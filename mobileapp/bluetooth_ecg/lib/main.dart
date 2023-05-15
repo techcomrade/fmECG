@@ -5,13 +5,19 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:bluetooth_ecg/present/login_screen.dart';
+import 'package:bluetooth_ecg/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:bluetooth_ecg/widgets.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
-  runApp(FlutterBlueApp());
+  runApp( GetMaterialApp(
+    home: LoginScreen(),
+    getPages : AppRoutes.pages,
+  ));
 }
 
 class FlutterBlueApp extends StatefulWidget {
