@@ -50,43 +50,6 @@ exports.updateUserInfo = async (req, res) => {
   }
 };
 
-// exports.changePassword = async (req, res) => {
-//   try {
-//     // Get the user ID from the authentication token
-//     const token = req.cookies.jwt;
-//     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-//     const userId = decodedToken.userId;
-
-//     // Find the user by ID
-//     const user = await User.findByPk(userId);
-
-//     if (!user) {
-//       return res.status(404).json({ status: 'error', msg: 'User not found' });
-//     }
-
-//     // Check if the provided current password matches the user's current password
-//     const currentPassword = req.body.currentPassword;
-//     const isMatch = await bcrypt.compare(currentPassword, user.password);
-
-//     if (!isMatch) {
-//       return res.status(401).json({ status: 'error', msg: 'Current password is incorrect' });
-//     }
-
-//     // Hash the new password
-//     const newPassword = req.body.newPassword;
-//     const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-//     // Update the user's password
-//     user.password = hashedPassword;
-//     await user.save();
-
-//     res.status(200).json({ status: 'success', msg: 'Password changed successfully' });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ status: 'error', msg: 'An error occurred while changing the password' });
-//   }
-// };
-
 exports.changePassword = async (req, res) => {
   try {
     // Get the user ID from the authentication token
@@ -156,4 +119,34 @@ exports.getUserProfile = async (req, res) => {
   }
 };
 
-// TODO(TuanHA): Implement for API get all of current users support pagination 
+exports.getAllUsers = async (req, res) => {
+  try {
+    // Check if the user is authenticated and has admin rights
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decodedToken || decodedToken.role !== 2) {
+      return res.status(401).json({ status: 'error', msg: 'Unauthorized' });
+    }
+
+    // Pagination and limit parameters
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+
+    // Fetch users from the database with pagination and limit
+    const result = await User.findAndCountAll({
+      attributes: ['name', 'email', 'dob', 'phone_number', 'role'],
+      limit: limit,
+      offset: offset,
+    });
+
+    const users = result.rows;
+    const count = result.count;
+
+    res.status(200).json({ status: 'success', data: { users, count } });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', msg: 'An error occurred while fetching user information' });
+  }
+};
+
