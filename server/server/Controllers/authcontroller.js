@@ -5,12 +5,9 @@ const User = require('../Models/userModel');
 const ResetToken = require('../Models/resetToken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-// const dotenv = require('dotenv').dotenv;
-// dotenv.config({
-//   path:'./config.env',
-// });
+const path = require('path');
 
-// TODO(TuanHA): User dotenv to get env config instead of context data
+require('dotenv').config({ path: path.resolve(__dirname, '../config.env') })
 
 exports.register = async (req, res, next) => {
   try {
@@ -67,7 +64,7 @@ exports.login = async (req, res, next) => {
     }
 
     // Generate a token
-    const token = jwt.sign({ userId: user.user_id }, 'your-secret-key', {
+    const token = jwt.sign({ userId: user.user_id }, process.env.JWT_SECRET, {
       expiresIn: '24h',
     });
     const cookieOptions = {
@@ -126,13 +123,13 @@ exports.resetPasswordToken = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: 'hostecg@gmail.com',
-        pass: 'ovqvhqwpozdorwcl',
+        user: process.env.EMAIL_HOST,
+        pass: process.env.EMAIL_PASSWORD,
       },
     });
 
     const mailOptions = {
-      from: 'hostecg@gmail.com',
+      from: process.env.EMAIL_HOST,
       to: email,
       subject: 'Password Reset',
       text: `You are receiving this email because you (or someone else) has requested to reset your password.\n\n`
