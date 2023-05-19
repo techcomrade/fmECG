@@ -6,24 +6,28 @@ String ecgRecordToJson(EcgRecord data) => json.encode(data.toJson());
 
 class EcgRecord {
     int id;
-    String name;
+    int userId;
+    int deviceId;
     String dataDirectory;
 
     EcgRecord({
         required this.id,
-        required this.name,
+        required this.userId,
+        required this.deviceId,
         required this.dataDirectory,
     });
 
     factory EcgRecord.fromJson(Map<String, dynamic> json) => EcgRecord(
         id: json["id"],
-        name: json["name"],
+        userId: json["user_id"],
+        deviceId: json["device_id"],
         dataDirectory: json["data_directory"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "name": name,
+        "user_id": userId,
+        "device_id": deviceId,
         "data_directory": dataDirectory,
     };
 }
