@@ -3,8 +3,8 @@ import 'package:bluetooth_ecg/utils/color_constant.dart';
 import 'package:bluetooth_ecg/utils/image_constant.dart';
 import 'package:bluetooth_ecg/utils/size_utils.dart';
 import 'package:bluetooth_ecg/utils/validation_functions.dart';
-import 'package:bluetooth_ecg/view/custom_image_view.dart';
-import 'package:bluetooth_ecg/view/custom_text_form_field.dart';
+import 'package:bluetooth_ecg/components/custom_image_view.dart';
+import 'package:bluetooth_ecg/components/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 

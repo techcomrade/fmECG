@@ -1,22 +1,28 @@
-// Copyright 2017, Paul DeMarco.
-// All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'dart:async';
 import 'dart:math';
 
-import 'package:bluetooth_ecg/present/login_screen.dart';
-import 'package:bluetooth_ecg/routes/app_routes.dart';
+import 'package:bluetooth_ecg/generated/l10n.dart';
+import 'package:bluetooth_ecg/providers/auth_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:bluetooth_ecg/screens/login_screen.dart';
+import 'package:bluetooth_ecg/routes/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:bluetooth_ecg/widgets.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp( 
     GetMaterialApp(
       home: LoginScreen(),
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       getPages : AppRoutes.pages,
     )
   );
@@ -43,22 +49,29 @@ class FlutterBlueAppState extends State<FlutterBlueApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      color: Colors.lightBlue,
-      home: StreamBuilder<BluetoothState>(
-          stream: FlutterBlue.instance.state,
-          initialData: BluetoothState.unknown,
-          builder: (c, snapshot) {
-            final state = snapshot.data;
-            if (state == BluetoothState.on &&
-                _permissionStatus == PermissionStatus.granted) {
-              return FindDevicesScreen();
-            } else {
-              requestPermission(Permission.bluetoothScan);
-              requestPermission(Permission.bluetoothConnect);
-            }
-            return BluetoothOffScreen(state: state);
-          }),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: Consumer<AuthProvider>(
+        builder: (ctx, auth, _) => MaterialApp(
+          color: Colors.lightBlue,
+          home: StreamBuilder<BluetoothState>(
+            stream: FlutterBlue.instance.state,
+            initialData: BluetoothState.unknown,
+            builder: (c, snapshot) {
+              final state = snapshot.data;
+              if (state == BluetoothState.on &&
+                  _permissionStatus == PermissionStatus.granted) {
+                return FindDevicesScreen();
+              } else {
+                requestPermission(Permission.bluetoothScan);
+                requestPermission(Permission.bluetoothConnect);
+              }
+              return BluetoothOffScreen(state: state);
+            }),
+        ),
+      ),
     );
   }
 }
