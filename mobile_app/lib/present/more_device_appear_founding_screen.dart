@@ -2,9 +2,9 @@
 import 'package:bluetooth_ecg/routes/app_routes.dart';
 import 'package:bluetooth_ecg/theme/app_decoration.dart';
 import 'package:bluetooth_ecg/theme/app_style.dart';
-import 'package:bluetooth_ecg/util/color_constant.dart';
-import 'package:bluetooth_ecg/util/image_constant.dart';
-import 'package:bluetooth_ecg/util/size_utils.dart';
+import 'package:bluetooth_ecg/utils/color_constant.dart';
+import 'package:bluetooth_ecg/utils/image_constant.dart';
+import 'package:bluetooth_ecg/utils/size_utils.dart';
 import 'package:bluetooth_ecg/view/custom_button.dart';
 import 'package:bluetooth_ecg/view/custom_image_view.dart';
 import 'package:flutter/material.dart';

@@ -1,8 +1,8 @@
 
-import 'package:bluetooth_ecg/util/color_constant.dart';
-import 'package:bluetooth_ecg/util/image_constant.dart';
-import 'package:bluetooth_ecg/util/size_utils.dart';
-import 'package:bluetooth_ecg/util/validation_functions.dart';
+import 'package:bluetooth_ecg/utils/color_constant.dart';
+import 'package:bluetooth_ecg/utils/image_constant.dart';
+import 'package:bluetooth_ecg/utils/size_utils.dart';
+import 'package:bluetooth_ecg/utils/validation_functions.dart';
 import 'package:bluetooth_ecg/view/custom_image_view.dart';
 import 'package:bluetooth_ecg/view/custom_text_form_field.dart';
 import 'package:flutter/material.dart';

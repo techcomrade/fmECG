@@ -1,5 +1,5 @@
-import 'package:bluetooth_ecg/util/color_constant.dart';
-import 'package:bluetooth_ecg/util/size_utils.dart';
+import 'package:bluetooth_ecg/utils/color_constant.dart';
+import 'package:bluetooth_ecg/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
