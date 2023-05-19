@@ -13,6 +13,7 @@ dotenv.config({
     path:'./config.env',
 });
 
+
 sequelize.sync().then(result => {
     console.log('Connect to DB success');
     // console.log(result);
