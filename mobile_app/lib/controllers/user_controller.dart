@@ -17,3 +17,20 @@ Future<void> loginUser(String email, String password) async {
       print('error from login: $err');
     }
   }
+
+  Future<void> registerUser() async {
+    // call API with email and password
+    String url = APIConstant.apiUrl + '/login';
+    try {
+      final response = await http.post(Uri.parse('url'), 
+        headers: APIConstant.headers,
+        // body: {'email': email, 'password': password}
+      );
+      // final responseData = response.body;
+      // if (responseData["success"]) {
+      //   // do something with data
+      // }
+    } catch (err) {
+      print('error from login: $err');
+    }
+  }
