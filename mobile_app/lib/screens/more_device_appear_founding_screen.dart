@@ -2,7 +2,7 @@
 import 'package:bluetooth_ecg/routes/route.dart';
 import 'package:bluetooth_ecg/theme/app_decoration.dart';
 import 'package:bluetooth_ecg/theme/app_style.dart';
-import 'package:bluetooth_ecg/contants/color_constant.dart';
+import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/utils/image_constant.dart';
 import 'package:bluetooth_ecg/utils/size.dart';
 import 'package:bluetooth_ecg/components/custom_button.dart';

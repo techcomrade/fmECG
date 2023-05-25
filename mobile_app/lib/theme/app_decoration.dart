@@ -1,4 +1,4 @@
-import 'package:bluetooth_ecg/contants/color_constant.dart';
+import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/utils/size.dart';
 import 'package:flutter/material.dart';
 
