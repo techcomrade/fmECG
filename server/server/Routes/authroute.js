@@ -9,5 +9,7 @@ authroute.post("/login", authcontroller.login);
 authroute.post("/reset-password", authcontroller.resetPasswordToken);
 authroute.post("/reset-password/reset", authcontroller.resetPassword);
 authroute.get("/logout", authcontroller.logout);
+authroute.get("/is-login", authcontroller.isLogin);
+
 
 module.exports = authroute;

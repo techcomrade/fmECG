@@ -94,10 +94,8 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-
 exports.getUserProfile = async (req, res) => {
   try {
-    // Get the user ID from the authentication token
     // Get the user ID from the authentication token
     const token = req.cookies.jwt;
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
@@ -105,7 +103,7 @@ exports.getUserProfile = async (req, res) => {
 
     // Find the user by ID
     const user = await User.findByPk(userId, {
-      attributes: ['name', 'email', 'dob', 'phone_number', 'role']
+      attributes: ['user_id', 'name', 'email', 'dob', 'phone_number', 'role'] // Add 'user_id' to the attributes
     });
 
     if (!user) {
@@ -118,6 +116,8 @@ exports.getUserProfile = async (req, res) => {
     res.status(500).json({ status: 'error', msg: 'An error occurred while retrieving the user profile' });
   }
 };
+
+
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -147,6 +147,51 @@ exports.getAllUsers = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: 'error', msg: 'An error occurred while fetching user information' });
+  }
+};
+
+exports.getUserById = async (req, res) => {
+  try {
+    let userId;
+
+    // Check if the user ID is provided in the request parameter
+    if (req.params.userId) {
+      userId = req.params.userId;
+    }
+    // If the user ID is not in the request parameter, check the request body
+    else if (req.body.userId) {
+      userId = req.body.userId;
+    }
+    // If the user ID is not provided in either the parameter or body, return an error
+    else {
+      return res.status(400).json({ status: 'error', msg: 'User ID not provided' });
+    }
+
+    // Get the user role from the authentication token
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userRole = decodedToken.role;
+
+    // Check if the user role is doctor (1) or admin (2)
+    if (userRole !== 1 && userRole !== 2) {
+      return res.status(403).json({ status: 'error', msg: 'Unauthorized access' });
+    }
+
+    // Find the user by ID
+    const user = await User.findByPk(userId, {
+      attributes: {
+        exclude: ['password'] // Exclude the 'password' field from the retrieved data
+      }
+    });
+
+    if (!user) {
+      return res.status(404).json({ status: 'error', msg: 'User not found' });
+    }
+
+    res.status(200).json({ status: 'success', data: user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', msg: 'An error occurred while retrieving the user information' });
   }
 };
 
