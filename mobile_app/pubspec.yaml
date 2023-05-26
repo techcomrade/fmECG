@@ -37,6 +37,7 @@ dependencies:
   provider: ^6.0.5
   get: ^4.6.5
   dio: ^5.1.2
+  http: any
 
   # storage
   shared_preferences: ^2.1.1
