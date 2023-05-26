@@ -21,6 +21,7 @@ const User = sequelize.define('user', {
     allowNull: false
   },
   doB: {
+    // TODO(TuanHA): Update type to DateTime
     type: Sequelize.STRING,
     allowNull: false
   },

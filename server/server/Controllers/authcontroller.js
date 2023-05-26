@@ -62,7 +62,7 @@ exports.login = async (req, res, next) => {
     if (!passwordMatch) {
       return res.status(401).json({ status: 'error', msg: 'Invalid email or password' });
     }
-
+    // TODO(TuanHA): Set expired for token (90 days)
     // Generate a token
     const token = jwt.sign({ userId: user.user_id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: '24h',
