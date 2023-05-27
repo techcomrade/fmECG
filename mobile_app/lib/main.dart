@@ -15,16 +15,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp( 
-    GetMaterialApp(
-      home: LoginScreen(),
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      getPages : AppRoutes.pages,
-    )
+    FlutterBlueApp()
   );
 }
 
@@ -54,23 +45,34 @@ class FlutterBlueAppState extends State<FlutterBlueApp> {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: Consumer<AuthProvider>(
-        builder: (ctx, auth, _) => MaterialApp(
-          color: Colors.lightBlue,
-          home: StreamBuilder<BluetoothState>(
-            stream: FlutterBlue.instance.state,
-            initialData: BluetoothState.unknown,
-            builder: (c, snapshot) {
-              final state = snapshot.data;
-              if (state == BluetoothState.on &&
-                  _permissionStatus == PermissionStatus.granted) {
-                return FindDevicesScreen();
-              } else {
-                requestPermission(Permission.bluetoothScan);
-                requestPermission(Permission.bluetoothConnect);
-              }
-              return BluetoothOffScreen(state: state);
-            }),
-        ),
+        builder: (ctx, auth, _) => 
+          GetMaterialApp(
+            home: LoginScreen(),
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            getPages : AppRoutes.pages,
+          )
+        // MaterialApp(
+        //   color: Colors.lightBlue,
+        //   home: StreamBuilder<BluetoothState>(
+        //     stream: FlutterBlue.instance.state,
+        //     initialData: BluetoothState.unknown,
+        //     builder: (c, snapshot) {
+        //       final state = snapshot.data;
+        //       if (state == BluetoothState.on &&
+        //           _permissionStatus == PermissionStatus.granted) {
+        //         return FindDevicesScreen();
+        //       } else {
+        //         requestPermission(Permission.bluetoothScan);
+        //         requestPermission(Permission.bluetoothConnect);
+        //       }
+        //       return BluetoothOffScreen(state: state);
+        //     }),
+        // ),
       ),
     );
   }

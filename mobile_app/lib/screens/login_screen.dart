@@ -5,6 +5,7 @@ import 'package:bluetooth_ecg/utils/image_constant.dart';
 import 'package:bluetooth_ecg/utils/size.dart';
 import 'package:bluetooth_ecg/components/custom_button.dart';
 import 'package:bluetooth_ecg/components/custom_image_view.dart';
+import 'package:bluetooth_ecg/utils/utils.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -15,6 +16,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Utils.setGlobalContext(context);
     return SafeArea(
         child: Scaffold(
             backgroundColor: ColorConstant.quinary,

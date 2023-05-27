@@ -81,7 +81,7 @@ class RegisterScreen extends StatelessWidget {
                                             TextInputType.emailAddress,
                                         validator: (value) {
                                           if (value == null ||
-                                              (!isValidEmail(value,
+                                              (!Validators.isValidEmail(value,
                                                   isRequired: true))) {
                                             return "Please enter valid email";
                                           }
@@ -130,7 +130,7 @@ class RegisterScreen extends StatelessWidget {
                                             maxHeight: getVerticalSize(58.00)),
                                         validator: (value) {
                                           if (value == null ||
-                                              (!isValidPassword(value,
+                                              (!Validators.isValidPassword(value,
                                                   isRequired: true))) {
                                             return "Please enter valid password";
                                           }
@@ -177,7 +177,7 @@ class RegisterScreen extends StatelessWidget {
                                             maxHeight: getVerticalSize(58.00)),
                                         validator: (value) {
                                           if (value == null ||
-                                              (!isValidPassword(value,
+                                              (!Validators.isValidPassword(value,
                                                   isRequired: true))) {
                                             return "Please enter valid password";
                                           }
