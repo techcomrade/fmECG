@@ -1,6 +1,10 @@
 // auth provider
 
+import 'dart:convert';
+
+import 'package:bluetooth_ecg/constants/api_constant.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -53,6 +57,44 @@ class AuthProvider extends ChangeNotifier {
       return false;
     } else {
       return true;
+    }
+  }
+
+  Future<void> loginUser(String email, String password) async {
+    // call API with email and password
+    String url = APIConstant.apiUrl + 'login';
+    print('email:$email, $password');
+    try {
+      final response = await http.post(Uri.parse(url), 
+        headers: APIConstant.headers,
+        body: jsonEncode({"email": email, "password": password})
+      );
+      final responseData = jsonDecode(response.body);
+      print('res:$responseData');
+
+      if (responseData["status"] == "success") {
+        // do something with data
+        // print('heheh donee:${responseData["token"]}');
+      }
+    } catch (err) {
+      print('error from login: $err');
+    }
+  }
+
+  Future<void> registerUser(String email, String password) async {
+    // call API with email and password
+    String url = APIConstant.apiUrl + '/login';
+    try {
+      final response = await http.post(Uri.parse(url), 
+        headers: APIConstant.headers,
+        // body: {'email': email, 'password': password}
+      );
+      // final responseData = response.body;
+      // if (responseData["success"]) {
+      //   // do something with data
+      // }
+    } catch (err) {
+      print('error from login: $err');
     }
   }
 

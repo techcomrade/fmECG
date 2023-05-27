@@ -11,7 +11,6 @@ import 'package:bluetooth_ecg/components/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:flutter/cupertino.dart';
 
 // ignore_for_file: must_be_immutable
@@ -81,7 +80,7 @@ class RegisterScreen extends StatelessWidget {
                                             TextInputType.emailAddress,
                                         validator: (value) {
                                           if (value == null ||
-                                              (!isValidEmail(value,
+                                              (!Validators.isValidEmail(value,
                                                   isRequired: true))) {
                                             return "Please enter valid email";
                                           }
@@ -130,7 +129,7 @@ class RegisterScreen extends StatelessWidget {
                                             maxHeight: getVerticalSize(58.00)),
                                         validator: (value) {
                                           if (value == null ||
-                                              (!isValidPassword(value,
+                                              (!Validators.isValidPassword(value,
                                                   isRequired: true))) {
                                             return "Please enter valid password";
                                           }
@@ -177,7 +176,7 @@ class RegisterScreen extends StatelessWidget {
                                             maxHeight: getVerticalSize(58.00)),
                                         validator: (value) {
                                           if (value == null ||
-                                              (!isValidPassword(value,
+                                              (!Validators.isValidPassword(value,
                                                   isRequired: true))) {
                                             return "Please enter valid password";
                                           }
