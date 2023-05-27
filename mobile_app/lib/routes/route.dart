@@ -1,8 +1,8 @@
 
-import 'package:bluetooth_ecg/present/login1_screen.dart';
-import 'package:bluetooth_ecg/present/login_screen.dart';
-import 'package:bluetooth_ecg/present/more_device_appear_founding_screen.dart';
-import 'package:bluetooth_ecg/present/register_screen.dart';
+import 'package:bluetooth_ecg/screens/login1_screen.dart';
+import 'package:bluetooth_ecg/screens/login_screen.dart';
+import 'package:bluetooth_ecg/screens/more_device_appear_founding_screen.dart';
+import 'package:bluetooth_ecg/screens/register_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
