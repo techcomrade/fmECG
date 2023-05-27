@@ -22,7 +22,7 @@ class RegisterScreen extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
             resizeToAvoidBottomInset: false,
-            backgroundColor: ColorConstant.deepPurpleA200,
+            backgroundColor: ColorConstant.quinary,
             body: Form(
                 key: _formKey,
                 child: Container(
