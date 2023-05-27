@@ -30,7 +30,7 @@ const User = sequelize.define('user', {
     allowNull: false
   },
   role: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER, // 0-patient, 1-doctor, 2-admin
     allowNull: false
   }
 });
