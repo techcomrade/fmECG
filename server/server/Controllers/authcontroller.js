@@ -2,16 +2,21 @@ const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 const User = require('../Models/userModel');
-const ResetToken = require('../Models/resetToken');
+const ResetToken = require('../Models/resetTokenModel');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const path = require('path');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../config.env') })
 
+
 exports.register = async (req, res, next) => {
   try {
     const { password, confirm_password, name, email, doB, phone_number, role } = req.body;
+    // Check if the role is not 2 (admin)
+    if (role === 2) {
+      return res.status(400).json({ status: 'error', msg: 'Admin cannot register an account' });
+    }
 
     // Check if email is duplicated
     const existingUser = await User.findOne({ where: { email } });
@@ -63,29 +68,31 @@ exports.login = async (req, res, next) => {
       return res.status(401).json({ status: 'error', msg: 'Invalid email or password' });
     }
 
-    // Generate a token
-    const token = jwt.sign({ userId: user.user_id, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: '24h',
-    });
+    // Generate a token with a 90-day expiration time
+    const token = jwt.sign(
+      { userId: user.user_id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '90d' }
+    );
+
     const cookieOptions = {
-      expires: new Date(
-        Date.now() + 1000 * 24 * 60 * 60 * 1000
-      ),
+      expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), // 90 days in milliseconds
       httpOnly: true,
     };
-    console.log("The Token is " + token);
+
     // Remove password field from the user object
     const { password: _password, ...userWithoutPassword } = user.dataValues;
 
     // Set the token as a cookie
-    res.cookie("jwt", token, cookieOptions);
- 
-    res.json({ status: 'success', token:token, user: userWithoutPassword });
+    res.cookie('jwt', token, cookieOptions);
+
+    res.json({ status: 'success', token, user: userWithoutPassword });
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: 'error', msg: 'An error occurred during login' });
   }
 };
+
 
 exports.logout = (req, res) => {
   try {
@@ -118,7 +125,7 @@ exports.resetPasswordToken = async (req, res) => {
     const resetTokenExpiration = Date.now() + 60*10000; // 10 minutes expiration
 
     // Save reset token and expiration in the ResetToken table
-    await ResetToken.create({ userId: user.user_id, token: resetToken, expiration: resetTokenExpiration });
+    await ResetToken.create({ user_id: user.user_id, token: resetToken, expiration: resetTokenExpiration });
 
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
@@ -174,7 +181,7 @@ exports.resetPassword = async (req, res) => {
     }
 
     // Find the associated user by the reset token
-    const user = await User.findOne({ where: { user_id: resetTokenData.userId } });
+    const user = await User.findOne({ where: { user_id: resetTokenData.user_id } });
 
     // If user not found, return an error
     if (!user) {
@@ -203,5 +210,37 @@ exports.resetPassword = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: 'error', msg: 'An error occurred while resetting the password' });
+  }
+};
+
+exports.isLogin = async (req, res) => {
+  try {
+    // Check if the token cookie exists
+    const token = req.cookies.jwt;
+    if (!token) {
+      return res.status(401).json({ status: 'error', msg: 'No token found' });
+    }
+
+    // Verify and decode the token
+    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+      if (err) {
+        if (err.name === 'TokenExpiredError') {
+          // Token has expired
+          // Log out the user
+          return res.redirect('/logout'); // Redirect to the logout route or call the logout function directly
+        }
+        // Token is invalid for some other reason
+        return res.status(401).json({ status: 'error', msg: 'Invalid token' });
+      }
+
+      // Token verification successful
+      // Perform additional checks or operations here if needed (Maybe)
+
+      // Return the decoded token
+      res.json({ status: 'success', user: decodedToken });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', msg: 'An error occurred' });
   }
 };
