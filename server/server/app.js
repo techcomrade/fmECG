@@ -2,10 +2,10 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const route = require('./Routes/route');
-const authroute = require('./Routes/authroute');
-const usersroute = require('./Routes/usersroute');
-const newsroute = require('./Routes/newsroute');
-const ecgrecordsroute = require('./Routes/ecgrecordroute');
+const authRoute = require('./Routes/authRoute');
+const usersRoute = require('./Routes/usersRoute');
+const newsRoute = require('./Routes/newsRoute');
+const ecgRecordsRoute = require('./Routes/ecgRecordRoute');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
@@ -28,9 +28,9 @@ sequelize.sync().then(result => {
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use('/', authroute);
-app.use('/users', usersroute);
-app.use('/news', newsroute);
-app.use('/ecg-records', ecgrecordsroute);
+app.use('/', authRoute);
+app.use('/users', usersRoute);
+app.use('/news', newsRoute);
+app.use('/ecg-records', ecgRecordsRoute);
 
 module.exports = app;

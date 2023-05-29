@@ -16,6 +16,11 @@ const NewsCategory = sequelize.define('news_category', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+},
+{
+  updatedAt: 'updated_at',
+  createdAt: 'create_at',
+  tableName: 'news_categories'
 });
 
 const News = sequelize.define('news', {
@@ -45,6 +50,11 @@ const News = sequelize.define('news', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+},
+{
+  updatedAt: 'updated_at',
+  createdAt: 'create_at',
+  tableName: 'news'
 });
 
 NewsCategory.hasMany(News, {

@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 const { v4: uuidv4 } = require('uuid');
-const EcgRecord = require('../Models/ecgrecordModel');
-const { isLogin } = require('./authcontroller');
+const EcgRecord = require('../Models/ecgRecordModel');
+const { isLogin } = require('./authController');
 const multer = require('multer');
 
 // Create the upload directory if it doesn't exist

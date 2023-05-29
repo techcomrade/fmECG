@@ -1,13 +1,13 @@
 const express = require('express');
-const usersroute = express.Router();
+const usersRoute = express.Router();
 const bodyParser = require('body-parser')
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
-const userscontroller = require('../Controllers/usercontroller');
+const usersController = require('../Controllers/userController');
 
-usersroute.put("/profile", userscontroller.updateUserInfo);
-usersroute.put("/change-password", userscontroller.changePassword);
-usersroute.get("/profile", userscontroller.getUserProfile);
-usersroute.get("/", userscontroller.getAllUsers);
-usersroute.get("/:userId", userscontroller.getUserById);
+usersRoute.put("/profile", usersController.updateUserInfo);
+usersRoute.put("/change-password", usersController.changePassword);
+usersRoute.get("/profile", usersController.getUserProfile);
+usersRoute.get("/", usersController.getAllUsers);
+usersRoute.get("/:userId", usersController.getUserById);
 
-module.exports = usersroute;
+module.exports = usersRoute;

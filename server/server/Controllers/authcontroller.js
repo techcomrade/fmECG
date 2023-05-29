@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 const User = require('../Models/userModel');
-const ResetToken = require('../Models/resetToken');
+const ResetToken = require('../Models/resetTokenModel');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const path = require('path');
@@ -125,7 +125,7 @@ exports.resetPasswordToken = async (req, res) => {
     const resetTokenExpiration = Date.now() + 60*10000; // 10 minutes expiration
 
     // Save reset token and expiration in the ResetToken table
-    await ResetToken.create({ userId: user.user_id, token: resetToken, expiration: resetTokenExpiration });
+    await ResetToken.create({ user_id: user.user_id, token: resetToken, expiration: resetTokenExpiration });
 
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
@@ -181,7 +181,7 @@ exports.resetPassword = async (req, res) => {
     }
 
     // Find the associated user by the reset token
-    const user = await User.findOne({ where: { user_id: resetTokenData.userId } });
+    const user = await User.findOne({ where: { user_id: resetTokenData.user_id } });
 
     // If user not found, return an error
     if (!user) {
@@ -234,9 +234,9 @@ exports.isLogin = async (req, res) => {
       }
 
       // Token verification successful
-      // You can perform additional checks or operations here if needed
+      // Perform additional checks or operations here if needed (Maybe)
 
-      // Return the decoded token or any other response you prefer
+      // Return the decoded token
       res.json({ status: 'success', user: decodedToken });
     });
   } catch (error) {

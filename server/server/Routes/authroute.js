@@ -1,15 +1,15 @@
 const express = require('express');
-const authroute = express.Router();
+const authRoute = express.Router();
 const bodyParser = require('body-parser')
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
-const authcontroller = require('../Controllers/authcontroller');
+const authController = require('../Controllers/authController');
 
-authroute.post("/register", authcontroller.register);
-authroute.post("/login", authcontroller.login);
-authroute.post("/reset-password", authcontroller.resetPasswordToken);
-authroute.post("/reset-password/reset", authcontroller.resetPassword);
-authroute.get("/logout", authcontroller.logout);
-authroute.get("/is-login", authcontroller.isLogin);
+authRoute.post("/register", authController.register);
+authRoute.post("/login", authController.login);
+authRoute.post("/reset-password", authController.resetPasswordToken);
+authRoute.post("/reset-password/reset", authController.resetPassword);
+authRoute.get("/logout", authController.logout);
+authRoute.get("/is-login", authController.isLogin);
 
 
-module.exports = authroute;
+module.exports = authRoute;
