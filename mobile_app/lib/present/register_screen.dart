@@ -1,4 +1,3 @@
-
 import 'package:bluetooth_ecg/routes/app_routes.dart';
 import 'package:bluetooth_ecg/theme/app_decoration.dart';
 import 'package:bluetooth_ecg/theme/app_style.dart';
@@ -69,13 +68,13 @@ class RegisterScreen extends StatelessWidget {
                                         width: 305,
                                         focusNode: FocusNode(),
                                         controller: null,
-                                        hintText: "Stuart Kearns",
+                                        hintText: "Your name",
                                         margin: getMargin(left: 24, top: 10)),
                                     CustomTextFormField(
                                         width: 305,
                                         focusNode: FocusNode(),
                                         controller: null,
-                                        hintText: "test@gmail.com",
+                                        hintText: "Your_mail@gmail.com",
                                         margin: getMargin(left: 24, top: 10),
                                         textInputType:
                                             TextInputType.emailAddress,
@@ -90,101 +89,97 @@ class RegisterScreen extends StatelessWidget {
                                     CustomTextFormField(
                                         width: 305,
                                         focusNode: FocusNode(),
-                                        controller:
-                                            null,
-                                        hintText: "91 234 5678 90",
+                                        controller: null,
+                                        hintText: "Phone number",
                                         margin: getMargin(left: 24, top: 10),
                                         padding:
                                             TextFormFieldPadding.PaddingT16),
                                     CustomTextFormField(
-                                        width: 305,
-                                        focusNode: FocusNode(),
-                                        controller:
-                                            null,
-                                        hintText: "***************",
-                                        margin: getMargin(left: 24, top: 10),
-                                        padding:
-                                            TextFormFieldPadding.PaddingT11,
-                                        textInputType:
-                                            TextInputType.visiblePassword,
-                                        suffix: InkWell(
-                                            onTap: () {
-                                              // controller.isShowPassword.value =
-                                              //     !controller
-                                              //         .isShowPassword.value;
-                                            },
-                                            child: Container(
-                                                margin: getMargin(
-                                                    left: 30,
-                                                    top: 10,
-                                                    right: 17,
-                                                    bottom: 18),
-                                                child: CustomImageView(
-                                                    svgPath:
-                                                        //  ImageConstant
-                                                        //     .imgInstagram
-                                                        // :
-                                                    ImageConstant
-                                                            .imgInstagram))),
-                                        suffixConstraints: BoxConstraints(
-                                            maxHeight: getVerticalSize(58.00)),
-                                        validator: (value) {
-                                          if (value == null ||
-                                              (!isValidPassword(value,
-                                                  isRequired: true))) {
-                                            return "Please enter valid password";
-                                          }
-                                          return null;
-                                        },
-                                        // isObscureText:
-                                        //     !controller.isShowPassword.value
+                                      width: 305,
+                                      focusNode: FocusNode(),
+                                      controller: null,
+                                      hintText: "Password",
+                                      margin: getMargin(left: 24, top: 10),
+                                      padding: TextFormFieldPadding.PaddingT11,
+                                      textInputType:
+                                          TextInputType.visiblePassword,
+                                      suffix: InkWell(
+                                          onTap: () {
+                                            // controller.isShowPassword.value =
+                                            //     !controller
+                                            //         .isShowPassword.value;
+                                          },
+                                          child: Container(
+                                              margin: getMargin(
+                                                  left: 30,
+                                                  top: 10,
+                                                  right: 17,
+                                                  bottom: 18),
+                                              child: CustomImageView(
+                                                  svgPath:
+                                                      //  ImageConstant
+                                                      //     .imgInstagram
+                                                      // :
+                                                      ImageConstant
+                                                          .imgInstagram))),
+                                      suffixConstraints: BoxConstraints(
+                                          maxHeight: getVerticalSize(58.00)),
+                                      validator: (value) {
+                                        if (value == null ||
+                                            (!isValidPassword(value,
+                                                isRequired: true))) {
+                                          return "Please enter valid password";
+                                        }
+                                        return null;
+                                      },
+                                      // isObscureText:
+                                      //     !controller.isShowPassword.value
                                     ),
 
                                     CustomTextFormField(
-                                        width: 305,
-                                        focusNode: FocusNode(),
-                                        // controller:
-                                        //     controller.passwordOneController,
-                                        hintText: "*************",
-                                        margin: getMargin(left: 24, top: 10),
-                                        padding:
-                                            TextFormFieldPadding.PaddingT11,
-                                        textInputAction: TextInputAction.done,
-                                        textInputType:
-                                            TextInputType.visiblePassword,
-                                        suffix: InkWell(
-                                            onTap: () {
-                                              // controller.isShowPassword1.value =
-                                              //     !controller
-                                              //         .isShowPassword1.value;
-                                            },
-                                            child: Container(
-                                                margin: getMargin(
-                                                    left: 30,
-                                                    top: 14,
-                                                    right: 13,
-                                                    bottom: 15),
-                                                child: CustomImageView(
-                                                    // svgPath: controller
-                                                    //         .isShowPassword1
-                                                    //         .value
-                                                    //     ? ImageConstant
-                                                    //         .imgCheckmark
-                                                    //     : ImageConstant
-                                                    //         .imgCheckmark
-                                                ))),
-                                        suffixConstraints: BoxConstraints(
-                                            maxHeight: getVerticalSize(58.00)),
-                                        validator: (value) {
-                                          if (value == null ||
-                                              (!isValidPassword(value,
-                                                  isRequired: true))) {
-                                            return "Please enter valid password";
-                                          }
-                                          return null;
-                                        },
-                                        // isObscureText:
-                                        //     !controller.isShowPassword1.value
+                                      width: 305,
+                                      focusNode: FocusNode(),
+                                      // controller:
+                                      //     controller.passwordOneController,
+                                      hintText: "Confirm",
+                                      margin: getMargin(left: 24, top: 10),
+                                      padding: TextFormFieldPadding.PaddingT11,
+                                      textInputAction: TextInputAction.done,
+                                      textInputType:
+                                          TextInputType.visiblePassword,
+                                      suffix: InkWell(
+                                          onTap: () {
+                                            // controller.isShowPassword1.value =
+                                            //     !controller
+                                            //         .isShowPassword1.value;
+                                          },
+                                          child: Container(
+                                              margin: getMargin(
+                                                  left: 30,
+                                                  top: 14,
+                                                  right: 13,
+                                                  bottom: 15),
+                                              child: CustomImageView(
+                                                  // svgPath: controller
+                                                  //         .isShowPassword1
+                                                  //         .value
+                                                  //     ? ImageConstant
+                                                  //         .imgCheckmark
+                                                  //     : ImageConstant
+                                                  //         .imgCheckmark
+                                                  ))),
+                                      suffixConstraints: BoxConstraints(
+                                          maxHeight: getVerticalSize(58.00)),
+                                      validator: (value) {
+                                        if (value == null ||
+                                            (!isValidPassword(value,
+                                                isRequired: true))) {
+                                          return "Please enter valid password";
+                                        }
+                                        return null;
+                                      },
+                                      // isObscureText:
+                                      //     !controller.isShowPassword1.value
                                     ),
                                     Padding(
                                         padding: getPadding(left: 10, top: 10),
@@ -232,7 +227,7 @@ class RegisterScreen extends StatelessWidget {
                                                             style: TextStyle(
                                                                 color: ColorConstant
                                                                     .fromHex(
-                                                                        "#7041ee"),
+                                                                        "#41eeee"),
                                                                 fontSize:
                                                                     getFontSize(
                                                                         15),
@@ -254,8 +249,8 @@ class RegisterScreen extends StatelessWidget {
                                           alignment: Alignment.center,
                                           child: Container(
                                               width: getHorizontalSize(305.00),
-                                              margin:
-                                                  getMargin(top: 10, bottom: 42),
+                                              margin: getMargin(
+                                                  top: 10, bottom: 42),
                                               padding: getPadding(
                                                   left: 0,
                                                   top: 12,
@@ -268,12 +263,15 @@ class RegisterScreen extends StatelessWidget {
                                                           BorderRadiusStyle
                                                               .txtRoundedBorder24),
                                               child: Text("Proceed",
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   textAlign: TextAlign.center,
-                                                  style: AppStyle.txtPoppinsBold20
+                                                  style: AppStyle
+                                                      .txtPoppinsBold20
                                                       .copyWith(
-                                                          height: getVerticalSize(
-                                                              1.00))))),
+                                                          height:
+                                                              getVerticalSize(
+                                                                  1.00))))),
                                     )
                                   ]))
                         ])))));
