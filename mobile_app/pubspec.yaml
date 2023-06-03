@@ -58,6 +58,7 @@ dependencies:
   #  image: ^3.0.2
   #  bluetooth_print: ^4.3.0
   permission_handler: ^10.2.0
+  select_card: ^0.0.9
 
   # other lib
   flutter_localizations:

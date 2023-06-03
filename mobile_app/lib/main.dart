@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
+import 'package:bluetooth_ecg/screens/home_screen.dart';
+import 'package:bluetooth_ecg/screens/select_account_type_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:bluetooth_ecg/screens/login_screen.dart';
 import 'package:bluetooth_ecg/routes/route.dart';
@@ -12,6 +14,8 @@ import 'package:bluetooth_ecg/widgets.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+
+import 'screens/login1_screen.dart';
 
 void main() {
   runApp( 
@@ -45,10 +49,12 @@ class FmECGAppState extends State<FmECGApp> {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: Consumer<AuthProvider>(
-        builder: (ctx, auth, _) => 
-          GetMaterialApp(
+        builder: (ctx, auth, _) {
+          print('isAuthAfterUpdate:${auth.isAuth}');
+          
+          return GetMaterialApp(
             theme: ThemeData(fontFamily: "AvenirNext"),
-            home: LoginScreen(),
+            home: auth.isAuth ? HomeScreen() : Login1Screen(),
             localizationsDelegates: const [
               S.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -56,7 +62,7 @@ class FmECGAppState extends State<FmECGApp> {
               GlobalCupertinoLocalizations.delegate,
             ],
             getPages : AppRoutes.pages,
-          )
+          );
         // MaterialApp(
         //   color: Colors.lightBlue,
         //   home: StreamBuilder<BluetoothState>(
@@ -74,7 +80,7 @@ class FmECGAppState extends State<FmECGApp> {
         //       return BluetoothOffScreen(state: state);
         //     }),
         // ),
-      ),
+      }),
     );
   }
 }

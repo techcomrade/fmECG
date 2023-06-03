@@ -12,6 +12,7 @@ class AuthProvider extends ChangeNotifier {
   String _token = "";
   var _expiryDate;
   int _userId = 0;
+  int _roleId = -1;
   String _locale = 'en';
   bool _isDarkTheme = false;
 
@@ -50,10 +51,12 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  bool get isAuth {
-    final isExpiryDate = _expiryDate != null && _expiryDate!.isBefore(DateTime.now()) && _token != "";
+  int get roleId => _roleId;
 
-    if (token == "" || isExpiryDate) {
+  bool get isAuth {
+    // final isExpiryDate = _expiryDate != null && _expiryDate!.isBefore(DateTime.now()) && _token != "";
+    final isExpiryDate = _roleId != -1 && _token !=  "";
+    if (!isExpiryDate) {
       return false;
     } else {
       return true;
@@ -63,11 +66,35 @@ class AuthProvider extends ChangeNotifier {
   Future<void> loginUser(String email, String password) async {
     // call API with email and password
     String url = APIConstant.apiUrl + 'login';
-    print('email:$email, $password');
+    final bodyEncoded = jsonEncode({"email": email, "password": password});
     try {
       final response = await http.post(Uri.parse(url), 
         headers: APIConstant.headers,
-        body: jsonEncode({"email": email, "password": password})
+        body: bodyEncoded
+      );
+      final responseData = jsonDecode(response.body);
+
+      if (responseData["status"] == "success") {
+        // do something with data
+        print('response:$responseData');
+        _token = responseData["token"];
+        _roleId = responseData["user"]["role"];
+
+        notifyListeners();
+      }
+    } catch (err) {
+      print('error from login: $err');
+    }
+  }
+
+  Future<void> registerUser(String email, String password) async {
+    // call API with email and password
+    String url = APIConstant.apiUrl + 'register';
+    final bodyEncoded = jsonEncode({"email": email, "password": password});
+    try {
+      final response = await http.post(Uri.parse(url), 
+        headers: APIConstant.headers,
+        body: bodyEncoded
       );
       final responseData = jsonDecode(response.body);
       print('res:$responseData');
@@ -77,24 +104,7 @@ class AuthProvider extends ChangeNotifier {
         // print('heheh donee:${responseData["token"]}');
       }
     } catch (err) {
-      print('error from login: $err');
-    }
-  }
-
-  Future<void> registerUser(String email, String password) async {
-    // call API with email and password
-    String url = APIConstant.apiUrl + '/login';
-    try {
-      final response = await http.post(Uri.parse(url), 
-        headers: APIConstant.headers,
-        // body: {'email': email, 'password': password}
-      );
-      // final responseData = response.body;
-      // if (responseData["success"]) {
-      //   // do something with data
-      // }
-    } catch (err) {
-      print('error from login: $err');
+      print('error from register: $err');
     }
   }
 
