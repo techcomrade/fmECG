@@ -18,9 +18,6 @@ class AppDecoration {
   static BoxDecoration get fillBlack90016 => BoxDecoration(
         color: ColorConstant.black90016,
       );
-   static BoxDecoration get fillPrimary => BoxDecoration(
-        color: ColorConstant.primary,
-      );    
   static BoxDecoration get outlineBlack9000f => BoxDecoration(
         color: ColorConstant.whiteA700,
         boxShadow: [
