@@ -1,4 +1,3 @@
-
 import 'package:bluetooth_ecg/components/submit_button.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
