@@ -21,8 +21,8 @@ sequelize.sync().then(result => {
     console.log('Connect to DB success');
     // console.log(result);
 }).catch(err => {
-    console.log('err');
-    // console.log(err);
+    // console.log('err');
+    console.log(err);
 });
 
 app.use(cookieParser());
