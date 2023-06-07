@@ -1,5 +1,9 @@
 {
     "registration": "Registration",
     "login": "Login",
-    "signUp": "Sign up"
+    "signUp": "Sign up",
+    "home": "Home",
+    "history": "History",
+    "chat": "Chat",
+    "profile": "Profile"
 }

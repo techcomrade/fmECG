@@ -1,5 +1,5 @@
 class APIConstant {
-  static String apiUrl = "http://192.168.5.151:2000/";
+  static String apiUrl = "http://192.168.1.218:2000/";
 
   // static getDebugMode() {
   //   assert(() {
