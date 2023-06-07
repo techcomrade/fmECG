@@ -37,6 +37,36 @@ class AuthProvider extends ChangeNotifier {
   //   if (status) notifyListeners();
   // }
 
+  void setDataLogin() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final userData = json.encode(
+      {
+        'token': _token,
+        'userId': _userId,
+        'role': _roleId
+      },
+    );
+    preferences.setString('userData', userData);
+  }
+
+  Future<bool> tryAutoLogin() async {
+    final preferences = await SharedPreferences.getInstance();
+    if (!preferences.containsKey('userData')) {
+      return false;
+    }
+
+    final userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
+    // final expiryDate = DateTime.parse(extractedUserData['expiryDate'].toString());
+    // if (expiryDate.isBefore(DateTime.now())) {
+    //   return false;
+    // }
+    _token = userDataDecoded['token'].toString();
+    _userId = userDataDecoded['userId'];
+    // _expiryDate = expiryDate;
+    notifyListeners();
+    return true;
+  }
+
   Future<String> getLocale() async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
     _locale = preferences.getString('locale') ?? "en";
@@ -78,7 +108,7 @@ class AuthProvider extends ChangeNotifier {
         // do something with data
         _token = responseData["token"];
         _roleId = responseData["user"]["role"];
-
+        
         notifyListeners();
       }
     } catch (err) {

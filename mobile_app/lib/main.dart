@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
-import 'package:bluetooth_ecg/screens/home_screen.dart';
+import 'package:bluetooth_ecg/screens/main_screen.dart';
 import 'package:bluetooth_ecg/screens/select_account_type_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:bluetooth_ecg/screens/login_screen.dart';
@@ -54,7 +54,24 @@ class FmECGAppState extends State<FmECGApp> {
           
           return GetMaterialApp(
             theme: ThemeData(fontFamily: "AvenirNext"),
-            home: auth.isAuth ? HomeScreen() : Login1Screen(),
+            home: auth.isAuth ? MainScreen() : 
+              FutureBuilder(
+                future: auth.tryAutoLogin(),
+                builder: (ctx, authResultSnapshot) {
+                  print('auth:${authResultSnapshot.data}');
+                    if (authResultSnapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (authResultSnapshot.hasError) {
+                      return Text('Error: ${authResultSnapshot.error}');
+                    } else {
+                      if (authResultSnapshot.data == true) {
+                        // login succesfully
+                        return MainScreen();
+                      } else {
+                        return Login1Screen();
+                      }
+                    }
+                }),
             localizationsDelegates: const [
               S.delegate,
               GlobalMaterialLocalizations.delegate,
