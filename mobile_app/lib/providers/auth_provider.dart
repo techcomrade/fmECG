@@ -76,7 +76,6 @@ class AuthProvider extends ChangeNotifier {
 
       if (responseData["status"] == "success") {
         // do something with data
-        print('response:$responseData');
         _token = responseData["token"];
         _roleId = responseData["user"]["role"];
 

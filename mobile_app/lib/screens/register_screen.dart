@@ -162,7 +162,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 20),
             
                   // button login 
-                  SubmitButton(onTap: () {}, text: "Proceed"),
+                  Container(
+                    child: loginProcess ? CircularProgressIndicator(color: ColorConstant.primary) : SubmitButton(onTap: _signUpUser, text: "Proceed")
+                  ),
             
                   const SizedBox(height: 50),
                   Row(

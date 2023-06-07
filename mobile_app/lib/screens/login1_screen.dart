@@ -151,14 +151,14 @@ class _Login1ScreenState extends State<Login1Screen> {
                 const SizedBox(height: 50),
                 Container(
                   margin: paddingLoginHorizontal30,
-                  child: SubmitButton(onTap: _loginUser, text: "Login")
+                  child: loginProcess ? CircularProgressIndicator(color: ColorConstant.primary) : SubmitButton(onTap: _loginUser, text: "Login")
                 ),
 
                 const SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                  Text("Don't have an account?"),
+                  const Text("Don't have an account?"),
                   Text("  Sign up", style: TextStyle(color: ColorConstant.primary, fontWeight: FontWeight.bold),)
                 ],)
               ]
