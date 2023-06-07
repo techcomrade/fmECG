@@ -3,31 +3,35 @@ import 'dart:math';
 
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
+import 'package:bluetooth_ecg/screens/home_screen.dart';
+import 'package:bluetooth_ecg/screens/select_account_type_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:bluetooth_ecg/screens/login_screen.dart';
 import 'package:bluetooth_ecg/routes/route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_blue/flutter_blue.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:bluetooth_ecg/widgets.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/login1_screen.dart';
+
 void main() {
   runApp( 
-    FlutterBlueApp()
+    FmECGApp()
   );
 }
 
-class FlutterBlueApp extends StatefulWidget {
+class FmECGApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return FlutterBlueAppState();
+    return FmECGAppState();
   }
 }
 
-class FlutterBlueAppState extends State<FlutterBlueApp> {
+class FmECGAppState extends State<FmECGApp> {
   Future<void> requestPermission(Permission permission) async {
     final status = await permission.request();
 
@@ -45,9 +49,12 @@ class FlutterBlueAppState extends State<FlutterBlueApp> {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: Consumer<AuthProvider>(
-        builder: (ctx, auth, _) => 
-          GetMaterialApp(
-            home: LoginScreen(),
+        builder: (ctx, auth, _) {
+          print('isAuthAfterUpdate:${auth.isAuth}');
+          
+          return GetMaterialApp(
+            theme: ThemeData(fontFamily: "AvenirNext"),
+            home: auth.isAuth ? HomeScreen() : Login1Screen(),
             localizationsDelegates: const [
               S.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -55,7 +62,7 @@ class FlutterBlueAppState extends State<FlutterBlueApp> {
               GlobalCupertinoLocalizations.delegate,
             ],
             getPages : AppRoutes.pages,
-          )
+          );
         // MaterialApp(
         //   color: Colors.lightBlue,
         //   home: StreamBuilder<BluetoothState>(
@@ -73,7 +80,7 @@ class FlutterBlueAppState extends State<FlutterBlueApp> {
         //       return BluetoothOffScreen(state: state);
         //     }),
         // ),
-      ),
+      }),
     );
   }
 }
@@ -121,13 +128,13 @@ class FindDevicesScreen extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () =>
-            FlutterBlue.instance.startScan(timeout: Duration(seconds: 4)),
+            FlutterBluePlus.instance.startScan(timeout: Duration(seconds: 4)),
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               StreamBuilder<List<BluetoothDevice>>(
                 stream: Stream.periodic(Duration(seconds: 2))
-                    .asyncMap((_) => FlutterBlue.instance.connectedDevices),
+                    .asyncMap((_) => FlutterBluePlus.instance.connectedDevices),
                 initialData: [],
                 builder: (c, snapshot) => Column(
                   children: snapshot.data!
@@ -156,7 +163,7 @@ class FindDevicesScreen extends StatelessWidget {
                 ),
               ),
               StreamBuilder<List<ScanResult>>(
-                stream: FlutterBlue.instance.scanResults,
+                stream: FlutterBluePlus.instance.scanResults,
                 initialData: [],
                 builder: (c, snapshot) => Column(
                   children: snapshot.data!
@@ -178,20 +185,20 @@ class FindDevicesScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: StreamBuilder<bool>(
-        stream: FlutterBlue.instance.isScanning,
+        stream: FlutterBluePlus.instance.isScanning,
         initialData: false,
         builder: (c, snapshot) {
           if (snapshot.data!) {
             return FloatingActionButton(
               child: Icon(Icons.stop),
-              onPressed: () => FlutterBlue.instance.stopScan(),
+              onPressed: () => FlutterBluePlus.instance.stopScan(),
               backgroundColor: Colors.red,
             );
           } else {
             return FloatingActionButton(
               child: Icon(Icons.search),
               onPressed: () =>
-                  FlutterBlue.instance.startScan(timeout: Duration(seconds: 4)),
+                  FlutterBluePlus.instance.startScan(timeout: Duration(seconds: 4)),
             );
           }
         },
