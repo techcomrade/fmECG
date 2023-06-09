@@ -1,31 +1,31 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../util/db');
+import { DataTypes } from 'sequelize';
+import sequelize from '../util/db.js';
 
 const User = sequelize.define('user', {
   user_id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true
   },
   password: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false, 
   },
   email: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     validate: {
       isEmail: true // Validate email format
     }
   },
   name: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   doB: {
-    // TODO(TuanHA): Update type to DateTime
-    type: Sequelize.DATE,
+    // TODO: Update type to DateTime
+    type: DataTypes.DATE,
     allowNull: false,
     set(value) {
       if (typeof value === 'string') {
@@ -39,7 +39,7 @@ const User = sequelize.define('user', {
     }
   },
   phone_number: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     validate: {
       isNumeric: true, // Validate numeric characters only
@@ -47,7 +47,7 @@ const User = sequelize.define('user', {
     }
   },
   role: {
-    type: Sequelize.INTEGER, // 0-patient, 1-doctor, 2-admin
+    type: DataTypes.INTEGER, // 0-patient, 1-doctor, 2-admin
     allowNull: false,
     validate: {
       min: 0, // Minimum value for role field
@@ -61,4 +61,4 @@ const User = sequelize.define('user', {
   tableName: 'users'
 });
 
-module.exports = User;
+export default User;

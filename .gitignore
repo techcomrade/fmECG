@@ -131,3 +131,6 @@ dist
 
 pubspec.lock
 pubspec.yaml
+
+.adminjs
+.vscode

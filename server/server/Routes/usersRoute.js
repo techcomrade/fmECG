@@ -1,13 +1,15 @@
-const express = require('express');
+import express from 'express';
+import bodyParser from 'body-parser';
+import { updateUserInfo, changePassword, getUserProfile, getAllUsers, getUserById } from '../Controllers/userController.js';
+
+
 const usersRoute = express.Router();
-const bodyParser = require('body-parser')
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
-const usersController = require('../Controllers/userController');
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-usersRoute.put("/profile", usersController.updateUserInfo);
-usersRoute.put("/change-password", usersController.changePassword);
-usersRoute.get("/profile", usersController.getUserProfile);
-usersRoute.get("/", usersController.getAllUsers);
-usersRoute.get("/:userId", usersController.getUserById);
+usersRoute.put("/profile", updateUserInfo);
+usersRoute.put("/change-password", changePassword);
+usersRoute.get("/profile", getUserProfile);
+usersRoute.get("/", getAllUsers);
+usersRoute.get("/:userId", getUserById);
 
-module.exports = usersRoute;
+export default usersRoute;

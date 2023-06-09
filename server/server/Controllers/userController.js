@@ -1,13 +1,16 @@
-const mysql = require('mysql');
-const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken');
-const { promisify } = require('util');
-const User = require('../Models/userModel');
-const path = require('path');
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import User from '../Models/userModel.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
 
-require('dotenv').config({ path: path.resolve(__dirname, '../config.env') });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-exports.updateUserInfo = async (req, res) => {
+dotenv.config({ path: path.resolve(__dirname, '../config.env') });
+
+export const updateUserInfo = async (req, res) => {
   try {
     // Get the user ID from the authentication token
     const token = req.cookies.jwt;
@@ -50,7 +53,7 @@ exports.updateUserInfo = async (req, res) => {
   }
 };
 
-exports.changePassword = async (req, res) => {
+export const changePassword = async (req, res) => {
   try {
     // Get the user ID from the authentication token
     const token = req.cookies.jwt;
@@ -94,7 +97,7 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-exports.getUserProfile = async (req, res) => {
+export const getUserProfile = async (req, res) => {
   try {
     // Get the user ID from the authentication token
     const token = req.cookies.jwt;
@@ -117,9 +120,7 @@ exports.getUserProfile = async (req, res) => {
   }
 };
 
-
-
-exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     // Check if the user is authenticated and has admin rights
     const token = req.cookies.jwt;
@@ -150,7 +151,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-exports.getUserById = async (req, res) => {
+export const getUserById = async (req, res) => {
   try {
     let userId;
 
@@ -194,4 +195,3 @@ exports.getUserById = async (req, res) => {
     res.status(500).json({ status: 'error', msg: 'An error occurred while retrieving the user information' });
   }
 };
-
