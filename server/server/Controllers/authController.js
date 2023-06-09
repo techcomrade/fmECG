@@ -1,22 +1,16 @@
-import bcrypt from "bcryptjs";
-import jwt from 'jsonwebtoken';
-import { promisify } from 'util';
-import User from '../Models/userModel.js';
-import ResetToken from '../Models/resetTokenModel.js';
-import crypto from 'crypto';
-import nodemailer from 'nodemailer';
+const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
+const { promisify } = require('util');
+const User = require('../Models/userModel');
+const ResetToken = require('../Models/resetTokenModel');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const path = require('path');
 
-import path from 'path';
-import { fileURLToPath } from 'url';
-import dotenv from 'dotenv';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-dotenv.config({ path: path.resolve(__dirname, '../config.env') });
+require('dotenv').config({ path: path.resolve(__dirname, '../config.env') })
 
 
-export const register = async (req, res, next) => {
+exports.register = async (req, res, next) => {
   try {
     const { password, confirm_password, name, email, doB, phone_number, role } = req.body;
     // Check if the role is not 2 (admin)
@@ -58,7 +52,7 @@ export const register = async (req, res, next) => {
   }
 };
 
-export const login = async (req, res, next) => {
+exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -99,7 +93,8 @@ export const login = async (req, res, next) => {
   }
 };
 
-export const logout = (req, res) => {
+
+exports.logout = (req, res) => {
   try {
     // Check if the token cookie exists
     if (!req.cookies.token) {
@@ -116,7 +111,7 @@ export const logout = (req, res) => {
   }
 };
 
-export const resetPasswordToken = async (req, res) => {
+exports.resetPasswordToken = async (req, res) => {
   try {
     const { email } = req.body;
 
@@ -165,8 +160,9 @@ export const resetPasswordToken = async (req, res) => {
   }
 };
 
-export const resetPassword = async (req, res) => {
+exports.resetPassword = async (req, res) => {
   try {
+
     const { resetToken, password, confirm_password, email } = req.body;
 
     // Check if the reset token exists and is associated with a user
@@ -217,7 +213,7 @@ export const resetPassword = async (req, res) => {
   }
 };
 
-export const isLogin = async (req, res) => {
+exports.isLogin = async (req, res) => {
   try {
     // Check if the token cookie exists
     const token = req.cookies.jwt;
@@ -248,6 +244,3 @@ export const isLogin = async (req, res) => {
     res.status(500).json({ status: 'error', msg: 'An error occurred' });
   }
 };
-
-// export default authController;
-

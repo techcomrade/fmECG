@@ -1,12 +1,12 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import { uploadEcgData } from '../Controllers/ecgRecordController.js';
-
-import multer from 'multer';
-
+const express = require('express');
 const ecgRecordsRoute = express.Router();
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
+const bodyParser = require('body-parser')
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
+const ecgRecordsController = require('../Controllers/ecgRecordController');
+const multer = require('multer');
 
-ecgRecordsRoute.post('/upload', uploadEcgData);
 
-export default ecgRecordsRoute;
+
+ecgRecordsRoute.post('/upload', ecgRecordsController.uploadEcgData);
+
+module.exports = ecgRecordsRoute;

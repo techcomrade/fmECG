@@ -1,30 +1,29 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import { getNewsById, getAllNews, createNews, updateNewsById, deleteNewsById, getAllNewsCategories, getNewsCategoryById, addNewsCategory,deleteNewsCategory, updateNewsCategory } from '../Controllers/newsController.js';
-
+const express = require('express');
 const newsRoute = express.Router();
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
+const bodyParser = require('body-parser')
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
+const newsController = require('../Controllers/newsController');
 
 // Get news information by ID
-newsRoute.get('/:newsId', getNewsById);
+newsRoute.get('/:newsId', newsController.getNewsById);
 // Get all news with pagination support
-newsRoute.get('/', getAllNews);
+newsRoute.get('/', newsController.getAllNews);
 // Create news (only accessible to admins)
-newsRoute.post('/', createNews);
+newsRoute.post('/', newsController.createNews);
 // Update news by ID (only accessible to admins)
-newsRoute.put('/:id', updateNewsById);
+newsRoute.put('/:id', newsController.updateNewsById);
 // Delete news by ID  (only accessible to admins)
-newsRoute.delete('/:id', deleteNewsById);
+newsRoute.delete('/:id', newsController.deleteNewsById);
 
 // Get all news categories with pagination support
-newsRoute.get('/categories', getAllNewsCategories);
+newsRoute.get('/categories', newsController.getAllNewsCategories);
 // Get news category information by ID
-newsRoute.get('/categories/:categoryId', getNewsCategoryById);
+newsRoute.get('/categories/:categoryId', newsController.getNewsCategoryById);
 // Add a news category  (only accessible to admins)
-newsRoute.post('/category', addNewsCategory);
+newsRoute.post('/category', newsController.addNewsCategory);
 // Delete a news category by ID  (only accessible to admins)
-newsRoute.delete('/category/:id', deleteNewsCategory);
+newsRoute.delete('/category/:id', newsController.deleteNewsCategory);
 // Update a news category by ID  (only accessible to admins)
-newsRoute.put('/category/:id', updateNewsCategory);
+newsRoute.put('/category/:id', newsController.updateNewsCategory);
 
-export default newsRoute;
+module.exports = newsRoute;

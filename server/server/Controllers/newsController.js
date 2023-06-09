@@ -1,8 +1,8 @@
-import { News, NewsCategory } from '../Models/newsModel.js';
-import { isLogin } from './authController.js';
+const { News, NewsCategory } = require('../Models/newsModel');
+const { isLogin } = require('./authController');
 
 // Get news by id
-export const getNewsById = async (req, res) => {
+exports.getNewsById = async (req, res) => {
   try {
     const { newsId } = req.params;
 
@@ -21,7 +21,7 @@ export const getNewsById = async (req, res) => {
 };
 
 // Get all news, support pagination and limit
-export const getAllNews = async (req, res) => {
+exports.getAllNews = async (req, res) => {
   try {
     const page = req.query.page || 1; // Current page number
     const limit = req.query.limit || 10; // Number of news per page
@@ -46,7 +46,7 @@ export const getAllNews = async (req, res) => {
 };
 
 // Create news, only admin can use this api
-export const createNews = async (req, res) => {
+exports.createNews = async (req, res) => {
   try {
     // Check if the user is authenticated and has admin rights
     const isLoginResponse = await isLogin(req, res);
@@ -79,7 +79,7 @@ export const createNews = async (req, res) => {
 };
 
 // Update news, only admin can use this api
-export const updateNewsById = async (req, res) => {
+exports.updateNewsById = async (req, res) => {
   try {
     // Check if the user is authenticated and has admin rights
     const isLoginResponse = await isLogin(req, res);
@@ -113,7 +113,7 @@ export const updateNewsById = async (req, res) => {
 };
 
 // Delete news, only admin can use this api
-export const deleteNewsById = async (req, res) => {
+exports.deleteNewsById = async (req, res) => {
   try {
     // Check if the user is authenticated and has admin rights
     const isLoginResponse = await isLogin(req, res);
@@ -140,7 +140,7 @@ export const deleteNewsById = async (req, res) => {
 };
 
 // Get all news categories with pagination support
-export const getAllNewsCategories = async (req, res) => {
+exports.getAllNewsCategories = async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query; // Get the page and limit parameters from the query string
 
@@ -167,7 +167,7 @@ export const getAllNewsCategories = async (req, res) => {
 };
 
 // Get news category by id
-export const getNewsCategoryById = async (req, res) => {
+exports.getNewsCategoryById = async (req, res) => {
   try {
     const { categoryId } = req.params;
 
@@ -186,7 +186,7 @@ export const getNewsCategoryById = async (req, res) => {
 };
 
 // Add news category, only admin can use this api
-export const addNewsCategory = async (req, res) => {
+exports.addNewsCategory = async (req, res) => {
   try {
     // Check if the user is authenticated and has admin rights
     const isLoginResponse = await isLogin(req, res);
@@ -208,7 +208,7 @@ export const addNewsCategory = async (req, res) => {
 };
 
 // Delete news category, only admin can use this api
-export const deleteNewsCategory = async (req, res) => {
+exports.deleteNewsCategory = async (req, res) => {
   try {
     // Check if the user is authenticated and has admin rights
     const isLoginResponse = await isLogin(req, res);
@@ -236,7 +236,7 @@ export const deleteNewsCategory = async (req, res) => {
 };
 
 // Update news category, only admin can use this api
-export const updateNewsCategory = async (req, res) => {
+exports.updateNewsCategory = async (req, res) => {
   try {
     // Check if the user is authenticated and has admin rights
     const isLoginResponse = await isLogin(req, res);

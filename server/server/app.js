@@ -1,15 +1,16 @@
-import express from 'express';
-import authRoute from './Routes/authRoute.js';
-import usersRoute from './Routes/usersRoute.js';
-import newsRoute from './Routes/newsRoute.js';
-import ecgRecordsRoute from './Routes/ecgRecordRoute.js';
-import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
-import sequelize from './util/db.js';
-import adminRouter from'./AdminJs/admin.config.js';
-const app = express(); 
-
+const express = require('express');
+const app = express();
+const path = require('path');
+const route = require('./Routes/route');
+const authRoute = require('./Routes/authRoute');
+const usersRoute = require('./Routes/usersRoute');
+const newsRoute = require('./Routes/newsRoute');
+const ecgRecordsRoute = require('./Routes/ecgRecordRoute');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const mysql = require('mysql');
+const dotenv = require('dotenv');
+const sequelize = require('./util/db');
 
 dotenv.config({
     path:'./config.env',
@@ -31,7 +32,5 @@ app.use('/', authRoute);
 app.use('/users', usersRoute);
 app.use('/news', newsRoute);
 app.use('/ecg-records', ecgRecordsRoute);
-app.use('/admin', adminRouter);
 
-// module.exports = app;
-export default app;
+module.exports = app;

@@ -1,14 +1,15 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import { register, login, logout, resetPasswordToken, resetPassword, isLogin } from '../Controllers/authController.js';
+const express = require('express');
 const authRoute = express.Router();
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
+const bodyParser = require('body-parser')
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
+const authController = require('../Controllers/authController');
 
-authRoute.post("/register",register);
-authRoute.post("/login", login);
-authRoute.post("/reset-password", resetPasswordToken);
-authRoute.post("/reset-password/reset", resetPassword);
-authRoute.get("/logout", logout);
-authRoute.get("/is-login", isLogin);
+authRoute.post("/register", authController.register);
+authRoute.post("/login", authController.login);
+authRoute.post("/reset-password", authController.resetPasswordToken);
+authRoute.post("/reset-password/reset", authController.resetPassword);
+authRoute.get("/logout", authController.logout);
+authRoute.get("/is-login", authController.isLogin);
 
-export default authRoute;
+
+module.exports = authRoute;
