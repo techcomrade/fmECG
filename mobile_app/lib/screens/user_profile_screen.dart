@@ -1,4 +1,6 @@
+import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserProfileScreen extends StatefulWidget {
   @override
@@ -14,10 +16,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: 'John Doe');
-    _emailController = TextEditingController(text: 'john.doe@example.com');
-    _bioController = TextEditingController(text: 'Lorem ipsum dolor sit amet');
-    _locationController = TextEditingController(text: 'New York, USA');
+    _nameController = TextEditingController(text: 'Thai Dong');
+    _emailController = TextEditingController(text: 'thai.dong@gmail.com');
+    _bioController = TextEditingController(text: 'fmECG is my life');
+    _locationController = TextEditingController(text: 'Hanoi');
   }
 
   @override
@@ -76,16 +78,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Save the updated user profile information
-                String name = _nameController.text;
-                String email = _emailController.text;
-                String bio = _bioController.text;
-                String location = _locationController.text;
+                // String name = _nameController.text;
+                // String email = _emailController.text;
+                // String bio = _bioController.text;
+                // String location = _locationController.text;
 
+                // await context.read()<AuthProvider>().logout();
+                await Provider.of<AuthProvider>(context, listen: false).logoutUser();
                 // Perform the necessary actions to save the updated information
               },
-              child: Text('Save'),
+              child: Text('Logout'),
             ),
           ],
         ),

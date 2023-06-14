@@ -95,7 +95,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> loginUser(String email, String password) async {
     // call API with email and password
-    String url = APIConstant.apiUrl + 'login';
+    String url = APIConstant.apiUrlProduction + 'login';
     final bodyEncoded = jsonEncode({"email": email, "password": password});
     try {
       final response = await http.post(Uri.parse(url), 
@@ -112,13 +112,13 @@ class AuthProvider extends ChangeNotifier {
         notifyListeners();
       }
     } catch (err) {
-      print('error from login: $err');
+      debugPrint('error from login: $err');
     }
   }
 
   Future<void> registerUser(String email, String password) async {
     // call API with email and password
-    String url = APIConstant.apiUrl + 'register';
+    String url = APIConstant.apiUrlProduction + 'register';
     final bodyEncoded = jsonEncode({"email": email, "password": password});
     try {
       final response = await http.post(Uri.parse(url), 
@@ -126,14 +126,32 @@ class AuthProvider extends ChangeNotifier {
         body: bodyEncoded
       );
       final responseData = jsonDecode(response.body);
-      print('res:$responseData');
-
       if (responseData["status"] == "success") {
         // do something with data
         // print('heheh donee:${responseData["token"]}');
       }
     } catch (err) {
-      print('error from register: $err');
+      debugPrint('error from register: $err');
+    }
+  }
+
+  Future<void> logoutUser() async {
+    // call API with email and password
+    String url = APIConstant.apiUrlProduction + 'logout';
+    try {
+      final response = await http.get(Uri.parse(url), 
+        headers: {...APIConstant.headers, 'Cookie': 'token=$_token'},
+      );
+      final responseData = jsonDecode(response.body);
+
+      if (responseData["status"] == "success") {
+        // do something with data
+        _token = "";
+        print('heheh donee:${responseData}');
+        notifyListeners();
+      }
+    } catch (err) {
+      debugPrint('error from register: $err');
     }
   }
 
