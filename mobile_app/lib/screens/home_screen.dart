@@ -1,15 +1,22 @@
+import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_off_screen.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_scanning_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("helelo from hoemsecernbk")
-    );
+    return StreamBuilder<BluetoothState>(
+      stream: FlutterBluePlus.instance.state,
+      initialData: BluetoothState.unknown,
+      builder: (c, snapshot) {
+        final state = snapshot.data;
+        if (state == BluetoothState.on) {
+          return BluetoothScanningScreen();
+        }
+        return BluetoothOffScreen(state: state);
+      });
   }
 }
