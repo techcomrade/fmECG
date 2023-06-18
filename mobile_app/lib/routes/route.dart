@@ -1,6 +1,8 @@
 
+import 'package:bluetooth_ecg/screens/home_screen.dart';
 import 'package:bluetooth_ecg/screens/login1_screen.dart';
 import 'package:bluetooth_ecg/screens/login_screen.dart';
+import 'package:bluetooth_ecg/screens/main_screen.dart';
 import 'package:bluetooth_ecg/screens/more_device_appear_founding_screen.dart';
 import 'package:bluetooth_ecg/screens/register_screen.dart';
 import 'package:get/get.dart';
@@ -32,6 +34,8 @@ class AppRoutes {
   static const String appNavigationScreen = '/app_navigation_screen';
 
   static String initialRoute = '/initialRoute';
+  static String homeScreen = '/homes_creen';
+  static String mainScreen = '/main_screen';
 
   static List<GetPage> pages = [
     // GetPage(
@@ -46,13 +50,14 @@ class AppRoutes {
       page: () => RegisterScreen(),
 
     ),
-    // GetPage(
-    //   name: registerScreenOneScreen,
-    //   page: () => RegisterScreenOneScreen(),
-    //   bindings: [
-    //     RegisterScreenOneBinding(),
-    //   ],
-    // ),
+    GetPage(
+      name: homeScreen,
+      page: () => HomeScreen(),
+    ),
+    GetPage(
+      name: mainScreen,
+      page: () => MainScreen(),
+    ),
     // GetPage(
     //   name: scanningBluetoothDeviceScreen,
     //   page: () => ScanningBluetoothDeviceScreen(),
