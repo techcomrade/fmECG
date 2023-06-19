@@ -11,6 +11,7 @@ class MainScreen extends StatefulWidget {
   @override
   _MainScreenState createState() => _MainScreenState();
 }
+Color LIME = Color(0xFF094D55);
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
@@ -25,10 +26,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorConstant.primary,
-        title: Text('fmECG'),
-      ),
+
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

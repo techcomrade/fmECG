@@ -41,9 +41,9 @@ dependencies:
 
   # storage
   shared_preferences: ^2.1.1
-  
+
   # language 
-  intl: ^0.17.0
+  intl: ^0.18.0
 
   # assets lib
   flutter_svg: ^1.0.3
@@ -89,6 +89,10 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/homescreen/
+    - assets/doctordetails/
+    - assets/departmentScreen/
+    - assets/chatScreen/
 
   fonts:
     - family: Recoleta

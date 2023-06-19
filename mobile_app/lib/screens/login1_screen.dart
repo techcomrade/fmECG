@@ -2,11 +2,13 @@ import 'package:bluetooth_ecg/components/submit_button.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/controllers/auth_controller.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
+import 'package:bluetooth_ecg/routes/route.dart';
 import 'package:bluetooth_ecg/utils/size.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:bluetooth_ecg/utils/validation.dart';
 import 'package:bluetooth_ecg/components/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 class Login1Screen extends StatefulWidget {
   @override
@@ -32,6 +34,8 @@ class _Login1ScreenState extends State<Login1Screen> {
   void _loginUser() async {
     final AuthProvider authProvider = context.read<AuthProvider>();
     try {
+      Get.toNamed(AppRoutes.mainScreen);
+
       if (loginProcess) return;
       setState(() {
         loginProcess = true;
