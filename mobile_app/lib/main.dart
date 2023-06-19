@@ -6,6 +6,8 @@ import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_main_screen.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_scanning_screen.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_test_screen.dart';
+import 'package:bluetooth_ecg/screens/home_screen.dart';
 import 'package:bluetooth_ecg/screens/main_screen.dart';
 import 'package:bluetooth_ecg/screens/select_account_type_screen.dart';
 import 'package:bluetooth_ecg/screens/user_profile_screen.dart';
@@ -79,7 +81,7 @@ class FmECGAppState extends State<FmECGApp> {
           print('isAuthAfterUpdate:${auth.isAuth}');
           return GetMaterialApp(
             theme: ThemeData(fontFamily: "AvenirNext"),
-            home: auth.isAuth ? MainScreen() : Login1Screen(),
+            home: auth.isAuth ? MainScreen() : HomeScreen(),
               // FutureBuilder(
               //   future: auth.tryAutoLogin(),
               //   builder: (ctx, authResultSnapshot) {

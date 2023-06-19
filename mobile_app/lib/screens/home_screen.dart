@@ -50,6 +50,18 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+//     // String deviceUUID = "00001800-0000-1000-8000-00805f9b34fb";
+//     // String deviceID = "D6:88:7F:DA:2B:09";
+//     return StreamBuilder<BluetoothState>(
+//       stream: FlutterBluePlus.instance.state,
+//       initialData: BluetoothState.unknown,
+//       builder: (c, snapshot) {
+//         final state = snapshot.data;
+//         if (state == BluetoothState.on) {
+//           return BluetoothScanningScreen();
+//         }
+//         return BluetoothOffScreen(state: state);
+//       });
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white38,
