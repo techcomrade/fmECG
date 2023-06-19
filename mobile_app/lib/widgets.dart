@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'dart:convert' show utf8;
 
 class ScanResultTile extends StatelessWidget {
   const ScanResultTile({Key? key, required this.result, this.onTap})
@@ -123,14 +124,14 @@ class ServiceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (characteristicTiles.length > 0) {
+    if (characteristicTiles.isNotEmpty) {
       return ExpansionTile(
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text('Service'),
-            Text('0x${service.uuid.toString().toUpperCase().substring(4, 8)}',
+            Text('${service.uuid.toString().toUpperCase()}',
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     color: Theme.of(context).textTheme.caption?.color))
           ],
@@ -163,6 +164,13 @@ class CharacteristicTile extends StatelessWidget {
       this.onNotificationPressed})
       : super(key: key);
 
+  String _dataParser(List<int> dataFromDevice) {
+    return utf8.decode(dataFromDevice);
+  }
+
+  static const String SERVICE_UUID_STETHOO1 = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+  static const String CHARACTERISTIC_UUID_STETHO01 = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<int>>(
@@ -170,6 +178,9 @@ class CharacteristicTile extends StatelessWidget {
       initialData: characteristic.lastValue,
       builder: (c, snapshot) {
         final value = snapshot.data;
+        final stringValue = String.fromCharCodes(value!);
+        print("The recieved Value is $stringValue and $value");
+        print('valueeeeeeee:${value}');
         return ExpansionTile(
           title: ListTile(
             title: Column(
@@ -178,12 +189,12 @@ class CharacteristicTile extends StatelessWidget {
               children: <Widget>[
                 Text('Characteristic'),
                 Text(
-                    '0x${characteristic.uuid.toString().toUpperCase().substring(4, 8)}',
+                    '${characteristic.uuid.toString().toUpperCase()}',
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         color: Theme.of(context).textTheme.caption?.color))
               ],
             ),
-            subtitle: Text(value.toString()),
+            subtitle: Text(stringValue.toString()),
             contentPadding: EdgeInsets.all(0.0),
           ),
           trailing: Row(

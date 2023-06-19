@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bluetooth_ecg/main.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_found_devices_screen.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_test_screen.dart';
 import 'package:bluetooth_ecg/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
@@ -67,15 +68,16 @@ class BluetoothScanningScreen extends StatelessWidget {
                 initialData: [],
                 builder: (c, snapshot) => Column(
                   children: snapshot.data!.map((resultScanning) {
-                    if (resultScanning.rssi  > -70) {
-                      print('resulttttt: ${resultScanning.device.name == "finnickBB"}');
-                    }
+                    // if (resultScanning.rssi  > -70) {
+                    //   print('resulttttt: ${resultScanning.device.id == "D6:88:7F:DA:2B:09"}');
+                    // }
                     return ScanResultTile(
                       result: resultScanning,
                       onTap: () => Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         resultScanning.device.connect();
                         return BluetoothFoundDevicesScreen(device: resultScanning.device);
+                        // return BluetoothTestScreen(device: resultScanning.device);
                       })),
                     );
                   }).toList()
