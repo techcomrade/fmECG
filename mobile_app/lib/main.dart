@@ -81,7 +81,7 @@ class FmECGAppState extends State<FmECGApp> {
           print('isAuthAfterUpdate:${auth.isAuth}');
           return GetMaterialApp(
             theme: ThemeData(fontFamily: "AvenirNext"),
-            home: auth.isAuth ? MainScreen() : HomeScreen(),
+            home: MainScreen(),
               // FutureBuilder(
               //   future: auth.tryAutoLogin(),
               //   builder: (ctx, authResultSnapshot) {

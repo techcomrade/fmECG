@@ -7,9 +7,9 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-import '../AllText.dart';
-import '../main.dart';
-import 'main_screen.dart';
+import '../../AllText.dart';
+import '../../main.dart';
+import '../main_screen.dart';
 
 class DoctorDetails extends StatefulWidget {
   final int id;
