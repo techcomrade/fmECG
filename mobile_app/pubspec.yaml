@@ -43,7 +43,7 @@ dependencies:
   shared_preferences: ^2.1.1
 
   # language 
-  intl: ^0.18.0
+  # intl: ^0.18.0
 
   # assets lib
   flutter_svg: ^1.0.3
@@ -51,7 +51,9 @@ dependencies:
   phosphor_flutter: ^2.0.0
   cached_network_image: ^3.2.0
   flutter_spinkit: any
+  flutter_switch: ^0.3.2
   oscilloscope: ^0.2.0+1
+  syncfusion_flutter_charts: 21.2.4
 
   #  flutter_bluetooth_serial: ^0.4.0
   #  print_bluetooth_thermal: ^1.0.5
@@ -64,6 +66,9 @@ dependencies:
   # other lib
   flutter_localizations:
     sdk: flutter
+
+dependency_overrides:
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
