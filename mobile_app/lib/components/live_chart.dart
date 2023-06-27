@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math' as math;
 
+import 'package:bluetooth_ecg/controllers/ecg_data_controller.dart';
+import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class LiveChartSample extends StatefulWidget {
-  const LiveChartSample({Key? key}) : super(key: key);
+  const LiveChartSample({Key? key, required this.fileToSave}) : super(key: key);
+  final File fileToSave;
 
   @override
   State<LiveChartSample> createState() => _LiveChartSampleState();
@@ -14,7 +18,7 @@ class LiveChartSample extends StatefulWidget {
 class _LiveChartSampleState extends State<LiveChartSample> {
   _LiveChartSampleState() {
     timer =
-        Timer.periodic(const Duration(milliseconds: 500), _updateDataSource);
+        Timer.periodic(const Duration(milliseconds: 50), _updateDataSource);
   }
 
   Timer? timer;
@@ -54,6 +58,7 @@ class _LiveChartSampleState extends State<LiveChartSample> {
       _ChartData(17, 72),
       _ChartData(18, 94),
     ];
+    // _updateDataSource();
     super.initState();
   }
 
@@ -87,19 +92,25 @@ class _LiveChartSampleState extends State<LiveChartSample> {
 
   ///Continously updating the data source based on timer
   void _updateDataSource(Timer timer) {
-    chartData!.add(_ChartData(count, _getRandomInt(10, 100)));
-    if (chartData!.length == 20) {
-      chartData!.removeAt(0);
+    List<int> fakeRows = List.generate(16, (_) => _getRandomInt(1, 244));
+    List<double> dataChannelsToSave = ECGDataController.handleDataRowFromBluetooth(fakeRows);
+    List<double> dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(dataChannelsToSave);
+    _ChartData newData = _ChartData(count, _calculateSineValue(count));
+    chartData!.add(newData);
+    // if (chartData!.length == 20) {
+    //   // print('go heree');
+    //   chartData!.removeAt(0);
+    //   _chartSeriesController?.updateDataSource(
+    //     addedDataIndexes: <int>[chartData!.length - 1],
+    //     removedDataIndexes: <int>[0],
+    //   );
+    // } else {
       _chartSeriesController?.updateDataSource(
         addedDataIndexes: <int>[chartData!.length - 1],
-        removedDataIndexes: <int>[0],
       );
-    } else {
-      _chartSeriesController?.updateDataSource(
-        addedDataIndexes: <int>[chartData!.length - 1],
-      );
-    }
+    // }
     count = count + 1;
+    // FilesManagement.appendDataToFile(widget.fileToSave, dataChannelsToSave);
   }
 
   ///Get the random data
@@ -107,11 +118,17 @@ class _LiveChartSampleState extends State<LiveChartSample> {
     final math.Random random = math.Random();
     return min + random.nextInt(max - min);
   }
+
+  double _calculateSineValue(int x) {
+    // Calculate the sine value for the given x value
+    // You can adjust the frequency, amplitude, and other parameters as needed
+    return 100 * (1 + math.sin(x / 10));
+  }
 }
 
 /// Private calss for storing the chart series data points.
 class _ChartData {
   _ChartData(this.country, this.sales);
   final int country;
-  final num sales;
+  final double sales;
 }

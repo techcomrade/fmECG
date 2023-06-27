@@ -164,13 +164,6 @@ class CharacteristicTile extends StatelessWidget {
       this.onNotificationPressed})
       : super(key: key);
 
-  String _dataParser(List<int> dataFromDevice) {
-    return utf8.decode(dataFromDevice);
-  }
-
-  static const String SERVICE_UUID_STETHOO1 = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-  static const String CHARACTERISTIC_UUID_STETHO01 = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<int>>(
@@ -178,8 +171,6 @@ class CharacteristicTile extends StatelessWidget {
       initialData: characteristic.lastValue,
       builder: (c, snapshot) {
         final value = snapshot.data;
-        final stringValue = String.fromCharCodes(value!);
-        print("The recieved Value is $stringValue and $value");
         print('valueeeeeeee:${value}');
         return ExpansionTile(
           title: ListTile(
@@ -194,7 +185,7 @@ class CharacteristicTile extends StatelessWidget {
                         color: Theme.of(context).textTheme.caption?.color))
               ],
             ),
-            subtitle: Text(stringValue.toString()),
+            subtitle: Text(value.toString()),
             contentPadding: EdgeInsets.all(0.0),
           ),
           trailing: Row(

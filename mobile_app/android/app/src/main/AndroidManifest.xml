@@ -22,9 +22,13 @@
     <!-- If your application supports a service and can run on Android 10 (API level 29) or Android 11, you must also declare 
     the ACCESS_BACKGROUND_LOCATION permission to discover Bluetooth devices. -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
    <application
         android:label="bluetooth_ecg"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:exported="true"

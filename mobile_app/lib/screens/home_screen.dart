@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_main_screen.dart';
+import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:flutter/material.dart';
 import 'package:bluetooth_ecg/components/live_chart.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -14,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   ScrollController _scrollController = ScrollController();
+  late File fileToSave;
   bool isShowChart = false;
   @override
   void initState() {
@@ -142,12 +146,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       );
                     }, 
-                    temporaryNothing: () {
+                    temporaryNothing: () async {
+                      FilesManagement.createDirectoryFirstTimeWithDevice();
+                      fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
                       setState(() {
                         isShowChart = true;
                       });
                     }
-                  ) : LiveChartSample()
+                  ) 
+                  : LiveChartSample(fileToSave: fileToSave)
+                  // : Container(),
                 ],
               ),
             ),
