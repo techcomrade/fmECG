@@ -146,4 +146,12 @@ class AppStyle {
     fontFamily: 'ABeeZee',
     fontWeight: FontWeight.w400,
   );
+    static TextStyle txtAveriasSansLibre = TextStyle(
+    color: ColorConstant.blue198eb6,
+    fontSize: getFontSize(
+      26,
+    ),
+    fontFamily: 'Averia Sans Libre',
+    fontWeight: FontWeight.w700,
+  );
 }
