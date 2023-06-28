@@ -12,10 +12,10 @@ const PatientDoctorAssignment = require('../Models/patientDoctorAssignmentModel.
 
 
 const Components = {
-  // Dashboard: componentLoader.add('Dashboard', '../Views/pages/dashboard'),
-  // // PatientDoctorAssignmentNew: componentLoader.override('DefaultNewAction', '../Views/pages/AddFormPatientDoctorAssignment'),
-  // PatientDoctorAssignmentDoctorIDProp: componentLoader.add('PatientDoctorAssignmentDoctorIDProp', '../Views/pages/PropertyDoctorIDAssignment.jsx'),
-  // PatientDoctorAssignmentPatientIDProp: componentLoader.add('PatientDoctorAssignmentPatientIDProp', '../Views/pages/PropertyPatientIDAssignment.jsx'),
+  Dashboard: componentLoader.add('Dashboard', '../Views/pages/dashboard'),
+  // PatientDoctorAssignmentNew: componentLoader.override('DefaultNewAction', '../Views/pages/AddFormPatientDoctorAssignment'),
+  PatientDoctorAssignmentDoctorIDProp: componentLoader.add('PatientDoctorAssignmentDoctorIDProp', '../Views/pages/PropertyDoctorIDAssignment.jsx'),
+  PatientDoctorAssignmentPatientIDProp: componentLoader.add('PatientDoctorAssignmentPatientIDProp', '../Views/pages/PropertyPatientIDAssignment.jsx'),
 
   // other custom components
 };
@@ -296,23 +296,23 @@ const PatientDoctorAssignmentResource = {
       patient_id: {
         position: 3,
         isVisible: { list: true, show: true, edit: true },
-        // components: {
-        //   edit: Components.PatientDoctorAssignmentPatientIDProp, // this is our custom component
-        // },
-        // props: {
-        //   onChange: 'onChange',
-        // },
+        components: {
+          edit: Components.PatientDoctorAssignmentPatientIDProp, // this is our custom component
+        },
+        props: {
+          onChange: 'onChange',
+        },
 
       },
       doctor_id: {
         position: 2,
         isVisible: { list: true, show: true, edit: true },
-        // components: {
-        //   edit: Components.PatientDoctorAssignmentDoctorIDProp, // this is our custom component
-        // },
-        // props: {
-        //   onChange: 'onChange',
-        // },
+        components: {
+          edit: Components.PatientDoctorAssignmentDoctorIDProp, // this is our custom component
+        },
+        props: {
+          onChange: 'onChange',
+        },
 
       },
       start_date: {
@@ -372,9 +372,9 @@ const adminJsOptions = {
     PatientDoctorAssignmentResource,
     UserResource
   ],
-  // dashboard: {
-  //   component: Components.Dashboard,
-  // },
+  dashboard: {
+    component: Components.Dashboard,
+  },
   componentLoader,
   branding: {
     companyName: 'ECG',
