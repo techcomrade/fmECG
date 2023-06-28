@@ -1,8 +1,7 @@
-
 import 'package:bluetooth_ecg/present/login1_screen.dart';
 import 'package:bluetooth_ecg/present/login_screen.dart';
 import 'package:bluetooth_ecg/present/more_device_appear_founding_screen.dart';
-import 'package:bluetooth_ecg/present/register_screen.dart';
+import 'package:bluetooth_ecg/present/History_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
@@ -44,7 +43,6 @@ class AppRoutes {
     GetPage(
       name: registerScreen,
       page: () => RegisterScreen(),
-
     ),
     // GetPage(
     //   name: registerScreenOneScreen,
@@ -75,17 +73,14 @@ class AppRoutes {
     GetPage(
       name: loginScreen,
       page: () => LoginScreen(),
-
     ),
     GetPage(
       name: login1Screen,
       page: () => Login1Screen(),
-
     ),
     GetPage(
       name: initialRoute,
       page: () => LoginScreen(),
-
     )
   ];
 }
