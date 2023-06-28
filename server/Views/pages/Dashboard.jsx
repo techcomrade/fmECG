@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import CarStatsChart from '../chart/StatsChart.jsx'
-import MileChart from '../chart/MileChart.jsx'
+// import CarStatsChart from '../chart/StatsChart.jsx'
+// import MileChart from '../chart/MileChart.jsx'
+const MileChart = lazy(() => import('../chart/MileChart.jsx')); // Import MileChart as a lazy component
+
 import { Link } from 'react-router-dom';
 import { RiUser2Line, RiUserHeartLine, RiNewspaperLine, RiRecordCircleLine } from 'react-icons/ri';
 
