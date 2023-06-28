@@ -12,8 +12,7 @@ const PatientDoctorAssignment = require('../Models/patientDoctorAssignmentModel.
 
 
 const Components = {
-  // Dashboard: componentLoader.add('Dashboard', '../Views/pages/dashboard.jsx'),
-  // PatientDoctorAssignmentNew: componentLoader.override('DefaultNewAction', '../Views/pages/AddFormPatientDoctorAssignment'),
+  Dashboard: componentLoader.add('Dashboard', '../Views/pages/Dashboard.jsx'),
   PatientDoctorAssignmentDoctorIDProp: componentLoader.add('PatientDoctorAssignmentDoctorIDProp', '../Views/pages/PropertyDoctorIDAssignment.jsx'),
   PatientDoctorAssignmentPatientIDProp: componentLoader.add('PatientDoctorAssignmentPatientIDProp', '../Views/pages/PropertyPatientIDAssignment.jsx'),
 
