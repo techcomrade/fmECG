@@ -134,3 +134,5 @@ pubspec.yaml
 
 .adminjs
 .vscode
+
+package-lock.json
