@@ -1,18 +1,10 @@
-import React, { useState, useEffect, Suspense  } from "react";
+import React, { useState, useEffect  } from "react";
 import SingleCard from '../components/SingleCard';
-import MileChart from '../components/MileChart';
+// import MileChart from '../components/MileChart';
 
-// const SingleCard = React.lazy(() => import("../components/SingleCard"));
-// const MileChart = React.lazy(() => import("../components/MileChart"));
 
-// import React, { Suspense, useState, useEffect } from "react";
-// const MileChart = lazy(() => import('../components/MileChart'));
-// import SingleCard from '../components/SingleCard';
-
-// import { Link } from 'react-router-dom';
 import { RiUser2Line, RiUserHeartLine, RiNewspaperLine, RiRecordCircleLine } from 'react-icons/ri';
 
-// const SuspenseFallback = <div>Loading...</div>;
 
 const Dashboard = () => {
 
@@ -132,15 +124,13 @@ const Dashboard = () => {
           <SingleCard item={newsObj} />
           <SingleCard item={ecgObj} />
         </div>
-      <div style={staticsStyles} className="statics">
+      {/* <div style={staticsStyles} className="statics">
         <div style={statsStyles} className="stats">
           <h3 style={statsTitleStyles} className="stats__title">User Statistics</h3>
-          <Suspense fallback={<div>Loading</div>}>
           <MileChart mileStaticsDataWeek={mileStaticsDataWeek} mileStaticsDataMonth={mileStaticsDataMonth}/>
-          </Suspense>
         </div>
 
-      </div>
+      </div> */}
 
       </div>
     </div>
