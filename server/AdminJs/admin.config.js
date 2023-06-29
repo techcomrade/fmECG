@@ -7,11 +7,12 @@ const AdminJSSequelize = require('@adminjs/sequelize');
 const { ComponentLoader } = require('adminjs');
 const componentLoader = new ComponentLoader();
 const PatientDoctorAssignment = require('../Models/patientDoctorAssignmentModel.js');
+const { ValidationError } = require('adminjs');
+const bcrypt = require("bcryptjs");
 
 
 const Components = {
   Dashboard: componentLoader.add('Dashboard', '../Views/pages/Dashboard.jsx'),
-  // PatientDoctorAssignmentNew: componentLoader.override('DefaultNewAction', '../Views/pages/AddFormPatientDoctorAssignment'),
   PatientDoctorAssignmentDoctorIDProp: componentLoader.add('PatientDoctorAssignmentDoctorIDProp', '../Views/pages/PropertyDoctorIDAssignment.jsx'),
   PatientDoctorAssignmentPatientIDProp: componentLoader.add('PatientDoctorAssignmentPatientIDProp', '../Views/pages/PropertyPatientIDAssignment.jsx'),
 
@@ -37,15 +38,15 @@ const UserResource = {
       },
       name: {
         position: 2,
-        isVisible: { list: true, edit: true, filter: false, show: true  },
+        isVisible: { list: true, edit: true, filter: false, show: true },
       },
       email: {
         position: 3,
-        isVisible: { list: true, edit: false, filter: false, show: true  },
+        isVisible: { list: true, edit: false, filter: false, show: true },
       },
       phone_number: {
         position: 4,
-        isVisible: { list: true, edit: true, filter: false, show: true  },
+        isVisible: { list: true, edit: true, filter: false, show: true },
       },
       doB: {
         position: 5,
@@ -53,7 +54,7 @@ const UserResource = {
       },
       role: {
         position: 6,
-        isVisible: { list: true, edit: false, filter: true, show: true  },
+        isVisible: { list: true, edit: false, filter: true, show: true },
         isRequired: true,
         availableValues: [
           { value: 0, label: 'Patient' },
@@ -62,7 +63,7 @@ const UserResource = {
         ],
       },
     },
-   
+
   },
 
 };
@@ -71,7 +72,7 @@ const NewsResource = {
   resource: News,
   options: {
     parent: {
-      icon: 'newspaper',
+      // icon: 'newspaper',
     },
   },
 };
@@ -80,7 +81,7 @@ const NewsCategoryResource = {
   resource: NewsCategory,
   options: {
     parent: {
-      icon: 'Category',
+      // icon: 'Category',
     },
   },
 };
@@ -129,7 +130,7 @@ const DoctorResource = {
   options: {
     id: 'Doctor',
     parent: {
-      icon: 'User',
+      // icon: 'User',
     },
     properties: {
       user_id: {
@@ -138,7 +139,7 @@ const DoctorResource = {
       },
       name: {
         position: 2,
-        isVisible: { list: true, edit: true, filter: false, show: true  },
+        isVisible: { list: true, edit: true, filter: false, show: true },
       },
       email: {
         position: 3,
@@ -146,7 +147,7 @@ const DoctorResource = {
       },
       phone_number: {
         position: 4,
-        isVisible: { list: true, edit: true, filter: false, show: true  },
+        isVisible: { list: true, edit: true, filter: false, show: true },
       },
       doB: {
         position: 5,
@@ -164,15 +165,72 @@ const DoctorResource = {
 
     actions: {
       list: {
-        before:[customDoctorBefore],
+        before: [customDoctorBefore],
       },
-      new: { isVisible: true,
+      new: {
         before: async (request, context) => {
-         request.payload.role = 1;
- 
-           return request;
-         },
-     },
+          request.payload.role = 1;
+          const email = request.payload.email;
+          const existingDoctor = await User.findOne({ where: { email } });
+          const errors = {}
+          if (existingDoctor) {
+            console.log(existingDoctor)
+            errors.email = {
+              message: 'Email existed',
+            }
+          }
+
+          const phoneNumber = request.payload.phone_number;
+          const phoneRegex = /^\d{10,15}$/;
+          if (!phoneRegex.test(phoneNumber)) {
+            errors.phone_number = {
+              message: 'Phone number invalid',
+            }
+          }
+
+          const password = request.payload.password;
+          if (password) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            request.payload.password = hashedPassword;
+          }
+          if (Object.keys(errors).length) {
+            throw new ValidationError(errors)
+          }
+          return request;
+        },
+        isVisible: true
+      },
+      edit: {
+        before: async (request, context) => {
+          const errors = {};
+
+          const phoneNumber = request.payload.phone_number;
+          if (phoneNumber) {
+            const phoneRegex = /^\d{10,15}$/;
+            if (!phoneRegex.test(phoneNumber)) {
+              errors.phone_number = {
+                message: 'Phone number invalid',
+              }
+            }
+          }
+
+          const existingDoctor = await User.findByPk(request.params.recordId);
+          const password = request.payload.password;
+          if (password && password !== existingDoctor.password) {
+            const hashedPassword = await bcrypt.hash(password.toString(), 10);
+            request.payload.password = hashedPassword;
+          }
+
+          
+          if (Object.keys(errors).length) {
+            throw new ValidationError(errors)
+          }
+          return request;
+        },
+        
+        isVisible: true
+      },
+      delete: { isVisible: true },
     },
 
   },
@@ -185,7 +243,7 @@ const AdminResource = {
   options: {
     id: 'Admin',
     parent: {
-      icon: 'User',
+      // icon: 'User',
     },
     properties: {
       user_id: {
@@ -194,15 +252,15 @@ const AdminResource = {
       },
       name: {
         position: 2,
-        isVisible: { list: true, edit: true, filter: false, show: true  },
+        isVisible: { list: true, edit: true, filter: false, show: true },
       },
       email: {
         position: 3,
-        isVisible: { list: true, edit: false, filter: false, show: true  },
+        isVisible: { list: true, edit: false, filter: false, show: true },
       },
       phone_number: {
         position: 4,
-        isVisible: { list: true, edit: true, filter: false, show: true  },
+        isVisible: { list: true, edit: true, filter: false, show: true },
       },
       doB: {
         position: 5,
@@ -219,18 +277,70 @@ const AdminResource = {
     },
     actions: {
       list: {
-        before:[customAdminBefore],
+        before: [customAdminBefore],
       },
       new: {
         before: async (request, context) => {
           request.payload.role = 2;
-  
-            return request;
-          },
-         isVisible: true
-         },
+          const email = request.payload.email;
+          const existingDoctor = await User.findOne({ where: { email } });
+          const errors = {}
+          if (existingDoctor) {
+            console.log(existingDoctor)
+            errors.email = {
+              message: 'Email existed',
+            }
+          }
+
+          const phoneNumber = request.payload.phone_number;
+          const phoneRegex = /^\d{10,15}$/;
+          if (!phoneRegex.test(phoneNumber)) {
+            errors.phone_number = {
+              message: 'Phone number invalid',
+            }
+          }
+
+          const password = request.payload.password;
+          const hashedPassword = await bcrypt.hash(password, 10);
+          request.payload.password = hashedPassword;
+          if (Object.keys(errors).length) {
+            throw new ValidationError(errors)
+          }
+          return request;
+        },
+        isVisible: true
+      },
       delete: { isVisible: true },
-      edit: { isVisible: true },
+      edit: {
+        before: async (request, context) => {
+          const errors = {};
+
+          const phoneNumber = request.payload.phone_number;
+          if (phoneNumber) {
+            const phoneRegex = /^\d{10,15}$/;
+            if (!phoneRegex.test(phoneNumber)) {
+              errors.phone_number = {
+                message: 'Phone number invalid',
+              }
+            }
+          }
+
+          const existingDoctor = await User.findByPk(request.params.recordId);
+          const password = request.payload.password;
+          if (password && password !== existingDoctor.password) {
+            const hashedPassword = await bcrypt.hash(password.toString(), 10);
+            request.payload.password = hashedPassword;
+          }
+
+          
+          if (Object.keys(errors).length) {
+            throw new ValidationError(errors)
+          }
+          return request;
+        },
+        
+        isVisible: true
+      },
     },
     filter: { role: 2 },
   },
@@ -241,7 +351,7 @@ const PatientResource = {
   options: {
     id: 'Patient',
     parent: {
-      icon: 'User',
+      // icon: 'User',
     },
     properties: {
       user_id: {
@@ -250,15 +360,15 @@ const PatientResource = {
       },
       name: {
         position: 2,
-        isVisible: { list: true, edit: true, filter: false, show: true  },
+        isVisible: { list: true, edit: true, filter: false, show: true },
       },
       email: {
         position: 3,
-        isVisible: { list: true, edit: true, filter: false, show: true  },
+        isVisible: { list: true, edit: true, filter: false, show: true },
       },
       phone_number: {
         position: 4,
-        isVisible: { list: true, edit: true, filter: false, show: true  },
+        isVisible: { list: true, edit: true, filter: false, show: true },
       },
       doB: {
         position: 5,
@@ -275,17 +385,70 @@ const PatientResource = {
     },
     actions: {
       list: {
-        before:[customPatientBefore],
+        before: [customPatientBefore],
       },
-      new: { isVisible: true,
+      new: {
         before: async (request, context) => {
-         request.payload.role = 0;
- 
-           return request;
-         },
-     },
+          request.payload.role = 0;
+          const email = request.payload.email;
+          const existingDoctor = await User.findOne({ where: { email } });
+          const errors = {}
+          if (existingDoctor) {
+            console.log(existingDoctor)
+            errors.email = {
+              message: 'Email existed',
+            }
+          }
+
+          const phoneNumber = request.payload.phone_number;
+          const phoneRegex = /^\d{10,15}$/;
+          if (!phoneRegex.test(phoneNumber)) {
+            errors.phone_number = {
+              message: 'Phone number invalid',
+            }
+          }
+
+          const password = request.payload.password;
+          const hashedPassword = await bcrypt.hash(password, 10);
+          request.payload.password = hashedPassword;
+          if (Object.keys(errors).length) {
+            throw new ValidationError(errors)
+          }
+          return request;
+        },
+        isVisible: true
+      },
       delete: { isVisible: true },
-      edit: { isVisible: true },
+      edit: {
+        before: async (request, context) => {
+          const errors = {};
+
+          const phoneNumber = request.payload.phone_number;
+          if (phoneNumber) {
+            const phoneRegex = /^\d{10,15}$/;
+            if (!phoneRegex.test(phoneNumber)) {
+              errors.phone_number = {
+                message: 'Phone number invalid',
+              }
+            }
+          }
+
+          const existingDoctor = await User.findByPk(request.params.recordId);
+          const password = request.payload.password;
+          if (password && password !== existingDoctor.password) {
+            const hashedPassword = await bcrypt.hash(password.toString(), 10);
+            request.payload.password = hashedPassword;
+          }
+
+          
+          if (Object.keys(errors).length) {
+            throw new ValidationError(errors)
+          }
+          return request;
+        },
+        
+        isVisible: true
+      },
     },
     filter: { role: 0 },
   },
@@ -296,7 +459,7 @@ const EcgRecordsResource = {
   resource: EcgRecords,
   options: {
     parent: {
-      icon: 'List',
+      // icon: 'List',
     },
   },
 };
@@ -305,12 +468,13 @@ const PatientDoctorAssignmentResource = {
   resource: PatientDoctorAssignment,
   options: {
     parent: {
-      icon: 'Assignment',
+      // icon: 'Assignment',
     },
     properties: {
       assign_id: {
-         isVisible: { list: true, show: true },
-        position: 1 },
+        isVisible: { list: true, show: true },
+        position: 1
+      },
       patient_id: {
         position: 3,
         isVisible: { list: true, show: true, edit: true },
@@ -335,42 +499,32 @@ const PatientDoctorAssignmentResource = {
       },
       start_date: {
         position: 4,
-         isVisible: { list: true, show: true, edit: true } },
+        isVisible: { list: true, show: true, edit: true }
+      },
     },
     actions: {
       new: {
         // before: [customDocto2rBefore],
         before: async (request, context) => {
-         try {
-          console.log('before ok');
-         } catch (err) {
-          console.log(err);
-         }
-        // const selectedPatientId = request.payload.doctor_id;
-        // const { selectedPatientId } = request.payload;
-        const { selectedDoctorEmail } = request.payload;
-    
-        console.log("selectedPatientId: ", selectedDoctorEmail);
-        // const selectedUserId = 1;
-        // request.payload.doctor_id = selectedUserId;
-
+          const { selectedDoctorEmail } = request.payload;
+          console.log("selectedPatientId: ", selectedDoctorEmail);
           return request;
         },
         after: async (request, context) => {
           try {
-           console.log('after ok');
+            console.log('after ok');
           } catch (err) {
-           console.log(err);
+            console.log(err);
           }
- 
-           return request;
-         },
+
+          return request;
+        },
       },
       // component: Components.PatientDoctorAssignmentNew,
       delete: { isVisible: true },
-      edit: { 
-      
-       },
+      edit: {
+
+      },
     },
 
 
@@ -378,6 +532,18 @@ const PatientDoctorAssignmentResource = {
   },
 };
 
+
+const locale = {
+  translations: {
+    labels: {
+      // change Heading for Login
+      loginWelcome: 'Welcome',
+    },
+    messages: {
+      loginWelcome: 'to ECG dashoard for Admin',
+    },
+  },
+};
 
 const adminJsOptions = {
   resources: [
@@ -393,12 +559,15 @@ const adminJsOptions = {
   dashboard: {
     component: Components.Dashboard,
   },
+  locale,
   componentLoader,
   branding: {
     companyName: 'ECG',
     logo: false,
-    withMadeWithLove: false
-  }
+    withMadeWithLove: false,
+    loginWelcome: "false"
+  },
+  loginPath: '/admin/login'
 };
 
 
@@ -409,7 +578,31 @@ admin.watch();
 
 
 
-// const router = AdminJS.createRouter(admin);
-const adminRouter = AdminJSExpress.buildRouter(admin);
+// const adminRouter = AdminJSExpress.buildRouter(admin);
+
+const DEFAULT_ADMIN = {
+  email: 'admin@example.com',
+  password: 'password',
+}
+
+
+const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
+  admin,
+  {
+    authenticate: async (email, password) => {
+      if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
+        return { email: DEFAULT_ADMIN.email };
+      }
+      return null;
+    },
+    cookiePassword: 'password-used-to-encrypt-cookies',
+  }, 
+  null,
+  {
+    resave: false, 
+    saveUninitialized: true,
+  }
+);
+
 module.exports = adminRouter;
 
