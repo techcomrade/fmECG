@@ -1,0 +1,16 @@
+@startuml
+actor User
+participant Client
+participant Server
+
+User -> Client: Initiate logout
+Client -> Server: GET /logout
+Server -> Server: Check token existence
+alt Token found
+    Server -> Server: Clear token cookie
+    Server --> Client: Success response
+else Token not found
+    Server --> Client: Error response
+end
+
+@enduml
