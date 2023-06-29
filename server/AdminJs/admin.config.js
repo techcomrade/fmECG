@@ -166,6 +166,13 @@ const DoctorResource = {
       list: {
         before:[customDoctorBefore],
       },
+      new: { isVisible: true,
+        before: async (request, context) => {
+         request.payload.role = 1;
+ 
+           return request;
+         },
+     },
     },
 
   },
@@ -216,7 +223,7 @@ const AdminResource = {
       },
       new: {
         before: async (request, context) => {
-          request.payload.role = 1;
+          request.payload.role = 2;
   
             return request;
           },
