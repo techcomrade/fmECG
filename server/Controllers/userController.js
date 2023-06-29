@@ -1,7 +1,5 @@
-const mysql = require('mysql');
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
-const { promisify } = require('util');
 const User = require('../Models/userModel');
 const path = require('path');
 

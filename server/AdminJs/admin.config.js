@@ -4,15 +4,14 @@ const User = require('../Models/userModel.js');
 const EcgRecords = require('../Models/ecgRecordModel.js');
 const AdminJSExpress = require('@adminjs/express');
 const AdminJSSequelize = require('@adminjs/sequelize');
-// const Dashboard = require('./dashboard.jsx');
 const { ComponentLoader } = require('adminjs');
-const { BaseResource } = require('adminjs');
 const componentLoader = new ComponentLoader();
 const PatientDoctorAssignment = require('../Models/patientDoctorAssignmentModel.js');
 
 
 const Components = {
   Dashboard: componentLoader.add('Dashboard', '../Views/pages/Dashboard.jsx'),
+  // PatientDoctorAssignmentNew: componentLoader.override('DefaultNewAction', '../Views/pages/AddFormPatientDoctorAssignment'),
   PatientDoctorAssignmentDoctorIDProp: componentLoader.add('PatientDoctorAssignmentDoctorIDProp', '../Views/pages/PropertyDoctorIDAssignment.jsx'),
   PatientDoctorAssignmentPatientIDProp: componentLoader.add('PatientDoctorAssignmentPatientIDProp', '../Views/pages/PropertyPatientIDAssignment.jsx'),
 
@@ -371,9 +370,9 @@ const adminJsOptions = {
     PatientDoctorAssignmentResource,
     UserResource
   ],
-  // dashboard: {
-  //   component: Components.Dashboard,
-  // },
+  dashboard: {
+    component: Components.Dashboard,
+  },
   componentLoader,
   branding: {
     companyName: 'ECG',

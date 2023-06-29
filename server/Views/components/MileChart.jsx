@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, Tooltip, Legend } from "recharts";
 
+;
+
 const MileChart = ({ mileStaticsDataWeek, mileStaticsDataMonth }) => {
   const [showBy, setShowBy] = useState("week");
 
-  // Lựa chọn dữ liệu dựa trên "Show by"
   const selectedData = showBy === "month" ? mileStaticsDataMonth : mileStaticsDataWeek;
 
   const handleShowByChange = (event) => {

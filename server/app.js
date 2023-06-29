@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const route = require('./Routes/route');
+// const route = require('./Routes/route');
 const authRoute = require('./Routes/authRoute');
 const usersRoute = require('./Routes/usersRoute');
 const newsRoute = require('./Routes/newsRoute');
@@ -9,8 +9,8 @@ const ecgRecordsRoute = require('./Routes/ecgRecordRoute');
 const dasboardHelperRoute = require('./Routes/dasboardHelperRoute');
 
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const mysql = require('mysql');
+// const bodyParser = require('body-parser');
+// const mysql = require('mysql');
 const dotenv = require('dotenv');
 const sequelize = require('./util/db');
 const adminRouter = require('./AdminJs/admin.config.js');
@@ -50,30 +50,6 @@ app.use('/news', newsRoute);
 app.use('/ecg-records', ecgRecordsRoute);
 app.use('/admin', adminRouter);
 app.use('/', dasboardHelperRoute);
-
-
-// app.get('/dashboard-data', async (req, res) => {
-//     try {
-//       const doctorCount = await User.countDocuments({ role: 1 });
-//       const patientCount = await User.countDocuments({ role: 0 });
-//       const newsCount = await News.countDocuments({});
-//       const ecgCount = await EcgRecord.countDocuments({});
-  
-//       const dashboardData = {
-//         doctorCount,
-//         patientCount,
-//         newsCount,
-//         ecgCount,
-//       };
-  
-//       res.json(dashboardData);
-//     } catch (error) {
-//       // Xử lý lỗi nếu cần
-//       console.log("error");
-//       res.status(500).json({ error: 'Internal Server Error' });
-//     }
-//   });
-
 
 
 module.exports = app;

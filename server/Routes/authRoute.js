@@ -1,7 +1,7 @@
 const express = require('express');
 const authRoute = express.Router();
 const bodyParser = require('body-parser')
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
+// const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const authController = require('../Controllers/authController');
 
 authRoute.post("/register", authController.register);

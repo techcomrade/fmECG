@@ -1,9 +1,7 @@
 const User = require('../Models/userModel');
-const { News, NewsCategory } = require('../Models/newsModel');
+const { News } = require('../Models/newsModel');
 const EcgRecord = require('../Models/ecgRecordModel');
 const sequelize = require('../util/db');
-const moment = require('moment');
-const { where } = require('sequelize');
 const { Op } = require('sequelize');
 
 

@@ -49,28 +49,5 @@
     "zlib": "^1.0.5"
   },
   "keywords": [],
-  "description": "",
-  "devDependencies": {
-    "@babel/core": "^7.22.5",
-    "@babel/preset-env": "^7.22.5",
-    "@babel/preset-react": "^7.22.5",
-    "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-commonjs": "^25.0.2",
-    "@rollup/plugin-json": "^6.0.0",
-    "@rollup/plugin-node-resolve": "^15.1.0",
-    "babel-loader": "^9.1.2",
-    "babel-preset-env": "^1.7.0",
-    "rollup": "^2.79.1",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-css-only": "^4.3.0",
-    "rollup-plugin-image": "^1.0.2",
-    "rollup-plugin-import-css": "^3.3.1",
-    "rollup-plugin-node-polyfills": "^0.2.1",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-polyfill-node": "^0.12.0",
-    "rollup-plugin-postcss": "^4.0.2",
-    "webpack": "^5.88.0",
-    "webpack-dev-middleware": "^6.1.1"
-  }
+  "description": ""
 }

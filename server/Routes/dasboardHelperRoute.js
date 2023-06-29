@@ -1,7 +1,7 @@
 const express = require('express');
 const dasboardHelperRoute = express.Router();
-const bodyParser = require('body-parser')
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
+// const bodyParser = require('body-parser')
+// const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const dasboardHelperController = require('../Controllers/dasboardHelperController');
 
 
