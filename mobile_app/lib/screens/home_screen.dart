@@ -1,36 +1,24 @@
-import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_off_screen.dart';
-import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_scanning_screen.dart';
+import 'dart:io';
+
+import 'package:bluetooth_ecg/components/circular_avatar.dart';
+import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_main_screen.dart';
+import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:cached_network_image/cached_network_image.dart';
-
-import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../AllText.dart';
-import 'doctor_detail.dart';
-import 'login1_screen.dart';
-import 'main_screen.dart';
+import 'package:bluetooth_ecg/components/live_chart.dart';
+import 'package:flutter_switch/flutter_switch.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
-  ScrollController scrollController = ScrollController();
-  bool isLoadingMore = false;
-  String nextUrl = "";
-  String myUid = "";
-  late Timer timer;
+class _HomeScreenState extends State<HomeScreen> {
 
-  bool isLoggedIn = false;
-
+  ScrollController _scrollController = ScrollController();
+  late File fileToSave;
+  bool isShowChart = false;
   @override
   void initState() {
     super.initState();
@@ -39,355 +27,335 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   @override
   void dispose() {
     super.dispose();
-    print("Dispose called");
-    timer.cancel();
-    Map<String, dynamic> presenceStatusFalse = {
-      'presence': false,
-      'last_seen': DateTime.now().toString(),
-    };
-    WidgetsBinding.instance.removeObserver(this);
   }
 
   @override
   Widget build(BuildContext context) {
-//     // String deviceUUID = "00001800-0000-1000-8000-00805f9b34fb";
-//     // String deviceID = "D6:88:7F:DA:2B:09";
-//     return StreamBuilder<BluetoothState>(
-//       stream: FlutterBluePlus.instance.state,
-//       initialData: BluetoothState.unknown,
-//       builder: (c, snapshot) {
-//         final state = snapshot.data;
-//         if (state == BluetoothState.on) {
-//           return BluetoothScanningScreen();
-//         }
-//         return BluetoothOffScreen(state: state);
-//       });
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white38,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          flexibleSpace: header(),
-        ),
-        body: body(),
-      ),
-    );
-  }
-
-  header() {
-    return SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  HOME,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w800),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: Image.asset(
-                    "assets/homescreen/search_header.png",
-                    height: 25,
-                    width: 25,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  body() {
-    return SingleChildScrollView(
-      controller: scrollController,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 5,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Login1Screen(),
-                  ));
-            },
-            child: Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.all(14),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      "assets/homescreen/Book-appointment-banner.png",
-                      height: 180,
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  height: 180,
-                  child: Row(
+    return Container(
+      padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
+      child: SingleChildScrollView(
+        controller: _scrollController,
+        physics: const ClampingScrollPhysics(),
+        child: Column(
+          children: [
+            // header
+            SizedBox(
+              height: 50,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
                     children: [
-                      SizedBox(
-                        width: 20,
-                      ),
+                      CircularAvatar(imageAsset: 'assets/images/doctor.png', radius: 27),
+                      const SizedBox(width: 8),
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            BOOK,
+                          Text("Welcome to fmECG"),
+                          Text(
+                            'Thai Dong',
                             style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          const Text(
-                            APPOINTMENT,
-                            style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Text(
-                            QUICKLY_CREATE_FILES,
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            width: isLoggedIn ? 120 : 130,
-                            height: 28,
-                            child: Stack(
-                              children: [
-                                Image.asset(
-                                  "assets/homescreen/bookappointment.png",
-                                  width: isLoggedIn ? 120 : 130,
-                                  height: 28,
-                                  fit: BoxFit.fill,
-                                ),
-                                Center(
-                                  child: Text(
-                                    isLoggedIn
-                                        ? BOOKAPPOINTMENT
-                                        : LOGIN_TO_BOOK_APPOINTMENT,
-                                    style: TextStyle(
-                                        fontSize: 9,
-                                        color: LIME,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                              ],
+                              color: ColorConstant.primary,
+                              fontWeight: FontWeight.bold,
                             ),
                           )
                         ],
                       ),
-                    ],
+                    ]
                   ),
-                )
-              ],
+                  Row(
+                    children: [
+                      const DarkLightSwitch(),
+                      const SizedBox(width: 8),
+                      InkWell(
+                        child: Icon(PhosphorIcons.regular.bell),
+                      )
+                  ])
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  DOCTOR_LIST,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700),
-                ),
-                InkWell(
-                  onTap: () {
-
-                  },
-                  child: Text(
-                    SEE_ALL,
+            const SizedBox(height: 30),
+            //quick action
+            SizedBox(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Quick Action",
                     style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700),
+                      color: ColorConstant.quaternary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SquareContainer(icon: PhosphorIcons.regular.lightning, text: "Power nap"),
+                      SquareContainer(icon: PhosphorIcons.regular.moon, text: "Deep sleep"),
+                      SquareContainer(icon: PhosphorIcons.regular.userSwitch, text: "Focus"),
+                    ],
+                  )
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 30),
+            SizedBox(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Overview",
+                    style: TextStyle(
+                      color: ColorConstant.quaternary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      NumberCard(number: 80.0, text: "Heart Rate", color1: ColorConstant.primary, color2: ColorConstant.primary),
+                      NumberCard(number: 36.7, text: "Temperature", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            SizedBox(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Signals",
+                    style: TextStyle(
+                      color: ColorConstant.quaternary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  !isShowChart ? ImageCard(
+                    imageAsset: 'assets/images/heart_rate_example.jpeg', 
+                    functionScanBluetooth: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(
+                          builder: (context) => BluetoothMainScreen(),
+                        )
+                      );
+                    }, 
+                    temporaryNothing: () async {
+                      FilesManagement.createDirectoryFirstTimeWithDevice();
+                      fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
+                      setState(() {
+                        isShowChart = true;
+                      });
+                    }
+                  ) 
+                  : LiveChartSample(fileToSave: fileToSave)
+                  // : Container(),
+                ],
+              ),
+            ),
+          ],
+        ),
+        // child: LiveChartSample()
+      ),
+    );
+  }
+}
+
+class DarkLightSwitch extends StatefulWidget {
+  const DarkLightSwitch({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<DarkLightSwitch> createState() => _DarkLightSwitchState();
+}
+
+class _DarkLightSwitchState extends State<DarkLightSwitch> {
+
+  bool isDarkSwitch = false;
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return FlutterSwitch(
+      width: 60,
+      height: 35.0,
+      toggleSize: 25.0,
+      value: isDarkSwitch,
+      borderRadius: 20.0,
+      padding: 1.5,
+      activeToggleColor: Color(0xFF6E40C9),
+      inactiveToggleColor: Color(0xFF2F363D),
+      activeSwitchBorder: Border.all(
+        color: Color(0xFF3C1E70),
+        width: 3.0,
+      ),
+      inactiveSwitchBorder: Border.all(
+        color: Color(0xFFD1D5DA),
+        width: 3.0,
+      ),
+      activeColor: Color(0xFF271052),
+      inactiveColor: Colors.white,
+      activeIcon: Icon(
+        Icons.nightlight_round,
+        color: Color(0xFFF8E3A1),
+      ),
+      inactiveIcon: Icon(
+        Icons.wb_sunny,
+        color: Color(0xFFFFDF5D),
+      ),
+      onToggle: (val) {
+        setState(() {
+          isDarkSwitch = val;
+        });
+      },
+    );
+  }
+}
+
+class SquareContainer extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  SquareContainer({required this.icon, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100.0,
+      height: 100.0,
+      decoration: BoxDecoration(
+        color: ColorConstant.description,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: ColorConstant.quaternary,
+            size: 35.0,
+          ),
+          const SizedBox(height: 10.0),
+          Text(
+            text,
+            style: TextStyle(
+              color: ColorConstant.quaternary,
+              fontSize: 15.0,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          doctorDetailTile(
-              imageUrl:
-                  "https://img.freepik.com/premium-vector/doctor-surgeon-pharmacist-therapist-with-stethoscope-smiling-medic-worker-medical-staff_458444-338.jpg?w=2000",
-              name: "Pham ngoc ha",
-              department: "Cardiology",
-              aboutUs:
-                  "Cardiologists specify in the study and treatment of the heart and the many disseases and issues",
-              id: 1),
-          doctorDetailTile(
-              imageUrl:
-                  "https://img.freepik.com/premium-vector/doctor-surgeon-pharmacist-therapist-with-stethoscope-smiling-medic-worker-medical-staff_458444-338.jpg?w=2000",
-              name: "Pham ngoc ha",
-              department: "Cardiology",
-              aboutUs:
-                  "Cardiologists specify in the study and treatment of the heart and the many disseases and issues",
-              id: 1),
-          doctorDetailTile(
-              imageUrl:
-                  "https://img.freepik.com/premium-vector/doctor-surgeon-pharmacist-therapist-with-stethoscope-smiling-medic-worker-medical-staff_458444-338.jpg?w=2000",
-              name: "Pham ngoc ha",
-              department: "Cardiology",
-              aboutUs:
-                  "Cardiologists specify in the study and treatment of the heart and the many disseases and issues",
-              id: 1),
-          doctorDetailTile(
-              imageUrl:
-                  "https://img.freepik.com/premium-vector/doctor-surgeon-pharmacist-therapist-with-stethoscope-smiling-medic-worker-medical-staff_458444-338.jpg?w=2000",
-              name: "Pham ngoc ha",
-              department: "Cardiology",
-              aboutUs:
-                  "Cardiologists specify in the study and treatment of the heart and the many disseases and issues",
-              id: 1),
-          nextUrl != "null"
-              ? Padding(
-                  padding: const EdgeInsets.all(50.0),
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                  ),
-                )
-              : Container(),
         ],
       ),
     );
   }
+}
 
-  doctorDetailTile(
-      {required String imageUrl,
-      required String name,
-      required String department,
-      required String aboutUs,
-      required int id}) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => DoctorDetails(id)));
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.black12, borderRadius: BorderRadius.circular(10)),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: CachedNetworkImage(
-                  height: 72,
-                  width: 72,
-                  fit: BoxFit.cover,
-                  imageUrl: Uri.parse(imageUrl).toString(),
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      Container(
-                          height: 75,
-                          width: 75,
-                          child: Center(child: Icon(Icons.image))),
-                  errorWidget: (context, url, error) => Container(
-                    height: 75,
-                    width: 75,
-                    child: Center(
-                        child: Image.asset(
-                      "assets/images/doctor.png",
-                    )),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    name,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w800),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(3),
-                      color: LIME,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 3, 5, 3),
-                      child: Text(
-                        department,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          aboutUs,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 10,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 16,
-            )
-          ],
+class NumberCard extends StatelessWidget {
+  final double number;
+  final String text;
+  final Color color1;
+  final Color color2;
+
+  NumberCard({
+    required this.number,
+    required this.text,
+    required this.color1,
+    required this.color2,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 150.0,
+      height: 100.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        gradient: LinearGradient(
+          colors: [color1, color2],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
-        margin: EdgeInsets.fromLTRB(16, 6, 16, 6),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 18.0,
+              color: ColorConstant.description,
+            ),
+          ),
+          const SizedBox(height: 12.0),
+          Text(
+            '$number',
+            style: TextStyle(
+              fontSize: 30.0,
+              color: ColorConstant.description,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          
+        ],
       ),
     );
   }
+}
 
-  Future<bool> _willPopScope() async {
-    Navigator.popUntil(context, (route) => route.isFirst);
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Login1Screen()));
-    return false;
+class ImageCard extends StatelessWidget {
+  final String imageAsset;
+  final Function() functionScanBluetooth;
+  final Function() temporaryNothing;
+
+  ImageCard({
+    required this.imageAsset,
+    required this.functionScanBluetooth,
+    required this.temporaryNothing,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: ColorConstant.quinary,
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Column(
+        children: [
+          Image.asset(
+            imageAsset,
+            width: double.infinity,
+            height: 200.0,
+            fit: BoxFit.cover,
+          ),
+          SizedBox(height: 12.0),
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: functionScanBluetooth,
+                child: Text("Scan bluetooth"),
+              ),
+              ElevatedButton(
+                onPressed: temporaryNothing,
+                child: Text("Test live chart"),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
