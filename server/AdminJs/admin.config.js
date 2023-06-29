@@ -214,7 +214,14 @@ const AdminResource = {
       list: {
         before:[customAdminBefore],
       },
-      new: { isVisible: true },
+      new: {
+        before: async (request, context) => {
+          request.payload.role = 1;
+  
+            return request;
+          },
+         isVisible: true
+         },
       delete: { isVisible: true },
       edit: { isVisible: true },
     },
@@ -240,7 +247,7 @@ const PatientResource = {
       },
       email: {
         position: 3,
-        isVisible: { list: true, edit: false, filter: false, show: true  },
+        isVisible: { list: true, edit: true, filter: false, show: true  },
       },
       phone_number: {
         position: 4,
@@ -263,7 +270,13 @@ const PatientResource = {
       list: {
         before:[customPatientBefore],
       },
-      new: { isVisible: true },
+      new: { isVisible: true,
+        before: async (request, context) => {
+         request.payload.role = 0;
+ 
+           return request;
+         },
+     },
       delete: { isVisible: true },
       edit: { isVisible: true },
     },
