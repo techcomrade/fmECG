@@ -42,14 +42,21 @@ sequelize.sync().then(result => {
 });
 
 app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+// app.use(bodyParser.json())
 app.use('/', authRoute);
 app.use('/users', usersRoute);
 app.use('/news', newsRoute);
 app.use('/ecg-records', ecgRecordsRoute);
 app.use('/admin', adminRouter);
 app.use('/', dasboardHelperRoute);
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: false }));
+// app.use(express.json())
+
 
 
 module.exports = app;
