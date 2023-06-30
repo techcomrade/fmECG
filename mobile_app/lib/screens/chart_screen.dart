@@ -165,7 +165,7 @@ class LiveChartTest extends StatefulWidget {
 class _LiveChartTestState extends State<LiveChartTest> {
   Timer? timer;
   List<_ChartData>? chartData;
-  int count = 0;
+  late int count;
   ChartSeriesController? _chartSeriesController;
 
   @override
@@ -179,27 +179,7 @@ class _LiveChartTestState extends State<LiveChartTest> {
   @override
   void initState() {
     count = 0;
-    chartData = <_ChartData>[
-      // _ChartData(0, 42),
-      // _ChartData(1, 47),
-      // _ChartData(2, 33),
-      // _ChartData(3, 49),
-      // _ChartData(4, 54),
-      // _ChartData(5, 41),
-      // _ChartData(6, 58),
-      // _ChartData(7, 51),
-      // _ChartData(8, 98),
-      // _ChartData(9, 41),
-      // _ChartData(10, 53),
-      // _ChartData(11, 72),
-      // _ChartData(12, 86),
-      // _ChartData(13, 52),
-      // _ChartData(14, 94),
-      // _ChartData(15, 92),
-      // _ChartData(16, 86),
-      // _ChartData(17, 72),
-      // _ChartData(18, 94),
-    ];
+    chartData = <_ChartData>[];
     super.initState();
   }
 
@@ -234,6 +214,7 @@ class _LiveChartTestState extends State<LiveChartTest> {
 
   /// Returns the realtime Cartesian line chart.
   SfCartesianChart _buildLiveLineChart() {
+    print('buildd');
     return SfCartesianChart(
         plotAreaBorderWidth: 0,
         primaryXAxis:
@@ -258,9 +239,9 @@ class _LiveChartTestState extends State<LiveChartTest> {
   ///Continously updating the data source based on timer
   void _updateDataSource(bytes) {
     List<double> dataChannelsToSave = ECGDataController.handleDataRowFromBluetooth(bytes);
-    print('data:${dataChannelsToSave}');
-
+    print('1');
     List<double> dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(dataChannelsToSave);
+    print('2gdskjgs:${dataChannelsToShowOnChart[0]}');
     _ChartData newData = _ChartData(count, dataChannelsToShowOnChart[0]);
     chartData!.add(newData);
 

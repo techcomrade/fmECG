@@ -3,10 +3,11 @@
 import 'dart:convert';
 
 import 'package:bluetooth_ecg/constants/api_constant.dart';
-import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+enum ThemeType { DARK, LIGHT }
 
 class AuthProvider extends ChangeNotifier {
   String _token = "";
@@ -15,6 +16,7 @@ class AuthProvider extends ChangeNotifier {
   int _roleId = -1;
   String _locale = 'en';
   bool _isDarkTheme = false;
+  bool _isAutoTheme = false;
 
   String get locale => _locale;
 
@@ -36,6 +38,44 @@ class AuthProvider extends ChangeNotifier {
 
   //   if (status) notifyListeners();
   // }
+
+  ThemeType get theme => _isDarkTheme ? ThemeType.DARK : ThemeType.LIGHT;
+  set theme(ThemeType type) => setTheme(type, false);
+
+
+  void setTheme(ThemeType type, bool isAuto) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    _isDarkTheme = type == ThemeType.DARK;
+    await preferences.setBool('isAutoTheme', isAuto);
+    bool status = await preferences.setBool('isDark', _isDarkTheme);
+
+    if (status) notifyListeners();
+  }
+
+  Future<bool> getAutoTheme() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    _isAutoTheme = preferences.getBool('isAutoTheme') ?? false;
+    return _isAutoTheme;
+  }
+
+  Future<ThemeType> getTheme() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var theme = preferences.getBool('isDark');
+    _isDarkTheme = theme ?? true ;
+    return _isDarkTheme ? ThemeType.DARK : ThemeType.LIGHT;
+  }
+
+  bool get isAutoTheme => _isAutoTheme;
+  set isAutoTheme(bool isAuto) => setIsAutoTheme(isAuto);
+
+  void setIsAutoTheme(bool isAuto) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    _isAutoTheme = isAuto;
+    bool status = await preferences.setBool('isAutoTheme', _isAutoTheme);
+    await preferences.setBool('isDark', false);
+
+    if(status) notifyListeners();
+  }
 
   void setDataLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
