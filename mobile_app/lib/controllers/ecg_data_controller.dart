@@ -20,7 +20,7 @@ class ECGDataController {
     CHANNELS_NUMBER.forEach((channelNumber) {
       if (channelNumber == 4) return; //tạm thời chưa sử dụng channelNumber4
       List<int> channelBytes = getChannelsSplittedBytes(channelsBytes, channelNumber);
-      double channelFigure = calculateBytesToDecimal(channelBytes);
+      double channelFigure = calculateByteToDecimal(channelBytes);
       row.add(channelFigure);
     });
 
@@ -78,7 +78,7 @@ class ECGDataController {
     }
   }
 
-  static double calculateBytesToDecimal(List<int> threeBytes) {
+  static double calculateByteToDecimal(List<int> threeBytes) {
     num finalDecimal = 0;
     if (threeBytes.isNotEmpty && threeBytes.length == 3) {
       num decimalValue = threeBytes[0] * math.pow(2, 16) + threeBytes[1] * math.pow(2, 8) + threeBytes[2];
