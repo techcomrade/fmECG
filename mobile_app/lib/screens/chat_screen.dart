@@ -61,11 +61,12 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-              Text('Dr. Upul',
-              style: AppStyle.txtAveriasSansLibre
-              .copyWith(
-                color: ColorConstant.blue198eb6,
-                fontSize: 26,
+              Text('Dr. Hiệp',
+              style: TextStyle(
+                color: ColorConstant.primary,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Roboto',
+                fontSize: 25
               )),
               Container(
                 height: 35,
@@ -91,28 +92,30 @@ class _ChatScreenState extends State<ChatScreen> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                      return Container(
-                        padding: EdgeInsets.all(15),
-                        margin: EdgeInsets.all(10),
-                        child: Align( 
-                        alignment: (messages[index].recipientId == 1 ?Alignment.topRight:Alignment.topLeft ),
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: (messages[index].recipientId==1?ColorConstant.blue198eb6:ColorConstant.gray80014)
-            
+                        final bool isRecipient = messages[index].recipientId == 1;
+                        return Container(
+                          padding: EdgeInsets.all(15),
+                          margin: EdgeInsets.all(10),
+                          child: Align( 
+                          alignment: (isRecipient ? Alignment.topRight : Alignment.topLeft),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: (isRecipient ? ColorConstant.primary : ColorConstant.gray80014)
+              
+                            ),
+                            child: Text(messages[index].content,
+                            style: TextStyle(
+                              // fontFamily: 'txtAveriasSansLibre',
+                              fontSize: 16,
+                              color: (messages[index].recipientId== 1 ? ColorConstant.whiteA700: ColorConstant.black900)
+                            ),
+                            )
                           ),
-                          child: Text(messages[index].content,
-                          style: TextStyle(
-                            fontFamily: 'txtAveriasSansLibre',
-                            fontSize: 16,
-                            color: (messages[index].recipientId== 1 ? ColorConstant.whiteA700: ColorConstant.black900)
-                          ),
-                          )
-                        ),
-                       ));
-                    },)                
+                        ));
+                      }
+                    )                
                   ]
                 ),
             ),
@@ -132,7 +135,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     size: 30,
                     color:ColorConstant.black9007e
                     ),
-                  hintText: 'type here',
+                  hintText: 'Nhập tin nhắn',
                   suffix: IconButton(icon: Icon(Icons.camera_alt,
                   color: ColorConstant.black9007e,
                   size: 30,),
