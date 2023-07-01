@@ -22,27 +22,27 @@ class _ChatScreenState extends State<ChatScreen> {
     id: 1,
     userId: 2,
     recipientId: 1,
-    content: "Hello",
+    content: "Xin chào bác sĩ!",
     timeSent: DateTime.now(),
   ),
   Message(
       id: 2,
       userId: 3,
       recipientId: 2,
-      content: "Hi",
+      content: "Chào bạn!",
       timeSent: DateTime.now(),
     ),  
   Message(
     id: 1,
     userId: 2,
     recipientId: 1,
-    content: "I've send my record to you ",
+    content: "Tôi đã gửi cho bác sĩ kết quả nhịp tim của tôi",
     timeSent: DateTime.now()),
     Message(
       id: 2,
       userId: 3,
       recipientId: 2,
-      content: "Good! How do you feel ?",
+      content: "Chào bạn tôi đã xem kết quả vào đã làm một bản đánh giá. ",
       timeSent: DateTime.now(),
     ), 
   ];
@@ -94,8 +94,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       itemBuilder: (context, index) {
                         final bool isRecipient = messages[index].recipientId == 1;
                         return Container(
-                          padding: EdgeInsets.all(15),
-                          margin: EdgeInsets.all(10),
+                          padding: EdgeInsets.all(10),
+                          margin: (isRecipient ? EdgeInsets.only(left: 60,top: 15, right: 10) : EdgeInsets.only(right: 60, top: 15, left: 10)),
                           child: Align( 
                           alignment: (isRecipient ? Alignment.topRight : Alignment.topLeft),
                           child: Container(
@@ -145,7 +145,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: ColorConstant.blue198eb6,
+                  color: ColorConstant.primary,
                   borderRadius: BorderRadius.circular(50)
                  ),
                 child: IconButton(icon:Icon(Icons.send,
