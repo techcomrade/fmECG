@@ -174,23 +174,50 @@ class ChatScreen extends StatelessWidget {
               children: [
                 
                 Padding(
-                padding: EdgeInsets.fromLTRB(10, 15, 10, 10),
-                    
-                child: CustomTextFormField(
-                hintText: 'Search',
-                alignment: Alignment.topCenter,
-                prefix: Icon(PhosphorIcons.bold.magnifyingGlass),
-                width: 320,
+                  padding: EdgeInsets.fromLTRB(10, 15, 10, 10),
                       
-                      ),
-                    )
-                     
-              ],
-            ),
-          )
-          ],),
-        
-      )
-    );
+                  child: CustomTextFormField(
+                  hintText: 'Search',
+                  alignment: Alignment.topCenter,
+                  prefix: Icon(PhosphorIcons.bold.magnifyingGlass),
+                  width: 320,      
+                  ),
+                ),
+                Container(
+                  child: ListView.builder(
+                    itemCount: doctors.length,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        width: double.infinity,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: ColorConstant.whiteA700
+                        ),
+                        child: Container(
+                          color: ColorConstant.whiteA700,
+                          child: Row(
+                            children: [
+                              Container(
+                                child: Image.asset(doctors[index].image),
+                                color: ColorConstant.whiteA700,
+                              ),
+                              Column(
+                                children: [
+                                  Text(doctors[index].name),
+                                  Text('Recent message')
+                                ],
+                              )
+                            ],
+                          ),
+                  )
+                );                
+              },
+            )
+          )      
+        ],
+      ),),],),
+    ));
   }
 }
