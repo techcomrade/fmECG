@@ -31,8 +31,11 @@ const EcgRecordsResource = {
         updated_at: {
           position: 7,
         },
+        sensor_type: {
+          position: 8
+        },
         data_directory :{
-          position: 8,
+          position: 9,
           components: {
             show: Components.ShowECGRecord,
           }

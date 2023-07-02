@@ -4,7 +4,7 @@ const EcgRecord = require('../Models/ecgRecordModel');
 const multer = require('multer');
 
 // Create the upload directory if it doesn't exist
-const uploadDir = path.join(__dirname, '../upload');
+const uploadDir = path.join(__dirname, '../upload/record-data');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -15,54 +15,49 @@ const storage = multer.diskStorage({
     cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
-    const timestamp = Date.now();
-    const originalExtension = path.extname(file.originalname);
-    const filename = `${timestamp}${originalExtension}`;
-    cb(null, filename);
+    cb(null, file.originalname);
   }
 });
+
 // Create a multer upload instance with the storage configuration
-const upload = multer({ storage }).single('ecgdata');
+const upload = multer({ storage }).single('file');
 
 exports.uploadEcgData = async (req, res) => {
   try {
-    // TODO(TuanHA): Remove this comment 
-    // Authenticate the user using the isLogin function from authcontroller
-    // const isAuthenticated = await isLogin(req);
-    // if (!isAuthenticated) {
-    //   return res.status(401).json({ status: 'error', msg: 'Unauthorized' });
-    // }
-
-    // Use the multer upload instance to handle form-data
     upload(req, res, async (err) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ status: 'error', msg: 'An error occurred while uploading the file' });
       }
 
-      // Extract the user_id, device_id, start_time, and stop_time from the request body
-      const { user_id, device_id, start_time, stop_time } = req.body;
+      // Extract the user_id, device_id, start_time, stop_time, and type from the request body
+      const { user_id, device_id, start_time, stop_time, sensor_type } = req.body;
 
       // Get the uploaded file information
       const { filename, destination } = req.file;
-      
-      // Create the data_directory path
-      const currentDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).split('/').reverse().join('_');
-      const deviceDirectory = path.join(destination, device_id);
-      const dataDirectory = path.join(deviceDirectory, currentDate);
-      
+
       // Create the device_id folder if it doesn't exist
+      const deviceDirectory = path.join(uploadDir, device_id);
       if (!fs.existsSync(deviceDirectory)) {
         fs.mkdirSync(deviceDirectory, { recursive: true });
       }
-      
-      // Create the yyyy_mm_dd folder if it doesn't exist
-      if (!fs.existsSync(dataDirectory)) {
-        fs.mkdirSync(dataDirectory, { recursive: true });
+
+      // Create the user_id-unix_timestamp folder
+      const timestamp = Date.parse(start_time);
+      const userDirectory = path.join(deviceDirectory, `${user_id}-${timestamp}`);
+      if (!fs.existsSync(userDirectory)) {
+        fs.mkdirSync(userDirectory, { recursive: true });
       }
 
-      // Move the uploaded file to the data_directory
-      const newFilePath = path.join(dataDirectory, filename);
+      // Create the type folder
+      // const typeDirectory = path.join(userDirectory, sensor_type);
+      const typeDirectory = path.join(userDirectory, sensor_type.toUpperCase());
+      if (!fs.existsSync(typeDirectory)) {
+        fs.mkdirSync(typeDirectory, { recursive: true });
+      }
+
+      // Move the uploaded file to the type folder
+      const newFilePath = path.join(typeDirectory, filename);
       fs.renameSync(req.file.path, newFilePath);
 
       // Create a new ECG record
@@ -71,7 +66,8 @@ exports.uploadEcgData = async (req, res) => {
         device_id,
         data_directory: newFilePath,
         start_time,
-        stop_time
+        stop_time,
+        sensor_type: sensor_type.toUpperCase()
       });
 
       res.json({ status: 'success', data: newEcgRecord });
@@ -81,4 +77,3 @@ exports.uploadEcgData = async (req, res) => {
     res.status(500).json({ status: 'error', msg: 'An error occurred while saving ECG records' });
   }
 };
-
