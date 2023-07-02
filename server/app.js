@@ -19,33 +19,23 @@ const fs = require('fs')
 
 //----------
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/image/news' }); // Định nghĩa nơi lưu trữ hình ảnh tải lên
-app.post('/image/news/upload', upload.single('image'), (req, res) => {
+const upload = multer({ dest: 'upload/news/image' }); // Định nghĩa nơi lưu trữ hình ảnh tải lên
+
+app.post('/upload/news/image', upload.single('image'), (req, res) => {
   // Tạo URL của hình ảnh tải lên
   const fileExtension = path.extname(req.file.originalname);
   const newFileName = `${req.file.filename}${fileExtension}`;
   const newFilePath = path.join(req.file.destination, newFileName);
 
-  // Di chuyển file tải lên với tên mới
   fs.renameSync(req.file.path, newFilePath);
 
-  // Tạo URL của hình ảnh tải lên
-  const imageUrl = `/uploads/image/news/${newFileName}`;
+  const imageUrl = `/upload/news/image/${newFileName}`;
 
-  // Tạo đối tượng hình ảnh thực tế
-//   const imageObject = {
-//     src: imageUrl,
-//     alt: "Image Alt Text", // Thay bằng văn bản mô tả hình ảnh (tùy chọn)
-//     dimensions: {
-//       width: "100%", // Thay bằng chiều rộng hình ảnh (tùy chọn)
-//       height: "auto", // Thay bằng chiều cao hình ảnh (tùy chọn)
-//     },
-//   };
   console.log(imageUrl);
   res.json(imageUrl);
 });
 
-app.use('/uploads/image/news', express.static(path.join(__dirname, 'uploads/image/news')));
+app.use('/upload/news/image', express.static(path.join(__dirname, 'upload/news/image')));
 //-------------
 
 app.use(expressLayouts);

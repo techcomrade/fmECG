@@ -4,7 +4,7 @@ const EcgRecord = require('../Models/ecgRecordModel');
 const multer = require('multer');
 
 // Create the upload directory if it doesn't exist
-const uploadDir = path.join(__dirname, '../uploads');
+const uploadDir = path.join(__dirname, '../upload');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
