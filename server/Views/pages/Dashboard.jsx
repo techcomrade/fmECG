@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SingleCard from '../components/SingleCard';
-// import MileChart from '../components/MileChart';
+import MileChart from '../components/MileChart';
 
 import { RiUser2Line, RiUserHeartLine, RiNewspaperLine, RiRecordCircleLine } from 'react-icons/ri';
 
@@ -124,13 +124,13 @@ const Dashboard = () => {
           <SingleCard item={newsObj} />
           <SingleCard item={ecgObj} />
         </div>
-      {/* <div style={staticsStyles} className="statics">
+      <div style={staticsStyles} className="statics">
         <div style={statsStyles} className="stats">
           <h3 style={statsTitleStyles} className="stats__title">User Statistics</h3>
           <MileChart mileStaticsDataWeek={mileStaticsDataWeek} mileStaticsDataMonth={mileStaticsDataMonth}/>
         </div>
 
-      </div> */}
+      </div>
 
       </div>
     </div>
