@@ -16,6 +16,8 @@ const sequelize = require('./util/db');
 const adminRouter = require('./AdminJs/admin.config.js');
 const expressLayouts = require('express-ejs-layouts');
 const fs = require('fs')
+const XLSX = require("xlsx");
+
 
 //----------
 const multer = require('multer');
@@ -36,7 +38,15 @@ app.post('/upload/news/image', upload.single('image'), (req, res) => {
 });
 
 app.use('/upload/news/image', express.static(path.join(__dirname, 'upload/news/image')));
+app.use('/upload/record-data', express.static(path.join(__dirname, 'upload/record-data')));
+
 //-------------
+
+
+
+
+
+
 
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
@@ -78,6 +88,37 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // app.use(express.json())
 
+
+//-----------------------
+app.post("/convert-excel-to-json", (req, res) => {
+    const { filePath } = req.body;
+  
+    if (!filePath) {
+      return res.status(400).json({ error: "Missing filePath parameter" });
+    }
+  
+    try {
+      const workbook = XLSX.readFile(filePath);
+      const sheetName = workbook.SheetNames[0]; // Assume data is in the first sheet
+      const worksheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+  
+      // Convert the data to the desired format for the chart
+      const chartData = jsonData.slice(1).map((row) => ({
+        time: row[0],
+        data1: row[1],
+        data2: row[2],
+        data3: row[3],
+      }));
+      console.log(chartData);
+      res.json({ data: chartData });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "An error occurred while converting Excel to JSON" });
+    }
+  });
+
+//-----------------------
 
 
 module.exports = app;

@@ -60,11 +60,13 @@ exports.uploadEcgData = async (req, res) => {
       const newFilePath = path.join(typeDirectory, filename);
       fs.renameSync(req.file.path, newFilePath);
 
+      const absoluteDataDirectory = path.resolve(uploadDir, newFilePath);
+      const relativeDataDirectory = path.relative(uploadDir, newFilePath).replace(/\\/g, '/');
       // Create a new ECG record
       const newEcgRecord = await EcgRecord.create({
         user_id,
         device_id,
-        data_directory: newFilePath,
+        data_directory: `upload/record-data/${relativeDataDirectory}`,
         start_time,
         stop_time,
         sensor_type: sensor_type.toUpperCase()
