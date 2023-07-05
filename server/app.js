@@ -104,7 +104,13 @@ app.post("/convert-excel-to-json", (req, res) => {
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
   
       // Convert the data to the desired format for the chart
-      const chartData = jsonData.slice(1).map((row) => ({
+      // const chartData = jsonData.slice(1).map((row) => ({
+      //   time: row[0],
+      //   data1: row[1],
+      //   data2: row[2],
+      //   data3: row[3],
+      // }));
+      const chartData = jsonData.map((row, index) => ({
         time: row[0],
         data1: row[1],
         data2: row[2],

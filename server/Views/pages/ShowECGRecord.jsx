@@ -19,7 +19,7 @@ const statsStyles = {
   background: "#f2f2f2",
   padding: "30px",
   borderRadius: "5px",
-  height: "320px",
+  height: "450px",
   paddingBottom: "50px",
  
 };
