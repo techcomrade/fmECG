@@ -18,7 +18,7 @@ class LiveChartSample extends StatefulWidget {
 class _LiveChartSampleState extends State<LiveChartSample> {
   _LiveChartSampleState() {
     timer =
-        Timer.periodic(const Duration(milliseconds: 500), _updateDataSource);
+        Timer.periodic(const Duration(milliseconds: 100), _updateDataSource);
   }
 
   Timer? timer;
@@ -148,7 +148,7 @@ class _LiveChartSampleState extends State<LiveChartSample> {
         position: LegendPosition.top
       ),
       series:[
-        LineSeries(
+        FastLineSeries(
           onRendererCreated: (ChartSeriesController controller) {
             _chartSeriesController = controller;
           },
@@ -200,7 +200,7 @@ class _LiveChartSampleState extends State<LiveChartSample> {
     chartData!.add(newData);
     chartData2!.add(newData2);
     chartData3!.add(newData3);
-    if (chartData!.length == 20) {
+    if (chartData!.length >= 20) {
       // print('go heree');
       chartData!.removeAt(0);
       _chartSeriesController?.updateDataSource(
