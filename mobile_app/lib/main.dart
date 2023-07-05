@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:bluetooth_ecg/constants/theme.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_main_screen.dart';
@@ -78,9 +79,18 @@ class FmECGAppState extends State<FmECGApp> {
       ],
       child: Consumer<AuthProvider>(
         builder: (ctx, auth, _) {
-          print('isAuthAfterUpdate:${auth.isAuth}');
+          // print('isAuthAfterUpdate:${auth.isAuth}');
           return GetMaterialApp(
-            theme: ThemeData(fontFamily: "AvenirNext"),
+            debugShowCheckedModeBanner: false,
+            theme: (auth.theme == ThemeType.DARK
+              ? ThemeECG.darkTheme
+              : ThemeECG.lightTheme).copyWith(
+                pageTransitionsTheme: const PageTransitionsTheme(
+                  builders: <TargetPlatform, PageTransitionsBuilder>{
+                    TargetPlatform.android: ZoomPageTransitionsBuilder(),
+                  },
+                )),
+            darkTheme: ThemeECG.darkTheme,
             home: MainScreen(),
               // FutureBuilder(
               //   future: auth.tryAutoLogin(),

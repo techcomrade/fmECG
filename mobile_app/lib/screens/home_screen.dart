@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_main_screen.dart';
+import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:flutter/material.dart';
 import 'package:bluetooth_ecg/components/live_chart.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   ScrollController _scrollController = ScrollController();
+  late File fileToSave;
   bool isShowChart = false;
   @override
   void initState() {
@@ -27,12 +33,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final bool isDarkTheme = Provider.of<AuthProvider>(context, listen: true).theme == ThemeType.DARK;
+    // final Color backgroundColorApp = isDarkTheme ? ColorConstant.quaternary: Colors.white; 
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
+      // color: backgroundColorApp,
       child: SingleChildScrollView(
         controller: _scrollController,
         physics: const ClampingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // header
             SizedBox(
@@ -71,50 +81,57 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 30),
-            //quick action
-            SizedBox(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Quick Action",
-                    style: TextStyle(
-                      color: ColorConstant.quaternary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SquareContainer(icon: PhosphorIcons.regular.lightning, text: "Power nap"),
-                      SquareContainer(icon: PhosphorIcons.regular.moon, text: "Deep sleep"),
-                      SquareContainer(icon: PhosphorIcons.regular.userSwitch, text: "Focus"),
-                    ],
-                  )
-                ],
-              ),
-            ),
+            // const SizedBox(height: 30),
+            // //quick action
+            // SizedBox(
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Text("Quick Action",
+            //         style: TextStyle(
+            //           color: ColorConstant.quaternary,
+            //           fontWeight: FontWeight.bold,
+            //           fontSize: 18
+            //         ),
+            //       ),
+            //       const SizedBox(height: 10),
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //         children: [
+            //           SquareContainer(icon: PhosphorIcons.regular.lightning, text: "Power nap"),
+            //           SquareContainer(icon: PhosphorIcons.regular.moon, text: "Deep sleep"),
+            //           SquareContainer(icon: PhosphorIcons.regular.userSwitch, text: "Focus"),
+            //         ],
+            //       )
+            //     ],
+            //   ),
+            // ),
 
             const SizedBox(height: 30),
             SizedBox(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("Overview",
-                    style: TextStyle(
-                      color: ColorConstant.quaternary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text("Overview",
+                      style: TextStyle(
+                        color: ColorConstant.quaternary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    alignment: WrapAlignment.spaceAround,
                     children: [
-                      NumberCard(number: 80.0, text: "Heart Rate", color1: ColorConstant.primary, color2: ColorConstant.primary),
-                      NumberCard(number: 36.7, text: "Temperature", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
+                      NumberCard(number: 82.0, text: "Heart Rate (BPM)", subText: "Mother", color1: ColorConstant.primary, color2: ColorConstant.primary),
+                      NumberCard(number: 72.9, text: "Variability (BPM)", subText: "Mother", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
+                      NumberCard(number: 82.6, text: "Heart Rate (BPM)", subText: "Fetus", color1: ColorConstant.tertiary, color2: ColorConstant.primary),
+                      NumberCard(number: 86.0, text: "Variability (BPM)", subText: "Fetus", color1: ColorConstant.secondary, color2: ColorConstant.primary),
                     ],
                   )
                 ],
@@ -129,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(
                       color: ColorConstant.quaternary,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18
+                      fontSize: 22
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -142,12 +159,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       );
                     }, 
-                    temporaryNothing: () {
+                    temporaryNothing: () async {
+                      FilesManagement.createDirectoryFirstTimeWithDevice();
+                      fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
                       setState(() {
                         isShowChart = true;
                       });
                     }
-                  ) : LiveChartSample()
+                  ) 
+                  : LiveChartSample(fileToSave: fileToSave)
+                  // : Container(),
                 ],
               ),
             ),
@@ -207,9 +228,17 @@ class _DarkLightSwitchState extends State<DarkLightSwitch> {
         color: Color(0xFFFFDF5D),
       ),
       onToggle: (val) {
+        Provider.of<AuthProvider>(context, listen: false).isAutoTheme = false;
+        ThemeType theme = Provider.of<AuthProvider>(context, listen: false).theme;
+        final auth = Provider.of<AuthProvider>(context, listen: false);
         setState(() {
           isDarkSwitch = val;
         });
+        if (isDarkSwitch) {
+          auth.setTheme(ThemeType.DARK, false);
+        } else {
+          auth.setTheme(ThemeType.LIGHT, false);
+        }
       },
     );
   }
@@ -256,20 +285,22 @@ class SquareContainer extends StatelessWidget {
 class NumberCard extends StatelessWidget {
   final double number;
   final String text;
+  final String subText;
   final Color color1;
   final Color color2;
 
   NumberCard({
     required this.number,
     required this.text,
+    required this.subText,
     required this.color1,
-    required this.color2,
+    required this.color2, 
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150.0,
+      width: 165.0,
       height: 100.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
@@ -285,7 +316,16 @@ class NumberCard extends StatelessWidget {
           Text(
             text,
             style: TextStyle(
+              fontWeight: FontWeight.bold,
               fontSize: 18.0,
+              color: ColorConstant.description,
+            ),
+          ),
+          const SizedBox(height: 5.0),
+          Text(
+            subText,
+            style: TextStyle(
+              fontSize: 16.0,
               color: ColorConstant.description,
             ),
           ),

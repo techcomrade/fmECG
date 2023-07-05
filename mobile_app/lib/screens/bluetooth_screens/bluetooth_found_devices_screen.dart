@@ -24,7 +24,6 @@ class _BluetoothFoundDevicesScreenState extends State<BluetoothFoundDevicesScree
       math.nextInt(255)
     ];
   }
-  Stream<List<int>> stream = Stream.value([]);
 
   List<Widget> _buildServiceTiles(List<BluetoothService> services) {
     // BluetoothService service0 = services[0];
@@ -71,10 +70,6 @@ class _BluetoothFoundDevicesScreenState extends State<BluetoothFoundDevicesScree
         .toList();
   }
 
-  String _dataParser(List<int> dataFromDevice) {
-    return utf8.decode(dataFromDevice);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +99,10 @@ class _BluetoothFoundDevicesScreenState extends State<BluetoothFoundDevicesScree
               return TextButton(
                   onPressed: onPressed,
                   child: Text(
-                    text
+                    text,
+                    style: TextStyle(
+                      color: Colors.red
+                    ),
                   ));
             },
           )
@@ -177,49 +175,6 @@ class _BluetoothFoundDevicesScreenState extends State<BluetoothFoundDevicesScree
                 );
               },
             ),
-            StreamBuilder<List<int>>(
-                    stream: stream,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<int>> snapshot) {
-                      if (snapshot.hasError)
-                        return Text('Error: ${snapshot.error}');
-                      print('gfjkbgbjkdfbg:${snapshot.data}');
-                      if (snapshot.connectionState ==
-                          ConnectionState.active) {
-                        var currentValue = _dataParser(snapshot.data!);
-                        // traceDust.add(double.tryParse(currentValue) ?? 0);
-
-                        return Center(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text('Current value from Sensor',
-                                        style: TextStyle(fontSize: 14)),
-                                    Text('${currentValue} ug/m3',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24))
-                                  ]),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              // child: oscilloscope,
-                              child: Container(
-                                decoration: BoxDecoration(color: Colors.red),
-                              )
-                            )
-                          ],
-                        ));
-                      } else {
-                        return Text('Check the stream');
-                      }
-                    },
-                  ),
           ],
         ),
       ),

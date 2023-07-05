@@ -1,11 +1,13 @@
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
+import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_measurement_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
 import 'package:bluetooth_ecg/screens/user_profile_screen.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -26,6 +28,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -34,9 +37,9 @@ class _MainScreenState extends State<MainScreen> {
             _currentIndex = index;
           });
         },
-        backgroundColor: Colors.white,
-        selectedItemColor: ColorConstant.primary,
-        unselectedItemColor: ColorConstant.quaternary,
+        // backgroundColor: backgroundColorApp,
+        // selectedItemColor: ColorConstant.primary,
+        // unselectedItemColor: ColorConstant.quaternary,
         items: [
           BottomNavigationBarItem(
             icon: PhosphorIcon(PhosphorIcons.regular.house),
