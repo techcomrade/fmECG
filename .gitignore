@@ -133,3 +133,4 @@ pubspec.lock
 pubspec.yaml
 
 .adminjs/
+package-lock.json

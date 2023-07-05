@@ -50,6 +50,7 @@ const PatientDoctorAssignmentResource = {
             console.log("selectedPatientId: ", selectedDoctorEmail);
             return request;
           },
+          
           after: async (request, context) => {
             try {
               console.log('after ok');

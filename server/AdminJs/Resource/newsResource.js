@@ -41,14 +41,41 @@ const NewsResource = {
           },
         },
       },
-      action: {
-        // list: {
-        //   before : async = (request, contenxt) => {
-        //     // request.payload.content = "...";
-        //     return request;
-        //   },
-        // }
-      }
+
+      actions: {
+        new : {
+          // after: async (request, response, context) => {
+          //   const news = response.record.toJSON();
+          //   const newsId = news._id.toString();
+          //   const newsUrl = `/news/${newsId}`;
+            
+          //   // Update the news URL
+          //   await News.findByIdAndUpdate(news._id, { url: newsUrl });
+          //   console.log('new hook ')
+          //   return response;
+          // },
+
+          before: async (request, context) => {
+            try {
+              console.log('before ok');
+            } catch (err) {
+              console.log(err);
+            }
+  
+            return request;
+          },
+
+          after: async (request, context) => {
+            try {
+              console.log('after ok');
+            } catch (err) {
+              console.log(err);
+            }
+  
+            return request;
+          },
+        },
+      },
     },
   };
   
