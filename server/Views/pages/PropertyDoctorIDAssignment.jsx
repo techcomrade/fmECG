@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { FormGroup, FormMessage, Label  } from '@adminjs/design-system';
 import Select from 'react-select'
-import { useRecord } from 'adminjs';
 
 
 const PatientDoctorAssignmentDoctorIDProp = (props) => {
   const [doctorList, setDoctorList] = useState([]);
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
-  const { record } = useRecord();
-  const { params, onChange } = record || {};
   useEffect(() => {
     const fetchDoctorEmail = async () => {
       try {

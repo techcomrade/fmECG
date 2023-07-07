@@ -11,6 +11,9 @@ dasboardHelperRoute.get("/dashboard-miles-stat-data/week", dasboardHelperControl
 dasboardHelperRoute.get("/dashboard-helper/doctor-email-list", dasboardHelperController.getListDoctorsProp);
 dasboardHelperRoute.get("/dashboard-helper/patient-email-list", dasboardHelperController.getListPatientsProp);
 
+dasboardHelperRoute.post("/upload/news/image", dasboardHelperController.uploadNewsImage);
+dasboardHelperRoute.post("/convert-excel-to-json", dasboardHelperController.converExceltoJson);
+
 
 
 

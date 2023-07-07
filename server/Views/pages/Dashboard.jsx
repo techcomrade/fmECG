@@ -1,48 +1,47 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import SingleCard from '../components/SingleCard';
 // import MileChart from '../components/MileChart';
 
-
 import { RiUser2Line, RiUserHeartLine, RiNewspaperLine, RiRecordCircleLine } from 'react-icons/ri';
+
+const dashboardStyles = {
+  marginTop: "20px",
+  padding: "0px 30px",
+  paddingBottom: "50px",
+  width: "100%",
+  boxSizing: "border-box",
+};
+
+const dashboardCardsStyles = {
+  display: "grid",
+  gridTemplateColumns: "repeat(4, 1fr)",
+  columnGap: "2rem",
+};
+
+const statsStyles = {
+  background: "#f2f2f2",
+  padding: "30px",
+  borderRadius: "5px",
+  height: "320px",
+  paddingBottom: "50px",
+ 
+};
+
+const statsTitleStyles = {
+  color: "#1C2833",
+  fontSize: "1.2rem",
+  fontWeight: "500",
+  marginBottom: "20px",
+};
+
+const staticsStyles = {
+  display: "grid",
+  columnGap: "2rem",
+  marginTop: "2rem",
+};
 
 
 const Dashboard = () => {
-
-  const dashboardStyles = {
-    marginTop: "20px",
-    padding: "0px 30px",
-    paddingBottom: "50px",
-    width: "100%",
-    boxSizing: "border-box",
-  };
-
-  const dashboardCardsStyles = {
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-    columnGap: "2rem",
-  };
-
-  const statsStyles = {
-    background: "#f2f2f2",
-    padding: "30px",
-    borderRadius: "5px",
-    height: "320px",
-    paddingBottom: "50px",
-   
-  };
-  
-  const statsTitleStyles = {
-    color: "#1C2833",
-    fontSize: "1.2rem",
-    fontWeight: "500",
-    marginBottom: "20px",
-  };
-
-  const staticsStyles = {
-    display: "grid",
-    columnGap: "2rem",
-    marginTop: "2rem",
-  };
 
   const [doctorCount, setDoctorCount] = useState(0);
   const [patientCount, setPatientCount] = useState(0);
@@ -83,6 +82,7 @@ const Dashboard = () => {
     icon: <RiNewspaperLine />,
     link: "resources/news"
   };
+
   const ecgObj = {
     title: "Total ECG Records",
     totalNumber: ecgCount,
@@ -124,6 +124,7 @@ const Dashboard = () => {
           <SingleCard item={newsObj} />
           <SingleCard item={ecgObj} />
         </div>
+
       {/* <div style={staticsStyles} className="statics">
         <div style={statsStyles} className="stats">
           <h3 style={statsTitleStyles} className="stats__title">User Statistics</h3>
@@ -138,4 +139,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-// export default React.memo(Dashboard);
