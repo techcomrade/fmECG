@@ -7,7 +7,8 @@ import { useTranslation } from 'adminjs'
 const ShowNewsContents = (props) => {
   const { property, record } = props
   const { translateProperty } = useTranslation()
-  const value = record.params[property.path] || ''
+  const value = record.params[property.path] || '';
+  
 
   const createMarkup = (html) => ({ dangerouslySetInnerHTML: { __html: xss(html) } })
 

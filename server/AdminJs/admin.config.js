@@ -65,7 +65,7 @@ admin.watch();
 
 
 
-const adminRouter = AdminJSExpress.buildRouter(admin);
+// const adminRouter = AdminJSExpress.buildRouter(admin);
 
 const DEFAULT_ADMIN = {
   email: 'admin@example.com',
@@ -73,23 +73,23 @@ const DEFAULT_ADMIN = {
 }
 
 
-// const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
-//   admin,
-//   {
-//     authenticate: async (email, password) => {
-//       if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
-//         return { email: DEFAULT_ADMIN.email };
-//       }
-//       return null;
-//     },
-//     cookiePassword: 'password-used-to-encrypt-cookies',
-//   }, 
-//   null,
-//   {
-//     resave: false, 
-//     saveUninitialized: true,
-//   }
-// );
+const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
+  admin,
+  {
+    authenticate: async (email, password) => {
+      if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
+        return { email: DEFAULT_ADMIN.email };
+      }
+      return null;
+    },
+    cookiePassword: 'password-used-to-encrypt-cookies',
+  }, 
+  null,
+  {
+    resave: false, 
+    saveUninitialized: true,
+  }
+);
 
 module.exports = adminRouter;
 

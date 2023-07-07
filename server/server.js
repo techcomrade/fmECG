@@ -1,6 +1,8 @@
 const dotenv = require("dotenv");
 const app = require("./app");
 // const path = require('path');
+const {createUsers, deleteAllUsers} = require('./dummy/dummyUser');
+
 
 dotenv.config({ path: "./config.env" });
 
@@ -8,6 +10,16 @@ dotenv.config({ path: "./config.env" });
 app.get("/", (req, res) => {
     res.send("server");
 });
+
+const dummyDataEnabled = process.env.DUMMY_DATA === 'true';
+if (dummyDataEnabled) {
+    deleteAllUsers();
+  
+    createUsers(0, 200);
+  
+    createUsers(1, 100);
+  }
+
 
 const http = require("http").createServer(app);
 http.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));

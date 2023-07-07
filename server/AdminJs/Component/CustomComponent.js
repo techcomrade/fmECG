@@ -10,6 +10,7 @@ const Components = {
     NewsContentInput: componentLoader.add('NewsContentInput', '../../Views/pages/NewsContentInput.jsx'),
     ShowNewsContents: componentLoader.add('ShowNewsContent', '../../Views/pages/ShowNewsContent.jsx'),
     ListNewsContent: componentLoader.add('ListNewsContent', '../../Views/pages/ListNewsContent.jsx'),
+    // UploadNewsImage: componentLoader.add('UploadNewsImage', '../../Views/pages/UploadNewsImage.jsx'),
     // other custom components
   };
 

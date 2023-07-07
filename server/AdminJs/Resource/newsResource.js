@@ -1,6 +1,7 @@
 const { News, NewsCategory } = require('../../Models/newsModel.js');
 const {Components} = require('../Component/CustomComponent.js')
-
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../config.env') })
 
 const NewsResource = {
     resource: News,
@@ -21,12 +22,18 @@ const NewsResource = {
         },
         url: {
           position: 4,
+          isVisible: { edit: false, filter: false, show: true, list:true },
         }, 
         author: {
           position: 5,
         },
-        url: {
+        image: {
           position: 6,
+          // components: {
+          //   show: Components.ShowNewsContents,
+          //   edit: Components.UploadNewsImage,
+          //   list: Components.ListNewsContent,
+          // },
         },
         content : {
           position: 7,
@@ -44,34 +51,19 @@ const NewsResource = {
 
       actions: {
         new : {
-          // after: async (request, response, context) => {
-          //   const news = response.record.toJSON();
-          //   const newsId = news._id.toString();
-          //   const newsUrl = `/news/${newsId}`;
-            
-          //   // Update the news URL
-          //   await News.findByIdAndUpdate(news._id, { url: newsUrl });
-          //   console.log('new hook ')
-          //   return response;
-          // },
 
           before: async (request, context) => {
-            try {
-              console.log('before ok');
-            } catch (err) {
-              console.log(err);
-            }
-  
+            request.payload.url = ''
             return request;
           },
 
-          after: async (request, context) => {
-            try {
-              console.log('after ok');
-            } catch (err) {
-              console.log(err);
-            }
-  
+          after: async (request, response, context) => {
+            const news = context.record.params;
+            const baseUrl = process.env.NODE_ENV === 'production' ? process.env.PROD_BASE_URL : process.env.DEV_BASE_URL;
+            const newsId = news.news_id
+            const newsUrl = `${baseUrl}/news/${newsId}`;
+            console.log(newsUrl);
+            await News.update({ url: newsUrl }, { where: { news_id: newsId } });  
             return request;
           },
         },
