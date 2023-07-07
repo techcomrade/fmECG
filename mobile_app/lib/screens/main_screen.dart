@@ -1,11 +1,16 @@
+import 'dart:async';
+
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/controllers/firebase_messages_controller.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
+import 'package:bluetooth_ecg/main.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_measurement_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
 import 'package:bluetooth_ecg/screens/user_profile_screen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +33,37 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    requestPermissionFirebase();
+    Timer.run(() async {
+      final String firebaseToken = await FmECGFirebaseMessage().getDeviceToken();
+      // await FmECGFirebaseMessage().saveTokenToFireStore(firebaseToken);
+    });
+    
+  }
+
+  void requestPermissionFirebase() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      sound: true,
+      criticalAlert: false,
+      provisional: false
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('permis');
+    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+      print('provisional ');
+    } else {
+      print('declined');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -39,9 +75,6 @@ class _MainScreenState extends State<MainScreen> {
             _currentIndex = index;
           });
         },
-        // backgroundColor: backgroundColorApp,
-        // selectedItemColor: ColorConstant.primary,
-        // unselectedItemColor: ColorConstant.quaternary,
         items: [
           BottomNavigationBarItem(
             icon: PhosphorIcon(PhosphorIcons.regular.house),
