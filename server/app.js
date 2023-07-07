@@ -6,6 +6,8 @@ const usersRoute = require('./Routes/usersRoute');
 const newsRoute = require('./Routes/newsRoute');
 const ecgRecordsRoute = require('./Routes/ecgRecordRoute');
 const dasboardHelperRoute = require('./Routes/dasboardHelperRoute');
+const PatientDoctorAssignmentRoute = require('./Routes/patientDoctorAssignmentRoute');
+
 
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -33,10 +35,12 @@ app.use(cookieParser());
 app.use(bodyParser.json())
 app.use('/', authRoute);
 app.use('/users', usersRoute);
-app.use('/news', newsRoute);
+app.use('/', newsRoute);
 app.use('/ecg-records', ecgRecordsRoute);
 app.use('/admin', adminRouter);
 app.use('/', dasboardHelperRoute);
+app.use('/', PatientDoctorAssignmentRoute);
+
 
 app.use(express.json());
 
