@@ -43,8 +43,10 @@ dependencies:
   shared_preferences: ^2.1.1
   path_provider: ^2.0.15
 
-  # language 
-  # intl: ^0.18.0
+  # firebase
+  firebase_messaging: ^14.1.1
+  firebase_core: ^2.14.0
+  cloud_firestore: ^4.8.2
 
   # assets lib
   flutter_svg: ^1.0.3
@@ -63,6 +65,7 @@ dependencies:
     sdk: flutter
 
 dependency_overrides:
+  # language
   intl: ^0.18.0
 
 dev_dependencies:
