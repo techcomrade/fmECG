@@ -170,22 +170,23 @@ exports.uploadNewsImage = async (req, res) => {
     const upload = multer({ dest: 'upload/news/image' }).single('image');
 
     upload(req, res, (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ status: 'error', msg: 'An error occurred while uploading the file' });
+      try {
+
+        // Tạo URL của hình ảnh tải lên
+        const fileExtension = path.extname(req.file.originalname);
+        const newFileName = `${req.file.filename}${fileExtension}`;
+        const newFilePath = path.join(req.file.destination, newFileName);
+
+        fs.renameSync(req.file.path, newFilePath);
+
+        const imageUrl = `/upload/news/image/${newFileName}`;
+
+        console.log(imageUrl);
+        res.json(imageUrl);
+      } catch (error) {
+          console.error(error);
+          return res.status(500).json({ status: 'error', msg: 'An error occurred while uploading the file' });
       }
-
-      // Tạo URL của hình ảnh tải lên
-      const fileExtension = path.extname(req.file.originalname);
-      const newFileName = `${req.file.filename}${fileExtension}`;
-      const newFilePath = path.join(req.file.destination, newFileName);
-
-      fs.renameSync(req.file.path, newFilePath);
-
-      const imageUrl = `/upload/news/image/${newFileName}`;
-
-      console.log(imageUrl);
-      res.json(imageUrl);
     });
   } catch (error) {
     console.error(error);
