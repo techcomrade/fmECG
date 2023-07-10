@@ -122,10 +122,7 @@ class AuthProvider extends ChangeNotifier {
         _token = responseData["token"];
         _roleId = responseData["user"]["role"];
         _userId = responseData["user"]["user_id"];
-        print('1');
         userProvider.setDataUser(responseData["user"]);      
-        print('responseData:${responseData["user"]}');
-        print('2');
         notifyListeners();
         setDataLogin();
       }
