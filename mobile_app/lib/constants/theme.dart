@@ -22,7 +22,7 @@ class ThemeECG {
       selectedItemColor: ColorConstant.primary,
       unselectedItemColor: ColorConstant.quaternary
     ),
-    fontFamily: "AvenirNext"
+    fontFamily: "Roboto"
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -39,6 +39,6 @@ class ThemeECG {
     buttonTheme: ButtonThemeData(
       buttonColor: Colors.red
     ),
-    fontFamily: "AvenirNext"
+    fontFamily: "Roboto"
   );
 }

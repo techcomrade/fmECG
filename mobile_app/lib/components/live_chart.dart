@@ -18,7 +18,7 @@ class LiveChartSample extends StatefulWidget {
 class _LiveChartSampleState extends State<LiveChartSample> {
   _LiveChartSampleState() {
     timer =
-        Timer.periodic(const Duration(milliseconds: 100), _updateDataSource);
+        Timer.periodic(const Duration(milliseconds: 2), _updateDataSource);
   }
 
   Timer? timer;
@@ -159,31 +159,31 @@ class _LiveChartSampleState extends State<LiveChartSample> {
           yValueMapper: (_ChartData sales, _) => sales.sales,
           animationDuration: 0,
         ),
-        LineSeries(
-          onRendererCreated: (ChartSeriesController controller) {
-            _chartSeriesController3 = controller;
-          },
-          dataSource: chartData3!,
-          legendItemText: "Fetus",
-          color: Colors.green,
-          xValueMapper: (_ChartData sales, _) => sales.country,
-          yValueMapper: (_ChartData sales, _) => sales.sales,
-          animationDuration: 0,
-        ),
-        LineSeries(
-          onRendererCreated: (ChartSeriesController controller) {
-            _chartSeriesController2 = controller;
-          },
-          dataSource: chartData2!,
-          color: Colors.red,
-          legendItemText: "Combination",
-          xValueMapper: (_ChartData sales, _) => sales.country,
-          yValueMapper: (_ChartData sales, _) => sales.sales,
-          animationDuration: 0,
-          markerSettings: MarkerSettings(
-            // isVisible: true,
-          ),
-        ),
+        // LineSeries(
+        //   onRendererCreated: (ChartSeriesController controller) {
+        //     _chartSeriesController3 = controller;
+        //   },
+        //   dataSource: chartData3!,
+        //   legendItemText: "Fetus",
+        //   color: Colors.green,
+        //   xValueMapper: (_ChartData sales, _) => sales.country,
+        //   yValueMapper: (_ChartData sales, _) => sales.sales,
+        //   animationDuration: 0,
+        // ),
+        // LineSeries(
+        //   onRendererCreated: (ChartSeriesController controller) {
+        //     _chartSeriesController2 = controller;
+        //   },
+        //   dataSource: chartData2!,
+        //   color: Colors.red,
+        //   legendItemText: "Combination",
+        //   xValueMapper: (_ChartData sales, _) => sales.country,
+        //   yValueMapper: (_ChartData sales, _) => sales.sales,
+        //   animationDuration: 0,
+        //   markerSettings: MarkerSettings(
+        //     // isVisible: true,
+        //   ),
+        // ),
         
       ],
     );
@@ -191,15 +191,17 @@ class _LiveChartSampleState extends State<LiveChartSample> {
 
   ///Continously updating the data source based on timer
   void _updateDataSource(Timer timer) {
-    // List<int> fakeRows = List.generate(16, (_) => _getRandomInt(1, 244));
-    // List<double> dataChannelsToSave = ECGDataController.handleDataRowFromBluetooth(fakeRows);
-    // List<double> dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(dataChannelsToSave);
-    _ChartData newData = _ChartData(count, _getRandomInt(2, 99));
-    _ChartData newData2 = _ChartData(count, _getRandomInt(1,90));
-    _ChartData newData3 = _ChartData(count, _getRandomInt(1, 99));
+    List<int> fakeRows = List.generate(16, (_) => _getRandomInt(1, 244));
+    int m = DateTime.now().microsecondsSinceEpoch;
+    List<double> dataChannelsToSave = ECGDataController.handleDataRowFromBluetooth(fakeRows);
+    List<double> dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(dataChannelsToSave);
+    print("dsgkhdjfgd:${DateTime.now().microsecondsSinceEpoch - m}");
+    _ChartData newData = _ChartData(count, dataChannelsToShowOnChart[0]);
+    // _ChartData newData2 = _ChartData(count, _getRandomInt(1,90));
+    // _ChartData newData3 = _ChartData(count, _getRandomInt(1, 99));
     chartData!.add(newData);
-    chartData2!.add(newData2);
-    chartData3!.add(newData3);
+    // chartData2!.add(newData2);
+    // chartData3!.add(newData3);
     if (chartData!.length >= 20) {
       // print('go heree');
       chartData!.removeAt(0);
@@ -213,31 +215,31 @@ class _LiveChartSampleState extends State<LiveChartSample> {
       );
     }
 
-    if (chartData2!.length == 20) {
-      // print('go heree');
-      chartData2!.removeAt(0);
-      _chartSeriesController2?.updateDataSource(
-        addedDataIndexes: <int>[chartData2!.length - 1],
-        removedDataIndexes: <int>[0],
-      );
-    } else {
-      _chartSeriesController2?.updateDataSource(
-        addedDataIndexes: <int>[chartData2!.length - 1],
-      );
-    }
+    // if (chartData2!.length == 20) {
+    //   // print('go heree');
+    //   chartData2!.removeAt(0);
+    //   _chartSeriesController2?.updateDataSource(
+    //     addedDataIndexes: <int>[chartData2!.length - 1],
+    //     removedDataIndexes: <int>[0],
+    //   );
+    // } else {
+    //   _chartSeriesController2?.updateDataSource(
+    //     addedDataIndexes: <int>[chartData2!.length - 1],
+    //   );
+    // }
 
-    if (chartData3!.length == 20) {
-      // print('go heree');
-      chartData3!.removeAt(0);
-      _chartSeriesController3?.updateDataSource(
-        addedDataIndexes: <int>[chartData3!.length - 1],
-        removedDataIndexes: <int>[0],
-      );
-    } else {
-      _chartSeriesController3?.updateDataSource(
-        addedDataIndexes: <int>[chartData3!.length - 1],
-      );
-    }
+    // if (chartData3!.length == 20) {
+    //   // print('go heree');
+    //   chartData3!.removeAt(0);
+    //   _chartSeriesController3?.updateDataSource(
+    //     addedDataIndexes: <int>[chartData3!.length - 1],
+    //     removedDataIndexes: <int>[0],
+    //   );
+    // } else {
+    //   _chartSeriesController3?.updateDataSource(
+    //     addedDataIndexes: <int>[chartData3!.length - 1],
+    //   );
+    // }
     count = count + 1;
     // FilesManagement.appendDataToFile(widget.fileToSave, dataChannelsToSave);
   }
@@ -259,5 +261,5 @@ class _LiveChartSampleState extends State<LiveChartSample> {
 class _ChartData {
   _ChartData(this.country, this.sales);
   final int country;
-  final int sales;
+  final double sales;
 }
