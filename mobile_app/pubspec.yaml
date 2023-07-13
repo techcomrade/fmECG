@@ -32,7 +32,7 @@ dependencies:
 
   # bluetooth
   flutter_blue_plus: ^1.5.2
-
+  flutter_reactive_ble: ^5.1.1
   # controller
   provider: ^6.0.5
   get: ^4.6.5
