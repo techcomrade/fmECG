@@ -206,69 +206,75 @@ class ChatScreen extends StatelessWidget {
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) {
-                      return Container(
-                        width: double.infinity,
-                        height: 100,
-                        padding: EdgeInsets.fromLTRB(15, 15, 5, 10),
-                        decoration: BoxDecoration(
-                          color: ColorConstant.whiteA700
-                        ),
+                      return InkWell(
+                        onTap: () => Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return ChatDetail();
+                      })),
                         child: Container(
-                          color: ColorConstant.whiteA700,
-                          child: Row(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.all(5),
-                                child: Image.asset(doctors[index].image),
-                                color: ColorConstant.whiteA700,
-                              ),
-                              Container(
-                                width: size.width / 1.4,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(doctors[index].name,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15
-                                          ),                                
-                                        ),
-                                        Text('20.00',
-                                          style: TextStyle(
-                                            fontSize: 12
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Tin nhắn mới'),
-                                        Container(
-                                          padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
-                                            color: ColorConstant.primary,
-                                          ),
-                                          child: Text('1',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
+                          width: double.infinity,
+                          height: 100,
+                          padding: EdgeInsets.fromLTRB(15, 15, 5, 10),
+                          decoration: BoxDecoration(
+                            color: ColorConstant.whiteA700
                           ),
-                                        )
-                );                
+                          child: Container(
+                            color: ColorConstant.whiteA700,
+                            child: Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.all(5),
+                                  child: Image.asset(doctors[index].image),
+                                  color: ColorConstant.whiteA700,
+                                ),
+                                Container(
+                                  width: size.width / 1.4,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(doctors[index].name,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15
+                                            ),                                
+                                          ),
+                                          Text('20.00',
+                                            style: TextStyle(
+                                              fontSize: 12
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Tin nhắn mới'),
+                                          Container(
+                                            padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: ColorConstant.primary,
+                                            ),
+                                            child: Text('1',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                                          )
+                                      ),
+                      );                
               },
             )
           )      

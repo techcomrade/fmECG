@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_off_screen.dart';
+import 'package:bluetooth_ecg/screens/home_screen.dart';
+import 'package:bluetooth_ecg/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'dart:io' show Platform;
+import 'package:permission_handler/permission_handler.dart';
 
 // This flutter app demonstrates an usage of the flutter_reactive_ble flutter plugin
 // This app works only with BLE devices which advertise with a Nordic UART Service (NUS) UUID
@@ -9,12 +12,12 @@ Uuid _UART_UUID = Uuid.parse("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
 Uuid _UART_RX   = Uuid.parse("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
 Uuid _UART_TX   = Uuid.parse("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
 
-class MyHomePage extends StatefulWidget {
+class BleReactiveScreen extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _BleReactiveScreenState createState() => _BleReactiveScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _BleReactiveScreenState extends State<BleReactiveScreen> {
 
   final flutterReactiveBle = FlutterReactiveBle();
   late DiscoveredDevice _deviceNeedConnecting;
@@ -33,7 +36,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    requestBluetoothPermission();
     super.initState();
+  }
+
+  Future<void> requestBluetoothPermission() async {
+    final status = await [
+      Permission.location,
+      Permission.storage,
+      Permission.bluetooth,
+      Permission.bluetoothConnect,
+      Permission.bluetoothScan
+    ].request();
+    for (PermissionStatus value in status.values) { 
+      if (value.isDenied) {
+        //show popup 
+      }
+      print('value:$value');
+    }
   }
 
   void refreshScreen() {
@@ -138,65 +158,75 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
 			backgroundColor: Colors.white,
-			body: Container(),
-			persistentFooterButtons: [
-         _isScanning
-            ? ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.grey, 
-                  onPrimary: Colors.white, 
-                ),
-                onPressed: () {},
-                child: const Icon(Icons.search),
-              )
-            // False condition
-            : ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue, // background
-                  onPrimary: Colors.white, // foreground
-                ),
-                onPressed: _startScan,
-                child: const Icon(Icons.search),
-              ),
-        _foundDeviceWaitingToConnect
-            // True condition
-            ? ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue, // background
-                  onPrimary: Colors.white, // foreground
-                ),
-                onPressed: onConnectDevice,
-                child: const Icon(Icons.bluetooth),
-              )
-            // False condition
-            : ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.grey, // background
-                  onPrimary: Colors.white, // foreground
-                ),
-                onPressed: () {},
-                child: const Icon(Icons.bluetooth),
-              ),
-        _isConnected
-            // True condition
-            ? ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue, // background
-                  onPrimary: Colors.white, // foreground
-                ),
-                onPressed: _partyTime,
-                child: const Icon(Icons.celebration_rounded),
-              )
-            // False condition
-            : ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.grey, // background
-                  onPrimary: Colors.white, // foreground
-                ),
-                onPressed: () {},
-                child: const Icon(Icons.celebration_rounded),
-              ),
-      ],
+			body: StreamBuilder<BleStatus>(
+          stream: flutterReactiveBle.statusStream,
+          initialData: BleStatus.unknown,
+          builder: (c, snapshot) {
+            final state = snapshot.data;
+            print('state:$state');
+            if (state == BleStatus.ready) {
+              return Container();
+            }
+            return BluetoothOffScreen(state: state);
+          }),
+			// persistentFooterButtons: [
+      //    _isScanning
+      //       ? ElevatedButton(
+      //           style: ElevatedButton.styleFrom(
+      //             primary: Colors.grey, 
+      //             onPrimary: Colors.white, 
+      //           ),
+      //           onPressed: () {},
+      //           child: const Icon(Icons.search),
+      //         )
+      //       // False condition
+      //       : ElevatedButton(
+      //           style: ElevatedButton.styleFrom(
+      //             primary: Colors.blue, // background
+      //             onPrimary: Colors.white, // foreground
+      //           ),
+      //           onPressed: _startScan,
+      //           child: const Icon(Icons.search),
+      //         ),
+      //   _foundDeviceWaitingToConnect
+      //       // True condition
+      //       ? ElevatedButton(
+      //           style: ElevatedButton.styleFrom(
+      //             primary: Colors.blue, // background
+      //             onPrimary: Colors.white, // foreground
+      //           ),
+      //           onPressed: onConnectDevice,
+      //           child: const Icon(Icons.bluetooth),
+      //         )
+      //       // False condition
+      //       : ElevatedButton(
+      //           style: ElevatedButton.styleFrom(
+      //             primary: Colors.grey, // background
+      //             onPrimary: Colors.white, // foreground
+      //           ),
+      //           onPressed: () {},
+      //           child: const Icon(Icons.bluetooth),
+      //         ),
+      //   _isConnected
+      //       // True condition
+      //       ? ElevatedButton(
+      //           style: ElevatedButton.styleFrom(
+      //             primary: Colors.blue, // background
+      //             onPrimary: Colors.white, // foreground
+      //           ),
+      //           onPressed: _partyTime,
+      //           child: const Icon(Icons.celebration_rounded),
+      //         )
+      //       // False condition
+      //       : ElevatedButton(
+      //           style: ElevatedButton.styleFrom(
+      //             primary: Colors.grey, // background
+      //             onPrimary: Colors.white, // foreground
+      //           ),
+      //           onPressed: () {},
+      //           child: const Icon(Icons.celebration_rounded),
+      //         ),
+      // ],
 		);
   }
 }

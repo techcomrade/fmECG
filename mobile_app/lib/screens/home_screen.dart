@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/models/user_model.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
-import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_main_screen.dart';
+import 'package:bluetooth_ecg/providers/user_provider.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens_udpate/ble_screen.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:flutter/material.dart';
 import 'package:bluetooth_ecg/components/live_chart.dart';
@@ -34,7 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     // final bool isDarkTheme = Provider.of<AuthProvider>(context, listen: true).theme == ThemeType.DARK;
-    // final Color backgroundColorApp = isDarkTheme ? ColorConstant.quaternary: Colors.white; 
+    // final Color backgroundColorApp = isDarkTheme ? ColorConstant.quaternary: Colors.white;
+    final User user = context.read<UserProvider>().user;
+    final String userName = user.name; 
+
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
       // color: backgroundColorApp,
@@ -58,9 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Welcome to fmECG"),
+                          Text("Chào mừng đến với fmECG"),
                           Text(
-                            'Thai Dong',
+                            userName,
                             style: TextStyle(
                               color: ColorConstant.primary,
                               fontWeight: FontWeight.bold,
@@ -114,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     alignment: Alignment.topLeft,
-                    child: Text("Overview",
+                    child: Text("Tổng quan",
                       style: TextStyle(
                         color: ColorConstant.quaternary,
                         fontWeight: FontWeight.bold,
@@ -124,14 +129,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 10),
                   Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
+                    spacing: 15,
+                    runSpacing: 15,
                     alignment: WrapAlignment.spaceAround,
                     children: [
-                      NumberCard(number: 82.0, text: "Heart Rate (BPM)", subText: "Mother", color1: ColorConstant.primary, color2: ColorConstant.primary),
-                      NumberCard(number: 72.9, text: "Variability (BPM)", subText: "Mother", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
-                      NumberCard(number: 82.6, text: "Heart Rate (BPM)", subText: "Fetus", color1: ColorConstant.tertiary, color2: ColorConstant.primary),
-                      NumberCard(number: 86.0, text: "Variability (BPM)", subText: "Fetus", color1: ColorConstant.secondary, color2: ColorConstant.primary),
+                      NumberCard(number: 82.0, text: "Nhịp tim (bpm)", subText: "Mẹ", color1: ColorConstant.primary, color2: ColorConstant.primary),
+                      NumberCard(number: 72.9, text: "Biến thiên nhịp tim (bpm)", subText: "Mẹ", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
+                      NumberCard(number: 82.6, text: "Nhịp tim (bpm)", subText: "Thai nhi", color1: ColorConstant.primary, color2: ColorConstant.primary),
+                      NumberCard(number: 86.0, text: "Biến thiên nhịp tim (bpm)", subText: "Thai nhi", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
                     ],
                   )
                 ],
@@ -142,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Signals",
+                  Text("Tín hiệu điện tim",
                     style: TextStyle(
                       color: ColorConstant.quaternary,
                       fontWeight: FontWeight.bold,
@@ -155,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     functionScanBluetooth: () {
                       Navigator.push(context,
                         MaterialPageRoute(
-                          builder: (context) => BluetoothMainScreen(),
+                          builder: (context) => BleReactiveScreen(),
                         )
                       );
                     }, 
@@ -300,7 +305,7 @@ class NumberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 165.0,
+      width: 150.0,
       height: 100.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
@@ -312,16 +317,18 @@ class NumberCard extends StatelessWidget {
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             text,
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 18.0,
+              fontSize: 15.0,
               color: ColorConstant.description,
             ),
           ),
-          const SizedBox(height: 5.0),
+          const SizedBox(height: 3.0),
           Text(
             subText,
             style: TextStyle(
@@ -329,7 +336,7 @@ class NumberCard extends StatelessWidget {
               color: ColorConstant.description,
             ),
           ),
-          const SizedBox(height: 12.0),
+          const SizedBox(height: 5.0),
           Text(
             '$number',
             style: TextStyle(

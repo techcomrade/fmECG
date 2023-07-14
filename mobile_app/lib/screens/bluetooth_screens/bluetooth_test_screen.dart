@@ -3,7 +3,6 @@ import 'dart:convert' show utf8;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:oscilloscope/oscilloscope.dart';
 
 class BluetoothTestScreen extends StatefulWidget {
   const BluetoothTestScreen({Key? key, required this.device}) : super(key: key);

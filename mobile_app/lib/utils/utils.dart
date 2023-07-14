@@ -4,8 +4,14 @@ import 'package:flutter/material.dart';
 
 class Utils {
   static BuildContext? globalContext;
-  static getGlobalContext() { return globalContext; }
-  static setGlobalContext(context) { globalContext = context; }
+
+  static getGlobalContext() { 
+    return globalContext; 
+  }
+
+  static setGlobalContext(context) { 
+    globalContext = context; 
+  }
 
   static getRandomString(int length){
     const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';

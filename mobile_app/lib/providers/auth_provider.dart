@@ -3,11 +3,16 @@
 import 'dart:convert';
 
 import 'package:bluetooth_ecg/constants/api_constant.dart';
+import 'package:bluetooth_ecg/providers/user_provider.dart';
+import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum ThemeType { DARK, LIGHT }
+
+UserProvider userProvider = Provider.of<UserProvider>(Utils.globalContext!, listen: false);
 
 class AuthProvider extends ChangeNotifier {
   String _token = "";
@@ -19,8 +24,25 @@ class AuthProvider extends ChangeNotifier {
   bool _isAutoTheme = false;
 
   String get locale => _locale;
-
   int get userId => _userId; 
+  int get roleId => _roleId;
+  
+  String get token {
+    if (_expiryDate != null &&_expiryDate!.isAfter(DateTime.now()) && _token != "") {
+      return _token;
+    } else {
+      return "";
+    }
+  }
+
+  bool get isAuth {
+    final isExpiryDate = _roleId != -1 && _token !=  "";
+    if (!isExpiryDate) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   AuthProvider() {
     getLocale().then((value) {
@@ -28,7 +50,6 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     });
   }
-
   // set locale(lc) => setLocale(lc);
   // void setLocale(lc) async {
   //   S.load(Locale(lc)); 
@@ -77,35 +98,6 @@ class AuthProvider extends ChangeNotifier {
     if(status) notifyListeners();
   }
 
-  void setDataLogin() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    final userData = json.encode(
-      {
-        'token': _token,
-        'userId': _userId,
-        'role': _roleId
-      },
-    );
-    preferences.setString('userData', userData);
-  }
-
-  Future<bool> tryAutoLogin() async {
-    final preferences = await SharedPreferences.getInstance();
-    if (!preferences.containsKey('userData')) {
-      return false;
-    }
-
-    final userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
-    // final expiryDate = DateTime.parse(extractedUserData['expiryDate'].toString());
-    // if (expiryDate.isBefore(DateTime.now())) {
-    //   return false;
-    // }
-    _token = userDataDecoded['token'].toString();
-    _userId = userDataDecoded['userId'];
-    // _expiryDate = expiryDate;
-    notifyListeners();
-    return true;
-  }
 
   Future<String> getLocale() async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -113,25 +105,6 @@ class AuthProvider extends ChangeNotifier {
     return _locale;
   }
 
-  String get token {
-    if (_expiryDate != null &&_expiryDate!.isAfter(DateTime.now()) && _token != "") {
-      return _token;
-    } else {
-      return "";
-    }
-  }
-
-  int get roleId => _roleId;
-
-  bool get isAuth {
-    // final isExpiryDate = _expiryDate != null && _expiryDate!.isBefore(DateTime.now()) && _token != "";
-    final isExpiryDate = _roleId != -1 && _token !=  "";
-    if (!isExpiryDate) {
-      return false;
-    } else {
-      return true;
-    }
-  }
 
   Future<void> loginUser(String email, String password) async {
     // call API with email and password
@@ -148,8 +121,10 @@ class AuthProvider extends ChangeNotifier {
         // do something with data
         _token = responseData["token"];
         _roleId = responseData["user"]["role"];
-        
+        _userId = responseData["user"]["user_id"];
+        userProvider.setDataUser(responseData["user"]);      
         notifyListeners();
+        setDataLogin();
       }
     } catch (err) {
       debugPrint('error from login: $err');
@@ -187,7 +162,7 @@ class AuthProvider extends ChangeNotifier {
       if (responseData["status"] == "success") {
         // do something with data
         _token = "";
-        print('heheh donee:${responseData}');
+        removeDataLogin();
         notifyListeners();
       }
     } catch (err) {
@@ -195,4 +170,38 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  void setDataLogin() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final userData = json.encode(
+      {
+        'token': _token,
+        'userId': _userId,
+        'roleId': _roleId,
+      },
+    );
+    preferences.setString('userData', userData);
+  }
+  
+  void removeDataLogin() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove("userData");
+  }
+
+  Future<bool> checkAutoLogin() async {
+    final preferences = await SharedPreferences.getInstance();
+    if (!preferences.containsKey('userData')) {
+      return false;
+    }
+
+    final userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
+    _token = userDataDecoded['token'].toString();
+    _userId = userDataDecoded['userId'];
+    _roleId = userDataDecoded['roleId'];
+    notifyListeners();
+    if ( _roleId != -1 && _token !=  "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

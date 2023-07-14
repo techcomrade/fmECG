@@ -1,6 +1,7 @@
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_off_screen.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_scanning_screen.dart';
+import 'package:bluetooth_ecg/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
@@ -19,7 +20,8 @@ class BluetoothMainScreen extends StatelessWidget {
             if (state == BluetoothState.on) {
               return BluetoothScanningScreen();
             }
-            return BluetoothOffScreen(state: state);
+            return LoginScreen();
+            // return BluetoothOffScreen(state: state);
           }),
     );
   }

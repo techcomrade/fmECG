@@ -34,8 +34,6 @@ class _Login1ScreenState extends State<Login1Screen> {
   void _loginUser() async {
     final AuthProvider authProvider = context.read<AuthProvider>();
     try {
-      Get.toNamed(AppRoutes.mainScreen);
-
       if (loginProcess) return;
       setState(() {
         loginProcess = true;
