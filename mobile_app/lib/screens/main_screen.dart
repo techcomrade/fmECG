@@ -37,8 +37,9 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     requestPermissionFirebase();
     Timer.run(() async {
+      // de o phan dang nhap => luu token ngay sau khi dang nhap tren firebase
       final String firebaseToken = await FmECGFirebaseMessage().getDeviceToken();
-      // await FmECGFirebaseMessage().saveTokenToFireStore(firebaseToken);
+      // await FmECGFirebaseMessage().saveTokenToFirestore(firebaseToken, 3010);
     });
     
   }
