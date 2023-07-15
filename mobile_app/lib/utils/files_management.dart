@@ -26,7 +26,7 @@ class FilesManagement {
   }
 
   static convertRowToStringBeforeSaving(List<dynamic> row) {
-    String dataRow = row.join(" ");
+    String dataRow = row.join(",");
     return dataRow;
   }
 
