@@ -12,6 +12,7 @@ import 'package:bluetooth_ecg/components/live_chart.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -26,6 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    checkPrefer();
+  }
+
+  void checkPrefer() async {
+    final prefs = await SharedPreferences.getInstance();
+    final data = prefs.getString("files_not_upload");
+    print('data:$data');
   }
 
   @override
@@ -37,8 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // final bool isDarkTheme = Provider.of<AuthProvider>(context, listen: true).theme == ThemeType.DARK;
     // final Color backgroundColorApp = isDarkTheme ? ColorConstant.quaternary: Colors.white;
-    final User user = context.read<UserProvider>().user;
-    final String userName = user.name; 
+    // final User user = context.read<UserProvider>().user;
+    // final String userName = user.name; 
 
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
@@ -65,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Text("Chào mừng đến với fmECG"),
                           Text(
-                            userName,
+                            "Thai Dong",
                             style: TextStyle(
                               color: ColorConstant.primary,
                               fontWeight: FontWeight.bold,
@@ -172,8 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     }
                   ) 
-                  : LiveChartSample(fileToSave: fileToSave)
-                  // : Container(),
+                  : LiveChartSample(fileToSave: fileToSave),
                 ],
               ),
             ),

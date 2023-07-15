@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FilesManagement {
   static Future<String> get _pathToSaveData async {
@@ -25,7 +26,7 @@ class FilesManagement {
   }
 
   static convertRowToStringBeforeSaving(List<dynamic> row) {
-    String dataRow = row.join(" ");
+    String dataRow = row.join(",");
     return dataRow;
   }
 
@@ -34,5 +35,20 @@ class FilesManagement {
     data = data + "\n"; //xuống dòng khi lưu dữ liệu 1 row
     await file.writeAsString(data, mode: FileMode.append);
     print('successful');
+  }
+
+  static void saveFilePathCaseNoInternet(String filePath) async {
+    const String keyToSave = "files_not_upload";
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    String existingFilePath;
+    
+    if (preferences.containsKey(keyToSave)) {
+      existingFilePath = preferences.getString(keyToSave)!;
+      existingFilePath = existingFilePath + '\n$filePath';
+      preferences.setString(keyToSave, existingFilePath);
+    } else {
+      existingFilePath = filePath;
+      preferences.setString(keyToSave, existingFilePath);
+    }
   }
 }
