@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:bluetooth_ecg/controllers/ecg_data_controller.dart';
+import 'package:bluetooth_ecg/controllers/ecg_files_controller.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
+import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class LiveChartSample extends StatefulWidget {
@@ -18,128 +22,84 @@ class LiveChartSample extends StatefulWidget {
 class _LiveChartSampleState extends State<LiveChartSample> {
   _LiveChartSampleState() {
     timer =
-        Timer.periodic(const Duration(milliseconds: 2), _updateDataSource);
+        Timer.periodic(const Duration(milliseconds: 100), _updateDataSource);
   }
 
   Timer? timer;
   List<_ChartData>? chartData;
-  List<_ChartData>? chartData2;
-  List<_ChartData>? chartData3;
   late int count;
   ChartSeriesController? _chartSeriesController;
-  ChartSeriesController? _chartSeriesController2;
-  ChartSeriesController? _chartSeriesController3;
+
+  @override
+  void initState() {
+    count = 0;
+    chartData = <_ChartData>[];
+    super.initState();
+  }
 
   @override
   void dispose() {
     timer?.cancel();
     chartData!.clear();
-    chartData2!.clear();
-    chartData3!.clear();
     _chartSeriesController = null;
-    _chartSeriesController2 = null;
-    _chartSeriesController3 = null;
-
     super.dispose();
   }
 
   @override
-  void initState() {
-    count = 19;
-    chartData = <_ChartData>[
-      _ChartData(0, 42),
-      _ChartData(1, 47),
-      _ChartData(2, 33),
-      _ChartData(3, 49),
-      _ChartData(4, 54),
-      _ChartData(5, 41),
-      _ChartData(6, 58),
-      _ChartData(7, 51),
-      _ChartData(8, 98),
-      _ChartData(9, 41),
-      _ChartData(10, 53),
-      _ChartData(11, 72),
-      _ChartData(12, 86),
-      _ChartData(13, 52),
-      _ChartData(14, 94),
-      _ChartData(15, 92),
-      _ChartData(16, 86),
-      _ChartData(17, 72),
-      _ChartData(18, 94),
-    ];
-    chartData2 = <_ChartData>[
-      _ChartData(0, 42),
-      _ChartData(1, 47),
-      _ChartData(2, 33),
-      _ChartData(3, 49),
-      _ChartData(4, 54),
-      _ChartData(5, 41),
-      _ChartData(6, 58),
-      _ChartData(7, 51),
-      _ChartData(8, 98),
-      _ChartData(9, 41),
-      _ChartData(10, 53),
-      _ChartData(11, 72),
-      _ChartData(12, 86),
-      _ChartData(13, 52),
-      _ChartData(14, 94),
-      _ChartData(15, 92),
-      _ChartData(16, 86),
-      _ChartData(17, 72),
-      _ChartData(18, 94),
-    ];
-    chartData3 = <_ChartData>[
-      _ChartData(0, 42),
-      _ChartData(1, 47),
-      _ChartData(2, 33),
-      _ChartData(3, 49),
-      _ChartData(4, 54),
-      _ChartData(5, 41),
-      _ChartData(6, 58),
-      _ChartData(7, 51),
-      _ChartData(8, 98),
-      _ChartData(9, 41),
-      _ChartData(10, 53),
-      _ChartData(11, 72),
-      _ChartData(12, 86),
-      _ChartData(13, 52),
-      _ChartData(14, 94),
-      _ChartData(15, 92),
-      _ChartData(16, 86),
-      _ChartData(17, 72),
-      _ChartData(18, 94),
-    ];
-    // _updateDataSource();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return _buildLiveLineChart();
+    return Column(
+      children: [
+        _buildLiveLineChart(),
+        Align(
+          alignment: Alignment.center,
+          child: ElevatedButton(
+            onPressed: () async {
+              timer?.cancel();
+              _chartSeriesController = null;
+              final DateTime stopTime = DateTime.now();            
+              final SharedPreferences preferences = await SharedPreferences.getInstance();
+              final Map userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
+
+              if (userDataDecoded["roleId"] == -1 || userDataDecoded["token"] == "") {
+                return Utils.showDialogLoginRequirement(context);
+              }
+
+              final int userId = userDataDecoded["userId"] ?? 0;
+              final int deviceId = 2;
+              final String startTimeAsTimeStamp = widget.fileToSave.path.split("/").last.split('.').first;
+              final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(int.parse(startTimeAsTimeStamp));
+
+              final Map fileUploadInformation = {
+                "filePath": widget.fileToSave.path,
+                "userId": userId,
+                "deviceId": deviceId,
+                "startTime": startTime,
+                "stopTime": stopTime,
+              };
+              Future.delayed(Duration(milliseconds: 500), () {
+                ECGFilesController.uploadFileToDB(fileUploadInformation);
+              });
+            }, 
+            child: Text('End measurement')
+          ),
+        )
+      ]
+    );
   }
 
-  /// Returns the realtime Cartesian line chart.
   SfCartesianChart _buildLiveLineChart() {
     return SfCartesianChart(
       title: ChartTitle(
-        text: "Heart Rate Real-time",
+        text: "Biểu đồ nhịp tim thời gian thực",
         alignment: ChartAlignment.center,
       ),
       enableAxisAnimation: true,
-      // plotAreaBackgroundColor: Color(0XFF006A89),
       plotAreaBorderWidth: 0,
       primaryXAxis: NumericAxis(
         zoomPosition: 0.3,
-        // majorGridLines: MajorGridLines(
-        //   color: Colors.red,
-        // ),
-        // minorGridLines: MinorGridLines(
-        //   color: Colors.red,
-        // ),
         edgeLabelPlacement: EdgeLabelPlacement.shift
       ),
       primaryYAxis: NumericAxis(
-          // axisLine: const AxisLine(width: 0),
         edgeLabelPlacement: EdgeLabelPlacement.shift,
         majorGridLines: const MajorGridLines(width: 1)),
       legend: Legend(
@@ -152,39 +112,13 @@ class _LiveChartSampleState extends State<LiveChartSample> {
           onRendererCreated: (ChartSeriesController controller) {
             _chartSeriesController = controller;
           },
-          legendItemText: "Mother",
+          legendItemText: "Người mẹ",
           dataSource: chartData!,
           color: Color(0XFF7BB4EA),
           xValueMapper: (_ChartData sales, _) => sales.country,
           yValueMapper: (_ChartData sales, _) => sales.sales,
           animationDuration: 0,
         ),
-        // LineSeries(
-        //   onRendererCreated: (ChartSeriesController controller) {
-        //     _chartSeriesController3 = controller;
-        //   },
-        //   dataSource: chartData3!,
-        //   legendItemText: "Fetus",
-        //   color: Colors.green,
-        //   xValueMapper: (_ChartData sales, _) => sales.country,
-        //   yValueMapper: (_ChartData sales, _) => sales.sales,
-        //   animationDuration: 0,
-        // ),
-        // LineSeries(
-        //   onRendererCreated: (ChartSeriesController controller) {
-        //     _chartSeriesController2 = controller;
-        //   },
-        //   dataSource: chartData2!,
-        //   color: Colors.red,
-        //   legendItemText: "Combination",
-        //   xValueMapper: (_ChartData sales, _) => sales.country,
-        //   yValueMapper: (_ChartData sales, _) => sales.sales,
-        //   animationDuration: 0,
-        //   markerSettings: MarkerSettings(
-        //     // isVisible: true,
-        //   ),
-        // ),
-        
       ],
     );
   }
@@ -192,18 +126,12 @@ class _LiveChartSampleState extends State<LiveChartSample> {
   ///Continously updating the data source based on timer
   void _updateDataSource(Timer timer) {
     List<int> fakeRows = List.generate(16, (_) => _getRandomInt(1, 244));
-    int m = DateTime.now().microsecondsSinceEpoch;
     List<double> dataChannelsToSave = ECGDataController.handleDataRowFromBluetooth(fakeRows);
     List<double> dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(dataChannelsToSave);
-    print("dsgkhdjfgd:${DateTime.now().microsecondsSinceEpoch - m}");
     _ChartData newData = _ChartData(count, dataChannelsToShowOnChart[0]);
-    // _ChartData newData2 = _ChartData(count, _getRandomInt(1,90));
-    // _ChartData newData3 = _ChartData(count, _getRandomInt(1, 99));
     chartData!.add(newData);
-    // chartData2!.add(newData2);
-    // chartData3!.add(newData3);
+
     if (chartData!.length >= 20) {
-      // print('go heree');
       chartData!.removeAt(0);
       _chartSeriesController?.updateDataSource(
         addedDataIndexes: <int>[chartData!.length - 1],
@@ -214,46 +142,13 @@ class _LiveChartSampleState extends State<LiveChartSample> {
         addedDataIndexes: <int>[chartData!.length - 1],
       );
     }
-
-    // if (chartData2!.length == 20) {
-    //   // print('go heree');
-    //   chartData2!.removeAt(0);
-    //   _chartSeriesController2?.updateDataSource(
-    //     addedDataIndexes: <int>[chartData2!.length - 1],
-    //     removedDataIndexes: <int>[0],
-    //   );
-    // } else {
-    //   _chartSeriesController2?.updateDataSource(
-    //     addedDataIndexes: <int>[chartData2!.length - 1],
-    //   );
-    // }
-
-    // if (chartData3!.length == 20) {
-    //   // print('go heree');
-    //   chartData3!.removeAt(0);
-    //   _chartSeriesController3?.updateDataSource(
-    //     addedDataIndexes: <int>[chartData3!.length - 1],
-    //     removedDataIndexes: <int>[0],
-    //   );
-    // } else {
-    //   _chartSeriesController3?.updateDataSource(
-    //     addedDataIndexes: <int>[chartData3!.length - 1],
-    //   );
-    // }
     count = count + 1;
-    // FilesManagement.appendDataToFile(widget.fileToSave, dataChannelsToSave);
+    FilesManagement.appendDataToFile(widget.fileToSave, dataChannelsToSave);
   }
 
-  ///Get the random data
   int _getRandomInt(int min, int max) {
     final math.Random random = math.Random();
     return min + random.nextInt(max - min);
-  }
-
-  double _calculateSineValue(int x) {
-    // Calculate the sine value for the given x value
-    // You can adjust the frequency, amplitude, and other parameters as needed
-    return 100 * (1 + math.sin(x / 10));
   }
 }
 
