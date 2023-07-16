@@ -8,7 +8,7 @@ dotenv.config({ path: "./config.env" });
 
 
 app.get("/", (req, res) => {
-    res.send("server");
+  res.redirect("/admin");
 });
 
 const dummyDataEnabled = process.env.DUMMY_DATA === 'true';
