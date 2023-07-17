@@ -57,8 +57,21 @@ const User = sequelize.define('user', {
 }, 
 {
   updatedAt: 'updated_at',
-  createdAt: 'create_at',
-  tableName: 'users'
+  createdAt: 'created_at',
+  tableName: 'users',
+  scopes: {
+    patient: {
+      where: {
+        role: 0
+      }
+    },
+    doctor: {
+      where: {
+        role: 1
+      }
+    }
+  }
 });
 
 module.exports = User;
+

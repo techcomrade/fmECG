@@ -1,7 +1,5 @@
-const mysql = require('mysql');
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
-const { promisify } = require('util');
 const User = require('../Models/userModel');
 const path = require('path');
 
@@ -194,4 +192,6 @@ exports.getUserById = async (req, res) => {
     res.status(500).json({ status: 'error', msg: 'An error occurred while retrieving the user information' });
   }
 };
+
+
 
