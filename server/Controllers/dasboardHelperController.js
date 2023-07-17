@@ -51,7 +51,7 @@ exports.getUserMileStatsDataByMonth = async (req, res) => {
           role: {
             [Op.in]: [0] // role = 0 (patient) or role = 1 (doctor)
           },
-          create_at: {
+          created_at: {
             [Op.gte]: new Date(today.getFullYear(), i, 1), // Start of the month
             [Op.lte]: new Date(today.getFullYear(), i + 1, 0) // End of the month
           }
@@ -63,7 +63,7 @@ exports.getUserMileStatsDataByMonth = async (req, res) => {
           role: {
             [Op.in]: [1] // role = 0 (patient) or role = 1 (doctor)
           },
-          create_at: {
+          created_at: {
             [Op.gte]: new Date(today.getFullYear(), i, 1), // Start of the month
             [Op.lte]: new Date(today.getFullYear(), i + 1, 0) // End of the month
           }
@@ -99,7 +99,7 @@ exports.getUserMileStatsDataByWeek = async (req, res) => {
           role: {
             [Op.in]: [0] // role = 0 (patient) or role = 1 (doctor)
           },
-          create_at: {
+          created_at: {
             [Op.gte]: new Date(previousDay.setHours(0, 0, 0, 0)), // Start of the day
             [Op.lte]: new Date(previousDay.setHours(23, 59, 59, 999)) // End of the day
           }
@@ -111,7 +111,7 @@ exports.getUserMileStatsDataByWeek = async (req, res) => {
           role: {
             [Op.in]: [1] // role = 0 (patient) or role = 1 (doctor)
           },
-          create_at: {
+          created_at: {
             [Op.gte]: new Date(previousDay.setHours(0, 0, 0, 0)), // Start of the day
             [Op.lte]: new Date(previousDay.setHours(23, 59, 59, 999)) // End of the day
           }
@@ -183,16 +183,17 @@ exports.uploadNewsImage = async (req, res) => {
 
         console.log(imageUrl);
         res.json(imageUrl);
-      } catch (error) {
-          console.error(error);
-          return res.status(500).json({ status: 'error', msg: 'An error occurred while uploading the file' });
-      }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ status: 'error', msg: 'An error occurred while uploading the file' });
+    }
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: 'error', msg: 'An error occurred while handling the image upload' });
   }
 };
+
 
 exports.converExceltoJson = async (req, res) => {
   const { filePath } = req.body;
@@ -206,13 +207,6 @@ exports.converExceltoJson = async (req, res) => {
     const worksheet = workbook.Sheets[sheetName];
     const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-    // Convert the data to the desired format for the chart
-    // const chartData = jsonData.slice(1).map((row) => ({
-    //   time: row[0],
-    //   data1: row[1],
-    //   data2: row[2],
-    //   data3: row[3],
-    // }));
     const chartData = jsonData.map((row, index) => ({
       time: row[0],
       data1: row[1],

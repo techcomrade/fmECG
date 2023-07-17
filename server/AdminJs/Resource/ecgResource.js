@@ -51,7 +51,7 @@ const EcgRecordsResource = {
         stop_time: {
           position: 5,
         },
-        create_at: {
+        created_at: {
           position: 6,
         },
         updated_at: {
