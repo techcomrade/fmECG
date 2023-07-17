@@ -61,7 +61,7 @@ class NewsAllScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 15),
                     Container(
-                      height: 80,
+                      height: 85,
                       // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
                       width: 240,
                       child: Column(
