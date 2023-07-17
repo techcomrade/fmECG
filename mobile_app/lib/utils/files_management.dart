@@ -1,14 +1,10 @@
 import 'dart:io';
 import 'package:bluetooth_ecg/utils/utils.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FilesManagement {
   static Future<String> get _pathToSaveData async {
-    final directoryToSaveFile = await getApplicationDocumentsDirectory();
-    // final directoryToSaveFile = await getExternalStorageDirectory();
-    // final directoryToSaveFile = Directory("/storage/self/primary/fm_ECG");
-    // Directory("/storage/self/primary/fm_ECG");
+    final directoryToSaveFile = Directory("/storage/self/primary/fm_ECG");
     final directoryToSaveData = directoryToSaveFile.path + '/fmECG_data';
     return directoryToSaveData;
   }
@@ -20,7 +16,6 @@ class FilesManagement {
   }
 
   static void createDirectoryFirstTimeWithDevice() async {
-    // final directoryPath = "/storage/self/primary/fm_ECG";
     final directoryPath = await _pathToSaveData;
     Directory(directoryPath).createSync(recursive: true);
   }

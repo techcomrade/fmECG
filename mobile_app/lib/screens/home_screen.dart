@@ -14,6 +14,8 @@ import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:flutter/material.dart';
 import 'package:bluetooth_ecg/components/live_chart.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,12 +38,31 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     checkPrefer();
     NewsController.getAllNews();
+    test();
   }
 
   void checkPrefer() async {
     final prefs = await SharedPreferences.getInstance();
     final data = prefs.getString("files_not_upload");
     print('data:$data');
+  }
+
+  void test() async {
+    final a = await getExternalStorageDirectory();
+    print('a: ${a!.path}');
+    final b = await getTemporaryDirectory();
+    print('b: ${b!.path}');
+    final c = await getExternalStorageDirectories();
+    print('c: ${c!.first}');
+  }
+
+  Future<bool> _requestManageStorage() async {
+    final PermissionStatus status = await Permission.manageExternalStorage.request();  
+    if (status == PermissionStatus.granted) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -178,11 +199,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }, 
                     temporaryNothing: () async {
-                      FilesManagement.createDirectoryFirstTimeWithDevice();
-                      fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
-                      setState(() {
-                        isShowChart = true;
-                      });
+                      bool isAccessFiles = await _requestManageStorage();
+                      if (isAccessFiles) {
+                        FilesManagement.createDirectoryFirstTimeWithDevice();
+                        fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
+                        setState(() {
+                          isShowChart = true;
+                        });
+                      } else {
+                        // show dialog need permission
+                        print('phone does not grant permission');
+                      }
                     }
                   ) 
                   : LiveChartSample(fileToSave: fileToSave),
@@ -251,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         SizedBox(width: 20),
                         Container(
-                          height: 80,
+                          height: 90,
                           // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
                           width: 240,
                           child: Column(
