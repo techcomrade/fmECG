@@ -47,7 +47,6 @@ dependencies:
   # intl: ^0.18.0
 
   # assets lib
-  flutter_svg: ^1.0.3
   cupertino_icons: ^1.0.2
   phosphor_flutter: ^2.0.0
   cached_network_image: ^3.2.0
@@ -55,8 +54,10 @@ dependencies:
   flutter_switch: ^0.3.2
   syncfusion_flutter_charts: 21.2.4
   permission_handler: ^10.2.0
-  select_card: ^0.0.9
   app_settings: ^4.2.0
+  flutter_html: ^2.2.1
+
+  
 
   # other lib
   flutter_localizations:

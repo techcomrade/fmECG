@@ -27,4 +27,17 @@ class NewsController {
       rethrow;
     }
   }
+
+  static Future<void> getNewsById(int newsId) async {
+    final String apiGetNewsById = apiGetAllNews + '/$newsId';
+    try {
+      final response = await http.get(Uri.parse(apiGetNewsById));
+      if (response.statusCode == 200) {
+        newsProvider.setSelectedNews(response.body);
+      }
+    } catch (e) {
+      debugPrint('error from getNewsById: $e');
+      rethrow;
+    }
+  }
 }
