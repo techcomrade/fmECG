@@ -101,7 +101,7 @@ class LoginScreen extends StatelessWidget {
                       //     fontStyle:
                       //         ButtonFontStyle.PoppinsBold20DeeppurpleA200,
                       //     onTap: onTapLogin),
-                      SubmitButton(onTap: onTapGetstarted, text: "Get Started"),
+                      SubmitButton(onTap: onTapGetstarted, text: "Register"),
                       const SizedBox(height: 10),
                       SubmitButton(onTap: onTapLogin, text: "Login"),
                       const SizedBox(height: 40),

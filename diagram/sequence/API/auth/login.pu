@@ -1,0 +1,32 @@
+@startuml
+
+
+actor User
+participant ClientApp
+participant Server
+database Database
+
+User -> ClientApp: Provide login credentials
+ClientApp -> Server: Send login request
+Server -> Database: Find user by email
+activate Database
+Database --> Server: Return user data
+deactivate Database
+Server -> Server: Compare passwords
+alt Password match
+    Server -> Server: Generate JWT token
+    Server -> ClientApp: Send JWT token
+    ClientApp -> User: Receive JWT token
+    User -> ClientApp: Store JWT token
+    ClientApp -> Server: Include JWT token in requests
+    Server -> Server: Validate JWT token
+    alt Token valid
+        Server -> Server: Perform authorized action
+        Server -> ClientApp: Return response
+    else Token invalid
+        Server -> ClientApp: Return authentication error
+    end
+else Password mismatch
+    Server -> ClientApp: Return authentication error
+end
+@enduml
