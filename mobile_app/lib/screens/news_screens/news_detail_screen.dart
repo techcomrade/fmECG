@@ -25,16 +25,22 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
     final String contentNewsInHTML = context.read<NewsProvider>().selectedContentNews;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(PhosphorIcons.regular.arrowLeft), onPressed: () => Navigator.pop(context)),
+        leading: IconButton(
+          icon: Icon(PhosphorIcons.regular.arrowLeft), 
+          onPressed: () => Navigator.pop(context)
+        ),
       ),
       body: SingleChildScrollView(
-        child: Html(
-          data: contentNewsInHTML,
-          style: {
-            "p": Style(
-              fontSize: FontSize.larger
-            )
-          },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Html(
+            data: contentNewsInHTML,
+            style: {
+              "p": Style(
+                fontSize: FontSize.larger
+              )
+            },
+          ),
         )
       ),
     );
