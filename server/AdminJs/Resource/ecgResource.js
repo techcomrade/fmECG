@@ -1,6 +1,32 @@
 
 const EcgRecords = require('../../Models/ecgRecordModel.js');
-const {Components} = require('../Component/CustomComponent.js')
+const {Components, componentLoader} = require('../Component/CustomComponent.js')
+
+const exportData = async (request, response, context) => {
+  try {
+    const ecgRecord = context.record;
+    const dataDirectory = ecgRecord.param.data_directory;
+    console.log(dataDirectory)
+    const { record, currentAdmin } = context
+          return {
+            record: record.toJSON(currentAdmin),
+            msg: 'Hello world',
+          }
+
+    // if (!fs.existsSync(dataDirectory)) {
+    //   return response.status(404).json({ status: 'error', msg: 'Data directory not found' });
+    // }
+
+    // const exportFilePath = path.join(dataDirectory, 'exported_data.txt');
+
+
+    // return response.status(404).json({ status: 'error', msg: 'Data directory not found' });
+
+  } catch (error) {
+    console.error(error);
+    return response.status(500).json({ status: 'error', msg: 'An error occurred while exporting data' });
+  }
+};
 
 
 const EcgRecordsResource = {
@@ -43,9 +69,18 @@ const EcgRecordsResource = {
       },
 
       actions: {
-        // show : {
-        //   components: Components.ShowECGRecord
-        // }
+        exportData: {
+          actionType: 'record',
+          component: false,
+          icon: 'Export',
+          isVisible: true,
+          handler: exportData
+        },
+
+        edit: {
+          isVisible: false,
+        },
+
       }
     },
   };
