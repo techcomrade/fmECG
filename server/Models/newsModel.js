@@ -19,7 +19,7 @@ const NewsCategory = sequelize.define('news_category', {
 },
 {
   updatedAt: 'updated_at',
-  createdAt: 'create_at',
+  createdAt: 'created_at',
   tableName: 'news_categories'
 });
 
@@ -57,7 +57,7 @@ const News = sequelize.define('news', {
 },
 {
   updatedAt: 'updated_at',
-  createdAt: 'create_at',
+  createdAt: 'created_at',
   tableName: 'news'
 });
 

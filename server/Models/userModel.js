@@ -57,7 +57,7 @@ const User = sequelize.define('user', {
 }, 
 {
   updatedAt: 'updated_at',
-  createdAt: 'create_at',
+  createdAt: 'created_at',
   tableName: 'users',
   scopes: {
     patient: {

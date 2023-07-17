@@ -40,7 +40,7 @@ const EcgRecords = sequelize.define('ecg_record', {
 },
 {
   updatedAt: 'updated_at',
-  createdAt: 'create_at',
+  createdAt: 'created_at',
   tableName: 'ecg_records'
 });
 
