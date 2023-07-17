@@ -2,10 +2,14 @@ import 'dart:io';
 
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/controllers/news_controller.dart';
 import 'package:bluetooth_ecg/models/user_model.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
+import 'package:bluetooth_ecg/providers/news_provider.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens_udpate/ble_screen.dart';
+import 'package:bluetooth_ecg/screens/news_screens/news_all_screens.dart';
+import 'package:bluetooth_ecg/screens/news_screens/news_detail_screen.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:flutter/material.dart';
 import 'package:bluetooth_ecg/components/live_chart.dart';
@@ -13,6 +17,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -21,13 +26,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   late File fileToSave;
   bool isShowChart = false;
+
+  Map allNews = {}; 
   @override
   void initState() {
     super.initState();
     checkPrefer();
+    NewsController.getAllNews();
   }
 
   void checkPrefer() async {
@@ -43,10 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final bool isDarkTheme = Provider.of<AuthProvider>(context, listen: true).theme == ThemeType.DARK;
-    // final Color backgroundColorApp = isDarkTheme ? ColorConstant.quaternary: Colors.white;
-    // final User user = context.read<UserProvider>().user;
-    // final String userName = user.name; 
+    final List allNews = context.watch<NewsProvider>().allNews;
 
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
@@ -183,6 +188,105 @@ class _HomeScreenState extends State<HomeScreen> {
                   : LiveChartSample(fileToSave: fileToSave),
                 ],
               ),
+            ),
+
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Các tin tức",
+                  style: TextStyle(
+                    color: ColorConstant.quaternary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                      Navigator.push(context, 
+                        MaterialPageRoute(builder:(context) => const NewsAllScreen())
+                    );
+                  },
+                  child: const Text("Xem tất cả"),
+                )
+              ]
+            ),
+
+            if(allNews.isNotEmpty)
+            ListView.builder(
+              padding: EdgeInsets.only(top: 10),
+              shrinkWrap: true,
+              itemCount: 4,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final news = allNews[index];
+                final String imagePresentUrl = news["image"] ?? "";
+                final int newsId = news["news_id"];
+                final int newsCategoryId = news["category_id"];
+                final DateTime newsCreatedAt = DateTime.parse(news["create_at"]);
+                final String newsCreatedAtFormat = DateFormat("EEEE, dd-MM-yyyy", "vi").format(newsCreatedAt);
+                final String newsTitle = news["title"].length > 100 ? 
+                                          news["title"].substring(0, 100) : news["title"];
+            
+                return InkWell(
+                  onTap: () async {
+                    await NewsController.getNewsById(newsId);
+                    Navigator.push(context, 
+                      MaterialPageRoute(builder:(context) => const NewsDetailScreen())
+                    );
+                  },
+                  splashColor: ColorConstant.primary,
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            imagePresentUrl,
+                            width: 90,
+                            height: 90,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        Container(
+                          height: 80,
+                          // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
+                          width: 240,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Sport", 
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey[600]
+                                )
+                              ),
+                              Text("$newsTitle", 
+                                overflow: TextOverflow.ellipsis, 
+                                maxLines: 2,
+                                style: const TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black
+                                )
+                              ),
+                              Text("$newsCreatedAtFormat",
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                )
+                              ),
+                            ]
+                          ),
+                        )
+                      ]
+                    ),
+                  ),
+                );
+              }
             ),
           ],
         ),
