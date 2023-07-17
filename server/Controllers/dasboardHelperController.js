@@ -51,7 +51,7 @@ exports.getUserMileStatsDataByMonth = async (req, res) => {
           role: {
             [Op.in]: [0] // role = 0 (patient) or role = 1 (doctor)
           },
-          create_at: {
+          created_at: {
             [Op.gte]: new Date(today.getFullYear(), i, 1), // Start of the month
             [Op.lte]: new Date(today.getFullYear(), i + 1, 0) // End of the month
           }
@@ -63,7 +63,7 @@ exports.getUserMileStatsDataByMonth = async (req, res) => {
           role: {
             [Op.in]: [1] // role = 0 (patient) or role = 1 (doctor)
           },
-          create_at: {
+          created_at: {
             [Op.gte]: new Date(today.getFullYear(), i, 1), // Start of the month
             [Op.lte]: new Date(today.getFullYear(), i + 1, 0) // End of the month
           }
@@ -99,7 +99,7 @@ exports.getUserMileStatsDataByWeek = async (req, res) => {
           role: {
             [Op.in]: [0] // role = 0 (patient) or role = 1 (doctor)
           },
-          create_at: {
+          created_at: {
             [Op.gte]: new Date(previousDay.setHours(0, 0, 0, 0)), // Start of the day
             [Op.lte]: new Date(previousDay.setHours(23, 59, 59, 999)) // End of the day
           }
@@ -111,7 +111,7 @@ exports.getUserMileStatsDataByWeek = async (req, res) => {
           role: {
             [Op.in]: [1] // role = 0 (patient) or role = 1 (doctor)
           },
-          create_at: {
+          created_at: {
             [Op.gte]: new Date(previousDay.setHours(0, 0, 0, 0)), // Start of the day
             [Op.lte]: new Date(previousDay.setHours(23, 59, 59, 999)) // End of the day
           }
