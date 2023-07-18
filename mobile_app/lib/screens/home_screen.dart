@@ -76,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
-      // color: backgroundColorApp,
       child: SingleChildScrollView(
         controller: _scrollController,
         physics: const ClampingScrollPhysics(),
@@ -120,31 +119,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // const SizedBox(height: 30),
-            // //quick action
-            // SizedBox(
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Text("Quick Action",
-            //         style: TextStyle(
-            //           color: ColorConstant.quaternary,
-            //           fontWeight: FontWeight.bold,
-            //           fontSize: 18
-            //         ),
-            //       ),
-            //       const SizedBox(height: 10),
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //         children: [
-            //           SquareContainer(icon: PhosphorIcons.regular.lightning, text: "Power nap"),
-            //           SquareContainer(icon: PhosphorIcons.regular.moon, text: "Deep sleep"),
-            //           SquareContainer(icon: PhosphorIcons.regular.userSwitch, text: "Focus"),
-            //         ],
-            //       )
-            //     ],
-            //   ),
-            // ),
 
             const SizedBox(height: 30),
             SizedBox(
@@ -241,16 +215,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
             if(allNews.isNotEmpty)
             ListView.builder(
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               shrinkWrap: true,
               itemCount: 4,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final news = allNews[index];
                 final String imagePresentUrl = news["image"] ?? "";
                 final int newsId = news["news_id"];
-                final int newsCategoryId = news["category_id"];
-                final DateTime newsCreatedAt = DateTime.parse(news["create_at"]);
+                final String newsCategory = news["category_name"];
+                final DateTime newsCreatedAt = DateTime.parse(news["created_at"]);
                 final String newsCreatedAtFormat = DateFormat("EEEE, dd-MM-yyyy", "vi").format(newsCreatedAt);
                 final String newsTitle = news["title"].length > 100 ? 
                                           news["title"].substring(0, 100) : news["title"];
@@ -264,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   splashColor: ColorConstant.primary,
                   child: Container(
-                    margin: EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.only(bottom: 10),
                     child: Row(
                       children: [
                         ClipRRect(
@@ -280,12 +254,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         Container(
                           height: 90,
                           // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
-                          width: 240,
+                          width: 210,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Sport", 
+                              Text("$newsCategory", 
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
