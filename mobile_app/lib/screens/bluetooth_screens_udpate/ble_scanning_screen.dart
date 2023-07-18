@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens_udpate/ble_chart_test.dart';
-import 'package:bluetooth_ecg/screens/main_screen.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
@@ -99,6 +98,8 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
             deviceId: deviceId
           );
           showDialogStateConnectionBluetooth(state);
+        } else {
+          print("not connected");
         }
       },
       onError: (Object e) =>

@@ -30,14 +30,16 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   List<_ChartData>? chartData;
   late int count;
   ChartSeriesController? _chartSeriesController;
-  late StreamSubscription<List<int>>? subscribeStream;
-  late Stream<List<int>> _receivedDataStream;
 
+  late StreamSubscription<List<int>> subscribeStream;
+  late StreamController<List<int>> _dataStreamController;
+  Stream<List<int>> get _dataStream => _dataStreamController.stream;
 
   @override
   void initState() {
     count = 0;
     chartData = <_ChartData>[];
+    _dataStreamController = StreamController<List<int>>.broadcast();
     super.initState();
   }
 
@@ -45,22 +47,22 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   void dispose() {
     chartData!.clear();
     _chartSeriesController = null;
-    subscribeStream?.cancel();
+    subscribeStream.cancel();
+    _dataStreamController.close();
+    
     super.dispose();
   }
 
-  Future<void> subscribeCharacteristic() async {
+  subscribeCharacteristic() {
     subscribeStream =
       flutterReactiveBle.subscribeToCharacteristic(widget.bluetoothCharacteristic).listen((value) {
         _updateDataSource(value);
+        FilesManagement.appendDataToFile(widget.fileToSave, value);
+        print('dataaa:$value');
+        _dataStreamController.add(value);
       });
   }
-  // Widget get subscribeSection => Container(
-  //   child: ElevatedButton(
-  //             onPressed: subscribeCharacteristic(),
-  //             child: const Text('Subscribe'),
-  //           ),
-  // );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,13 +73,20 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
             onPressed: () => subscribeCharacteristic(),
             child: const Text('Subscribe'),
           ),
-          _buildLiveLineChart(),
+          StreamBuilder<List<int>>(
+            stream: _dataStream,
+            builder: (context, snapshot) {
+              print('a:${snapshot.data}');
+              return _buildLiveLineChart();
+            }
+          ),
           Align(
             alignment: Alignment.center,
             child: ElevatedButton(
               onPressed: () async {
-                timer?.cancel();
                 _chartSeriesController = null;
+                subscribeStream.cancel();
+                _dataStreamController.close();
                 final DateTime stopTime = DateTime.now();            
                 final SharedPreferences preferences = await SharedPreferences.getInstance();
                 final Map userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
@@ -173,8 +182,6 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
       );
     }
     count = count + 1;
-
-    FilesManagement.appendDataToFile(widget.fileToSave, dataChannelsToSave);
   }
 
   ///Get the random data
