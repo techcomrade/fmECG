@@ -32,8 +32,8 @@ class NewsAllScreen extends StatelessWidget {
             final news = allNews[index];
             final String imagePresentUrl = news["image"] ?? "";
             final int newsId = news["news_id"];
-            final int newsCategoryId = news["category_id"];
-            final DateTime newsCreatedAt = DateTime.parse(news["create_at"]);
+            final String newsCategory = news["category_name"];
+            final DateTime newsCreatedAt = DateTime.parse(news["created_at"]);
             final String newsCreatedAtFormat = DateFormat("EEEE, dd-MM-yyyy", "vi").format(newsCreatedAt);
             final String newsTitle = news["title"].length > 100 ? 
                                       news["title"].substring(0, 100) : news["title"];
@@ -63,12 +63,12 @@ class NewsAllScreen extends StatelessWidget {
                     Container(
                       height: 85,
                       // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
-                      width: 240,
+                      width: 210,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Sport", 
+                          Text("$newsCategory", 
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
