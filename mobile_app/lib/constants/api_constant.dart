@@ -1,5 +1,6 @@
 class APIConstant {
-  static String apiUrl = "http://localhost:2000/";
+  static String apiUrl = "http://192.168.1.7:2000/";
+  static String apiUrlProduction = "http://13.250.106.115/";
 
   // static getDebugMode() {
   //   assert(() {
@@ -13,6 +14,6 @@ class APIConstant {
   // }
 
   static const headers = <String, String>{
-    'Content-Type': 'application/json; charset=UTF-8'
+    'Content-Type': 'application/json;charset=UTF-8'
   };
 }

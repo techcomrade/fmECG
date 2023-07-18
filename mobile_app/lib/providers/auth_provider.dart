@@ -1,19 +1,48 @@
 // auth provider
 
-import 'package:bluetooth_ecg/generated/l10n.dart';
+import 'dart:convert';
+
+import 'package:bluetooth_ecg/constants/api_constant.dart';
+import 'package:bluetooth_ecg/providers/user_provider.dart';
+import 'package:bluetooth_ecg/utils/utils.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+enum ThemeType { DARK, LIGHT }
+
+UserProvider userProvider = Provider.of<UserProvider>(Utils.globalContext!, listen: false);
 
 class AuthProvider extends ChangeNotifier {
   String _token = "";
   var _expiryDate;
   int _userId = 0;
+  int _roleId = -1;
   String _locale = 'en';
   bool _isDarkTheme = false;
+  bool _isAutoTheme = false;
 
   String get locale => _locale;
-
   int get userId => _userId; 
+  int get roleId => _roleId;
+  
+  String get token {
+    if (_expiryDate != null &&_expiryDate!.isAfter(DateTime.now()) && _token != "") {
+      return _token;
+    } else {
+      return "";
+    }
+  }
+
+  bool get isAuth {
+    final isExpiryDate = _roleId != -1 && _token !=  "";
+    if (!isExpiryDate) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   AuthProvider() {
     getLocale().then((value) {
@@ -21,7 +50,6 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     });
   }
-
   // set locale(lc) => setLocale(lc);
   // void setLocale(lc) async {
   //   S.load(Locale(lc)); 
@@ -32,28 +60,148 @@ class AuthProvider extends ChangeNotifier {
   //   if (status) notifyListeners();
   // }
 
+  ThemeType get theme => _isDarkTheme ? ThemeType.DARK : ThemeType.LIGHT;
+  set theme(ThemeType type) => setTheme(type, false);
+
+
+  void setTheme(ThemeType type, bool isAuto) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    _isDarkTheme = type == ThemeType.DARK;
+    await preferences.setBool('isAutoTheme', isAuto);
+    bool status = await preferences.setBool('isDark', _isDarkTheme);
+
+    if (status) notifyListeners();
+  }
+
+  Future<bool> getAutoTheme() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    _isAutoTheme = preferences.getBool('isAutoTheme') ?? false;
+    return _isAutoTheme;
+  }
+
+  Future<ThemeType> getTheme() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var theme = preferences.getBool('isDark');
+    _isDarkTheme = theme ?? true ;
+    return _isDarkTheme ? ThemeType.DARK : ThemeType.LIGHT;
+  }
+
+  bool get isAutoTheme => _isAutoTheme;
+  set isAutoTheme(bool isAuto) => setIsAutoTheme(isAuto);
+
+  void setIsAutoTheme(bool isAuto) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    _isAutoTheme = isAuto;
+    bool status = await preferences.setBool('isAutoTheme', _isAutoTheme);
+    await preferences.setBool('isDark', false);
+
+    if(status) notifyListeners();
+  }
+
+
   Future<String> getLocale() async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
     _locale = preferences.getString('locale') ?? "en";
     return _locale;
   }
 
-  String get token {
-    if (_expiryDate != null &&_expiryDate!.isAfter(DateTime.now()) && _token != "") {
-      return _token;
-    } else {
-      return "";
+
+  Future<void> loginUser(String email, String password) async {
+    // call API with email and password
+    String url = APIConstant.apiUrlProduction + 'login';
+    final bodyEncoded = jsonEncode({"email": email, "password": password});
+    try {
+      final response = await http.post(Uri.parse(url), 
+        headers: APIConstant.headers,
+        body: bodyEncoded
+      );
+      final responseData = jsonDecode(response.body);
+
+      if (responseData["status"] == "success") {
+        // do something with data
+        _token = responseData["token"];
+        _roleId = responseData["user"]["role"];
+        _userId = responseData["user"]["user_id"];
+        userProvider.setDataUser(responseData["user"]);      
+        notifyListeners();
+        setDataLogin();
+      }
+    } catch (err) {
+      debugPrint('error from login: $err');
     }
   }
 
-  bool get isAuth {
-    final isExpiryDate = _expiryDate != null && _expiryDate!.isBefore(DateTime.now()) && _token != "";
+  Future<void> registerUser(String email, String password) async {
+    // call API with email and password
+    String url = APIConstant.apiUrlProduction + 'register';
+    final bodyEncoded = jsonEncode({"email": email, "password": password});
+    try {
+      final response = await http.post(Uri.parse(url), 
+        headers: APIConstant.headers,
+        body: bodyEncoded
+      );
+      final responseData = jsonDecode(response.body);
+      if (responseData["status"] == "success") {
+        // do something with data
+        // print('heheh donee:${responseData["token"]}');
+      }
+    } catch (err) {
+      debugPrint('error from register: $err');
+    }
+  }
 
-    if (token == "" || isExpiryDate) {
+  Future<void> logoutUser() async {
+    // call API with email and password
+    String url = APIConstant.apiUrlProduction + 'logout';
+    try {
+      final response = await http.get(Uri.parse(url), 
+        headers: {...APIConstant.headers, 'Cookie': 'token=$_token'},
+      );
+      final responseData = jsonDecode(response.body);
+
+      if (responseData["status"] == "success") {
+        // do something with data
+        _token = "";
+        removeDataLogin();
+        notifyListeners();
+      }
+    } catch (err) {
+      debugPrint('error from register: $err');
+    }
+  }
+
+  void setDataLogin() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final userData = json.encode(
+      {
+        'token': _token,
+        'userId': _userId,
+        'roleId': _roleId,
+      },
+    );
+    preferences.setString('userData', userData);
+  }
+  
+  void removeDataLogin() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove("userData");
+  }
+
+  Future<bool> checkAutoLogin() async {
+    final preferences = await SharedPreferences.getInstance();
+    if (!preferences.containsKey('userData')) {
       return false;
-    } else {
+    }
+
+    final userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
+    _token = userDataDecoded['token'].toString();
+    _userId = userDataDecoded['userId'];
+    _roleId = userDataDecoded['roleId'];
+    notifyListeners();
+    if ( _roleId != -1 && _token !=  "") {
       return true;
+    } else {
+      return false;
     }
   }
-
 }

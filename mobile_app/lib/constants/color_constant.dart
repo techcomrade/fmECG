@@ -8,6 +8,7 @@ class ColorConstant {
   static Color tertiary = const Color(0xFF7BE5C5);
   static Color quaternary = const Color(0xFF222566);
   static Color quinary = const Color(0xFFF7F9FB);
+  static Color description = const Color(0XFFEDEDED);
 
   static Color black9007e = fromHex('#7e000000');
   static Color blueGray100 = fromHex('#cfcfcf');

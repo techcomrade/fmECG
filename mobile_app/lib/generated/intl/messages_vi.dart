@@ -22,7 +22,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "hello": MessageLookupByLibrary.simpleMessage("Xin chào"),
-        "nothing": MessageLookupByLibrary.simpleMessage("Không có gì")
+        "chat": MessageLookupByLibrary.simpleMessage("Trò chuyện"),
+        "history": MessageLookupByLibrary.simpleMessage("Lịch sử"),
+        "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
+        "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
+        "profile": MessageLookupByLibrary.simpleMessage("Cá nhân"),
+        "registration": MessageLookupByLibrary.simpleMessage("Đăng ký"),
+        "signUp": MessageLookupByLibrary.simpleMessage("Sign up")
       };
 }
