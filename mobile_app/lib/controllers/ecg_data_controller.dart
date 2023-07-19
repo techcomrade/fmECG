@@ -9,7 +9,7 @@ class ECGDataController {
   /// - first 3 bytes: status bytes
   /// - 12 next bytes: 3 bytes correspond to 1 channel and the last channel is test channel
   /// - last bytes: counting bytes
-  static handleDataRowFromBluetooth(List<int> bytes) {
+  static List<double> handleDataRowFromBluetooth(List<int> bytes) {
     // final List<int> statusBytes = getStatusBytes(bytes);
     final List<int> channelsBytes = getChannelsBytes(bytes);
     // final int countByte = getCountByte(bytes);
@@ -94,7 +94,7 @@ class ECGDataController {
   }
 
   // tính điện áp để vẽ ra biểu đồ
-  static calculateDataPointToShow(List<double> row) {
+  static List<double> calculateDataPointToShow(List<double> row) {
     List<double> dataPoints = row.map((decimalValue) => (decimalValue * REFERENCE_VOLTAGE) / (math.pow(2, 23) - 1).toDouble()).toList();
     return dataPoints;
   }
