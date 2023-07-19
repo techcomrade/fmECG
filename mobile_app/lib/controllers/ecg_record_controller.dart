@@ -4,7 +4,7 @@ import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ECGFilesController {
+class ECGRecordController {
   static Future<void> uploadFileToDB(Map fileUploadInformation) async {
     final url = APIConstant.apiUrlProduction + 'ecg-records/upload';
 

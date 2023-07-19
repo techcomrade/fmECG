@@ -3,7 +3,7 @@ import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_measurement_screen.dart';
-import 'package:bluetooth_ecg/screens/history_screen.dart';
+import 'package:bluetooth_ecg/screens/history_screens/history_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
 import 'package:bluetooth_ecg/screens/user_profile_screen.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';

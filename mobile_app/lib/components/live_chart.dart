@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:bluetooth_ecg/controllers/ecg_data_controller.dart';
-import 'package:bluetooth_ecg/controllers/ecg_files_controller.dart';
+import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
