@@ -4,6 +4,7 @@ import 'package:bluetooth_ecg/constants/theme.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/providers/bluetooth_provider.dart';
+import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:bluetooth_ecg/screens/main_screen.dart';
@@ -82,6 +83,7 @@ class FmECGAppState extends State<FmECGApp> {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => NewsProvider()),
         ChangeNotifierProvider(create: (_) => BluetoothProvider()),
+        ChangeNotifierProvider(create: (_) => ECGProvider()),
       ],
       child: Consumer<AuthProvider>(
         builder: (ctx, auth, _) {

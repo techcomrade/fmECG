@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
 import 'package:bluetooth_ecg/controllers/news_controller.dart';
 import 'package:bluetooth_ecg/controllers/user_controller.dart';
 import 'package:bluetooth_ecg/models/user_model.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
+import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens_udpate/ble_screen.dart';
@@ -40,7 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     checkPrefer();
     NewsController.getAllNews();
-    test();
   }
 
   void checkPrefer() async {
