@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:bluetooth_ecg/constants/api_constant.dart';
+import 'package:bluetooth_ecg/controllers/firebase_messages_controller.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:http/http.dart' as http;
@@ -16,6 +17,7 @@ UserProvider userProvider = Provider.of<UserProvider>(Utils.globalContext!, list
 
 class AuthProvider extends ChangeNotifier {
   String _token = "";
+  String _firebaseToken = "";
   var _expiryDate;
   int _userId = 0;
   int _roleId = -1;
@@ -122,12 +124,24 @@ class AuthProvider extends ChangeNotifier {
         _token = responseData["token"];
         _roleId = responseData["user"]["role"];
         _userId = responseData["user"]["user_id"];
-        userProvider.setDataUser(responseData["user"]);      
-        notifyListeners();
+        userProvider.setDataUser(responseData["user"]);
+
+        // firebase token sẽ đi theo thiết bị di động không phải theo phiên đăng nhập
+        _firebaseToken = await FmECGFirebaseMessage().getDeviceToken();
+        _checkAndSaveFirebaseToken();
         setDataLogin();
+
+        notifyListeners();
       }
     } catch (err) {
       debugPrint('error from login: $err');
+    }
+  }
+
+  void _checkAndSaveFirebaseToken() async {
+    bool isFirebaseTokenExisted = await FmECGFirebaseMessage().checkFirebaseTokenExist(_firebaseToken);
+    if (!isFirebaseTokenExisted) {
+      await FmECGFirebaseMessage().saveTokenToFirestore(_userId, _firebaseToken);
     }
   }
 
@@ -177,6 +191,7 @@ class AuthProvider extends ChangeNotifier {
         'token': _token,
         'userId': _userId,
         'roleId': _roleId,
+        'firebaseToken': _firebaseToken
       },
     );
     preferences.setString('userData', userData);
@@ -197,6 +212,7 @@ class AuthProvider extends ChangeNotifier {
     _token = userDataDecoded['token'].toString();
     _userId = userDataDecoded['userId'];
     _roleId = userDataDecoded['roleId'];
+    _firebaseToken = userDataDecoded['firebaseToken'];
     notifyListeners();
     if ( _roleId != -1 && _token !=  "") {
       return true;

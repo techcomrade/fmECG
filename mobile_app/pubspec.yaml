@@ -46,6 +46,7 @@ dependencies:
   # firebase
   firebase_messaging: ^14.1.1
   firebase_core: ^2.14.0
+  firebase_database: ^10.2.4
   cloud_firestore: ^4.8.2
 
   # assets lib
