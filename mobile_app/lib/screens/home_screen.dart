@@ -4,6 +4,7 @@ import 'package:bluetooth_ecg/components/circular_avatar.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
 import 'package:bluetooth_ecg/controllers/news_controller.dart';
+import 'package:bluetooth_ecg/controllers/user_controller.dart';
 import 'package:bluetooth_ecg/models/user_model.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
@@ -47,6 +48,18 @@ class _HomeScreenState extends State<HomeScreen> {
     final prefs = await SharedPreferences.getInstance();
     final data = prefs.getString("files_not_upload");
     print('data:$data');
+  }
+
+  void test() async {
+    final a = await getExternalStorageDirectory();
+    print('a: ${a!.path}');
+    final b = await getTemporaryDirectory();
+    print('b: ${b!.path}');
+    final c = await getExternalStorageDirectories();
+    print('c: ${c!.first}');
+    int patientId = await Utils.getUserId();
+    UserController.getDoctorAssigned(patientId);
+
   }
 
   Future<bool> _requestManageStorage() async {
