@@ -30,4 +30,25 @@ class Utils {
     final timestamp = now.millisecondsSinceEpoch;
     return timestamp;
   }
+
+  static Future<void> showDialogLoginRequirement(context) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Có lỗi xảy ra"),
+          content: Text("Bạn phải đăng nhập để thực hiện chức năng này!"),
+          actions: [
+            TextButton(
+              child: Text('Trở về'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      }
+    );
+  }
 }

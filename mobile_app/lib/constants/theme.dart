@@ -17,6 +17,14 @@ class ThemeECG {
     //   backgroundColor: ColorConstant.primary,
     //   elevation: 1
     // ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(ColorConstant.primary)
+      )
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: ColorConstant.primary
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Colors.black,
       selectedItemColor: ColorConstant.primary,

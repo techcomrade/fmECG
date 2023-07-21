@@ -2,16 +2,24 @@ import 'dart:io';
 
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/controllers/news_controller.dart';
 import 'package:bluetooth_ecg/models/user_model.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
+import 'package:bluetooth_ecg/providers/news_provider.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens_udpate/ble_screen.dart';
+import 'package:bluetooth_ecg/screens/news_screens/news_all_screens.dart';
+import 'package:bluetooth_ecg/screens/news_screens/news_detail_screen.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:flutter/material.dart';
 import 'package:bluetooth_ecg/components/live_chart.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -20,12 +28,41 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   late File fileToSave;
   bool isShowChart = false;
+
+  Map allNews = {}; 
   @override
   void initState() {
     super.initState();
+    checkPrefer();
+    NewsController.getAllNews();
+    test();
+  }
+
+  void checkPrefer() async {
+    final prefs = await SharedPreferences.getInstance();
+    final data = prefs.getString("files_not_upload");
+    print('data:$data');
+  }
+
+  void test() async {
+    final a = await getExternalStorageDirectory();
+    print('a: ${a!.path}');
+    final b = await getTemporaryDirectory();
+    print('b: ${b!.path}');
+    final c = await getExternalStorageDirectories();
+    print('c: ${c!.first}');
+  }
+
+  Future<bool> _requestManageStorage() async {
+    final PermissionStatus status = await Permission.manageExternalStorage.request();  
+    if (status == PermissionStatus.granted) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -35,12 +72,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final bool isDarkTheme = Provider.of<AuthProvider>(context, listen: true).theme == ThemeType.DARK;
-    // final Color backgroundColorApp = isDarkTheme ? ColorConstant.quaternary: Colors.white;
+    final List allNews = context.watch<NewsProvider>().allNews;
 
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
-      // color: backgroundColorApp,
       child: SingleChildScrollView(
         controller: _scrollController,
         physics: const ClampingScrollPhysics(),
@@ -84,31 +119,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // const SizedBox(height: 30),
-            // //quick action
-            // SizedBox(
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Text("Quick Action",
-            //         style: TextStyle(
-            //           color: ColorConstant.quaternary,
-            //           fontWeight: FontWeight.bold,
-            //           fontSize: 18
-            //         ),
-            //       ),
-            //       const SizedBox(height: 10),
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //         children: [
-            //           SquareContainer(icon: PhosphorIcons.regular.lightning, text: "Power nap"),
-            //           SquareContainer(icon: PhosphorIcons.regular.moon, text: "Deep sleep"),
-            //           SquareContainer(icon: PhosphorIcons.regular.userSwitch, text: "Focus"),
-            //         ],
-            //       )
-            //     ],
-            //   ),
-            // ),
 
             const SizedBox(height: 30),
             SizedBox(
@@ -163,17 +173,121 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }, 
                     temporaryNothing: () async {
-                      FilesManagement.createDirectoryFirstTimeWithDevice();
-                      fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
-                      setState(() {
-                        isShowChart = true;
-                      });
+                      bool isAccessFiles = await _requestManageStorage();
+                      if (isAccessFiles) {
+                        FilesManagement.createDirectoryFirstTimeWithDevice();
+                        fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
+                        setState(() {
+                          isShowChart = true;
+                        });
+                      } else {
+                        // show dialog need permission
+                        print('phone does not grant permission');
+                      }
                     }
                   ) 
-                  : LiveChartSample(fileToSave: fileToSave)
-                  // : Container(),
+                  : LiveChartSample(fileToSave: fileToSave),
                 ],
               ),
+            ),
+
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Các tin tức",
+                  style: TextStyle(
+                    color: ColorConstant.quaternary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                      Navigator.push(context, 
+                        MaterialPageRoute(builder:(context) => const NewsAllScreen())
+                    );
+                  },
+                  child: const Text("Xem tất cả"),
+                )
+              ]
+            ),
+
+            if(allNews.isNotEmpty)
+            ListView.builder(
+              padding: const EdgeInsets.only(top: 10),
+              shrinkWrap: true,
+              itemCount: 4,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final news = allNews[index];
+                final String imagePresentUrl = news["image"] ?? "";
+                final int newsId = news["news_id"];
+                final String newsCategory = news["category_name"];
+                final DateTime newsCreatedAt = DateTime.parse(news["created_at"]);
+                final String newsCreatedAtFormat = DateFormat("EEEE, dd-MM-yyyy", "vi").format(newsCreatedAt);
+                final String newsTitle = news["title"].length > 100 ? 
+                                          news["title"].substring(0, 100) : news["title"];
+            
+                return InkWell(
+                  onTap: () async {
+                    await NewsController.getNewsById(newsId);
+                    Navigator.push(context, 
+                      MaterialPageRoute(builder:(context) => const NewsDetailScreen())
+                    );
+                  },
+                  splashColor: ColorConstant.primary,
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            imagePresentUrl,
+                            width: 90,
+                            height: 90,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        Container(
+                          height: 90,
+                          // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
+                          width: 210,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("$newsCategory", 
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey[600]
+                                )
+                              ),
+                              Text("$newsTitle", 
+                                overflow: TextOverflow.ellipsis, 
+                                maxLines: 2,
+                                style: const TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black
+                                )
+                              ),
+                              Text("$newsCreatedAtFormat",
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                )
+                              ),
+                            ]
+                          ),
+                        )
+                      ]
+                    ),
+                  ),
+                );
+              }
             ),
           ],
         ),

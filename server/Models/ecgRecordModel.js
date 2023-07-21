@@ -32,11 +32,15 @@ const EcgRecords = sequelize.define('ecg_record', {
   stop_time: {
     type: Sequelize.DATE,
     allowNull: false
-  }
+  },
+  sensor_type: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
 },
 {
   updatedAt: 'updated_at',
-  createdAt: 'create_at',
+  createdAt: 'created_at',
   tableName: 'ecg_records'
 });
 
