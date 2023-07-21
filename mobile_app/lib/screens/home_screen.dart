@@ -37,8 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // final bool isDarkTheme = Provider.of<AuthProvider>(context, listen: true).theme == ThemeType.DARK;
     // final Color backgroundColorApp = isDarkTheme ? ColorConstant.quaternary: Colors.white;
-    final User user = context.read<UserProvider>().user;
-    final String userName = user.name; 
 
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
@@ -65,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Text("Chào mừng đến với fmECG"),
                           Text(
-                            userName,
+                            "Thai Dong",
                             style: TextStyle(
                               color: ColorConstant.primary,
                               fontWeight: FontWeight.bold,
