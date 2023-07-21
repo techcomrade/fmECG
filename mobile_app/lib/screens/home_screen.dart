@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/controllers/news_controller.dart';
+import 'package:bluetooth_ecg/controllers/user_controller.dart';
 import 'package:bluetooth_ecg/models/user_model.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
@@ -11,6 +12,7 @@ import 'package:bluetooth_ecg/screens/bluetooth_screens_udpate/ble_screen.dart';
 import 'package:bluetooth_ecg/screens/news_screens/news_all_screens.dart';
 import 'package:bluetooth_ecg/screens/news_screens/news_detail_screen.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
+import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:bluetooth_ecg/components/live_chart.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -54,6 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
     print('b: ${b!.path}');
     final c = await getExternalStorageDirectories();
     print('c: ${c!.first}');
+    int patientId = await Utils.getUserId();
+    UserController.getDoctorAssigned(patientId);
+
   }
 
   Future<bool> _requestManageStorage() async {

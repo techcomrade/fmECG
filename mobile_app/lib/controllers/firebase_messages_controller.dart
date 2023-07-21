@@ -11,27 +11,37 @@ class FmECGFirebaseMessage {
     return firebaseToken ?? "";
   }
 
-  Future<void> saveTokenToFirestore(String token, int userId) async {
-    await database.collection("user_tokens").doc(userId.toString()).set(
+  Future<void> saveTokenToFirestore(int userId, String firebaseToken) async {
+    await database.collection("user_tokens").add(
       {
-        "firebase_token": token
+        "user_id": userId,
+        "firebase_token": firebaseToken
       }
     );
   }
 
-  //TODO: add list userId
-  void getSpecificConversationByUserIds() async {
+  Future<void> createConversation(Map<String, dynamic> conversationInfo) async {
+    await database.collection("conversations").add(conversationInfo);
+  }
+
+  Future<String> getSpecificConversationIdByUserIds(List userIds) async {
     final QuerySnapshot collectionQuerySnapshot = await database.collection("conversations")
-                                                    .where('member_ids.${333}', isEqualTo: true)
-                                                    .where('member_ids.${444}', isEqualTo: true)
+                                                    .where('member_ids.${userIds[0]}', isEqualTo: true)
+                                                    .where('member_ids.${userIds[1]}', isEqualTo: true)
                                                     .get();
     final allDocuments = collectionQuerySnapshot.docs;
-    for (DocumentSnapshot documentSnapshot in allDocuments) {
-      final Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
-      print('data:$data');
-      if (data["member_ids"] != null && data["member_ids"].length > 1) {
-        print('datataaa:${data["member_ids"]}');
+    if (allDocuments.isEmpty) {
+      return "";
+    } else {
+      String conversationId = "";
+      for (DocumentSnapshot documentSnapshot in allDocuments) {
+        final Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
+        if (data["conversation_id"] != null) {
+          conversationId = data["conversation_id"];
+          break;
+        }
       }
+      return conversationId;
     }
   }
 
@@ -43,19 +53,18 @@ class FmECGFirebaseMessage {
     return conversationInfoQuery;
   }
 
-  //TODO: add userId
-  getAllConversationsInfo() {
+  getAllConversationsInfo(int userId) {
     final allConversationsQuery = database.collection("conversations")
-                                .where('member_ids.${333}', isEqualTo: true)
+                                .where('member_ids.${userId}', isEqualTo: true)
                                 .snapshots();
     return allConversationsQuery;
   }
 
   //TODO: add conversationId
-  getMessageConversation() {
+  getMessageConversation(String conversationId) {
     final messageConversationQuery = database.collection("messages")
-                                            .where("conversation_id", isEqualTo: 1)
-                                            // .orderBy("sent_at")
+                                            .where("conversation_id", isEqualTo: conversationId)
+                                            .orderBy("sent_at")
                                             .snapshots();
     return messageConversationQuery;
   }
@@ -64,20 +73,15 @@ class FmECGFirebaseMessage {
     await database.collection("messages").add(message);
   }
 
-  // sendMessage(Map message) async {
-  //   Map messagebody = {
-  //     "conversation_id": 
-  //     "message_id":
-  //     "message_content":
-  //     "sender_id":
-  //     "sent_at":
-  //   };
-
-  // }
-
-  // createConversation(Map conversation) async {
-  //   Map conversation = {
-
-  //   };
-  // }
+  Future<bool> checkFirebaseTokenExist(String firebaseToken) async {
+    final QuerySnapshot firebaseTokenSnapshot = await database.collection("user_tokens")
+                                     .where("firebase_token", isEqualTo: firebaseToken)
+                                     .get();
+    final allDocuments = firebaseTokenSnapshot.docs;
+    if (allDocuments.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
