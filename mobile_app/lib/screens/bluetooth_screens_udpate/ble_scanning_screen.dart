@@ -138,7 +138,7 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
                 child: Text('Tiến hành đo'),
                 onPressed: () async {
                   bool isAccessFiles = await _requestManageStorage();
-
+                  _scanStream?.cancel();
                   if (isAccessFiles) {
                     FilesManagement.createDirectoryFirstTimeWithDevice();
                     final File fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();

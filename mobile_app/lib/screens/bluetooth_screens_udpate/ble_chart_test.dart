@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math' as math; 
 import 'package:bluetooth_ecg/controllers/ecg_data_controller.dart';
+import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -27,26 +27,42 @@ class BleLiveChartTest extends StatefulWidget {
 class _BleLiveChartTestState extends State<BleLiveChartTest> {
   final flutterReactiveBle = FlutterReactiveBle();
   Timer? timer;
-  List<_ChartData>? chartData;
+  List<_ChartData>? chartDataChannel;
+  List<_ChartData>? chartDataChannel2;
+  List<_ChartData>? chartDataChannel3;
+  List<_ChartData>? chartDataChannel4;
   late int count;
   ChartSeriesController? _chartSeriesController;
+  ChartSeriesController? _chartSeriesController2;
+  ChartSeriesController? _chartSeriesController3;
+  ChartSeriesController? _chartSeriesController4;
 
   late StreamSubscription<List<int>> subscribeStream;
-  late StreamController<List<int>> _dataStreamController;
-  Stream<List<int>> get _dataStream => _dataStreamController.stream;
+  late StreamController<List<double>> _dataStreamController;
+  Stream<List<double>> get _dataStream => _dataStreamController.stream;
+  List samples = [];
 
   @override
   void initState() {
     count = 0;
-    chartData = <_ChartData>[];
-    _dataStreamController = StreamController<List<int>>.broadcast();
+    chartDataChannel = <_ChartData>[];
+    chartDataChannel2 = <_ChartData>[];
+    chartDataChannel3 = <_ChartData>[];
+    chartDataChannel4 = <_ChartData>[];
+    _dataStreamController = StreamController<List<double>>.broadcast();
     super.initState();
   }
 
   @override
   void dispose() {
-    chartData!.clear();
+    chartDataChannel!.clear();
+    chartDataChannel2!.clear();
+    chartDataChannel3!.clear();
+    chartDataChannel4!.clear();
     _chartSeriesController = null;
+    _chartSeriesController2 = null;
+    _chartSeriesController3 = null;
+    _chartSeriesController4 = null;
     subscribeStream.cancel();
     _dataStreamController.close();
     
@@ -56,10 +72,16 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   subscribeCharacteristic() {
     subscribeStream =
       flutterReactiveBle.subscribeToCharacteristic(widget.bluetoothCharacteristic).listen((value) {
-        _updateDataSource(value);
-        FilesManagement.appendDataToFile(widget.fileToSave, value);
-        print('dataaa:$value');
-        _dataStreamController.add(value);
+        final Map dataShowOnChart = ECGDataController.handlePacketData(value, widget.fileToSave);
+        samples.add(dataShowOnChart);
+        dataShowOnChart.forEach((key, row) {
+          List<double> test = [];
+          if (key % 10 == 0) {
+            test = ECGDataController.calculateDataPointToShow(row);
+            _updateDataSource(test);
+          }
+          _dataStreamController.add(test);
+        });
       });
   }
 
@@ -73,10 +95,9 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
             onPressed: () => subscribeCharacteristic(),
             child: const Text('Subscribe'),
           ),
-          StreamBuilder<List<int>>(
+          StreamBuilder<List<double>>(
             stream: _dataStream,
             builder: (context, snapshot) {
-              print('a:${snapshot.data}');
               return _buildLiveLineChart();
             }
           ),
@@ -85,6 +106,10 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
             child: ElevatedButton(
               onPressed: () async {
                 _chartSeriesController = null;
+                _chartSeriesController2 = null;
+                _chartSeriesController3 = null;
+                _chartSeriesController4 = null;
+
                 subscribeStream.cancel();
                 _dataStreamController.close();
                 final DateTime stopTime = DateTime.now();            
@@ -107,9 +132,11 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                   "startTime": startTime,
                   "stopTime": stopTime,
                 };
-                // Future.delayed(Duration(milliseconds: 500), () {
-                //   ECGFilesController.uploadFileToDB(fileUploadInformation);
-                // });
+                FilesManagement.appendDataToFile(widget.fileToSave, samples);
+                Future.delayed(Duration(milliseconds: 500), () {
+                  ECGRecordController.uploadFileToDB(fileUploadInformation);
+                });
+                print('samples:$samples');
               }, 
               child: Text('End measurement')
             ),
@@ -154,8 +181,38 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           onRendererCreated: (ChartSeriesController controller) {
             _chartSeriesController = controller;
           },
-          dataSource: chartData!,
+          dataSource: chartDataChannel!,
           color: Color.fromARGB(255, 42, 25, 228),
+          xValueMapper: (_ChartData sales, _) => sales.country,
+          yValueMapper: (_ChartData sales, _) => sales.sales,
+          animationDuration: 0,
+        ),
+        FastLineSeries<_ChartData, int>(
+          onRendererCreated: (ChartSeriesController controller) {
+            _chartSeriesController2 = controller;
+          },
+          dataSource: chartDataChannel2!,
+          color: Color.fromARGB(255, 228, 25, 25),
+          xValueMapper: (_ChartData sales, _) => sales.country,
+          yValueMapper: (_ChartData sales, _) => sales.sales,
+          animationDuration: 0,
+        ),
+        FastLineSeries<_ChartData, int>(
+          onRendererCreated: (ChartSeriesController controller) {
+            _chartSeriesController3 = controller;
+          },
+          dataSource: chartDataChannel3!,
+          color: Color.fromARGB(255, 25, 228, 45),
+          xValueMapper: (_ChartData sales, _) => sales.country,
+          yValueMapper: (_ChartData sales, _) => sales.sales,
+          animationDuration: 0,
+        ),
+        FastLineSeries<_ChartData, int>(
+          onRendererCreated: (ChartSeriesController controller) {
+            _chartSeriesController4 = controller;
+          },
+          dataSource: chartDataChannel4!,
+          color: Color.fromARGB(255, 214, 228, 25),
           xValueMapper: (_ChartData sales, _) => sales.country,
           yValueMapper: (_ChartData sales, _) => sales.sales,
           animationDuration: 0,
@@ -163,31 +220,65 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
       ]);
 
   ///Continously updating the data source based on timer
-  void _updateDataSource(List<int> bytes) {
-    // List<int> fakeRows = List.generate(16, (_) => _getRandomInt(1, 244));
-    List<double> dataChannelsToSave = ECGDataController.handleDataRowFromBluetooth(bytes);
-    List<double> dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(dataChannelsToSave);
-    _ChartData newData = _ChartData(count, dataChannelsToShowOnChart[0]);
-    chartData!.add(newData);
+  void _updateDataSource(List row) {
+    print('zbjkdfhjkfjkfg:${row}');
+    _ChartData newData = _ChartData(count, row[0]);
+    _ChartData newData2 = _ChartData(count, row[1]);
+    _ChartData newData3 = _ChartData(count, row[2]);
+    _ChartData newData4 = _ChartData(count, row[3]);
+    chartDataChannel!.add(newData);
+    chartDataChannel2!.add(newData2);
+    chartDataChannel3!.add(newData3);
+    chartDataChannel4!.add(newData4);
 
-    if (chartData!.length >= 50) {
-      chartData!.removeAt(0);
+    if (chartDataChannel!.length >= 50) {
+      chartDataChannel!.removeAt(0);
       _chartSeriesController?.updateDataSource(
-        addedDataIndexes: <int>[chartData!.length - 1],
+        addedDataIndexes: <int>[chartDataChannel!.length - 1],
         removedDataIndexes: <int>[0],
       );
     } else {
       _chartSeriesController?.updateDataSource(
-        addedDataIndexes: <int>[chartData!.length - 1],
+        addedDataIndexes: <int>[chartDataChannel!.length - 1],
+      );
+    }
+
+    if (chartDataChannel2!.length >= 50) {
+      chartDataChannel2!.removeAt(0);
+      _chartSeriesController2?.updateDataSource(
+        addedDataIndexes: <int>[chartDataChannel2!.length - 1],
+        removedDataIndexes: <int>[0],
+      );
+    } else {
+      _chartSeriesController2?.updateDataSource(
+        addedDataIndexes: <int>[chartDataChannel2!.length - 1],
+      );
+    }
+
+    if (chartDataChannel3!.length >= 50) {
+      chartDataChannel3!.removeAt(0);
+      _chartSeriesController3?.updateDataSource(
+        addedDataIndexes: <int>[chartDataChannel3!.length - 1],
+        removedDataIndexes: <int>[0],
+      );
+    } else {
+      _chartSeriesController3?.updateDataSource(
+        addedDataIndexes: <int>[chartDataChannel3!.length - 1],
+      );
+    }
+
+    if (chartDataChannel4!.length >= 50) {
+      chartDataChannel4!.removeAt(0);
+      _chartSeriesController4?.updateDataSource(
+        addedDataIndexes: <int>[chartDataChannel4!.length - 1],
+        removedDataIndexes: <int>[0],
+      );
+    } else {
+      _chartSeriesController4?.updateDataSource(
+        addedDataIndexes: <int>[chartDataChannel4!.length - 1],
       );
     }
     count = count + 1;
-  }
-
-  ///Get the random data
-  int _getRandomInt(int min, int max) {
-    final math.Random random = math.Random();
-    return min + random.nextInt(max - min);
   }
 }
 

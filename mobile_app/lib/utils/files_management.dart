@@ -25,10 +25,10 @@ class FilesManagement {
     return dataRow;
   }
 
-  static void appendDataToFile(File file, List<dynamic> row) async {
+  static void appendDataToFile(File file, List<dynamic> row) {
     String data = convertRowToStringBeforeSaving(row);
     data = data + "\n"; //xuống dòng khi lưu dữ liệu 1 row
-    await file.writeAsString(data, mode: FileMode.append);
+    file.writeAsStringSync(data, mode: FileMode.append);
     print('successful');
   }
 

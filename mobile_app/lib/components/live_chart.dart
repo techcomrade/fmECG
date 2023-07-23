@@ -76,9 +76,9 @@ class _LiveChartSampleState extends State<LiveChartSample> {
                 "startTime": startTime,
                 "stopTime": stopTime,
               };
-              // Future.delayed(Duration(milliseconds: 500), () {
-              //   ECGFilesController.uploadFileToDB(fileUploadInformation);
-              // });
+              Future.delayed(Duration(milliseconds: 500), () {
+                ECGRecordController.uploadFileToDB(fileUploadInformation);
+              });
             }, 
             child: Text('End measurement')
           ),
