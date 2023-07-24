@@ -36,6 +36,8 @@ end box
 
 box "model" #lightBlue
 participant UserModel as UserModel
+participant SessionModel as SessionModel
+
 
 end box
 
@@ -90,6 +92,16 @@ AuthController --> AuthRoute: return response
 ' - status
 ' - user
 ' end note
+
+AuthController -> SessionModel: create()
+note right of AuthController #Aqua
+* Request param:
+ - token: token
+end note
+
+activate SessionModel
+SessionModel --> AuthController: return
+deactivate SessionModel
 
 else request.password !== user.password 
 AuthController --> AuthRoute: return response error
