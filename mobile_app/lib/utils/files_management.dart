@@ -31,9 +31,9 @@ class FilesManagement {
     file.writeAsStringSync(data, mode: FileMode.append);
   }
 
-  static void handleSaveDataToFileV2(File file, List rawData) {
+  static Future<void> handleSaveDataToFileV2(File file, List rawData) async {
     String dataConverted = convertDataToCSVFormat(rawData);
-    appendDataToFileV2(file, dataConverted);
+    await appendDataToFileV2(file, dataConverted);
   }
 
   static String convertDataToCSVFormat(List data) {

@@ -73,7 +73,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
     subscribeStream =
       flutterReactiveBle.subscribeToCharacteristic(widget.bluetoothCharacteristic).listen((value) {
         final List packetHandled = ECGDataController.handlePacketData(value);
-        samples.add(packetHandled);
+        samples = samples + packetHandled;
 
         for (int i = 0; i < packetHandled.length; i ++) {
           List<double> dataChannel = packetHandled[i].sublist(1, 5);
@@ -134,11 +134,11 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                   "startTime": startTime,
                   "stopTime": stopTime,
                 };
-                FilesManagement.appendDataToFile(widget.fileToSave, samples);
+                await FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
+
                 Future.delayed(Duration(milliseconds: 500), () {
                   ECGRecordController.uploadFileToDB(fileUploadInformation);
                 });
-                print('samples:$samples');
               }, 
               child: Text('End measurement')
             ),
