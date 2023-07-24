@@ -1,0 +1,178 @@
+@startuml
+
+' Define class
+
+package "Controllers" {
+    ' class AuthController
+    ' class ECGRecordController
+    ' class NewsController
+    ' class PatientDoctorAssignmentController
+    ' class UserController
+    class AdminController
+}
+
+package "Models" {
+    class ECGRecordModel
+    class NewsModel
+    class NewsCategoryModel
+    class ResetTokenModel
+    class UserModel
+    class DeviceModel
+    class SessionModel
+    class PatientDoctorAssignmentModel
+}
+
+package "Routes" {
+    ' class AuthRoute
+    ' class ECGRecordRoute
+    ' class NewsRoute
+    ' class PatientDoctorAssignmentRoute
+    ' class UserRoute
+    class AdminRoute
+}
+
+package "Views" {
+    class DashboardViewComponent
+    class NewsViewComponent
+    class ECGRecordViewComponent
+    class PatientDoctorAssignmentViewComponent
+}
+
+package "Admin" {
+    package "Resource" {
+        class AdminResource
+        class DoctorResource
+        class PatientResource
+        class ECGRecordResource
+        class NewsResource
+        class NewsCategoryResource
+        class PatientDoctorAssignmentResource
+    }
+
+    package "Component" {
+        class Component
+    }
+}
+
+' Define relationship between classes
+
+
+' ---------------------AlginLaylout----------------------
+' ---Models
+UserModel -[hidden]-> PatientDoctorAssignmentModel
+SessionModel -[hidden]-> ResetTokenModel
+' ECGRecordModel -[hidden]-> DeviceModel
+' NewsCategoryModel -[hidden]-> NewsModel
+PatientDoctorAssignmentModel -[hidden]-> ECGRecordModel
+ResetTokenModel -[hidden]-> NewsCategoryModel
+
+
+' ' ---Controller
+' UserController -[hidden]-> AuthController
+' ' UserController -[hidden]-> ECGRecordController
+' UserController -[hidden]-> NewsController
+' AuthController -[hidden]-> ECGRecordController
+
+' ' -----Route
+' ' ECGRecordRoute -[hidden]-> NewsRoute
+' ECGRecordRoute -[hidden]-> AuthRoute
+' ECGRecordRoute -[hidden]-> PatientDoctorAssignmentRoute
+' PatientDoctorAssignmentRoute -[hidden]-> NewsRoute
+
+
+' ------Admin/Resource
+NewsResource -[hidden]-> PatientResource
+NewsResource -[hidden]-> DoctorResource
+NewsResource -[hidden]-> AdminResource
+AdminResource -[hidden]-> NewsCategoryResource
+AdminResource -[hidden]-> PatientDoctorAssignmentResource
+
+' ------Admin/View
+PatientDoctorAssignmentViewComponent -[hidden]-> ECGRecordViewComponent
+ECGRecordViewComponent -[hidden]-> NewsViewComponent
+NewsViewComponent -[hidden]-> DashboardViewComponent
+
+
+' --------------------------------------------------------
+
+
+
+' ' ---------------Controller-----------------------
+
+' AuthController *--- UserModel
+' AuthController *-- ResetTokenModel
+' AuthController *-- SessionModel
+
+
+
+' NewsController *--- NewsCategoryModel
+' NewsController *--- NewsModel
+
+' UserController *--- UserModel
+
+' PatientDoctorAssignmentController *--- UserModel
+' PatientDoctorAssignmentController *--- PatientDoctorAssignmentModel
+
+' ECGRecordController *--- ECGRecordModel
+' ECGRecordController *--- PatientDoctorAssignmentModel
+' ECGRecordController *--- DeviceModel
+
+
+
+
+
+' ' ----------------------------------------------------
+
+
+
+' ' ---------------------------Route----------------------
+
+' AuthRoute *--- AuthController
+' ECGRecordRoute *--- ECGRecordController
+' UserRoute *--- UserController
+' NewsRoute *--- NewsController
+' PatientDoctorAssignmentRoute *--- PatientDoctorAssignmentController
+' AdminRoute *--- AdminController
+
+' ' --------------------------------------------------------
+
+' ----------------------------Admin------------------------
+
+' ----------------Resource--------------------------------
+
+AdminResource *--- UserModel
+DoctorResource *--- UserModel
+PatientResource *--- UserModel
+NewsResource *--- NewsModel
+NewsCategoryResource *--- NewsCategoryModel
+ECGRecordResource *--- ECGRecordModel
+PatientDoctorAssignmentResource *--- PatientDoctorAssignmentModel
+
+' --------------------------------------------------------
+
+' ------------------------------Component----------
+
+Component *--- DashboardViewComponent
+Component *--- NewsViewComponent
+Component *--- ECGRecordViewComponent
+Component *--- PatientDoctorAssignmentViewComponent
+
+' ---------------------------------------------------
+
+AdminController *--- AdminResource
+AdminController *--- DoctorResource
+AdminController *--- PatientResource
+AdminController *--- NewsResource
+AdminController *--- NewsCategoryResource
+AdminController *--- ECGRecordResource
+AdminController *--- PatientDoctorAssignmentResource
+AdminController *--- Component
+
+AdminRoute *-- AdminController
+
+' ----------------------------------------------------------
+
+
+
+@enduml
+

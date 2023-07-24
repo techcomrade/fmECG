@@ -1,27 +1,147 @@
-@startuml
-actor User
-participant Client as C
-participant Server as S
-participant Database as DB
+' @startuml
+' actor User
+' participant Client as C
+' participant Server as S
+' participant Database as DB
 
-User -> C: Enter registration details
-C -> S: Send registration request
-activate S
-S -> S: Validate role (check if admin)
-alt Invalid role
-    S --> C: Error response (400)
-else Valid role
-    S -> DB: Check existing user by email
-    activate DB
-    DB --> S: Existing user
-    alt Email already in use
-        S --> C: Error response (400)
-    else Email available
-        S -> DB: Create new user
-        DB --> S: New user created
-        S --> C: Success response (200)
-    end
+' User -> C: Enter registration details
+' C -> S: Send registration request
+' activate S
+' S -> S: Validate role (check if admin)
+' alt Invalid role
+'     S --> C: Error response (400)
+' else Valid role
+'     S -> DB: Check existing user by email
+'     activate DB
+'     DB --> S: Existing user
+'     alt Email already in use
+'         S --> C: Error response (400)
+'     else Email available
+'         S -> DB: Create new user
+'         DB --> S: New user created
+'         S --> C: Success response (200)
+'     end
+' end
+' deactivate S
+' C --> User: Receive success response
+' @enduml
+
+
+
+@startuml
+
+
+skinparam style strictuml
+
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 90
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+box "view" #LightGoldenRodYellow
+
+participant RegisterPage as RegisterPage
+
+end box
+
+
+box "route" #lightBlue
+
+participant AuthRoute as AuthRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant AuthController as AuthController
+
+end box
+
+
+box "model" #lightBlue
+participant UserModel as UserModel
+
+end box
+
+User -> RegisterPage: Request to register account
+
+activate User
+activate RegisterPage
+
+RegisterPage -> AuthRoute: POST api/register
+activate AuthRoute
+note right of RegisterPage #Aqua
+  * Request param:
+  Content type: application/json
+  Request content:
+  - password: String,
+  - confirm_password: String,
+  - name: String,
+  - doB: Date,
+  - email: String,
+  - phone_number: String,
+  - role: Interger (0-patient, 1-doctor, 2-admin)
+end note
+
+AuthRoute -> AuthController: register(req, res)
+note right of AuthRoute #Aqua
+  * Request param:
+  { password, confirm_password, name,
+  email, doB, phone_number, role }
+   = req.body
+end note
+activate AuthController
+
+AuthController -> UserModel: findOne(param)
+note right of AuthController #Aqua
+  * Request param:
+  email: String
+end note
+activate UserModel
+UserModel --> AuthController: return user
+deactivate UserModel
+
+alt user does not exist
+
+  alt password === confirm_password
+    AuthController -> AuthController: Hash password
+
+    AuthController -> UserModel: create()
+    note right of AuthController #Aqua
+      * Request param
+        - name
+        - email
+        - password: hashedPassword
+        - doB
+        - phone_number
+        - role
+    end note
+    activate UserModel
+    UserModel --> AuthController: return
+
+    deactivate UserModel
+    AuthController --> AuthRoute: return response
+
+  else password !== confirm_password
+  AuthController --> AuthRoute: return error response
+
+  end
+
+else user existed
+AuthController --> AuthRoute: return error response
+deactivate AuthController
 end
-deactivate S
-C --> User: Receive success response
+AuthRoute --> RegisterPage: return response
+
+deactivate AuthRoute
+RegisterPage --> User: return response
+
+deactivate RegisterPage
+deactivate User
+
 @enduml

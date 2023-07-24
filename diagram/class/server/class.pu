@@ -1,0 +1,335 @@
+@startuml
+
+' Define class
+
+package Controllers {
+    class AuthController {
+        - bcrypt: bcryptjs
+        - jwt: jsonwebtoken
+        - crypto: crypto
+        - nodemailer: nodemailer
+        - path: path
+        - User: UserModel
+        - ResetToken: ResetTokenModel
+        - Sesion: SessionModel
+
+        + register(req, res)
+        + login(req, res)
+        + logout(req, res)
+        + resetPasswordToken(req, res)
+        + resetPassword(req, res)
+        + isLogin(req, res)
+    }
+
+    class ECGRecordController {
+        - fs: fs
+        - path: path
+        - EcgRecord: ECGRecordModel
+        - PatientDoctorAssignment: PatientDoctorAssignmentModel
+        - Device: DeviceModel
+
+        + uploadEcgData(req, res)
+        + getEcgRecordsByUserId(req, res)
+        + getEcgRecordsByDoctor(req, res)
+        + getECGRecordata(req, res) 
+    }
+
+    class NewsController {
+        - News: NewsModel
+        - NewsCategory: NewsCategoryModel
+
+        + getNewsById(req, res)
+        + getAllNews(req, res)
+        + getAllNewsCategories(req, res)
+        + getNewsCategoryById(req, res)
+        + getNewsByCategory(req, res)
+
+    }
+
+    class PatientDoctorAssignmentController {
+        - User: UserModel
+        - PatientDoctorAssignment: PatientDoctorAssignmentModel
+
+        + getPatientsByDoctor(req, res)
+        + getDoctorByPatient(req, res)
+        + getNewsById(req, res)
+        + getNewsById(req, res)
+
+    }
+
+    class UserController {
+        - bcrypt: bcryptjs
+        - jwt: jsonwebtoken
+        - User: UserModel
+        - path: path
+
+        + updateUserInfo(req, res)
+        + changePassword(req, res)
+        + getUserProfile(req, res)
+        + getAllUsers(req, res)
+        + getUserById(req, res)
+
+    }
+
+    class AdminController  {
+        - AdminJS: adminjs
+        - Component: Component
+        - EcgRecordsResource: ECGRecordResource
+        - NewsCategoryResource: NewsCateGoryResource
+        - NewsResource: NewsResource
+        - PatientDoctorAssignmentResource: PatientDoctorAssignmentResource
+        - PatientResource: PatientResource
+        - DoctorResource: DoctorResource
+        - AdminResource: AdminResource
+
+        + AdminController()
+    }
+}
+
+package Models {
+    class ECGRecordModel {
+        + record_id: Interger
+        + user_id: Interger
+        + device_id: Interger
+        + data_directory:String
+        + start_time: Date
+        + stop_time: Date
+        + sensor_type: String
+        + updated_at: Date
+        + created_at: Date
+        - Sequelize: sequelize
+    }
+
+    class NewsModel {
+        + news_id: Interger
+        + title: String
+        + content: String
+        + category_id: Interger
+        + author: String
+        + url: String
+        + image: url
+        + updated_at: Date
+        + created_at: Date
+        - Sequelize: sequelize
+    }
+
+    class NewsCategoryModel {
+        + category_id: Interger
+        + category_name: String
+        + updated_at: Date
+        + created_at: Date
+        - Sequelize: sequelize
+
+    }
+
+    class ResetTokenModel {
+        + reset_id: Interger
+        + user_id: Interger
+        + token: String
+        + expiration: Date
+        + updated_at: Date
+        + created_at: Date
+        - Sequelize: sequelize
+
+    }
+
+    class UserModel {
+        + user_id: Interger
+        + password: String
+        + email: String
+        + name: String
+        + doB: Date
+        + phone_numer: String
+        + role: Interger
+        + updated_at: Date
+        + created_at: Date
+        - Sequelize: sequelize
+
+    }
+
+    class DeviceModel {
+        + device_id: Interger
+        + device_name: String
+        + updated_at: Date
+        + created_at: Date
+        - Sequelize: sequelize
+
+    }
+
+    class SessionModel {
+        + session_id: Interger
+        + session_token: String
+        + updated_at: Date
+        + created_at: Date
+        - Sequelize: sequelize
+
+    }
+
+    class PatientDoctorAssignmentModel {
+        + assign_id: Interger
+        + patient_id: Interger
+        + doctor_id: Interger
+        + start_date: Date
+        + updated_at: Date
+        + created_at: Date
+        - Sequelize: sequelize        
+    }
+
+}
+
+package Routes {
+    class AuthRoute {
+        - authController: AuthController
+        - express: express
+
+        + AuthRoute()
+        + registerRoute()
+        + getRoute: Router
+
+
+    }
+
+    class ECGRecordRoute {
+        - ecgRecordsController: ECGRecordController
+        - express: express
+
+        + ECGRecordRoute()
+        + registerRoute()
+        + getRoute: Router
+
+    }
+
+    class NewsRoute {
+        - newsController: NewsController
+        - express: express
+
+        + NewsRoute()
+        + registerRoute()
+        + getRoute: Router
+
+    }
+
+    class PatientDoctorAssignmentRoute {
+        - patientDoctorAssignmentController: PatientDoctorAssignmentController
+        - express: express
+
+        + PatientDoctorAssignmentRoute()
+        + registerRoute()
+        + getRoute: Router
+
+    }
+
+    class UserRoute {
+        - usersController: UserController
+        - express: express
+
+        + UserRoute()
+        + registerRoute()
+        + getRoute: Router
+
+    }
+
+    class AdminRoute {
+        - AdminController: AdminController
+
+        + AdminRoute()
+        + registerRoute()
+        + getRoute: Router
+
+    }
+}
+
+package Views {
+
+    class DashboardViewComponent {
+
+    }
+
+    class NewsViewComponent {
+
+    }
+
+    class ECGRecordViewComponent {
+
+    }
+
+    class PatientDoctorAssignmentViewComponent {
+
+    }
+
+}
+
+package Admin {
+    package Resource {
+        class AdminResource {
+            - User: UserModel
+            - bcrypt: bcrypt
+            - ValidationError: adminjs
+
+            + AdminResource()
+
+        }
+
+        class DoctorResource {
+            - User: UserModel
+            - bcrypt: bcrypt
+            - ValidationError: adminjs
+
+            + DoctorResource()
+            
+        }
+
+        class PatientResource {
+            - User: UserModel
+            - bcrypt: bcrypt
+            - ValidationError: adminjs
+
+            + PatientResource()
+            
+        }
+
+        class ECGRecordResource {
+            - EcgRecords: ECGRecordModel
+
+            + ECGRecordResource()
+        }
+
+        class NewsResource {
+            - News: NewsModel
+
+            + NewsResource()
+        }
+
+        class NewsCategoryResource {
+            - NewsCategory: NewsCategoryModel
+            + NewsCategoryResource()
+
+        }
+
+        class PatientDoctorAssignmentResource {
+            - PatientDoctorAssignment: PatientDoctorAssignmentModel
+            + PatientDoctorAssignmentResource()
+            
+        }
+
+    }
+
+    package Component {
+        class Component {
+            + componentLoader: ComponentLoader
+            + DashboardView: DashboardViewComponent
+            + NewsView: NewsViewComponent
+            + ECGRecordView: ECGRecordViewComponent
+            + PatientDoctorAssignmentView: PatientDoctorAssignmentViewComponent
+
+            + Component()
+        }
+
+    }
+}
+
+
+
+
+
+@enduml
