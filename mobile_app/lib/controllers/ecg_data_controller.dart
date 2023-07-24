@@ -97,37 +97,33 @@ class ECGDataController {
   }
 
   // tính điện áp để vẽ ra biểu đồ
-  static List<double> calculateDataPointToShow(List<double> row) {
-    List<double> dataPoints = row.map((decimalValue) => 
+  //TODO: HANDLE LIST<TYPE> 
+  static List calculateDataPointToShow(List row) {
+    List dataPoints = row.map((decimalValue) => 
                                     (decimalValue * REFERENCE_VOLTAGE) / (math.pow(2, 23) - 1).toDouble()).toList();
     return dataPoints;
   }
 
-  static handlePacketData(List<int> bytes, File file) {
+  static List handlePacketData(List<int> bytes) {
     final int numberSample = (bytes[9] / 4 / 3).toInt();
     final rowLength = bytes.length;
     final dataECG = bytes.sublist(11, rowLength);
 
     final Map<int, List<int>> dataSeperated = separateDataIntoEachSample(dataECG, numberSample);
     List rowToSave = [];
-    Map dataToShowOnChart = {};
+    List dataToSave = [];
 
     dataSeperated.forEach((key, sample) {
       final rowData = processSampleToSave(sample);
-      // rowToSave = [key, ...rowData];
-      dataToShowOnChart.addAll({
-        key: rowData
-      });
-      // FilesManagement.appendDataToFile(file, rowToSave);
+      rowToSave = [key, ...rowData];
+      dataToSave.add(rowToSave);
     });
-    return dataToShowOnChart;
+    return dataToSave;
   }
 
   static List<double> processSampleToSave(List<int> bytes) {
-    // final List<int> statusBytes = getStatusBytes(bytes);
-    // final int countByte = getCountByte(bytes);
-    
-    /// 1 row include calculated figure for each channel like sample: [figureChannel1, figureChannel2, figureChannel3, figureChannel4]
+    /// 1 row include calculated figure for each channel like sample:
+    /// [figureChannel1, figureChannel2, figureChannel3, figureChannel4]
     final List<double> row = [];
 
     CHANNELS_NUMBER.forEach((channelNumber) {
@@ -142,7 +138,7 @@ class ECGDataController {
   static separateDataIntoEachSample(List<int> data, int numberSample) {
     Map<int, List<int>> dataSeperated = {};
     for (int i = 1; i <= numberSample; i++) {
-      List<int> row = data.sublist((i-1)*12, (i-1)*12 + 12);
+      List<int> row = data.sublist((i-1) * 12, (i-1) * 12 + 12);
       dataSeperated.addAll({
         i: row
       });

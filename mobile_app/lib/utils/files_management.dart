@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class FilesManagement {
   static Future<String> get _pathToSaveData async {
-    final directoryToSaveFile = Directory("/storage/self/primary/fm_ECG");
+    final directoryToSaveFile = Directory("/stoxrage/self/primary/fm_ECG");
     final directoryToSaveData = directoryToSaveFile.path + '/fmECG_data';
     return directoryToSaveData;
   }
@@ -29,7 +29,21 @@ class FilesManagement {
     String data = convertRowToStringBeforeSaving(row);
     data = data + "\n"; //xuống dòng khi lưu dữ liệu 1 row
     file.writeAsStringSync(data, mode: FileMode.append);
-    print('successful');
+  }
+
+  static void handleSaveDataToFileV2(File file, List rawData) {
+    String dataConverted = convertDataToCSVFormat(rawData);
+    appendDataToFileV2(file, dataConverted);
+  }
+
+  static String convertDataToCSVFormat(List data) {
+    final removingBracketsRegex = RegExp(r'\[|\]');
+    String dataConverted = data.join("\n").replaceAll(removingBracketsRegex, "");
+    return dataConverted;
+  }
+
+  static Future<void> appendDataToFileV2(File file, String dataConverted) async {
+    await file.writeAsString(dataConverted, mode: FileMode.append);
   }
 
   static void saveFilePathCaseNoInternet(String filePath) async {

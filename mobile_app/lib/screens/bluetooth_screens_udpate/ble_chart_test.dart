@@ -38,8 +38,8 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   ChartSeriesController? _chartSeriesController4;
 
   late StreamSubscription<List<int>> subscribeStream;
-  late StreamController<List<double>> _dataStreamController;
-  Stream<List<double>> get _dataStream => _dataStreamController.stream;
+  late StreamController<List> _dataStreamController;
+  Stream<List> get _dataStream => _dataStreamController.stream;
   List samples = [];
 
   @override
@@ -72,16 +72,18 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   subscribeCharacteristic() {
     subscribeStream =
       flutterReactiveBle.subscribeToCharacteristic(widget.bluetoothCharacteristic).listen((value) {
-        final Map dataShowOnChart = ECGDataController.handlePacketData(value, widget.fileToSave);
-        samples.add(dataShowOnChart);
-        dataShowOnChart.forEach((key, row) {
-          List<double> test = [];
-          if (key % 10 == 0) {
-            test = ECGDataController.calculateDataPointToShow(row);
-            _updateDataSource(test);
+        final List packetHandled = ECGDataController.handlePacketData(value);
+        samples.add(packetHandled);
+
+        for (int i = 0; i < packetHandled.length; i ++) {
+          List<double> dataChannel = packetHandled[i].sublist(1, 5);
+          List dataShowOnChart = [];
+          if (packetHandled[i] % 10 == 0) {
+            dataShowOnChart = ECGDataController.calculateDataPointToShow(dataChannel);
+            _updateDataSource(dataShowOnChart);
           }
-          _dataStreamController.add(test);
-        });
+          _dataStreamController.add(dataShowOnChart);
+        }
       });
   }
 
@@ -95,7 +97,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
             onPressed: () => subscribeCharacteristic(),
             child: const Text('Subscribe'),
           ),
-          StreamBuilder<List<double>>(
+          StreamBuilder<List>(
             stream: _dataStream,
             builder: (context, snapshot) {
               return _buildLiveLineChart();
@@ -221,7 +223,6 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
 
   ///Continously updating the data source based on timer
   void _updateDataSource(List row) {
-    print('zbjkdfhjkfjkfg:${row}');
     _ChartData newData = _ChartData(count, row[0]);
     _ChartData newData2 = _ChartData(count, row[1]);
     _ChartData newData3 = _ChartData(count, row[2]);
