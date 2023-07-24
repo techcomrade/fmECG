@@ -1,0 +1,37 @@
+@startuml
+
+actor ":Người dùng" as User
+boundary ":Giao diện đăng ký" as ClientApp
+control ":Control đăng ký" as Control
+entity ":Entity người dùng" as Entity
+
+activate User
+User -> ClientApp: Nhấn nút đăng ký
+activate ClientApp
+ClientApp -> ClientApp: Hiển thị giao diện đăng ký
+ClientApp --> User
+User -> ClientApp: Nhập thông tin đăng ký
+ClientApp -> ClientApp: Kiểm tra định dạng thông tin
+alt Định dạng đăng ký hợp lệ
+  ClientApp -> Control: Gửi thông tin đăng ký
+  activate Control
+  Control -> Entity: Truy vấn dữ liệu
+  activate Entity
+  Entity --> Control: Trả về kết quả kiểm tra
+  deactivate Entity
+  alt Kết quả hợp lệ
+    Control --> ClientApp: Hiển thị đăng ký thành công
+    ClientApp --> User: Thông báo đăng ký thành công
+  else Kết quả không hợp lệ
+    Control --> ClientApp: Hiển thị đăng ký thất bại
+    deactivate Control
+    ClientApp --> User: Thông báo đăng ký thất bại 
+  end
+
+else Định dạng đăng ký không hợp lệ
+  ClientApp -> User: Yêu cầu người dùng nhập lại
+  deactivate ClientApp
+end
+deactivate User
+
+@enduml
