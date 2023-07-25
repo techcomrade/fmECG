@@ -1,0 +1,96 @@
+'
+
+@startuml
+
+
+skinparam style strictuml
+
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 70
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+box "view" #LightGoldenRodYellow
+
+participant GetAllNewsPage as GetAllNewsPage
+
+end box
+
+box "route" #lightBlue
+
+participant NewsRoute as NewsRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant NewsController as NewsController
+
+end box
+
+
+box "model" #lightBlue
+participant NewsModel as NewsModel
+
+end box
+
+
+User -> GetAllNewsPage: Request to get all news
+activate User
+activate GetAllNewsPage
+
+GetAllNewsPage -> NewsRoute: GET api/news
+activate NewsRoute
+
+
+NewsRoute -> NewsController: getAllNews(req, res)
+activate NewsController
+
+' ' note right of NewsRoute #Aqua
+' ' * Request param:
+' ' {
+'   currentPassword, newPassword,
+'   '  confirmPassword
+' }
+' = req.body
+' ' token = req.cookies.jwt
+' ' end note
+
+NewsController -> NewsModel: findAndCountAll()
+
+activate NewsModel
+
+NewsModel --> NewsController: return list news
+
+deactivate NewsModel
+
+NewsController --> NewsRoute: return response
+
+deactivate NewsController
+
+alt response error
+  NewsRoute --> GetAllNewsPage: return exception
+  note right of GetAllNewsPage
+    status: "error"
+    message: error description
+  end note
+else response success
+  NewsRoute --> GetAllNewsPage: return response
+    deactivate NewsRoute
+
+  note right of GetAllNewsPage
+    status: "success"
+    data : [news list]
+  end note
+end
+GetAllNewsPage --> User: return response
+deactivate GetAllNewsPage
+deactivate User
+
+@enduml
+

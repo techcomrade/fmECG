@@ -1,0 +1,95 @@
+'
+
+@startuml
+
+
+skinparam style strictuml
+
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 70
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+box "view" #LightGoldenRodYellow
+
+participant GetAllNewsByCategoryPage as GetAllNewsByCategoryPage
+
+end box
+
+box "route" #lightBlue
+
+participant NewsRoute as NewsRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant NewsController as NewsController
+
+end box
+
+
+box "model" #lightBlue
+participant NewsModel as NewsModel
+
+end box
+
+
+User -> GetAllNewsByCategoryPage: Request to get all news by category
+activate User
+activate GetAllNewsByCategoryPage
+
+GetAllNewsByCategoryPage -> NewsRoute: GET api/news/category/{categoryId}
+activate NewsRoute
+
+
+NewsRoute -> NewsController: getNewsCategoryById(req, res)
+activate NewsController
+
+note right of NewsRoute #Aqua
+  * Request param:
+   - categoryId = req.param
+end note
+
+NewsController -> NewsModel: findAndCountAll()
+note right of NewsController #Aqua 
+* Request param
+  category_id: categoryId
+end note
+
+activate NewsModel
+
+NewsModel --> NewsController: return list news
+
+deactivate NewsModel
+
+NewsController --> NewsRoute: return response
+
+deactivate NewsController
+
+alt response error
+  NewsRoute --> GetAllNewsByCategoryPage: return exception
+  note right of GetAllNewsByCategoryPage
+    status: "error"
+    message: error description
+  end note
+else response success
+  NewsRoute --> GetAllNewsByCategoryPage: return response
+    deactivate NewsRoute
+
+  note right of GetAllNewsByCategoryPage
+    status: "success"
+    data : [news list]
+  end note
+end
+GetAllNewsByCategoryPage --> User: return response
+deactivate GetAllNewsByCategoryPage
+deactivate User
+
+@enduml
+

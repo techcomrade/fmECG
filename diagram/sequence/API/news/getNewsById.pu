@@ -1,0 +1,97 @@
+'
+
+@startuml
+
+
+skinparam style strictuml
+
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 70
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+box "view" #LightGoldenRodYellow
+
+participant GetNewsContentPage as GetNewsContentPage
+
+end box
+
+box "route" #lightBlue
+
+participant NewsRoute as NewsRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant NewsController as NewsController
+
+end box
+
+
+box "model" #lightBlue
+participant NewsModel as NewsModel
+
+end box
+
+
+User -> GetNewsContentPage: Request to get news contents
+activate User
+activate GetNewsContentPage
+
+GetNewsContentPage -> NewsRoute: GET api/news/{:newsId}
+activate NewsRoute
+
+
+NewsRoute -> NewsController: getNewsById(req, res)
+activate NewsController
+
+note right of NewsRoute #Aqua
+  * Request param:
+   - newsId = req.param
+end note
+
+NewsController -> NewsModel: findByPk(newsId)
+
+activate NewsModel
+
+NewsModel --> NewsController: return news
+
+deactivate NewsModel
+
+opt news does not exist
+NewsController --> NewsRoute: return error
+
+end
+
+
+NewsController --> NewsRoute: return response
+
+deactivate NewsController
+
+alt response error
+  NewsRoute --> GetNewsContentPage: return exception
+  note right of GetNewsContentPage
+    status: "error"
+    message: error description
+  end note
+else response success
+  NewsRoute --> GetNewsContentPage: return response
+  deactivate NewsRoute
+
+  note right of GetNewsContentPage
+    status: "success"
+    data : news content
+  end note
+end
+GetNewsContentPage --> User: return response
+deactivate GetNewsContentPage
+deactivate User
+
+@enduml
+

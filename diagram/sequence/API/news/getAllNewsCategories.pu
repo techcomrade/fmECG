@@ -1,0 +1,96 @@
+'
+
+@startuml
+
+
+skinparam style strictuml
+
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 70
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+box "view" #LightGoldenRodYellow
+
+participant GetAllNewsCategoryPage as GetAllNewsCategoryPage
+
+end box
+
+box "route" #lightBlue
+
+participant NewsRoute as NewsRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant NewsController as NewsController
+
+end box
+
+
+box "model" #lightBlue
+participant NewsCategoryModel as NewsCategoryModel
+
+end box
+
+
+User -> GetAllNewsCategoryPage: Request to get all news category
+activate User
+activate GetAllNewsCategoryPage
+
+GetAllNewsCategoryPage -> NewsRoute: GET api/categories
+activate NewsRoute
+
+
+NewsRoute -> NewsController: getAllNewsCategories(req, res)
+activate NewsController
+
+' ' note right of NewsRoute #Aqua
+' ' * Request param:
+' ' {
+'   currentPassword, newPassword,
+'   '  confirmPassword
+' }
+' = req.body
+' ' token = req.cookies.jwt
+' ' end note
+
+NewsController -> NewsCategoryModel: findAndCountAll()
+
+activate NewsCategoryModel
+
+NewsCategoryModel --> NewsController: return list news category
+
+deactivate NewsCategoryModel
+
+NewsController --> NewsRoute: return response
+
+deactivate NewsController
+
+alt response error
+  NewsRoute --> GetAllNewsCategoryPage: return exception
+  note right of GetAllNewsCategoryPage
+    status: "error"
+    message: error description
+  end note
+else response success
+  NewsRoute --> GetAllNewsCategoryPage: return response
+  deactivate NewsRoute
+
+  note right of GetAllNewsCategoryPage
+    status: "success"
+    data : [news category list]
+  end note
+end
+GetAllNewsCategoryPage --> User: return response
+deactivate GetAllNewsCategoryPage
+deactivate User
+
+@enduml
+
