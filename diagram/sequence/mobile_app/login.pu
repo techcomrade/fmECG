@@ -33,4 +33,6 @@ else Format rejected
   deactivate ClientApp
 end
 deactivate User
+skinparam style strictuml
+
 @enduml

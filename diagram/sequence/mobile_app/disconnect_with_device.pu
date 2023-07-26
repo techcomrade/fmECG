@@ -11,6 +11,9 @@ activate ClientApp
 ClientApp -> Control: Send request disconnect device of user
 activate Control
 Control --> ClientApp: Send response state disconnected
+deactivate Control
 ClientApp --> User: Show state disconnected to user
+deactivate ClientApp
 
+skinparam style strictuml
 @enduml

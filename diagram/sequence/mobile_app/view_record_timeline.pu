@@ -29,4 +29,6 @@ deactivate Control
 ClientApp --> User: Show chart with data response for user
 deactivate ClientApp
 
+skinparam style strictuml
+
 @enduml

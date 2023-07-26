@@ -31,4 +31,6 @@ deactivate Control
 ClientApp --> User: Show specific news
 deactivate ClientApp
 
+skinparam style strictuml
+
 @enduml

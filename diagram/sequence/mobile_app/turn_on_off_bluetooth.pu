@@ -25,6 +25,8 @@ else Bluetooth is turn on state
   Control --> ClientApp: Response state turn off
   deactivate Control
   ClientApp --> User: Show state turn off to user
+  deactivate ClientApp
 end
+skinparam style strictuml
 
 @enduml

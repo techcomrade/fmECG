@@ -20,4 +20,5 @@ deactivate Control
 ClientApp --> User: Show status connection with ECG device
 deactivate ClientApp
 
+skinparam style strictuml
 @enduml

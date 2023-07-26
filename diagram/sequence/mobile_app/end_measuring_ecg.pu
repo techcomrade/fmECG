@@ -18,5 +18,7 @@ deactivate Entity
 Control -> ClientApp: Send response result
 deactivate Control
 ClientApp --> User: Notify result for user
+deactivate ClientApp
 
+skinparam style strictuml
 @enduml
