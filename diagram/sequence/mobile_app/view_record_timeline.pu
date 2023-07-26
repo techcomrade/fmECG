@@ -1,0 +1,32 @@
+@startuml
+
+actor ":User" as User
+boundary ":View List Records" as ClientApp
+control ":Control Record" as Control
+entity ":Entity Record" as Entity
+
+activate User
+User -> ClientApp: Click a button to open all records view
+activate ClientApp
+ClientApp -> Control: Send request get all records information
+activate Control
+Control -> Entity: Query into database
+activate Entity
+Entity --> Control: Send response result
+deactivate Entity
+Control --> ClientApp: Show all records order by time descending
+deactivate Control
+
+User -> ClientApp: Choose one record in list
+ClientApp -> Control: Send request get all data in one record
+activate Control
+Control -> Entity: Query into database
+activate Entity
+Entity --> Control: Send response result
+deactivate Entity
+Control -> ClientApp: Send response result
+deactivate Control
+ClientApp --> User: Show chart with data response for user
+deactivate ClientApp
+
+@enduml

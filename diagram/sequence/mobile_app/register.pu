@@ -1,37 +1,36 @@
 @startuml
 
-actor ":Người dùng" as User
-boundary ":Giao diện đăng ký" as ClientApp
-control ":Control đăng ký" as Control
-entity ":Entity người dùng" as Entity
+actor ":User" as User
+boundary ":View Login" as ClientApp
+control ":Control Login" as Control
+entity ":Entity User" as Entity
 
 activate User
-User -> ClientApp: Nhấn nút đăng ký
+User -> ClientApp: Click button register
 activate ClientApp
-ClientApp -> ClientApp: Hiển thị giao diện đăng ký
+ClientApp -> ClientApp: Show register view
 ClientApp --> User
-User -> ClientApp: Nhập thông tin đăng ký
-ClientApp -> ClientApp: Kiểm tra định dạng thông tin
-alt Định dạng đăng ký hợp lệ
-  ClientApp -> Control: Gửi thông tin đăng ký
+User -> ClientApp: Submit register information
+ClientApp -> ClientApp: Validate register format
+alt Format accepted
+  ClientApp -> Control: Send register request with information
   activate Control
-  Control -> Entity: Truy vấn dữ liệu
+  Control -> Entity: Query database
   activate Entity
-  Entity --> Control: Trả về kết quả kiểm tra
+  Entity --> Control: Send response result
   deactivate Entity
-  alt Kết quả hợp lệ
-    Control --> ClientApp: Hiển thị đăng ký thành công
-    ClientApp --> User: Thông báo đăng ký thành công
-  else Kết quả không hợp lệ
-    Control --> ClientApp: Hiển thị đăng ký thất bại
+  alt Response success
+    Control --> ClientApp: Show register successfully
+    ClientApp --> User: Notify to user register successfully
+  else Response fail
+    Control --> ClientApp: Show register fail
     deactivate Control
-    ClientApp --> User: Thông báo đăng ký thất bại 
+    ClientApp --> User: Notify to user register fail
   end
 
-else Định dạng đăng ký không hợp lệ
-  ClientApp -> User: Yêu cầu người dùng nhập lại
+else Format rejected
+  ClientApp -> User: Require user to submit again
   deactivate ClientApp
 end
 deactivate User
-
 @enduml

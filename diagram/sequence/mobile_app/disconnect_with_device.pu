@@ -1,0 +1,16 @@
+@startuml
+
+autonumber
+actor ":User" as User
+boundary ":View ECG device" as ClientApp
+control ":Control Disconnect ECG device" as Control
+
+activate User
+User -> ClientApp: Click button disconnect with ECG device
+activate ClientApp
+ClientApp -> Control: Send request disconnect device of user
+activate Control
+Control --> ClientApp: Send response state disconnected
+ClientApp --> User: Show state disconnected to user
+
+@enduml

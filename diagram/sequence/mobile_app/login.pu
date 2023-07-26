@@ -1,35 +1,35 @@
 @startuml
 
-actor ":Người dùng" as User
-boundary ":Giao diện đăng nhập" as ClientApp
-control ":Control đăng nhập" as Control
-entity ":Entity người dùng" as Entity
+actor ":User" as User
+boundary ":View Login" as ClientApp
+control ":Control Login" as Control
+entity ":Entity User" as Entity
 
 activate User
-User -> ClientApp: Mở ứng dụng
+User -> ClientApp: Open app
 activate ClientApp
-ClientApp -> ClientApp: Hiển thị giao diện đăng nhập
+ClientApp -> ClientApp: Show login view
 ClientApp --> User
-User -> ClientApp: Nhập thông tin đăng nhập
-ClientApp -> ClientApp: Kiểm tra định dạng đăng nhập
-alt Định dạng đăng nhập hợp lệ
-  ClientApp -> Control: Gửi thông tin đăng nhập
+User -> ClientApp: Submit login information (email, password)
+ClientApp -> ClientApp: Validate login format
+alt Format accepted
+  ClientApp -> Control: Send login request with information
   activate Control
-  Control -> Entity: Truy vấn dữ liệu
+  Control -> Entity: Query database
   activate Entity
-  Entity --> Control: Trả về kết quả kiểm tra
+  Entity --> Control: Send response result
   deactivate Entity
-  alt Kết quả hợp lệ
-    Control --> ClientApp: Hiển thị đăng nhập thành công
-    ClientApp --> User: Thông báo đăng nhập thành công
-  else Kết quả không hợp lệ
-    Control --> ClientApp: Hiển thị đăng nhập thất bại
+  alt Response success
+    Control --> ClientApp: Show login successfully
+    ClientApp --> User: Notify to user login successfully
+  else Response fail
+    Control --> ClientApp: Show login fail
     deactivate Control
-    ClientApp --> User: Thông báo đăng nhập thất bại 
+    ClientApp --> User: Notify to user login fail
   end
 
-else Định dạng đăng nhập không hợp lệ
-  ClientApp -> User: Yêu cầu người dùng nhập lại
+else Format rejected
+  ClientApp -> User: Require user to submit again
   deactivate ClientApp
 end
 deactivate User
