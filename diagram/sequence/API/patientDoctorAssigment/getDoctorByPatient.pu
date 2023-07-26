@@ -1,0 +1,102 @@
+'
+
+@startuml
+
+
+skinparam style strictuml
+
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 70
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+box "view" #LightGoldenRodYellow
+
+participant GetAssigedDoctorPage as GetAssigedDoctorPage
+
+end box
+
+box "route" #lightBlue
+
+participant PatientDoctorAssignmentRoute as PatientDoctorAssignmentRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant PatientDoctorAssignmentController as PatientDoctorAssignmentController
+
+end box
+
+
+box "model" #lightBlue
+participant PatientDoctorAssignmentModel as PatientDoctorAssignmentModel
+participant UserModel as UserModel
+
+end box
+
+
+User -> GetAssigedDoctorPage: Request to get doctor information being assign to patient
+activate User
+activate GetAssigedDoctorPage
+
+GetAssigedDoctorPage -> PatientDoctorAssignmentRoute: GET api/patient/{:patientId}/doctor
+activate PatientDoctorAssignmentRoute
+
+
+PatientDoctorAssignmentRoute -> PatientDoctorAssignmentController: getDoctorByPatient(req, res)
+activate PatientDoctorAssignmentController
+
+note right of PatientDoctorAssignmentRoute #Aqua
+  * Request param:
+   - patient_id: patientId
+end note
+
+PatientDoctorAssignmentController -> PatientDoctorAssignmentModel: findOne(patientId)
+
+activate PatientDoctorAssignmentModel
+
+PatientDoctorAssignmentModel --> PatientDoctorAssignmentController: return doctor_id
+
+deactivate PatientDoctorAssignmentModel
+
+opt doctor does not exist
+PatientDoctorAssignmentController --> PatientDoctorAssignmentRoute: return error
+
+end
+
+PatientDoctorAssignmentController -> UserModel: findOne(doctor_id)
+activate UserModel
+UserModel --> PatientDoctorAssignmentController: return doctor infomation
+deactivate UserModel
+
+PatientDoctorAssignmentController --> PatientDoctorAssignmentRoute: return response
+
+deactivate PatientDoctorAssignmentController
+
+alt response error
+  PatientDoctorAssignmentRoute --> GetAssigedDoctorPage: return exception
+  note right of GetAssigedDoctorPage
+    status: "error"
+    message: error description
+  end note
+else response success
+  PatientDoctorAssignmentRoute --> GetAssigedDoctorPage: return response
+  deactivate PatientDoctorAssignmentRoute
+
+  note right of GetAssigedDoctorPage
+    status: "success"
+    data : doctor information
+  end note
+end
+GetAssigedDoctorPage --> User: return response
+deactivate GetAssigedDoctorPage
+deactivate User
+
+@enduml
+

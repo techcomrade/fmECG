@@ -1,32 +1,3 @@
-' @startuml
-' actor User
-' participant Client as C
-' participant Server as S
-' participant Database as DB
-
-' User -> C: Enter registration details
-' C -> S: Send registration request
-' activate S
-' S -> S: Validate role (check if admin)
-' alt Invalid role
-'     S --> C: Error response (400)
-' else Valid role
-'     S -> DB: Check existing user by email
-'     activate DB
-'     DB --> S: Existing user
-'     alt Email already in use
-'         S --> C: Error response (400)
-'     else Email available
-'         S -> DB: Create new user
-'         DB --> S: New user created
-'         S --> C: Success response (200)
-'     end
-' end
-' deactivate S
-' C --> User: Receive success response
-' @enduml
-
-
 
 @startuml
 

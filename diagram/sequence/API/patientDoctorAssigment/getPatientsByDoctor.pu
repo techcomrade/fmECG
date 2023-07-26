@@ -1,0 +1,98 @@
+'
+
+@startuml
+
+
+skinparam style strictuml
+
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 70
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+box "view" #LightGoldenRodYellow
+
+participant GetAllAssigedPatientPage as GetAllAssigedPatientPage
+
+end box
+
+box "route" #lightBlue
+
+participant PatientDoctorAssignmentRoute as PatientDoctorAssignmentRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant PatientDoctorAssignmentController as PatientDoctorAssignmentController
+
+end box
+
+
+box "model" #lightBlue
+participant PatientDoctorAssignmentModel as PatientDoctorAssignmentModel
+participant UserModel as UserModel
+
+end box
+
+
+User -> GetAllAssigedPatientPage: Request to get all patients being managed by doctor
+activate User
+activate GetAllAssigedPatientPage
+
+GetAllAssigedPatientPage -> PatientDoctorAssignmentRoute: GET api/doctor/{:doctorId}/patients
+activate PatientDoctorAssignmentRoute
+
+
+PatientDoctorAssignmentRoute -> PatientDoctorAssignmentController: getPatientsByDoctor(req, res)
+activate PatientDoctorAssignmentController
+
+note right of PatientDoctorAssignmentRoute #Aqua
+  * Request param:
+   - doctorId = req.params.doctorId
+end note
+
+PatientDoctorAssignmentController -> PatientDoctorAssignmentModel: findAndCountAll(doctorId)
+
+activate PatientDoctorAssignmentModel
+
+PatientDoctorAssignmentModel --> PatientDoctorAssignmentController: return list patient_id 
+
+deactivate PatientDoctorAssignmentModel
+
+
+PatientDoctorAssignmentController -> UserModel: findAll(patient_id list)
+activate UserModel
+UserModel --> PatientDoctorAssignmentController: return patient infomation
+deactivate UserModel
+
+PatientDoctorAssignmentController --> PatientDoctorAssignmentRoute: return response
+
+deactivate PatientDoctorAssignmentController
+
+alt response error
+  PatientDoctorAssignmentRoute --> GetAllAssigedPatientPage: return exception
+  note right of GetAllAssigedPatientPage
+    status: "error"
+    message: error description
+  end note
+else response success
+  PatientDoctorAssignmentRoute --> GetAllAssigedPatientPage: return response
+  deactivate PatientDoctorAssignmentRoute
+
+  note right of GetAllAssigedPatientPage
+    status: "success"
+    data : [patient information]
+  end note
+end
+GetAllAssigedPatientPage --> User: return response
+deactivate GetAllAssigedPatientPage
+deactivate User
+
+@enduml
+

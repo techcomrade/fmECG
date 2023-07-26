@@ -1,0 +1,96 @@
+'
+
+@startuml
+
+
+skinparam style strictuml
+
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 70
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+box "view" #LightGoldenRodYellow
+
+participant GetAllECGDataPage as GetAllECGDataPage
+
+end box
+
+box "route" #lightBlue
+
+participant ECGRecordRoute as ECGRecordRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant ECGRecordController as ECGRecordController
+
+end box
+
+
+box "model" #lightBlue
+participant ECGRecordModel as ECGRecordModel
+
+end box
+
+
+User -> GetAllECGDataPage: Request get all ECG data of all patient being managed by doctor
+activate User
+activate GetAllECGDataPage
+
+GetAllECGDataPage -> ECGRecordRoute: GET api/ecg-records/doctor/{:doctorId}
+activate ECGRecordRoute
+
+
+ECGRecordRoute -> ECGRecordController: getEcgRecordsByDoctor(req, res)
+activate ECGRecordController
+
+note right of ECGRecordRoute #Aqua
+  * Request param:
+  doctorId = req.params
+end note
+
+
+ECGRecordController -> ECGRecordModel: findAndCountAll()
+note right of ECGRecordController #Aqua
+  * Request param
+    doctor_id = doctorId
+end note
+
+activate ECGRecordModel
+
+ECGRecordModel --> ECGRecordController: return ecg record
+
+deactivate ECGRecordModel
+
+ECGRecordController --> ECGRecordRoute: return response
+
+deactivate ECGRecordController
+
+alt response error
+  ECGRecordRoute --> GetAllECGDataPage: return exception
+  note right of GetAllECGDataPage
+    status: "error"
+    message: error description
+  end note
+else response success
+  ECGRecordRoute --> GetAllECGDataPage: return response
+  deactivate ECGRecordRoute
+
+  note right of GetAllECGDataPage
+    status: "success"
+    data : [ECGRecordModel list]
+  end note
+end
+GetAllECGDataPage --> User: return response
+deactivate GetAllECGDataPage
+deactivate User
+
+@enduml
+
