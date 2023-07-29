@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex main"] 0 "main.aux" "main.bbl" "main" 0 -1
+["bibtex main"] 1690631892 "main.aux" "main.bbl" "main" 1690631894 0
   "./TaiLieuThamKhao.bib" 1690391546 897 0b3348af8417e9e3a36f42ae74a86933 ""
   "/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1678549815 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "main.aux" 1690620787 20736 7e9d469cf18321cbc2611d0bb934a6f2 "pdflatex"
+  "main.aux" 1690631894 21009 fd4a2710583f404fbb1d2111b99997f9 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1690620786 "/Users/admin/Documents/projects/personal/fmECG/latex_thesis/main.tex" "main.pdf" "main" 1690620787 2
-  "/Users/admin/Documents/projects/personal/fmECG/latex_thesis/main.tex" 1690620784 59752 b5af9fc38c9f7a92b0aa3f6ce4fb09c2 ""
+["pdflatex"] 1690631892 "/Users/admin/Documents/projects/personal/fmECG/latex_thesis/main.tex" "main.pdf" "main" 1690631894 0
+  "/Users/admin/Documents/projects/personal/fmECG/latex_thesis/main.tex" 1690631890 60321 a540df630f407a5f34dd636e57bc6c3c ""
   "/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/fonts/enc/dvips/base/8r.enc" 1678549815 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/fonts/enc/dvips/vntex/t5.enc" 1678549815 7824 21ade6c3c7fd67cb4ace8dbc91c53118 ""
   "/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/fonts/map/fontname/texfonts.map" 1678549815 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -211,16 +211,27 @@
   "Images/mobile_app/turn_on_off_bluetooth.png" 1690391546 33140 8209d7404a4d3bd63cb612457e97105c ""
   "Images/mobile_app/view_news.png" 1690391546 33524 40a29c25f9c9940f22be5de3ec4d36f9 ""
   "Images/mobile_app/view_record_timeline.png" 1690391546 32166 997547f3e26fa679862a42fb1b9bdb56 ""
+  "Images/use_case/use_case_assign_doctor.png" 1690618487 38162 9cf1cd653f5ea33906b5f18761ae67d0 ""
+  "Images/use_case/use_case_bluetooth.png" 1690618542 98453 0221376af5b3d29a5c44887229b8ddeb ""
+  "Images/use_case/use_case_category_news.png" 1690618526 68041 a83cd5876eec341650dd96a7b9cc713f ""
   "Images/use_case/use_case_forgot_password.png" 1690618473 19274 edd50ee0939bb386c4617b406130b973 ""
   "Images/use_case/use_case_general.png" 1690620300 233750 fe997207e412328dca58b4fb2ec3a7c7 ""
+  "Images/use_case/use_case_login.png" 1690619548 18779 3ef2f807180ded7e68e1cdad5e0d57ee ""
+  "Images/use_case/use_case_manage_info.png" 1690618481 58719 ea05b98ea3049673d0fc5c5077c477fe ""
+  "Images/use_case/use_case_manage_records.png" 1690618536 73075 7af504e175b626c939bf5a4111100667 ""
+  "Images/use_case/use_case_manage_users.png" 1690618515 76470 1d46c9b970257c51bcbe8b8dc1f9078f ""
+  "Images/use_case/use_case_measure_ecg.png" 1690618531 55991 093903bd1eca5835c8074c39b55de669 ""
+  "Images/use_case/use_case_news.png" 1690618521 96422 7b94155bf53af72d71fff7833c8e14be ""
   "Images/use_case/use_case_register.png" 1690618462 18652 608be47d832296b1c610657fce30e51f ""
-  "main.aux" 1690620787 20736 7e9d469cf18321cbc2611d0bb934a6f2 "pdflatex"
-  "main.bbl" 1690620381 1215 ef001c3b390155e73cc7ca527daa0fa6 "bibtex main"
-  "main.lof" 1690620787 3983 1efe0b7bdddc5bb93b2746b7f4e46460 "pdflatex"
-  "main.lot" 1690620787 1583 2d10a89a1c872b9aec0ba470fcaa2d1a "pdflatex"
-  "main.out" 1690620787 14804 b93ef7017a786df5232461477346ff5f "pdflatex"
-  "main.tex" 1690620784 59752 b5af9fc38c9f7a92b0aa3f6ce4fb09c2 ""
-  "main.toc" 1690620787 6795 b80d05cb3b6423d333eea7584148f831 "pdflatex"
+  "Images/use_case/use_case_send_receive_message.png" 1690391805 54250 fa443b234805cc9691baa22e376daaf2 ""
+  "Images/use_case/use_case_view_history_record.png" 1690618448 36374 f71485236dd92ade1b4e157e076ed88f ""
+  "main.aux" 1690631894 21009 fd4a2710583f404fbb1d2111b99997f9 "pdflatex"
+  "main.bbl" 1690631892 1215 ef001c3b390155e73cc7ca527daa0fa6 "bibtex main"
+  "main.lof" 1690631894 4109 aaf3551828e3b75242a2f9b94a826250 "pdflatex"
+  "main.lot" 1690631894 1583 7b039f41bd964f49a6a191e99eba1a46 "pdflatex"
+  "main.out" 1690631894 14804 db678af0b3581f81c7772f5abc098674 "pdflatex"
+  "main.tex" 1690631890 60321 a540df630f407a5f34dd636e57bc6c3c ""
+  "main.toc" 1690631894 6805 f2b3feaec1d9c180549996a4710b5618 "pdflatex"
   (generated)
   "main.aux"
   "main.lof"
