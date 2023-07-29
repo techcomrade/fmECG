@@ -131,3 +131,15 @@ dist
 
 pubspec.lock
 pubspec.yaml
+out/
+*.aux
+*.bbl
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.blg
+*.synctex.*
+*.toc

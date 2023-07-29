@@ -1,16 +1,84 @@
-@startuml
-actor User
-participant Client
-participant Server
 
-User -> Client: Initiate logout
-Client -> Server: GET /logout
-Server -> Server: Check token existence
-alt Token found
-    Server -> Server: Clear token cookie
-    Server --> Client: Success response
-else Token not found
-    Server --> Client: Error response
+@startuml
+
+
+skinparam style strictuml
+
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 70
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+
+participant main as main
+
+
+
+box "route" #lightBlue
+
+participant AuthRoute as AuthRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant AuthController as AuthController
+
+end box
+
+
+box "model" #lightBlue
+participant SessionModel as SessionModel
+
+end box
+
+
+User -> main: Request to login into app
+activate User
+activate main
+
+main -> AuthRoute: GET api/logout
+activate AuthRoute
+
+AuthRoute -> AuthController: logout(req, res)
+
+activate AuthController
+
+opt cookie token does exist
+  AuthController --> AuthRoute: return response error
+
 end
+
+AuthController -> AuthController: clear cookie
+
+AuthController --> SessionModel: destroy()
+note right of AuthController #Aqua
+* Request param:
+  - token: cookie token
+
+end note
+
+activate SessionModel
+SessionModel --> AuthController: return
+
+deactivate SessionModel
+
+AuthController --> AuthRoute: return response
+
+deactivate AuthController
+
+AuthRoute --> main: return response
+
+deactivate AuthRoute
+
+main --> User: return response
+
+deactivate main
+deactivate User
 
 @enduml

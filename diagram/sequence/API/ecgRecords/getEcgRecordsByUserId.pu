@@ -1,0 +1,94 @@
+'
+
+@startuml
+
+
+skinparam style strictuml
+
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 70
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+
+participant main as main
+
+
+box "route" #lightBlue
+
+participant ECGRecordRoute as ECGRecordRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant ECGRecordController as ECGRecordController
+
+end box
+
+
+box "model" #lightBlue
+participant ECGRecordModel as ECGRecordModel
+
+end box
+
+
+User -> main: Request get all ECG data of patient
+activate User
+activate main
+
+main -> ECGRecordRoute: GET api/ecg-records/patient/{:patientId}
+activate ECGRecordRoute
+
+
+ECGRecordRoute -> ECGRecordController: getEcgRecordsByUserId(req, res)
+activate ECGRecordController
+
+note right of ECGRecordRoute #Aqua
+  * Request param:
+  userId = req.params
+end note
+
+
+ECGRecordController -> ECGRecordModel: findAndCountAll()
+note right of ECGRecordController #Aqua
+  * Request param
+    user_id = userId
+end note
+
+activate ECGRecordModel
+
+ECGRecordModel --> ECGRecordController: return ecg record
+
+deactivate ECGRecordModel
+
+ECGRecordController --> ECGRecordRoute: return response
+
+deactivate ECGRecordController
+
+alt response error
+  ECGRecordRoute --> main: return exception
+  note right of main
+    status: "error"
+    message: error description
+  end note
+else response success
+  ECGRecordRoute --> main: return response
+  deactivate ECGRecordRoute
+
+  note right of main
+    status: "success"
+    data : [ECGRecordModel list]
+  end note
+end
+main --> User: return response
+deactivate main
+deactivate User
+
+@enduml
+

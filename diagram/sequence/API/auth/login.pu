@@ -1,32 +1,121 @@
+
 @startuml
 
 
-actor User
-participant ClientApp
-participant Server
-database Database
+skinparam style strictuml
 
-User -> ClientApp: Provide login credentials
-ClientApp -> Server: Send login request
-Server -> Database: Find user by email
-activate Database
-Database --> Server: Return user data
-deactivate Database
-Server -> Server: Compare passwords
-alt Password match
-    Server -> Server: Generate JWT token
-    Server -> ClientApp: Send JWT token
-    ClientApp -> User: Receive JWT token
-    User -> ClientApp: Store JWT token
-    ClientApp -> Server: Include JWT token in requests
-    Server -> Server: Validate JWT token
-    alt Token valid
-        Server -> Server: Perform authorized action
-        Server -> ClientApp: Return response
-    else Token invalid
-        Server -> ClientApp: Return authentication error
-    end
-else Password mismatch
-    Server -> ClientApp: Return authentication error
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 70
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+
+participant main as main
+
+
+
+box "route" #lightBlue
+
+participant AuthRoute as AuthRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant AuthController as AuthController
+
+end box
+
+
+box "model" #lightBlue
+participant UserModel as UserModel
+participant SessionModel as SessionModel
+
+
+end box
+
+
+User -> main: Request to login into app
+activate User
+activate main
+
+main -> AuthRoute: POST api/login
+activate AuthRoute
+
+note right of main #Aqua
+* Request param:
+Content type: application/json
+Request content:
+- email: String
+- password: String
+
+end note
+
+AuthRoute -> AuthController: login(req, res)
+activate AuthController
+
+note right of AuthRoute #Aqua
+* Request param:
+{ email, password } = req.body
+end note
+
+AuthController -> UserModel: findOne(param)
+note right of AuthController #Aqua
+* Request param:
+email: String
+end note
+activate UserModel 
+UserModel --> AuthController: return user
+deactivate UserModel
+alt user existed
+
+alt request.password === user.password 
+AuthController -> AuthController: Generate Token
+note right of AuthController #Aqua
+* Request param
+payload: user.user_id, user.role
+secretKey: JWT_SECRET
+option: expiresIn: '90d'
+end note
+
+AuthController --> AuthRoute: return response
+' note left of AuthController #Aqua
+' * Response params:
+' - cookie
+' - status
+' - user
+' end note
+
+AuthController -> SessionModel: create()
+note right of AuthController #Aqua
+* Request param:
+ - token: token
+end note
+
+activate SessionModel
+SessionModel --> AuthController: return
+deactivate SessionModel
+
+else request.password !== user.password 
+AuthController --> AuthRoute: return response error
+
 end
+
+else user not existed
+AuthController --> AuthRoute: return response error
+
+end
+deactivate AuthController
+
+AuthRoute --> main: return response
+deactivate AuthRoute
+main --> User: return response
+deactivate main
+deactivate User
+
 @enduml

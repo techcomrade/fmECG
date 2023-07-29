@@ -1,0 +1,95 @@
+'
+
+@startuml
+
+
+skinparam style strictuml
+
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 70
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+
+participant main as main
+
+
+box "route" #lightBlue
+
+participant NewsRoute as NewsRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant NewsController as NewsController
+
+end box
+
+
+box "model" #lightBlue
+participant NewsCategoryModel as NewsCategoryModel
+
+end box
+
+
+User -> main: Request to get news category data
+activate User
+activate main
+
+main -> NewsRoute: GET api/category/{:categoryId}
+activate NewsRoute
+
+
+NewsRoute -> NewsController: getNewsCategoryById(req, res)
+activate NewsController
+
+note right of NewsRoute #Aqua
+  * Request param:
+   - categoryId = req.param
+end note
+
+NewsController -> NewsCategoryModel: findByPk(categoryId)
+
+activate NewsCategoryModel
+
+NewsCategoryModel --> NewsController: return news category
+
+deactivate NewsCategoryModel
+
+opt news category does not exist
+NewsController --> NewsRoute: return error
+
+end
+
+
+NewsController --> NewsRoute: return response
+
+deactivate NewsController
+
+alt response error
+  NewsRoute --> main: return exception
+  note right of main
+    status: "error"
+    message: error description
+  end note
+else response success
+  NewsRoute --> main: return response
+  deactivate NewsRoute
+
+  note right of main
+    status: "success"
+    data : news category data
+  end note
+end
+main --> User: return response
+deactivate main
+deactivate User
+
+@enduml
+
