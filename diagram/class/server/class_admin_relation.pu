@@ -10,6 +10,10 @@ package "Controllers" {
     ' class UserController
     class AdminController
 }
+package "lib" {
+    class Model <<Sequelize>>
+
+}
 
 package "Models" {
     class ECGRecordModel
@@ -49,7 +53,7 @@ package "Admin" {
         class PatientDoctorAssignmentResource
     }
 
-    package "Component" {
+    package "Components" {
         class Component
     }
 }
@@ -59,25 +63,20 @@ package "Admin" {
 
 ' ---------------------AlginLaylout----------------------
 ' ---Models
+Model -[hidden]-> UserModel
+Model -[hidden]-> SessionModel
+Model -[hidden]-> DeviceModel
+Model -[hidden]-> NewsModel
+
+
 UserModel -[hidden]-> PatientDoctorAssignmentModel
-SessionModel -[hidden]-> ResetTokenModel
-' ECGRecordModel -[hidden]-> DeviceModel
-' NewsCategoryModel -[hidden]-> NewsModel
+UserModel -[hidden]-> ResetTokenModel
+UserModel -[hidden]-> SessionModel
+
 PatientDoctorAssignmentModel -[hidden]-> ECGRecordModel
 ResetTokenModel -[hidden]-> NewsCategoryModel
 
-
-' ' ---Controller
-' UserController -[hidden]-> AuthController
-' ' UserController -[hidden]-> ECGRecordController
-' UserController -[hidden]-> NewsController
-' AuthController -[hidden]-> ECGRecordController
-
-' ' -----Route
-' ' ECGRecordRoute -[hidden]-> NewsRoute
-' ECGRecordRoute -[hidden]-> AuthRoute
-' ECGRecordRoute -[hidden]-> PatientDoctorAssignmentRoute
-' PatientDoctorAssignmentRoute -[hidden]-> NewsRoute
+Model <|--- Models
 
 
 ' ------Admin/Resource
@@ -94,45 +93,6 @@ NewsViewComponent -[hidden]-> DashboardViewComponent
 
 
 ' --------------------------------------------------------
-
-
-
-' ' ---------------Controller-----------------------
-
-' AuthController *--- UserModel
-' AuthController *-- ResetTokenModel
-' AuthController *-- SessionModel
-
-
-
-' NewsController *--- NewsCategoryModel
-' NewsController *--- NewsModel
-
-' UserController *--- UserModel
-
-' PatientDoctorAssignmentController *--- UserModel
-' PatientDoctorAssignmentController *--- PatientDoctorAssignmentModel
-
-' ECGRecordController *--- ECGRecordModel
-' ECGRecordController *--- PatientDoctorAssignmentModel
-' ECGRecordController *--- DeviceModel
-
-
-
-
-
-' ' ----------------------------------------------------
-
-
-
-' ' ---------------------------Route----------------------
-
-' AuthRoute *--- AuthController
-' ECGRecordRoute *--- ECGRecordController
-' UserRoute *--- UserController
-' NewsRoute *--- NewsController
-' PatientDoctorAssignmentRoute *--- PatientDoctorAssignmentController
-' AdminRoute *--- AdminController
 
 ' ' --------------------------------------------------------
 
@@ -152,25 +112,22 @@ PatientDoctorAssignmentResource *--- PatientDoctorAssignmentModel
 
 ' ------------------------------Component----------
 
-Component *--- DashboardViewComponent
-Component *--- NewsViewComponent
-Component *--- ECGRecordViewComponent
-Component *--- PatientDoctorAssignmentViewComponent
+
+Component *-l-- Views
+
 
 ' ---------------------------------------------------
 
-AdminController *--- AdminResource
-AdminController *--- DoctorResource
-AdminController *--- PatientResource
-AdminController *--- NewsResource
-AdminController *--- NewsCategoryResource
-AdminController *--- ECGRecordResource
-AdminController *--- PatientDoctorAssignmentResource
-AdminController *--- Component
+AdminController *--- Components
+
+AdminController *--- Resource
 
 AdminRoute *-- AdminController
 
 ' ----------------------------------------------------------
+
+Models -[hidden]-> Resource
+Admin --[hidden]--> Views
 
 
 

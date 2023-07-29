@@ -13,11 +13,9 @@ autonumber
 
 actor User as User
 
-box "view" #LightGoldenRodYellow
 
-participant UserInfoPage as UserInfoPage
+participant main as main
 
-end box
 
 box "route" #lightBlue
 
@@ -38,11 +36,11 @@ participant UserModel as UserModel
 end box
 
 
-User -> UserInfoPage: Request to change password
+User -> main: Request to change password
 activate User
-activate UserInfoPage
+activate main
 
-UserInfoPage -> UserRoute: GET api/users/{:userId}
+main -> UserRoute: GET api/users/{:userId}
 activate UserRoute
 
 
@@ -73,13 +71,13 @@ UserController --> UserRoute: return response
 
 deactivate UserController
 
-UserRoute --> UserInfoPage: return response
+UserRoute --> main: return response
 
 deactivate UserRoute
 
-UserInfoPage --> User: return response
+main --> User: return response
 
-deactivate UserInfoPage
+deactivate main
 deactivate User
 
 

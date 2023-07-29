@@ -15,11 +15,9 @@ autonumber
 
 actor User as User
 
-box "view" #LightGoldenRodYellow
 
-participant GetAssigedDoctorPage as GetAssigedDoctorPage
+participant main as main
 
-end box
 
 box "route" #lightBlue
 
@@ -41,11 +39,11 @@ participant UserModel as UserModel
 end box
 
 
-User -> GetAssigedDoctorPage: Request to get doctor information being assign to patient
+User -> main: Request to get doctor information being assign to patient
 activate User
-activate GetAssigedDoctorPage
+activate main
 
-GetAssigedDoctorPage -> PatientDoctorAssignmentRoute: GET api/patient/{:patientId}/doctor
+main -> PatientDoctorAssignmentRoute: GET api/patient/{:patientId}/doctor
 activate PatientDoctorAssignmentRoute
 
 
@@ -80,22 +78,22 @@ PatientDoctorAssignmentController --> PatientDoctorAssignmentRoute: return respo
 deactivate PatientDoctorAssignmentController
 
 alt response error
-  PatientDoctorAssignmentRoute --> GetAssigedDoctorPage: return exception
-  note right of GetAssigedDoctorPage
+  PatientDoctorAssignmentRoute --> main: return exception
+  note right of main
     status: "error"
     message: error description
   end note
 else response success
-  PatientDoctorAssignmentRoute --> GetAssigedDoctorPage: return response
+  PatientDoctorAssignmentRoute --> main: return response
   deactivate PatientDoctorAssignmentRoute
 
-  note right of GetAssigedDoctorPage
+  note right of main
     status: "success"
     data : doctor information
   end note
 end
-GetAssigedDoctorPage --> User: return response
-deactivate GetAssigedDoctorPage
+main --> User: return response
+deactivate main
 deactivate User
 
 @enduml

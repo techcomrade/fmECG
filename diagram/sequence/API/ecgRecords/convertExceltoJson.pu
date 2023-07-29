@@ -15,11 +15,9 @@ autonumber
 
 actor User as User
 
-box "view" #LightGoldenRodYellow
 
-participant GetECGDataPage as GetECGDataPage
+participant main as main
 
-end box
 
 box "route" #lightBlue
 
@@ -40,11 +38,11 @@ participant ECGRecordModel as ECGRecordModel
 end box
 
 
-User -> GetECGDataPage: Request ECG record data
+User -> main: Request ECG record data
 activate User
-activate GetECGDataPage
+activate main
 
-GetECGDataPage -> ECGRecordRoute: GET api/ecg-records/record-data/{:record_id}
+main -> ECGRecordRoute: GET api/ecg-records/record-data/{:record_id}
 activate ECGRecordRoute
 
 
@@ -83,22 +81,22 @@ ECGRecordController --> ECGRecordRoute: return response
 deactivate ECGRecordController
 
 alt response error
-  ECGRecordRoute --> GetECGDataPage: return exception
-  note right of GetECGDataPage
+  ECGRecordRoute --> main: return exception
+  note right of main
     status: "error"
     message: error description
   end note
 else response success
-  ECGRecordRoute --> GetECGDataPage: return response
+  ECGRecordRoute --> main: return response
   deactivate ECGRecordRoute
 
-  note right of GetECGDataPage
+  note right of main
     status: "success"
     data : [ECGRecord data]
   end note
 end
-GetECGDataPage --> User: return response
-deactivate GetECGDataPage
+main --> User: return response
+deactivate main
 deactivate User
 
 @enduml

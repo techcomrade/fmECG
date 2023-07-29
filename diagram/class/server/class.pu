@@ -13,6 +13,7 @@ package Controllers {
         - ResetToken: ResetTokenModel
         - Sesion: SessionModel
 
+        + AuthController()
         + register(req, res)
         + login(req, res)
         + logout(req, res)
@@ -28,6 +29,7 @@ package Controllers {
         - PatientDoctorAssignment: PatientDoctorAssignmentModel
         - Device: DeviceModel
 
+        + ECGRecordController()
         + uploadEcgData(req, res)
         + getEcgRecordsByUserId(req, res)
         + getEcgRecordsByDoctor(req, res)
@@ -38,6 +40,7 @@ package Controllers {
         - News: NewsModel
         - NewsCategory: NewsCategoryModel
 
+        + NewsController()
         + getNewsById(req, res)
         + getAllNews(req, res)
         + getAllNewsCategories(req, res)
@@ -50,6 +53,8 @@ package Controllers {
         - User: UserModel
         - PatientDoctorAssignment: PatientDoctorAssignmentModel
 
+
+        + PatientDoctorAssignmentController()
         + getPatientsByDoctor(req, res)
         + getDoctorByPatient(req, res)
         + getNewsById(req, res)
@@ -63,6 +68,7 @@ package Controllers {
         - User: UserModel
         - path: path
 
+        + UserController()
         + updateUserInfo(req, res)
         + changePassword(req, res)
         + getUserProfile(req, res)
@@ -86,6 +92,7 @@ package Controllers {
     }
 }
 
+
 package Models {
     class ECGRecordModel {
         + record_id: Interger
@@ -98,6 +105,8 @@ package Models {
         + updated_at: Date
         + created_at: Date
         - Sequelize: sequelize
+
+        + ECGRecordModel()
     }
 
     class NewsModel {
@@ -111,6 +120,8 @@ package Models {
         + updated_at: Date
         + created_at: Date
         - Sequelize: sequelize
+
+        + NewsModel()
     }
 
     class NewsCategoryModel {
@@ -119,6 +130,8 @@ package Models {
         + updated_at: Date
         + created_at: Date
         - Sequelize: sequelize
+
+        + NewsCategoryModel()
 
     }
 
@@ -130,6 +143,8 @@ package Models {
         + updated_at: Date
         + created_at: Date
         - Sequelize: sequelize
+
+        + ResetTokenModel()
 
     }
 
@@ -145,6 +160,8 @@ package Models {
         + created_at: Date
         - Sequelize: sequelize
 
+        + UserModel()
+
     }
 
     class DeviceModel {
@@ -153,6 +170,8 @@ package Models {
         + updated_at: Date
         + created_at: Date
         - Sequelize: sequelize
+
+        + DeviceModel()
 
     }
 
@@ -163,6 +182,8 @@ package Models {
         + created_at: Date
         - Sequelize: sequelize
 
+        + SessionModel()
+
     }
 
     class PatientDoctorAssignmentModel {
@@ -172,10 +193,13 @@ package Models {
         + start_date: Date
         + updated_at: Date
         + created_at: Date
-        - Sequelize: sequelize        
+        - Sequelize: sequelize     
+
+        + PatientDoctorAssignmentModel()   
     }
 
 }
+
 
 package Routes {
     class AuthRoute {
@@ -239,28 +263,35 @@ package Routes {
     }
 }
 
+
+
 package Views {
 
     class DashboardViewComponent {
 
+        + DashboardViewComponent()
+
     }
 
     class NewsViewComponent {
-
+        + NewsViewComponent()
     }
 
     class ECGRecordViewComponent {
+        + ECGRecordViewComponent()
 
     }
 
     class PatientDoctorAssignmentViewComponent {
+        + PatientDoctorAssignmentViewComponent()
 
     }
 
 }
 
+
 package Admin {
-    package Resource {
+    package Resources {
         class AdminResource {
             - User: UserModel
             - bcrypt: bcrypt
@@ -314,7 +345,7 @@ package Admin {
 
     }
 
-    package Component {
+    package Components {
         class Component {
             + componentLoader: ComponentLoader
             + DashboardView: DashboardViewComponent
@@ -327,6 +358,8 @@ package Admin {
 
     }
 }
+
+Components --[hidden]-> Resources
 
 
 

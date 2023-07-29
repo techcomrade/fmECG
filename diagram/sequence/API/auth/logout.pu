@@ -1,21 +1,3 @@
-' @startuml
-' actor User
-' participant Client
-' participant Server
-
-' User -> Client: Initiate logout
-' Client -> Server: GET /logout
-' Server -> Server: Check token existence
-' alt Token found
-'     Server -> Server: Clear token cookie
-'     Server --> Client: Success response
-' else Token not found
-'     Server --> Client: Error response
-' end
-
-' @enduml
-
-
 
 @startuml
 
@@ -32,11 +14,9 @@ autonumber
 
 actor User as User
 
-box "view" #LightGoldenRodYellow
 
-participant LogoutPage as LogoutPage
+participant main as main
 
-end box
 
 
 box "route" #lightBlue
@@ -58,11 +38,11 @@ participant SessionModel as SessionModel
 end box
 
 
-User -> LogoutPage: Request to login into app
+User -> main: Request to login into app
 activate User
-activate LogoutPage
+activate main
 
-LogoutPage -> AuthRoute: GET api/logout
+main -> AuthRoute: GET api/logout
 activate AuthRoute
 
 AuthRoute -> AuthController: logout(req, res)
@@ -92,13 +72,13 @@ AuthController --> AuthRoute: return response
 
 deactivate AuthController
 
-AuthRoute --> LogoutPage: return response
+AuthRoute --> main: return response
 
 deactivate AuthRoute
 
-LogoutPage --> User: return response
+main --> User: return response
 
-deactivate LogoutPage
+deactivate main
 deactivate User
 
 @enduml

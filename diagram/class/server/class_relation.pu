@@ -31,28 +31,10 @@ package "Routes" {
     class AdminRoute
 }
 
-' package "Views" {
-'     class DashboardViewComponent
-'     class NewsViewComponent
-'     class ECGRecordViewComponent
-'     class PatientDoctorAssignmentViewComponent
-' }
+package "lib" {
+    class Model <<Sequelize>>
 
-' package "Admin" {
-'     package "Resource" {
-'         class AdminResource
-'         class DoctorResource
-'         class PatientResource
-'         class ECGRecordResource
-'         class NewsResource
-'         class NewsCategoryResource
-'         class PatientDoctorAssignmentResource
-'     }
-
-'     package "Component" {
-'         class Component
-'     }
-' }
+}
 
 ' Define relationship between classes
 
@@ -78,19 +60,6 @@ AuthController -[hidden]-> ECGRecordController
 ECGRecordRoute -[hidden]-> AuthRoute
 ECGRecordRoute -[hidden]-> PatientDoctorAssignmentRoute
 PatientDoctorAssignmentRoute -[hidden]-> NewsRoute
-
-
-' ' ------Admin/Resource
-' NewsResource -[hidden]-> PatientResource
-' NewsResource -[hidden]-> DoctorResource
-' NewsResource -[hidden]-> AdminResource
-' AdminResource -[hidden]-> NewsCategoryResource
-' AdminResource -[hidden]-> PatientDoctorAssignmentResource
-
-' ' ------Admin/View
-' PatientDoctorAssignmentViewComponent -[hidden]-> ECGRecordViewComponent
-' ECGRecordViewComponent -[hidden]-> NewsViewComponent
-' NewsViewComponent -[hidden]-> DashboardViewComponent
 
 
 ' --------------------------------------------------------
@@ -136,40 +105,7 @@ AdminRoute *--- AdminController
 
 ' --------------------------------------------------------
 
-' ' ----------------------------Admin------------------------
-
-' ' ----------------Resource--------------------------------
-
-' AdminResource *--- UserModel
-' DoctorResource *--- UserModel
-' PatientResource *--- UserModel
-' NewsResource *--- NewsModel
-' NewsCategoryResource *--- NewsCategoryModel
-' ECGRecordResource *--- ECGRecordModel
-' PatientDoctorAssignmentResource *--- PatientDoctorAssignmentModel
-
-' ' --------------------------------------------------------
-
-' ' ------------------------------Component----------
-
-' Component *--- DashboardViewComponent
-' Component *--- NewsViewComponent
-' Component *--- ECGRecordViewComponent
-' Component *--- PatientDoctorAssignmentViewComponent
-
-' ' ---------------------------------------------------
-
-' AdminController *--- AdminResource
-' AdminController *--- DoctorResource
-' AdminController *--- PatientResource
-' AdminController *--- NewsResource
-' AdminController *--- NewsCategoryResource
-' AdminController *--- ECGRecordResource
-' AdminController *--- PatientDoctorAssignmentResource
-
-' ' ----------------------------------------------------------
-
-
+Model <|--u- Models
 
 @enduml
 

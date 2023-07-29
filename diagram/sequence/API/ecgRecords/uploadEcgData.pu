@@ -15,11 +15,9 @@ autonumber
 
 actor User as User
 
-box "view" #LightGoldenRodYellow
 
-participant MeasureECGDataPage as MeasureECGDataPage
+participant main as main
 
-end box
 
 box "route" #lightBlue
 
@@ -40,13 +38,13 @@ participant ECGRecordModel as ECGRecordModel
 end box
 
 
-User -> MeasureECGDataPage: Request upload ECG data to server when finish measuring
+User -> main: Request upload ECG data to server when finish measuring
 activate User
-activate MeasureECGDataPage
+activate main
 
-MeasureECGDataPage -> ECGRecordRoute: POST api/ecg-records/upload
+main -> ECGRecordRoute: POST api/ecg-records/upload
 activate ECGRecordRoute
-note right of MeasureECGDataPage #Aqua
+note right of main #Aqua
   * Request param:
   Content type: application/form-data
   Request content:
@@ -96,22 +94,22 @@ ECGRecordController --> ECGRecordRoute: return response
 deactivate ECGRecordController
 
 alt response error
-  ECGRecordRoute --> MeasureECGDataPage: return exception
-  note right of MeasureECGDataPage
+  ECGRecordRoute --> main: return exception
+  note right of main
     status: "error"
     message: error description
   end note
 else response success
-  ECGRecordRoute --> MeasureECGDataPage: return response
+  ECGRecordRoute --> main: return response
   deactivate ECGRecordRoute
 
-  note right of MeasureECGDataPage
+  note right of main
     status: "success"
     data : ECGRecordModel
   end note
 end
-MeasureECGDataPage --> User: return response
-deactivate MeasureECGDataPage
+main --> User: return response
+deactivate main
 deactivate User
 
 @enduml

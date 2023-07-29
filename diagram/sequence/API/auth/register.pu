@@ -14,11 +14,9 @@ autonumber
 
 actor User as User
 
-box "view" #LightGoldenRodYellow
 
-participant RegisterPage as RegisterPage
+participant main as main
 
-end box
 
 
 box "route" #lightBlue
@@ -39,14 +37,14 @@ participant UserModel as UserModel
 
 end box
 
-User -> RegisterPage: Request to register account
+User -> main: Request to register account
 
 activate User
-activate RegisterPage
+activate main
 
-RegisterPage -> AuthRoute: POST api/register
+main -> AuthRoute: POST api/register
 activate AuthRoute
-note right of RegisterPage #Aqua
+note right of main #Aqua
   * Request param:
   Content type: application/json
   Request content:
@@ -107,12 +105,12 @@ else user existed
 AuthController --> AuthRoute: return error response
 deactivate AuthController
 end
-AuthRoute --> RegisterPage: return response
+AuthRoute --> main: return response
 
 deactivate AuthRoute
-RegisterPage --> User: return response
+main --> User: return response
 
-deactivate RegisterPage
+deactivate main
 deactivate User
 
 @enduml

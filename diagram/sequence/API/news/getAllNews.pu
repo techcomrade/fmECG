@@ -15,11 +15,9 @@ autonumber
 
 actor User as User
 
-box "view" #LightGoldenRodYellow
 
-participant GetAllNewsPage as GetAllNewsPage
+participant main as main
 
-end box
 
 box "route" #lightBlue
 
@@ -40,11 +38,11 @@ participant NewsModel as NewsModel
 end box
 
 
-User -> GetAllNewsPage: Request to get all news
+User -> main: Request to get all news
 activate User
-activate GetAllNewsPage
+activate main
 
-GetAllNewsPage -> NewsRoute: GET api/news
+main -> NewsRoute: GET api/news
 activate NewsRoute
 
 
@@ -74,22 +72,22 @@ NewsController --> NewsRoute: return response
 deactivate NewsController
 
 alt response error
-  NewsRoute --> GetAllNewsPage: return exception
-  note right of GetAllNewsPage
+  NewsRoute --> main: return exception
+  note right of main
     status: "error"
     message: error description
   end note
 else response success
-  NewsRoute --> GetAllNewsPage: return response
+  NewsRoute --> main: return response
     deactivate NewsRoute
 
-  note right of GetAllNewsPage
+  note right of main
     status: "success"
     data : [news list]
   end note
 end
-GetAllNewsPage --> User: return response
-deactivate GetAllNewsPage
+main --> User: return response
+deactivate main
 deactivate User
 
 @enduml

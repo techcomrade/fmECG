@@ -14,11 +14,9 @@ autonumber
 
 actor User as User
 
-box "view" #LightGoldenRodYellow
 
-participant LoginPage as LoginPage
+participant main as main
 
-end box
 
 
 box "route" #lightBlue
@@ -42,14 +40,14 @@ participant SessionModel as SessionModel
 end box
 
 
-User -> LoginPage: Request to login into app
+User -> main: Request to login into app
 activate User
-activate LoginPage
+activate main
 
-LoginPage -> AuthRoute: POST api/login
+main -> AuthRoute: POST api/login
 activate AuthRoute
 
-note right of LoginPage #Aqua
+note right of main #Aqua
 * Request param:
 Content type: application/json
 Request content:
@@ -114,10 +112,10 @@ AuthController --> AuthRoute: return response error
 end
 deactivate AuthController
 
-AuthRoute --> LoginPage: return response
+AuthRoute --> main: return response
 deactivate AuthRoute
-LoginPage --> User: return response
-deactivate LoginPage
+main --> User: return response
+deactivate main
 deactivate User
 
 @enduml

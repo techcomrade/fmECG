@@ -15,11 +15,9 @@ autonumber
 
 actor User as User
 
-box "view" #LightGoldenRodYellow
 
-participant GetNewsContentPage as GetNewsContentPage
+participant main as main
 
-end box
 
 box "route" #lightBlue
 
@@ -40,11 +38,11 @@ participant NewsModel as NewsModel
 end box
 
 
-User -> GetNewsContentPage: Request to get news contents
+User -> main: Request to get news contents
 activate User
-activate GetNewsContentPage
+activate main
 
-GetNewsContentPage -> NewsRoute: GET api/news/{:newsId}
+main -> NewsRoute: GET api/news/{:newsId}
 activate NewsRoute
 
 
@@ -75,22 +73,22 @@ NewsController --> NewsRoute: return response
 deactivate NewsController
 
 alt response error
-  NewsRoute --> GetNewsContentPage: return exception
-  note right of GetNewsContentPage
+  NewsRoute --> main: return exception
+  note right of main
     status: "error"
     message: error description
   end note
 else response success
-  NewsRoute --> GetNewsContentPage: return response
+  NewsRoute --> main: return response
   deactivate NewsRoute
 
-  note right of GetNewsContentPage
+  note right of main
     status: "success"
     data : news content
   end note
 end
-GetNewsContentPage --> User: return response
-deactivate GetNewsContentPage
+main --> User: return response
+deactivate main
 deactivate User
 
 @enduml

@@ -13,11 +13,9 @@ autonumber
 
 actor User as User
 
-box "view" #LightGoldenRodYellow
 
-participant UpdateUserInfoPage as UpdateUserInfoPage
+participant main as main
 
-end box
 
 box "route" #lightBlue
 
@@ -38,14 +36,14 @@ participant UserModel as UserModel
 end box
 
 
-User -> UpdateUserInfoPage: Request to change password
+User -> main: Request to change password
 activate User
-activate UpdateUserInfoPage
+activate main
 
-UpdateUserInfoPage -> UserRoute: PUT api/users/profile
+main -> UserRoute: PUT api/users/profile
 activate UserRoute
 
-note right of UpdateUserInfoPage #Aqua
+note right of main #Aqua
 * Request param:
 Content type: application/json
 Request content:
@@ -104,13 +102,13 @@ UserController --> UserRoute: return response
 
 deactivate UserController
 
-UserRoute --> UpdateUserInfoPage: return response
+UserRoute --> main: return response
 
 deactivate UserRoute
 
-UpdateUserInfoPage --> User: return response
+main --> User: return response
 
-deactivate UpdateUserInfoPage
+deactivate main
 deactivate User
 
 
