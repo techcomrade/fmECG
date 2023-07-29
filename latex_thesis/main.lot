@@ -1,10 +1,10 @@
-\contentsline {table}{\numberline {2.1}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng thực thể và thuộc tính\relax }}{17}{table.caption.31}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {user}\relax }}{18}{table.caption.32}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {ecg\_record}\relax }}{19}{table.caption.33}%
-\contentsline {table}{\numberline {2.4}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {news\_category}\relax }}{19}{table.caption.34}%
-\contentsline {table}{\numberline {2.5}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {news}\relax }}{19}{table.caption.35}%
-\contentsline {table}{\numberline {2.6}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {patient\_doctor\_assignment}\relax }}{20}{table.caption.36}%
-\contentsline {table}{\numberline {2.7}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {reset\_token}\relax }}{20}{table.caption.37}%
-\contentsline {table}{\numberline {2.8}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {session}\relax }}{20}{table.caption.38}%
-\contentsline {table}{\numberline {2.9}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {device}\relax }}{20}{table.caption.39}%
-\contentsline {table}{\numberline {4.1}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Kết quả thí nghiệm\relax }}{22}{table.caption.40}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng thực thể và thuộc tính\relax }}{19}{table.caption.40}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {user}\relax }}{20}{table.caption.41}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {ecg\_record}\relax }}{21}{table.caption.42}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {news\_category}\relax }}{21}{table.caption.43}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {news}\relax }}{21}{table.caption.44}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {patient\_doctor\_assignment}\relax }}{22}{table.caption.45}%
+\contentsline {table}{\numberline {2.7}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {reset\_token}\relax }}{22}{table.caption.46}%
+\contentsline {table}{\numberline {2.8}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {session}\relax }}{22}{table.caption.47}%
+\contentsline {table}{\numberline {2.9}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {device}\relax }}{22}{table.caption.48}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Kết quả thí nghiệm\relax }}{24}{table.caption.49}%

@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex main"] 1690520463 "main.aux" "main.bbl" "main" 1690520465 0
+["bibtex main"] 0 "main.aux" "main.bbl" "main" 0 -1
   "./TaiLieuThamKhao.bib" 1690391546 897 0b3348af8417e9e3a36f42ae74a86933 ""
   "/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1678549815 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "main.aux" 1690520464 15995 26322ecbc0bfa77477a1c772b52717d5 "pdflatex"
+  "main.aux" 1690620787 20736 7e9d469cf18321cbc2611d0bb934a6f2 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1690520464 "/Users/admin/Documents/projects/personal/fmECG/latex_thesis/main.tex" "main.pdf" "main" 1690520465 0
-  "/Users/admin/Documents/projects/personal/fmECG/latex_thesis/main.tex" 1690520462 52793 a561704293eab17d79c248f847867e46 ""
+["pdflatex"] 1690620786 "/Users/admin/Documents/projects/personal/fmECG/latex_thesis/main.tex" "main.pdf" "main" 1690620787 2
+  "/Users/admin/Documents/projects/personal/fmECG/latex_thesis/main.tex" 1690620784 59752 b5af9fc38c9f7a92b0aa3f6ce4fb09c2 ""
   "/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/fonts/enc/dvips/base/8r.enc" 1678549815 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/fonts/enc/dvips/vntex/t5.enc" 1678549815 7824 21ade6c3c7fd67cb4ace8dbc91c53118 ""
   "/opt/homebrew/Cellar/texlive/20230313_2/share/texmf-dist/fonts/map/fontname/texfonts.map" 1678549815 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -209,16 +209,18 @@
   "Images/mobile_app/send_and_receive_message.png" 1690391546 42141 76ebeae8dda21db735fcc9fa0efe8b0e ""
   "Images/mobile_app/start_measuring_ecg.png" 1690391546 16101 f1fa78b353ced26e6cbcf30bbbf27409 ""
   "Images/mobile_app/turn_on_off_bluetooth.png" 1690391546 33140 8209d7404a4d3bd63cb612457e97105c ""
-  "Images/mobile_app/use_case_send_receive_message.png" 1690391805 54250 fa443b234805cc9691baa22e376daaf2 ""
   "Images/mobile_app/view_news.png" 1690391546 33524 40a29c25f9c9940f22be5de3ec4d36f9 ""
   "Images/mobile_app/view_record_timeline.png" 1690391546 32166 997547f3e26fa679862a42fb1b9bdb56 ""
-  "main.aux" 1690520464 15995 26322ecbc0bfa77477a1c772b52717d5 "pdflatex"
-  "main.bbl" 1690520464 1215 ef001c3b390155e73cc7ca527daa0fa6 "bibtex main"
-  "main.lof" 1690520464 2683 1f83bb9fa88e0ae82d3a491003aabc9c "pdflatex"
-  "main.lot" 1690520464 1583 fddc5399632d84249063b478a985a82c "pdflatex"
-  "main.out" 1690520464 10804 e807b4b9ce84f363ec0b70a8ceaae81c "pdflatex"
-  "main.tex" 1690520462 52793 a561704293eab17d79c248f847867e46 ""
-  "main.toc" 1690520464 5221 cc73a9e2113f76803c8a075ea3b5368f "pdflatex"
+  "Images/use_case/use_case_forgot_password.png" 1690618473 19274 edd50ee0939bb386c4617b406130b973 ""
+  "Images/use_case/use_case_general.png" 1690620300 233750 fe997207e412328dca58b4fb2ec3a7c7 ""
+  "Images/use_case/use_case_register.png" 1690618462 18652 608be47d832296b1c610657fce30e51f ""
+  "main.aux" 1690620787 20736 7e9d469cf18321cbc2611d0bb934a6f2 "pdflatex"
+  "main.bbl" 1690620381 1215 ef001c3b390155e73cc7ca527daa0fa6 "bibtex main"
+  "main.lof" 1690620787 3983 1efe0b7bdddc5bb93b2746b7f4e46460 "pdflatex"
+  "main.lot" 1690620787 1583 2d10a89a1c872b9aec0ba470fcaa2d1a "pdflatex"
+  "main.out" 1690620787 14804 b93ef7017a786df5232461477346ff5f "pdflatex"
+  "main.tex" 1690620784 59752 b5af9fc38c9f7a92b0aa3f6ce4fb09c2 ""
+  "main.toc" 1690620787 6795 b80d05cb3b6423d333eea7584148f831 "pdflatex"
   (generated)
   "main.aux"
   "main.lof"

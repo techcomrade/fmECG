@@ -255,16 +255,44 @@ dụng PC-Covid để cập nhật các thông tin tiêm vắc xin, thông tin x
 dụng công nghệ 4.0 vào trong ngành y tế một cách chủ động. Hiện nay, việc chăm sóc sức khoẻ đang được chú trọng, đặc biệt
 là đối với những mẹ bầu, những người cần theo dõi sức khoẻ định kỳ liên tục, việc di chuyển đến bệnh viện đông đúc để
 thăm khám rất khó khăn, cộng với chi phí không hề rẻ, và tỉ lệ sẩy thai, thai lưu khi phát hiện không kịp thời là khá cao.
-câu hỏi đặt ra là có cách nào có thể giúp các mẹ bầu không cần di
-chuyển
+câu hỏi đặt ra là có cách nào có thể giúp các mẹ bầu không cần di chuyển đến bệnh viện mà vẫn có thể theo dõi được sức khoẻ của mình và
+em bé, vẫn được sự chăm sóc, tư vấn của bác sĩ và chi phí ở mức có thể tiếp cận với nhiều gia đình. 
+
+% Đồ án về đề tài...,
+% chính là một nhánh trong hệ thống giúp các mẹ bầu có thể xem được nhịp tim của mình và em bé, được phân công bác sĩ để
+% trao đổi trực tiếp tình hình. 
 
 \subsection*{Đề xuất hệ thống}
 \phantomsection\addcontentsline{toc}{section}{\numberline{} Đề xuất hệ thống}
-(Nếu có) \cite{nhu2019effects}
+% (Nếu có) \cite{nhu2019effects}
+Với nền tảng đã có thiết bị đo điện tim của mẹ và thai nhi bằng điện cực không tiếp xúc thì việc phát triển một hệ thống
+phần mềm để có thể tiếp cận gần hơn với mục tiêu là giúp các mẹ bầu không cần di chuyển, vẫn theo dõi được tim thai của
+cả mẹ và bé, và chi phí tốt với nhiều gia đình là điều mà đồ án chúng em hướng tới. Hệ thống của chúng em sẽ gồm:
+
+- Một ứng dụng di động cho riêng những mẹ bầu để có thể theo dõi trực tiếp tình trạng sức khoẻ của mẹ và thai nhi, đồng
+thời có thể trao đổi với bác sĩ về tình trạng các lần đo, xem tin tức về các thông tin liên quan tới sức khoẻ của mẹ bầu.
+
+- Một ứng dụng di động cho bác sĩ để có thể xem được kết quả đo của các bệnh nhân được quản lý, trao đổi được với bệnh nhân.
+
+- Một ứng dụng web cho admin để quản lý hệ thống, đặc biệt là có phần phân công bác sĩ quản lý cho bệnh nhân.
+
+- Một server để lưu cơ sở dữ liệu liên quan đến người dùng và dữ liệu đo của người dùng, có thể phục vụ cho công tác nghiên cứu
+sau này.
 
 \subsection*{Cấu trúc đồ án}
 \phantomsection\addcontentsline{toc}{section}{\numberline{} Cấu trúc đồ án}
-(nếu có)
+- Phần mở đầu: Trình bày về mục đích của đồ án, thu thập yêu cầu, đề xuất hệ thống, phần tích tính khả thi và bố cục đồ án.
+
+- Chương 1: Trình bày chi tiết các khâu trong phân tích hệ thống. 
+Bao gồm xác định yêu cầu, thiết kế sơ đồ use case, biểu đồ hoạt động, biểu đồ tuần tự.
+
+- Chương 2: Trình bày chi tiết khâu thiết kế cho hệ thống. Bao gồm thiết kế hệ thống và thiết kế cơ sở dữ liệu.
+
+- Chương 3: Trình bày khâu thiết kế phần mềm. Bao gồm thiết kế API và thiết kế giao diện và giải pháp tối ưu hiệu năng.
+
+- Chương 4: Trình bày khâu triền khai và kiểm thử.
+
+- Chương 5: Kết luận và nêu ra hướng phát triển.
 \cleardoublepage
 
 \pagenumbering{arabic} %đánh số thứ tự 1,2,3....
@@ -277,15 +305,20 @@ chuyển
 \addcontentsline{toc}{section}
 % \addcontentsline{toc}{section}
 {\numberline{}CHƯƠNG 1. TỔNG QUAN HỆ THỐNG}
-Trong chương này, chúng em sẽ tiến hành phân tích hệ thống cho dự án đề tài "Hệ thống quản lý ECG". 
-Đây là một hệ thống được thiết kế để quản lý và xử lý dữ liệu điện tâm đồ (ECG) của người dùng. 
-Hệ thống cung cấp khả năng ghi lại và hiển thị dữ liệu điện tim, cho phép người dùng theo dõi và 
-đánh giá sự hoạt động của tim. 
-Người dụng cũng có thể thực hiện trao đổi dựa trên các kết quả điện tim đo được. 
-Những thông tin này có thể hữu ích trong việc theo dõi sức khỏe tim mạch, theo dõi hiệu quả của liệu pháp 
+Trong chương này, chúng em sẽ tiến hành phân tích hệ thống cho dự án đề tài "Hệ thống quản lý ECG" dựa trên các mục tiêu
+đã nêu ra trong Mục Đề xuất hệ thống ở Phần mở đầu. Trước tiên bài toán đặt ra ở hệ thống phần mềm điện tim là có thể có:
+
+- Một thiết bị để có thể giúp mẹ bầu đo được những thông tin cần thiết
+
+- Trực quan và tiêu chuẩn hoá những thông tin đo được
+bằng hình ảnh hoặc số liệu để bác sĩ có thể dựa vào đó để đưa ra những đánh giá cho mẹ bầu. Ngoài ra những thông tin này
+có thể hữu ích trong việc theo dõi sức khỏe tim mạch, theo dõi hiệu quả của liệu pháp 
 và hỗ trợ quyết định của người dùng.
 
+- Quản trị viên sẽ là người có thể phân công bác sĩ để chăm sóc, theo dõi sức khoẻ từ
+xa cho mẹ bầu. 
 
+Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được chúng em trình bày ở các chương dưới.
 
 \subsection{Yêu cầu hệ thống}
 \subsubsection{Yêu cầu về người dùng hệ thống}
@@ -340,55 +373,140 @@ Hệ thống hỗ trợ các chức năng cơ bản sau đối với người d�
 \subsubsection{Yêu cầu phi chức năng}
 \begin{itemize}
     \item Hệ thống hỗ trợ ngôn ngữ Tiếng Việt và Tiếng Anh.
-    \item Hệ thống cần đảm bảo tính bảo mật và quyền riêng tư thông tin của người dùng.
-    \item Hệ thống phải có giao diện người dùng thân thiện, dễ sử dụng và có thể tương tác trên các thiết bị di động.
+    \item Hệ thống có thể tương thích với các loại thiết bị phổ biến hiện nay (với Android: Android 10+, IOS: IOS > 12.1)
+    \item Hệ thống đảm bảo tính bảo mật và quyền riêng tư thông tin của người dùng.
+    \item Hệ thống phải có giao diện người dùng thân thiện, dễ sử dụng để có thể tương tác mà không gặp quá nhiều khó khăn.
     \item Thời gian phản hồi của hệ thống phải nhanh chóng và ổn định.
-    \item Hệ thống cần sao lưu dữ liệu định kỳ để đảm bảo tính an toàn và khả năng khôi phục dữ liệu khi cần thiết.
+    % \item Hệ thống cần sao lưu dữ liệu định kỳ để đảm bảo tính an toàn và khả năng khôi phục dữ liệu khi cần thiết.
 \end{itemize}
 
-Thông qua việc phân tích yêu cầu hệ thống, chúng ta có cái nhìn tổng quan về các chức năng, yêu cầu phi chức năng và các đối tượng người dùng mà hệ thống phải hỗ trợ. Phần phân tích này sẽ cung cấp cơ sở cho việc thiết kế và phát triển hệ thống quản lý ECG, đáp ứng đầy đủ các yêu cầu của người dùng và đảm bảo hiệu suất, bảo mật và tính khả dụng của hệ thống.
+Thông qua việc phân tích yêu cầu hệ thống, chúng ta có cái nhìn tổng quan về các chức năng, yêu cầu phi chức năng và 
+các đối tượng người dùng mà hệ thống phải hỗ trợ. Phần phân tích này sẽ cung cấp cơ sở cho việc thiết kế và phát triển hệ thống quản lý ECG, 
+đáp ứng đầy đủ các yêu cầu của người dùng và đảm bảo hiệu suất, bảo mật và tính khả dụng của hệ thống.
 \subsection{Sơ đồ use case}
-\subsubsection{Use case xem/nhận tin nhắn}
+\subsubsection{Use case tổng quát hệ thống}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/mobile_app/use_case_send_receive_message.png}
-    \caption[Sơ đồ tuần tự chức năng đăng ký trên App]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ tuần tự chức năng đăng ký trên App}
+    \includegraphics[width=17cm,height=14cm]{Images/use_case/use_case_general.png}
+    \caption[Sơ đồ use case tổng quát của hệ thống]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case tổng quát của hệ thống}
     \label{hinh21} %đặt tên cho ảnh
   \end{figure}
 
+\subsubsection{Use case chức năng đăng ký tài khoản}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/mobile_app/use_case_send_receive_message.png}
-    \caption[Sơ đồ tuần tự chức năng đăng ký trên App]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ tuần tự chức năng đăng ký trên App}
+    \includegraphics[width=15cm,height=6cm]{Images/use_case/use_case_register.png}
+    \caption[Sơ đồ use case chức năng đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng đăng ký tài khoản}
     \label{hinh21} %đặt tên cho ảnh
   \end{figure}
 
+\subsubsection{Use case chức năng quên mật khẩu}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/mobile_app/use_case_send_receive_message.png}
-    \caption[Sơ đồ tuần tự chức năng đăng ký trên App]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ tuần tự chức năng đăng ký trên App}
+    \includegraphics[width=15cm,height=6cm]{Images/use_case/use_case_forgot_password.png}
+    \caption[Sơ đồ use case chức năng quên mật khẩu]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quên mật khẩu}
     \label{hinh21} %đặt tên cho ảnh
   \end{figure}
 
+\subsubsection{Use case chức năng đăng nhập}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/mobile_app/use_case_send_receive_message.png}
-    \caption[Sơ đồ tuần tự chức năng đăng ký trên App]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ tuần tự chức năng đăng ký trên App}
+    \includegraphics[width=15cm,height=6cm]{Images/use_case/}
+    \caption[Sơ đồ use case chức năng đăng nhập]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng đăng nhập}
     \label{hinh21} %đặt tên cho ảnh
   \end{figure}
 
+\subsubsection{Use case chức năng xem lịch sử các lần đo}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm,height=6cm]{Images/use_case/}
+    \caption[Sơ đồ use case chức năng xem lịch sử các lần đo]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng xem lịch sử các lần đo}
+    \label{hinh21} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng quản lý thông tin cá nhân}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm,height=6cm]{Images/use_case/}
+    \caption[Sơ đồ use case chức năng quản lý thông tin cá nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý thông tin cá nhân}
+    \label{hinh21} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng quản lý dịch vụ nhắn tin}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm,height=6cm]{Images/use_case/}
+    \caption[Sơ đồ use case chức năng quản lý dịch vụ nhắn tin]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý dịch vụ nhắn tin}
+    \label{hinh21} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng quản lý đo điện tim}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm,height=6cm]{Images/use_case/}
+    \caption[Sơ đồ use case chức năng quản lý đo điện tim]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý đo điện tim}
+    \label{hinh21} %đặt tên cho ảnh
+  \end{figure}
+\subsubsection{Use case chức năng quản lý dịch vụ Bluetooth}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm,height=6cm]{Images/use_case/}
+    \caption[Sơ đồ use case chức năng quản lý dịch vụ Bluetooth]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý dịch vụ Bluetooth}
+    \label{hinh21} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng quản lý bài đăng và nhãn bài đăng}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm,height=6cm]{Images/use_case/}
+    \caption[Sơ đồ use case chức năng quản lý bài đăng và nhãn bài đăng]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý bài đăng và nhãn bài đăng}
+    \label{hinh21} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng quản lý các bản ghi dữ liệu điện tim}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm,height=6cm]{Images/use_case/}
+    \caption[Sơ đồ use case chức năng quản lý các bản ghi dữ liệu điện tim]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý các bản ghi dữ liệu điện tim}
+    \label{hinh21} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng quản lý tài khoản người dùng}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm,height=6cm]{Images/use_case/}
+    \caption[Sơ đồ use case chức năng quản lý tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý tài khoản người dùng}
+    \label{hinh21} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng quản lý phân công bác sĩ - bệnh nhân}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm,height=6cm]{Images/use_case/}
+    \caption[Sơ đồ use case chức năng quản lý phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý phân công bác sĩ - bệnh nhân}
+    \label{hinh21} %đặt tên cho ảnh
+  \end{figure}
 
 \subsection{Sơ đồ tuần tự}
 \subsubsection{Sơ đồ tuần tự chức năng đăng ký}
     \begin{figure}[H]
          \centering
          \includegraphics[width=16cm,height=12cm]{Images/mobile_app/register.png}
-         \caption[Sơ đồ tuần tự chức năng đăng ký trên App]{\bfseries \fontsize{12pt}{0pt}
-         \selectfont Sơ đồ tuần tự chức năng đăng ký trên App}
+         \caption[Sơ đồ use case]{\bfseries \fontsize{12pt}{0pt}
+         \selectfont Sơ đồ use case}
          \label{hinh21} %đặt tên cho ảnh
     \end{figure}
 
