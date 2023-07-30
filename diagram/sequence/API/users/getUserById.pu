@@ -36,7 +36,7 @@ participant UserModel as UserModel
 end box
 
 
-User -> main: Request to change password
+User -> main: Request to get user infomation by id
 activate User
 activate main
 
@@ -44,7 +44,7 @@ main -> UserRoute: GET api/users/{:userId}
 activate UserRoute
 
 
-UserRoute -> UserController: getUserProfile(req, res)
+UserRoute -> UserController: getUserById(req, res)
 activate UserController
 
 note right of UserRoute #Aqua
@@ -53,7 +53,7 @@ userId = req.body.userId
 end note
 
 
-UserController -> UserModel: findByPk(decodeToken.user_id)
+UserController -> UserModel: findByPk(userId)
 
 activate  UserModel
 
