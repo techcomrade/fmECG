@@ -185,7 +185,7 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng \texttt{user}}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng user}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
@@ -205,11 +205,16 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     role & INTEGER & Quyền của người dùng (0-patient, 1-doctor, 2-admin). \\
     \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    \hline
+    
   \end{tabularx}
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng \texttt{ecg\_record}}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng ecg\_record}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
@@ -229,11 +234,15 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     sensor\_type & STRING & Loại cảm biến. \\
     \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    \hline
   \end{tabularx}
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng \texttt{news\_category}}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng news\_category}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
@@ -245,11 +254,15 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     category\_description & STRING & Mô tả danh mục tin tức. \\
     \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    \hline
   \end{tabularx}
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng \texttt{news}}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng news}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
@@ -269,11 +282,15 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     image & STRING & Đường dẫn hình ảnh tin tức (có thể là null). \\
     \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    \hline
   \end{tabularx}
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng \texttt{patient\_doctor\_assignment}}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng patient\_doctor\_assignment}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
@@ -287,11 +304,15 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     start\_date & DATE & Ngày bắt đầu phân công. \\
     \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    \hline
   \end{tabularx}
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng \texttt{reset\_token}}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng reset\_token}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
@@ -305,12 +326,16 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     expiration & DATE & Thời gian hết hạn của mã thông báo đặt lại. \\
     \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    \hline
   \end{tabularx}
 \end{table}
 
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng \texttt{session}}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng session}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
@@ -324,11 +349,15 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     expiration & DATE & Thời gian hết hạn của phiên đăng nhập. \\
     \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    \hline
   \end{tabularx}
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng \texttt{device}}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng device}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
@@ -338,8 +367,24 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     device\_name & STRING & Tên thiết bị. \\
     \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    \hline
   \end{tabularx}
 \end{table}
+
+\subsubsection{Sơ đồ ERD}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=15cm]{Images/server/database/fmECG_architecture-Database.drawio.png}
+  \caption[Sơ đồ ERD]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ ERD}
+  \label{fmECG_architecture-Database} %đặt tên cho ảnh
+\end{figure}
+
+
+
 
 \subsection{Phân tích chi tiết hệ thống}
 
@@ -488,8 +533,8 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=12cm]{Images/server/class/class_controller.png}
-  \caption[Sơ đồ lớp]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp}
+  \includegraphics[width=16cm,height=13cm]{Images/server/class/class_controller.png}
+  \caption[Sơ đồ lớp của package Controllers]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Controllers}
   \label{class_controller} %đặt tên cho ảnh
 \end{figure}
 
@@ -497,24 +542,24 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=12cm]{Images/server/class/class_model.png}
-  \caption[Sơ đồ lớp]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp}
+  \includegraphics[width=15cm,height=16cm]{Images/server/class/class_model.png}
+  \caption[Sơ đồ lớp của package Models]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Models}
   \label{class_model} %đặt tên cho ảnh
 \end{figure}
 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=12cm]{Images/server/class/class_route.png}
-  \caption[Sơ đồ lớp]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp}
+  \includegraphics[width=14cm,height=14cm]{Images/server/class/class_route.png}
+  \caption[Sơ đồ lớp của package Routes]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Routes}
   \label{class_route} %đặt tên cho ảnh
 \end{figure}
 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=12cm]{Images/server/class/class_admin.png}
-  \caption[Sơ đồ lớp]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp}
+  \includegraphics[width=15cm,height=14cm]{Images/server/class/class_admin.png}
+  \caption[Sơ đồ lớp của package View và Admin]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package View và Admin}
   \label{class_admin} %đặt tên cho ảnh
 \end{figure}
 
@@ -551,15 +596,15 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm,height=12cm]{Images/server/class/class_relation.png}
-  \caption[Sơ đồ lớp]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp}
+  \caption[Mối quan hệ giữa các class ở phía server]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía server}
   \label{class_relation} %đặt tên cho ảnh
 \end{figure}
 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=12cm]{Images/server/class/class_admin_relation.png}
-  \caption[Sơ đồ lớp]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp}
+  \includegraphics[width=16cm,height=15cm]{Images/server/class/class_admin_relation.png}
+  \caption[Mối quan hệ giữa các class ở phía website quản trị]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía website quản trị}
   \label{class_admin_relation} %đặt tên cho ảnh
 \end{figure}
 
@@ -580,8 +625,8 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getUserById.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API lấy thông tin của người dùng dựa trên ID ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy thông tin của người dùng dựa trên ID }
   \label{getUserById} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{getUserById} mô tả quá trình lấy thông tin người dùng dựa trên ID trong ứng dụng. Người dùng gửi yêu cầu lấy thông tin người dùng theo ID, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi UserController. UserController kiểm tra thông tin và truy vấn UserModel để lấy thông tin người dùng. Nếu người dùng không tồn tại, hệ thống trả về response lỗi, ngược lại, response chứa thông tin người dùng được gửi lại từ UserController tới người dùng.
@@ -591,8 +636,8 @@ Hình \ref{getUserById} mô tả quá trình lấy thông tin người dùng d�
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getUserProfile.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API lấy thông tin của người dùng dựa trên JWT token ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy thông tin của người dùng dựa trên JWT token }
   \label{getUserProfile} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{getUserProfile} mô tả quá trình lấy thông tin hồ sơ người dùng trong ứng dụng. Người dùng gửi yêu cầu lấy thông tin hồ sơ, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi UserController. UserController giải mã mã thông báo (token) để xác định người dùng, sau đó truy vấn UserModel để lấy thông tin hồ sơ của người dùng dựa trên user\_id từ mã giải mã. Nếu người dùng không tồn tại, hệ thống trả về response lỗi, ngược lại, response chứa thông tin hồ sơ của người dùng được gửi lại từ UserController tới người dùng.
@@ -605,9 +650,9 @@ Hình \ref{getUserProfile} mô tả quá trình lấy thông tin hồ sơ ngư�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/changePassword.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \includegraphics[width=14cm,height=15cm]{Images/server/sequence/server/changePassword.png}
+  \caption[Sơ đồ tuần tự cho API thay đổi mật khẩu người dùng ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API thay đổi mật khẩu người dùng }
   \label{changePassword} %đặt tên cho ảnh
 \end{figure}
 
@@ -617,9 +662,9 @@ Hình \ref{changePassword} mô tả quá trình thay đổi mật khẩu ngườ
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/updateUserInfo.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \includegraphics[width=16cm,height=12cm]{Images/server/sequence/server/updateUserInfo.png}
+  \caption[Sơ đồ tuần tự cho API cập nhật thông tin người dùng ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API cập nhật thông tin người dùng }
   \label{updateUserInfo} %đặt tên cho ảnh
 \end{figure}
 
@@ -638,9 +683,9 @@ Hình \ref{updateUserInfo} mô tả quá trình cập nhật thông tin người
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/login.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \includegraphics[width=16cm,height=12cm]{Images/server/sequence/server/login.png}
+  \caption[Sơ đồ tuần tự cho API đăng nhập vào hệ thống]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API đăng nhập vào hệ thống }
   \label{login} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{login}  mô tả quá trình xác thực người dùng đăng nhập vào ứng dụng. Người dùng gửi yêu cầu đăng nhập, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. AuthController kiểm tra thông tin người dùng, tạo token nếu đúng thông tin đăng nhập và trả về response cho người dùng.
@@ -648,17 +693,17 @@ Hình \ref{login}  mô tả quá trình xác thực người dùng đăng nhập
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/logout.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API đăng xuất khỏi hệ thống ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API đăng xuất khỏi hệ thống }
   \label{logout} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{logout} mô tả quá trình đăng xuất (logout) người dùng khỏi ứng dụng. Người dùng gửi yêu cầu đăng xuất, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. Đầu tiên, hệ thống kiểm tra xem cookie token có tồn tại hay không. Nếu không tồn tại, hệ thống trả về response lỗi. Ngược lại, AuthController xóa cookie và gọi tới SessionModel để hủy phiên đăng nhập của người dùng dựa trên token trong cookie. Sau khi xử lý, hệ thống trả về response thành công tới người dùng.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/register.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \includegraphics[width=16cm,height=12cm]{Images/server/sequence/server/register.png}
+  \caption[Sơ đồ tuần tự cho API đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API đăng ký tài khoản }
   \label{register} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{register} mô tả quá trình đăng ký tài khoản trong ứng dụng. Người dùng gửi yêu cầu đăng ký, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. Đầu tiên, hệ thống kiểm tra thông tin yêu cầu đăng ký, bao gồm việc kiểm tra mật khẩu và xác nhận mật khẩu có khớp hay không. Sau đó, AuthController kiểm tra xem người dùng đã tồn tại trong hệ thống hay chưa. Nếu người dùng chưa tồn tại và mật khẩu khớp, AuthController sẽ mã hóa mật khẩu và tạo một bản ghi mới trong UserModel để lưu thông tin đăng ký. Nếu người dùng đã tồn tại hoặc mật khẩu không khớp, hệ thống sẽ trả về response lỗi tương ứng. Sau khi xử lý, hệ thống trả về response kết quả cho người dùng.
@@ -666,9 +711,9 @@ Hình \ref{register} mô tả quá trình đăng ký tài khoản trong ứng d�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/resetPassword.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \includegraphics[width=16cm,height=13cm]{Images/server/sequence/server/resetPassword.png}
+  \caption[Sơ đồ tuần tự cho API đăt lại mật khẩu ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API đăt lại mật khẩu }
   \label{resetPassword} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{resetPassword} mô tả quá trình đặt lại mật khẩu (reset password) trong ứng dụng. Người dùng gửi yêu cầu đặt lại mật khẩu, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. Đầu tiên, hệ thống kiểm tra thông tin yêu cầu đặt lại mật khẩu, bao gồm resetToken, mật khẩu mới và xác nhận mật khẩu. Sau đó, AuthController kiểm tra xem resetToken có hợp lệ hay không, bằng cách tìm kiếm trong ResetTokenModel. Nếu resetToken không hợp lệ hoặc đã hết hạn, hệ thống sẽ trả về response lỗi tương ứng. Nếu resetToken hợp lệ, AuthController tiếp tục kiểm tra xem người dùng có tồn tại và email trong yêu cầu có khớp với email của người dùng không. Nếu không hợp lệ, hệ thống sẽ trả về response lỗi tương ứng. Nếu mọi thông tin đều hợp lệ, AuthController sẽ mã hóa mật khẩu mới, cập nhật mật khẩu trong UserModel và trả về response thành công tới người dùng.
@@ -676,8 +721,8 @@ Hình \ref{resetPassword} mô tả quá trình đặt lại mật khẩu (reset 
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/resetPasswordToken.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API gửi token đặt lại mật khẩu ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API gửi token đặt lại mật khẩu  }
   \label{resetPasswordToken} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{resetPasswordToken} mô tả quá trình yêu cầu gửi mã thông báo đặt lại mật khẩu (reset password token) trong ứng dụng. Người dùng gửi yêu cầu đặt lại mật khẩu, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. Đầu tiên, hệ thống kiểm tra thông tin yêu cầu đặt lại mật khẩu, bao gồm email người dùng. Sau đó, AuthController kiểm tra xem người dùng đã tồn tại trong hệ thống hay chưa. Nếu người dùng tồn tại, AuthController sẽ tạo một mã thông báo đặt lại mật khẩu (reset token) cùng với thời gian hết hạn cho mã (reset token expiration) và lưu thông tin này vào ResetTokenModel. Sau đó, hệ thống sẽ gửi mã thông báo đặt lại mật khẩu tới email của người dùng. Nếu người dùng không tồn tại, hệ thống sẽ trả về response lỗi tương ứng. Sau khi xử lý, hệ thống trả về response kết quả cho người dùng.
@@ -693,8 +738,8 @@ Hình \ref{resetPasswordToken} mô tả quá trình yêu cầu gửi mã thông 
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getAllNews.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API lấy tất cả thông tin của tin tức]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy tất cả thông tin của tin tức }
   \label{getAllNews} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{getAllNews} mô tả quá trình lấy tất cả tin tức (news) trong ứng dụng. Người dùng gửi yêu cầu lấy tất cả tin tức, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi NewsController. NewsController tiếp tục truy vấn NewsModel để lấy danh sách tất cả các tin tức từ cơ sở dữ liệu. Sau đó, danh sách tin tức được trả về từ NewsModel và được gửi trở lại NewsRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách tin tức cho người dùng. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi với mô tả lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng.
@@ -703,8 +748,8 @@ Hình \ref{getAllNews} mô tả quá trình lấy tất cả tin tức (news) tr
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getAllNewsCategories.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API lấy tất cả thông tin của danh mục tin tức ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy tất cả thông tin của danh mục tin tức }
   \label{getAllNewsCategories} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{getAllNewsCategories} mô tả quá trình lấy tất cả danh mục tin tức (news category) trong ứng dụng. Người dùng gửi yêu cầu lấy tất cả danh mục tin tức, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi NewsController. NewsController tiếp tục truy vấn NewsCategoryModel để lấy danh sách tất cả các danh mục tin tức từ cơ sở dữ liệu. Sau đó, danh sách danh mục tin tức được trả về từ NewsCategoryModel và được gửi trở lại NewsRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách danh mục tin tức cho người dùng. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi với mô tả lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng.
@@ -712,8 +757,8 @@ Hình \ref{getAllNewsCategories} mô tả quá trình lấy tất cả danh mụ
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getNewsByCategory.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API lấy tất cả tin tức theo loại tin tức ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy tất cả tin tức theo danh mục tin tức }
   \label{getNewsByCategory} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{getNewsByCategory} mô tả quá trình lấy danh sách tin tức (news list) theo danh mục (category) trong ứng dụng. Người dùng gửi yêu cầu lấy danh sách tin tức theo danh mục, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi NewsController. NewsController tiếp tục truy vấn NewsModel để lấy danh sách tin tức dựa trên categoryId được truyền vào từ yêu cầu. Sau đó, danh sách tin tức được trả về từ NewsModel và được gửi trở lại NewsRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách tin tức cho người dùng. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng.
@@ -722,8 +767,8 @@ Hình \ref{getNewsByCategory} mô tả quá trình lấy danh sách tin tức (n
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getNewsById.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API lấy nội dung của một tin tức ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy nội dung của một tin tức }
   \label{getNewsById} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{getNewsById} mô tả quá trình lấy nội dung tin tức (news content) trong ứng dụng. Người dùng gửi yêu cầu lấy nội dung tin tức, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi NewsController. NewsController tiếp tục truy vấn NewsModel để lấy nội dung tin tức dựa trên newsId được truyền vào từ yêu cầu. Sau đó, nội dung tin tức được trả về từ NewsModel và được gửi trở lại NewsRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa nội dung tin tức cho người dùng. Nếu tin tức không tồn tại, hệ thống trả về response lỗi tương ứng. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi với mô tả lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng.
@@ -731,8 +776,8 @@ Hình \ref{getNewsById} mô tả quá trình lấy nội dung tin tức (news co
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getNewsCategoryById.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API lấy thông tin của một danh mục tin tức ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy thông tin của một danh mục tin tức }
   \label{getNewsCategoryById} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{getNewsCategoryById} mô tả quá trình lấy dữ liệu danh mục tin tức (news category data) trong ứng dụng. Người dùng gửi yêu cầu lấy dữ liệu danh mục tin tức, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi NewsController. NewsController tiếp tục truy vấn NewsCategoryModel để lấy dữ liệu danh mục tin tức dựa trên categoryId được truyền vào từ yêu cầu. Sau đó, dữ liệu danh mục tin tức được trả về từ NewsCategoryModel và được gửi trở lại NewsRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa dữ liệu danh mục tin tức cho người dùng. Nếu danh mục tin tức không tồn tại, hệ thống trả về response lỗi tương ứng. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi với mô tả lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng.
@@ -749,8 +794,8 @@ Hình \ref{getNewsCategoryById} mô tả quá trình lấy dữ liệu danh mụ
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getEcgRecordsByDoctor.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API lấy thông tin phiên đo ECG của các bệnh nhân được quản lý bởi một bác sĩ ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy thông tin phiên đo ECG của các bệnh nhân được quản lý bởi một bác sĩ }
   \label{getEcgRecordsByDoctor} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{getEcgRecordsByDoctor} mô tả quá trình lấy dữ liệu ECG (Electrocardiogram) của tất cả bệnh nhân được quản lý bởi một bác sĩ trong ứng dụng. Người dùng (bác sĩ) gửi yêu cầu lấy dữ liệu ECG của tất cả bệnh nhân mà họ quản lý, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi ECGRecordController. ECGRecordController tiếp tục truy vấn ECGRecordModel để lấy dữ liệu ECG dựa trên doctorId (ID của bác sĩ) được truyền vào từ yêu cầu. Sau đó, danh sách dữ liệu ECG của các bệnh nhân được trả về từ ECGRecordModel và được gửi trở lại ECGRecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách dữ liệu ECG cho bác sĩ. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (bác sĩ).
@@ -759,8 +804,8 @@ Hình \ref{getEcgRecordsByDoctor} mô tả quá trình lấy dữ liệu ECG (El
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/convertExceltoJson.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API lấy dữ liệu của một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy dữ liệu của một phiên đo ECG  }
   \label{convertExceltoJson} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{convertExceltoJson} mô tả quá trình yêu cầu lấy dữ liệu ECG (Electrocardiogram) từ một bản ghi cụ thể trong ứng dụng. Người dùng (User) gửi yêu cầu lấy dữ liệu ECG cho một bản ghi có record\_id nhất định, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi ECGRecordController. ECGRecordController tiếp tục truy vấn ECGRecordModel để tìm kiếm bản ghi ECG dựa trên record\_id được truyền vào từ yêu cầu. Sau đó, data\_directory của bản ghi ECG được trả về từ ECGRecordModel và được gửi trở lại ECGRecordRoute để xử lý việc chuyển đổi dữ liệu từ định dạng file Excel sang định dạng JSON. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa dữ liệu ECG của bản ghi tương ứng. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng.
@@ -768,8 +813,8 @@ Hình \ref{convertExceltoJson} mô tả quá trình yêu cầu lấy dữ liệu
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getEcgRecordsByUserId.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API lấy thông tin các phiên đo ECG của một bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy thông tin các phiên đo ECG của một bệnh nhân }
   \label{getEcgRecordsByUserId} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{getEcgRecordsByUserId} mô tả quá trình yêu cầu dữ liệu ECG (Electrocardiogram) của một bệnh nhân cụ thể từ ứng dụng. Người dùng (User) gửi yêu cầu lấy dữ liệu ECG cho một bệnh nhân với patientId nhất định, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi ECGRecordController. ECGRecordController tiếp tục truy vấn ECGRecordModel để tìm kiếm các bản ghi ECG của bệnh nhân dựa trên patientId được truyền vào từ yêu cầu. Sau đó, danh sách các bản ghi ECG của bệnh nhân được trả về từ ECGRecordModel và được gửi trở lại ECGRecordRoute để tạo response chứa danh sách này. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách các bản ghi ECG của bệnh nhân tương ứng. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng.
@@ -777,9 +822,9 @@ Hình \ref{getEcgRecordsByUserId} mô tả quá trình yêu cầu dữ liệu EC
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/uploadEcgData.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \includegraphics[width=16cm,height=13cm]{Images/server/sequence/server/uploadEcgData.png}
+  \caption[Sơ đồ tuần tự cho API tải dữ liệu ECG lên server ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API tải dữ liệu ECG lên server }
   \label{uploadEcgData} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{uploadEcgData} mô tả quá trình tải lên dữ liệu ECG (Electrocardiogram) sau khi hoàn thành việc đo đạc từ thiết bị đo ECG. Người dùng (User) gửi yêu cầu tải lên dữ liệu ECG cho một bệnh nhân cụ thể, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi ECGRecordController. ECGRecordController tiếp tục tạo folder mới để lưu trữ dữ liệu ECG, sau đó lưu dữ liệu ECG được tải lên vào folder vừa tạo. Tiếp theo, ECGRecordController tạo một bản ghi mới trong ECGRecordModel, lưu trữ thông tin về người dùng (user\_id), thiết bị đo (device\_id), thời gian bắt đầu đo (start\_time), thời gian kết thúc đo (stop\_time), loại cảm biến (sensor\_type) và đường dẫn của dữ liệu ECG được lưu trữ. Sau đó, ECGRecordModel trả về thông tin vừa lưu vào ECGRecordController. Nếu quá trình tải lên thành công, hệ thống trả về response thành công chứa thông tin về bản ghi ECG vừa tạo. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng.
@@ -794,9 +839,9 @@ Hình \ref{uploadEcgData} mô tả quá trình tải lên dữ liệu ECG (Elect
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getDoctorByPatient.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \includegraphics[width=16cm,height=10cm]{Images/server/sequence/server/getDoctorByPatient.png}
+  \caption[Sơ đồ tuần tự cho API lấy thông tin bác sĩ được phân công cho một bệnh nhân ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy thông tin bác sĩ được phân công cho một bệnh nhân }
   \label{getDoctorByPatient} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{getDoctorByPatient} mô tả quá trình lấy thông tin bác sĩ được phân công cho một bệnh nhân cụ thể. Người dùng (User) gửi yêu cầu lấy thông tin bác sĩ của một bệnh nhân cụ thể, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi PatientDoctorAssignmentController. PatientDoctorAssignmentController tìm kiếm thông tin liên kết giữa bệnh nhân và bác sĩ trong PatientDoctorAssignmentModel bằng cách tìm bản ghi với patient\_id trùng khớp với bệnh nhân được chỉ định. Nếu không tìm thấy thông tin liên kết, hệ thống trả về response lỗi tương ứng. Nếu tìm thấy thông tin liên kết, PatientDoctorAssignmentController sẽ tiếp tục tìm kiếm thông tin của bác sĩ trong UserModel bằng cách sử dụng doctor\_id lấy từ bản ghi liên kết. Sau khi tìm thấy thông tin của bác sĩ, hệ thống trả về response thành công chứa thông tin về bác sĩ đó. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng.
@@ -805,8 +850,8 @@ Hình \ref{getDoctorByPatient} mô tả quá trình lấy thông tin bác sĩ đ
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getPatientsByDoctor.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \caption[Sơ đồ tuần tự cho API lấy thông tin tất cả bệnh nhân được quản lý bởi một bác sĩ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy thông tin tất cả bệnh nhân được quản lý bởi một bác sĩ }
   \label{getPatientsByDoctor} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{getPatientsByDoctor}  mô tả quá trình lấy thông tin tất cả bệnh nhân được quản lý bởi một bác sĩ cụ thể. Người dùng (User) gửi yêu cầu lấy thông tin tất cả bệnh nhân của một bác sĩ cụ thể, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi PatientDoctorAssignmentController. PatientDoctorAssignmentController tìm kiếm thông tin liên kết giữa bác sĩ và bệnh nhân trong PatientDoctorAssignmentModel bằng cách tìm bản ghi với doctorId trùng khớp với bác sĩ được chỉ định. Sau đó, PatientDoctorAssignmentController tìm kiếm thông tin của tất cả bệnh nhân có trong danh sách patient\_id tìm thấy, thông qua UserModel. Mỗi bệnh nhân sẽ có thông tin riêng bao gồm tên, tuổi, địa chỉ, v.v. Sau khi tìm thấy thông tin của tất cả bệnh nhân, hệ thống trả về response thành công chứa danh sách thông tin của các bệnh nhân đó. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng.
@@ -820,9 +865,9 @@ Hình \ref{getPatientsByDoctor}  mô tả quá trình lấy thông tin tất c�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/web/seq_auth.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \includegraphics[width=16cm,height=10cm]{Images/server/sequence/web/seq_auth.png}
+  \caption[Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) }
   \label{seq_auth} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{seq_auth} mô tả quá trình truy cập vào bảng điều khiển quản trị (admin dashboard) của người dùng (User). Khi người dùng yêu cầu truy cập vào admin dashboard, hệ thống sẽ yêu cầu xác thực thông qua ViewComponent. Nếu xác thực thành công, AdminJS sẽ xây dựng admin dashboard và yêu cầu dữ liệu từ các tài nguyên (resources) khác nhau để hiển thị thông tin.
@@ -842,9 +887,9 @@ Sau khi hoàn tất, hệ thống sẽ trả về response cuối cùng và hi�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/web/seq_crud.png}
-  \caption[Sơ đồ tuần tự ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần }
+  \includegraphics[width=16cm,height=14cm]{Images/server/sequence/web/seq_crud.png}
+  \caption[Sơ đồ tuần tự cho quá trình trình thực hiện các thao tác CRUD trên các tài nguyên (resources) ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho quá trình trình thực hiện các thao tác CRUD trên các tài nguyên (resources) }
   \label{seq_crud} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{seq_crud}  mô tả quá trình thực hiện các thao tác CRUD trên các tài nguyên (resources) khác nhau của admin dashboard khi người dùng (User) thực hiện các thao tác trong ViewComponent.
