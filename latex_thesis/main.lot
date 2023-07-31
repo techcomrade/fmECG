@@ -1,10 +1,22 @@
-\contentsline {table}{\numberline {2.1}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng thực thể và thuộc tính\relax }}{23}{table.caption.41}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {user}\relax }}{24}{table.caption.42}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {ecg\_record}\relax }}{25}{table.caption.43}%
-\contentsline {table}{\numberline {2.4}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {news\_category}\relax }}{25}{table.caption.44}%
-\contentsline {table}{\numberline {2.5}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {news}\relax }}{25}{table.caption.45}%
-\contentsline {table}{\numberline {2.6}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {patient\_doctor\_assignment}\relax }}{26}{table.caption.46}%
-\contentsline {table}{\numberline {2.7}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {reset\_token}\relax }}{26}{table.caption.47}%
-\contentsline {table}{\numberline {2.8}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {session}\relax }}{26}{table.caption.48}%
-\contentsline {table}{\numberline {2.9}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {device}\relax }}{26}{table.caption.49}%
-\contentsline {table}{\numberline {4.1}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Kết quả thí nghiệm\relax }}{28}{table.caption.50}%
+\contentsline {table}{\numberline {1.1}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng đăng ký\relax }}{5}{table.caption.15}%
+\contentsline {table}{\numberline {1.2}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng quên mật khẩu\relax }}{6}{table.caption.17}%
+\contentsline {table}{\numberline {1.3}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng đăng nhập\relax }}{6}{table.caption.19}%
+\contentsline {table}{\numberline {1.4}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng xem lịch sử các lần đo\relax }}{7}{table.caption.21}%
+\contentsline {table}{\numberline {1.5}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý thông tin cá nhân\relax }}{8}{table.caption.23}%
+\contentsline {table}{\numberline {1.6}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý dịch vụ nhắn tin\relax }}{8}{table.caption.25}%
+\contentsline {table}{\numberline {1.7}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý đo điện tim\relax }}{9}{table.caption.27}%
+\contentsline {table}{\numberline {1.8}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý dịch vụ Bluetooth\relax }}{10}{table.caption.29}%
+\contentsline {table}{\numberline {1.9}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý bài đăng và nhãn bài đăng\relax }}{10}{table.caption.31}%
+\contentsline {table}{\numberline {1.10}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý nhãn bài đăng\relax }}{11}{table.caption.33}%
+\contentsline {table}{\numberline {1.11}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý các bản ghi dữ liệu điện tim\relax }}{12}{table.caption.35}%
+\contentsline {table}{\numberline {1.12}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý tài khoản người dùng\relax }}{12}{table.caption.37}%
+\contentsline {table}{\numberline {1.13}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý phân công bác sĩ - bệnh nhân\relax }}{13}{table.caption.39}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng thực thể và thuộc tính\relax }}{31}{table.caption.57}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {user}\relax }}{32}{table.caption.58}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {ecg\_record}\relax }}{33}{table.caption.59}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {news\_category}\relax }}{33}{table.caption.60}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {news}\relax }}{33}{table.caption.61}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {patient\_doctor\_assignment}\relax }}{34}{table.caption.62}%
+\contentsline {table}{\numberline {2.7}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {reset\_token}\relax }}{34}{table.caption.63}%
+\contentsline {table}{\numberline {2.8}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {session}\relax }}{34}{table.caption.64}%
+\contentsline {table}{\numberline {2.9}{\ignorespaces \bfseries \fontsize {12pt}{0pt}\selectfont Bảng \texttt {device}\relax }}{34}{table.caption.65}%
