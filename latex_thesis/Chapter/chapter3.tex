@@ -13,7 +13,7 @@ Trong quá trình triển khai ứng dụng, chúng em sử dụng dịch vụ E
    chúng em tối ưu hóa việc quản lý hệ thống, đảm bảo tính sẵn sàng và
     mở rộng khả năng chịu tải cho ứng dụng.
 
-\subsubsection{Triển khai ứng dụng trên AWS EC2}
+\subsubsection{Triển khai ứng dụng Web trên AWS EC2}
 \begin{itemize}
   \item Tạo máy ảo EC2: Chúng em đã tạo một EC2 instance với loại instance t2.micro. Đây là loại instance nhỏ, phù hợp với các ứng dụng có lưu lượng truy cập thấp hoặc giai đoạn phát triển. Instance này sử dụng kiến trúc 64-bit, cho phép chạy các ứng dụng trên cả hệ thống 32-bit và 64-bit. Bộ nhớ của instance là 1 GiB, đủ để chạy ứng dụng Node.js cùng với các dependencies. Dung lượng lưu trữ 8GB, chúng em đã cài đặt hệ điều hành Linux/UNIX để chạy mã nguồn của ứng dụng.
   \item Cài đặt các phần mềm và dependencies: Sau khi triển khai máy ảo EC2, chúng em đã cài đặt các phần mềm và dependencies cần thiết để chạy ứng dụng, bao gồm Node.js và các thư viện hỗ trợ và các gói npm cần thiết.
@@ -30,6 +30,9 @@ Trong quá trình triển khai ứng dụng, chúng em sử dụng dịch vụ E
   \item Backup và giám sát cơ sở dữ liệu: Chúng em đã thiết lập các chính sách sao lưu định kỳ cho cơ sở dữ liệu RDS để đảm bảo an toàn cho dữ liệu và khả năng khôi phục trong trường hợp xảy ra sự cố.
 \end{itemize}
 
+\subsubsection{Triển khai ứng dụng di động trên nền tảng Android}
+Trong quá trình phát triển ứng dụng di động chúng em có sử dụng máy ảo Android (phiên bản Android API 33) và máy thật
+(Android 11 - 13), đồng thời xuất file APK để các thiết bị muốn test đều có thể dùng thử.
 
 \subsection{Kiểm thử}
 
