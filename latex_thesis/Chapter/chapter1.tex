@@ -1,24 +1,24 @@
 
-\section*{CHƯƠNG 1. TỔNG QUAN HỆ THỐNG}
+\section*{CHƯƠNG 1. PHÂN TÍCH HỆ THỐNG}
 \setcounter{section}{1}
 \setcounter{subsection}{0} %LƯU Ý MỖI LẦN THÊM CHƯƠNG MỚI CẦN THÊM CÂU NÀY ĐỂ RESET THỨ TỰ CỦA SUBSECTON VỀ 1
 \setcounter{table}{0} % LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}
 % \addcontentsline{toc}{section}
-{\numberline{}CHƯƠNG 1. TỔNG QUAN HỆ THỐNG}
+{\numberline{}CHƯƠNG 1. PHÂN TÍCH HỆ THỐNG}
 Trong chương này, chúng em sẽ tiến hành phân tích hệ thống cho dự án đề tài "Hệ thống quản lý ECG" dựa trên các mục tiêu
 đã nêu ra trong Mục Đề xuất hệ thống ở Phần mở đầu. Trước tiên bài toán đặt ra ở hệ thống phần mềm điện tim là có thể có:
 
-- Một thiết bị để có thể giúp mẹ bầu đo được những thông tin cần thiết.
-
-- Trực quan và tiêu chuẩn hoá những thông tin đo được
-bằng hình ảnh hoặc số liệu để bác sĩ có thể dựa vào đó để đưa ra những đánh giá cho mẹ bầu. Ngoài ra những thông tin này
-có thể hữu ích trong việc theo dõi sức khỏe tim mạch, theo dõi hiệu quả của liệu pháp 
-và hỗ trợ quyết định của người dùng.
-
-- Quản trị viên sẽ là người có thể phân công bác sĩ để chăm sóc, theo dõi sức khoẻ từ
-xa cho mẹ bầu. 
+\begin{itemize}
+  \item Một thiết bị để có thể giúp mẹ bầu đo được những thông tin cần thiết
+  \item Trực quan và tiêu chuẩn hoá những thông tin đo được
+    bằng hình ảnh hoặc số liệu để bác sĩ có thể dựa vào đó để đưa ra những đánh giá cho mẹ bầu. Ngoài ra những thông tin này
+    có thể hữu ích trong việc theo dõi sức khỏe tim mạch, theo dõi hiệu quả của liệu pháp 
+    và hỗ trợ quyết định của người dùng
+  \item Quản trị viên sẽ là người có thể phân công bác sĩ để chăm sóc, theo dõi sức khoẻ từ
+  xa cho mẹ bầu. 
+\end{itemize}
 
 Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được chúng em trình bày ở các chương dưới.
 
@@ -93,7 +93,7 @@ Hệ thống hỗ trợ các chức năng cơ bản sau đối với người d�
 Thông qua việc phân tích yêu cầu hệ thống, chúng ta có cái nhìn tổng quan về các chức năng, yêu cầu phi chức năng và 
 các đối tượng người dùng mà hệ thống phải hỗ trợ. Phần phân tích này sẽ cung cấp cơ sở cho việc thiết kế và phát triển hệ thống quản lý ECG, 
 đáp ứng đầy đủ các yêu cầu của người dùng và đảm bảo hiệu suất, bảo mật và tính khả dụng của hệ thống.
-\subsection{Phân tích tổng quan hệ thống}
+% \subsection{Phân tích tổng quan hệ thống}
 
 \subsection{Sơ đồ use case}
 \subsubsection{Use case tổng quát hệ thống}
@@ -131,7 +131,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{register} và Hình\\
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{register} và Hình \ref{backend_register}\\
       % \end{tabular} \\
       \hline
     \end{tabularx}
@@ -161,7 +161,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{forgot_password} và Hình\\
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{forgot_password}, Hình \ref{resetPassword}, và Hình \ref{resetPasswordToken}\\
       % \end{tabular} \\
       \hline
     \end{tabularx}
@@ -191,7 +191,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{login} và Hình\\
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{login} và Hình \ref{backend_login}\\
       % \end{tabular} \\
       \hline
     \end{tabularx}
@@ -222,7 +222,8 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{view_record_timeline} và Hình\\
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{view_record_timeline}, Hình \ref{getEcgRecordsByUserId}, Hình \ref{getEcgRecordsByDoctor} 
+        \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
@@ -252,7 +253,8 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{change_user_information}, Hình \ref{change_password} 
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{change_user_information}, Hình \ref{change_password}, 
+        Hình \ref{updateUserInfo} và Hình \ref{changePassword}
         và Hình\\
       % \end{tabular} \\
       \hline
@@ -284,7 +286,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{send_and_receive_message} và Hình\\
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{send_and_receive_message}\\
       % \end{tabular} \\
       \hline
     \end{tabularx}
@@ -375,7 +377,8 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{view_news} và Hình\\
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{view_news}, Hình \ref{getAllNews},
+        và Hình \ref{getNewsById} \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
@@ -404,7 +407,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình\\
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{getNewsByCategory}, Hình \ref{getAllNewsCategories}\\
       % \end{tabular} \\
       \hline
     \end{tabularx}
@@ -434,7 +437,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình\\
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{seq_crud} mục ECGRecordsResource\\
       % \end{tabular} \\
       \hline
     \end{tabularx}
@@ -464,7 +467,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{} và Hình\\
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{seq_crud} mục DoctorResource, PatientResource và Admin Resource\\
       % \end{tabular} \\
       \hline
     \end{tabularx}
@@ -495,25 +498,20 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{} và Hình\\
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{seq_crud} mục PatientDoctorAssignmentResource\\
       % \end{tabular} \\
       \hline
     \end{tabularx}
   \end{table}
 
 
-\subsubsection{Sơ đồ kiến trúc hệ thống}
+\subsection{Sơ đồ kiến trúc hệ thống}
 Hệ thống chúng em xây dựng được chia làm ba phần Device, Application và Server. Cụ thể: 
 \begin{itemize}
   \item Device: Thiết bị phần cứng đo điện tim, để kết nối với App bệnh nhân thông qua Bluetooth 
   \item Application: Bao gồm ứng dụng của bệnh nhân, ứng dụng của bác sĩ và Website của Admin
   \item Server: Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu và Cloud lưu trữ
 \end{itemize}
- 
-Trong hệ thống thì Devices là phần mà chúng em sẽ không trực tiếp thực hiện trong đồ án này, Application và Server sẽ là
-phần mà đồ án chúng em thực hiện. Ở trong sơ đồ kiến trúc hệ thống riêng có bệnh nhân sẽ có tương tác trực tiếp với Devices,
-còn lại khối Application sẽ tương tác với Server thông qua API với giao thức HTTP. Khi nhận được yêu cầu từ Application,
-Server sẽ thực hiện xử lý dữ liệu và gửi lại thông tin mà Application yêu cầu.
 
 \begin{figure}[H]
   \centering
@@ -521,6 +519,11 @@ Server sẽ thực hiện xử lý dữ liệu và gửi lại thông tin mà Ap
   \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
   \label{fmECG_architecture-System} %đặt tên cho ảnh
 \end{figure}
+
+Trong hệ thống thì Devices là phần mà chúng em sẽ không trực tiếp thực hiện trong đồ án này, Application và Server sẽ là
+phần mà đồ án chúng em thực hiện. Ở trong sơ đồ kiến trúc hệ thống riêng có bệnh nhân sẽ có tương tác trực tiếp với Devices,
+còn lại khối Application sẽ tương tác với Server thông qua API với giao thức HTTP. Khi nhận được yêu cầu từ Application,
+Server sẽ thực hiện xử lý dữ liệu và gửi lại thông tin mà Application yêu cầu.
 
 \subsubsection{Sơ đồ khối phần mềm}
 
@@ -590,7 +593,7 @@ tự.
   \end{figure}
   Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng ký vào hệ thống. Người dùng gửi yêu cầu đăng ký, yêu cầu sẽ
   được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Control
-  sẽ xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{} trong chương sau.
+  sẽ xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{backend_register} trong chương sau.
 \paragraph{Sơ đồ tuần tự chức năng đăng nhập}
 \mbox{}
 
@@ -604,7 +607,7 @@ tự.
 
   Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng nhập vào hệ thống. Người dùng gửi yêu cầu đăng nhập, yêu cầu sẽ
   được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Việc Control
-  sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hiện trong Hình \ref{} trong chương sau.
+  sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hiện trong Hình \ref{backend_login} trong chương sau.
 
 \paragraph{Sơ đồ tuần tự chức năng quên mật khẩu}
 \mbox{}
@@ -619,7 +622,7 @@ tự.
 
     Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng lấy lại mật khẩu. Người dùng nhập email đã đăng ký tài khoản,
   và gửi yêu cầu lấy lại mật khẩu, Control xử lý gửi đến email một mã xác thực, người dùng nhập đúng mã xác thực sẽ được thay
-  đổi mật khẩu mới. Control xử lý cụ thể yêu cầu được chúng em thể hiện trong Hình \ref{} trong chương sau.
+  đổi mật khẩu mới. Control xử lý cụ thể yêu cầu được chúng em thể hiện trong Hình \ref{resetPassword} và Hình \ref{resetPasswordToken} trong chương sau.
 
 \paragraph{Sơ đồ tuần tự chức năng xem lịch sử các lần đo}
 \mbox{}
@@ -635,22 +638,22 @@ tự.
     Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem lịch sử các lần đo. Người dùng chọn vào tab xem lịch sử, 
     lúc đó hệ thống sẽ gửi một yêu cầu lấy danh sách lịch sử các lần đo qua Control và hiển thị cho người dùng, sau đó người dùng sẽ
     chọn một bản ghi, Control sẽ lấy dữ liệu và hiển thị cho người dùng dữ liệu đo trên biểu đồ. Việc xử lý các yêu cầu cụ thể
-    được chúng em thể hiện trong Hình \ref{} ở chương sau.
+    Hình \ref{getEcgRecordsByDoctor}, Hình \ref{convertExceltoJson} và Hình \ref{getEcgRecordsByUserId} ở chương sau.
 
-\paragraph{Sơ đồ tuần tự chức năng xem thay đổi thông tin cá nhân}
+\paragraph{Sơ đồ tuần tự chức năng thay đổi thông tin cá nhân}
 \mbox{}
 
   \begin{figure}[H]
         \centering
         \includegraphics[width=16cm,height=11cm]{Images/mobile_app/change_user_information.png}
-        \caption[Sơ đồ tuần tự chức năng xem thay đổi thông tin cá nhân trên App]{\bfseries \fontsize{12pt}{0pt}
-        \selectfont Sơ đồ tuần tự chức năng xem thay đổi thông tin cá nhân trên App}
+        \caption[Sơ đồ tuần tự chức năng thay đổi thông tin cá nhân trên App]{\bfseries \fontsize{12pt}{0pt}
+        \selectfont Sơ đồ tuần tự chức năng thay đổi thông tin cá nhân trên App}
         \label{change_user_information} %đặt tên cho ảnh
   \end{figure}
 
   Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng thay đổi thông tin cá nhân. Người dùng thay đổi thông tin cá nhân
   và gửi yêu cầu. Control sẽ xử lý và lưu vào cơ sở dữ liệu, sau đó sẽ thông báo lại cho người dùng.
-  Việc xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{} ở chương sau.
+  Việc xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{updateUserInfo} ở chương sau.
 
   \paragraph{Sơ đồ tuần tự chức năng đổi mật khẩu}
 \mbox{}
@@ -665,7 +668,7 @@ tự.
 
   Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đổi mật khẩu. Người dùng nhập mật khẩu và gửi yêu cầu đổi mật khẩu, 
   yêu cầu sẽ được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Control
-  sẽ xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{} trong chương sau.
+  sẽ xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{changePassword} trong chương sau.
 
 \paragraph{Sơ đồ tuần tự chức năng xem/gửi tin nhắn}
 \mbox{}
@@ -679,9 +682,8 @@ tự.
   \end{figure}
 
   Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem và gửi tin nhắn. Người dùng click vào hội thoại để xem tin nhắn. 
-  Nếu người dùng gửi tin nhắn, Control sẽ xử lý để gửi tin nhắn đến cho đối phương và lưu tin nhắn vào cơ sở dữ liệu, 
-  chi tiết Control sẽ xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{} trong chương sau.
-
+  Nếu người dùng gửi tin nhắn, Control sẽ xử lý để gửi tin nhắn đến cho đối phương và lưu tin nhắn vào cơ sở dữ liệu. Ở chức năng
+  này chúng em sử dụng Firebase để xử lý tất cả các tin nhắn, việc sử dụng Firebase sẽ được chúng em giới thiệu ở chương sau.
 
 \paragraph{Sơ đồ tuần tự chức năng xem bài đăng tin tức}
 \mbox{}
@@ -696,7 +698,8 @@ tự.
 
   Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem tin tức/bài đăng. Người dùng chọn mở giao diện tin tức, API lấy tin tức sẽ
   được xử lý bởi Control, và hiện danh sách các bài đăng cho người dùng, sau đó người dùng chọn một bài đăng thì thông tin chi tiết
-  của bài đăng sẽ hiển thị cho người dùng. Cụ thể về việc xử lý các yêu cầu của Control được chúng em thể hiện trong Hình \ref{} trong chương sau.
+  của bài đăng sẽ hiển thị cho người dùng. Cụ thể về việc xử lý các yêu cầu của Control được chúng em thể hiện trong 
+  Hình \ref{getAllNews}, Hình \ref{getNewsByCategory} trong chương sau.
 
 \paragraph{Sơ đồ tuần tự chức năng bật/tắt Bluetooth}
 \mbox{}
@@ -747,7 +750,7 @@ tự.
 
   \begin{figure}[H]
         \centering
-        \includegraphics[width=16cm,height=9cm]{Images/mobile_app/start_measuring_ecg.png}
+        \includegraphics[width=12cm,height=6cm]{Images/mobile_app/start_measuring_ecg.png}
         \caption[Sơ đồ tuần tự chức năng tiến hành đo điện tim trên App]{\bfseries \fontsize{12pt}{0pt}
         \selectfont Sơ đồ tuần tự chức năng tiến hành đo điện tim trên App}
         \label{start_measuring_ecg} %đặt tên cho ảnh
