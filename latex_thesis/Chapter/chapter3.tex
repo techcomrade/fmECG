@@ -5,4 +5,37 @@
 \setcounter{table}{0} % LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 3. TRIỂN KHAI VÀ KIỂM THỬ}
+
+\subsection{Triển khai ứng dụng}
+Trong quá trình triển khai ứng dụng, chúng em sử dụng dịch vụ Elastic Compute
+ Cloud (EC2) của AWS để chạy ứng dụng và sử dụng dịch vụ Relational Database Service
+  (RDS) để lưu trữ cơ sở dữ liệu của ứng dụng. Việc sử dụng EC2 và RDS giúp
+   chúng em tối ưu hóa việc quản lý hệ thống, đảm bảo tính sẵn sàng và
+    mở rộng khả năng chịu tải cho ứng dụng.
+
+\subsubsection{Triển khai ứng dụng trên AWS EC2}
+\begin{itemize}
+  \item Tạo máy ảo EC2: Chúng em đã tạo một EC2 instance với loại instance t2.micro. Đây là loại instance nhỏ, phù hợp với các ứng dụng có lưu lượng truy cập thấp hoặc giai đoạn phát triển. Instance này sử dụng kiến trúc 64-bit, cho phép chạy các ứng dụng trên cả hệ thống 32-bit và 64-bit. Bộ nhớ của instance là 1 GiB, đủ để chạy ứng dụng Node.js cùng với các dependencies. Dung lượng lưu trữ 8GB, chúng tôi đã cài đặt hệ điều hành Linux/UNIX để chạy mã nguồn của ứng dụng.
+  \item Cài đặt các phần mềm và dependencies: Sau khi triển khai máy ảo EC2, chúng em đã cài đặt các phần mềm và dependencies cần thiết để chạy ứng dụng, bao gồm Node.js và các thư viện hỗ trợ và các gói npm cần thiết.
+  \item Tạo và cấu hình môi trường ứng dụng:Chúng em đã tạo môi trường ứng dụng, bao gồm việc cấu hình các biến môi trường, thiết lập các file cấu hình, và chạy các lệnh khởi tạo ban đầu cho ứng dụng.
+  \item Triển khai ứng dụng: Tiếp theo, chúng em tải lên mã nguồn của ứng dụng lên máy ảo EC2 thông qua git
+  \item Mở cổng cho ứng dụng: Chúng em đã mở cổng mạng trên máy ảo EC2 để cho phép ứng dụng lắng nghe các yêu cầu từ internet.
+  \item Khởi động ứng dụng:Để khởi động ứng dụng, chúng em chạy các lệnh quản lý quá trình như npm start
+\end{itemize}
+
+\subsubsection{Triển khai cơ sở dữ liệu trên RDS}
+\begin{itemize}
+  \item Tạo cơ sở dữ liệu RDS: Chúng em đã triển khai một cơ sở dữ liệu MySQL trên dịch vụ RDS của AWS. Cơ sở dữ liệu này được đặt tên là "fm\_ecg" và có mật khẩu "fmecgdatabase" để bảo mật. Địa chỉ host của cơ sở dữ liệu là "fm-ecg-database.cx3akkmg3hid.ap-southeast-1.rds.amazonaws.com" cho phép EC2 instance kết nối và truy vấn dữ liệu từ cơ sở dữ liệu. Để truy cập và quản lý cơ sở dữ liệu, chúng tôi sử dụng tài khoản "admin" với các quyền tương ứng.
+  \item Kết nối giữa EC2 và RDS: Chúng em đã cấu hình ứng dụng Node.js chạy trên EC2 instance để kết nối đến cơ sở dữ liệu RDS thông qua thông tin host, tên người dùng và mật khẩu đã cung cấp. Khi ứng dụng gửi các truy vấn SQL đến cơ sở dữ liệu, RDS sẽ xử lý các truy vấn này và trả về kết quả cho ứng dụng.
+  \item Backup và giám sát cơ sở dữ liệu: Chúng em đã thiết lập các chính sách sao lưu định kỳ cho cơ sở dữ liệu RDS để đảm bảo an toàn cho dữ liệu và khả năng khôi phục trong trường hợp xảy ra sự cố.
+\end{itemize}
+
+
+\subsection{Kiểm thử}
+
+\subsubsection{Kiểm thử hoạt động của các API}
+\subsubsection{Kiểm thử ứng dụng web}
+
+
+
 \newpage

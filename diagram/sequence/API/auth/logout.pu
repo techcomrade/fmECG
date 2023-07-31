@@ -38,7 +38,7 @@ participant SessionModel as SessionModel
 end box
 
 
-User -> main: Request to login into app
+User -> main: Request to logout
 activate User
 activate main
 

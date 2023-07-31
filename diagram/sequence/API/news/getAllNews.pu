@@ -49,16 +49,6 @@ activate NewsRoute
 NewsRoute -> NewsController: getAllNews(req, res)
 activate NewsController
 
-' ' note right of NewsRoute #Aqua
-' ' * Request param:
-' ' {
-'   currentPassword, newPassword,
-'   '  confirmPassword
-' }
-' = req.body
-' ' token = req.cookies.jwt
-' ' end note
-
 NewsController -> NewsModel: findAndCountAll()
 
 activate NewsModel

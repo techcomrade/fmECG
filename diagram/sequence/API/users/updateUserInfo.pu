@@ -36,7 +36,7 @@ participant UserModel as UserModel
 end box
 
 
-User -> main: Request to change password
+User -> main: Request to update user information
 activate User
 activate main
 
