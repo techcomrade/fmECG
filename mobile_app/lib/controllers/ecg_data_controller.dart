@@ -106,16 +106,20 @@ class ECGDataController {
 
   static List handlePacketData(List<int> bytes) {
     final int numberSample = (bytes[9] / 4 / 3).toInt();
+    final int countPacket = bytes[10];
     final rowLength = bytes.length;
     final dataECG = bytes.sublist(11, rowLength);
 
     final Map<int, List<int>> dataSeperated = separateDataIntoEachSample(dataECG, numberSample);
-    List rowToSave = [];
     List dataToSave = [];
 
     dataSeperated.forEach((key, sample) {
+      List rowToSave = [];
+      if (key == 1) {
+        rowToSave.add(countPacket);
+      }
       final rowData = processSampleToSave(sample);
-      rowToSave = [key, ...rowData];
+      rowToSave = [key, ...rowData, ...rowToSave];
       dataToSave.add(rowToSave);
     });
     return dataToSave;

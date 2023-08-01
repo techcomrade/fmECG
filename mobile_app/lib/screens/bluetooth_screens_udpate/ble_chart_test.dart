@@ -7,6 +7,7 @@ import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -14,10 +15,12 @@ class BleLiveChartTest extends StatefulWidget {
   const BleLiveChartTest({
     Key? key, 
     required this.bluetoothCharacteristic, 
-    required this.fileToSave
+    required this.fileToSave, 
+    required this.deviceConnected,
   }) : super(key: key);
 
   final QualifiedCharacteristic bluetoothCharacteristic;
+  final DiscoveredDevice deviceConnected;
   final File fileToSave;
 
   @override
@@ -26,7 +29,6 @@ class BleLiveChartTest extends StatefulWidget {
 
 class _BleLiveChartTestState extends State<BleLiveChartTest> {
   final flutterReactiveBle = FlutterReactiveBle();
-  Timer? timer;
   List<_ChartData>? chartDataChannel;
   List<_ChartData>? chartDataChannel2;
   List<_ChartData>? chartDataChannel3;
@@ -41,6 +43,8 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   late StreamController<List> _dataStreamController;
   Stream<List> get _dataStream => _dataStreamController.stream;
   List samples = [];
+  bool isMeasuring = false;
+  bool isUploaded = false;
 
   @override
   void initState() {
@@ -55,14 +59,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
 
   @override
   void dispose() {
-    chartDataChannel!.clear();
-    chartDataChannel2!.clear();
-    chartDataChannel3!.clear();
-    chartDataChannel4!.clear();
-    _chartSeriesController = null;
-    _chartSeriesController2 = null;
-    _chartSeriesController3 = null;
-    _chartSeriesController4 = null;
+    _clearDataInChart();
     subscribeStream.cancel();
     _dataStreamController.close();
     
@@ -75,10 +72,15 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
         final List packetHandled = ECGDataController.handlePacketData(value);
         samples = samples + packetHandled;
 
+        if (samples.length == 50000) {
+          FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
+          samples.clear();
+        }
+
         for (int i = 0; i < packetHandled.length; i ++) {
-          List<double> dataChannel = packetHandled[i].sublist(1, 5);
+          List dataChannel = packetHandled[i].sublist(1, 5);
           List dataShowOnChart = [];
-          if (packetHandled[i] % 10 == 0) {
+          if (i % 10 == 0) {
             dataShowOnChart = ECGDataController.calculateDataPointToShow(dataChannel);
             _updateDataSource(dataShowOnChart);
           }
@@ -87,74 +89,116 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
       });
   }
 
+  _resetMeasuring() {
+    // subscribeStream.cancel();
+    // _dataStreamController.close();
+    _clearDataInChart();
+    samples.clear();
+    FilesManagement.deleteFileRecord(widget.fileToSave);
+    setState(() {
+      isMeasuring = false;
+    });
+  }
+
+  _handleSaveRecordInFile() async {
+    final DateTime stopTime = DateTime.now();            
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final Map userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
+
+    if (userDataDecoded["roleId"] == -1 || userDataDecoded["token"] == "") {
+      return Utils.showDialogLoginRequirement(context);
+    }
+
+    final int userId = userDataDecoded["userId"] ?? 0;
+    final String deviceId = widget.deviceConnected.id;
+    final String startTimeAsTimeStamp = widget.fileToSave.path.split("/").last.split('.').first;
+    final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(int.parse(startTimeAsTimeStamp));
+
+    final Map fileUploadInformation = {
+      "filePath": widget.fileToSave.path,
+      "userId": userId,
+      "deviceId": deviceId,
+      "startTime": startTime,
+      "stopTime": stopTime,
+    };
+    await FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      ECGRecordController.uploadFileToDB(fileUploadInformation);
+    });
+  }
+
+  _clearDataInChart() {
+    chartDataChannel!.clear();
+    chartDataChannel2!.clear();
+    chartDataChannel3!.clear();
+    chartDataChannel4!.clear();
+    _chartSeriesController = null;
+    _chartSeriesController2 = null;
+    _chartSeriesController3 = null;
+    _chartSeriesController4 = null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(PhosphorIcons.regular.arrowLeft), 
+          onPressed: () => Navigator.pop(context)
+        ),
+        title: const Text("Trang đo dữ liệu"),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(
-            onPressed: () => subscribeCharacteristic(),
-            child: const Text('Subscribe'),
-          ),
+          Text('RSSI: ${widget.deviceConnected.rssi}'),
           StreamBuilder<List>(
             stream: _dataStream,
             builder: (context, snapshot) {
               return _buildLiveLineChart();
             }
           ),
-          Align(
-            alignment: Alignment.center,
-            child: ElevatedButton(
-              onPressed: () async {
-                _chartSeriesController = null;
-                _chartSeriesController2 = null;
-                _chartSeriesController3 = null;
-                _chartSeriesController4 = null;
-
-                subscribeStream.cancel();
-                _dataStreamController.close();
-                final DateTime stopTime = DateTime.now();            
-                final SharedPreferences preferences = await SharedPreferences.getInstance();
-                final Map userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
-
-                if (userDataDecoded["roleId"] == -1 || userDataDecoded["token"] == "") {
-                  return Utils.showDialogLoginRequirement(context);
-                }
-
-                final int userId = userDataDecoded["userId"] ?? 0;
-                final int deviceId = 2;
-                final String startTimeAsTimeStamp = widget.fileToSave.path.split("/").last.split('.').first;
-                final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(int.parse(startTimeAsTimeStamp));
-
-                final Map fileUploadInformation = {
-                  "filePath": widget.fileToSave.path,
-                  "userId": userId,
-                  "deviceId": deviceId,
-                  "startTime": startTime,
-                  "stopTime": stopTime,
-                };
-                await FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
-
-                Future.delayed(Duration(milliseconds: 500), () {
-                  ECGRecordController.uploadFileToDB(fileUploadInformation);
-                });
-              }, 
-              child: Text('End measurement')
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  if (isMeasuring) {
+                    _resetMeasuring();
+                  } else {
+                    subscribeCharacteristic();
+                    setState(() {
+                      isMeasuring = true;
+                    });
+                  }
+                }, 
+                child: Text(isMeasuring ? 'Reset biểu đồ' : 'Bắt đầu đo')
+              ),
+              ElevatedButton(
+                onPressed: samples.isEmpty ? null : () async {
+                  await _handleSaveRecordInFile();
+  
+                  const snackBar = SnackBar(
+                    content: Text('Đã lưu kết quả đo vào bộ nhớ!'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }, 
+                child: const Text("Lưu kết quả đo")
+              )
+            ],
           )
         ],
-      ),
+      )
     );
   }
 
   /// Returns the realtime Cartesian line chart.
   SfCartesianChart _buildLiveLineChart() => SfCartesianChart(
         title: ChartTitle(
-        text: "Heart Rate Real-time",
+        text: "Biểu đồ đo điện tim thời gian thực",
         alignment: ChartAlignment.center,
       ),
-      // enableAxisAnimation: true,
       // plotAreaBackgroundColor: Color(0XFF006A89),
       plotAreaBorderWidth: 0,
       primaryXAxis: NumericAxis(
@@ -188,6 +232,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           xValueMapper: (_ChartData sales, _) => sales.country,
           yValueMapper: (_ChartData sales, _) => sales.sales,
           animationDuration: 0,
+          legendItemText: "Kênh 1"
         ),
         FastLineSeries<_ChartData, int>(
           onRendererCreated: (ChartSeriesController controller) {
@@ -198,6 +243,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           xValueMapper: (_ChartData sales, _) => sales.country,
           yValueMapper: (_ChartData sales, _) => sales.sales,
           animationDuration: 0,
+          legendItemText: "Kênh 2"
         ),
         FastLineSeries<_ChartData, int>(
           onRendererCreated: (ChartSeriesController controller) {
@@ -208,6 +254,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           xValueMapper: (_ChartData sales, _) => sales.country,
           yValueMapper: (_ChartData sales, _) => sales.sales,
           animationDuration: 0,
+          legendItemText: "Kênh 3"
         ),
         FastLineSeries<_ChartData, int>(
           onRendererCreated: (ChartSeriesController controller) {
@@ -218,6 +265,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           xValueMapper: (_ChartData sales, _) => sales.country,
           yValueMapper: (_ChartData sales, _) => sales.sales,
           animationDuration: 0,
+          legendItemText: "Kênh 4"
         )
       ]);
 
@@ -287,5 +335,5 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
 class _ChartData {
   _ChartData(this.country, this.sales);
   final int country;
-  final double sales;
+  final sales;
 }

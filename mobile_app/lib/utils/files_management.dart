@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class FilesManagement {
   static Future<String> get _pathToSaveData async {
-    final directoryToSaveFile = Directory("/stoxrage/self/primary/fm_ECG");
+    final directoryToSaveFile = Directory("/storage/self/primary/fm_ECG");
     final directoryToSaveData = directoryToSaveFile.path + '/fmECG_data';
     return directoryToSaveData;
   }
@@ -59,5 +59,9 @@ class FilesManagement {
       existingFilePath = filePath;
       preferences.setString(keyToSave, existingFilePath);
     }
+  }
+
+  static Future<void> deleteFileRecord(File file) async {
+    await file.delete();
   }
 }

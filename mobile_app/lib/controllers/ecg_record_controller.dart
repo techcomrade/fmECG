@@ -13,7 +13,7 @@ class ECGRecordController {
     final url = APIConstant.apiUrlProduction + 'ecg-records/upload';
 
     final String filePath = fileUploadInformation["filePath"];
-    final int userId = fileUploadInformation["userId"];
+    final String userId = fileUploadInformation["userId"];
     final int deviceId = fileUploadInformation["deviceId"];
     final DateTime startTime = fileUploadInformation["startTime"];
     final DateTime stopTime = fileUploadInformation["stopTime"];

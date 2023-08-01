@@ -21,20 +21,17 @@ class BleScanningAndConnectingScreen extends StatefulWidget {
 class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectingScreen> {
   final flutterReactiveBle = FlutterReactiveBle();
   List<DiscoveredDevice> devices = [];
+  DiscoveredDevice? deviceConnected;
   StreamSubscription<DiscoveredDevice>? _scanStream;
   late StreamController<DiscoveredDevice> _deviceScanningController;
   Stream<DiscoveredDevice> get deviceScanningStream => _deviceScanningController.stream;
 
   StreamSubscription<ConnectionStateUpdate>? _connectionStream;
   late StreamController<ConnectionStateUpdate> _deviceConnectionController;
-  Stream<ConnectionStateUpdate> get _deviceConnectionStream  => _deviceConnectionController.stream;
+  Stream<ConnectionStateUpdate> get deviceConnectionStream  => _deviceConnectionController.stream;
   
   late QualifiedCharacteristic characteristicToReceiveData;
-
   bool _isScanning = false;
-
-  // int _timerScanningLength = 10;
-  // Timer? _timerScanning;
 
   @override
   void initState() {
@@ -62,7 +59,6 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
         }
       }
       _deviceScanningController.add(device);
-      print('devices:${devices.length}');
       setState(() {});
     });
   }
@@ -97,7 +93,9 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
             characteristicId: _UART_TX, 
             deviceId: deviceId
           );
+          deviceConnected = devices.firstWhere((device) => device.id == deviceId);
           showDialogStateConnectionBluetooth(state);
+          _stopScanning();
         } else {
           print("not connected");
         }
@@ -120,6 +118,9 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
           failure: null,
         ),
       );
+      setState(() {
+        deviceConnected = null;
+      });
     }
   }
 
@@ -137,22 +138,8 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
               child: ElevatedButton(
                 child: Text('Tiến hành đo'),
                 onPressed: () async {
-                  bool isAccessFiles = await _requestManageStorage();
-                  _scanStream?.cancel();
-                  if (isAccessFiles) {
-                    FilesManagement.createDirectoryFirstTimeWithDevice();
-                    final File fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
-                    Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(
-                      builder:(context) => BleLiveChartTest(
-                        fileToSave: fileToSave,
-                        bluetoothCharacteristic: characteristicToReceiveData,
-                      )
-                    ));
-                  } else {
-                    print('phone does not grant permission');
-                  }
-                  
+                  Navigator.pop(context);
+                  await _navigateToChart();
                 },
               ),
             ),
@@ -160,6 +147,24 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
         );
       }
     );
+  }
+
+  _navigateToChart() async {
+    bool isAccessFiles = await _requestManageStorage();
+    _scanStream?.cancel();
+    if (isAccessFiles) {
+      FilesManagement.createDirectoryFirstTimeWithDevice();
+      final File fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
+      Navigator.push(context, MaterialPageRoute(
+        builder:(context) => BleLiveChartTest(
+          deviceConnected: deviceConnected!,
+          fileToSave: fileToSave,
+          bluetoothCharacteristic: characteristicToReceiveData,
+        )
+      ));
+    } else {
+      print('phone does not grant permission');
+    }
   }
 
   Future<bool> _requestManageStorage() async {
@@ -180,74 +185,103 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
     super.dispose();
   }
 
-  Widget rowDeviceBluetooth(DiscoveredDevice device) => Container(
-    margin: const EdgeInsets.only(bottom: 8),
-    child: Row(
-      children: [
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(6), 
-                bottomLeft: Radius.circular(6)
+  Widget rowDeviceBluetooth(DiscoveredDevice device) {
+    return StreamBuilder<ConnectionStateUpdate>(
+      stream: deviceConnectionStream,
+      builder: (context, snapshot) {
+        bool isDeviceConnected = snapshot.hasData && 
+          snapshot.data?.connectionState == DeviceConnectionState.connected && 
+          device.id == deviceConnected?.id;
+        return Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(6), 
+                      bottomLeft: Radius.circular(6)
+                    ),
+                    color: ColorConstant.primary
+                  ),
+                  child: Text(
+                    device.name.isNotEmpty ? device.name : device.id,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      overflow: TextOverflow.ellipsis
+                    ),
+                  ),
+                ),
               ),
-              color: ColorConstant.primary
-            ),
-            child: Text(
-              device.name.isNotEmpty ? device.name : device.id,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
+              Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: () {
+                    _connectDeviceAndNavigate(device.id); 
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(6), 
+                        bottomRight: Radius.circular(6)
+                      ),
+                      color: ColorConstant.quaternary
+                    ),
+                    child: isDeviceConnected ? const Text(
+                      "Đã kết nối",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ): const Text(
+                      "Kết nối",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    )
+                  )
+                )
               ),
-            ),
+              if (isDeviceConnected)
+              InkWell(
+                onTap: () async {
+                  await _navigateToChart();
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(6), 
+                      bottomRight: Radius.circular(6)
+                    ),
+                    color: Colors.green
+                  ),
+                  child: const Text(
+                    "Đo",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  )
+                ),
+              )
+            ],
           ),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: InkWell(
-            onTap: () {
-              _connectDeviceAndNavigate(device.id); 
-            },
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(6), 
-                  bottomRight: Radius.circular(6)
-                ),
-                color: ColorConstant.quaternary
-              ),
-              child: const Text(
-                "Kết nối",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          )
-        ),
-      ],
-    ),
-  );
+        );
+      }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Kết nối thiết bị"),
-      //   leading: IconButton(
-      //     icon:  Icon(PhosphorIcons.regular.arrowLeft),
-      //     onPressed: () => Navigator.pop(context)
-      //   ),
-      // ),
-      // floatingActionButton: IconButton(
-      //   icon: Icon(Icons.abc),
-      //   onPressed: () => showDialogStateConnectionBluetooth(
-      //     ConnectionStateUpdate(deviceId: 'dsf', connectionState: DeviceConnectionState.connected, failure: null)),
-      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -273,11 +307,13 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
               )
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
               ElevatedButton(onPressed: _startScanning, child: Text('Tìm kiếm')),
-              const SizedBox(width: 30),
               ElevatedButton(onPressed: _stopScanning, child: Text('Dừng')),
+              ElevatedButton(onPressed: deviceConnected != null ? () => _disconnectDevice(deviceConnected!.id) : null, 
+                child: Text('Ngắt kết nối')
+              ),
             ]),
 
             const SizedBox(height: 10),
