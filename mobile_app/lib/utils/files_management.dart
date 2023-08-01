@@ -25,11 +25,25 @@ class FilesManagement {
     return dataRow;
   }
 
-  static void appendDataToFile(File file, List<dynamic> row) async {
+  static void appendDataToFile(File file, List<dynamic> row) {
     String data = convertRowToStringBeforeSaving(row);
     data = data + "\n"; //xuống dòng khi lưu dữ liệu 1 row
-    await file.writeAsString(data, mode: FileMode.append);
-    print('successful');
+    file.writeAsStringSync(data, mode: FileMode.append);
+  }
+
+  static Future<void> handleSaveDataToFileV2(File file, List rawData) async {
+    String dataConverted = convertDataToCSVFormat(rawData);
+    await appendDataToFileV2(file, dataConverted);
+  }
+
+  static String convertDataToCSVFormat(List data) {
+    final removingBracketsRegex = RegExp(r'\[|\]');
+    String dataConverted = data.join("\n").replaceAll(removingBracketsRegex, "");
+    return dataConverted;
+  }
+
+  static Future<void> appendDataToFileV2(File file, String dataConverted) async {
+    await file.writeAsString(dataConverted, mode: FileMode.append);
   }
 
   static void saveFilePathCaseNoInternet(String filePath) async {
@@ -45,5 +59,9 @@ class FilesManagement {
       existingFilePath = filePath;
       preferences.setString(keyToSave, existingFilePath);
     }
+  }
+
+  static Future<void> deleteFileRecord(File file) async {
+    await file.delete();
   }
 }
