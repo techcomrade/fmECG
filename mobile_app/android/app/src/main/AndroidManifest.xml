@@ -28,7 +28,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
    <application
-        android:label="bluetooth_ecg"
+        android:label="fmECG Patient"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity
