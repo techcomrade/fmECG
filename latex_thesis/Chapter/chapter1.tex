@@ -773,4 +773,54 @@ tự.
 
   Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng kết thúc quá trình đo điện tim. Trong khi đang đo, nếu người dùng muốn dừng, 
   việc kết thúc quá trình đo đồng nghĩa với dữ liệu đo được lưu lên cơ sở dữ liệu để bác sĩ có thể theo dõi.
+
+
+\subsection{Xây dựng mô hình thực thể liên kết}
+
+Xác định các thực thể và thuộc tính:
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng thực thể và thuộc tính}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|X|}
+    \hline
+    \textbf{Thực thể} & \textbf{Thuộc tính} \\
+    \hline
+    Người dùng & 
+    ID người dùng, Mật khẩu, Email, Tên, Ngày sinh, Số điện thoại, Quyền \\
+    \hline
+    Bản ghi ECG & 
+    ID bản ghi ECG, ID người dùng, ID thiết bị, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo, Loại cảm biến \\
+    \hline
+    Danh mục tin tức & 
+    ID danh mục tin tức, Tên danh mục tin tức, Mô tả danh mục tin tức \\
+    \hline
+    Tin tức & 
+    ID tin tức, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn, Đường dẫn hình ảnh \\
+    \hline
+    Phân công bệnh nhân - bác sĩ & 
+    ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu \\
+    \hline
+    Mã thông báo đặt lại mật khẩu & 
+    ID mã thông báo, ID người dùng, Mã thông báo, Thời gian hết hạn \\
+    \hline
+    Phiên đăng nhập & 
+    ID phiên đăng nhập, ID người dùng, Mã phiên đăng nhập, Thời gian hết hạn \\
+    \hline
+    Thiết bị & 
+    ID thiết bị, Tên thiết bị \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=8cm]{Images/server/database/ttlk.png}
+  \caption[Mô hình thực thể liên kết]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Mô hình thực thể liên kết}
+  \label{ttlk} %đặt tên cho ảnh
+\end{figure}
+
+
+
 \newpage
