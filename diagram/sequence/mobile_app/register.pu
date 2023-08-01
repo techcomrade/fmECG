@@ -1,0 +1,38 @@
+@startuml
+
+actor ":User" as User
+boundary ":View Login" as ClientApp
+control ":Control Login" as Control
+entity ":Entity User" as Entity
+
+activate User
+User -> ClientApp: Click button register
+activate ClientApp
+ClientApp -> ClientApp: Show register view
+ClientApp --> User
+User -> ClientApp: Submit register information
+ClientApp -> ClientApp: Validate register format
+alt Format accepted
+  ClientApp -> Control: Send register request with information
+  activate Control
+  Control -> Entity: Query database
+  activate Entity
+  Entity --> Control: Send response result
+  deactivate Entity
+  alt Response success
+    Control --> ClientApp: Show register successfully
+    ClientApp --> User: Notify to user register successfully
+  else Response fail
+    Control --> ClientApp: Show register fail
+    deactivate Control
+    ClientApp --> User: Notify to user register fail
+  end
+
+else Format rejected
+  ClientApp -> User: Require user to submit again
+  deactivate ClientApp
+end
+deactivate User
+skinparam style strictuml
+
+@enduml

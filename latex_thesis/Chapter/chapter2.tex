@@ -7,7 +7,108 @@
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 2. THIẾT KẾ CHI TIẾT HỆ THỐNG}
 
 \subsection{Công nghệ sử dụng}
-\subsubsection{Ứng dụng}
+\subsubsection{Ứng dụng di động}
+
+\paragraph{Flutter}
+\mbox{}
+
+Flutter là framework được chúng em sử dụng để lập trình cho ứng dụng di động, dưới đây là phần giới thiệu về Flutter cũng
+như những tính năng sẽ được chúng em sử dụng trong ứng dụng này.
+
+Flutter là một framework mã nguồn mở phát triển bởi Google, được sử dụng để xây dựng ứng dụng di động, web và desktop đẹp và nhanh chóng. Flutter sử dụng ngôn ngữ lập trình Dart, là một ngôn ngữ hiện đại và linh hoạt, giúp tạo ra các ứng dụng chạy mượt mà trên nhiều nền tảng.
+
+Một số điểm nổi bật của Flutter được chúng em sử dụng bao gồm:
+
+\begin{itemize}
+  \item Giao diện được xây dựng dễ dàng với Widgets, chức năng được tuỳ biến và phát triển với Library
+  \item Tích hợp nhanh chóng: Flutter hỗ trợ tích hợp API của hệ điều hành và bên thứ ba một cách dễ dàng, giúp chúng ta tạo các tính năng phong phú và đa dạng cho ứng dụng của mình
+  \item Tương thích đa nền tảng: Với Flutter, mã nguồn cơ sở chỉ cần viết một lần và triển khai ứng dụng của mình trên nhiều nền tảng như Android, iOS, web và desktop mà không cần viết lại mã nguồn
+\end{itemize}
+
+Ngoài ra điểm đặc biệt của Flutter so với một số Framework khác đó là việc tương tác với native code, Flutter có thể tương
+tác trực tiếp với native code thông qua cơ chế \textbf{Method Channel}, tức là giao tiếp giữa mã Dart của ứng dụng Flutter 
+và mã nguồn của hệ điều hành hoặc các hệ thống khác nằm ngoài môi trường Flutter. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=8cm]{Images/system/flutter_native_code.png}
+  \caption[Kiến trúc ứng dụng của hệ thống gốc]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Kiến trúc ứng dụng của hệ thống gốc}
+  \label{flutter_native_code} %đặt tên cho ảnh
+\end{figure}
+
+Hình ảnh trên thể hiện sự tương tác giữa Native Code và các dịch vụ của Platform một cách trực tiếp, nói cách khác, sử dụng
+native code chúng ta có thể truy cập đến mọi services một cách nhanh chóng và thuận tiện nhất. Tuy nhiên việc thực hiện
+code trên native cũng tương đối khó và đòi hỏi kinh nghiệm vì cấu trúc phức tạp và có hiểu biết về hệ điều hành.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=8cm]{Images/system/flutter_JS.png}
+  \caption[Kiến trúc ứng dụng của hệ thống sử dụng cầu nối Javascript]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Kiến trúc ứng dụng của hệ thống sử dụng cầu nối Javascript}
+  \label{flutter_JS} %đặt tên cho ảnh
+\end{figure}
+
+Tiếp theo, để xử lý những vấn đề gặp phải ở trên, giải pháp ở đây đó chính là sử dụng một cầu nối, cầu nối Javascript (một ngôn ngữ lập trình bậc cao)
+sẽ giảm tải việc không phải chạm đến native code, đơn giản hoá việc code ứng dụng, nhược điểm là tốc độ xử lý và chạy ứng
+dụng sẽ chậm hơn vì phải chuyển từ Javascript qua Native Code khi chạy. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=8cm]{Images/system/flutter_dart.png}
+  \caption[Kiến trúc ứng dụng của hệ thống sử dụng Method Channel Flutter]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Kiến trúc ứng dụng của hệ thống sử dụng Method Channel Flutter}
+  \label{flutter_dart} %đặt tên cho ảnh
+\end{figure}
+
+Giải pháp của Flutter là việc xây dựng sẵn Widget tương tác trực tiếp với Native Code, người dùng chỉ cần gọi Widget và tuỳ
+biến dựa trên mong muốn, và Method Channel cho việc phát triển những chức năng mà Flutter chưa thực sự hỗ trợ. Việc kết hợp này
+giúp cho tốc độ xử lý nhanh và đảm bảo có chiều sâu khi hỗ trợ cả Native Code bắt kỳ khi nào chúng ta cần.
+
+
+\paragraph{Firebase}
+\mbox{}
+
+Ứng dụng di động của bệnh nhân và bác sĩ sử dụng Firebase Firestore để lưu trữ tin nhắn và trong tương lai sẽ sử dụng Firebase
+Messaging để gửi thông báo đến cho người nhận. Dưới đây là phần giới thiệu của chúng em về Firebase Firestore:
+
+Firebase Firestore: là một cơ sở dữ liệu NoSQL của Firebase, cho phép bạn lưu trữ và đồng bộ dữ liệu trong thời gian thực giữa ứng dụng của bạn và cơ sở dữ liệu trên đám mây. Firestore được thiết kế để cung cấp hiệu suất cao, đáng tin cậy và dễ sử dụng cho việc lưu trữ và truy vấn dữ liệu.
+Đặc điểm của Firebase Firestore bao gồm:
+\begin{itemize} 
+  \item Lưu trữ dữ liệu dưới dạng tài liệu (document) và bộ sưu tập (collection) có cấu trúc linh hoạt
+  \item Hỗ trợ lắng nghe sự thay đổi dữ liệu trong thời gian thực thông qua tính năng "realtime updates"
+  \item Được tích hợp sâu với các sản phẩm và dịch vụ khác của Firebase, như Firebase Authentication, Firebase Cloud Functions, và Firebase Cloud Messaging
+  \item Có SDK hỗ trợ nhiều nền tảng, bao gồm Android, iOS, web và cả Flutter.
+\end{itemize}
+
+\paragraph{Bluetooth Low Energy}
+\mbox{}
+
+Ứng dụng di động của bệnh nhân sử dụng Bluetooth với công nghệ Bluetooth Low Energy để truyền/nhận dữ liệu giữa ứng dụng di
+động với thiết bị IOT. BLE được thiết kế để tiết kiệm năng lượng và thích hợp cho các ứng dụng yêu cầu tiêu thụ điện năng thấp 
+và phạm vi hoạt động ngắn, rất phù hợp với thiết bị điện tim cần truyền dữ liệu liên tục đến ứng dụng. Trong ứng dụng di động này, chúng
+em sử dụng đến hai khái niệm thường dùng trong BLE đó là Service và Characteristic.
+
+
+\begin{itemize} 
+  \item Service: được định danh bằng UUID, dùng để định nghĩa một chức năng cụ thể của thiết bị
+  \item Characteristic: được định danh bằng UUID, thuộc về một service nhất định và có thể thực hiện việc đọc, ghi cũng như lắng nghe
+\end{itemize}
+
+Việc thực hiện lắng nghe Characteristic và lấy dữ liệu ra là chìa khoá của Bluetooth trong ứng dụng lần này.
+  \begin{figure}[H]
+        \centering
+        \includegraphics[width=16cm,height=8cm]{Images/system/ble_services.png}
+        \caption[Ví dụ mô tả chức năng của Bluetooth Low Energy]{\bfseries \fontsize{12pt}{0pt}
+        \selectfont Ví dụ mô tả chức năng của Bluetooth Low Energy}
+        \label{ble_services} %đặt tên cho ảnh
+  \end{figure}
+
+  Hình \ref{ble_services} mô tả cách mà dữ liệu sẽ được truyền/nhận hay lắng nghe thông qua Write/Read/Notify. 
+  Với Central (đại diện cho thiết bị di động), Peripheral đại diện cho thiết bị ngoại vi (thiết bị đo), sau khi kết nối giữa chúng 
+  được thiết lập, việc giao tiếp giữa chúng phụ thuộc vào việc chúng ta sẽ kết nối với đúng UUID của từng services hay
+  characteristic như đã được giới thiệu ở trên.
+
 \subsubsection{Server và Website}
 
 \paragraph{NodeJs}
@@ -393,6 +494,102 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 \paragraph{Ứng dụng}
 \mbox{}
 
+Dưới đây là các giao diện thực tế mà chúng em thiết kế cho App:
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/login.png}
+  \caption[Giao diện trang đăng nhập]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng nhập}
+  \label{demo_login} %đặt tên cho ảnh
+\end{figure}
+
+Trang đăng nhập gồm có logo, sau đó là hai ô để nhập email và mật khẩu, cùng một nút màu xanh cho người dùng nhấn để kiểm tra 
+việc đăng nhập vào
+trang chủ nếu email và mật khẩu của người dùng được xác thực. Nếu việc xác thực không thành công, giao diện sẽ hiển thị
+một dòng chữ dưới hai ô nhập.
+
+Ngoài ra nếu người dùng chưa có tài khoản thì có thể chọn đăng ký ở dưới để chuyển sang trang đăng ký.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/register.png}
+  \caption[Giao diện trang đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng ký tài khoản}
+  \label{demo_register} %đặt tên cho ảnh
+\end{figure}
+
+Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản một cách nhanh chóng
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/home_screen.png}
+  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \label{demo_} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=8cm]{Images/mobile_app/demo/preview_news.png}
+  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \label{demo_} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/all_news.png}
+  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \label{demo_} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/detail_news.png}
+  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \label{demo_} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/history.png}
+  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \label{demo_} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/detail_record.png}
+  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \label{demo_} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/chat_preview.png}
+  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \label{demo_} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/chat_detail.png}
+  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \label{demo_} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/off_bluetooth.png}
+  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \label{demo_} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/finding_bluetooth.png}
+  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \label{demo_} %đặt tên cho ảnh
+\end{figure}
+
+
+
 \paragraph{Website}
 \mbox{}
 
@@ -550,7 +747,7 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=14cm,height=14cm]{Images/server/class/class_route.png}
+  \includegraphics[width=14cm,height=6cm]{Images/server/class/class_route.png}
   \caption[Sơ đồ lớp của package Routes]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Routes}
   \label{class_route} %đặt tên cho ảnh
 \end{figure}
@@ -686,27 +883,27 @@ Hình \ref{updateUserInfo} mô tả quá trình cập nhật thông tin người
   \includegraphics[width=16cm,height=12cm]{Images/server/sequence/server/login.png}
   \caption[Sơ đồ tuần tự cho API đăng nhập vào hệ thống]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API đăng nhập vào hệ thống }
-  \label{login} %đặt tên cho ảnh
+  \label{backend_login} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{login}  mô tả quá trình xác thực người dùng đăng nhập vào ứng dụng. Người dùng gửi yêu cầu đăng nhập, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. AuthController kiểm tra thông tin người dùng, tạo token nếu đúng thông tin đăng nhập và trả về response cho người dùng.
+Hình \ref{backend_login}  mô tả quá trình xác thực người dùng đăng nhập vào ứng dụng. Người dùng gửi yêu cầu đăng nhập, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. AuthController kiểm tra thông tin người dùng, tạo token nếu đúng thông tin đăng nhập và trả về response cho người dùng.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/logout.png}
   \caption[Sơ đồ tuần tự cho API đăng xuất khỏi hệ thống ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API đăng xuất khỏi hệ thống }
-  \label{logout} %đặt tên cho ảnh
+  \label{backend_logout} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{logout} mô tả quá trình đăng xuất (logout) người dùng khỏi ứng dụng. Người dùng gửi yêu cầu đăng xuất, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. Đầu tiên, hệ thống kiểm tra xem cookie token có tồn tại hay không. Nếu không tồn tại, hệ thống trả về response lỗi. Ngược lại, AuthController xóa cookie và gọi tới SessionModel để hủy phiên đăng nhập của người dùng dựa trên token trong cookie. Sau khi xử lý, hệ thống trả về response thành công tới người dùng.
+Hình \ref{backend_logout} mô tả quá trình đăng xuất (logout) người dùng khỏi ứng dụng. Người dùng gửi yêu cầu đăng xuất, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. Đầu tiên, hệ thống kiểm tra xem cookie token có tồn tại hay không. Nếu không tồn tại, hệ thống trả về response lỗi. Ngược lại, AuthController xóa cookie và gọi tới SessionModel để hủy phiên đăng nhập của người dùng dựa trên token trong cookie. Sau khi xử lý, hệ thống trả về response thành công tới người dùng.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=12cm]{Images/server/sequence/server/register.png}
   \caption[Sơ đồ tuần tự cho API đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API đăng ký tài khoản }
-  \label{register} %đặt tên cho ảnh
+  \label{backend_register} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{register} mô tả quá trình đăng ký tài khoản trong ứng dụng. Người dùng gửi yêu cầu đăng ký, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. Đầu tiên, hệ thống kiểm tra thông tin yêu cầu đăng ký, bao gồm việc kiểm tra mật khẩu và xác nhận mật khẩu có khớp hay không. Sau đó, AuthController kiểm tra xem người dùng đã tồn tại trong hệ thống hay chưa. Nếu người dùng chưa tồn tại và mật khẩu khớp, AuthController sẽ mã hóa mật khẩu và tạo một bản ghi mới trong UserModel để lưu thông tin đăng ký. Nếu người dùng đã tồn tại hoặc mật khẩu không khớp, hệ thống sẽ trả về response lỗi tương ứng. Sau khi xử lý, hệ thống trả về response kết quả cho người dùng.
+Hình \ref{backend_register} mô tả quá trình đăng ký tài khoản trong ứng dụng. Người dùng gửi yêu cầu đăng ký, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. Đầu tiên, hệ thống kiểm tra thông tin yêu cầu đăng ký, bao gồm việc kiểm tra mật khẩu và xác nhận mật khẩu có khớp hay không. Sau đó, AuthController kiểm tra xem người dùng đã tồn tại trong hệ thống hay chưa. Nếu người dùng chưa tồn tại và mật khẩu khớp, AuthController sẽ mã hóa mật khẩu và tạo một bản ghi mới trong UserModel để lưu thông tin đăng ký. Nếu người dùng đã tồn tại hoặc mật khẩu không khớp, hệ thống sẽ trả về response lỗi tương ứng. Sau khi xử lý, hệ thống trả về response kết quả cho người dùng.
 
 
 \begin{figure}[H]

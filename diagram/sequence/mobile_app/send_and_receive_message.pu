@@ -1,0 +1,37 @@
+@startuml
+
+autonumber
+actor ":User" as User
+boundary ":View Message" as ClientApp
+control ":Control Message" as Control
+entity ":Entity Message" as Entity
+
+activate User
+User -> ClientApp: Open conversation of user
+activate ClientApp
+ClientApp -> Control: Send request get all messages in conversation
+activate Control
+Control -> Entity: Query in database
+activate Entity
+Entity --> Control: Send response with data
+deactivate Entity
+Control --> ClientApp: Send response with data
+deactivate Control
+ClientApp --> User: Show all messages in conversation
+
+User -> ClientApp: Type a message content
+ClientApp -> Control: Send message
+activate Control
+Control -> Entity: Save message into database (Firebase Firestore)
+activate Entity
+Entity --> Control: Send response result
+deactivate Entity
+Control --> ClientApp: Send response result
+deactivate Control
+ClientApp --> User: Show message sent recently
+deactivate ClientApp
+
+
+
+
+@enduml
