@@ -504,85 +504,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
   \end{table}
 
+\subsection{Sơ đồ tuần tự}
 
-\subsection{Sơ đồ kiến trúc hệ thống}
-Hệ thống chúng em xây dựng được chia làm ba phần Device, Application và Server. Cụ thể: 
-\begin{itemize}
-  \item Device: Thiết bị phần cứng đo điện tim, để kết nối với App bệnh nhân thông qua Bluetooth 
-  \item Application: Bao gồm ứng dụng của bệnh nhân, ứng dụng của bác sĩ và Website của Admin
-  \item Server: Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu và Cloud lưu trữ
-\end{itemize}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-System Architecture.drawio.png}
-  \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
-  \label{fmECG_architecture-System} %đặt tên cho ảnh
-\end{figure}
-
-Trong hệ thống thì Devices là phần mà chúng em sẽ không trực tiếp thực hiện trong đồ án này, Application và Server sẽ là
-phần mà đồ án chúng em thực hiện. Ở trong sơ đồ kiến trúc hệ thống riêng có bệnh nhân sẽ có tương tác trực tiếp với Devices,
-còn lại khối Application sẽ tương tác với Server thông qua API với giao thức HTTP. Khi nhận được yêu cầu từ Application,
-Server sẽ thực hiện xử lý dữ liệu và gửi lại thông tin mà Application yêu cầu.
-
-\subsubsection{Sơ đồ khối phần mềm}
-
-\paragraph{Ứng dụng di động cho bệnh nhân}
-\mbox{}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-Patient.drawio.png}
-  \caption[Sơ đồ khối cho App bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bệnh nhân}
-  \label{fmECG_architecture-Patient} %đặt tên cho ảnh
-\end{figure}
-
-Trong hình trên, lớp trên cùng User interface là lớp để người dùng tương tác và thực hiện lời gọi thông qua API Adapter, 
-các yêu cầu của người dùng sẽ được xử lý thông qua Services và phản hồi lại với người dùng qua giao diện. Dưới đây là phần
-giải thích Services trong hình:
-
-\begin{itemize}
-  \item ECG Service: Khối có nhiệm vụ xử lý yêu cầu cho các trạng thái đo: thực hiện đo, kết thúc đo, lưu kết quả đo
-  \item ECG Signal Processing Service: Khối có nhiệm vụ xử lý tín hiệu đo để phân tích sâu, hiển thị lên màn hình
-  \item User Management Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến người dùng như đăng nhập, đăng ký
-  \item Chat Service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin
-  \item Storage Service: Khối có nhiệm vụ lưu thông tin vào bộ nhớ
-\end{itemize}
-
-Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Device để phục vụ cho việc đo điện tim.
-\paragraph{Ứng dụng di động cho bác sĩ}
-\mbox{}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-Doctors.drawio.png}
-  \caption[Sơ đồ khói cho App bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bác sĩ}
-  \label{fmECG_architecture-Doctors} %đặt tên cho ảnh
-\end{figure}
-
-Về cơ bản, ứng dụng di động cho bác sĩ có những khối tương tự với bệnh nhân, trừ việc bác sĩ sẽ không có hai khối Device
-và Bluetooth để phục vụ việc đo như bệnh nhân.
-
-
-\paragraph{Website cho quản trị viên}
-\mbox{}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-Admin.drawio.png}
-  \caption[Sơ đồ khối cho Website quản trị viên]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho Website quản trị viên}
-  \label{fmECG_architecture-Admin} %đặt tên cho ảnh
-\end{figure}
-
-Quản trị viên sẽ quản lý 2 Services chính đó là quản lý người dùng (User Management Service) và quản lý phân công
-bác sĩ - bệnh nhân (Patient Assignment Service), logic và thứ tự các khối tương đồng với ứng dụng dành cho bác sĩ.
-
-Tiếp theo để phân tích cụ thể hơn từng luồng trong hệ thống qua use case, chúng em xin phép được trình bày các sơ đồ tuần
-tự. 
-\newpage
-\subsubsection{Sơ đồ tuần tự}
-
-\paragraph{Sơ đồ tuần tự chức năng đăng ký}
+\subsubsection{Sơ đồ tuần tự chức năng đăng ký}
 \mbox{}
   \begin{figure}[H]
         \centering
@@ -594,7 +518,7 @@ tự.
   Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng ký vào hệ thống. Người dùng gửi yêu cầu đăng ký, yêu cầu sẽ
   được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Control
   sẽ xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{backend_register} trong chương sau.
-\paragraph{Sơ đồ tuần tự chức năng đăng nhập}
+\subsubsection{Sơ đồ tuần tự chức năng đăng nhập}
 \mbox{}
 
     \begin{figure}[H]
@@ -609,7 +533,7 @@ tự.
   được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Việc Control
   sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hiện trong Hình \ref{backend_login} trong chương sau.
 
-\paragraph{Sơ đồ tuần tự chức năng quên mật khẩu}
+\subsubsection{Sơ đồ tuần tự chức năng quên mật khẩu}
 \mbox{}
 
   \begin{figure}[H]
@@ -624,7 +548,7 @@ tự.
   và gửi yêu cầu lấy lại mật khẩu, Control xử lý gửi đến email một mã xác thực, người dùng nhập đúng mã xác thực sẽ được thay
   đổi mật khẩu mới. Control xử lý cụ thể yêu cầu được chúng em thể hiện trong Hình \ref{resetPassword} và Hình \ref{resetPasswordToken} trong chương sau.
 
-\paragraph{Sơ đồ tuần tự chức năng xem lịch sử các lần đo}
+\subsubsection{Sơ đồ tuần tự chức năng xem lịch sử các lần đo}
 \mbox{}
 
     \begin{figure}[H]
@@ -640,7 +564,7 @@ tự.
     chọn một bản ghi, Control sẽ lấy dữ liệu và hiển thị cho người dùng dữ liệu đo trên biểu đồ. Việc xử lý các yêu cầu cụ thể
     Hình \ref{getEcgRecordsByDoctor}, Hình \ref{convertExceltoJson} và Hình \ref{getEcgRecordsByUserId} ở chương sau.
 
-\paragraph{Sơ đồ tuần tự chức năng thay đổi thông tin cá nhân}
+\subsubsection{Sơ đồ tuần tự chức năng thay đổi thông tin cá nhân}
 \mbox{}
 
   \begin{figure}[H]
@@ -655,7 +579,7 @@ tự.
   và gửi yêu cầu. Control sẽ xử lý và lưu vào cơ sở dữ liệu, sau đó sẽ thông báo lại cho người dùng.
   Việc xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{updateUserInfo} ở chương sau.
 
-  \paragraph{Sơ đồ tuần tự chức năng đổi mật khẩu}
+  \subsubsection{Sơ đồ tuần tự chức năng đổi mật khẩu}
 \mbox{}
 
   \begin{figure}[H]
@@ -670,7 +594,7 @@ tự.
   yêu cầu sẽ được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Control
   sẽ xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{changePassword} trong chương sau.
 
-\paragraph{Sơ đồ tuần tự chức năng xem/gửi tin nhắn}
+\subsubsection{Sơ đồ tuần tự chức năng xem/gửi tin nhắn}
 \mbox{}
 
   \begin{figure}[H]
@@ -685,7 +609,7 @@ tự.
   Nếu người dùng gửi tin nhắn, Control sẽ xử lý để gửi tin nhắn đến cho đối phương và lưu tin nhắn vào cơ sở dữ liệu. Ở chức năng
   này chúng em sử dụng Firebase để xử lý tất cả các tin nhắn, việc sử dụng Firebase sẽ được chúng em giới thiệu ở chương sau.
 
-\paragraph{Sơ đồ tuần tự chức năng xem bài đăng tin tức}
+\subsubsection{Sơ đồ tuần tự chức năng xem bài đăng tin tức}
 \mbox{}
 
   \begin{figure}[H]
@@ -701,7 +625,7 @@ tự.
   của bài đăng sẽ hiển thị cho người dùng. Cụ thể về việc xử lý các yêu cầu của Control được chúng em thể hiện trong 
   Hình \ref{getAllNews}, Hình \ref{getNewsByCategory} trong chương sau.
 
-\paragraph{Sơ đồ tuần tự chức năng bật/tắt Bluetooth}
+\subsubsection{Sơ đồ tuần tự chức năng bật/tắt Bluetooth}
 \mbox{}
 
   \begin{figure}[H]
@@ -715,7 +639,7 @@ tự.
   Sơ đồ tuần tự trên mô tả chi tiết quá trình bật/tắt Bluetooth. Người dùng gửi yêu cầu bật hoặc tắt Bluetooth, Control sẽ kiểm tra
   trạng thái Bluetooth và truy cập vào phần cứng thực hiện yêu cầu của người dùng.
 
-\paragraph{Sơ đồ tuần tự chức năng kết nối Bluetooth với thiết bị đo điện tim}
+\subsubsection{Sơ đồ tuần tự chức năng kết nối Bluetooth với thiết bị đo điện tim}
 \mbox{}
 
   \begin{figure}[H]
@@ -730,7 +654,7 @@ tự.
   sẽ có thể tìm kiếm thiết bị và xem các danh sách các thiết bị mình tìm thấy. Người dùng chọn đúng thiết bị (theo tên) 
   và thực hiện kết nối, kết quả của việc kết nối sẽ được hiện trên màn hình.
 
-\paragraph{Sơ đồ tuần tự chức năng ngắt kết nối Bluetooth với thiết bị đo điện tim}
+\subsubsection{Sơ đồ tuần tự chức năng ngắt kết nối Bluetooth với thiết bị đo điện tim}
 \mbox{}
 
   \begin{figure}[H]
@@ -745,7 +669,7 @@ tự.
   có thể chọn ngắt kết nối Bluetooth giữa thiết bị và ứng dụng, sau khi ngắt kết nối, sẽ có thông báo
   hiển thị trên màn hình.
 
-\paragraph{Sơ đồ tuần tự chức năng tiến hành đo điện tim}
+\subsubsection{Sơ đồ tuần tự chức năng tiến hành đo điện tim}
 \mbox{}
 
   \begin{figure}[H]
@@ -760,7 +684,7 @@ tự.
   kiện đó là người dùng đã kết nối thiết bị với ứng dụng để có thể lắng nghe được dữ liệu từ Bluetooth trả ra. Sau khi nhấn nút bắt đầu đo,
   dữ liệu lắng nghe sẽ được xử lý và thể hiện trên biểu đồ cho người dùng.
 
-\paragraph{Sơ đồ tuần tự chức năng kết thúc quá trình đo điện tim}
+\subsubsection{Sơ đồ tuần tự chức năng kết thúc quá trình đo điện tim}
 \mbox{}
 
   \begin{figure}[H]
@@ -773,4 +697,6 @@ tự.
 
   Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng kết thúc quá trình đo điện tim. Trong khi đang đo, nếu người dùng muốn dừng, 
   việc kết thúc quá trình đo đồng nghĩa với dữ liệu đo được lưu lên cơ sở dữ liệu để bác sĩ có thể theo dõi.
+
+\subsection{Kết luận chương}
 \newpage
