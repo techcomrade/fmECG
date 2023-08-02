@@ -27,7 +27,12 @@ Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 Trong hệ thống thì Devices là phần mà chúng em sẽ không trực tiếp thực hiện trong đồ án này, Application và Server sẽ là
 phần mà đồ án chúng em thực hiện. Ở trong sơ đồ kiến trúc hệ thống riêng có bệnh nhân sẽ có tương tác trực tiếp với Devices,
 còn lại khối Application sẽ tương tác với Server thông qua API với giao thức HTTP. Khi nhận được yêu cầu từ Application,
-Server sẽ thực hiện xử lý dữ liệu và gửi lại thông tin mà Application yêu cầu.
+Server sẽ thực hiện xử lý dữ liệu, mọi yêu cầu đến đều được xử lý bởi Services, tuỳ vào yêu cầu đến Services tương ứng sẽ đảm nhiệm 
+việc lấy/lưu dữ liệu trong cơ sở dữ liệu sau đó trả ra kết quả cho người dùng.
+
+Ngoài ra, hệ thống sẽ phải có kết nối bluetooth low energy giữa thiết bị đo và ứng dụng di động để có thể truyền/nhận dữ liệu.
+Trên đây là tổng quan về kiến trúc hệ thống, phần tiếp dưới đây chúng em xin phép trình bày kỹ hơn về từng khối nhỏ hơn
+dựa vào những đối tượng đã được xác định trong hệ thống.
 
 \subsection{Sơ đồ khối phần mềm}
 
@@ -347,9 +352,7 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 \end{figure}
 
 
-
-
-\subsection{Phân tích chi tiết hệ thống}
+\subsection{Thiết kế chi tiết hệ thống}
 
 \subsubsection{Thiết kế giao diện}
 
@@ -961,5 +964,174 @@ Sau đó, AdminJS sẽ thực hiện thao tác CRUD tương ứng trên các tà
 
 
 Sau khi AdminJS đã nhận được kết quả từ các tài nguyên, nó sẽ trả về kết quả đó cho ViewComponent. ViewComponent sẽ hiển thị kết quả tương ứng cho người dùng. Quá trình này được thực hiện đối với từng tài nguyên mà người dùng yêu cầu thực hiện thao tác CRUD.
+
+\subsubsection{Thiết kế và tối ưu các chức năng chính cho ứng dụng di động}
+\label{design_function_mobile}
+
+Ứng dụng di động được trong hệ thống được chia cụ thể gồm ứng dụng di động cho bệnh nhân và ứng dụng di động cho bác sĩ. Nhìn vào
+sơ đồ usecase chúng ta có thể thấy hầu hết các chức năng cơ bản của hai ứng dụng đều giống nhau như đăng nhập, xem lịch sử đo, nhắn tin.
+Điểm khác biệt giữa hai ứng dụng di động là ứng dụng di động cho bệnh nhân sẽ có thêm chức năng kết nối với thiết bị đo cũng như xem tin tức.
+
+Trong nội dung của mục \ref{design_function_mobile}, chúng em xin được phép trình bày chi tiết hướng thực hiện các chức năng
+từ các chức năng chung đến chức năng riêng cho bệnh nhân, đồng thời sẽ triển khai hướng tối ưu của từng chức năng (nếu có).
+
+Các chức năng chung của hai ứng dụng bao gồm: 
+\begin{itemize}
+  \item Chức năng đăng nhập
+  \item Chức năng xem lịch sử đo
+  \item Chức năng nhắn tin.
+\end{itemize}
+
+Các chức năng riêng của bệnh nhân bao gồm:
+\begin{itemize}
+  \item Chức năng kết nối và thực hiện đo với thiết bị điện tim
+  \item Chức năng xem tin tức.
+\end{itemize}
+
+\paragraph{Chức năng đăng nhập}
+\mbox{}
+
+Chức năng đăng nhập là chức năng chung của hai ứng dụng, có tương tác trực tiếp với API, logic cơ bản được thể hiện ở Hình \ref{login}
+luồng thực hiện ở phía server được triển khai ở 
+Hình \ref{backend_login}. Có thể nhận thấy việc đăng nhập trên App chỉ nên diễn ra một lần sau khi người dùng nhập thông tin,
+và đã được xác thực. Bởi mỗi lần tắt đi bật lại ứng dụng, nếu phải đăng nhập lại thì rất phiền cho người sử dụng, đặc biệt
+với những ứng dụng không đòi hỏi tính truy nhập và bảo mật quá cao. Có nhiều cách để lưu dữ liệu đăng nhập như:
+
+\begin{itemize}
+  \item Lưu ở bộ nhớ ngoài: Mỗi lần mở app sẽ kiểm tra dữ liệu trong file. Nếu khớp với điều kiện đặt ra sẽ cho người dùng vào thẳng app.
+  Tuy nhiên cách này khá rườm rà và yêu cầu người thực hiện phải truy xuất file nhiều.
+  \item Lưu trên server: Mỗi lần mở app sẽ đẩy một yêu cầu lên server và server sẽ trả về trạng thái. Tuy nhiên, như vậy mọi tác
+  vụ sẽ phụ thuộc hoàn toàn vào internet. Và nếu số lượng người sử dụng lớn thì hoàn toàn không phù hợp.
+  \item Lưu trong bộ nhớ cục bộ của ứng dụng: Các hệ điều hành đều cung cấp những thư viện giúp việc lưu trữ dữ liệu nhỏ một cách 
+  dễ dàng trong cục bộ ứng dụng. Đây là một phương pháp lưu dưới dạng key-value (khoá-giá trị), giúp việc truy/xuất hay ghi nhanh chóng.
+  Với Android, chúng ta có thể sử dụng SharedPreferences (thêm tham khảo), với IOS là UserDefault (thêm tham khảo)
+  % //TODO: thêm tham khảo sharepref
+
+\end{itemize}
+Vậy luồng hoàn chỉnh cho đăng nhập trên ứng dụng của chúng em sẽ là: người dùng nhập thông tin, thông tin được gửi lên server xác thực,
+nếu kết quả trả về của server là đúng, sẽ lưu dữ liệu đăng nhập của người dùng vào trong Shared Preferences. Khi tắt và mở lại app,
+ứng dụng sẽ lấy dữ liệu và kiểm tra, nếu có dữ liệu thì người dùng sẽ không phải đăng nhập lại. Hình dưới mô tả chi tiết phần thiết
+kế việc lưu dữ liệu đăng nhập.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=10cm]{Images/server/sequence/web/seq_auth.png}
+  \caption[Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) }
+  \label{seq_auth} %đặt tên cho ảnh
+\end{figure}
+
+\paragraph{Chức năng xem lịch sử đo}
+\mbox{}
+
+Chức năng xem lịch sử đo lấy dữ liệu trực tiếp trên server, với logic cơ bản được thể hiện ở Hình \ref{view_record_timeline}. 
+Để xem được lịch sử các lần đo, bệnh nhân cần thực hiện đo ít nhất một lần (hệ thống sẽ tự gửi dữ liệu lên server). Dữ liệu sau khi được
+load từ API về sẽ được vẽ lên biểu đồ. Các Hình thể hiện luồng API hoạt động ở server để lấy dữ liệu về cho ứng dụng di động.
+
+% //TODO: add hình
+% Hình \ref{getEcgRecordsByDoctor}, Hình \ref{convertExceltoJson} và Hình \ref{getEcgRecordsByUserId}
+% Thêm hình demo biểu đồ sau khi vẽ
+
+Biểu đồ có trục tung là giá trị điện áp, trục hoành là toàn bộ thời gian từ lúc bắt đầu đo đến khi kết thúc. Người dùng có thể,
+thực hiện các thao tác phóng to, thu nhỏ.
+
+\paragraph{Chức năng kết nối và thực hiện đo với thiết bị điện tim}
+\mbox{}
+
+Chức năng kết nối và thực hiện đo với thiết bị điện tim là một trong những chức năng quan trọng nhất của ứng dụng. Chức năng này yêu cầu
+ứng dụng phải bật được bluetooth. Đầu tiên để có thể tiến hành đo, chúng ta phải thực hiện một kết nối bluetooth giữa ứng dụng di động và
+thiết bị đo điện tim. Sau khi dã kết nối thành công, dựa vào cơ chế của bluetooth low energy, chúng ta sẽ thiết lập để ứng dụng lắng
+nghe dữ liệu trả ra từ thiết bị điện tim. Dữ liệu thô được xử lý theo công thức tính toán và sau đó được vẽ trên biểu đồ. Người dùng sau
+khi thực hiện đo xong có thể chọn lưu kết quả đo lại (điều này sẽ đẩy dữ liệu đo lên server và bác sĩ có thể xem được).
+% //TODO: add reference
+% https://learn.adafruit.com/introduction-to-bluetooth-low-energy/gatt
+Đầu tiên việc kết nối Bluetooth với thiết bị đo điện tim là không khó khi có sự hỗ trợ của các thư viện và hệ điều hành, sau đó việc xử lý sau
+kết nối mới là một điều chúng ta cần phải lưu tâm tới. Sau khi kết nối với thiết bị đo điện tim, câu hỏi đặt ra là \textbf{làm thế nào
+để lắng nghe được dữ liệu} từ thiết bị điện tim? Đối với hệ thống BLE, sau khi kết nối thành công, một Profile Protocol được gọi
+là GATT (Generic ATTribute Profile) - xác định cách hai thiết bị sẽ truyền và nhận dữ liệu như thế nào thông qua
+Services và Characteristics sẽ được hình thành. 
+
+% //TODO: Chèn ảnh vào đây ảnh gatt
+
+Services là tập hợp của một nhóm thông tin để thực hiện một chức năng cụ thể,
+ví dụ Battery Service, Sensor Service, trong mỗi Service chính là một hoặc nhiều Characteristic, mỗi Characteristic đảm nhận
+một thông tin hoặc chức năng riêng biệt phục vụ cho Service đó. Mỗi một Service hay Characteristic đều có UUID (mã định danh duy nhất toàn cầu)
+Từ cơ sở trên, để có thể sẵn sàng lắng nghe được dữ liệu từ thiết bị điện tim, thiết bị di động cần kết nối đến đúng Services và Characteristics.
+% //TODO: Chèn ảnh nữa vào đây ảnh services and charac
+
+Trong thiết bị đo thực hiện trong đồ án lần này, chúng em xác định được những UUID tiêu chuẩn (biểu diễn dưới dạng String) để có thể lắng nghe được dữ liệu từ
+thiết bị:
+\begin{itemize}
+  \item UUID Service: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
+  \item UUID Characteristic: 6E400003-B5A3-F393-E0A9-E50E24DCCA9E
+\end{itemize}
+
+Sau khi hoàn thành phần xây dựng kết nối với thiết bị đo điện tim, quá trình thực hiện đo được bắt đầu. Ứng dụng sẽ lắng nghe
+dữ liệu từ thiết bị thông qua một hàm "subscribe characteristic", dữ liệu sẽ gửi liên tục qua characteristic này. Nhiệm vụ sau đó của ứng dụng là
+định nghĩa gói dữ liệu, xử lý và chuẩn hoá số liệu, từ đó vẽ lên biểu đồ. Chi tiết về bước định nghĩa gói dữ liệu, xử lý số liệu sẽ được chúng em trình bày
+ở chương sau. 
+% //TODO: add hình THêm hình luồng hoàn chỉnh thực hiện đo 
+
+
+Sau mỗi lần đo, dữ liệu sẽ được gửi lên server để lưu trữ và hiển thị lại cho bệnh nhân/bác sĩ quản lý xem nếu cần. Việc xem
+lịch sử đo được chúng em tiếp tục trình bày ở phần tiếp theo.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=10cm]{Images/server/sequence/web/seq_auth.png}
+  \caption[Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) }
+  \label{seq_auth} %đặt tên cho ảnh
+\end{figure}
+
+
+\paragraph{Chức năng xem tin tức}
+\mbox{}
+
+Chức năng xem tin tức lấy dữ liệu trực tiếp trên server, với logic cơ bản được thể hiện ở Hình \ref{view_news}. 
+Danh sách tin tức sẽ được load ngay khi người dùng mở ứng dụng (nếu có mạng). Tất cả phần xem trước của tin tức sẽ được lưu
+trong biến khi ứng dụng chạy, dữ liệu tin tức được lấy từ danh sách tin tức không bao gồm nội dung để giảm thiểu khối lượng
+thông tin dư thừa của gói tin. Chỉ khi người dùng chọn một tin tức cụ thể, khi đó ứng dụng mới gửi yêu cầu lên server để lấy
+nội dung tin tức đó về, nội dung tin tức được chúng em thống nhất lưu dưới dạng HTML và khi hiện lên sẽ hiển thị dạng HTML view.
+Điều này giúp cấu trúc của thông tin được nguyên vẹn và không cần phải chỉnh sửa nhiều.
+
+% //TODO: Thêm ảnh demo chức năng, hoặc biểu đồ giải thích xem tin tức
+
+
+\paragraph{Chức năng xem tin tức}
+\mbox{}
+
+Chức năng xem tin tức lấy dữ liệu trực tiếp trên server, với logic cơ bản được thể hiện ở Hình \ref{view_news}. 
+Danh sách tin tức sẽ được load ngay khi người dùng mở ứng dụng (nếu có mạng). Tất cả phần xem trước của tin tức sẽ được lưu
+trong biến khi ứng dụng chạy, dữ liệu tin tức được lấy từ danh sách tin tức không bao gồm nội dung để giảm thiểu khối lượng
+thông tin dư thừa của gói tin. Chỉ khi người dùng chọn một tin tức cụ thể, khi đó ứng dụng mới gửi yêu cầu lên server để lấy
+nội dung tin tức đó về, nội dung tin tức được chúng em thống nhất lưu dưới dạng HTML và khi hiện lên sẽ hiển thị dạng HTML view.
+Điều này giúp cấu trúc của thông tin được nguyên vẹn và không cần phải chỉnh sửa nhiều.
+
+% //TODO: Thêm ảnh demo chức năng, hoặc biểu đồ giải thích xem tin tức
+
+\paragraph{Chức năng nhắn tin}
+\mbox{}
+
+Chức năng nhắn tin là chức năng được thiết kế để không phụ thuộc vào server của hệ thống mà độc lập đứng riêng. Chúng em
+chọn Firebase làm nền tảng để phát triển chức năng nhắn tin bởi tính phổ biến, hỗ trợ rất nhiều ngôn ngữ đi kèm với tài liệu đầy đủ 
+và dễ dàng phát triển.
+Ở chức năng nhắn tin, mọi dữ liệu về tin nhắn sẽ được lưu trên FireStore (Cơ sở dữ liệu NOSQL của Firebase), cơ sở dữ liệu sẽ
+bao gồm ba bảng chính. 
+% //TODO: Thêm các bảng tin nhắn và giải thích
+
+Việc xử lý tin nhắn, gửi tin nhắn, hay các thao tác với tin nhắn đều có thể sử dụng các câu lệnh truy vấn và truy/xuất
+trực tiếp vào cơ sở dữ liệu, đồng thời các ví dụ và câu lệnh được Firebase hỗ trợ rất kĩ về mặt tài liệu, vì lẽ đó, khi sử dụng
+Firebase, ứng dụng sẽ linh hoạt và dễ cải tiến.
+
+Ví dụ, ứng dụng di động đang trong giao diện trò chuyện, tức nghĩa là phải có một câu truy vấn lấy các tin nhắn trong hội thoại
+để hiển thị cho người dùng. Khi gửi tin nhắn, một hàng được thêm vào
+cơ sở dữ liệu, tuỳ theo cơ chế của các hệ điều hành và ngôn ngữ lập trình, ứng dụng có thể lắng nghe được sự thay đổi
+trong cơ sở dữ liệu và lập tức gửi một thông điệp đến ứng dụng để cho người dùng biết, đồng thời cập nhật giao diện. Chi tiết
+về các câu lệnh Firebase và cách thức thực hiện chức năng tin nhắn được trình bày rõ hơn trong chương Triển khai và kiểm thử.
+
+% //TODO: Thêm các bảng tin nhắn và giải thích
+
+
 
 \newpage
