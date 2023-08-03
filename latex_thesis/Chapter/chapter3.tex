@@ -59,24 +59,1688 @@ Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liê
 \begin{enumerate}[a)]
   \item URL: GET api/users/profile 
   
+  \begin{table}[H]
+    \centering
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \begin{tabularx}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
 
-  \begin{itemize}
-    \item Test case 1: 
+
+    TC-1
+    & User đã đăng nhập vào hệ thống thành công
+    & JWT Cookie có tồn tại
+    & 
+
+    Status code: 200 OK
+
+      Response content:
+
+      \{
+
+    "status": "success",
+
+    "data": Thông tin của user
+
+    \}
     
-    \begin{itemize}
-      \item Điều kiện
-      \item Đầu vào 
-      \item Đầu ra mong muốn
-      \item Kết quả
-    \end{itemize}
+    & OK
+
+    \\ \hline
+  
+    TC-2
+    & User chưa đăng nhập vào hệ thống
+    & JWT Cookie không tồn tại
+    & 
+
+    Status code: 500 Internal Server Error
+
+      Response content:
+
+      \{
+
+    "status": "error",
+
+    "msg": "An error occurred while retrieving the user profile"
+
+    \}
     
-  \end{itemize}
+    & OK
+
+    \\ \hline
+  
+    \end{tabularx}
+    \label{table_api_news}
+  \end{table}
   
 
-  \item API api/users/profile
-  \item API api/users/change-password
-  \item API api/users/{:userId}
+  \item URL: PUT api/users/profile
+  
+  \begin{table}[H]
+    \centering
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \begin{tabularx}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+
+
+    TC-1
+    & User đã đăng nhập vào hệ thống thành công
+    & Thông tin user muốn cập nhật
+
+    \{
+
+    "name": họ tên,
+    "doB": ngày sinh,
+    "phone\_number": số điện thoại
+
+\}
+
+    & 
+
+    Status code: 200 OK
+
+      Response content:
+
+      \{
+
+    "status": "success",
+
+    "data": Thông tin của user sau khi cập nhật lại
+
+    \}
+    
+    & OK
+
+    \\ \hline
+  
+    TC-2
+    & User chưa đăng nhập vào hệ thống
+    & Thông tin user muốn cập nhật
+
+    \{
+
+    "name": họ tên,
+    "doB": ngày sinh,
+    "phone\_number": số điện thoại
+
+\}
+    & 
+
+    Status code: 500 Internal Server Error
+
+      Response content:
+
+      \{
+
+    "status": "error",
+
+    "msg": "An error occurred while retrieving the user profile"
+
+    \}
+    
+    & OK
+
+    \\ \hline
+  
+    \end{tabularx}
+    \label{table_api_news}
+  \end{table}
+  
+
+
+  \item URL: PUT api/users/change-password
+  
+\break
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & User đã đăng nhập vào hệ thống thành công và mật khẩu hiện tại trùng với req.currentPassword, req.newPassword và req.confirmPassword trùng nhau 
+    & Thông tin thay đổi mật khẩu
+  
+    \{
+  
+      "currentPassword": "123456",
+      "newPassword": "1234567",
+      "confirmPassword": "1234567"
+  
+  \}
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    msg: "Password changed successfully"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & User chưa đăng nhập vào hệ thống
+    & Thông tin thay đổi mật khẩu
+  
+    \{
+  
+      "currentPassword": mật khẩu hiện tại,
+      "newPassword": mật khẩu mới,
+      "confirmPassword": xác nhận lại mật khẩu
+  
+  \}
+    & 
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "An error occurred while retrieving the user profile"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-3
+    & User đã đăng nhập vào hệ thống thành công và mật khẩu hiện tại không
+    trùng với
+    req.currentPassword 
+    & Thông tin thay đổi mật khẩu
+  
+    \{
+  
+      "currentPassword": "1234568",
+      "newPassword": "1234567",
+      "confirmPassword": "1234567"
+  
+  \}
+  
+    & 
+  
+    Status code: 401 Unauthorized
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    msg: "Current password is incorrect"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-4
+    & User đã đăng nhập vào hệ thống thành công và và mật khẩu hiện tại trùng với req.currentPassword, req.newPassword và req.confirmPassword không trùng nhau 
+    & Thông tin thay đổi mật khẩu
+  
+    \{
+  
+      "currentPassword": "123456",
+      "newPassword": "1234567324",
+      "confirmPassword": "127"
+  
+  \}
+  
+    & 
+  
+    Status code: 401 Unauthorized
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    msg: "New password and confirm password do not match"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    
+  
+    \end{xltabular}
+
+
+
+  \item URL: GET api/users/{:userId}
+  
+  
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & User ID có tồn tại trên database
+    & User ID
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    data: Thông tin user
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & User ID không tồn tại trên database
+    & User ID
+  
+    & 
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "User not found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+    
+  
+    \end{xltabular}
+
+  
 \end{enumerate}
+
+
+\paragraph{API liên quan đến việc xác thực người dùng}
+\mbox{}
+
+Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liên quan
+
+
+
+\begin{enumerate}[a)]
+  \item URL: POST api/register
+  
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & User chưa có tài khoản trên hệ thống
+    & Thông tin đăng ký tài khoản
+
+    \{
+
+    "password": "123456789",
+    "confirm\_password": "123456789",
+    "name": "Anh Tuan",
+    "doB": "20-10-2001",
+    "email": "test@gmail.com",
+    "phone\_number": "0123344562",
+    "role": 0
+
+   \}
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    data: Thông tin user sau khi đăng ký thành công
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & User đã có tài khoản trên hệ thống
+    & Thông tin đăng ký tài khoản
+
+    \{
+
+    "password": "123456789",
+    "confirm\_password": "123456789",
+    "name": "Anh Tuan",
+    "doB": "20-10-2001",
+    "email": "test@gmail.com",
+    "phone\_number": "0123344562",
+    "role": 0
+
+   \}
+  
+    & 
+  
+    Status code: 400 Bad Request
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "Email is already in use"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+
+    TC-3
+    & User chưa có tài khoản trên hệ thống, req.password và req.confirm\_password không trùng nhau
+    & Thông tin đăng ký tài khoản
+
+    \{
+
+    "password": "123456789",
+
+    "confirm\_password": "123456789",
+
+    "name": "Anh Tuan",
+
+    "doB": "20-10-2001",
+
+    "email": "test@gmail.com",
+
+    "phone\_number": "0123344562",
+
+    "role": 0
+
+   \}
+  
+    & 
+  
+    Status code: 400 Bad Request
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "Passwords do not match"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+    
+  
+    \end{xltabular}
+
+  
+
+
+  \item URL: POST api/login
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Thông tin tài khoản và mật khẩu hợp lệ
+    & Thông tin đăng nhập
+
+    \{
+
+    "email": email của user,
+    "password": mật khẩu của user
+
+   \}
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    data: Thông tin user sau khi đăng ký thành công
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Thông tin tài khoản và mật khẩu không hợp lệ
+    & Thông tin đăng nhập
+
+    \{
+
+    "email": email của user,
+    "password": mật khẩu của user
+
+   \}
+  
+   &
+  
+    Status code: 401 Unauthorized
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "Invalid email or password"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+  \item URL: GET api/logout
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & User đã đăng nhập vào hệ thống
+    & JWT Token tồn tại
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    "msg": "Logged out successfully"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & User chưa đăng nhập vào hệ thống
+    & JWT Token không tồn tại
+  
+   &
+  
+    Status code: 401 Unauthorized
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "No token found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+  \item URL: POST api/reset-password
+  
+
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & User đã đăng ký tài khoản
+    & Email user
+
+    \{
+
+    "email": email user
+\}
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    "msg": "Reset token sent to email"
+
+    "resetToken": token
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & User chưa đăng ký tài khoản
+    & Email user
+
+    \{
+
+    "email": email user
+\}
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "User not found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+  \item URL: POST api/reset-password/reset 
+  
+
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & User đã đăng ký tài khoản, reset token và mật khẩu hợp lệ
+    & Thông tin reset mật khẩu
+
+    \{
+
+      "resetToken": "816e8d",
+
+      "password": "123456",
+
+      "confirm\_password": "123456",
+
+      "email": "test@gmail.com"
+
+  \}
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    "msg": "Password reset successful"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Reset token không hợp lệ
+    & Thông tin reset mật khẩu
+
+    \{
+
+      "resetToken": "816e8d",
+
+      "password": "123456",
+
+      "confirm\_password": "123456",
+
+      "email": "test@gmail.com"
+
+  \}
+   &
+  
+    Status code: 400 Bad Request
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "Invalid reset token"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+    TC-3
+    & Reset token hết hạn
+    & Thông tin reset mật khẩu
+
+    \{
+
+      "resetToken": "816e8d",
+
+      "password": "123456",
+
+      "confirm\_password": "123456",
+
+      "email": "test@gmail.com"
+
+  \}
+   &
+  
+    Status code: 400 Bad Request
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "Reset token has expired"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+
+    TC-4
+    & req.password và req.confirm\_password không trùng
+    & Thông tin reset mật khẩu
+
+    \{
+
+      "resetToken": "816e8d",
+
+      "password": "123456",
+
+      "confirm\_password": "123456",
+
+      "email": "test@gmail.com"
+
+  \}
+   &
+  
+    Status code: 400 Bad Request
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "Password confirmation does not match"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+\end{enumerate}
+
+
+\paragraph{API liên quan đến tin tức}
+\mbox{}
+
+Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liên quan
+
+\begin{enumerate}[a)]
+  \item URL: GET api/news/{:newsId}
+  
+
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Tin tức tồn tại với ID tương ứng
+    & ID tin tức
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+
+    data: Nội dung của tin tức
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Tin tức không tồn tại với ID tương ứng
+    & ID danh mục tin tức
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "News not found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+  \item URL: GET api/news
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & NULL
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    "count": Số lượng tin tức
+
+    data: Danh sách các tin tức
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & NULL
+    & Lỗi đường truyền server
+   &
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "An error occurred while retrieving the news"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+  \item URL: GET api/categories
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & NULL
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    "count": Số lượng danh mục tin tức
+
+    data: Danh sách các danh mục tin tức
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Lỗi đường truyền server
+    & NULL
+   &
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "An error occurred while retrieving the news categories"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+  \item URL: GET api/category/{:categoryId}
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Danh mục tin tức tồn tại với ID tương ứng
+    & ID danh mục tin tức
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+
+    data: Thông tin danh mục tin tức
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Danh mục tin tức không tồn tại với ID tương ứng
+    & ID danh mục tin tức
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "News category not found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+  \item URL: GET api/news/category/{:categoryId}
+  
+  
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Danh mục tin tức tồn tại với ID tương ứng
+    & ID danh mục tin tức
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+    "count": Số lượng tin tức
+
+    data: Thông tin tin tức
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Danh mục tin tức không tồn tại với ID tương ứng
+    & ID danh mục tin tức
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "News category not found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+
+\end{enumerate}
+
+
+
+\paragraph{API liên quan đến bản ghi ECG}
+\mbox{}
+
+Tham khảo bảng \ref{table_api_ecg} để xem thông tin của các api liên quan
+
+\begin{enumerate}[a)]
+  \item URL: POST api/ecg-records/upload 
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & Thông tin của ECG record dưới dạng form-data
+
+\{
+
+file: File dữ liệu
+
+user\_id: ID user
+
+device\_id: ID thiết bị
+
+stop\_time: Thời gian dừng đo
+
+start\_time: Thời gian bắt đầu đo
+
+sensor\_type: Loại cảm biến
+
+
+\}
+
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+
+    data: Thông tin của ECG record
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Lỗi đường truyền server
+    & Thông tin của ECG record dưới dạng form-data
+
+\{
+
+file: File dữ liệu
+
+user\_id: ID user
+
+device\_id: ID thiết bị
+
+stop\_time: Thời gian dừng đo
+
+start\_time: Thời gian bắt đầu đo
+
+sensor\_type: Loại cảm biến
+
+
+\}
+   &
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "An error occurred while retrieving the news categories"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+  \item URL: GET api/ecg-records/patient/{:patientId}
+  
+
+  
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & ID bệnh nhân
+
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+    "count": Số lượng ECG record của bệnh nhân
+
+    data: Thông tin của tất cả ECG record của bệnh nhân
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Lỗi đường truyền server
+    & ID bệnh nhân
+
+   &
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "An error occurred while retrieving the news categories"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+
+  \item URL: GET api/ecg-records/doctor/{:doctorId}
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & ID bác sỹ
+
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+    data: Thông tin của tất cả ECG record của từng bệnh nhân mà bác sỹ quản lý
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Lỗi đường truyền server
+    & ID bác sĩ
+
+   &
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "An error occurred while retrieving the news categories"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+  \item URL: GET api/ecg-records/record-data/{:recordId}
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Có tồn tại ECG record
+    & ID ECG record 
+
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+    count: Tổng số lượng dữ liệu của ECG record
+    data: Dữ liệu của ECG record
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Không tồn tại ECG record
+    & ID ECG record 
+
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "EcgRecord not found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+\end{enumerate}
+
+
+\paragraph{API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ
+64
+}
+\mbox{}
+
+Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api liên quan
+
+\begin{enumerate}[a)]
+  \item URL: GET api/doctor/{:doctorId}/patients
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & ID Doctor
+
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+    count: Tổng số lượng bệnh nhân mà bác sỹ đang được phân công,
+    data: Thông tin của các bệnh nhân mà bác sỹ đang được phân công
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Lỗi đường truyền server
+    & ID Doctor
+
+   &
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "An error occurred while retrieving the patients"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+  \item URL: GET api/patient/{:patientId}/doctor
+  
+
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & ID Patient
+
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+    data: Thông tin của bác sỹ được phân công cho bệnh nhân
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Lỗi đường truyền server
+    & ID Patient
+
+   &
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "An error occurred while retrieving the patients"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+\end{enumerate}
+
 
 \subsubsection{Kiểm thử ứng dụng web}
 
