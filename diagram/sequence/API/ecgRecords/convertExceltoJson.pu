@@ -1,0 +1,103 @@
+'
+
+@startuml
+
+
+skinparam style strictuml
+
+skinparam lifelineStrategy solid
+
+skinparam ParticipantPadding 70
+
+skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+
+
+participant main as main
+
+
+box "route" #lightBlue
+
+participant ECGRecordRoute as ECGRecordRoute
+
+end box
+
+
+box "controller" #LightGoldenRodYellow
+participant ECGRecordController as ECGRecordController
+
+end box
+
+
+box "model" #lightBlue
+participant ECGRecordModel as ECGRecordModel
+
+end box
+
+
+User -> main: Request ECG record data
+activate User
+activate main
+
+main -> ECGRecordRoute: GET api/ecg-records/record-data/{:record_id}
+activate ECGRecordRoute
+
+
+ECGRecordRoute -> ECGRecordController: convertExceltoJson(req, res)
+activate ECGRecordController
+
+note right of ECGRecordRoute #Aqua
+  * Request param:
+  record_id = req.params
+end note
+
+
+ECGRecordController -> ECGRecordModel: findOne()
+note right of ECGRecordController #Aqua
+  * Request param
+    record_id: record_id
+end note
+
+activate ECGRecordModel
+
+
+ECGRecordModel --> ECGRecordController: return data_directory
+
+
+deactivate ECGRecordModel
+
+
+
+opt ECG data does not exist
+ECGRecordController --> ECGRecordRoute: return response error
+end
+
+ECGRecordController -> ECGRecordController: Parse data from file to json format
+ECGRecordController --> ECGRecordRoute: return response
+
+deactivate ECGRecordController
+
+alt response error
+  ECGRecordRoute --> main: return exception
+  note right of main
+    status: "error"
+    message: error description
+  end note
+else response success
+  ECGRecordRoute --> main: return response
+  deactivate ECGRecordRoute
+
+  note right of main
+    status: "success"
+    data : [ECGRecord data]
+  end note
+end
+main --> User: return response
+deactivate main
+deactivate User
+
+@enduml
+

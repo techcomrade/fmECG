@@ -129,5 +129,18 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-pubspec.lock
-pubspec.yaml
+# pubspec.lock
+# pubspec.yaml
+out/
+*.aux
+*.bbl
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.blg
+*.synctex.*
+*.toc
+main.pdf

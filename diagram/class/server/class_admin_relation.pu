@@ -1,0 +1,135 @@
+@startuml
+
+' Define class
+
+package "Controllers" {
+    ' class AuthController
+    ' class ECGRecordController
+    ' class NewsController
+    ' class PatientDoctorAssignmentController
+    ' class UserController
+    class AdminController
+}
+package "lib" {
+    class Model <<Sequelize>>
+
+}
+
+package "Models" {
+    class ECGRecordModel
+    class NewsModel
+    class NewsCategoryModel
+    class ResetTokenModel
+    class UserModel
+    class DeviceModel
+    class SessionModel
+    class PatientDoctorAssignmentModel
+}
+
+package "Routes" {
+    ' class AuthRoute
+    ' class ECGRecordRoute
+    ' class NewsRoute
+    ' class PatientDoctorAssignmentRoute
+    ' class UserRoute
+    class AdminRoute
+}
+
+package "Views" {
+    class DashboardViewComponent
+    class NewsViewComponent
+    class ECGRecordViewComponent
+    class PatientDoctorAssignmentViewComponent
+}
+
+package "Admin" {
+    package "Resource" {
+        class AdminResource
+        class DoctorResource
+        class PatientResource
+        class ECGRecordResource
+        class NewsResource
+        class NewsCategoryResource
+        class PatientDoctorAssignmentResource
+    }
+
+    package "Components" {
+        class Component
+    }
+}
+
+' Define relationship between classes
+
+
+' ---------------------AlginLaylout----------------------
+' ---Models
+Model -[hidden]-> UserModel
+Model -[hidden]-> SessionModel
+Model -[hidden]-> DeviceModel
+Model -[hidden]-> NewsModel
+
+
+UserModel -[hidden]-> PatientDoctorAssignmentModel
+UserModel -[hidden]-> ResetTokenModel
+UserModel -[hidden]-> SessionModel
+
+PatientDoctorAssignmentModel -[hidden]-> ECGRecordModel
+ResetTokenModel -[hidden]-> NewsCategoryModel
+
+Model <|--- Models
+
+
+' ------Admin/Resource
+NewsResource -[hidden]-> PatientResource
+NewsResource -[hidden]-> DoctorResource
+NewsResource -[hidden]-> AdminResource
+AdminResource -[hidden]-> NewsCategoryResource
+AdminResource -[hidden]-> PatientDoctorAssignmentResource
+
+' ------Admin/View
+PatientDoctorAssignmentViewComponent -[hidden]-> ECGRecordViewComponent
+ECGRecordViewComponent -[hidden]-> NewsViewComponent
+NewsViewComponent -[hidden]-> DashboardViewComponent
+
+
+' --------------------------------------------------------
+
+' ' --------------------------------------------------------
+
+' ----------------------------Admin------------------------
+
+' ----------------Resource--------------------------------
+
+AdminResource *--- UserModel
+DoctorResource *--- UserModel
+PatientResource *--- UserModel
+NewsResource *--- NewsModel
+NewsCategoryResource *--- NewsCategoryModel
+ECGRecordResource *--- ECGRecordModel
+PatientDoctorAssignmentResource *--- PatientDoctorAssignmentModel
+
+' --------------------------------------------------------
+
+' ------------------------------Component----------
+
+
+Component *-l-- Views
+
+
+' ---------------------------------------------------
+
+AdminController *--- Components
+
+AdminController *--- Resource
+
+AdminRoute *-- AdminController
+
+' ----------------------------------------------------------
+
+Models -[hidden]-> Resource
+Admin --[hidden]--> Views
+
+
+
+@enduml
+

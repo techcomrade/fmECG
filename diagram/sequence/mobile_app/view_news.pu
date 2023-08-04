@@ -1,0 +1,36 @@
+@startuml
+
+autonumber
+actor ":User" as User
+boundary ":View News" as ClientApp
+control ":Control News" as Control
+entity ":Entity News" as Entity
+
+activate User
+User -> ClientApp: Click button to open news view
+activate ClientApp
+ClientApp -> Control: Send request to get all news
+activate Control
+Control -> Entity: Query into database
+activate Entity
+Entity --> Control: Response a result
+deactivate Entity
+Control --> ClientApp: Response a result
+deactivate Control
+ClientApp --> User: Show all news get from database
+
+User -> ClientApp: Click to one news
+ClientApp -> Control: Send request to get specific news
+activate Control
+Control -> Entity: Query into database
+activate Entity
+Entity --> Control: Response a result
+deactivate Entity
+Control --> ClientApp: Response a result
+deactivate Control
+ClientApp --> User: Show specific news
+deactivate ClientApp
+
+skinparam style strictuml
+
+@enduml

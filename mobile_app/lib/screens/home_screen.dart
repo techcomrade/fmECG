@@ -2,18 +2,24 @@ import 'dart:io';
 
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
 import 'package:bluetooth_ecg/controllers/news_controller.dart';
+import 'package:bluetooth_ecg/controllers/user_controller.dart';
 import 'package:bluetooth_ecg/models/user_model.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
+import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens_udpate/ble_screen.dart';
 import 'package:bluetooth_ecg/screens/news_screens/news_all_screens.dart';
 import 'package:bluetooth_ecg/screens/news_screens/news_detail_screen.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
+import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:bluetooth_ecg/components/live_chart.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,14 +40,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    checkPrefer();
+    getDoctorAssigned();
     NewsController.getAllNews();
   }
 
-  void checkPrefer() async {
-    final prefs = await SharedPreferences.getInstance();
-    final data = prefs.getString("files_not_upload");
-    print('data:$data');
+
+  void getDoctorAssigned() async {
+    int patientId = await Utils.getUserId();
+    UserController.getDoctorAssigned(patientId);
+  }
+
+  Future<bool> _requestManageStorage() async {
+    final PermissionStatus status = await Permission.manageExternalStorage.request();  
+    if (status == PermissionStatus.granted) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -55,7 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
-      // color: backgroundColorApp,
       child: SingleChildScrollView(
         controller: _scrollController,
         physics: const ClampingScrollPhysics(),
@@ -99,31 +113,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // const SizedBox(height: 30),
-            // //quick action
-            // SizedBox(
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Text("Quick Action",
-            //         style: TextStyle(
-            //           color: ColorConstant.quaternary,
-            //           fontWeight: FontWeight.bold,
-            //           fontSize: 18
-            //         ),
-            //       ),
-            //       const SizedBox(height: 10),
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //         children: [
-            //           SquareContainer(icon: PhosphorIcons.regular.lightning, text: "Power nap"),
-            //           SquareContainer(icon: PhosphorIcons.regular.moon, text: "Deep sleep"),
-            //           SquareContainer(icon: PhosphorIcons.regular.userSwitch, text: "Focus"),
-            //         ],
-            //       )
-            //     ],
-            //   ),
-            // ),
 
             const SizedBox(height: 30),
             SizedBox(
@@ -178,11 +167,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }, 
                     temporaryNothing: () async {
-                      FilesManagement.createDirectoryFirstTimeWithDevice();
-                      fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
-                      setState(() {
-                        isShowChart = true;
-                      });
+                      bool isAccessFiles = await _requestManageStorage();
+                      if (isAccessFiles) {
+                        FilesManagement.createDirectoryFirstTimeWithDevice();
+                        fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
+                        setState(() {
+                          isShowChart = true;
+                        });
+                      } else {
+                        // show dialog need permission
+                        print('phone does not grant permission');
+                      }
                     }
                   ) 
                   : LiveChartSample(fileToSave: fileToSave),
@@ -214,16 +209,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
             if(allNews.isNotEmpty)
             ListView.builder(
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               shrinkWrap: true,
               itemCount: 4,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final news = allNews[index];
                 final String imagePresentUrl = news["image"] ?? "";
                 final int newsId = news["news_id"];
-                final int newsCategoryId = news["category_id"];
-                final DateTime newsCreatedAt = DateTime.parse(news["create_at"]);
+                final String newsCategory = news["category_name"];
+                final DateTime newsCreatedAt = DateTime.parse(news["created_at"]);
                 final String newsCreatedAtFormat = DateFormat("EEEE, dd-MM-yyyy", "vi").format(newsCreatedAt);
                 final String newsTitle = news["title"].length > 100 ? 
                                           news["title"].substring(0, 100) : news["title"];
@@ -237,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   splashColor: ColorConstant.primary,
                   child: Container(
-                    margin: EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.only(bottom: 10),
                     child: Row(
                       children: [
                         ClipRRect(
@@ -251,14 +246,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         SizedBox(width: 20),
                         Container(
-                          height: 80,
+                          height: 90,
                           // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
-                          width: 240,
+                          width: 210,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Sport", 
+                              Text("$newsCategory", 
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,

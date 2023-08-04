@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:app_settings/app_settings.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
 class BluetoothOffScreen extends StatelessWidget {
@@ -34,7 +34,7 @@ class BluetoothOffScreen extends StatelessWidget {
             ElevatedButton(
               child: const Text('Bật Bluetooth'),
               onPressed: Platform.isAndroid
-                  ? () => AppSettings.openBluetoothSettings()
+                  ? () => FlutterBluePlus.instance.turnOn()
                   : null,
             ),
           ],

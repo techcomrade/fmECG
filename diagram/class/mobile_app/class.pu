@@ -1,0 +1,233 @@
+@startuml
+' Define class
+
+package Controllers {
+    class AuthProvider {
+        - String token
+        - String firebaseToken
+        - int userId
+        - int roleId
+        + bool isAuth
+
+        + **AuthProvider**()
+        + void **registerUser**(Map registerInfo)
+        + void **loginUser**(String email, String password)
+        + void **logoutUser**()
+        + void **sendResetPasswordToken**(String email)
+        + void **resetPassword**(Map infoToReset)
+        + void **setDataLogin**(Map dataLogin)
+        + void **checkAutoLogin**()
+        + void **removeDataLogin**()
+    }
+
+    class ECGRecordController {
+        - ECGRecord: ECGRecordModel
+
+        + **ECGRecordController**()
+        + void **uploadFileToDB**(Map fileUpload)
+        + void **getEcgRecordsByUserId**(int userId)
+        + void **getEcgRecordsByDoctor**(int userId)
+        + void **getECGRecorDataById**(int recordId) 
+    }
+
+   class ECGDataController {
+        - double referenceVoltage
+        + **ECGDataController**()
+        + List<dynamic> **handlePacketData**(List<int> bytes)
+        + Map<int, List<int>> **separateDataIntoEachSample**(List<int> data, int numberSample)
+        + List<double> **processSampleToSave**(List<int> bytes)
+        + List<int> **getChannelsSplittedBytes**(List<int> bytes, int order)
+        + double **calculateBytesToDecimal**(List<int> threeBytes)
+        + List **calculateDataPointToShow**(List row)
+        + List<int> **getStatusBytes**(List<int> bytes)
+        + int **getCountByte**(List<int> bytes)
+    }
+
+    class NewsController {
+        - News: NewsModel
+        - NewsCategory: NewsCategoryModel
+
+        + **NewsController**()
+        + void **getAllNews**()
+        + void **getNewsById**(int newsId)
+        + void **getAllCategoryNews**()
+        + void **getNewsCategoryById**(int newsCategoryId)
+    }
+
+    class PatientDoctorAssignmentController {
+        - User: UserModel
+        - PatientDoctorAssignment: PatientDoctorAssignmentModel
+
+        + **PatientDoctorAssignmentController**()
+        + void **getPatientsByDoctor**(int userId)
+        + void **getDoctorByPatient**(int userId)
+    }
+
+    class UserController {
+        - User: UserModel
+
+        + **UserController**()
+        + void **updateUserInfo**(Map userInfoToUpdate)
+        + void **changePassword**(Map passwords)
+        + void **getUserById**(int userId)
+
+    }
+
+    class FirebaseMessagesController  {
+        - Conversation: ConversationModel
+        - Message: MessageModel
+        
+        + **FirebaseMessageController**()
+        + void**getDeviceToken**()
+        + void **saveTokenToFirestore**(int userId, String firebaseToken)
+        + void **createConversation**(Map conversationInfo)
+        + void **getSpecificConversation**(String conversationId)
+        + void **getAllConversationsByUserId**(int userId)
+        + void **getMessagesConversation**(String conversationId)
+        + void **sendMessageConversation**(Map message)
+        + void **checkFirebaseTokenExist**(String firebaseToken)
+    }
+}
+
+
+package Models {
+    class ECGRecordModel {
+        + record_id: Interger
+        + user_id: Interger
+        + device_id: Interger
+        + data_directory:String
+        + start_time: DateTime
+        + stop_time: DateTime
+        + sensor_type: String
+        + updated_at: DateTime
+        + created_at: DateTime
+
+        + ECGRecordModel()
+        + fromJson(Map json)
+
+    }
+
+    class NewsModel {
+        + news_id: Interger
+        + title: String
+        + content: String
+        + category_id: Interger
+        + author: String
+        + url: String
+        + image: url
+        + updated_at: DateTime
+        + created_at: DateTime
+
+        + NewsModel()
+        + fromJson(Map json)
+    }
+
+    class NewsCategoryModel {
+        + category_id: Interger
+        + category_name: String
+        + updated_at: DateTime
+        + created_at: DateTime
+
+        + NewsCategoryModel()
+        + fromJson(Map json)
+
+    }
+
+    class ResetTokenModel {
+        + reset_id: Interger
+        + user_id: Interger
+        + token: String
+        + expiration: DateTime
+        + updated_at: DateTime
+        + created_at: DateTime
+
+        + ResetTokenModel()
+        + fromJson(Map json)
+
+    }
+
+    class UserModel {
+        + user_id: Interger
+        + password: String
+        + email: String
+        + name: String
+        + doB: DateTime
+        + phone_numer: String
+        + role: Interger
+        + updated_at: DateTime
+        + created_at: DateTime
+
+        + UserModel()
+        + fromJson(Map json)
+
+    }
+
+    class DeviceModel {
+        + device_id: Interger
+        + device_name: String
+        + updated_at: DateTime
+        + created_at: DateTime
+
+        + DeviceModel()
+        + fromJson(Map json)
+
+    }
+
+    class PatientDoctorAssignmentModel {
+        + assign_id: Interger
+        + patient_id: Interger
+        + doctor_id: Interger
+        + start_date: DateTime
+        + updated_at: DateTime
+        + created_at: DateTime
+
+        + PatientDoctorAssignmentModel()
+        + fromJson(Map json)
+    }
+
+}
+
+package Views {
+
+  class MainScreens {
+    + SplashScreen()
+    + IntroductionScreen()
+    + MainScreen()
+    + HomeScreen()
+  }
+
+  class AuthScreens {
+    + LoginScreen()
+    + RegisterScreen()
+    + ForgotPasswordScreen()
+  }
+
+  class BluetoothScreens {
+    + BluetoothMainScreen()
+    + BluetoothScanningScreen()
+    + BluetoothOffScreen()
+    + BluetoothChartScreen()
+  }
+
+  class NewsScreen {
+    + AllNewsScreen()
+    + NewsDetailScreen()
+  }
+
+  class UserScreens {
+    + ProfileScreen()
+    + ChangeInfoScreen()
+    + ChangePasswordScreen()
+  }
+
+  class ChatScreens {
+    + ListConversationsScreen()
+    + MessageScreen()
+  }
+
+  class HistoryRecordScreens {
+    + AllRecordsScreen()
+    + RecordWithChartScreen()
+  }
+}
+@enduml

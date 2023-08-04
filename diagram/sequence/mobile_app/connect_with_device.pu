@@ -1,0 +1,24 @@
+@startuml
+
+autonumber
+actor ":User" as User
+boundary ":View Find ECG device" as ClientApp
+control ":Control Find ECG device" as Control
+
+activate User
+User -> ClientApp: Click button find devices
+activate ClientApp
+ClientApp -> Control: Send request find devices of user
+activate Control
+Control --> ClientApp: Response list devices can connect
+ClientApp --> User: Show list devices to user
+
+User -> ClientApp: User choose connect with ECG device
+ClientApp -> Control: Send request connect Bluetooth (with serviceID and characteristicID)
+Control --> ClientApp: Send response status connection
+deactivate Control
+ClientApp --> User: Show status connection with ECG device
+deactivate ClientApp
+
+skinparam style strictuml
+@enduml
