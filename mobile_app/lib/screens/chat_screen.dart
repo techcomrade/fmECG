@@ -33,8 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void checkPatientDoctorAssignment() async {
     final doctorAssignedInfo = context.read<UserProvider>().doctorAssignedInfo;
-      int patientId = await Utils.getUserId();
-
+    
     if (doctorAssignedInfo.isNotEmpty) {
       // check conversation co tren db chua
       int patientId = await Utils.getUserId();

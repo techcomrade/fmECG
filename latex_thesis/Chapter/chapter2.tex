@@ -94,49 +94,21 @@ tự.
 \subsection{Thiết kế cơ sở dữ liệu}
 \label{design_database}
 
-\subsubsection{Xây dựng mô hình thực thể liên kết}
-
-Xác định các thực thể và thuộc tính:
-
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng thực thể và thuộc tính}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|c|X|}
-    \hline
-    \textbf{Thực thể} & \textbf{Thuộc tính} \\
-    \hline
-    Người dùng & 
-    ID người dùng, Mật khẩu, Email, Tên, Ngày sinh, Số điện thoại, Quyền \\
-    \hline
-    ECG Record & 
-    ID bản ghi ECG, ID người dùng, ID thiết bị, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu, Thời gian kết thúc, Loại cảm biến \\
-    \hline
-    Danh mục tin tức & 
-    ID danh mục tin tức, Tên danh mục tin tức, Mô tả danh mục tin tức \\
-    \hline
-    Tin tức & 
-    ID tin tức, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn, Đường dẫn hình ảnh \\
-    \hline
-    Phân công bệnh nhân - bác sĩ & 
-    ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu \\
-    \hline
-    Mã thông báo đặt lại & 
-    ID mã thông báo, ID người dùng, Mã thông báo, Thời gian hết hạn \\
-    \hline
-    Phiên đăng nhập & 
-    ID phiên đăng nhập, ID người dùng, Mã phiên đăng nhập, Thời gian hết hạn \\
-    \hline
-    Thiết bị & 
-    ID thiết bị, Tên thiết bị \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-
 
 \subsubsection{Chuyển mô hình thực thể liên kết sang mô hình quan hệ}
-Các bảng trong mô hình thực thể liên kết đã được chuyển thành các bảng trong mô hình quan hệ, với mỗi bảng đại diện cho một thực thể và các mối quan hệ được biểu diễn bằng các khóa ngoại.
+
+\begin{itemize}
+  \item Người dùng (\textbf{ID người dùng}, Mật khẩu, Email, Tên, Ngày sinh, Số điện thoại, Quyền)
+  \item Bản ghi ECG (\textbf{ID bản ghi ECG}, ID người dùng, ID thiết bị, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo, Loại cảm biến)
+  \item Danh mục tin tức (\textbf{ID danh mục tin tức}, Tên danh mục tin tức, Mô tả danh mục tin tức)
+  \item Tin tức (\textbf{ID tin tức}, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn, Đường dẫn hình ảnh)
+  \item Phân công bệnh nhân - bác sĩ (\textbf{ID phân công}, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu)
+  \item Mã thông báo đặt lại mật khẩu (\textbf{ID mã thông báo}, ID người dùng, Mã thông báo, Thời gian hết hạn)
+  \item Phiên đăng nhập (\textbf{ID phiên đăng nhập}, ID người dùng, Mã phiên đăng nhập, Thời gian hết hạn)
+  \item Thiết bị (\textbf{ID thiết bị}, Tên thiết bị)
+\end{itemize}
+
+
 
 \subsubsection{Mối quan hệ dữ liệu}
 
@@ -149,6 +121,202 @@ Các bảng trong mô hình thực thể liên kết đã được chuyển thà
 
 \subsubsection{Chuẩn hoá 3NF}
 Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì không có thuộc tính lặp lại và các thuộc tính không phụ thuộc vào một tập hợp con của khóa chính.
+
+\paragraph{Chuẩn hoá bảng Người dùng}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Người dùng}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID người dùng, Mật khẩu, Email, Tên, Ngày sinh, Số điện thoại,
+    Quyền \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi người dùng có một ID riêng, có duy nhất mật khẩu, email, tên, ngày sinh, số điện thoại,
+    quyền & \parbox[t]{\linewidth}{$\text{ID người dùng} \rightarrow$ mật khẩu, email, tên, ngày sinh, số điện thoại, quyền} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID người dùng}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Người dùng đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+\paragraph{Chuẩn hoá bảng Bản ghi ECG}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Bản ghi ECG}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID bản ghi ECG, ID người dùng, ID thiết bị, Đường dẫn lưu trữ dữ
+    liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo, Loại cảm biến \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi bản ghi ECG có một ID riêng, có duy nhất ID người dùng, ID thiết bị, đường dẫn lưu trữ dữ
+    liệu, thời gian bắt đầu đo, thời gian kết thúc đo, loại cảm biến & \parbox[t]{\linewidth}{$ \text{ID bản ghi ECG} \rightarrow$ ID người dùng, ID thiết bị, đường dẫn lưu trữ dữ
+    liệu, thời gian bắt đầu đo, thời gian kết thúc đo, loại cảm biến} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID bản ghi ECG}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Bản ghi ECG đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+\paragraph{Chuẩn hoá bảng Danh mục tin tức}
+\mbox{}
+
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Danh mục tin tức}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID danh mục tin tức, Tên danh mục tin tức, Mô tả danh mục tin
+    tức \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi danh mục tin tức có một ID riêng, có duy nhất tên danh mục tin tức, mô tả danh mục tin
+    tức & \parbox[t]{\linewidth}{$\text{ID danh mục tin tức} \rightarrow$ danh mục tin tức, mô tả danh mục tin
+    tức} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID danh mục tin tức}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Danh mục tin tức đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+\paragraph{Chuẩn hoá bảng Tin tức}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tin tức}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID tin tức, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn,
+    Đường dẫn hình ảnh \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi tin tức có một ID riêng, có duy nhất tiêu đề, nội dung, ID danh mục tin tức, tác giả, đường dẫn,
+    đường dẫn hình ảnh & \parbox[t]{\linewidth}{$\text{ID tin tức} \rightarrow$ tiêu đề, nội dung, ID danh mục tin tức, tác giả, đường dẫn,
+    đường dẫn hình ảnh} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tin tức}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tin tức đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+
+\paragraph{Chuẩn hoá bảng Phân công bệnh nhân - bác sĩ}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Phân công bệnh nhân - bác sĩ}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt
+    đầu \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi lần phân công bệnh nhân - bác sĩ có một ID riêng, có duy nhất ID bệnh nhân, ID bác sĩ, ngày bắt
+    đầu & \parbox[t]{\linewidth}{$\text{ID phân công} \rightarrow$ ID bệnh nhân, ID bác sĩ, ngày bắt
+    đầu} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID phân công}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Phân công bệnh nhân - bác sĩ đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+
+
+\paragraph{Chuẩn hoá bảng Mã thông báo đặt lại mật khẩu}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Mã thông báo đặt lại mật khẩu}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID mã thông báo, ID người dùng, Mã thông báo,
+    Thời gian hết hạn \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi mã thông báo đặt lại mật khẩu có một ID riêng, có duy nhất ID người dùng, mã thông báo,
+    thời gian hết hạn & \parbox[t]{\linewidth}{$\text{ID mã thông báo} \rightarrow$ ID người dùng, mã thông báo,
+    thời gian hết hạn} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID mã thông báo}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Mã thông báo đặt lại mật khẩu đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+\paragraph{Chuẩn hoá bảng Phiên đăng nhập}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Phiên đăng nhập}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID phiên đăng nhập, ID người dùng, Mã phiên đăng nhập, Thời
+    gian hết hạn \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi phiên đăng nhập có một ID riêng, có duy nhất ID người dùng, mã phiên đăng nhập, thời
+    gian hết hạn & \parbox[t]{\linewidth}{$\text{ID phiên đăng nhập} \rightarrow$ ID người dùng, mã phiên đăng nhập, thời
+    gian hết hạn} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID phiên đăng nhập}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Phiên đăng nhập đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+
+\paragraph{Chuẩn hoá bảng Thiết bị}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thiết bị}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID thiết bị, Tên thiết bị \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi thiết bị có một ID riêng, có duy nhất tên thiết bị & \parbox[t]{\linewidth}{$\text{ID thiết bị} \rightarrow$ tên thiết bị} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID thiết bị}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+
+
 \subsubsection{Từ điển dữ liệu}
 
 

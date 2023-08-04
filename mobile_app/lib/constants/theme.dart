@@ -19,7 +19,16 @@ class ThemeECG {
     // ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(ColorConstant.primary)
+        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+          (Set<MaterialState> states) {
+            if (states.contains(MaterialState.disabled)) {
+              return Colors.grey[600];
+            } else {
+              return ColorConstant.primary;
+            }
+          },
+        ),
+        
       )
     ),
     appBarTheme: AppBarTheme(

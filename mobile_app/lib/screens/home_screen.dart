@@ -40,26 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    checkPrefer();
+    getDoctorAssigned();
     NewsController.getAllNews();
   }
 
-  void checkPrefer() async {
-    final prefs = await SharedPreferences.getInstance();
-    final data = prefs.getString("files_not_upload");
-    print('data:$data');
-  }
 
-  void test() async {
-    final a = await getExternalStorageDirectory();
-    print('a: ${a!.path}');
-    final b = await getTemporaryDirectory();
-    print('b: ${b!.path}');
-    final c = await getExternalStorageDirectories();
-    print('c: ${c!.first}');
+  void getDoctorAssigned() async {
     int patientId = await Utils.getUserId();
     UserController.getDoctorAssigned(patientId);
-
   }
 
   Future<bool> _requestManageStorage() async {

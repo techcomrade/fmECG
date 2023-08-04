@@ -59,7 +59,7 @@ dependencies:
   permission_handler: ^10.2.0
   app_settings: ^4.2.0
   flutter_html: ^2.2.1
-
+  flutter_native_splash: 2.2.0
   
 
   # other lib
@@ -114,6 +114,13 @@ flutter:
         - asset: assets/fonts/AvenirNextLTPro-Italic.otf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_native_splash:
+  color: "#e1f5fe"
+  image: assets/images/heart_rate_monitor.png
+  branding: assets/images/fmECG_branding.png
+  branding_mode: bottom
+  android: true
 
 flutter_intl:
   enabled: true

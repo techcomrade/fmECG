@@ -1,4 +1,7 @@
+import 'dart:io';
 import 'dart:math' as math;
+
+import 'package:bluetooth_ecg/utils/files_management.dart';
 
 class ECGDataController {
   static const double REFERENCE_VOLTAGE = 4.5;
@@ -94,8 +97,56 @@ class ECGDataController {
   }
 
   // tính điện áp để vẽ ra biểu đồ
-  static List<double> calculateDataPointToShow(List<double> row) {
-    List<double> dataPoints = row.map((decimalValue) => (decimalValue * REFERENCE_VOLTAGE) / (math.pow(2, 23) - 1).toDouble()).toList();
+  //TODO: HANDLE LIST<TYPE> 
+  static List calculateDataPointToShow(List row) {
+    List dataPoints = row.map((decimalValue) => 
+                                    (decimalValue * REFERENCE_VOLTAGE) / (math.pow(2, 23) - 1).toDouble()).toList();
     return dataPoints;
+  }
+
+  static List handlePacketData(List<int> bytes) {
+    final int numberSample = (bytes[9] / 4 / 3).toInt();
+    final int countPacket = bytes[10];
+    final rowLength = bytes.length;
+    final dataECG = bytes.sublist(11, rowLength);
+
+    final Map<int, List<int>> dataSeperated = separateDataIntoEachSample(dataECG, numberSample);
+    List dataToSave = [];
+
+    dataSeperated.forEach((key, sample) {
+      List rowToSave = [];
+      if (key == 1) {
+        rowToSave.add(countPacket);
+      }
+      final rowData = processSampleToSave(sample);
+      rowToSave = [key, ...rowData, ...rowToSave];
+      dataToSave.add(rowToSave);
+    });
+    return dataToSave;
+  }
+
+  static List<double> processSampleToSave(List<int> bytes) {
+    /// 1 row include calculated figure for each channel like sample:
+    /// [figureChannel1, figureChannel2, figureChannel3, figureChannel4]
+    final List<double> row = [];
+
+    CHANNELS_NUMBER.forEach((channelNumber) {
+      List<int> channelBytes = getChannelsSplittedBytes(bytes, channelNumber);
+      double channelFigure = calculateByteToDecimal(channelBytes);
+      row.add(channelFigure);
+    });
+
+    return row;
+  }
+
+  static separateDataIntoEachSample(List<int> data, int numberSample) {
+    Map<int, List<int>> dataSeperated = {};
+    for (int i = 1; i <= numberSample; i++) {
+      List<int> row = data.sublist((i-1) * 12, (i-1) * 12 + 12);
+      dataSeperated.addAll({
+        i: row
+      });
+    }
+    return dataSeperated;
   }
 }
