@@ -26,6 +26,7 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
 \subsection{Yêu cầu hệ thống}
 \subsubsection{Yêu cầu về người dùng hệ thống}
 Hệ thống được thiết kế để phục vụ các đối tượng sau:
+% //TODO: them ecg vao bang viet tat
 \begin{itemize}
     \item Bệnh nhân: Người sử dụng hệ thống để thực hiện kiểm tra ECG thông qua Bluetooth và theo dõi sức khỏe của mình. Bệnh nhân có quyền truy cập vào kết quả ECG của mình, được một bác sĩ theo dõi và có thể theo dõi các thông tin liên quan đến điện tim và sức khoẻ.
     \item Bác sĩ: Người sử dụng hệ thống để xem và đánh giá kết quả ECG của bệnh nhân, đưa ra nhận xét và đề xuất điều trị. Bác sĩ có thể trao đổi với bệnh nhân và gửi thông báo quan trọng liên quan đến chăm sóc sức khỏe.
@@ -54,38 +55,40 @@ Hệ thống hỗ trợ các chức năng cơ bản sau đối với người d�
 
 \textbf{Đối với người dùng là bệnh nhân:}
 \begin{itemize}
-    \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, ngày sinh, số điện thoại và mật khẩu.
-    \item Cập nhật các thông tin cá nhân.
-    \item Xem kết quả ECG của mình, bao gồm biểu đồ và các thông số liên quan.
-    \item Theo dõi các tin tức liên quan đến sức khoẻ và tim mạch.
+    \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, ngày sinh, số điện thoại và mật khẩu
+    \item Cập nhật các thông tin cá nhân
+    \item Được theo dõi điện tim trực tiếp khi kết nối ứng dụng di động với thiết bị đo điện tim thông qua Bluetooth
+    \item Xem kết quả ECG của mình, bao gồm biểu đồ và các thông số liên quan
+    \item Theo dõi các tin tức liên quan đến sức khoẻ và tim mạch
     \item Nhận thông báo và có thể trao đổi trực tiếp với bác sĩ về tình hình sức khoẻ và các kết quả đo được từ thiết bị.
 \end{itemize}
 
-Đối với người dùng là bác sĩ:
+\textbf{Đối với người dùng là bác sĩ:}
 
 \begin{itemize}
-    \item Được cấp tài khoản để sử dụng hệ thống.
-    \item Cập nhật các thông tin cá nhân.
-    \item Xem danh sách bệnh nhân được phân công cho mình và xem kết quả ECG của từng bệnh nhân.
-    \item Đánh giá và đưa ra nhận xét về kết quả ECG của bệnh nhân.
+    \item Được cấp tài khoản để sử dụng hệ thống
+    \item Cập nhật các thông tin cá nhân
+    \item Xem danh sách bệnh nhân được phân công cho mình và xem kết quả ECG của từng bệnh nhân
+    \item Đánh giá và đưa ra nhận xét về kết quả ECG của bệnh nhân
     \item Trao đổi các thông tin liên quan đến tình hình sức khoẻ và kết quả đo của bệnh nhân.
 \end{itemize}
 
-Đối với người dùng là quản trị viên:
+\textbf{Đối với người dùng là quản trị viên:}
 \begin{itemize}
-    \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, số điện thoại và mật khẩu.
-    \item Cập nhật thông tin cá nhân.
-    \item Quản lý danh sách người dùng trong hệ thống, bao gồm bệnh nhân và bác sĩ.
-    \item Phân công bệnh nhân cho các bác sĩ và quản lý mối quan hệ giữa bác sĩ và bệnh nhân.
+    \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, số điện thoại và mật khẩu
+    \item Cập nhật thông tin cá nhân
+    \item Quản lý danh sách người dùng trong hệ thống, bao gồm bệnh nhân và bác sĩ
+    \item Phân công bệnh nhân cho các bác sĩ và quản lý mối quan hệ giữa bác sĩ và bệnh nhân
+    \item Quản lý các bản ghi dữ liệu điện tim của bệnh nhân
     \item Quản lý các tin tức được đăng trên ứng dụng của người dùng.
 \end{itemize}
 
 \subsubsection{Yêu cầu phi chức năng}
 \begin{itemize}
-    \item Hệ thống hỗ trợ ngôn ngữ Tiếng Việt và Tiếng Anh.
+    \item Hệ thống hỗ trợ ngôn ngữ Tiếng Việt và Tiếng Anh
     \item Hệ thống có thể tương thích với các loại thiết bị phổ biến hiện nay (với Android: Android 10+, IOS: IOS > 12.1)
-    \item Hệ thống đảm bảo tính bảo mật và quyền riêng tư thông tin của người dùng.
-    \item Hệ thống phải có giao diện người dùng thân thiện, dễ sử dụng để có thể tương tác mà không gặp quá nhiều khó khăn.
+    \item Hệ thống đảm bảo tính bảo mật và quyền riêng tư thông tin của người dùng
+    \item Hệ thống phải có giao diện người dùng thân thiện, dễ sử dụng để có thể tương tác mà không gặp quá nhiều khó khăn
     \item Thời gian phản hồi của hệ thống phải nhanh chóng và ổn định.
     % \item Hệ thống cần sao lưu dữ liệu định kỳ để đảm bảo tính an toàn và khả năng khôi phục dữ liệu khi cần thiết.
 \end{itemize}
@@ -346,7 +349,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{} và Hình\\
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{turn_on_off_bluetooth} \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
@@ -504,6 +507,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
   \end{table}
 
+\subsection{Sơ đồ tuần tự}
 
 \newpage
 \subsection{Sơ đồ tuần tự}
@@ -688,7 +692,6 @@ tự.
   Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng kết thúc quá trình đo điện tim. Trong khi đang đo, nếu người dùng muốn dừng, 
   việc kết thúc quá trình đo đồng nghĩa với dữ liệu đo được lưu lên cơ sở dữ liệu để bác sĩ có thể theo dõi.
 
-
 \subsection{Xây dựng mô hình thực thể liên kết}
 
 Xác định các thực thể và thuộc tính:
@@ -735,6 +738,6 @@ Xác định các thực thể và thuộc tính:
   \label{ttlk} %đặt tên cho ảnh
 \end{figure}
 
-
+\subsection{Kết luận chương}
 
 \newpage
