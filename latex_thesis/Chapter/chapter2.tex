@@ -59,8 +59,7 @@ giải thích Services trong hình:
 \end{itemize}
 
 Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Device để phục vụ cho việc đo điện tim.
-\paragraph{Ứng dụng di động cho bác sĩ}
-\mbox{}
+\subsubsection{Ứng dụng di động cho bác sĩ}
 
 \begin{figure}[H]
   \centering
@@ -73,8 +72,7 @@ Về cơ bản, ứng dụng di động cho bác sĩ có những khối tương 
 và Bluetooth để phục vụ việc đo như bệnh nhân.
 
 
-\paragraph{Website cho quản trị viên}
-\mbox{}
+\subsubsection{Website cho quản trị viên}
 
 \begin{figure}[H]
   \centering
@@ -813,7 +811,7 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
 
 \begin{table}[H]
      \centering
-     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Kết quả thí nghiệm}
+     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến thông tin người dùng}
      \begin{tabularx}{0.9\textwidth}{
      | >{\raggedright\arraybackslash}X
      | >{\raggedright\arraybackslash}m{2cm}
@@ -824,11 +822,10 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
     api/users/profile   &   GET  &  Lấy thông tin của người dùng với đầu vào là JWT token khi người dùng đăng nhập thành công vào hệ thống \\  \hline
     api/users/profile   &    PUT    &  Cập nhật thông tin người dùng \\  \hline
     api/users/change-password   &   PUT     & Thay đổi mật khẩu của người dùng  \\ \hline
-    api/users   &     GET   & Lấy toàn bộ danh sách thông tin của người dùng \\  \hline
     api/users/\{:userId\}  &   GET     & Lấy thông tin của người dùng cụ thể theo user id \\ \hline
 
      \end{tabularx}
-     \label{bang41}
+     \label{table_api_user}
 \end{table}
 
 
@@ -838,7 +835,7 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
 
 \begin{table}[H]
   \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Kết quả thí nghiệm}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến việc xác thực người dùng}
   \begin{tabularx}{0.9\textwidth}{
   | >{\raggedright\arraybackslash}X
   | >{\raggedright\arraybackslash}m{2cm}
@@ -853,7 +850,7 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
  api/reset-password/reset &   POST     & Giúp reset lại mật khẩu mới với verify token được nhận từ api: api/reset-password  \\ \hline
 
   \end{tabularx}
-  \label{bang41}
+  \label{table_api_auth}
 \end{table}
 
 
@@ -863,7 +860,7 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
 
 \begin{table}[H]
   \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Kết quả thí nghiệm}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
   \begin{tabularx}{0.9\textwidth}{
   | >{\raggedright\arraybackslash}X
   | >{\raggedright\arraybackslash}m{2cm}
@@ -878,7 +875,7 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
  api/ news/category/\{:categoryId\} &   GET     & Lấy toàn bộ thông tin của tin tức theo id của loại tin \\ \hline
 
   \end{tabularx}
-  \label{bang41}
+  \label{table_api_news}
 \end{table}
 
 \paragraph{API liên quan đến bản ghi ECG}
@@ -886,7 +883,7 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
 
 \begin{table}[H]
   \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Kết quả thí nghiệm}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến bản ghi ECG}
   \begin{tabularx}{0.9\textwidth}{
   | >{\raggedright\arraybackslash}X
   | >{\raggedright\arraybackslash}m{2cm}
@@ -900,7 +897,7 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
  api/ecg-records/record-data/\{:recordId\}  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
 
   \end{tabularx}
-  \label{bang41}
+  \label{table_api_ecg}
 \end{table}
 
 
@@ -910,7 +907,7 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
 
 \begin{table}[H]
   \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Kết quả thí nghiệm}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ}
   \begin{tabularx}{0.9\textwidth}{
   | >{\raggedright\arraybackslash}X
   | >{\raggedright\arraybackslash}m{2cm}
@@ -922,7 +919,7 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
   api/patient/\{:patientId\}/doctor  &    GET    & Lấy thông tin bác sỹ được phân công cho bệnh nhân \\ \hline
 
   \end{tabularx}
-  \label{bang41}
+  \label{table_api_pat_doc}
 \end{table}
 
 
