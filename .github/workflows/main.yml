@@ -1,0 +1,30 @@
+name: CI/CD for Mobile App
+on: 
+  push:
+    branches: 
+      - feature/add_cicd
+    tags: 
+      - v*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+    - run: flutter --version
+
+    - name: Install dependencies 
+      run: flutter pub get
+    # - name: Run test
+    #   run: flutter test --coverage
+    - name: Build APK
+      run: flutter build apk --no-shrink --no-tree-shake-icons
+    - name: Create a Release APK
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "build/app/outputs/apk/release/*.apk"
+        token: ${{ secrets.TOKEN }}
