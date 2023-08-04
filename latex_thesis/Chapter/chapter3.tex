@@ -21,9 +21,9 @@ Flutter là một framework mã nguồn mở phát triển bởi Google, đượ
 Một số điểm nổi bật của Flutter được chúng em sử dụng bao gồm:
 
 \begin{itemize}
-  \item Giao diện được xây dựng dễ dàng với Widgets, chức năng được tuỳ biến và phát triển với Library
+  \item Giao diện được xây dựng dễ dàng với Widgets, chức năng được tuỳ biến và phát triển với Libraryx
   \item Tích hợp nhanh chóng: Flutter hỗ trợ tích hợp API của hệ điều hành và bên thứ ba một cách dễ dàng, giúp chúng ta tạo các tính năng phong phú và đa dạng cho ứng dụng của mình
-  \item Tương thích đa nền tảng: Với Flutter, mã nguồn cơ sở chỉ cần viết một lần và triển khai ứng dụng của mình trên nhiều nền tảng như Android, iOS, web và desktop mà không cần viết lại mã nguồn
+  \item Tương thích đa nền tảng: Với Flutter, mã nguồn cơ sở chỉ cần viết một lần và triển khai ứng dụng của mình trên nhiều nền tảng như Android, iOS, web và desktop mà không cần viết lại mã nguồn.
 \end{itemize}
 
 Ngoài ra điểm đặc biệt của Flutter so với một số Framework khác đó là việc tương tác với native code, Flutter có thể tương
@@ -252,7 +252,14 @@ Trong quá trình triển khai ứng dụng, chúng em sử dụng dịch vụ E
 
 \subsubsection{Triển khai ứng dụng di động trên nền tảng Android}
 Trong quá trình phát triển ứng dụng di động chúng em có sử dụng máy ảo Android (phiên bản Android API 33) và máy thật
-(Android 11 - 13), đồng thời xuất file APK để các thiết bị muốn test đều có thể dùng thử.
+(Android 11 - 13), đồng thời xuất file APK để có thể linh động hơn trong việc triển khai và kiểm thử.
+
+Việc triển khai ứng dụng di động được tự động hoá khi được áp dụng CI/CD (Continous Integration/Continous Development), mỗi khi có
+code mới được đẩy lên Github (dịch vụ lưu trữ mã nguồn), sẽ có Github Actions tự động chạy các lệnh để kiểm tra lỗi, cài đặt
+các thư viện cần thiết và tạo ra một phiên bản apk cho người dùng tải về và cài đặt. Điều này giúp cho việc phát triển sản phẩm, 
+làm việc nhóm trở nên hiệu quả và nhanh chóng hơn.
+% //TODO: thêm ref cho CI/CD
+% //TODO: thêm ảnh ci/cd, demo một số hình ảnh
 
 \subsection{Kiểm thử}
 
@@ -2002,6 +2009,85 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
 
   \end{xltabular}
 
+
+\subsubsection{Kiểm thử ứng dụng di động}
+
+\paragraph{Kiểm thử giao diện}
+\mbox{}
+
+Ứng dụng di động có thể sử dụng thư viện do Flutter hỗ trợ để kiểm thử các giao diện với mục đích
+đảm bảo các giao diện hiển thị như mong muốn của người thiết kế và không có lỗi lớn phát sinh khi sử dụng
+ứng dụng trên nhiều thiết bị với nhiều kích thước khác nhau.
+
+% //TODO: thêm ref device preview
+Ứng dụng sẽ sử dụng thư viện Device Preview trong danh sách thư viện Flutter hỗ trợ để giả lập chiều cao, chiều rộng của
+các màn hình phổ biến, mục đích chính kiểm tra ứng dụng có bị tràn, vỡ giao diện hay không. Kết quả kiểm tra được thể hiện
+trong bảng dưới đây: 
+
+
+\paragraph{Kiểm thử chức năng}
+\mbox{}
+% //TODO: thêm phần test case, làm nhanh mô tả rõ từng test case
+Các chức năng được kiểm tra sẽ chia theo các lớp màn hình trong sơ đồ lớp Hình \ref{mobile_class_view} để đảm bảo hoạt động đúng mục đích. 
+Dưới đây là các kiểm thử cho từng lớp:
+
+\begin{enumerate}[a)]
+  \item AuthScreens
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng đăng nhập ứng dụng di động}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1 & NULL & ID Doctor & 
+      Status code: 200 OK
+    
+        Response content:
+    
+        \{
+      "status": "success",
+      count: Tổng số lượng bệnh nhân mà bác sỹ đang được phân công,
+      data: Thông tin của các bệnh nhân mà bác sỹ đang được phân công
+    
+      \}
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Lỗi đường truyền server
+    & ID Doctor
+
+   &
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "An error occurred while retrieving the patients"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+\end{enumerate}
 
 
 \newpage
