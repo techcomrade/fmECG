@@ -21,10 +21,10 @@ jobs:
     # - name: Run test
     #   run: flutter test --coverage
     - name: Build APK
-      run: flutter build apk --no-shrink --no-tree-shake-icons
+      run: cd mobile_app && flutter build apk --no-shrink --no-tree-shake-icons
     - name: Create a Release APK
       if: startsWith(github.ref, 'refs/tags/v')
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "build/app/outputs/apk/release/*.apk"
+        artifacts: "mobile_app/build/app/outputs/apk/release/*.apk"
         token: ${{ secrets.TOKEN }}
