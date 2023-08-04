@@ -3,85 +3,89 @@
 
 package Controllers {
     class AuthProvider {
-        - token
-        - firebaseToken
-        - userId
-        - roleId
+        - String token
+        - String firebaseToken
+        - int userId
+        - int roleId
+        + bool isAuth
 
-        + AuthProvider()
-        + registerUser(req, res)
-        + loginUser(req, res)
-        + logoutUser(req, res)
-        + resetPasswordToken(req, res)
-        + resetPassword(req, res)
-        + setDataLogin()
-        + checkAutoLogin()
-        + removeDataLogin()
-        + isAuth
+        + **AuthProvider**()
+        + void **registerUser**(Map registerInfo)
+        + void **loginUser**(String email, String password)
+        + void **logoutUser**()
+        + void **sendResetPasswordToken**(String email)
+        + void **resetPassword**(Map infoToReset)
+        + void **setDataLogin**(Map dataLogin)
+        + void **checkAutoLogin**()
+        + void **removeDataLogin**()
     }
 
     class ECGRecordController {
+        - ECGRecord: ECGRecordModel
 
-        + ECGRecordController()
-        + uploadFileToDB(fileUpload)
-        + getEcgRecordsByUserId(userId)
-        ' + getEcgRecordsByDoctor(req, res)
-        + getECGRecorDataById(recordId) 
+        + **ECGRecordController**()
+        + void **uploadFileToDB**(Map fileUpload)
+        + void **getEcgRecordsByUserId**(int userId)
+        + void **getEcgRecordsByDoctor**(int userId)
+        + void **getECGRecorDataById**(int recordId) 
+    }
+
+   class ECGDataController {
+        - double referenceVoltage
+        + **ECGDataController**()
+        + List<dynamic> **handlePacketData**(List<int> bytes)
+        + Map<int, List<int>> **separateDataIntoEachSample**(List<int> data, int numberSample)
+        + List<double> **processSampleToSave**(List<int> bytes)
+        + List<int> **getChannelsSplittedBytes**(List<int> bytes, int order)
+        + double **calculateBytesToDecimal**(List<int> threeBytes)
+        + List **calculateDataPointToShow**(List row)
+        + List<int> **getStatusBytes**(List<int> bytes)
+        + int **getCountByte**(List<int> bytes)
     }
 
     class NewsController {
         - News: NewsModel
         - NewsCategory: NewsCategoryModel
 
-        + NewsController()
-        + getNewsById(req, res)
-        + getAllNews(req, res)
-        + getAllNewsCategories(req, res)
-        + getNewsCategoryById(req, res)
-        + getNewsByCategory(req, res)
-
+        + **NewsController**()
+        + void **getAllNews**()
+        + void **getNewsById**(int newsId)
+        + void **getAllCategoryNews**()
+        + void **getNewsCategoryById**(int newsCategoryId)
     }
 
     class PatientDoctorAssignmentController {
         - User: UserModel
         - PatientDoctorAssignment: PatientDoctorAssignmentModel
 
-
-        + PatientDoctorAssignmentController()
-        + getPatientsByDoctor(req, res)
-        + getDoctorByPatient(req, res)
-        + getNewsById(req, res)
-        + getNewsById(req, res)
-
+        + **PatientDoctorAssignmentController**()
+        + void **getPatientsByDoctor**(int userId)
+        + void **getDoctorByPatient**(int userId)
     }
 
     class UserController {
-        - bcrypt: bcryptjs
-        - jwt: jsonwebtoken
         - User: UserModel
-        - path: path
 
-        + UserController()
-        + updateUserInfo(req, res)
-        + changePassword(req, res)
-        + getUserProfile(req, res)
-        + getAllUsers(req, res)
-        + getUserById(req, res)
+        + **UserController**()
+        + void **updateUserInfo**(Map userInfoToUpdate)
+        + void **changePassword**(Map passwords)
+        + void **getUserById**(int userId)
 
     }
 
-    class AdminController  {
-        - AdminJS: adminjs
-        - Component: Component
-        - EcgRecordsResource: ECGRecordResource
-        - NewsCategoryResource: NewsCateGoryResource
-        - NewsResource: NewsResource
-        - PatientDoctorAssignmentResource: PatientDoctorAssignmentResource
-        - PatientResource: PatientResource
-        - DoctorResource: DoctorResource
-        - AdminResource: AdminResource
-
-        + AdminController()
+    class FirebaseMessagesController  {
+        - Conversation: ConversationModel
+        - Message: MessageModel
+        
+        + **FirebaseMessageController**()
+        + void**getDeviceToken**()
+        + void **saveTokenToFirestore**(int userId, String firebaseToken)
+        + void **createConversation**(Map conversationInfo)
+        + void **getSpecificConversation**(String conversationId)
+        + void **getAllConversationsByUserId**(int userId)
+        + void **getMessagesConversation**(String conversationId)
+        + void **sendMessageConversation**(Map message)
+        + void **checkFirebaseTokenExist**(String firebaseToken)
     }
 }
 
@@ -92,14 +96,15 @@ package Models {
         + user_id: Interger
         + device_id: Interger
         + data_directory:String
-        + start_time: Date
-        + stop_time: Date
+        + start_time: DateTime
+        + stop_time: DateTime
         + sensor_type: String
-        + updated_at: Date
-        + created_at: Date
-        - Sequelize: sequelize
+        + updated_at: DateTime
+        + created_at: DateTime
 
         + ECGRecordModel()
+        + fromJson(Map json)
+
     }
 
     class NewsModel {
@@ -110,21 +115,21 @@ package Models {
         + author: String
         + url: String
         + image: url
-        + updated_at: Date
-        + created_at: Date
-        - Sequelize: sequelize
+        + updated_at: DateTime
+        + created_at: DateTime
 
         + NewsModel()
+        + fromJson(Map json)
     }
 
     class NewsCategoryModel {
         + category_id: Interger
         + category_name: String
-        + updated_at: Date
-        + created_at: Date
-        - Sequelize: sequelize
+        + updated_at: DateTime
+        + created_at: DateTime
 
         + NewsCategoryModel()
+        + fromJson(Map json)
 
     }
 
@@ -132,12 +137,12 @@ package Models {
         + reset_id: Interger
         + user_id: Interger
         + token: String
-        + expiration: Date
-        + updated_at: Date
-        + created_at: Date
-        - Sequelize: sequelize
+        + expiration: DateTime
+        + updated_at: DateTime
+        + created_at: DateTime
 
         + ResetTokenModel()
+        + fromJson(Map json)
 
     }
 
@@ -146,36 +151,25 @@ package Models {
         + password: String
         + email: String
         + name: String
-        + doB: Date
+        + doB: DateTime
         + phone_numer: String
         + role: Interger
-        + updated_at: Date
-        + created_at: Date
-        - Sequelize: sequelize
+        + updated_at: DateTime
+        + created_at: DateTime
 
         + UserModel()
+        + fromJson(Map json)
 
     }
 
     class DeviceModel {
         + device_id: Interger
         + device_name: String
-        + updated_at: Date
-        + created_at: Date
-        - Sequelize: sequelize
+        + updated_at: DateTime
+        + created_at: DateTime
 
         + DeviceModel()
-
-    }
-
-    class SessionModel {
-        + session_id: Interger
-        + session_token: String
-        + updated_at: Date
-        + created_at: Date
-        - Sequelize: sequelize
-
-        + SessionModel()
+        + fromJson(Map json)
 
     }
 
@@ -183,37 +177,57 @@ package Models {
         + assign_id: Interger
         + patient_id: Interger
         + doctor_id: Interger
-        + start_date: Date
-        + updated_at: Date
-        + created_at: Date
-        - Sequelize: sequelize     
+        + start_date: DateTime
+        + updated_at: DateTime
+        + created_at: DateTime
 
-        + PatientDoctorAssignmentModel()   
+        + PatientDoctorAssignmentModel()
+        + fromJson(Map json)
     }
 
 }
 
 package Views {
 
-    class DashboardViewComponent {
+  class MainScreens {
+    + SplashScreen()
+    + IntroductionScreen()
+    + MainScreen()
+    + HomeScreen()
+  }
 
-        + DashboardViewComponent()
+  class AuthScreens {
+    + LoginScreen()
+    + RegisterScreen()
+    + ForgotPasswordScreen()
+  }
 
-    }
+  class BluetoothScreens {
+    + BluetoothMainScreen()
+    + BluetoothScanningScreen()
+    + BluetoothOffScreen()
+    + BluetoothChartScreen()
+  }
 
-    class NewsViewComponent {
-        + NewsViewComponent()
-    }
+  class NewsScreen {
+    + AllNewsScreen()
+    + NewsDetailScreen()
+  }
 
-    class ECGRecordViewComponent {
-        + ECGRecordViewComponent()
+  class UserScreens {
+    + ProfileScreen()
+    + ChangeInfoScreen()
+    + ChangePasswordScreen()
+  }
 
-    }
+  class ChatScreens {
+    + ListConversationsScreen()
+    + MessageScreen()
+  }
 
-    class PatientDoctorAssignmentViewComponent {
-        + PatientDoctorAssignmentViewComponent()
-
-    }
-
+  class HistoryRecordScreens {
+    + AllRecordsScreen()
+    + RecordWithChartScreen()
+  }
 }
 @enduml
