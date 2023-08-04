@@ -92,6 +92,7 @@ tự.
 
 
 \subsection{Thiết kế cơ sở dữ liệu}
+\label{design_database}
 
 \subsubsection{Xây dựng mô hình thực thể liên kết}
 
@@ -354,6 +355,185 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 
 \subsection{Thiết kế chi tiết hệ thống}
 
+\subsubsection{Sơ đồ lớp cho ứng dụng di động, website và server}
+
+\paragraph{Ứng dụng di động}
+\mbox{}
+
+Ứng dụng di động được tổ chức theo mô hình MVC, với ba khối chính là Models, Views và Controllers:
+  
+\begin{itemize}
+  \item Khối "Models": Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu.
+ 
+  \item Khối "Controllers": Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng.
+
+  \item Khối "Views": Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng.
+\end{itemize}
+
+Chi tiết từng lớp và phần giải thích cho mỗi khối được chúng em thể hiện bằng hình và lời trong các mục bên dưới. 
+
+\begin{enumerate}[a)]
+  \item Danh sách các class diagram cho ứng dụng di động
+    
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm,height=18cm]{Images/mobile_app/class_diagram/mobile_class_model.png}
+    \caption[Sơ đồ lớp của khối Models trong ứng dụng di động]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của khối Models trong ứng dụng di động}
+    \label{mobile_class_model} %đặt tên cho ảnh
+  \end{figure}
+
+  Dựa trên mục \ref{design_database} về phần thiết kế cơ sở dữ liệu, Hình \ref{mobile_class_model} thể hiện các lớp trong Models:
+  \begin{itemize}
+    \item ECGRecordModel: Lớp thể hiện cấu trúc của một bản ghi dữ liệu điện tim
+    \item NewsModel: Lớp thể hiện cấu trúc một tin tức
+    \item NewsCategoryModel: Lớp thể hiện cấu trúc một danh mục tin tức
+    \item UserModel: Lớp thể hiện cho cấu trúc người dùng trong hệ thống
+    \item DeviceModel: Lớp thể hiện cho thông tin thiết bị điện tim 
+    \item PatientDoctorAssignmentModel: Lớp thể hiện cho thông tin phân công bác sĩ và bệnh nhân.
+  \end{itemize}
+
+  Mỗi lớp đều có một hàm fromJSON để chuyển từ dữ liệu JSON lấy từ API vào trong Model tương ứng. Điều này giúp
+  việc code và xử lý trở nên dễ dàng hơn. Sau khi định nghĩa được các Model.
+  
+  Phần tiếp theo là xác định các Views hay giao diện cần có trong ứng dụng di động và Controllers xử lý logic với những
+  yêu cầu từ người dùng.
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=14cm,height=7cm]{Images/mobile_app/class_diagram/mobile_class_view.png}
+    \caption[Sơ đồ lớp của khối Views trong ứng dụng di động]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của khối Views trong ứng dụng di động}
+    \label{mobile_class_view} %đặt tên cho ảnh
+  \end{figure}
+
+  Hình \ref{mobile_class_view} thể hiện các lớp trong Views. Mỗi use case liên quan đến bệnh nhân/bác sĩ thể hiện ở sơ đồ 
+  usecase Hình \ref{use_case_general} sẽ đại diện cho một lớp giao diện tương ứng. Trong đó sẽ gồm các màn cho từng chức năng
+  cụ thể:
+
+  \begin{itemize}
+    \item MainScreens: Các giao diện không thuộc chức năng cụ thể, những giao diện chính là tiền đề cho các giao diện chức năng khác
+    \item AuthScreens: Các giao diện xác thực người dùng 
+    \item BluetoothScreens: Các giao diện phục vụ cho quá trình kết nối và theo dõi dữ liệu điện tim thông qua bluetooth
+    \item NewsScreens: Các giao diện xem tin tức
+    \item UserScreens: Các giao diện cho người dùng
+    \item ChatScreens: Các giao diện phục vụ quá trình trao đổi giữa bác sĩ và bệnh nhân
+    \item HistoryRecordsScreens: Các giao diện cho phép người dùng xem lại lịch sử đo cùng với biểu đồ. 
+  \end{itemize}
+  
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm,height=15cm]{Images/mobile_app/class_diagram/mobile_class_controller.png}
+    \caption[Sơ đồ lớp của khối Controllers trong ứng dụng di động]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của khối Controllers trong ứng dụng di động}
+    \label{mobile_class_controller} %đặt tên cho ảnh
+  \end{figure}
+
+  Hình \ref{mobile_class_controller} thể hiện các lớp trong Controllers. Mỗi lớp trong Controllers quản lý một nhiệm vụ
+  nhất định được chia nhỏ thành các hàm, phương thức tương ứng giúp việc phia chia và đặc biệt khi kiểm soát lỗi rất dễ dàng do
+  chúng ta có thể dự đoán được lỗi phát sinh ở chức năng và hàm nào. 
+
+  % //TODO: Thiếu file managements trong sơ đồ
+  \begin{itemize}
+    \item AuthProvider: Cung cấp các biến và hàm để thực hiện chức năng xác thực người dùng
+    \item ECGRecordController: Cung cấp các hàm, phương thức để thực hiện chức năng liên quan đến các bản ghi điện tim
+    \item ECGDataController: Cung cấp các hàm, phương thức để xử lý dữ liệu của bản ghi diện tim thời gian thực
+    \item FileController: Cung cấp các hàm, phương thức để xử lý file (tạo, sửa, xoá file), phục vụ chính cho ECGRecordController  
+    \item NewsController: Cung cấp các hàm, phương thức để lấy dữ liệu tin tức
+    \item PatientDoctorAssignmentController: Cung cấp các hàm, phương thức để lấy dữ liệu phân công bệnh nhân/bác sĩ
+    \item UserController: Cung cấp các hàm, phương thức để thao tác với dữ liệu người dùng 
+    \item FirebaseMessagesController: Cung cấp các hàm, phương thức để thao tác với tin nhắn.
+  \end{itemize}
+
+  Các lớp được hình thành là nền tảng để viết code dễ dàng hơn, đồng thời điều này cũng giúp cho cấu trúc thư mục trong
+  bất kỳ dự án nào trở nên sạch sẽ và dễ theo dõi hơn.
+  
+  \end{enumerate}
+
+\paragraph{Server và Website quản trị hệ thống}
+\mbox{}
+
+\begin{enumerate}[a)]
+\item Danh sách các class diagram
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=13cm]{Images/server/class/class_controller.png}
+  \caption[Sơ đồ lớp của package Controllers]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Controllers}
+  \label{class_controller} %đặt tên cho ảnh
+\end{figure}
+
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=16cm]{Images/server/class/class_model.png}
+  \caption[Sơ đồ lớp của package Models]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Models}
+  \label{class_model} %đặt tên cho ảnh
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=6cm]{Images/server/class/class_route.png}
+  \caption[Sơ đồ lớp của package Routes]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Routes}
+  \label{class_route} %đặt tên cho ảnh
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=14cm]{Images/server/class/class_admin.png}
+  \caption[Sơ đồ lớp của package View và Admin]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package View và Admin}
+  \label{class_admin} %đặt tên cho ảnh
+\end{figure}
+
+
+\begin{itemize}
+
+  \item Package "Controllers":
+
+  Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng.
+  \item Package "Models":
+  
+  Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu.
+  \item Package "Routes":
+  
+  Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng.
+  \item Package "Views":
+  
+  Chứa các view components đại diện cho giao diện người dùng.
+  \item Package "Admin":
+  
+  Chứa các thành phần liên quan đến trang Admin dashboard.
+  \item Package "Resources" (Trong "Admin"):
+  
+  Chứa các lớp Resource (nguồn tài nguyên) đại diện cho các tài nguyên của trang Admin dashboard, bao gồm: AdminResource, DoctorResource, PatientResource, ECGRecordResource, NewsResource, NewsCategoryResource và PatientDoctorAssignmentResource.
+  \item Package "Components" (Trong "Admin"):
+  
+  Chứa các lớp Components đại diện cho các thành phần giao diện của trang Admin dashboard, bao gồm: ComponentLoader, DashboardViewComponent, NewsViewComponent, ECGRecordViewComponent và PatientDoctorAssignmentViewComponent.
+\end{itemize}
+
+
+
+\item Mối quan hệ
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=12cm]{Images/server/class/class_relation.png}
+  \caption[Mối quan hệ giữa các class ở phía server]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía server}
+  \label{class_relation} %đặt tên cho ảnh
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=15cm]{Images/server/class/class_admin_relation.png}
+  \caption[Mối quan hệ giữa các class ở phía website quản trị]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía website quản trị}
+  \label{class_admin_relation} %đặt tên cho ảnh
+\end{figure}
+
+\end{enumerate}
+
+
+
 \subsubsection{Thiết kế giao diện}
 
 \paragraph{Ứng dụng}
@@ -576,103 +756,6 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
   \end{tabularx}
   \label{bang41}
 \end{table}
-
-
-
-
-
-
-\subsubsection{Sơ đồ lớp}
-
-\paragraph{Ứng dụng}
-\mbox{}
-
-\paragraph{Server và Website quản trị hệ thống}
-\mbox{}
-
-\begin{enumerate}[a)]
-\item Danh sách các class diagram
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=13cm]{Images/server/class/class_controller.png}
-  \caption[Sơ đồ lớp của package Controllers]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Controllers}
-  \label{class_controller} %đặt tên cho ảnh
-\end{figure}
-
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=16cm]{Images/server/class/class_model.png}
-  \caption[Sơ đồ lớp của package Models]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Models}
-  \label{class_model} %đặt tên cho ảnh
-\end{figure}
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=14cm,height=6cm]{Images/server/class/class_route.png}
-  \caption[Sơ đồ lớp của package Routes]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Routes}
-  \label{class_route} %đặt tên cho ảnh
-\end{figure}
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=14cm]{Images/server/class/class_admin.png}
-  \caption[Sơ đồ lớp của package View và Admin]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package View và Admin}
-  \label{class_admin} %đặt tên cho ảnh
-\end{figure}
-
-
-\begin{itemize}
-
-  \item Package "Controllers":
-
-  Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng.
-  \item Package "Models":
-  
-  Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu.
-  \item Package "Routes":
-  
-  Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng.
-  \item Package "Views":
-  
-  Chứa các view components đại diện cho giao diện người dùng.
-  \item Package "Admin":
-  
-  Chứa các thành phần liên quan đến trang Admin dashboard.
-  \item Package "Resources" (Trong "Admin"):
-  
-  Chứa các lớp Resource (nguồn tài nguyên) đại diện cho các tài nguyên của trang Admin dashboard, bao gồm: AdminResource, DoctorResource, PatientResource, ECGRecordResource, NewsResource, NewsCategoryResource và PatientDoctorAssignmentResource.
-  \item Package "Components" (Trong "Admin"):
-  
-  Chứa các lớp Components đại diện cho các thành phần giao diện của trang Admin dashboard, bao gồm: ComponentLoader, DashboardViewComponent, NewsViewComponent, ECGRecordViewComponent và PatientDoctorAssignmentViewComponent.
-\end{itemize}
-
-
-
-\item Mối quan hệ
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=12cm]{Images/server/class/class_relation.png}
-  \caption[Mối quan hệ giữa các class ở phía server]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía server}
-  \label{class_relation} %đặt tên cho ảnh
-\end{figure}
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=15cm]{Images/server/class/class_admin_relation.png}
-  \caption[Mối quan hệ giữa các class ở phía website quản trị]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía website quản trị}
-  \label{class_admin_relation} %đặt tên cho ảnh
-\end{figure}
-
-\end{enumerate}
-
-
 
 
 \subsubsection{Sơ đồ tuần tự}
@@ -1009,7 +1092,7 @@ với những ứng dụng không đòi hỏi tính truy nhập và bảo mật 
 
 \end{itemize}
 Vậy luồng hoàn chỉnh cho đăng nhập trên ứng dụng của chúng em sẽ là: người dùng nhập thông tin, thông tin được gửi lên server xác thực,
-nếu kết quả trả về của server là đúng, sẽ lưu dữ liệu đăng nhập của người dùng vào trong Shared Preferences. Khi tắt và mở lại app,
+nếu kết quả trả về của server là đúng, sẽ lưu dữ liệu đăng nhập của người dùng vào trong Shared Preferences (Local Storage). Khi tắt và mở lại app,
 ứng dụng sẽ lấy dữ liệu và kiểm tra, nếu có dữ liệu thì người dùng sẽ không phải đăng nhập lại. Hình dưới mô tả chi tiết phần thiết
 kế việc lưu dữ liệu đăng nhập.
 
@@ -1035,7 +1118,7 @@ load từ API về sẽ được vẽ lên biểu đồ. Các Hình thể hiện
 Biểu đồ có trục tung là giá trị điện áp, trục hoành là toàn bộ thời gian từ lúc bắt đầu đo đến khi kết thúc. Người dùng có thể,
 thực hiện các thao tác phóng to, thu nhỏ.
 
-\paragraph{Chức năng kết nối và thực hiện đo với thiết bị điện tim}
+\paragraph{Chức năng kết nối và thực hiện nhận dữ liệu với thiết bị điện tim}
 \mbox{}
 
 Chức năng kết nối và thực hiện đo với thiết bị điện tim là một trong những chức năng quan trọng nhất của ứng dụng. Chức năng này yêu cầu
@@ -1045,17 +1128,17 @@ nghe dữ liệu trả ra từ thiết bị điện tim. Dữ liệu thô đư�
 khi thực hiện đo xong có thể chọn lưu kết quả đo lại (điều này sẽ đẩy dữ liệu đo lên server và bác sĩ có thể xem được).
 % //TODO: add reference
 % https://learn.adafruit.com/introduction-to-bluetooth-low-energy/gatt
+
 Đầu tiên việc kết nối Bluetooth với thiết bị đo điện tim là không khó khi có sự hỗ trợ của các thư viện và hệ điều hành, sau đó việc xử lý sau
 kết nối mới là một điều chúng ta cần phải lưu tâm tới. Sau khi kết nối với thiết bị đo điện tim, câu hỏi đặt ra là \textbf{làm thế nào
 để lắng nghe được dữ liệu} từ thiết bị điện tim? Đối với hệ thống BLE, sau khi kết nối thành công, một Profile Protocol được gọi
 là GATT (Generic ATTribute Profile) - xác định cách hai thiết bị sẽ truyền và nhận dữ liệu như thế nào thông qua
 Services và Characteristics sẽ được hình thành. 
-
 % //TODO: Chèn ảnh vào đây ảnh gatt
-
 Services là tập hợp của một nhóm thông tin để thực hiện một chức năng cụ thể,
 ví dụ Battery Service, Sensor Service, trong mỗi Service chính là một hoặc nhiều Characteristic, mỗi Characteristic đảm nhận
-một thông tin hoặc chức năng riêng biệt phục vụ cho Service đó. Mỗi một Service hay Characteristic đều có UUID (mã định danh duy nhất toàn cầu)
+một thông tin hoặc chức năng riêng biệt phục vụ cho Service đó. Mỗi một Service hay Characteristic đều có UUID (mã định danh duy nhất toàn cầu).
+
 Từ cơ sở trên, để có thể sẵn sàng lắng nghe được dữ liệu từ thiết bị điện tim, thiết bị di động cần kết nối đến đúng Services và Characteristics.
 % //TODO: Chèn ảnh nữa vào đây ảnh services and charac
 
