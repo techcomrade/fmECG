@@ -6,225 +6,93 @@
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 2. THIẾT KẾ CHI TIẾT HỆ THỐNG}
 
-\subsection{Công nghệ sử dụng}
-\subsubsection{Ứng dụng di động}
+\subsection{Sơ đồ kiến trúc hệ thống}
+Hệ thống chúng em xây dựng được chia làm ba phần Device, Application và Server. Các chi tiết cụ thể được thể hiện trong
+hình vẽ:
 
-\paragraph{Flutter}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-System Architecture.drawio.png}
+  \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
+  \label{fmECG_architecture-System} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{fmECG_architecture-System} thể hiện ba phần: 
+\begin{itemize}
+  \item Device: Thiết bị phần cứng đo điện tim, để kết nối với App bệnh nhân thông qua Bluetooth 
+  \item Application: Bao gồm ứng dụng của bệnh nhân, ứng dụng của bác sĩ và Website của Admin
+  \item Server: Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu và Cloud lưu trữ
+\end{itemize}
+
+Trong hệ thống thì Devices là phần mà chúng em sẽ không trực tiếp thực hiện trong đồ án này, Application và Server sẽ là
+phần mà đồ án chúng em thực hiện. Ở trong sơ đồ kiến trúc hệ thống riêng có bệnh nhân sẽ có tương tác trực tiếp với Devices,
+còn lại khối Application sẽ tương tác với Server thông qua API với giao thức HTTP. Khi nhận được yêu cầu từ Application,
+Server sẽ thực hiện xử lý dữ liệu, mọi yêu cầu đến đều được xử lý bởi Services, tuỳ vào yêu cầu đến Services tương ứng sẽ đảm nhiệm 
+việc lấy/lưu dữ liệu trong cơ sở dữ liệu sau đó trả ra kết quả cho người dùng.
+
+Ngoài ra, hệ thống sẽ phải có kết nối bluetooth low energy giữa thiết bị đo và ứng dụng di động để có thể truyền/nhận dữ liệu.
+Trên đây là tổng quan về kiến trúc hệ thống, phần tiếp dưới đây chúng em xin phép trình bày kỹ hơn về từng khối nhỏ hơn
+dựa vào những đối tượng đã được xác định trong hệ thống.
+
+\subsection{Sơ đồ khối phần mềm}
+
+\paragraph{Ứng dụng di động cho bệnh nhân}
 \mbox{}
 
-Flutter là framework được chúng em sử dụng để lập trình cho ứng dụng di động, dưới đây là phần giới thiệu về Flutter cũng
-như những tính năng sẽ được chúng em sử dụng trong ứng dụng này.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-Patient.drawio.png}
+  \caption[Sơ đồ khối cho App bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bệnh nhân}
+  \label{fmECG_architecture-Patient} %đặt tên cho ảnh
+\end{figure}
 
-Flutter là một framework mã nguồn mở phát triển bởi Google, được sử dụng để xây dựng ứng dụng di động, web và desktop đẹp và nhanh chóng. Flutter sử dụng ngôn ngữ lập trình Dart, là một ngôn ngữ hiện đại và linh hoạt, giúp tạo ra các ứng dụng chạy mượt mà trên nhiều nền tảng.
-
-Một số điểm nổi bật của Flutter được chúng em sử dụng bao gồm:
+Trong hình trên, lớp trên cùng User interface là lớp để người dùng tương tác và thực hiện lời gọi thông qua API Adapter, 
+các yêu cầu của người dùng sẽ được xử lý thông qua Services và phản hồi lại với người dùng qua giao diện. Dưới đây là phần
+giải thích Services trong hình:
 
 \begin{itemize}
-  \item Giao diện được xây dựng dễ dàng với Widgets, chức năng được tuỳ biến và phát triển với Library
-  \item Tích hợp nhanh chóng: Flutter hỗ trợ tích hợp API của hệ điều hành và bên thứ ba một cách dễ dàng, giúp chúng ta tạo các tính năng phong phú và đa dạng cho ứng dụng của mình
-  \item Tương thích đa nền tảng: Với Flutter, mã nguồn cơ sở chỉ cần viết một lần và triển khai ứng dụng của mình trên nhiều nền tảng như Android, iOS, web và desktop mà không cần viết lại mã nguồn
+  \item ECG Service: Khối có nhiệm vụ xử lý yêu cầu cho các trạng thái đo: thực hiện đo, kết thúc đo, lưu kết quả đo
+  \item ECG Signal Processing Service: Khối có nhiệm vụ xử lý tín hiệu đo để phân tích sâu, hiển thị lên màn hình
+  \item User Management Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến người dùng như đăng nhập, đăng ký
+  \item Chat Service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin
+  \item Storage Service: Khối có nhiệm vụ lưu thông tin vào bộ nhớ
 \end{itemize}
 
-Ngoài ra điểm đặc biệt của Flutter so với một số Framework khác đó là việc tương tác với native code, Flutter có thể tương
-tác trực tiếp với native code thông qua cơ chế \textbf{Method Channel}, tức là giao tiếp giữa mã Dart của ứng dụng Flutter 
-và mã nguồn của hệ điều hành hoặc các hệ thống khác nằm ngoài môi trường Flutter. 
+Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Device để phục vụ cho việc đo điện tim.
+\paragraph{Ứng dụng di động cho bác sĩ}
+\mbox{}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=8cm]{Images/system/flutter_native_code.png}
-  \caption[Kiến trúc ứng dụng của hệ thống gốc]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Kiến trúc ứng dụng của hệ thống gốc}
-  \label{flutter_native_code} %đặt tên cho ảnh
+  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-Doctors.drawio.png}
+  \caption[Sơ đồ khói cho App bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bác sĩ}
+  \label{fmECG_architecture-Doctors} %đặt tên cho ảnh
 \end{figure}
 
-Hình ảnh trên thể hiện sự tương tác giữa Native Code và các dịch vụ của Platform một cách trực tiếp, nói cách khác, sử dụng
-native code chúng ta có thể truy cập đến mọi services một cách nhanh chóng và thuận tiện nhất. Tuy nhiên việc thực hiện
-code trên native cũng tương đối khó và đòi hỏi kinh nghiệm vì cấu trúc phức tạp và có hiểu biết về hệ điều hành.
+Về cơ bản, ứng dụng di động cho bác sĩ có những khối tương tự với bệnh nhân, trừ việc bác sĩ sẽ không có hai khối Device
+và Bluetooth để phục vụ việc đo như bệnh nhân.
+
+
+\paragraph{Website cho quản trị viên}
+\mbox{}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=8cm]{Images/system/flutter_JS.png}
-  \caption[Kiến trúc ứng dụng của hệ thống sử dụng cầu nối Javascript]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Kiến trúc ứng dụng của hệ thống sử dụng cầu nối Javascript}
-  \label{flutter_JS} %đặt tên cho ảnh
+  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-Admin.drawio.png}
+  \caption[Sơ đồ khối cho Website quản trị viên]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho Website quản trị viên}
+  \label{fmECG_architecture-Admin} %đặt tên cho ảnh
 \end{figure}
 
-Tiếp theo, để xử lý những vấn đề gặp phải ở trên, giải pháp ở đây đó chính là sử dụng một cầu nối, cầu nối Javascript (một ngôn ngữ lập trình bậc cao)
-sẽ giảm tải việc không phải chạm đến native code, đơn giản hoá việc code ứng dụng, nhược điểm là tốc độ xử lý và chạy ứng
-dụng sẽ chậm hơn vì phải chuyển từ Javascript qua Native Code khi chạy. 
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=8cm]{Images/system/flutter_dart.png}
-  \caption[Kiến trúc ứng dụng của hệ thống sử dụng Method Channel Flutter]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Kiến trúc ứng dụng của hệ thống sử dụng Method Channel Flutter}
-  \label{flutter_dart} %đặt tên cho ảnh
-\end{figure}
-
-Giải pháp của Flutter là việc xây dựng sẵn Widget tương tác trực tiếp với Native Code, người dùng chỉ cần gọi Widget và tuỳ
-biến dựa trên mong muốn, và Method Channel cho việc phát triển những chức năng mà Flutter chưa thực sự hỗ trợ. Việc kết hợp này
-giúp cho tốc độ xử lý nhanh và đảm bảo có chiều sâu khi hỗ trợ cả Native Code bắt kỳ khi nào chúng ta cần.
-
-
-\paragraph{Firebase}
-\mbox{}
-
-Ứng dụng di động của bệnh nhân và bác sĩ sử dụng Firebase Firestore để lưu trữ tin nhắn và trong tương lai sẽ sử dụng Firebase
-Messaging để gửi thông báo đến cho người nhận. Dưới đây là phần giới thiệu của chúng em về Firebase Firestore:
-
-Firebase Firestore: là một cơ sở dữ liệu NoSQL của Firebase, cho phép bạn lưu trữ và đồng bộ dữ liệu trong thời gian thực giữa ứng dụng của bạn và cơ sở dữ liệu trên đám mây. Firestore được thiết kế để cung cấp hiệu suất cao, đáng tin cậy và dễ sử dụng cho việc lưu trữ và truy vấn dữ liệu.
-Đặc điểm của Firebase Firestore bao gồm:
-\begin{itemize} 
-  \item Lưu trữ dữ liệu dưới dạng tài liệu (document) và bộ sưu tập (collection) có cấu trúc linh hoạt
-  \item Hỗ trợ lắng nghe sự thay đổi dữ liệu trong thời gian thực thông qua tính năng "realtime updates"
-  \item Được tích hợp sâu với các sản phẩm và dịch vụ khác của Firebase, như Firebase Authentication, Firebase Cloud Functions, và Firebase Cloud Messaging
-  \item Có SDK hỗ trợ nhiều nền tảng, bao gồm Android, iOS, web và cả Flutter.
-\end{itemize}
-
-\paragraph{Bluetooth Low Energy}
-\mbox{}
-
-Ứng dụng di động của bệnh nhân sử dụng Bluetooth với công nghệ Bluetooth Low Energy để truyền/nhận dữ liệu giữa ứng dụng di
-động với thiết bị IOT. BLE được thiết kế để tiết kiệm năng lượng và thích hợp cho các ứng dụng yêu cầu tiêu thụ điện năng thấp 
-và phạm vi hoạt động ngắn, rất phù hợp với thiết bị điện tim cần truyền dữ liệu liên tục đến ứng dụng. Trong ứng dụng di động này, chúng
-em sử dụng đến hai khái niệm thường dùng trong BLE đó là Service và Characteristic.
-
-
-\begin{itemize} 
-  \item Service: được định danh bằng UUID, dùng để định nghĩa một chức năng cụ thể của thiết bị
-  \item Characteristic: được định danh bằng UUID, thuộc về một service nhất định và có thể thực hiện việc đọc, ghi cũng như lắng nghe
-\end{itemize}
-
-Việc thực hiện lắng nghe Characteristic và lấy dữ liệu ra là chìa khoá của Bluetooth trong ứng dụng lần này.
-  \begin{figure}[H]
-        \centering
-        \includegraphics[width=16cm,height=8cm]{Images/system/ble_services.png}
-        \caption[Ví dụ mô tả chức năng của Bluetooth Low Energy]{\bfseries \fontsize{12pt}{0pt}
-        \selectfont Ví dụ mô tả chức năng của Bluetooth Low Energy}
-        \label{ble_services} %đặt tên cho ảnh
-  \end{figure}
-
-  Hình \ref{ble_services} mô tả cách mà dữ liệu sẽ được truyền/nhận hay lắng nghe thông qua Write/Read/Notify. 
-  Với Central (đại diện cho thiết bị di động), Peripheral đại diện cho thiết bị ngoại vi (thiết bị đo), sau khi kết nối giữa chúng 
-  được thiết lập, việc giao tiếp giữa chúng phụ thuộc vào việc chúng ta sẽ kết nối với đúng UUID của từng services hay
-  characteristic như đã được giới thiệu ở trên.
-
-\subsubsection{Server và Website}
-
-\paragraph{NodeJs}
-\mbox{}
-
-Node.js là một nền tảng phát triển ứng dụng mã nguồn mở cực kỳ mạnh mẽ và đa dạng, giúp các nhà phát triển xây dựng các ứng dụng web và dịch vụ server-side với hiệu suất cao và khả năng mở rộng linh hoạt. Được ra đời vào năm 2009, Node.js đã nhanh chóng trở thành một trong những công nghệ phổ biến nhất trong cộng đồng lập trình viên và được ứng dụng rộng rãi trong các dự án phức tạp cũng như các ứng dụng thời gian thực.
-
-Một trong những điểm mạnh nổi bật của Node.js là sự hỗ trợ tốt cho kiến trúc không đồng bộ (asynchronous architecture). Bản chất của kiến trúc này là khả năng xử lý đa luồng (multithreading) không đồng bộ, giúp ứng dụng có thể xử lý nhiều yêu cầu cùng một lúc mà không phải chờ đợi hoàn thành từng yêu cầu trước. Điều này cho phép Node.js xử lý các yêu cầu I/O (Input/Output) nặng như truy vấn cơ sở dữ liệu, đọc/ghi dữ liệu từ tập tin, hay gửi và nhận các yêu cầu HTTP một cách hiệu quả và nhanh chóng. Sự không đồng bộ cũng giúp tăng hiệu suất cho ứng dụng, đồng thời tiết kiệm tài nguyên hệ thống.
-
-Node.js được xây dựng dựa trên JavaScript, ngôn ngữ lập trình phổ biến và có tính linh hoạt cao. Sự hòa quyện giữa Node.js và JavaScript cho phép phát triển viên sử dụng cùng một ngôn ngữ cho cả phía client và phía server, giúp đơn giản hóa việc phát triển và duy trì mã nguồn. Ngoài ra, cộng đồng phát triển JavaScript rất lớn và đầy đủ tài nguyên học tập và hỗ trợ trực tuyến, điều này làm cho việc học và sử dụng Node.js trở nên dễ dàng và thuận tiện.
-
-Vì Node.js là mã nguồn mở, nên nó rất linh hoạt và có khả năng tùy chỉnh cao. Phát triển viên có thể sửa đổi và mở rộng các tính năng của Node.js tùy theo nhu cầu của dự án một cách dễ dàng. Hơn nữa, Node.js có cộng đồng lớn và năng động, luôn cập nhật và cải tiến mã nguồn để đáp ứng yêu cầu của các dự án phức tạp và đa dạng. Cộng đồng Node.js cũng cung cấp rất nhiều các thư viện và module mở rộng, giúp tăng tính năng và hiệu suất của ứng dụng.
-
-Một trong những ưu điểm nổi bật của Node.js là hỗ trợ đa nền tảng (cross-platform), cho phép chạy ứng dụng trên nhiều hệ điều hành khác nhau như Windows, macOS, Linux, và nhiều nền tảng khác. Điều này giúp đơn giản hóa quá trình triển khai và triển khai ứng dụng trên nhiều môi trường mà không cần thay đổi mã nguồn.
-
-Một ưu điểm khác của Node.js là hỗ trợ tốt cho việc xây dựng các ứng dụng thời gian thực (real-time applications). Điều này rất hữu ích trong việc xây dựng các ứng dụng trò chơi trực tuyến, ứng dụng trò chuyện (chat applications), hay ứng dụng giao tiếp thời gian thực. Cơ chế WebSocket được tích hợp sẵn trong Node.js giúp kết nối và truyền thông dữ liệu giữa server và client một cách liên tục và nhanh chóng.
-
-Bên cạnh đó, Node.js cũng hỗ trợ các thư viện và giao thức mạng như HTTP, HTTPS, TCP, và UDP, cho phép phát triển viên xây dựng các ứng dụng mạng phức tạp và mạnh mẽ. Node.js cũng cung cấp khả năng tạo máy chủ đơn giản và hiệu quả, giúp xây dựng các ứng dụng web phức tạp với khả năng mở rộng linh hoạt.
-
-Trong việc lưu trữ dữ liệu, Node.js hỗ trợ cơ chế xử lý dữ liệu không đồng bộ, giúp tối ưu hóa hiệu suất của ứng dụng trong việc truy xuất và lưu trữ dữ liệu vào cơ sở dữ liệu. Node.js cũng hỗ trợ các cơ sở dữ liệu phổ biến như MySQL, PostgreSQL, MongoDB, và Redis, cho phép phát triển viên lựa chọn cơ sở dữ liệu phù hợp với yêu cầu của dự án.
-
-Ngoài ra, Node.js còn hỗ trợ các tiện ích cho việc phát triển ứng dụng như gỡ lỗi (debugging), kiểm thử (testing), và quản lý gói (package management) thông qua npm (Node Package Manager). Việc sử dụng các công cụ và thư viện này giúp đơn giản hóa việc phát triển và nâng cao chất lượng của mã nguồn.
-
-Trong quá trình triển khai ứng dụng, Node.js hỗ trợ dễ dàng tích hợp với các công cụ triển khai (deployment tools) như Docker và Kubernetes, giúp đơn giản hóa quá trình triển khai và vận hành ứng dụng trên các môi trường khác nhau.
-
-Tổng kết lại, Node.js là một nền tảng phát triển ứng dụng đa dạng và mạnh mẽ, với nhiều ưu điểm nổi trội như kiến trúc không đồng bộ, tích hợp với JavaScript, đa nền tảng, hỗ trợ ứng dụng thời gian thực, và cộng đồng lớn hỗ trợ phong phú. Với những lợi ích đáng kể này, Node.js đã trở thành một lựa chọn ưu việt cho việc xây dựng các ứng dụng web và dịch vụ server-side hiệu quả và mạnh mẽ.
-
-\paragraph{Javascript}
-\mbox{}
-
-JavaScript là một ngôn ngữ lập trình thông dịch, đa mục đích và được sử dụng phổ biến trên web. Nó ra đời vào năm 1995 bởi Brendan Eich, khi còn là một ngôn ngữ lập trình đơn giản để cung cấp tính năng tương tác và hiệu ứng động cho trang web. Tuy nhiên, từ đó đến nay, JavaScript đã trở thành một trong những ngôn ngữ lập trình quan trọng nhất trên thế giới, vượt qua giới hạn trang web và mở rộng sang nhiều lĩnh vực phát triển phần mềm khác nhau.
-
-Một trong những yếu tố quan trọng đóng góp vào sự phổ biến của JavaScript là việc nó được tích hợp một cách tự nhiên và mạnh mẽ với các trình duyệt web. Trước khi JavaScript xuất hiện, việc tạo ra hiệu ứng động và tương tác trên trang web đòi hỏi sự hỗ trợ của các ngôn ngữ lập trình phía server như PHP hoặc các công nghệ khác. JavaScript đã định hình lại cách các ứng dụng web tương tác và hiển thị nội dung, giúp chúng trở nên đa dạng và mạnh mẽ hơn.
-
-JavaScript là một ngôn ngữ linh hoạt và dễ tiếp cận, cho phép người phát triển xây dựng các ứng dụng phong phú và phức tạp với giao diện tương tác, kiểu dáng đẹp mắt và tính năng đa dạng. Ngôn ngữ này hỗ trợ một loạt các kiểu dữ liệu như số, chuỗi, mảng, đối tượng và hỗ trợ xử lý chuỗi, số học, ngày tháng, và các phép tính logic phức tạp.
-
-Một điểm mạnh của JavaScript là khả năng xử lý các sự kiện (event) và gắn kết chúng vào các thành phần trên trang web. Sự kiện là những hành động như nhấp chuột, nhập liệu từ bàn phím, hoặc thay đổi trạng thái của trang web. JavaScript cho phép người phát triển xử lý các sự kiện này và thay đổi nội dung hoặc hành vi của trang web một cách linh hoạt, đáp ứng tương tác của người dùng.
-
-Ngoài ra, JavaScript còn hỗ trợ các khái niệm cấu trúc dữ liệu và kiểu dữ liệu linh hoạt như đối tượng (object), mảng (array), và chuỗi (string). Điều này cho phép người phát triển xây dựng các ứng dụng phức tạp và có tính mô đun cao, giúp quản lý mã nguồn dễ dàng và giảm thiểu lỗi trong quá trình phát triển.
-
-Một trong những tính năng đáng chú ý của JavaScript là khả năng thực hiện các yêu cầu mạng bất đồng bộ (asynchronous) thông qua việc sử dụng các API như XMLHttpRequest (XHR) hay Fetch API. Điều này cho phép trang web tương tác với các dịch vụ web và cơ sở dữ liệu một cách hiệu quả mà không làm trì hoãn trình duyệt.
-
-JavaScript cũng hỗ trợ việc tạo ra các ứng dụng web động, đặc biệt là những ứng dụng đơn trang (single-page applications - SPA). SPA là mô hình phát triển ứng dụng web mà trang web chỉ tải một lần duy nhất khi người dùng truy cập, và sau đó các tương tác tiếp theo được thực hiện một cách bất đồng bộ thông qua JavaScript để cập nhật nội dung và thay đổi giao diện mà không cần tải lại trang. Điều này giúp tăng tốc độ và trải nghiệm người dùng.
-
-Một yếu tố quan trọng khác là cộng đồng JavaScript rất đông đảo và nhiệt tình. Có rất nhiều người dùng và nhà phát triển trên toàn thế giới đóng góp và chia sẻ mã nguồn, thư viện, framework và các tài liệu học tập trực tuyến. Điều này làm cho việc học và sử dụng JavaScript trở nên dễ dàng và thuận tiện, đồng thời giúp phát triển viên giải quyết các vấn đề và thách thức trong quá trình xây dựng ứng dụng.
-
-Một trong những hướng phát triển quan trọng của JavaScript là sự phát triển của các framework và thư viện mã nguồn mở như React, Angular, và Vue.js. Các framework này giúp người phát triển xây dựng các ứng dụng web phức tạp và mạnh mẽ một cách dễ dàng và hiệu quả hơn, đồng thời đảm bảo tính tương thích và bảo mật.
-
-Tuy nhiên, JavaScript cũng có một số hạn chế như việc thực hiện mã nguồn phức tạp có thể dẫn đến các vấn đề bảo mật và hiệu suất. Để giải quyết vấn đề này, người phát triển cần phải tuân thủ các nguyên tắc phát triển an toàn và tối ưu hóa mã nguồn.
-
-Tổng kết lại, JavaScript là một ngôn ngữ lập trình linh hoạt, mạnh mẽ và phổ biến, có nhiều ưu điểm vượt trội như tích hợp tốt với trình duyệt, đa dạng kiểu dữ liệu, khả năng thực hiện bất đồng bộ, và cộng đồng phát triển mạnh mẽ. JavaScript đã định hình lại cách các ứng dụng web tương tác và được sử dụng rộng rãi trong nhiều lĩnh vực phát triển phần mềm. Sự phát triển của các framework và thư viện JavaScript giúp người phát triển xây dựng các ứng dụng web phức tạp và mạnh mẽ một cách dễ dàng và hiệu quả hơn.
-
-\paragraph{AdminJS}
-\mbox{}
-
-AdminJS là một framework mã nguồn mở được thiết kế để hỗ trợ phát triển các trang quản lý (admin dashboard) dễ dàng và nhanh chóng. Với AdminJS, người phát triển có thể xây dựng các giao diện quản lý phức tạp và mạnh mẽ một cách dễ dàng và hiệu quả, giúp quản lý và điều hành hệ thống, ứng dụng hoặc dịch vụ một cách thuận tiện và hiệu quả hơn.
-
-Một trong những ưu điểm nổi bật của AdminJS là tích hợp các tính năng và chức năng phong phú sẵn có, giúp giảm thiểu thời gian và công sức trong việc xây dựng giao diện quản lý. AdminJS cung cấp các thành phần giao diện (UI components) sẵn có cho việc quản lý các bảng dữ liệu (data tables), hiển thị các biểu đồ thống kê, tạo các biểu mẫu nhập liệu (form fields) và nhiều tính năng khác. Nhờ vậy, người phát triển không cần phải viết mã nguồn từ đầu mà vẫn có thể xây dựng các trang quản lý đẹp mắt và chuyên nghiệp.
-
-AdminJS hỗ trợ tích hợp với nhiều loại cơ sở dữ liệu phổ biến như MongoDB, PostgreSQL, MySQL, và SQLite, giúp tương tác và quản lý dữ liệu một cách dễ dàng. Ngoài ra, nó cũng hỗ trợ tích hợp với các framework và thư viện phổ biến như Express.js, Nest.js, và các thư viện mã nguồn mở khác. Tích hợp với các công nghệ này giúp AdminJS trở nên linh hoạt và dễ dàng tích hợp vào các dự án sẵn có.
-
-Một tính năng quan trọng của AdminJS là khả năng tùy chỉnh và mở rộng. Người phát triển có thể tùy chỉnh các thành phần giao diện sẵn có để phù hợp với yêu cầu và phong cách của dự án. Điều này giúp tạo ra các trang quản lý có giao diện độc đáo và phù hợp với thương hiệu của dự án. Ngoài ra, người phát triển cũng có thể mở rộng và thêm các tính năng tùy chỉnh theo yêu cầu của dự án một cách dễ dàng.
-
-AdminJS cũng hỗ trợ tích hợp các tính năng bảo mật và xác thực. Người phát triển có thể dễ dàng thiết lập và quản lý các quyền truy cập và vai trò người dùng trên các trang quản lý. Điều này giúp bảo mật và bảo vệ dữ liệu quan trọng khỏi việc truy cập trái phép. AdminJS cũng hỗ trợ tích hợp với các công nghệ bảo mật như JSON Web Token (JWT), Passport.js và các cơ chế xác thực khác.
-
-Một điểm mạnh nữa của AdminJS là sự hỗ trợ mạnh mẽ từ cộng đồng. AdminJS có một cộng đồng đông đảo và năng động, luôn cập nhật và đóng góp cho mã nguồn để nâng cao tính năng và hiệu suất của framework. Cộng đồng cũng cung cấp rất nhiều tài liệu học tập và hỗ trợ trực tuyến, giúp người phát triển học hỏi và giải quyết các vấn đề trong quá trình xây dựng giao diện quản lý.
-
-Ngoài ra, AdminJS còn hỗ trợ tích hợp với các công cụ phát triển phổ biến như VSCode, Sublime Text, và Atom, giúp tăng cường trải nghiệm phát triển và giảm thiểu lỗi trong quá trình phát triển. Nó cũng hỗ trợ tích hợp với các công cụ quản lý mã nguồn như Git và GitHub, giúp quản lý và kiểm soát phiên bản mã nguồn một cách hiệu quả.
-
-Tóm lại, AdminJS là một framework mạnh mẽ và linh hoạt để xây dựng các trang quản lý (admin dashboard) dễ dàng và nhanh chóng. Với các tính năng và chức năng phong phú, tích hợp dễ dàng với nhiều loại cơ sở dữ liệu và khả năng tùy chỉnh mạnh mẽ, AdminJS giúp người phát triển xây dựng các giao diện quản lý chuyên nghiệp và mạnh mẽ một cách dễ dàng và hiệu quả. Sự hỗ trợ mạnh mẽ từ cộng đồng và tích hợp với các công cụ phát triển giúp tăng cường trải nghiệm phát triển và đảm bảo chất lượng của mã nguồn.
-
-\paragraph{MySQL}
-\mbox{}
-
-MySQL là một hệ quản trị cơ sở dữ liệu mã nguồn mở phổ biến và mạnh mẽ, được sử dụng rộng rãi trong nhiều ứng dụng và dự án phát triển phần mềm. MySQL ra đời vào năm 1995, do công ty TcX phát triển và sau đó được mua lại bởi công ty MySQL AB. Hiện nay, MySQL thuộc sở hữu của Oracle Corporation sau khi Oracle mua lại Sun Microsystems - công ty mẹ của MySQL AB vào năm 2010.
-
-MySQL là hệ quản trị cơ sở dữ liệu (DBMS - Database Management System) dựa trên mô hình quan hệ (relational database) và sử dụng ngôn ngữ truy vấn cấu trúc (Structured Query Language - SQL) để thực hiện các thao tác truy vấn dữ liệu. Mô hình quan hệ của MySQL cho phép lưu trữ và quản lý dữ liệu trong các bảng có mối quan hệ với nhau, tạo điều kiện để thực hiện các truy vấn phức tạp và hiệu quả.
-
-MySQL hỗ trợ nhiều loại dữ liệu phổ biến như số, chuỗi, ngày tháng, boolean, và các kiểu dữ liệu đặc biệt khác như JSON và các kiểu dữ liệu không gian (spatial data types). Điều này giúp người dùng lưu trữ và xử lý các loại dữ liệu khác nhau một cách linh hoạt và hiệu quả.
-
-Một trong những ưu điểm quan trọng của MySQL là hiệu suất cao và khả năng mở rộng linh hoạt. MySQL được tối ưu hóa để xử lý các yêu cầu truy vấn nhanh chóng và hiệu quả, cho phép xử lý hàng triệu hoặc thậm chí hàng tỷ bản ghi một cách mượt mà. Ngoài ra, MySQL cũng hỗ trợ tính năng phân chia dữ liệu (sharding) và nhân bản dữ liệu (replication), giúp tăng khả năng chịu tải và đảm bảo tính sẵn sàng và tin cậy của hệ thống.
-
-MySQL cung cấp các tính năng bảo mật và quản lý người dùng mạnh mẽ. Người quản trị có thể xác định và quản lý các quyền truy cập của người dùng và vai trò của họ trên các bảng và cơ sở dữ liệu. Điều này giúp bảo vệ dữ liệu quan trọng và ngăn chặn truy cập trái phép.
-
-MySQL hỗ trợ các công cụ và giao thức mạng như JDBC, ODBC, và các API kết nối khác, cho phép ứng dụng kết nối và tương tác với cơ sở dữ liệu MySQL từ các ứng dụng phần mềm và trang web khác nhau. MySQL cũng hỗ trợ giao thức kết nối và truy vấn an toàn, giúp đảm bảo tính bảo mật và chống lại các cuộc tấn công từ xa.
-
-MySQL có sự hỗ trợ mạnh mẽ từ cộng đồng và cung cấp rất nhiều tài liệu học tập và hỗ trợ trực tuyến. Cộng đồng MySQL rất đông đảo và năng động, luôn cập nhật và đóng góp cho mã nguồn để nâng cao tính năng và hiệu suất của hệ quản trị cơ sở dữ liệu này.
-
-MySQL cũng hỗ trợ tích hợp với các công cụ phát triển và quản lý mã nguồn như MySQL Workbench, phpMyAdmin và các công cụ khác, giúp quản lý và xem xét dữ liệu một cách thuận tiện và hiệu quả.
-
-Một điểm đáng chú ý nữa của MySQL là tính tương thích với nhiều hệ điều hành và nền tảng khác nhau. MySQL có phiên bản dành cho Windows, macOS và các hệ điều hành Linux khác nhau, giúp người dùng lựa chọn và triển khai phù hợp với môi trường họ sử dụng.
-
-Tóm lại, MySQL là một hệ quản trị cơ sở dữ liệu mã nguồn mở mạnh mẽ và phổ biến, được sử dụng rộng rãi trong nhiều ứng dụng và dự án phát triển phần mềm. Với tính năng hiệu suất cao, khả năng mở rộng linh hoạt, tính bảo mật và quản lý người dùng, sự hỗ trợ từ cộng đồng và tích hợp với nhiều công cụ phát triển, MySQL đã trở thành một lựa chọn ưu việt cho việc quản lý và xử lý cơ sở dữ liệu.
-
-
-\paragraph{Postman}
-\mbox{}
-
-Postman là một ứng dụng máy tính được sử dụng phổ biến trong quá trình phát triển và kiểm thử các dịch vụ web (web service) và các API (Application Programming Interface). Được phát triển bởi công ty Postman Inc., ứng dụng này cung cấp một giao diện đơn giản và dễ sử dụng để gửi các yêu cầu HTTP (HTTP request) và nhận các phản hồi (response) từ các API. Postman giúp người phát triển dễ dàng thử nghiệm và kiểm tra tính năng, hiệu năng và bảo mật của các dịch vụ web và API, từ đó đảm bảo chất lượng và độ tin cậy của ứng dụng.
-
-Một trong những ưu điểm nổi bật của Postman là khả năng gửi các yêu cầu HTTP một cách linh hoạt và dễ dàng. Người dùng có thể tùy chỉnh các yêu cầu HTTP bằng cách thêm các thông số và tham số, cũng như xác định các phương thức HTTP như GET, POST, PUT, DELETE, và nhiều phương thức khác. Điều này giúp người phát triển kiểm tra các chức năng khác nhau của API và dịch vụ web một cách hiệu quả.
-
-Postman cũng hỗ trợ quản lý các môi trường (environments) khác nhau, cho phép người dùng cấu hình các giá trị môi trường như URL, token xác thực, hay các giá trị động khác. Nhờ vậy, người dùng có thể thử nghiệm các yêu cầu API trên nhiều môi trường khác nhau một cách dễ dàng, từ đó giả lập các trường hợp sử dụng và kiểm tra tính ổn định của API.
-
-Một tính năng mạnh mẽ khác của Postman là khả năng tự động hóa các bước kiểm thử và thực hiện các bộ kiểm thử (test suite). Người dùng có thể viết các mã kiểm thử (test script) bằng ngôn ngữ JavaScript để kiểm tra phản hồi từ API và đánh giá tính đúng đắn của dữ liệu trả về. Điều này giúp tăng cường tính tin cậy của các bài kiểm thử và giảm thiểu nguy cơ sai sót từ phía người dùng.
-
-Postman hỗ trợ tích hợp với các công cụ và dịch vụ phổ biến khác như GitHub, Jenkins, và các công cụ kiểm thử liên quan khác. Điều này giúp người phát triển tích hợp Postman vào quy trình phát triển phần mềm tự động một cách dễ dàng, từ việc kiểm tra mã nguồn đến việc chạy các bài kiểm thử tự động.
-
-Postman cung cấp giao diện người dùng thân thiện và trực quan, giúp người dùng dễ dàng thao tác và nắm bắt các tính năng của ứng dụng. Nó cũng hỗ trợ nhiều loại dữ liệu và định dạng như JSON, XML, và form data, giúp người dùng kiểm thử các yêu cầu API đa dạng và phong phú.
-
-Ngoài ra, Postman còn hỗ trợ tích hợp với Postman Cloud, một dịch vụ lưu trữ dữ liệu trực tuyến cho phép người dùng chia sẻ và quản lý các bài kiểm thử và dữ liệu API trực tuyến. Điều này giúp tăng cường sự cộng tác và quản lý dự án trong quá trình phát triển.
-
-Postman đã trở thành một công cụ quan trọng và không thể thiếu trong quá trình phát triển và kiểm thử các ứng dụng và dịch vụ web. Sự dễ dàng sử dụng, tích hợp và tự động hóa giúp tăng cường năng suất và chất lượng của quá trình phát triển, đồng thời giảm thiểu nguy cơ lỗi và tối ưu hóa hiệu suất của ứng dụng.
+Quản trị viên sẽ quản lý 2 Services chính đó là quản lý người dùng (User Management Service) và quản lý phân công
+bác sĩ - bệnh nhân (Patient Assignment Service), logic và thứ tự các khối tương đồng với ứng dụng dành cho bác sĩ.
+
+Tiếp theo để phân tích cụ thể hơn từng luồng trong hệ thống qua use case, chúng em xin phép được trình bày các sơ đồ tuần
+tự. 
+\newpage
 
 
 \subsection{Thiết kế cơ sở dữ liệu}
+\label{design_database}
 
 
 \subsubsection{Chuyển mô hình thực thể liên kết sang mô hình quan hệ}
@@ -653,9 +521,186 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 \end{figure}
 
 
+\subsection{Thiết kế chi tiết hệ thống}
+
+\subsubsection{Sơ đồ lớp cho ứng dụng di động, website và server}
+
+\paragraph{Ứng dụng di động}
+\mbox{}
+
+Ứng dụng di động được tổ chức theo mô hình MVC, với ba khối chính là Models, Views và Controllers:
+  
+\begin{itemize}
+  \item Khối "Models": Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu.
+ 
+  \item Khối "Controllers": Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng.
+
+  \item Khối "Views": Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng.
+\end{itemize}
+
+Chi tiết từng lớp và phần giải thích cho mỗi khối được chúng em thể hiện bằng hình và lời trong các mục bên dưới. 
+
+\begin{enumerate}[a)]
+  \item Danh sách các class diagram cho ứng dụng di động
+    
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm,height=18cm]{Images/mobile_app/class_diagram/mobile_class_model.png}
+    \caption[Sơ đồ lớp của khối Models trong ứng dụng di động]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của khối Models trong ứng dụng di động}
+    \label{mobile_class_model} %đặt tên cho ảnh
+  \end{figure}
+
+  Dựa trên mục \ref{design_database} về phần thiết kế cơ sở dữ liệu, Hình \ref{mobile_class_model} thể hiện các lớp trong Models:
+  \begin{itemize}
+    \item ECGRecordModel: Lớp thể hiện cấu trúc của một bản ghi dữ liệu điện tim
+    \item NewsModel: Lớp thể hiện cấu trúc một tin tức
+    \item NewsCategoryModel: Lớp thể hiện cấu trúc một danh mục tin tức
+    \item UserModel: Lớp thể hiện cho cấu trúc người dùng trong hệ thống
+    \item DeviceModel: Lớp thể hiện cho thông tin thiết bị điện tim 
+    \item PatientDoctorAssignmentModel: Lớp thể hiện cho thông tin phân công bác sĩ và bệnh nhân.
+  \end{itemize}
+
+  Mỗi lớp đều có một hàm fromJSON để chuyển từ dữ liệu JSON lấy từ API vào trong Model tương ứng. Điều này giúp
+  việc code và xử lý trở nên dễ dàng hơn. Sau khi định nghĩa được các Model.
+  
+  Phần tiếp theo là xác định các Views hay giao diện cần có trong ứng dụng di động và Controllers xử lý logic với những
+  yêu cầu từ người dùng.
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=14cm,height=7cm]{Images/mobile_app/class_diagram/mobile_class_view.png}
+    \caption[Sơ đồ lớp của khối Views trong ứng dụng di động]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của khối Views trong ứng dụng di động}
+    \label{mobile_class_view} %đặt tên cho ảnh
+  \end{figure}
+
+  Hình \ref{mobile_class_view} thể hiện các lớp trong Views. Mỗi use case liên quan đến bệnh nhân/bác sĩ thể hiện ở sơ đồ 
+  usecase Hình \ref{use_case_general} sẽ đại diện cho một lớp giao diện tương ứng. Trong đó sẽ gồm các màn cho từng chức năng
+  cụ thể:
+
+  \begin{itemize}
+    \item MainScreens: Các giao diện không thuộc chức năng cụ thể, những giao diện chính là tiền đề cho các giao diện chức năng khác
+    \item AuthScreens: Các giao diện xác thực người dùng 
+    \item BluetoothScreens: Các giao diện phục vụ cho quá trình kết nối và theo dõi dữ liệu điện tim thông qua bluetooth
+    \item NewsScreens: Các giao diện xem tin tức
+    \item UserScreens: Các giao diện cho người dùng
+    \item ChatScreens: Các giao diện phục vụ quá trình trao đổi giữa bác sĩ và bệnh nhân
+    \item HistoryRecordsScreens: Các giao diện cho phép người dùng xem lại lịch sử đo cùng với biểu đồ. 
+  \end{itemize}
+  
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm,height=15cm]{Images/mobile_app/class_diagram/mobile_class_controller.png}
+    \caption[Sơ đồ lớp của khối Controllers trong ứng dụng di động]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của khối Controllers trong ứng dụng di động}
+    \label{mobile_class_controller} %đặt tên cho ảnh
+  \end{figure}
+
+  Hình \ref{mobile_class_controller} thể hiện các lớp trong Controllers. Mỗi lớp trong Controllers quản lý một nhiệm vụ
+  nhất định được chia nhỏ thành các hàm, phương thức tương ứng giúp việc phia chia và đặc biệt khi kiểm soát lỗi rất dễ dàng do
+  chúng ta có thể dự đoán được lỗi phát sinh ở chức năng và hàm nào. 
+
+  % //TODO: Thiếu file managements trong sơ đồ
+  \begin{itemize}
+    \item AuthProvider: Cung cấp các biến và hàm để thực hiện chức năng xác thực người dùng
+    \item ECGRecordController: Cung cấp các hàm, phương thức để thực hiện chức năng liên quan đến các bản ghi điện tim
+    \item ECGDataController: Cung cấp các hàm, phương thức để xử lý dữ liệu của bản ghi diện tim thời gian thực
+    \item FileController: Cung cấp các hàm, phương thức để xử lý file (tạo, sửa, xoá file), phục vụ chính cho ECGRecordController  
+    \item NewsController: Cung cấp các hàm, phương thức để lấy dữ liệu tin tức
+    \item PatientDoctorAssignmentController: Cung cấp các hàm, phương thức để lấy dữ liệu phân công bệnh nhân/bác sĩ
+    \item UserController: Cung cấp các hàm, phương thức để thao tác với dữ liệu người dùng 
+    \item FirebaseMessagesController: Cung cấp các hàm, phương thức để thao tác với tin nhắn.
+  \end{itemize}
+
+  Các lớp được hình thành là nền tảng để viết code dễ dàng hơn, đồng thời điều này cũng giúp cho cấu trúc thư mục trong
+  bất kỳ dự án nào trở nên sạch sẽ và dễ theo dõi hơn.
+  
+  \end{enumerate}
+
+\paragraph{Server và Website quản trị hệ thống}
+\mbox{}
+
+\begin{enumerate}[a)]
+\item Danh sách các class diagram
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=13cm]{Images/server/class/class_controller.png}
+  \caption[Sơ đồ lớp của package Controllers]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Controllers}
+  \label{class_controller} %đặt tên cho ảnh
+\end{figure}
 
 
-\subsection{Phân tích chi tiết hệ thống}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=16cm]{Images/server/class/class_model.png}
+  \caption[Sơ đồ lớp của package Models]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Models}
+  \label{class_model} %đặt tên cho ảnh
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=6cm]{Images/server/class/class_route.png}
+  \caption[Sơ đồ lớp của package Routes]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Routes}
+  \label{class_route} %đặt tên cho ảnh
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=14cm]{Images/server/class/class_admin.png}
+  \caption[Sơ đồ lớp của package View và Admin]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package View và Admin}
+  \label{class_admin} %đặt tên cho ảnh
+\end{figure}
+
+
+\begin{itemize}
+
+  \item Package "Controllers":
+
+  Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng.
+  \item Package "Models":
+  
+  Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu.
+  \item Package "Routes":
+  
+  Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng.
+  \item Package "Views":
+  
+  Chứa các view components đại diện cho giao diện người dùng.
+  \item Package "Admin":
+  
+  Chứa các thành phần liên quan đến trang Admin dashboard.
+  \item Package "Resources" (Trong "Admin"):
+  
+  Chứa các lớp Resource (nguồn tài nguyên) đại diện cho các tài nguyên của trang Admin dashboard, bao gồm: AdminResource, DoctorResource, PatientResource, ECGRecordResource, NewsResource, NewsCategoryResource và PatientDoctorAssignmentResource.
+  \item Package "Components" (Trong "Admin"):
+  
+  Chứa các lớp Components đại diện cho các thành phần giao diện của trang Admin dashboard, bao gồm: ComponentLoader, DashboardViewComponent, NewsViewComponent, ECGRecordViewComponent và PatientDoctorAssignmentViewComponent.
+\end{itemize}
+
+
+
+\item Mối quan hệ
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=12cm]{Images/server/class/class_relation.png}
+  \caption[Mối quan hệ giữa các class ở phía server]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía server}
+  \label{class_relation} %đặt tên cho ảnh
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=15cm]{Images/server/class/class_admin_relation.png}
+  \caption[Mối quan hệ giữa các class ở phía website quản trị]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía website quản trị}
+  \label{class_admin_relation} %đặt tên cho ảnh
+\end{figure}
+
+\end{enumerate}
+
+
 
 \subsubsection{Thiết kế giao diện}
 
@@ -879,103 +924,6 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
   \end{tabularx}
   \label{bang41}
 \end{table}
-
-
-
-
-
-
-\subsubsection{Sơ đồ lớp}
-
-\paragraph{Ứng dụng}
-\mbox{}
-
-\paragraph{Server và Website quản trị hệ thống}
-\mbox{}
-
-\begin{enumerate}[a)]
-\item Danh sách các class diagram
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=13cm]{Images/server/class/class_controller.png}
-  \caption[Sơ đồ lớp của package Controllers]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Controllers}
-  \label{class_controller} %đặt tên cho ảnh
-\end{figure}
-
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=16cm]{Images/server/class/class_model.png}
-  \caption[Sơ đồ lớp của package Models]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Models}
-  \label{class_model} %đặt tên cho ảnh
-\end{figure}
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=14cm,height=6cm]{Images/server/class/class_route.png}
-  \caption[Sơ đồ lớp của package Routes]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Routes}
-  \label{class_route} %đặt tên cho ảnh
-\end{figure}
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=14cm]{Images/server/class/class_admin.png}
-  \caption[Sơ đồ lớp của package View và Admin]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package View và Admin}
-  \label{class_admin} %đặt tên cho ảnh
-\end{figure}
-
-
-\begin{itemize}
-
-  \item Package "Controllers":
-
-  Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng.
-  \item Package "Models":
-  
-  Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu.
-  \item Package "Routes":
-  
-  Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng.
-  \item Package "Views":
-  
-  Chứa các view components đại diện cho giao diện người dùng.
-  \item Package "Admin":
-  
-  Chứa các thành phần liên quan đến trang Admin dashboard.
-  \item Package "Resources" (Trong "Admin"):
-  
-  Chứa các lớp Resource (nguồn tài nguyên) đại diện cho các tài nguyên của trang Admin dashboard, bao gồm: AdminResource, DoctorResource, PatientResource, ECGRecordResource, NewsResource, NewsCategoryResource và PatientDoctorAssignmentResource.
-  \item Package "Components" (Trong "Admin"):
-  
-  Chứa các lớp Components đại diện cho các thành phần giao diện của trang Admin dashboard, bao gồm: ComponentLoader, DashboardViewComponent, NewsViewComponent, ECGRecordViewComponent và PatientDoctorAssignmentViewComponent.
-\end{itemize}
-
-
-
-\item Mối quan hệ
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=12cm]{Images/server/class/class_relation.png}
-  \caption[Mối quan hệ giữa các class ở phía server]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía server}
-  \label{class_relation} %đặt tên cho ảnh
-\end{figure}
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=15cm]{Images/server/class/class_admin_relation.png}
-  \caption[Mối quan hệ giữa các class ở phía website quản trị]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía website quản trị}
-  \label{class_admin_relation} %đặt tên cho ảnh
-\end{figure}
-
-\end{enumerate}
-
-
 
 
 \subsubsection{Sơ đồ tuần tự}
@@ -1267,5 +1215,174 @@ Sau đó, AdminJS sẽ thực hiện thao tác CRUD tương ứng trên các tà
 
 
 Sau khi AdminJS đã nhận được kết quả từ các tài nguyên, nó sẽ trả về kết quả đó cho ViewComponent. ViewComponent sẽ hiển thị kết quả tương ứng cho người dùng. Quá trình này được thực hiện đối với từng tài nguyên mà người dùng yêu cầu thực hiện thao tác CRUD.
+
+\subsubsection{Thiết kế và tối ưu các chức năng chính cho ứng dụng di động}
+\label{design_function_mobile}
+
+Ứng dụng di động được trong hệ thống được chia cụ thể gồm ứng dụng di động cho bệnh nhân và ứng dụng di động cho bác sĩ. Nhìn vào
+sơ đồ usecase chúng ta có thể thấy hầu hết các chức năng cơ bản của hai ứng dụng đều giống nhau như đăng nhập, xem lịch sử đo, nhắn tin.
+Điểm khác biệt giữa hai ứng dụng di động là ứng dụng di động cho bệnh nhân sẽ có thêm chức năng kết nối với thiết bị đo cũng như xem tin tức.
+
+Trong nội dung của mục \ref{design_function_mobile}, chúng em xin được phép trình bày chi tiết hướng thực hiện các chức năng
+từ các chức năng chung đến chức năng riêng cho bệnh nhân, đồng thời sẽ triển khai hướng tối ưu của từng chức năng (nếu có).
+
+Các chức năng chung của hai ứng dụng bao gồm: 
+\begin{itemize}
+  \item Chức năng đăng nhập
+  \item Chức năng xem lịch sử đo
+  \item Chức năng nhắn tin.
+\end{itemize}
+
+Các chức năng riêng của bệnh nhân bao gồm:
+\begin{itemize}
+  \item Chức năng kết nối và thực hiện đo với thiết bị điện tim
+  \item Chức năng xem tin tức.
+\end{itemize}
+
+\paragraph{Chức năng đăng nhập}
+\mbox{}
+
+Chức năng đăng nhập là chức năng chung của hai ứng dụng, có tương tác trực tiếp với API, logic cơ bản được thể hiện ở Hình \ref{login}
+luồng thực hiện ở phía server được triển khai ở 
+Hình \ref{backend_login}. Có thể nhận thấy việc đăng nhập trên App chỉ nên diễn ra một lần sau khi người dùng nhập thông tin,
+và đã được xác thực. Bởi mỗi lần tắt đi bật lại ứng dụng, nếu phải đăng nhập lại thì rất phiền cho người sử dụng, đặc biệt
+với những ứng dụng không đòi hỏi tính truy nhập và bảo mật quá cao. Có nhiều cách để lưu dữ liệu đăng nhập như:
+
+\begin{itemize}
+  \item Lưu ở bộ nhớ ngoài: Mỗi lần mở app sẽ kiểm tra dữ liệu trong file. Nếu khớp với điều kiện đặt ra sẽ cho người dùng vào thẳng app.
+  Tuy nhiên cách này khá rườm rà và yêu cầu người thực hiện phải truy xuất file nhiều.
+  \item Lưu trên server: Mỗi lần mở app sẽ đẩy một yêu cầu lên server và server sẽ trả về trạng thái. Tuy nhiên, như vậy mọi tác
+  vụ sẽ phụ thuộc hoàn toàn vào internet. Và nếu số lượng người sử dụng lớn thì hoàn toàn không phù hợp.
+  \item Lưu trong bộ nhớ cục bộ của ứng dụng: Các hệ điều hành đều cung cấp những thư viện giúp việc lưu trữ dữ liệu nhỏ một cách 
+  dễ dàng trong cục bộ ứng dụng. Đây là một phương pháp lưu dưới dạng key-value (khoá-giá trị), giúp việc truy/xuất hay ghi nhanh chóng.
+  Với Android, chúng ta có thể sử dụng SharedPreferences (thêm tham khảo), với IOS là UserDefault (thêm tham khảo)
+  % //TODO: thêm tham khảo sharepref
+
+\end{itemize}
+Vậy luồng hoàn chỉnh cho đăng nhập trên ứng dụng của chúng em sẽ là: người dùng nhập thông tin, thông tin được gửi lên server xác thực,
+nếu kết quả trả về của server là đúng, sẽ lưu dữ liệu đăng nhập của người dùng vào trong Shared Preferences (Local Storage). Khi tắt và mở lại app,
+ứng dụng sẽ lấy dữ liệu và kiểm tra, nếu có dữ liệu thì người dùng sẽ không phải đăng nhập lại. Hình dưới mô tả chi tiết phần thiết
+kế việc lưu dữ liệu đăng nhập.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=10cm]{Images/server/sequence/web/seq_auth.png}
+  \caption[Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) }
+  \label{seq_auth} %đặt tên cho ảnh
+\end{figure}
+
+\paragraph{Chức năng xem lịch sử đo}
+\mbox{}
+
+Chức năng xem lịch sử đo lấy dữ liệu trực tiếp trên server, với logic cơ bản được thể hiện ở Hình \ref{view_record_timeline}. 
+Để xem được lịch sử các lần đo, bệnh nhân cần thực hiện đo ít nhất một lần (hệ thống sẽ tự gửi dữ liệu lên server). Dữ liệu sau khi được
+load từ API về sẽ được vẽ lên biểu đồ. Các Hình thể hiện luồng API hoạt động ở server để lấy dữ liệu về cho ứng dụng di động.
+
+% //TODO: add hình
+% Hình \ref{getEcgRecordsByDoctor}, Hình \ref{convertExceltoJson} và Hình \ref{getEcgRecordsByUserId}
+% Thêm hình demo biểu đồ sau khi vẽ
+
+Biểu đồ có trục tung là giá trị điện áp, trục hoành là toàn bộ thời gian từ lúc bắt đầu đo đến khi kết thúc. Người dùng có thể,
+thực hiện các thao tác phóng to, thu nhỏ.
+
+\paragraph{Chức năng kết nối và thực hiện nhận dữ liệu với thiết bị điện tim}
+\mbox{}
+
+Chức năng kết nối và thực hiện đo với thiết bị điện tim là một trong những chức năng quan trọng nhất của ứng dụng. Chức năng này yêu cầu
+ứng dụng phải bật được bluetooth. Đầu tiên để có thể tiến hành đo, chúng ta phải thực hiện một kết nối bluetooth giữa ứng dụng di động và
+thiết bị đo điện tim. Sau khi dã kết nối thành công, dựa vào cơ chế của bluetooth low energy, chúng ta sẽ thiết lập để ứng dụng lắng
+nghe dữ liệu trả ra từ thiết bị điện tim. Dữ liệu thô được xử lý theo công thức tính toán và sau đó được vẽ trên biểu đồ. Người dùng sau
+khi thực hiện đo xong có thể chọn lưu kết quả đo lại (điều này sẽ đẩy dữ liệu đo lên server và bác sĩ có thể xem được).
+% //TODO: add reference
+% https://learn.adafruit.com/introduction-to-bluetooth-low-energy/gatt
+
+Đầu tiên việc kết nối Bluetooth với thiết bị đo điện tim là không khó khi có sự hỗ trợ của các thư viện và hệ điều hành, sau đó việc xử lý sau
+kết nối mới là một điều chúng ta cần phải lưu tâm tới. Sau khi kết nối với thiết bị đo điện tim, câu hỏi đặt ra là \textbf{làm thế nào
+để lắng nghe được dữ liệu} từ thiết bị điện tim? Đối với hệ thống BLE, sau khi kết nối thành công, một Profile Protocol được gọi
+là GATT (Generic ATTribute Profile) - xác định cách hai thiết bị sẽ truyền và nhận dữ liệu như thế nào thông qua
+Services và Characteristics sẽ được hình thành. 
+% //TODO: Chèn ảnh vào đây ảnh gatt
+Services là tập hợp của một nhóm thông tin để thực hiện một chức năng cụ thể,
+ví dụ Battery Service, Sensor Service, trong mỗi Service chính là một hoặc nhiều Characteristic, mỗi Characteristic đảm nhận
+một thông tin hoặc chức năng riêng biệt phục vụ cho Service đó. Mỗi một Service hay Characteristic đều có UUID (mã định danh duy nhất toàn cầu).
+
+Từ cơ sở trên, để có thể sẵn sàng lắng nghe được dữ liệu từ thiết bị điện tim, thiết bị di động cần kết nối đến đúng Services và Characteristics.
+% //TODO: Chèn ảnh nữa vào đây ảnh services and charac
+
+Trong thiết bị đo thực hiện trong đồ án lần này, chúng em xác định được những UUID tiêu chuẩn (biểu diễn dưới dạng String) để có thể lắng nghe được dữ liệu từ
+thiết bị:
+\begin{itemize}
+  \item UUID Service: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
+  \item UUID Characteristic: 6E400003-B5A3-F393-E0A9-E50E24DCCA9E
+\end{itemize}
+
+Sau khi hoàn thành phần xây dựng kết nối với thiết bị đo điện tim, quá trình thực hiện đo được bắt đầu. Ứng dụng sẽ lắng nghe
+dữ liệu từ thiết bị thông qua một hàm "subscribe characteristic", dữ liệu sẽ gửi liên tục qua characteristic này. Nhiệm vụ sau đó của ứng dụng là
+định nghĩa gói dữ liệu, xử lý và chuẩn hoá số liệu, từ đó vẽ lên biểu đồ. Chi tiết về bước định nghĩa gói dữ liệu, xử lý số liệu sẽ được chúng em trình bày
+ở chương sau. 
+% //TODO: add hình THêm hình luồng hoàn chỉnh thực hiện đo 
+
+
+Sau mỗi lần đo, dữ liệu sẽ được gửi lên server để lưu trữ và hiển thị lại cho bệnh nhân/bác sĩ quản lý xem nếu cần. Việc xem
+lịch sử đo được chúng em tiếp tục trình bày ở phần tiếp theo.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=10cm]{Images/server/sequence/web/seq_auth.png}
+  \caption[Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) }
+  \label{seq_auth} %đặt tên cho ảnh
+\end{figure}
+
+
+\paragraph{Chức năng xem tin tức}
+\mbox{}
+
+Chức năng xem tin tức lấy dữ liệu trực tiếp trên server, với logic cơ bản được thể hiện ở Hình \ref{view_news}. 
+Danh sách tin tức sẽ được load ngay khi người dùng mở ứng dụng (nếu có mạng). Tất cả phần xem trước của tin tức sẽ được lưu
+trong biến khi ứng dụng chạy, dữ liệu tin tức được lấy từ danh sách tin tức không bao gồm nội dung để giảm thiểu khối lượng
+thông tin dư thừa của gói tin. Chỉ khi người dùng chọn một tin tức cụ thể, khi đó ứng dụng mới gửi yêu cầu lên server để lấy
+nội dung tin tức đó về, nội dung tin tức được chúng em thống nhất lưu dưới dạng HTML và khi hiện lên sẽ hiển thị dạng HTML view.
+Điều này giúp cấu trúc của thông tin được nguyên vẹn và không cần phải chỉnh sửa nhiều.
+
+% //TODO: Thêm ảnh demo chức năng, hoặc biểu đồ giải thích xem tin tức
+
+
+\paragraph{Chức năng xem tin tức}
+\mbox{}
+
+Chức năng xem tin tức lấy dữ liệu trực tiếp trên server, với logic cơ bản được thể hiện ở Hình \ref{view_news}. 
+Danh sách tin tức sẽ được load ngay khi người dùng mở ứng dụng (nếu có mạng). Tất cả phần xem trước của tin tức sẽ được lưu
+trong biến khi ứng dụng chạy, dữ liệu tin tức được lấy từ danh sách tin tức không bao gồm nội dung để giảm thiểu khối lượng
+thông tin dư thừa của gói tin. Chỉ khi người dùng chọn một tin tức cụ thể, khi đó ứng dụng mới gửi yêu cầu lên server để lấy
+nội dung tin tức đó về, nội dung tin tức được chúng em thống nhất lưu dưới dạng HTML và khi hiện lên sẽ hiển thị dạng HTML view.
+Điều này giúp cấu trúc của thông tin được nguyên vẹn và không cần phải chỉnh sửa nhiều.
+
+% //TODO: Thêm ảnh demo chức năng, hoặc biểu đồ giải thích xem tin tức
+
+\paragraph{Chức năng nhắn tin}
+\mbox{}
+
+Chức năng nhắn tin là chức năng được thiết kế để không phụ thuộc vào server của hệ thống mà độc lập đứng riêng. Chúng em
+chọn Firebase làm nền tảng để phát triển chức năng nhắn tin bởi tính phổ biến, hỗ trợ rất nhiều ngôn ngữ đi kèm với tài liệu đầy đủ 
+và dễ dàng phát triển.
+Ở chức năng nhắn tin, mọi dữ liệu về tin nhắn sẽ được lưu trên FireStore (Cơ sở dữ liệu NOSQL của Firebase), cơ sở dữ liệu sẽ
+bao gồm ba bảng chính. 
+% //TODO: Thêm các bảng tin nhắn và giải thích
+
+Việc xử lý tin nhắn, gửi tin nhắn, hay các thao tác với tin nhắn đều có thể sử dụng các câu lệnh truy vấn và truy/xuất
+trực tiếp vào cơ sở dữ liệu, đồng thời các ví dụ và câu lệnh được Firebase hỗ trợ rất kĩ về mặt tài liệu, vì lẽ đó, khi sử dụng
+Firebase, ứng dụng sẽ linh hoạt và dễ cải tiến.
+
+Ví dụ, ứng dụng di động đang trong giao diện trò chuyện, tức nghĩa là phải có một câu truy vấn lấy các tin nhắn trong hội thoại
+để hiển thị cho người dùng. Khi gửi tin nhắn, một hàng được thêm vào
+cơ sở dữ liệu, tuỳ theo cơ chế của các hệ điều hành và ngôn ngữ lập trình, ứng dụng có thể lắng nghe được sự thay đổi
+trong cơ sở dữ liệu và lập tức gửi một thông điệp đến ứng dụng để cho người dùng biết, đồng thời cập nhật giao diện. Chi tiết
+về các câu lệnh Firebase và cách thức thực hiện chức năng tin nhắn được trình bày rõ hơn trong chương Triển khai và kiểm thử.
+
+% //TODO: Thêm các bảng tin nhắn và giải thích
+
+
 
 \newpage
