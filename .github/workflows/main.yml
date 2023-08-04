@@ -13,8 +13,11 @@ jobs:
     - uses: actions/checkout@v3
     - uses: subosito/flutter-action@v2
       with:
+        flutter-version: "3.7.9"
         channel: stable
-    - run: flutter --version
+        cache: true
+    - name: Check Flutter version
+      run: flutter --version
 
     - name: Install dependencies 
       run: cd mobile_app && flutter pub get
