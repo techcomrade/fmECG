@@ -17,7 +17,7 @@ jobs:
     - run: flutter --version
 
     - name: Install dependencies 
-      run: flutter pub get
+      run: cd mobile_app && flutter pub get
     # - name: Run test
     #   run: flutter test --coverage
     - name: Build APK
