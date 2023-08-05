@@ -10,7 +10,7 @@ import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
-import 'package:bluetooth_ecg/screens/bluetooth_screens_udpate/ble_screen.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_screen.dart';
 import 'package:bluetooth_ecg/screens/news_screens/news_all_screens.dart';
 import 'package:bluetooth_ecg/screens/news_screens/news_detail_screen.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
