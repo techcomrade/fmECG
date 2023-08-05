@@ -21,7 +21,13 @@ User -> FirebaseMessagesController: Send request get all conversations info by u
 activate FirebaseMessagesController
 FirebaseMessagesController -> FirebaseDatabase: Query conversations based on user id
 activate FirebaseDatabase
+
 FirebaseDatabase --> FirebaseMessagesController: Return conversations info
+note left of FirebaseDatabase #Yellow
+* One conversation in list
+conversation_id: String
+members_id: Map<String, bool>
+end note
 FirebaseMessagesController --> User: Show conversations info
 ' notes
 
@@ -33,6 +39,15 @@ FirebaseMessagesController --> User: Show messages
 
 User -> FirebaseMessagesController: Send message
 'notes
+note right of User #Yellow
+* Message payload
+conversation_id: String
+message_id: String
+message_content: String
+sender_id: int
+sent_at: DateTime
+end note
+
 FirebaseMessagesController -> FirebaseDatabase: Insert message to database
 FirebaseDatabase --> FirebaseMessagesController: Broadcast message in conversation
 FirebaseMessagesController -> User: User in conversation see message real-time
