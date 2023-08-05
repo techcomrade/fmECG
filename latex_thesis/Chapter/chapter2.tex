@@ -732,14 +732,14 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/home_screen.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \caption[Giao diện màn hình chính]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn hình chính}
   \label{demo_} %đặt tên cho ảnh
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=8cm]{Images/mobile_app/demo/preview_news.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \caption[Giao diện mục tin tức trong màn hình chính]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện mục tin tức trong màn hình chính}
   \label{demo_} %đặt tên cho ảnh
 \end{figure}
 
@@ -753,49 +753,49 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/detail_news.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \caption[Giao diện trang tất cả tin tức]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tất cả tin tức}
   \label{demo_} %đặt tên cho ảnh
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/history.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \caption[Giao diện trang lịch sử các lần đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang lịch sử các lần đo}
   \label{demo_} %đặt tên cho ảnh
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/detail_record.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \caption[Giao diện trang biểu đồ dữ liệu một phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang biểu đồ dữ liệu một phiên đo}
   \label{demo_} %đặt tên cho ảnh
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/chat_preview.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \caption[Giao diện trang tất cả hội thoại]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tất cả hội thoại}
   \label{demo_} %đặt tên cho ảnh
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/chat_detail.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \caption[Giao diện trang chi tiết hội thoại]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang chi tiết hội thoại}
   \label{demo_} %đặt tên cho ảnh
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/off_bluetooth.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \caption[Giao diện trang bật/tắt bluetooth]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang bật/tắt bluetooth}
   \label{demo_} %đặt tên cho ảnh
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/finding_bluetooth.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
+  \caption[Giao diện trang tìm kiếm thiết bị điện tim]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tìm kiếm thiết bị điện tim}
   \label{demo_} %đặt tên cho ảnh
 \end{figure}
 
@@ -1255,8 +1255,7 @@ với những ứng dụng không đòi hỏi tính truy nhập và bảo mật 
   vụ sẽ phụ thuộc hoàn toàn vào internet. Và nếu số lượng người sử dụng lớn thì hoàn toàn không phù hợp.
   \item Lưu trong bộ nhớ cục bộ của ứng dụng: Các hệ điều hành đều cung cấp những thư viện giúp việc lưu trữ dữ liệu nhỏ một cách 
   dễ dàng trong cục bộ ứng dụng. Đây là một phương pháp lưu dưới dạng key-value (khoá-giá trị), giúp việc truy/xuất hay ghi nhanh chóng.
-  Với Android, chúng ta có thể sử dụng SharedPreferences (thêm tham khảo), với IOS là UserDefault (thêm tham khảo)
-  % //TODO: thêm tham khảo sharepref
+  Với Android, chúng ta có thể sử dụng SharedPreferences \cite{intro_sharedpref}, với IOS là UserDefault (thêm tham khảo)
 
 \end{itemize}
 Vậy luồng đăng nhập và lưu dữ liệu đăng nhập trên ứng dụng di động sẽ là: người dùng nhập thông tin, thông tin được gửi lên server xác thực,
@@ -1275,20 +1274,25 @@ kế việc lưu dữ liệu đăng nhập.
 \paragraph{Chức năng kết nối và nhận dữ liệu từ thiết bị điện tim}
 \mbox{}
 
+% https://learn.adafruit.com/introduction-to-bluetooth-low-energy/gatt
 Chức năng kết nối và nhận dữ liệu từ thiết bị điện tim là một trong những chức năng quan trọng nhất của ứng dụng. Chức năng này yêu cầu
 ứng dụng phải bật được bluetooth. Đầu tiên để có thể tiến hành đo, chúng ta phải thực hiện một kết nối bluetooth giữa ứng dụng di động và
-thiết bị đo điện tim. Sau khi dã kết nối thành công, dựa vào cơ chế của bluetooth low energy, chúng ta sẽ thiết lập để ứng dụng lắng
+thiết bị đo điện tim. Sau khi dã kết nối thành công, dựa vào cơ chế của bluetooth low energy \cite{intro_ble}, chúng ta sẽ thiết lập để ứng dụng lắng
 nghe dữ liệu trả ra từ thiết bị điện tim. Dữ liệu thô được xử lý theo công thức tính toán và sau đó được vẽ trên biểu đồ. Người dùng sau
 khi thực hiện đo xong có thể chọn lưu kết quả đo lại (điều này sẽ đẩy dữ liệu đo lên server và bác sĩ có thể xem được).
-% //TODO: add reference
-% https://learn.adafruit.com/introduction-to-bluetooth-low-energy/gatt
 
 Đầu tiên việc kết nối Bluetooth với thiết bị đo điện tim là không khó khi có sự hỗ trợ của các thư viện và hệ điều hành, sau đó việc xử lý sau
 kết nối mới là một điều chúng ta cần phải lưu tâm tới. Sau khi kết nối với thiết bị đo điện tim, câu hỏi đặt ra là \textbf{làm thế nào
 để lắng nghe được dữ liệu} từ thiết bị điện tim? Đối với hệ thống BLE, sau khi kết nối thành công, một Profile Protocol được gọi
-là GATT (Generic ATTribute Profile) - xác định cách hai thiết bị sẽ truyền và nhận dữ liệu như thế nào thông qua
-Services và Characteristics sẽ được hình thành. 
-% //TODO: Chèn ảnh vào đây ảnh gatt
+là GATT \cite{intro_ble_gatt} (Generic ATTribute Profile) - xác định cách hai thiết bị sẽ truyền và nhận dữ liệu như thế nào thông qua
+Services và Characteristics sẽ được hình thành.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=10cm]{Images/system/ble_service_charac.png}
+  \caption[Sơ đồ tuần tự thiết kế chức năng kết nối và nhận dữ liệu điện tim real-time]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự thiết kế chức năng kết nối và nhận dữ liệu điện tim real-time}
+  \label{ble_service_characteristic} %đặt tên cho ảnh
+\end{figure}
 Services là tập hợp của một nhóm thông tin để thực hiện một chức năng cụ thể,
 ví dụ Battery Service, Sensor Service, trong mỗi Service chính là một hoặc nhiều Characteristic, mỗi Characteristic đảm nhận
 một thông tin hoặc chức năng riêng biệt phục vụ cho Service đó. Mỗi một Service hay Characteristic đều có UUID (mã định danh duy nhất toàn cầu).
