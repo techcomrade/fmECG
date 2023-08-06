@@ -1,10 +1,10 @@
 
-\section*{CHƯƠNG 2. THIẾT KẾ CHI TIẾT HỆ THỐNG}
+\section*{CHƯƠNG 2. THIẾT KẾ HỆ THỐNG}
 \setcounter{section}{2}
 \setcounter{subsection}{0} %LƯU Ý MỖI LẦN THÊM CHƯƠNG MỚI CẦN THÊM CÂU NÀY ĐỂ RESET THỨ TỰ CỦA SUBSECTON VỀ 1
 \setcounter{table}{0} % LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
-\addcontentsline{toc}{section}{\numberline{}CHƯƠNG 2. THIẾT KẾ CHI TIẾT HỆ THỐNG}
+\addcontentsline{toc}{section}{\numberline{}CHƯƠNG 2. THIẾT KẾ HỆ THỐNG}
 
 \subsection{Sơ đồ kiến trúc hệ thống}
 Hệ thống chúng em xây dựng được chia làm ba phần Device, Application và Server. Các chi tiết cụ thể được thể hiện trong
@@ -106,16 +106,6 @@ tự.
   \item Thiết bị (\textbf{ID thiết bị}, Tên thiết bị)
 \end{itemize}
 
-
-
-\subsubsection{Mối quan hệ dữ liệu}
-
-\begin{itemize}
-  \item Bảng \texttt{ecg\_record} có mối quan hệ 1-n với bảng \texttt{user} thông qua khóa ngoại \texttt{user\_id}.
-  \item Bảng \texttt{news} có mối quan hệ n-1 với bảng \texttt{news\_category} thông qua khóa ngoại \texttt{category\_id}.
-  \item Bảng \texttt{patient\_doctor\_assignment} có mối quan hệ n-1 với bảng \texttt{user} thông qua khóa ngoại \texttt{patient\_id} và \texttt{doctor\_id}.
-  \item Bảng \texttt{reset\_token} có mối quan hệ n-1 với bảng \texttt{user} thông qua khóa ngoại \texttt{user\_id}.
-\end{itemize}
 
 \subsubsection{Chuẩn hoá 3NF}
 Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì không có thuộc tính lặp lại và các thuộc tính không phụ thuộc vào một tập hợp con của khóa chính.
@@ -519,14 +509,13 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 \end{figure}
 
 
-\subsection{Thiết kế chi tiết hệ thống}
+% \subsection{Thiết kế chi tiết hệ thống}
 
 
 
-\subsubsection{Thiết kế giao diện}
+\subsection{Thiết kế giao diện}
 
-\paragraph{Ứng dụng}
-\mbox{}
+\subsubsection{Ứng dụng}
 
 Dưới đây là các giao diện thực tế mà chúng em thiết kế cho App:
 \begin{figure}[H]
@@ -625,8 +614,8 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
 
 
 
-\paragraph{Website}
-\mbox{}
+\subsubsection{Website}
+
 
 
 
@@ -683,10 +672,10 @@ Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản m�
   \label{demo_} %đặt tên cho ảnh
 \end{figure}
 
-\subsubsection{Sơ đồ lớp cho ứng dụng di động, website và server}
+\subsection{Sơ đồ lớp cho ứng dụng di động, website và server}
 
-\paragraph{Ứng dụng di động}
-\mbox{}
+\subsubsection{Ứng dụng di động}
+
 
 Ứng dụng di động được tổ chức theo mô hình MVC, với ba khối chính là Models, Views và Controllers:
   
@@ -774,8 +763,8 @@ Chi tiết từng lớp và phần giải thích cho mỗi khối được chún
   
   \end{enumerate}
 
-\paragraph{Server và Website quản trị hệ thống}
-\mbox{}
+\subsubsection{Server và Website quản trị hệ thống}
+
 
 \begin{enumerate}[a)]
 \item Danh sách các class diagram
@@ -861,10 +850,10 @@ Chi tiết từng lớp và phần giải thích cho mỗi khối được chún
 
 
 
-\subsubsection{Thiết kế các chức năng cho Website và Server}
+\subsection{Thiết kế các chức năng cho Website và Server}
 
-\paragraph{Thiết kế API}
-\mbox{}
+\subsubsection{Thiết kế API}
+
 
 \begin{enumerate}[a)]
   \item API liên quan đến thông tin người dùng
@@ -987,15 +976,14 @@ Chi tiết từng lớp và phần giải thích cho mỗi khối được chún
 
 
 
-\paragraph{Sơ đồ tuần tự}
-\mbox{}
+\subsubsection{Sơ đồ tuần tự}
 
-\begin{enumerate}[a)]
 
 % ------------------------User----------------------
 
-\item  API liên quan đến thông tin người dùng
 
+\paragraph{API liên quan đến thông tin người dùng}
+\mbox{}
 
 % sửa lại ảnh 
 \begin{figure}[H]
@@ -1053,7 +1041,9 @@ Hình \ref{updateUserInfo} mô tả quá trình cập nhật thông tin người
 
 % ------------------------Auth----------------------
 
-\item API liên quan đến việc xác thực người dùng 
+
+\paragraph{API liên quan đến việc xác thực người dùng}
+\mbox{}
 
 \begin{figure}[H]
   \centering
@@ -1105,8 +1095,8 @@ Hình \ref{resetPasswordToken} mô tả quá trình yêu cầu gửi mã thông 
 
 
 % ------------------------News----------------------
-\item API liên quan đến tin tức
-
+\paragraph{API liên quan đến tin tức}
+\mbox{}
 
 \begin{figure}[H]
   \centering
@@ -1159,8 +1149,8 @@ Hình \ref{getNewsCategoryById} mô tả quá trình lấy dữ liệu danh mụ
 
 
 % -------------------------ECG----------------------------
-\item API liên quan đến bản ghi ECG
-
+\paragraph{API liên quan đến bản ghi ECG}
+\mbox{}
 
 \begin{figure}[H]
   \centering
@@ -1204,8 +1194,9 @@ Hình \ref{uploadEcgData} mô tả quá trình tải lên dữ liệu ECG (Elect
 
 
 % -----------------------PatientDoctor------------------------------
-\item API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ
 
+\paragraph{API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ}
+\mbox{}
 
 
 \begin{figure}[H]
@@ -1229,8 +1220,8 @@ Hình \ref{getPatientsByDoctor}  mô tả quá trình lấy thông tin tất c�
 
 % -----------------------------------------------------
 
-
-\item  Website
+\paragraph{Website quản trị}
+\mbox{}
 
 
 \begin{figure}[H]
@@ -1274,11 +1265,10 @@ Sau đó, AdminJS sẽ thực hiện thao tác CRUD tương ứng trên các tà
 Sau khi AdminJS đã nhận được kết quả từ các tài nguyên, nó sẽ trả về kết quả đó cho ViewComponent. ViewComponent sẽ hiển thị kết quả tương ứng cho người dùng. Quá trình này được thực hiện đối với từng tài nguyên mà người dùng yêu cầu thực hiện thao tác CRUD.
 
 
-\end{enumerate}
 
 
 
-\subsubsection{Thiết kế các chức năng chính cho ứng dụng di động}
+\subsection{Thiết kế và tối ưu các chức năng chính cho ứng dụng di động}
 \label{design_function_mobile}
 
 Ứng dụng di động được trong hệ thống được chia cụ thể gồm ứng dụng di động cho bệnh nhân và ứng dụng di động cho bác sĩ. 
@@ -1301,8 +1291,8 @@ Các chức năng riêng của bệnh nhân bao gồm:
   \item Chức năng xem tin tức.
 \end{itemize}
 
-\paragraph{Chức năng đăng nhập}
-\mbox{}
+\subsubsection{Chức năng đăng nhập}
+
 
 Chức năng đăng nhập là chức năng chung của hai ứng dụng, có tương tác trực tiếp với API, logic cơ bản được thể hiện ở Hình \ref{login}
 luồng thực hiện ở phía server được triển khai ở 
@@ -1333,11 +1323,10 @@ kế việc lưu dữ liệu đăng nhập.
   \label{seq_auth} %đặt tên cho ảnh
 \end{figure}
 
-\paragraph{Chức năng kết nối và nhận/lưu dữ liệu từ thiết bị điện tim}
+\subsubsection{Chức năng kết nối và nhận/lưu dữ liệu từ thiết bị điện tim}
 \mbox{}
 
-% https://learn.adafruit.com/introduction-to-bluetooth-low-energy/gatt
-Chức năng kết nối và nhận dữ liệu từ thiết bị điện tim là một trong những chức năng quan trọng nhất của ứng dụng. Chức năng này yêu cầu
+Chức năng kết nối và thực hiện đo với thiết bị điện tim là một trong những chức năng quan trọng nhất của ứng dụng. Chức năng này yêu cầu
 ứng dụng phải bật được bluetooth. Đầu tiên để có thể tiến hành đo, chúng ta phải thực hiện một kết nối bluetooth giữa ứng dụng di động và
 thiết bị đo điện tim. Sau khi dã kết nối thành công, dựa vào cơ chế của bluetooth low energy \cite{intro_ble}, chúng ta sẽ thiết lập để ứng dụng lắng
 nghe dữ liệu trả ra từ thiết bị điện tim. Dữ liệu thô được xử lý theo công thức tính toán và sau đó được vẽ trên biểu đồ. Người dùng sau
@@ -1467,9 +1456,18 @@ dữ liệu từ thiết bị thông qua một hàm "subscribe characteristic", 
 Trên đây là phần thiết kế chức năng quan trọng nhất của ứng dụng di động. Sau khi có dữ liệu đo, việc xem lịch sử đo được chúng em 
 tiếp tục trình bày ở mục \ref{function_view_history_record}.
 
-\paragraph{Chức năng xem lịch sử đo}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=10cm]{Images/server/sequence/web/seq_auth.png}
+  \caption[Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) }
+  \label{seq_auth} %đặt tên cho ảnh
+\end{figure}
+
+
+\subsubsection{Chức năng xem lịch sử đo}
 \label{function_view_history_record}
-\mbox{}
+
 
 Chức năng xem lịch sử đo lấy dữ liệu trực tiếp trên server, với logic cơ bản được thể hiện ở Hình \ref{view_record_timeline}. 
 Để xem được lịch sử các lần đo, bệnh nhân cần thực hiện đo ít nhất một lần (hệ thống sẽ tự gửi dữ liệu lên server). Dữ liệu sau khi được
@@ -1483,8 +1481,7 @@ như biểu đồ theo dõi dữ liệu điện tim real-time.
 Biểu đồ có trục tung là giá trị điện áp, trục hoành là toàn bộ thời gian từ lúc bắt đầu đo đến khi kết thúc. Người dùng có thể,
 thực hiện các thao tác phóng to, thu nhỏ để xem khoảng thời gian.
 
-\paragraph{Chức năng xem tin tức}
-\mbox{}
+\subsubsection{Chức năng xem tin tức}
 
 Chức năng xem tin tức lấy dữ liệu trực tiếp trên server, với logic cơ bản được thể hiện ở Hình \ref{view_news}. 
 Danh sách tin tức sẽ được load ngay khi người dùng mở ứng dụng (nếu có mạng). Tất cả phần xem trước của tin tức sẽ được lưu
@@ -1493,8 +1490,7 @@ thông tin dư thừa của gói tin. Chỉ khi người dùng chọn một tin 
 nội dung tin tức đó về, nội dung tin tức được chúng em thống nhất lưu dưới dạng HTML và khi hiện lên sẽ hiển thị dạng HTML view.
 Điều này giúp cấu trúc của thông tin được nguyên vẹn và không cần phải chỉnh sửa nhiều.
 
-\paragraph{Chức năng nhắn tin}
-\mbox{}
+\subsubsection{Chức năng nhắn tin}
 
 Chức năng nhắn tin là chức năng được thiết kế để không phụ thuộc vào server của hệ thống mà độc lập đứng riêng. Chúng em
 chọn Firebase làm nền tảng để phát triển chức năng nhắn tin bởi tính phổ biến, hỗ trợ rất nhiều ngôn ngữ đi kèm với tài liệu đầy đủ 
