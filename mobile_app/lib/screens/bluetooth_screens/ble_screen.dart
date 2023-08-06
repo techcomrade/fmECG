@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_off_screen.dart';
-import 'package:bluetooth_ecg/screens/bluetooth_screens_udpate/ble_scanning_screen.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_scanning_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
-import 'package:bluetooth_ecg/screens/login_screen.dart';
+import 'package:bluetooth_ecg/screens/auth_screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:permission_handler/permission_handler.dart';

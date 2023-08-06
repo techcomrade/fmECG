@@ -5,15 +5,13 @@ import 'package:bluetooth_ecg/controllers/firebase_messages_controller.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/main.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
-import 'package:bluetooth_ecg/screens/chat_screen.dart';
-import 'package:bluetooth_ecg/screens/history_measurement_screen.dart';
+import 'package:bluetooth_ecg/screens/chat_screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screens/history_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
-import 'package:bluetooth_ecg/screens/user_profile_screen.dart';
+import 'package:bluetooth_ecg/screens/user_screens/user_profile_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -26,7 +24,6 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    // HistoryMeasurementScreen(),
     HistoryScreen(),
     ChatScreen(),
     UserProfileScreen()

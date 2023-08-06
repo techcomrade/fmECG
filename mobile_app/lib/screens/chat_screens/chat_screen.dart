@@ -5,7 +5,7 @@ import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/controllers/firebase_messages_controller.dart';
 import 'package:bluetooth_ecg/models/doctor_info.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
-import 'package:bluetooth_ecg/screens/chat_detail_screen.dart';
+import 'package:bluetooth_ecg/screens/chat_screens/chat_detail_screen.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

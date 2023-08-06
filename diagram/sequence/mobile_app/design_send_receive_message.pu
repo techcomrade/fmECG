@@ -1,0 +1,55 @@
+
+@startuml
+
+
+skinparam style strictuml
+
+' skinparam lifelineStrategy solid
+
+' skinparam ParticipantPadding 20
+
+' skinparam BoxPadding 10
+
+autonumber
+
+actor User as User
+participant FirebaseMessagesController as FirebaseMessagesController
+participant FirebaseDatabase as FirebaseDatabase
+
+activate User
+User -> FirebaseMessagesController: Send request get all conversations info by user id
+activate FirebaseMessagesController
+FirebaseMessagesController -> FirebaseDatabase: Query conversations based on user id
+activate FirebaseDatabase
+
+FirebaseDatabase --> FirebaseMessagesController: Return conversations info
+note left of FirebaseDatabase #Yellow
+* One conversation in list
+conversation_id: String
+members_id: Map<String, bool>
+end note
+FirebaseMessagesController --> User: Show conversations info
+' notes
+
+User -> FirebaseMessagesController: Open one conversation
+FirebaseMessagesController -> FirebaseDatabase: Query messages based on conversation id
+FirebaseDatabase --> FirebaseMessagesController: Return all messages in conversation
+FirebaseMessagesController --> User: Show messages
+' notes
+
+User -> FirebaseMessagesController: Send message
+'notes
+note right of User #Yellow
+* Message payload
+conversation_id: String
+message_id: String
+message_content: String
+sender_id: int
+sent_at: DateTime
+end note
+
+FirebaseMessagesController -> FirebaseDatabase: Insert message to database
+FirebaseDatabase --> FirebaseMessagesController: Broadcast message in conversation
+FirebaseMessagesController -> User: User in conversation see message real-time
+
+@enduml
