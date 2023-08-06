@@ -143,4 +143,4 @@ out/
 *.blg
 *.synctex.*
 *.toc
-main.pdf
+latex_thesis/main.pdf
