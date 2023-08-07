@@ -1,0 +1,28 @@
+@startuml
+
+actor Client
+participant "User Controller" as Controller
+participant "User Model" as Model
+participant "Sequelize" as ORM
+database "Database" as DB
+
+Client -> Controller: GET /users/{userId}
+activate Controller
+
+Controller -> Model: Retrieve user by ID
+activate Model
+Model -> ORM: Find user record
+activate ORM
+ORM -> DB: Execute SELECT query
+deactivate ORM
+deactivate Model
+
+alt User found
+  Controller --> Client: Return user information
+else User not found
+  Controller --> Client: Return error response
+end
+
+deactivate Controller
+
+@enduml

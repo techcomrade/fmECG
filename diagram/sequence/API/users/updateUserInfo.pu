@@ -1,0 +1,28 @@
+@startuml
+
+actor Client
+participant "User Controller" as Controller
+participant "User Model" as Model
+participant "Sequelize" as ORM
+database "Database" as DB
+
+Client -> Controller: PUT /users/profile
+activate Controller
+
+Controller -> Controller: Validate request data
+alt Invalid data
+  Controller --> Client: Return error response
+  deactivate Controller
+else Valid data
+  Controller -> Model: Update user info
+  activate Model
+  Model -> ORM: Update user record
+  activate ORM
+  ORM -> DB: Execute UPDATE query
+  deactivate ORM
+  deactivate Model
+  Controller --> Client: Return success response
+  deactivate Controller
+end
+
+@enduml
