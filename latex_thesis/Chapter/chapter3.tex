@@ -267,12 +267,42 @@ Trong quá trình triển khai ứng dụng, chúng em sử dụng dịch vụ E
 Trong quá trình phát triển ứng dụng di động chúng em có sử dụng máy ảo Android (phiên bản Android API 33) và máy thật
 (Android 11 - 13), đồng thời xuất file APK để có thể linh động hơn trong việc triển khai và kiểm thử.
 
-Việc triển khai ứng dụng di động được tự động hoá khi được áp dụng CI/CD (Continous Integration/Continous Development), mỗi khi có
+Việc triển khai ứng dụng di động được tự động hoá khi được áp dụng CI/CD \cite{ci_cd_intro} (Continous Integration/Continous Development), mỗi khi có
 code mới được đẩy lên Github (dịch vụ lưu trữ mã nguồn), sẽ có Github Actions tự động chạy các lệnh để kiểm tra lỗi, cài đặt
 các thư viện cần thiết và tạo ra một phiên bản apk cho người dùng tải về và cài đặt. Điều này giúp cho việc phát triển sản phẩm, 
 làm việc nhóm trở nên hiệu quả và nhanh chóng hơn.
-% //TODO: thêm ref cho CI/CD
-% //TODO: thêm ảnh ci/cd, demo một số hình ảnh kieemr thuwr
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=8cm]{Images/mobile_app/demo/all_case_ci_cd.png}
+  \caption[Ví dụ mô tả chức năng của Bluetooth Low Energy]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Ví dụ mô tả chức năng của Bluetooth Low Energy}
+  \label{demo} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=8cm]{Images/mobile_app/demo/case_error_ci_cd.png}
+  \caption[Ví dụ mô tả chức năng của Bluetooth Low Energy]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Ví dụ mô tả chức năng của Bluetooth Low Energy}
+  \label{demo} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=8cm]{Images/mobile_app/demo/error_detail_ci_cd.png}
+  \caption[Ví dụ mô tả chức năng của Bluetooth Low Energy]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Ví dụ mô tả chức năng của Bluetooth Low Energy}
+  \label{demo} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=8cm]{Images/mobile_app/demo/success_case_ci_cd.png}
+  \caption[Ví dụ mô tả chức năng của Bluetooth Low Energy]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Ví dụ mô tả chức năng của Bluetooth Low Energy}
+  \label{demo} %đặt tên cho ảnh
+\end{figure}
 
 \subsection{Kiểm thử}
 

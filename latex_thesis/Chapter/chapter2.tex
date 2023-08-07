@@ -103,7 +103,9 @@ tự.
   \item Phân công bệnh nhân - bác sĩ (\textbf{ID phân công}, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu)
   \item Mã thông báo đặt lại mật khẩu (\textbf{ID mã thông báo}, ID người dùng, Mã thông báo, Thời gian hết hạn)
   \item Phiên đăng nhập (\textbf{ID phiên đăng nhập}, ID người dùng, Mã phiên đăng nhập, Thời gian hết hạn)
-  \item Thiết bị (\textbf{ID thiết bị}, Tên thiết bị)
+  \item Thông tin hội thoại (\textbf{ID hội thoại}, Danh sách ID người dùng trong hội thoại, thông tin tin nhắn gần nhất)
+  \item Thông tin tin nhắn (\textbf{ID tin nhắn}, Nội dung tin nhắn, ID người gửi tin nhắn, thời gian gửi tin nhắn, ID hội thoại)
+  \item Firebase token người dùng (\textbf{ID token}, Firebase token, ID người dùng)
 \end{itemize}
 
 
@@ -297,6 +299,68 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     Mỗi thiết bị có một ID riêng, có duy nhất tên thiết bị & \parbox[t]{\linewidth}{$\text{ID thiết bị} \rightarrow$ tên thiết bị} \\
     \hline
     \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID thiết bị}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Thông tin hội thoại}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thông tin hội thoại}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID hội thoại, Danh sách ID người dùng trong hội thoại, thông tin tin nhắn gần nhất \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi hội thoại có một ID riêng, có duy nhất một danh sách ID người dùng, và một thông tin tin nhắn gần nhất 
+      & \parbox[t]{\linewidth}{$\text{ID thiết bị} \rightarrow$ danh sách ID người dùng trong hội thoại, thông tin tin nhắn gần nhất} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID hội thoại}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Thông tin tin nhắn}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thông tin tin nhắn}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID tin nhắn, Nội dung tin nhắn, ID người gửi tin nhắn, thời gian gửi tin nhắn, ID hội thoại \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi tin nhắn có một ID riêng, có duy nhất một nội dung tin nhắn, một ID người gửi, thời gian gửi và xác định
+    được ID hội thoại & \parbox[t]{\linewidth}{$\text{ID tin nhắn} \rightarrow$ Nội dung tin nhắn, ID người gửi tin nhắn, thời gian gửi tin nhắn, ID hội thoại} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tin nhắn}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Firebase token người dùng}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Firebase token người dùng}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID token, Firebase token, ID người dùng \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi token có một ID riêng, từ ID xác định được một Firebase token riêng cho người dùng & \parbox[t]{\linewidth}{$\text{ID token} \rightarrow$ tên thiết bị} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID token}$} \\
     \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
     \hline
   \end{tabularx}
@@ -499,8 +563,71 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
   \end{tabularx}
 \end{table}
 
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng conversation}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    conversation\_id & STRING & Khóa chính của bảng, đại diện cho ID hội thoại \\
+    \hline
+    members\_id & MAP<String, Boolean> & Danh sách ID của người dùng trong hội thoại \\
+    \hline
+    recent\_message & MAP<String, dynamic> & Thông tin tin nhắn gần nhất \\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng message}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    message\_id & STRING & Khóa chính của bảng, đại diện cho ID tin nhắn \\
+    \hline
+    conversation\_id & STRING & ID hội thoại chứa tin nhắn \\
+    \hline
+    message\_content & STRING & Nội dung tin nhắn \\
+    \hline
+    sender\_id & INTEGER & ID Người gửi tin nhắn\\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng user\_firebase\_token}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    token\_id & String & Khóa chính của bảng, đại diện cho ID firebase token \\
+    \hline
+    firebase\_token & STRING & Token của thiết bị đăng nhập vào hệ thống do Firebase sinh ra \\
+    \hline
+    user\_id & INTEGER & ID của người dùng sử dụng token \\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    \hline
+  \end{tabularx}
+\end{table}
+
 \subsubsection{Sơ đồ ERD}
 
+% //FIXME: ADD ERD AGAIN
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm,height=15cm]{Images/server/database/fmECG_architecture-Database.drawio.png}
