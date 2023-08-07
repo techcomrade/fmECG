@@ -236,17 +236,132 @@ Trong quá trình triển khai ứng dụng, chúng em sử dụng dịch vụ E
 \subsubsection{Triển khai ứng dụng Web trên AWS EC2}
 \begin{itemize}
   \item Tạo máy ảo EC2: Chúng em đã tạo một EC2 instance với loại instance t2.micro. Đây là loại instance nhỏ, phù hợp với các ứng dụng có lưu lượng truy cập thấp hoặc giai đoạn phát triển. Instance này sử dụng kiến trúc 64-bit, cho phép chạy các ứng dụng trên cả hệ thống 32-bit và 64-bit. Bộ nhớ của instance là 1 GiB, đủ để chạy ứng dụng Node.js cùng với các dependencies. Dung lượng lưu trữ 8GB, chúng em đã cài đặt hệ điều hành Linux/UNIX để chạy mã nguồn của ứng dụng.
+  
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{Images/server/deploy/create_ec2.PNG}
+    \caption[Tạo máy ảo EC2]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Tạo máy ảo EC2}
+    \label{create_ec2} %đặt tên cho ảnh
+  \end{figure}
+
+  Sau khi tạo thành công, trên trang dashboad quản lý EC2 sẽ xuất hiện máy ảo mà ta đã tạo vừa xong
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{Images/server/deploy/ec2_dashboard.PNG}
+    \caption[Trang dashboad quản lý EC2 instance]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Trang dashboad quản lý EC2 instance}
+    \label{ec2_dashboard} %đặt tên cho ảnh
+  \end{figure}
+
+  Từ trang dashboard, ta sẽ thực hiện kết nối với máy ảo thông qua nút Connect
+
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/deploy/connect_ec2.PNG}
+  \caption[Trang kết nối tới máy ảo]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Trang kết nối tới máy ảo}
+  \label{connect_ec2} %đặt tên cho ảnh
+\end{figure}
+
+
+  Sau khi kết nối thành công trang console của máy ảo sẽ xuất hiện, từ đây ta có thể thực hiện các thao tác mong muốn trên server thông qua console
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.55]{Images/server/deploy/ec2_console.PNG}
+    \caption[Trang console của máy ảo]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Trang console của máy ảo}
+    \label{ec2_console} %đặt tên cho ảnh
+  \end{figure}
+
+
+
   \item Cài đặt các phần mềm và dependencies: Sau khi triển khai máy ảo EC2, chúng em đã cài đặt các phần mềm và dependencies cần thiết để chạy ứng dụng, bao gồm Node.js và các thư viện hỗ trợ và các gói npm cần thiết.
-  \item Tạo và cấu hình môi trường ứng dụng:Chúng em đã tạo môi trường ứng dụng, bao gồm việc cấu hình các biến môi trường, thiết lập các file cấu hình, và chạy các lệnh khởi tạo ban đầu cho ứng dụng.
+  
+
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{Images/server/deploy/list_node_package.PNG}
+    \caption[Các packages và dependencies cần thiết]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Các packages và dependencies cần thiết}
+    \label{ec2_dashboard} %đặt tên cho ảnh
+  \end{figure}
+
+
+  \item Tạo và cấu hình môi trường ứng dụng: Chúng em đã tạo môi trường ứng dụng, bao gồm việc cấu hình các biến môi trường, thiết lập các file cấu hình, và chạy các lệnh khởi tạo ban đầu cho ứng dụng.
   \item Triển khai ứng dụng: Tiếp theo, chúng em tải lên mã nguồn của ứng dụng lên máy ảo EC2 thông qua git
+  
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{Images/server/deploy/git_ec2.PNG}
+    \caption[Tải mã nguồn lên server thông qua git]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Tải mã nguồn lên server thông qua git}
+    \label{ec2_dashboard} %đặt tên cho ảnh
+  \end{figure}
+
   \item Mở cổng cho ứng dụng: Chúng em đã mở cổng mạng trên máy ảo EC2 để cho phép ứng dụng lắng nghe các yêu cầu từ internet.
-  \item Khởi động ứng dụng:Để khởi động ứng dụng, chúng em chạy các lệnh quản lý quá trình như npm start
+  \item Khởi động ứng dụng: Để khởi động ứng dụng, chúng em chạy các lệnh quản lý quá trình như npm start
+  
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{Images/server/deploy/execute_sever.PNG}
+    \caption[Chạy ứng dụng]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Chạy ứng dụng}
+    \label{execute_sever} %đặt tên cho ảnh
+  \end{figure}
+
+
 \end{itemize}
 
 \subsubsection{Triển khai cơ sở dữ liệu trên RDS}
 \begin{itemize}
   \item Tạo cơ sở dữ liệu RDS: Chúng em đã triển khai một cơ sở dữ liệu MySQL trên dịch vụ RDS của AWS. Cơ sở dữ liệu này được đặt tên là "fm\_ecg" và có mật khẩu "fmecgdatabase" để bảo mật. Địa chỉ host của cơ sở dữ liệu là "fm-ecg-database.cx3akkmg3hid.ap-southeast-1.rds.amazonaws.com" cho phép EC2 instance kết nối và truy vấn dữ liệu từ cơ sở dữ liệu. Để truy cập và quản lý cơ sở dữ liệu, chúng em sử dụng tài khoản "admin" với các quyền tương ứng.
+  
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{Images/server/deploy/create_rds.PNG}
+    \caption[Tạo cơ sở dữ liệu RDS]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Tạo cơ sở dữ liệu RDS}
+    \label{create_rds} %đặt tên cho ảnh
+  \end{figure}
+
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.43]{Images/server/deploy/rds_detail.PNG}
+    \caption[Cơ sở dữ liệu RDS sau khi tạo thành công]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Cơ sở dữ liệu RDS sau khi tạo thành công}
+    \label{rds_detail} %đặt tên cho ảnh
+  \end{figure}
+
   \item Kết nối giữa EC2 và RDS: Chúng em đã cấu hình ứng dụng Node.js chạy trên EC2 instance để kết nối đến cơ sở dữ liệu RDS thông qua thông tin host, tên người dùng và mật khẩu đã cung cấp. Khi ứng dụng gửi các truy vấn SQL đến cơ sở dữ liệu, RDS sẽ xử lý các truy vấn này và trả về kết quả cho ứng dụng.
+  
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{Images/server/deploy/connect_rds_1.PNG}
+    \caption[Kết nối giữa EC2 và RDS trên máy ảo EC2]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Kết nối giữa EC2 và RDS trên máy ảo EC2}
+    \label{rds_detail} %đặt tên cho ảnh
+  \end{figure}
+
+  Sau khi kết nối thành công, ta vào đường dẫn \underline{http://13.250.106.115:8080/} để đăng nhập vào trang quản lý database của hệ thống với tên máy chủ, tài khoản, mật khẩu đã tạo trước đó
+
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{Images/server/deploy/connect_rds_2.PNG}
+    \caption[Cơ sở dữ liệu RDS sau khi tạo thành công]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Cơ sở dữ liệu RDS sau khi tạo thành công}
+    \label{rds_detail} %đặt tên cho ảnh
+  \end{figure}
+
+
   \item Backup và giám sát cơ sở dữ liệu: Chúng em đã thiết lập các chính sách sao lưu định kỳ cho cơ sở dữ liệu RDS để đảm bảo an toàn cho dữ liệu và khả năng khôi phục trong trường hợp xảy ra sự cố.
 \end{itemize}
 
