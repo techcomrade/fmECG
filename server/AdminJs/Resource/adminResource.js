@@ -33,7 +33,7 @@ const AdminResource = {
             },
             email: {
                 position: 3,
-                isVisible: { list: true, edit: false, filter: false, show: true },
+                isVisible: { list: true, edit: true, filter: false, show: true },
             },
             phone_number: {
                 position: 4,
