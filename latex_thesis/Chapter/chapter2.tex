@@ -6,6 +6,8 @@
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 2. THIẾT KẾ HỆ THỐNG}
 
+% //TODO: thêm phần mở đầu
+
 \subsection{Sơ đồ kiến trúc hệ thống}
 Hệ thống chúng em xây dựng được chia làm ba phần Device, Application và Server. Các chi tiết cụ thể được thể hiện trong
 hình vẽ:
@@ -1620,7 +1622,6 @@ chọn Firebase làm nền tảng để phát triển chức năng nhắn tin b�
 và dễ dàng phát triển.
 Ở chức năng nhắn tin, mọi dữ liệu về tin nhắn sẽ được lưu trên Firestore (Cơ sở dữ liệu NoSQL của Firebase), cơ sở dữ liệu sẽ
 bao gồm ba bảng chính. 
-% //TODO: Thêm các bảng tin nhắn và giải thích ở chương 2 trong mục phân tích dữ liệu
 
 Việc xử lý tin nhắn, gửi tin nhắn, hay các thao tác với tin nhắn đều có thể sử dụng các câu lệnh truy vấn và truy/xuất
 trực tiếp vào cơ sở dữ liệu, đồng thời các ví dụ và câu lệnh được Firebase hỗ trợ rất kĩ về mặt tài liệu, vì lẽ đó, khi sử dụng

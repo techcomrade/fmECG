@@ -108,6 +108,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \selectfont Sơ đồ use case tổng quát của hệ thống}
     \label{use_case_general} %đặt tên cho ảnh
   \end{figure}
+  % //TODO: fix thành dăng nhập/đăng xuất
 
 \subsubsection{Use case chức năng đăng ký tài khoản}
   \begin{figure}[H]
@@ -546,6 +547,8 @@ tự.
         \label{forgot_password} %đặt tên cho ảnh
   \end{figure}
 
+  % //TODO: fix change password
+
     Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng lấy lại mật khẩu. Người dùng nhập email đã đăng ký tài khoản,
   và gửi yêu cầu lấy lại mật khẩu, Control xử lý gửi đến email một mã xác thực, người dùng nhập đúng mã xác thực sẽ được thay
   đổi mật khẩu mới. Control xử lý cụ thể yêu cầu được chúng em thể hiện trong Hình \ref{resetPassword} và Hình \ref{resetPasswordToken} trong chương sau.
@@ -739,16 +742,19 @@ Tại phần này, chúng em sẽ tiến hành xác định và mô tả các th
     Thông tin hội thoại & 
     ID hội thoại, Danh sách ID người dùng trong hội thoại, thông tin tin nhắn gần nhất \\
     \hline
-    Thông tin tin nhắn & 
+    Tin nhắn & 
     ID tin nhắn, Nội dung tin nhắn, ID người gửi tin nhắn, thời gian gửi tin nhắn \\
     \hline
     Firebase token người dùng & 
     ID token, Firebase token, ID người dùng \\
     \hline
   \end{tabularx}
+
+  Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em xác định được mô hình thực thể liên kết như sau:
+
 \end{table}
 
-% //TODO: fix image 
+% //TODO: fix image
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm,height=8cm]{Images/server/database/ttlk.png}
