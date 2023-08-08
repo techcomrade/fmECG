@@ -143,4 +143,5 @@ out/
 *.blg
 *.synctex.*
 *.toc
-main.pdf
+*.nav
+*.snm
