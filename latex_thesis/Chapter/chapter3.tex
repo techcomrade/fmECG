@@ -2050,10 +2050,10 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
   \\ \hline
 
    
-  Kiểm tra chức năng quản lý bệnh nhân
+  Kiểm tra chức năng đăng ký
   & 
 
-1. Vào màn hình quản lý bệnh nhân
+1. Vào màn hình đăng ký
 
 2. Thêm bệnh nhân mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
 
@@ -2247,71 +2247,259 @@ trong bảng dưới đây:
 
 \paragraph{Kiểm thử chức năng}
 \mbox{}
-% //TODO: thêm phần test case, làm nhanh mô tả rõ từng test case
+
 Các chức năng được kiểm tra sẽ chia theo các lớp màn hình trong sơ đồ lớp Hình \ref{mobile_class_view} để đảm bảo hoạt động đúng mục đích. 
+Các kiểm thử chưa được tự động hoá. 
 Dưới đây là các kiểm thử cho từng lớp:
 
 \begin{enumerate}[a)]
   \item AuthScreens
+
+    Các màn hình thuộc AuthScreens có thể được theo dõi ở class AuthScreens trong Hình \ref{mobile_class_view}.
+    Các chức năng kiểm tra trong màn hình AuthScreens bao gồm:
+    \begin{itemize}
+      \item Chức năng đăng nhập
+      \item Chúc năng đăng ký
+      \item Chức năng quên mật khẩu
+    \end{itemize}
+
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{2cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng đăng nhập ứng dụng di động}
-    % \label{table_api_news}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng trong màn AuthScreens}
     \\
     \hline
-    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+    \bfseries Test case    &\bfseries Các bước tái hiện 
+    &\bfseries Kết quả mong muốn &\bfseries Đánh giá\\ \hline
   
+    Kiểm tra chức năng đăng nhập
+    & 
+      1. Vào màn hình đăng nhập $\rightarrow$ Nhập thông tin tài khoản hoặc mật khẩu chưa có trên hệ thống
+      $\rightarrow$ Nhấn nút đăng nhập
   
-    TC-1 & NULL & ID Doctor & 
-      Status code: 200 OK
-    
-        Response content:
-    
-        \{
-      "status": "success",
-      count: Tổng số lượng bệnh nhân mà bác sỹ đang được phân công,
-      data: Thông tin của các bệnh nhân mà bác sỹ đang được phân công
-    
-      \}
+      2. Vào màn hình đăng nhập $\rightarrow$ Nhập thông tin tài khoản hoặc mật khẩu hơp lệ
+      $\rightarrow$ Nhấn nút đăng nhập 
+    & 
+  
+      1. Hiển thị thông báo sai email hoặc mật khẩu
+
+      2. Đăng nhập thành công vào hệ thống
     & OK
+    \\ \hline
+     
+    Kiểm tra chức năng đăng ký
+    & 
+      1. Vào màn hình đăng ký $\rightarrow$ Nhập một trường thông tin đăng ký không đúng định dạng
+      $\rightarrow$ Nhấn nút đăng ký
   
+      2. Vào màn hình đăng ký $\rightarrow$ Nhập thông tin đăng ký đầy đủ định dạng
+      $\rightarrow$ Nhấn nút đăng ký 
+    & 
+    1. Hiển thị thông báo chưa đúng định dạng
+
+    2. Đăng nhập thành công vào hệ thống
+    & OK
     \\ \hline
   
-    TC-2
-    & Lỗi đường truyền server
-    & ID Doctor
+    Kiểm tra chức năng quên mật khẩu
+    & 
+      Vào màn hình quên mật khẩu $\rightarrow$ Nhập email tài khoản để hệ thống gửi thông tin đổi mật khẩu tới email
+      $\rightarrow$ Nhận được mã số để đổi mật khẩu $\rightarrow$ Nhập mã số và đổi mật khẩu mới.
+    & 
+      1. Mã số đến được với email người dùng
 
-   &
+      2. Nếu người dùng nhập đúng mã số sẽ chuyển người dùng sang giao diện đổi mật khẩu mới
   
-    Status code: 500 Internal Server Error
-  
-      Response content:
-  
-      \{
-  
-    "status": "error",
-  
-    "msg": "An error occurred while retrieving the patients"
-  
-    \}
-    
     & OK
-  
     \\ \hline
-
-  
     \end{xltabular}
+
+  \item BluetoothScreens
+
+  Các màn hình thuộc BluetoothScreens có thể được theo dõi ở class BluetoothScreens trong Hình \ref{mobile_class_view}.
+  Các chức năng kiểm tra trong màn hình BluetoothScreens bao gồm:
+  \begin{itemize}
+    \item Chức năng bật/tắt bluetooth
+    \item Chúc năng kết nối với thiết bị
+    \item Chức năng theo dõi dữ liệu điện tim
+  \end{itemize}
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{2cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng trong màn BluetoothScreens}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Các bước tái hiện 
+    &\bfseries Kết quả mong muốn &\bfseries Đánh giá\\ \hline
+  
+    Kiểm tra chức năng bật/tắt bluetooth
+    & 
+      1. Vào màn hình Bluetooth và bật Bluetooth $\rightarrow$ Thực hiện tìm kiếm thiết bị
+  
+      2. Vào màn hình Bluetooth và tắt Bluetooth
+    & 
+      1. Hiển thị trạng thái đã bật bluetooth và tìm kiếm thiết bị ngay lập tức
+
+      2. Hiển thị trạng thái đã tắt bluetooth
+    & OK
+    \\ \hline
+     
+    Kiểm tra chúc năng kết nối với thiết bị
+    & 
+      1. Khi thấy các thiết bị được tìm thấy, nhấn nút kết nối
+    & 
+      1. Hiển thị kết nối thành công và chuyển sang màn hình theo dõi dữ liệu
+    & OK
+    \\ \hline
+  
+    Kiểm tra chức năng theo dõi dữ liệu điện tim
+    & 
+      1. Vào màn hình theo dõi dữ liệu điện tim $\rightarrow$ Nhấn nút theo dõi dữ liệu
+
+      2. Nhấn nút ngừng theo dõi
+
+      3. Nhấn nút lưu dữ liệu
+    & 
+      1. Dữ liệu được vẽ lên biểu đồ
+
+      2. Biểu đồ được reset
+
+      3. Lưu dữ liệu vào trong máy và thông báo thành công
+  
+    & OK
+    \\ \hline
+    \end{xltabular}
+  
 \end{enumerate}
 
-\paragraph{Kiểm thử chức năng}
+\paragraph{Kiểm thử hiệu năng}
 \mbox{}
-% //TODO:  kiểm thử hiệu năng với biểu đồ
 
+Flutter có bộ công cụ giúp việc kiểm thử hiệu năng của ứng dụng khá dễ dàng, công cụ đó được gọi là DevTools Performance.
+Công cụ này giúp việc đo hiệu năng ở ứng dụng di động trực tiếp khi thao tác trên màn hình. Theo tài liệu từ Flutter Performance
+\cite{flutter_performance}, hiệu suất tiêu chuẩn để ứng dụng chạy mượt mà, không bị lag và đem lại trải nghiệm tốt nhất
+cho người dùng là 60 FPS, tức nghĩa thời gian 1 frame cần hoàn thiện trong 16ms. 
 
+Mục tiêu của phần kiểm thử hiệu năng trong ứng dụng đó là:
+\begin{itemize}
+  \item Với những màn hình không yêu cầu quá nhiều các sự kiện động như màn đăng nhập, màn hình chính, FPS kì vọng ở mức trên 50
+  \item Với những màn hình luôn lắng nghe sự kiện đến như màn hình tin nhắn, màn hình tìm kiếm thiết bị, màn hình theo dõi
+    dữ liệu điện ti, FPS kì vọng ở mức 35 - 45. 
+\end{itemize}
+
+Dưới đây là hình ảnh ứng dụng di động chạy cùng DevTools Performance trong các điều kiện cụ thể:
+\begin{enumerate}[a)]
+  \item Máy ảo
+    \begin{itemize}
+      \item Thiết bị: Máy ảo Android trên hệ điều hành MacOS
+      \item Thông số: Android API 33 (Android 13)
+      \item Điều kiện: Không bật ứng dụng nào chạy nền
+    \end{itemize}
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=12cm,height=7.5cm]{Images/mobile_app/demo/login_performance.png}
+      \caption[Hình ảnh kiểm thử hiệu năng hệ thống ở màn hình đăng nhập]{\bfseries \fontsize{12pt}{0pt}
+      \selectfont Hình ảnh kiểm thử hiệu năng hệ thống ở màn hình đăng nhập}
+      \label{login_performance}
+    \end{figure}
+    Nhìn trong hình ở phần ngoài cùng, dưới Shader Compilation thì FPS trong màn hình đăng nhập là 57 FPS, khá tốt và
+    gần tiêu chuẩn 60 FPS.
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=12cm,height=7.5cm]{Images/mobile_app/demo/in_app_performance.png}
+      \caption[Hình ảnh kiểm thử hiệu năng hệ thống ở màn hình chính]{\bfseries \fontsize{12pt}{0pt}
+      \selectfont Hình ảnh kiểm thử hiệu năng hệ thống ở màn hình chính}
+      \label{in_app_performance}
+    \end{figure}
+
+    Ở màn hình chính, FPS được cải thiện một chút, đạt 58 FPS và trải nghiệm khi sử dụng rất mượt dù ở máy ảo. Tiếp theo
+    sẽ là các màn có các sự kiện và chạy qua nhiều hàm xử lý hơn ví dụ như màn vẽ biểu đồ lịch sử đo và màn tìm kiếm bluetooth.
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=12cm,height=7.5cm]{Images/mobile_app/demo/history_chart_performance.png}
+      \caption[Hình ảnh kiểm thử hiệu năng hệ thống ở màn hình xem lịch sử đo]{\bfseries \fontsize{12pt}{0pt}
+      \selectfont Hình ảnh kiểm thử hiệu năng hệ thống ở màn hình xem lịch sử đo}
+      \label{history_chart_performance}
+    \end{figure}
+
+    Ở màn hình xem lịch sử, ứng dụng sẽ phải lấy số liệu từ server, nạp vào biến và vẽ lên biểu đồ, FPS đạt 55, khá tốt và chưa
+    có hiện tượng giật lag.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=12cm,height=7.5cm]{Images/mobile_app/demo/find_device_performance.png}
+      \caption[Hình ảnh kiểm thử hiệu năng ở màn hình tìm kiếm thiết bị thông qua bluetooth]{\bfseries \fontsize{12pt}{0pt}
+      \selectfont Hình ảnh kiểm thử hiệu năng ở màn hình tìm kiếm thiết bị thông qua bluetooth}
+      \label{find_device_performance}
+    \end{figure}
+
+    Đối với màn hình tìm kiếm, ứng dụng sẽ phải bật Bluetooth, thực hiện tìm kiếm, kết quả sau khi tìm kiếm là 52 FPS. Trải nghiệm
+    khi tìm kiếm vẫn rất tốt. Do thiết bị máy ảo không thể kết nối bluetooth nên kiểm thử hiệu năng màn hình theo dõi dữ liệu điện tim sẽ được
+    chúng em trình bày ở phần bên dưới với máy thật.
+  
+  \item Máy thật
+  \begin{itemize}
+    \item Thiết bị: Realme 5 Pro - đã sử dụng 3 năm
+    \item Thông số: Android API 30 (Android 11)
+    \item Điều kiện: Không bật ứng dụng nào chạy nền
+  \end{itemize}
+
+  Mục này sẽ thực hiện kiểm thử hiệu năng khi thực hiện theo dõi dữ liệu điện tim thời gian thực khi kết nối qua Bluetooth.
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm,height=7.5cm]{Images/mobile_app/demo/measuring_performance.png}
+    \caption[Hình ảnh kiểm thử hiệu năng ở màn hình theo dõi dữ liệu khi bắt đầu đo]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Hình ảnh kiểm thử hiệu năng ở màn hình theo dõi dữ liệu khi bắt đầu đo}
+    \label{measuring_performance}
+  \end{figure}
+
+  Khi bắt đầu đo, nhìn ở biểu đồ Flutter Frames trên cùng bên trái, có thể thấy có rất nhiều cột màu đỏ, màu cam với thời gian
+  của các frames đều lớn hơn 16ms và nhiều frames còn gấp đôi so với 16ms. Màn hình biểu đồ bắt đầu có hiện tượng giật lag.
+  FPS khi thực hiện theo dõi dữ liệu tụt xuống 48 FPS. Và chắc chắn sẽ còn tiếp tục tụt xuống do dữ liệu sẽ được nạp ngày càng nhiều.
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm,height=7.5cm]{Images/mobile_app/demo/pre_middle_measuring_performance.png}
+    \caption[Hình ảnh kiểm thử hiệu năng ở màn hình tìm kiếm thiết bị thông qua bluetooth]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Hình ảnh kiểm thử hiệu năng ở màn hình tìm kiếm thiết bị thông qua bluetooth}
+    \label{pre_middle_measuring_performance}
+  \end{figure}
+
+  Sau khi thực hiện theo dõi được khoảng 1-2 phút, các frames vẫn mất khoảng 27 - 35ms để build, gần như gấp đôi so với
+  tiêu chuẩn để đảm bảo hiệu ứng mượt mà cho ứng dụng, FPS tụt xuống khá thấp còn 24 FPS. Chắc chắn để cải thiện trải nghiệm
+  của người dùng sẽ cần phải có sự tối ưu trong khi đo. 
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm,height=7.5cm]{Images/mobile_app/demo/middle_measuring_performance.png}
+    \caption[Hình ảnh kiểm thử hiệu năng ở màn hình tìm kiếm thiết bị thông qua bluetooth]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Hình ảnh kiểm thử hiệu năng ở màn hình tìm kiếm thiết bị thông qua bluetooth}
+    \label{middle_measuring_performance}
+  \end{figure}
+
+  Khoảng hơn hai phút sau khi đo, FPS ổn định khoảng 28-30. Màn hình hơi giật nhẹ, đôi lúc hơi đứng. Hiệu năng của ứng dụng
+  di động chưa được đảm bảo ở màn hình này.
+    
+\end{enumerate}
+
+Trên đây là phần kiểm thử hiệu năng của ứng dụng di động ở cả máy ảo và máy thật trong điều kiện thực tế, hầu hết các màn hình
+và khi thực hiện chức năng đều đảm bảo về mặt hiệu năng cũng như trải nghiệm của người dùng, tuy nhiên màn hình theo dõi
+dữ liệu điện tim sẽ cần phải cải thiện sớm trong tương lai.
+
+\subsubsection{Kết luận chương}
+  Trong Chương 3, chúng em đã trình bày phần triển khai hệ thống trên những nền tảng cụ thể, kèm với đó là việc thực hiện
+  các kiểm thử với mục tiêu rõ ràng, việc kiểm thử đã giúp chúng em có cái nhìn toàn diện cũng như rất chi tiết về cách đánh giá 
+  hệ thống trong môi trường phát triển và thực tế, đồng thời chúng em cũng rút ra được những thiết sót và kinh nghiệm
+  để có hướng phát triển cho những chức năng còn thiếu sót trong hệ thống.
 \newpage
