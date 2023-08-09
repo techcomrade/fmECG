@@ -254,7 +254,7 @@ Trong quá trình triển khai ứng dụng, chúng em sử dụng dịch vụ E
    chúng em tối ưu hóa việc quản lý hệ thống, đảm bảo tính sẵn sàng và
     mở rộng khả năng chịu tải cho ứng dụng.
 
-\subsubsection{Triển khai ứng dụng Web trên AWS EC2}
+\subsubsection{Triển khai API và ứng dụng web trên AWS EC2}
 \begin{itemize}
   \item Tạo máy ảo EC2: Chúng em đã tạo một EC2 instance với loại instance t2.micro. Đây là loại instance nhỏ, phù hợp với các ứng dụng có lưu lượng truy cập thấp hoặc giai đoạn phát triển. Instance này sử dụng kiến trúc 64-bit, cho phép chạy các ứng dụng trên cả hệ thống 32-bit và 64-bit. Bộ nhớ của instance là 1 GiB, đủ để chạy ứng dụng Node.js cùng với các dependencies. Dung lượng lưu trữ 8GB, chúng em đã cài đặt hệ điều hành Linux/UNIX để chạy mã nguồn của ứng dụng.
   
@@ -398,32 +398,32 @@ làm việc nhóm trở nên hiệu quả và nhanh chóng hơn.
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=8cm]{Images/mobile_app/demo/all_case_ci_cd.png}
-  \caption[Ví dụ mô tả chức năng của Bluetooth Low Energy]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Ví dụ mô tả chức năng của Bluetooth Low Energy}
+  \caption[Hình ảnh triển khai App sử dụng CI/CD trên Github Actions]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Hình ảnh triển khai App sử dụng CI/CD trên Github Actions}
   \label{demo} %đặt tên cho ảnh
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=8cm]{Images/mobile_app/demo/case_error_ci_cd.png}
-  \caption[Ví dụ mô tả chức năng của Bluetooth Low Energy]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Ví dụ mô tả chức năng của Bluetooth Low Energy}
+  \caption[Hình ảnh triển khai App bị lỗi]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Hình ảnh triển khai App bị lỗi}
   \label{demo} %đặt tên cho ảnh
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=8cm]{Images/mobile_app/demo/error_detail_ci_cd.png}
-  \caption[Ví dụ mô tả chức năng của Bluetooth Low Energy]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Ví dụ mô tả chức năng của Bluetooth Low Energy}
+  \caption[Chi tiết lỗi trong quá trình triển khai CI/CD]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Chi tiết lỗi trong quá trình triển khai CI/CD}
   \label{demo} %đặt tên cho ảnh
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=8cm]{Images/mobile_app/demo/success_case_ci_cd.png}
-  \caption[Ví dụ mô tả chức năng của Bluetooth Low Energy]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Ví dụ mô tả chức năng của Bluetooth Low Energy}
+  \caption[Triển khai App thành công bằng quy trình Ci/CD Github Actions]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Triển khai App thành công bằng quy trình Ci/CD Github Actions}
   \label{demo} %đặt tên cho ảnh
 \end{figure}
 
@@ -601,11 +601,11 @@ Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liê
 \break
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API thay đổi mật khẩu người dùng}
     % \label{table_api_news}
@@ -744,13 +744,15 @@ Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liê
 
   \item URL: GET api/users/{:userId}
   
+
+  \break
   
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin của người dùng thông qua ID}
     % \label{table_api_news}
@@ -821,12 +823,14 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 \begin{enumerate}[a)]
   \item URL: POST api/register
   
+\break
+
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng ký tài khoản}
     % \label{table_api_news}
@@ -955,11 +959,11 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng nhập}
     % \label{table_api_news}
@@ -1036,11 +1040,11 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng xuất}
     % \label{table_api_news}
@@ -1104,11 +1108,11 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API gửi token đặt lại mật khẩu}
     % \label{table_api_news}
@@ -1183,11 +1187,11 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đặt lại mật khẩu}
     % \label{table_api_news}
@@ -1350,11 +1354,11 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
 
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy nội dung của tin tức theo ID}
     % \label{table_api_news}
@@ -1415,11 +1419,11 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách tin tức}
     % \label{table_api_news}
@@ -1482,11 +1486,11 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách danh mục tin tức}
     % \label{table_api_news}
@@ -1549,11 +1553,11 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin danh mục tin tức theo ID}
     % \label{table_api_news}
@@ -1614,11 +1618,11 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
   
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách tin tứu theo ID danh mục tin tức}
     % \label{table_api_news}
@@ -1691,11 +1695,11 @@ Tham khảo bảng \ref{table_api_ecg} để xem thông tin của các api liên
   
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tải dữ liệu đo ECG lên server}
     % \label{table_api_news}
@@ -1791,11 +1795,11 @@ sensor\_type: Loại cảm biến
 
   
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin phiên đo ECG của bệnh nhân}
     % \label{table_api_news}
@@ -1860,11 +1864,11 @@ sensor\_type: Loại cảm biến
   
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách phiên đo ECG của các bệnh nhân mà bác sĩ đang quản lý}
     % \label{table_api_news}
@@ -1926,11 +1930,11 @@ sensor\_type: Loại cảm biến
   
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy dữ liệu một phiên đo ECG}
     % \label{table_api_news}
@@ -1999,13 +2003,13 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
 \begin{enumerate}[a)]
   \item URL: GET api/doctor/{:doctorId}/patients
   
-
+\break
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bệnh nhân mà bác sĩ đang quản lý theo ID bác sĩ}
     % \label{table_api_news}
@@ -2068,11 +2072,11 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
 
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin bác sĩ đang quản lý bệnh nhân theo ID bệnh nhân}
     % \label{table_api_news}
@@ -2138,10 +2142,10 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
 
 
 \begin{xltabular}{\textwidth}{
-  | >{\raggedright\arraybackslash}m{2cm}
+  | >{\raggedright\arraybackslash}p{2cm}
   | >{\raggedright\arraybackslash}X
   | >{\raggedright\arraybackslash}X
-  | >{\raggedright\arraybackslash}m{1cm}|
+  | >{\raggedright\arraybackslash}p{1cm}|
   }
   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng của website quản trị}
   % \label{table_api_news}
@@ -2152,8 +2156,7 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
 
 
   Kiểm tra chức năng đăng nhập
-  & 
-  1. Vào màn hình đăng nhập $\rightarrow$ Nhập thông tin tài khoản hoặc mật khẩu chưa có trên hệ thống
+  & 1. Vào màn hình đăng nhập $\rightarrow$ Nhập thông tin tài khoản hoặc mật khẩu chưa có trên hệ thống
   $\rightarrow$ Nhấn nút đăng nhập
 
   % \\ &
@@ -2327,7 +2330,6 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
   
   Kiểm tra chức năng quản lý dữ liệu ECG
   & 
-
 1. Vào màn hình quản lý dữ liệu ECG 
 
 2. Tải dữ liệu ECG từ thiết bị lên hệ thống $\rightarrow$ Lưu thông tin
@@ -2369,9 +2371,9 @@ trong bảng và hình dưới đây:
   | >{\raggedright\arraybackslash}X
   | >{\raggedright\arraybackslash}X
   | >{\raggedright\arraybackslash}X
-  | >{\raggedright\arraybackslash}m{1cm}|
+  | >{\raggedright\arraybackslash}p{2cm}|
   }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng trong màn AuthScreens}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử giao diện}
   \\
   \hline
   \bfseries Thông số thiết bị    &\bfseries Các màn hình
@@ -2534,11 +2536,14 @@ Dưới đây là các kiểm thử cho từng lớp:
       \item Chức năng quên mật khẩu
     \end{itemize}
 
+\break
+
+
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{2cm}
+    | >{\raggedright\arraybackslash}p{2cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng trong màn AuthScreens}
     \\
@@ -2599,10 +2604,10 @@ Dưới đây là các kiểm thử cho từng lớp:
   \end{itemize}
 
   \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{2cm}
+    | >{\raggedright\arraybackslash}p{2cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng trong màn BluetoothScreens}
     \\
@@ -2768,7 +2773,7 @@ Trên đây là phần kiểm thử hiệu năng của ứng dụng di động �
 và khi thực hiện chức năng đều đảm bảo về mặt hiệu năng cũng như trải nghiệm của người dùng, tuy nhiên màn hình theo dõi
 dữ liệu điện tim sẽ cần phải cải thiện sớm trong tương lai.
 
-\subsubsection{Kết luận chương}
+\subsection{Kết luận chương}
   Trong Chương 3, chúng em đã trình bày phần triển khai hệ thống trên những nền tảng cụ thể, kèm với đó là việc thực hiện
   các kiểm thử với mục tiêu rõ ràng, việc kiểm thử đã giúp chúng em có cái nhìn toàn diện cũng như rất chi tiết về cách đánh giá 
   hệ thống trong môi trường phát triển và thực tế, đồng thời chúng em cũng rút ra được những thiết sót và kinh nghiệm

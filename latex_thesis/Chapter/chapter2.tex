@@ -22,24 +22,28 @@ hình vẽ:
 % //fix lại kiến trúc: bỏ cái nối trực tiếp vào ecg services, website chuyển lên application, database gộp chung
 
 Hình \ref{fmECG_architecture-System} thể hiện ba phần: 
+
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item Device: Thiết bị phần cứng đo điện tim, để kết nối với App bệnh nhân thông qua Bluetooth 
   \item Application: Bao gồm ứng dụng của bệnh nhân, ứng dụng của bác sĩ và Website của Admin
   \item Server: Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu và Cloud lưu trữ
 \end{itemize}
+\end{adjustwidth}
 
 Trong hệ thống thì Devices là phần mà chúng em sẽ không trực tiếp thực hiện trong đồ án này, Application và Server sẽ là
 phần mà đồ án chúng em thực hiện. Ở trong sơ đồ kiến trúc hệ thống riêng có bệnh nhân sẽ có tương tác trực tiếp với Devices,
 còn lại khối Application sẽ tương tác với Server thông qua API với giao thức HTTP. Khi nhận được yêu cầu từ Application,
 Server sẽ thực hiện xử lý dữ liệu, mọi yêu cầu đến đều được xử lý bởi Services, tuỳ vào yêu cầu đến Services tương ứng sẽ đảm nhiệm 
 việc lấy/lưu dữ liệu trong cơ sở dữ liệu sau đó trả ra kết quả cho người dùng.
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item User Services: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin tài khoản
   \item ECG Services: Xử lý các tác vụ liên quan tới dữ liệu điện tim
   \item Storage Services: Xử lý các tác vụ lưu trữ dữ liệu của hệ thống với AWS
   \item Message Services: Xử lý các yêu cầu liên quan tới hội thoại, tin nhắn.
 \end{itemize}
-
+\end{adjustwidth}
 Ngoài ra, hệ thống sẽ phải có kết nối bluetooth low energy giữa thiết bị đo và ứng dụng di động để có thể truyền/nhận dữ liệu.
 Trên đây là tổng quan về kiến trúc hệ thống, phần tiếp dưới đây chúng em xin phép trình bày kỹ hơn về từng khối nhỏ hơn
 dựa vào những đối tượng đã được xác định trong hệ thống.
@@ -59,7 +63,7 @@ dựa vào những đối tượng đã được xác định trong hệ thống
 Trong hình trên, lớp trên cùng User interface là lớp để người dùng tương tác và thực hiện lời gọi thông qua API Adapter, 
 các yêu cầu của người dùng sẽ được xử lý thông qua Services và phản hồi lại với người dùng qua giao diện. Dưới đây là phần
 giải thích Services trong hình:
-
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item ECG Service: Khối có nhiệm vụ xử lý yêu cầu cho các trạng thái đo: thực hiện đo, kết thúc đo, lưu kết quả đo
   \item ECG Signal Processing Service: Khối có nhiệm vụ xử lý tín hiệu đo để phân tích sâu, hiển thị lên màn hình
@@ -67,6 +71,7 @@ giải thích Services trong hình:
   \item Chat Service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin
   \item Storage Service: Khối có nhiệm vụ lưu thông tin vào bộ nhớ
 \end{itemize}
+\end{adjustwidth}
 
 Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Device để phục vụ cho việc đo điện tim.
 \subsubsection{Ứng dụng di động cho bác sĩ}
@@ -997,12 +1002,15 @@ Chi tiết từng lớp và phần giải thích cho mỗi khối được chún
 \begin{enumerate}[a)]
   \item Danh sách các class diagram cho ứng dụng di động
     
+
   \begin{figure}[H]
     \centering
     \includegraphics[width=16cm,height=18cm]{Images/mobile_app/class_diagram/mobile_class_model.png}
     \caption[Sơ đồ lớp của khối Models trong ứng dụng di động]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của khối Models trong ứng dụng di động}
     \label{mobile_class_model} %đặt tên cho ảnh
   \end{figure}
+
+
 
   Dựa trên mục \ref{design_database} về phần thiết kế cơ sở dữ liệu, Hình \ref{mobile_class_model} thể hiện các lớp trong Models:
   \begin{itemize}
@@ -1584,18 +1592,22 @@ Trong nội dung của mục \ref{design_function_mobile}, chúng em xin đượ
 từ các chức năng chung đến chức năng riêng cho bệnh nhân, đồng thời sẽ triển khai hướng tối ưu của từng chức năng (nếu có).
 
 Các chức năng chung của hai ứng dụng cho bác sĩ và bệnh nhân bao gồm: 
+
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item Chức năng đăng nhập
   \item Chức năng xem lịch sử đo
   \item Chức năng nhắn tin.
 \end{itemize}
+\end{adjustwidth}
 
 Các chức năng riêng của bệnh nhân bao gồm:
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item Chức năng kết nối, thực hiện theo dõi và lưu dữ liệu với thiết bị điện tim
   \item Chức năng xem tin tức.
 \end{itemize}
-
+\end{adjustwidth}
 \subsubsection{Chức năng đăng nhập}
 
 
@@ -1826,6 +1838,13 @@ gửi một tin nhắn thông qua FirebaseMessagesController, dữ liệu đư�
 cơ chế thông báo cho người dùng đã thực hiện query ở luồng 6, có một tin nhắn mới được thêm. Ứng dụng có thể nhận được tin nhắn
 đó ngay lập tức và hiển thị lên màn hình.
 
-\subsubsection{Kết luận chương}
+\subsection{Kết luận chương}
+
+Chương 2 đã trình bày quá trình thiết kế hệ thống 
+dưới góc độ kiến trúc và các thành
+ phần cụ thể. Trong quá trình thiết kế, chúng em đã tập trung
+  vào việc xây dựng một kiến trúc hoạt động mượt mà và hiệu quả,
+   đảm bảo tính bảo mật, hiệu suất và khả năng mở rộng của hệ
+    thống.
 
 \newpage
