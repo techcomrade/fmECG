@@ -4,6 +4,7 @@ actor ":User" as User
 boundary ":View List Records" as ClientApp
 control ":Control Record" as Control
 entity ":Entity Record" as Entity
+autonumber
 
 activate User
 User -> ClientApp: Click a button to open all records view

@@ -4,6 +4,7 @@ actor ":User" as User
 boundary ":View Login" as ClientApp
 control ":Control Login" as Control
 entity ":Entity User" as Entity
+autonumber
 
 activate User
 User -> ClientApp: Click button register

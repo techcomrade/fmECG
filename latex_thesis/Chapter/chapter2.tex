@@ -6,16 +6,20 @@
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 2. THIẾT KẾ HỆ THỐNG}
 
+% //TODO: thêm phần mở đầu chương 2
+
 \subsection{Sơ đồ kiến trúc hệ thống}
 Hệ thống chúng em xây dựng được chia làm ba phần Device, Application và Server. Các chi tiết cụ thể được thể hiện trong
 hình vẽ:
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-System Architecture.drawio.png}
+  \includegraphics[width=12cm,height=10cm]{Images/system/fmECG_architecture-System_Architecture.png}
   \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
   \label{fmECG_architecture-System} %đặt tên cho ảnh
 \end{figure}
+
+% //fix lại kiến trúc: bỏ cái nối trực tiếp vào ecg services, website chuyển lên application, database gộp chung
 
 Hình \ref{fmECG_architecture-System} thể hiện ba phần: 
 \begin{itemize}
@@ -29,6 +33,12 @@ phần mà đồ án chúng em thực hiện. Ở trong sơ đồ kiến trúc h
 còn lại khối Application sẽ tương tác với Server thông qua API với giao thức HTTP. Khi nhận được yêu cầu từ Application,
 Server sẽ thực hiện xử lý dữ liệu, mọi yêu cầu đến đều được xử lý bởi Services, tuỳ vào yêu cầu đến Services tương ứng sẽ đảm nhiệm 
 việc lấy/lưu dữ liệu trong cơ sở dữ liệu sau đó trả ra kết quả cho người dùng.
+\begin{itemize}
+  \item User Services: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin tài khoản
+  \item ECG Services: Xử lý các tác vụ liên quan tới dữ liệu điện tim
+  \item Storage Services: Xử lý các tác vụ lưu trữ dữ liệu của hệ thống với AWS
+  \item Message Services: Xử lý các yêu cầu liên quan tới hội thoại, tin nhắn.
+\end{itemize}
 
 Ngoài ra, hệ thống sẽ phải có kết nối bluetooth low energy giữa thiết bị đo và ứng dụng di động để có thể truyền/nhận dữ liệu.
 Trên đây là tổng quan về kiến trúc hệ thống, phần tiếp dưới đây chúng em xin phép trình bày kỹ hơn về từng khối nhỏ hơn
@@ -103,7 +113,9 @@ tự.
   \item Phân công bệnh nhân - bác sĩ (\textbf{ID phân công}, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu)
   \item Mã thông báo đặt lại mật khẩu (\textbf{ID mã thông báo}, ID người dùng, Mã thông báo, Thời gian hết hạn)
   \item Phiên đăng nhập (\textbf{ID phiên đăng nhập}, ID người dùng, Mã phiên đăng nhập, Thời gian hết hạn)
-  \item Thiết bị (\textbf{ID thiết bị}, Tên thiết bị)
+  \item Thông tin hội thoại (\textbf{ID hội thoại}, Danh sách ID người dùng trong hội thoại, thông tin tin nhắn gần nhất)
+  \item Thông tin tin nhắn (\textbf{ID tin nhắn}, Nội dung tin nhắn, ID người gửi tin nhắn, thời gian gửi tin nhắn, ID hội thoại)
+  \item Firebase token người dùng (\textbf{ID token}, Firebase token, ID người dùng)
 \end{itemize}
 
 
@@ -297,6 +309,68 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     Mỗi thiết bị có một ID riêng, có duy nhất tên thiết bị & \parbox[t]{\linewidth}{$\text{ID thiết bị} \rightarrow$ tên thiết bị} \\
     \hline
     \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID thiết bị}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Thông tin hội thoại}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thông tin hội thoại}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID hội thoại, Danh sách ID người dùng trong hội thoại, thông tin tin nhắn gần nhất \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi hội thoại có một ID riêng, có duy nhất một danh sách ID người dùng, và một thông tin tin nhắn gần nhất 
+      & \parbox[t]{\linewidth}{$\text{ID thiết bị} \rightarrow$ danh sách ID người dùng trong hội thoại, thông tin tin nhắn gần nhất} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID hội thoại}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Thông tin tin nhắn}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thông tin tin nhắn}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID tin nhắn, Nội dung tin nhắn, ID người gửi tin nhắn, thời gian gửi tin nhắn, ID hội thoại \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi tin nhắn có một ID riêng, có duy nhất một nội dung tin nhắn, một ID người gửi, thời gian gửi và xác định
+    được ID hội thoại & \parbox[t]{\linewidth}{$\text{ID tin nhắn} \rightarrow$ Nội dung tin nhắn, ID người gửi tin nhắn, thời gian gửi tin nhắn, ID hội thoại} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tin nhắn}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Firebase token người dùng}
+\mbox{}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Firebase token người dùng}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID token, Firebase token, ID người dùng \\ % Thêm \textbf{} cho abc
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi token có một ID riêng, từ ID xác định được một Firebase token riêng cho người dùng & \parbox[t]{\linewidth}{$\text{ID token} \rightarrow$ tên thiết bị} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID token}$} \\
     \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
     \hline
   \end{tabularx}
@@ -499,25 +573,94 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
   \end{tabularx}
 \end{table}
 
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng conversation}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    conversation\_id & STRING & Khóa chính của bảng, đại diện cho ID hội thoại \\
+    \hline
+    members\_id & MAP<String, Boolean> & Danh sách ID của người dùng trong hội thoại \\
+    \hline
+    recent\_message & MAP<String, dynamic> & Thông tin tin nhắn gần nhất \\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng message}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    message\_id & STRING & Khóa chính của bảng, đại diện cho ID tin nhắn \\
+    \hline
+    conversation\_id & STRING & ID hội thoại chứa tin nhắn \\
+    \hline
+    message\_content & STRING & Nội dung tin nhắn \\
+    \hline
+    sender\_id & INTEGER & ID Người gửi tin nhắn\\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng user\_firebase\_token}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    token\_id & String & Khóa chính của bảng, đại diện cho ID firebase token \\
+    \hline
+    firebase\_token & STRING & Token của thiết bị đăng nhập vào hệ thống do Firebase sinh ra \\
+    \hline
+    user\_id & INTEGER & ID của người dùng sử dụng token \\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    \hline
+  \end{tabularx}
+\end{table}
+
 \subsubsection{Sơ đồ ERD}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=15cm]{Images/server/database/fmECG_architecture-Database.drawio.png}
+  \includegraphics[width=15cm,height=15cm]{Images/system/fmECG_database.png}
   \caption[Sơ đồ ERD]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ ERD}
   \label{fmECG_architecture-Database} %đặt tên cho ảnh
 \end{figure}
-
-
-% \subsection{Thiết kế chi tiết hệ thống}
-
-
 
 \subsection{Thiết kế giao diện}
 
 \subsubsection{Ứng dụng}
 
+Ứng dụng có giao diện được thiết kế theo tông màu chủ đạo là trắng và xanh nước biển để em lại cảm giác gần gũi và tươi sáng.
+
 Dưới đây là các giao diện thực tế mà chúng em thiết kế cho App:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/splash_screen_demo.jpg}
+  \caption[Giao diện màn hình khởi động]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn hình khởi động}
+  \label{demo_splash_screen} %đặt tên cho ảnh
+\end{figure}
+
+Màn hình khởi động gồm một icon tượng trưng cho máy đo điện tim, kèm vói đó là chữ fmECG nhỏ ở dưới.  
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/login.png}
@@ -539,80 +682,133 @@ Ngoài ra nếu người dùng chưa có tài khoản thì có thể chọn đă
   \label{demo_register} %đặt tên cho ảnh
 \end{figure}
 
-Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản một cách nhanh chóng
+Trang đăng ký gồm có 3 ô để người dùng đăng ký tài khoản một cách nhanh chóng, đồng thời nếu người dùng đã có tài khoản, có thể chọn
+Login ở bên dưới để chuyển sang giao diện đăng ký.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/home_screen.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
-  \label{demo_} %đặt tên cho ảnh
+  \caption[Giao diện màn hình chính]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn hình chính}
+  \label{demo_home_screen} %đặt tên cho ảnh
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=8cm]{Images/mobile_app/demo/preview_news.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
-  \label{demo_} %đặt tên cho ảnh
+  \caption[Giao diện mục tin tức trong màn hình chính]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện mục tin tức trong màn hình chính}
+  \label{demo_preview_news} %đặt tên cho ảnh
 \end{figure}
+
+Màn hình chính sẽ gồm phần thanh điều hướng ở dưới để có thể chuyển sang các giao diện khác (Xem lịch sử đo, Chat, Xem thông tin cá nhân).
+Trong màn hình chính sẽ có phần khung phía trên hiển thị tên người dùng và switch đổi chế độ sáng tối và thông báo của ứng dụng.
+Phần tổng quan bên dưới sẽ thể hiện dữ liệu đã được phân tích từ các lần đo, ngay bên dưới ở mục tín hiệu điện tim sẽ có nút để chuyển người dùng
+sang trang theo dõi điện tim. Dưới cùng là các tin tức để người dùng có thể theo dõi, giới hạn ở năm bài viết. Các nút điều hướng có nhiệm vụ chuyển trang,
+và giúp cho người dùng biết mình đang ở trang nào.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/all_news.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
-  \label{demo_} %đặt tên cho ảnh
+  \caption[Giao diện trang tất cả tin túc]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tất cả tin tức}
+  \label{demo_all_news}
 \end{figure}
+Trang tất cả tin tức có giao diện gần giống với giao diện của tin tức ở ngoài màn hình chính, điểm khác biệt là ở trang này,
+tất cả các tin tức sẽ được hiển thị thay vì chỉ có năm tin như ở màn hình chính.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/detail_news.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
-  \label{demo_} %đặt tên cho ảnh
+  \caption[Giao diện trang chi tiết tin tức]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang chi tiết tin tức}
+  \label{demo_detail_news}
 \end{figure}
+
+Sau khi click vào một tin tức, tất cả tin tức sẽ được hiển thị, người dùng có thể cuộn xuống để đọc và có thanh điều hướng
+giúp người dùng quay lại.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/history.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
-  \label{demo_} %đặt tên cho ảnh
+  \caption[Giao diện trang lịch sử các lần đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang lịch sử các lần đo}
+  \label{demo_history}
 \end{figure}
+
+Danh sách lịch sử các lần đo có thể được vào bằng thanh điều hướng, khi đó danh sách sẽ được lấy từ cơ sở dữ liệu và hiển thị cho người dùng.
+Một phiên đo sẽ gồm có thời gian đo, tên file lưu trên server và bpm được tính sau khi người dùng theo dõi xong. Người dùng
+có thể click vào một phiên đo để hiển thị dữ liệu phiên đo lên biểu đồ.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/detail_record.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
-  \label{demo_} %đặt tên cho ảnh
+  \caption[Giao diện trang biểu đồ dữ liệu một phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang biểu đồ dữ liệu một phiên đo}
+  \label{demo_detail_record}
 \end{figure}
+
+Sau khi click vào một phiên đo, một biểu đồ sẽ được hiển thị với dữ liệu đã được thu thập ở lần đo trước đó, người dùng có thể
+thực hiện thao tác phóng to, thu nhỏ. Nếu có nhiều hơn một dữ liệu được đo, thể hiện qua màu sắc các đường, người dùng có thể
+click vào phần chú thích của một đường ở trên biểu đồ để ẩn đường đó khỏi biểu đồ và quan sát đường còn lại một cách dễ dàng hơn.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/chat_preview.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
-  \label{demo_} %đặt tên cho ảnh
+  \caption[Giao diện trang tất cả hội thoại]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tất cả hội thoại}
+  \label{demo_chat_preview}
 \end{figure}
+
+Giao diện chat preview có thể được vào bằng thanh điều hướng ở màn hình chính. Trong giao diện này sẽ thể hiện những người
+mà người dùng có thể chat cùng, được phân công theo bác sĩ bệnh nhân, tức nghĩa là nếu bác sĩ đã được phân công một bệnh nhân
+thì sẽ có một cuộc hội thoại được tạo giữa hai người một cách tự động.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/chat_detail.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
-  \label{demo_} %đặt tên cho ảnh
+  \caption[Giao diện trang chi tiết hội thoại]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang chi tiết hội thoại}
+  \label{demo_chat_detail}
 \end{figure}
+
+Sau khi người dùng chọn một hội thoại, người dùng có thể bắt đầu nhắn tin, các tin nhắn được hiển thị theo thứ tự từ dưới lên về
+thời gian nhắn tin, người dùng thực hiện nhập và nhắn một tin, tin nhắn sẽ hiện ở dưới cùng của màn hình, nếu tin nhắn do
+chính người dùng nhắn sẽ hiển thị màu xanh, nếu của người còn lại sẽ hiển thị màu xám.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/off_bluetooth.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
-  \label{demo_} %đặt tên cho ảnh
+  \caption[Giao diện trang bật/tắt bluetooth]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang bật/tắt bluetooth}
+  \label{demo_off_bluetooth}
 \end{figure}
 
+Giao diện trang bật/tắt Bluetooth được truy nhập khi người dùng chọn theo dõi điện tim ở màn hình chính. Nếu người dùng chưa
+bật bluetooth, ứng dụng sẽ hiện màn hình như trong Hình \ref{demo_off_bluetooth} trên. Người dùng ấn bật bluetooth, ứng dụng
+sẽ vào hệ thống và bật bluetooth cho người dùng. Nếu người dùng đã bật Bluetooth sẽ chuyển sang màn hình Hình \ref{demo_finding_bluetooth}
+ở bên dưới.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/finding_bluetooth.png}
-  \caption[Giao diện trang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang}
-  \label{demo_} %đặt tên cho ảnh
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/demo_connected_device.jpg}
+  \caption[Giao diện trang tìm kiếm thiết bị điện tim]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tìm kiếm thiết bị điện tim}
+  \label{demo_finding_bluetooth}
 \end{figure}
 
+Khi ở giao diện tìm kiếm, ứng dụng sẽ tìm kiếm các thiết bị và hiện các thiết bị có thể kết nối lên trên màn hình. Người dùng có thể ấn dừng
+sau khi đã tìm thấy thiết bị có thể kết nối. Người dùng nhất nút kết nối cạnh tên của thiết bị hiện trên màn hình và sẽ có một
+popup hiện lên nếu kết nối thành công. Người dùng nhấn tiến hành đo để vào trang theo dõi dữ liệu điện tim thời gian thực.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/demo_real_time_chart_2.jpg}
+  \caption[Giao diện trang theo dõi dữ liệu điện tim real-time màn hình dọc]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện theo dõi dữ liệu điện tim real-time màn hình dọc}
+  \label{demo_real_time_chart_2}
+\end{figure}
+
+Khi vào giao diện sẽ có nút Tiến hành đo để người dùng chủ động theo dõi dữ liệu điện tim, ngay sau khi ngươi dùng ấn, dữ liệu lập tức sẽ
+thể hiện trên biểu đồ. Trục tung là giá trị điện áp (đơn vị V), trục hoành đúng sẽ là đơn vị thời gian (đơn vị giây), tuy nhiên đang trong
+quá trình kiểm thử với nhiều thiết bị nên hình ảnh hiển thị số mẫu. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm,height=4cm]{Images/mobile_app/demo/demo_real_time_chart.jpg}
+  \caption[Giao diện trang theo dõi dữ liệu điện tim real-time màn hình ngang]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang theo dõi dữ liệu điện tim real-time màn hình ngang}
+  \label{demo_real_time_chart}
+\end{figure}
+Ngoài việc theo dõi biểu đồ màn hình dọc, người dùng có thể xoay ngang màn hình và theo dõi.
 
 \subsubsection{Website}
 
@@ -826,7 +1022,7 @@ Chi tiết từng lớp và phần giải thích cho mỗi khối được chún
 
   \begin{figure}[H]
     \centering
-    \includegraphics[width=14cm,height=7cm]{Images/mobile_app/class_diagram/mobile_class_view.png}
+    \includegraphics[width=14cm,height=9cm]{Images/mobile_app/class_diagram/mobile_class_view.png}
     \caption[Sơ đồ lớp của khối Views trong ứng dụng di động]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của khối Views trong ứng dụng di động}
     \label{mobile_class_view} %đặt tên cho ảnh
   \end{figure}
@@ -847,7 +1043,7 @@ Chi tiết từng lớp và phần giải thích cho mỗi khối được chún
   
   \begin{figure}[H]
     \centering
-    \includegraphics[width=16cm,height=15cm]{Images/mobile_app/class_diagram/mobile_class_controller.png}
+    \includegraphics[width=16cm,height=9cm]{Images/mobile_app/class_diagram/mobile_class_controller.png}
     \caption[Sơ đồ lớp của khối Controllers trong ứng dụng di động]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của khối Controllers trong ứng dụng di động}
     \label{mobile_class_controller} %đặt tên cho ảnh
   \end{figure}
@@ -856,7 +1052,6 @@ Chi tiết từng lớp và phần giải thích cho mỗi khối được chún
   nhất định được chia nhỏ thành các hàm, phương thức tương ứng giúp việc phia chia và đặc biệt khi kiểm soát lỗi rất dễ dàng do
   chúng ta có thể dự đoán được lỗi phát sinh ở chức năng và hàm nào. 
 
-  % //TODO: Thiếu file managements trong sơ đồ
   \begin{itemize}
     \item AuthProvider: Cung cấp các biến và hàm để thực hiện chức năng xác thực người dùng
     \item ECGRecordController: Cung cấp các hàm, phương thức để thực hiện chức năng liên quan đến các bản ghi điện tim
@@ -960,7 +1155,7 @@ Chi tiết từng lớp và phần giải thích cho mỗi khối được chún
 
 
 
-\subsection{Thiết kế các chức năng cho Website và Server}
+\subsection{Thiết kế các chức năng cho website và server}
 
 \subsubsection{Thiết kế API}
 
@@ -1378,7 +1573,7 @@ Sau khi AdminJS đã nhận được kết quả từ các tài nguyên, nó s�
 
 
 
-\subsection{Thiết kế và tối ưu các chức năng chính cho ứng dụng di động}
+\subsection{Thiết kế các chức năng cho ứng dụng di động}
 \label{design_function_mobile}
 
 Ứng dụng di động được trong hệ thống được chia cụ thể gồm ứng dụng di động cho bệnh nhân và ứng dụng di động cho bác sĩ. 
@@ -1388,7 +1583,7 @@ Hầu hết các chức năng cơ bản được thể hiện trong sơ đồ us
 Trong nội dung của mục \ref{design_function_mobile}, chúng em xin được phép trình bày chi tiết hướng thực hiện các chức năng
 từ các chức năng chung đến chức năng riêng cho bệnh nhân, đồng thời sẽ triển khai hướng tối ưu của từng chức năng (nếu có).
 
-Các chức năng chung của hai ứng dụng bao gồm: 
+Các chức năng chung của hai ứng dụng cho bác sĩ và bệnh nhân bao gồm: 
 \begin{itemize}
   \item Chức năng đăng nhập
   \item Chức năng xem lịch sử đo
@@ -1397,7 +1592,7 @@ Các chức năng chung của hai ứng dụng bao gồm:
 
 Các chức năng riêng của bệnh nhân bao gồm:
 \begin{itemize}
-  \item Chức năng kết nối và thực hiện đo với thiết bị điện tim
+  \item Chức năng kết nối, thực hiện theo dõi và lưu dữ liệu với thiết bị điện tim
   \item Chức năng xem tin tức.
 \end{itemize}
 
@@ -1433,20 +1628,7 @@ kế việc lưu dữ liệu đăng nhập.
   \label{seq_auth} %đặt tên cho ảnh
 \end{figure}
 
-\subsubsection{Chức năng xem lịch sử đo}
-
-Chức năng xem lịch sử đo lấy dữ liệu trực tiếp trên server, với logic cơ bản được thể hiện ở Hình \ref{view_record_timeline}. 
-Để xem được lịch sử các lần đo, bệnh nhân cần thực hiện đo ít nhất một lần (hệ thống sẽ tự gửi dữ liệu lên server). Dữ liệu sau khi được
-load từ API về sẽ được vẽ lên biểu đồ. Các Hình thể hiện luồng API hoạt động ở server để lấy dữ liệu về cho ứng dụng di động.
-
-% //TODO: add hình
-% Hình \ref{getEcgRecordsByDoctor}, Hình \ref{convertExceltoJson} và Hình \ref{getEcgRecordsByUserId}
-% Thêm hình demo biểu đồ sau khi vẽ
-
-Biểu đồ có trục tung là giá trị điện áp, trục hoành là toàn bộ thời gian từ lúc bắt đầu đo đến khi kết thúc. Người dùng có thể,
-thực hiện các thao tác phóng to, thu nhỏ.
-
-\paragraph{Chức năng kết nối và thực hiện nhận dữ liệu với thiết bị điện tim}
+\subsubsection{Chức năng kết nối và nhận/lưu dữ liệu từ thiết bị điện tim}
 \mbox{}
 
 Chức năng kết nối và thực hiện đo với thiết bị điện tim là một trong những chức năng quan trọng nhất của ứng dụng. Chức năng này yêu cầu
@@ -1462,10 +1644,10 @@ là GATT \cite{intro_ble_gatt} (Generic ATTribute Profile) - xác định cách 
 Services và Characteristics sẽ được hình thành.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=10cm]{Images/system/ble_service_charac.png}
-  \caption[Sơ đồ tuần tự thiết kế chức năng kết nối và nhận dữ liệu điện tim real-time]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự thiết kế chức năng kết nối và nhận dữ liệu điện tim real-time}
-  \label{ble_service_characteristic} %đặt tên cho ảnh
+  \includegraphics[width=15cm,height=9cm]{Images/mobile_app/ecg_calculation/ble_gatt.png}
+  \caption[Cấu trúc dữ liệu gói của]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Cấu trúc dữ liệu gói của}
+  \label{ble_gatt} %đặt tên cho ảnh
 \end{figure}
 Services là tập hợp của một nhóm thông tin để thực hiện một chức năng cụ thể,
 ví dụ Battery Service, Sensor Service, trong mỗi Service chính là một hoặc nhiều Characteristic, mỗi Characteristic đảm nhận
@@ -1490,21 +1672,104 @@ thiết bị:
 
 Sau khi hoàn thành phần xây dựng kết nối với thiết bị đo điện tim, quá trình thực hiện đo được bắt đầu. Ứng dụng sẽ lắng nghe
 dữ liệu từ thiết bị thông qua một hàm "subscribe characteristic", dữ liệu sẽ gửi liên tục qua characteristic này. Nhiệm vụ sau đó của ứng dụng là
-định nghĩa gói dữ liệu, xử lý và chuẩn hoá số liệu, từ đó vẽ lên biểu đồ. Chi tiết về bước định nghĩa gói dữ liệu, xử lý số liệu sẽ được chúng em trình bày
-ở chương sau. 
-% //TODO: add hình THêm luồng xử lý dữ liệu và lưu file
+định nghĩa cấu trúc gói dữ liệu, xử lý và chuẩn hoá số liệu, từ đó vẽ lên biểu đồ dữ liệu điện tim, và lưu dữ liệu sau khi đo.
 
-Sau mỗi lần đo, dữ liệu sẽ được gửi lên server để lưu trữ và hiển thị lại cho bệnh nhân/bác sĩ quản lý xem nếu cần. Việc xem
-lịch sử đo được chúng em tiếp tục trình bày ở mục \ref{function_view_history_record}.
+\begin{enumerate} [a)]
+  \item Định nghĩa cấu trúc gói dữ liệu
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=10cm]{Images/server/sequence/web/seq_auth.png}
-  \caption[Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) }
-  \label{seq_auth} %đặt tên cho ảnh
-\end{figure}
+    % FIXME: lùi đầu dòng anh Tuấn
+    Khi ứng dụng di động bắt đầu nhận được gói, điều đầu tiên là phải xác định dữ liệu trong gói được định dạng như thế nào.
+    Dưới đây là hình ảnh về cấu trúc một gói dữ liệu của BLE:
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=14cm,height=4cm]{Images/mobile_app/ecg_calculation/preview_packet.png}
+      \caption[Cấu trúc gói BLE]{\bfseries \fontsize{12pt}{0pt}
+      \selectfont Cấu trúc gói BLE}
+      \label{preview_packet} %đặt tên cho ảnh
+    \end{figure}
+    Trong một gói mà ứng dụng nhận được, dữ liệu nằm trong DataPDU, đó chính là phần Payload, vậy dữ liệu điện tim tối đa
+    trong một gói là 255 bytes. Nói cách khác, mỗi khi BLE gửi một gói đến, dữ liệu thô mà ứng dụng nhận được sẽ là một
+    list các bytes. Sau khi đã nắm được khung dữ liệu trong một gói, cần sự kết hợp của cả bên phần cứng 
+    và người lập trình firmware để xác định chi tiết ý nghĩa về dữ liệu trong gói bởi nếu không nắm được dữ liệu
+    trong một gói được tổ chức ra sao, những bytes nào đảm nhận nhiệm vụ gì, sẽ không thể tính toán ra số liệu và vẽ lên biểu
+    đồ được.
+    
+    Trong đồ án lần này, chúng em có thử nghiệm với hai thiết bị đo là ống nghe điện tử sử dụng trong thính chẩn tim (electronic stethoscope for cardiac auscultation)
+    và thiết bị đo điện tim bằng điện cực không tiếp xúc, hai thiết bị phần cứng đều được nghiên cứu và phát triển bởi BKIC Lab, trường Điện - Điện tử,
+    Đại học Bách khoa Hà Nội. Dưới đây là hai hình vẽ thể hiện cấu trúc gói chi tiết của hai thiết bị:
 
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=12cm,height=4.8cm]{Images/mobile_app/ecg_calculation/data_packet_all.png}
+      \caption[Cấu trúc dữ liệu gói gửi qua Bluetooth của thiết bị đo tiếng tim]{\bfseries \fontsize{12pt}{0pt}
+      \selectfont Cấu trúc dữ liệu gói gửi qua Bluetooth của thiết bị đo tiếng tim}
+      \label{data_packet_ecg}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=12cm,height=3cm]{Images/mobile_app/ecg_calculation/ble_packet_fmECG.jpeg}
+      \caption[Cấu trúc dữ liệu gói gửi qua Bluetooth của thiết bị đo điện tim]{\bfseries \fontsize{12pt}{0pt}
+      \selectfont Cấu trúc dữ liệu gói của thiết bị đo điện tim}
+      \label{ble_packet_fmECG}
+    \end{figure}
+
+    Về cơ bản, 0 - 240 bytes trong trường Data, chính là gộp của nhiều mẫu đo nhỏ, rồi mới gửi qua Bluetooth.
+    Sau khi xác định được đủ các yếu tố và hiểu được cấu trúc gói, chúng em sẽ bắt đầu xử lý gói dữ liệu.
+
+  \item Xử lý gói dữ liệu
+
+    Sau khi đã hiểu về mỗi bytes trong một gói đảm nhận nhiệm vụ gì, việc tiếp theo là phân tách các bytes cần thiết,
+    thực hiện tính toán. 
+    
+    Với dữ liệu gửi từ thiết bị đo tiếng tim có 16 bytes/gói dữ liệu ở Hình \ref{data_packet_ecg}, 3 bytes đầu và 1 byte cuối được bỏ qua (3 bytes status, 
+    1 byte đếm), ứng dụng sẽ cần thực hiện xử lý và tính toán với 12 bytes. Dưới đây là chi tiết các bước thiết lập tính toán cho channel 1 trong Hình \ref{data_packet_ecg}:
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=16cm,height=4cm]{Images/mobile_app/ecg_calculation/handle_one_channel.png}
+      \caption[Các bước tính điện áp channel 1 từ 3 bytes của channel]{\bfseries \fontsize{12pt}{0pt}
+      \selectfont Các bước tính điện áp channel 1 từ 3 bytes của channel}
+      \label{channel_01_calculation} %đặt tên cho ảnh
+    \end{figure}
+
+    Nhìn vào trong hình \ref{channel_01_calculation}, bước (1) sẽ thực hiện công đoạn chuyển 3 bytes sang số thập phân,
+    bước (2) kiểm tra điều kiện khi so sánh với \(2^{23}\), bước (3) do giá trị ở bước (1) lớn hơn \(2^{23}\) nên thực hiện
+    phép trừ để trả về đúng dấu, nếu giá trị bước (1) nhỏ hơn \(2^{23}\) thì giữ nguyên giá trị mà không trừ.
+    bước (4) thực hiện công thức quy đổi ra điện áp theo công thức tính được cung cấp trong Table 9, ADS 1299
+    Datasheet.
+
+    Dữ liệu output trả ra chính là giá trị điện áp của channel 1 dùng để vẽ lên biểu đồ. Lần lượt thực hiện với các channel
+    còn lại, kết quả thu được sẽ là 4 giá trị điện áp với từng channel tính toán thành công trong một gói nhận từ thiết bị.
+    Nói cách khác, một gói dữ liệu mà ứng dụng nhận được, sau khi qua xử lý sẽ trả ra các giá trị điện áp tương ứng với các
+    channel, mỗi giá trị sẽ là một điểm trên biểu đồ điện tim.
+
+    Đối với gói dữ liệu gửi từ thiết bị đo điện tim, sẽ phức tạp hơn một chút khi phải chia nhỏ dữ liệu trong trường Data,
+    thành từng cụm 12 bytes và xử lý 12 bytes y hệt như công thức xử lý ở trên. 
+
+  \item Vẽ dữ liệu đã được xử lý lên biểu đồ
+
+    Sau khi dữ liệu được xử lý, ứng dụng đã có các điểm cần thiết để vẽ lên biểu đồ. Và với tần số lấy mẫu cơ bản là 250Hz, 
+    tức nghĩa là sẽ có 250 gói được gửi tới ứng dụng trong 1 giây, 250 điểm thuộc một channel có thể vẽ lên biểu đồ trong một giây.
+    Với tốc độ 250Hz, hoàn toàn có thể vẽ đủ các điểm lên biểu đồ mà không gây ra hiện tượng lag ứng dụng khi phải xử lý và vẽ một
+    lượng lớn số liệu trong khoảng thời gian rất ngắn. Tuy nhiên khi tần số lấy mẫu tăng, thì việc vẽ đủ tất cả các mẫu lên
+    biểu đồ có thể không xử lý kịp. Phương án khả thi có thể đưa ra đó là áp dụng định lý lấy mẫu Nyquist-Shannon để giảm
+    đến mức cho phép số mẫu cần phải xử lý và vẽ lên biểu đồ.
+
+  \item Lưu dữ liệu sau khi kết thúc quá trình theo dõi
+    
+    Trước khi đo, ứng dụng sẽ yêu cầu được cấp quyền ghi file để có thể lưu dữ liệu vào file trong máy. Lần đầu đo người dùng,
+    sẽ được tạo một folder để lưu dữ liệu điện tim.
+  
+    Dữ liệu điện tim được thiết kế lưu tạm thời trong RAM (lưu trong một biến khi chương trình đang chạy) trong quá trình 
+    đang thực hiện đo/theo dõi, đồng thời để giảm tải cho biến, dữ liệu sẽ được ghi vào file trong máy người dùng khi đạt tới số mẫu nhất định và xoá dữ liệu trong biến.
+    Số mẫu 5000 cần được kiểm thử trong môi trường thực tế nhiều hơn.
+
+    Sau mỗi lần đo, dữ liệu sẽ được gửi lên server để lưu trữ và hiển thị lại cho bệnh nhân/bác sĩ quản lý xem nếu cần.
+
+\end{enumerate}
+Trên đây là phần thiết kế chức năng quan trọng nhất của ứng dụng di động. Sau khi có dữ liệu đo, việc xem lịch sử đo được chúng em 
+tiếp tục trình bày ở mục \ref{function_view_history_record}.
 
 \subsubsection{Chức năng xem lịch sử đo}
 \label{function_view_history_record}
@@ -1531,17 +1796,13 @@ thông tin dư thừa của gói tin. Chỉ khi người dùng chọn một tin 
 nội dung tin tức đó về, nội dung tin tức được chúng em thống nhất lưu dưới dạng HTML và khi hiện lên sẽ hiển thị dạng HTML view.
 Điều này giúp cấu trúc của thông tin được nguyên vẹn và không cần phải chỉnh sửa nhiều.
 
-% //TODO: Thêm ảnh demo chức năng, hoặc biểu đồ giải thích xem tin tức, ảnh html
-
 \subsubsection{Chức năng nhắn tin}
-
 
 Chức năng nhắn tin là chức năng được thiết kế để không phụ thuộc vào server của hệ thống mà độc lập đứng riêng. Chúng em
 chọn Firebase làm nền tảng để phát triển chức năng nhắn tin bởi tính phổ biến, hỗ trợ rất nhiều ngôn ngữ đi kèm với tài liệu đầy đủ 
 và dễ dàng phát triển.
 Ở chức năng nhắn tin, mọi dữ liệu về tin nhắn sẽ được lưu trên Firestore (Cơ sở dữ liệu NoSQL của Firebase), cơ sở dữ liệu sẽ
 bao gồm ba bảng chính. 
-% //TODO: Thêm các bảng tin nhắn và giải thích ở chương 2
 
 Việc xử lý tin nhắn, gửi tin nhắn, hay các thao tác với tin nhắn đều có thể sử dụng các câu lệnh truy vấn và truy/xuất
 trực tiếp vào cơ sở dữ liệu, đồng thời các ví dụ và câu lệnh được Firebase hỗ trợ rất kĩ về mặt tài liệu, vì lẽ đó, khi sử dụng
@@ -1552,10 +1813,9 @@ Ví dụ, ứng dụng di động đang trong giao diện trò chuyện, tức n
 cơ sở dữ liệu, tuỳ theo cơ chế của ngôn ngữ lập trình, Firebase lắng nghe được sự thay đổi
 trong cơ sở dữ liệu và lập tức gửi một thông điệp đến ứng dụng để cho người dùng biết, đồng thời cập nhật tin nhắn kèm giao diện.
 
-% //TODO: Thêm ảnh demo và hỏi anh Tuấn cách thêm notes
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=10cm]{Images/mobile_app/design_send_receive_message.png}
+  \includegraphics[width=16cm,height=14cm]{Images/mobile_app/design_send_receive_message.png}
   \caption[Sơ đồ tuần tự thiết kế chức năng gửi và nhận tin nhắn real-time]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự thiết kế chức năng gửi và nhận tin nhắn real-time}
   \label{design_send_receive_firebase_message} %đặt tên cho ảnh
