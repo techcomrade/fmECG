@@ -9,7 +9,7 @@
 {\numberline{}CHƯƠNG 1. PHÂN TÍCH HỆ THỐNG}
 Trong chương này, chúng em sẽ tiến hành phân tích hệ thống cho dự án đề tài "Hệ thống quản lý ECG" dựa trên các mục tiêu
 đã nêu ra trong Mục Đề xuất hệ thống ở Phần mở đầu. Trước tiên bài toán đặt ra ở hệ thống phần mềm điện tim là có thể có:
-
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item Một thiết bị để có thể giúp mẹ bầu đo được những thông tin cần thiết
   \item Trực quan và tiêu chuẩn hoá những thông tin đo được
@@ -19,23 +19,24 @@ Trong chương này, chúng em sẽ tiến hành phân tích hệ thống cho d�
   \item Quản trị viên sẽ là người có thể phân công bác sĩ để chăm sóc, theo dõi sức khoẻ từ
   xa cho mẹ bầu. 
 \end{itemize}
-
+\end{adjustwidth}
 Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được chúng em trình bày ở các chương dưới.
 
 
 \subsection{Yêu cầu hệ thống}
 \subsubsection{Yêu cầu về người dùng hệ thống}
 Hệ thống được thiết kế để phục vụ các đối tượng sau:
-
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
     \item Bệnh nhân: Người sử dụng hệ thống để thực hiện kiểm tra ECG thông qua Bluetooth và theo dõi sức khỏe của mình. Bệnh nhân có quyền truy cập vào kết quả ECG của mình, được một bác sĩ theo dõi và có thể theo dõi các thông tin liên quan đến điện tim và sức khoẻ.
     \item Bác sĩ: Người sử dụng hệ thống để xem và đánh giá kết quả ECG của bệnh nhân, đưa ra nhận xét và đề xuất điều trị. Bác sĩ có thể trao đổi với bệnh nhân và gửi thông báo quan trọng liên quan đến chăm sóc sức khỏe.
     \item Quản trị viên: Người sử dụng hệ thống để quản lý các tài khoản người dùng, phân công bệnh nhân cho bác sĩ và quản lý mối quan hệ giữa bác sĩ và bệnh nhân.
 \end{itemize}
+\end{adjustwidth}
 
 \subsubsection{Yêu cầu chức năng}
 Các chức năng chính của hệ thống bao gồm: 
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{1.5em}{}
   \begin{itemize}
       \item Ghi lại dữ liệu điện tim: Hệ thống cho phép ghi lại tín hiệu điện tim từ máy đo ECG (Electrocardiogram) hay thiết bị đo điện tim khác. Dữ liệu được chuyển tới ứng dụng của người dùng thông qua Bluetooth để lưu trữ, phân tích và có thể xem lại sau này.
   
@@ -54,6 +55,7 @@ Các chức năng chính của hệ thống bao gồm:
 Hệ thống hỗ trợ các chức năng cơ bản sau đối với người dùng:
 
 \textbf{Đối với người dùng là bệnh nhân:}
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
     \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, ngày sinh, số điện thoại và mật khẩu
     \item Cập nhật các thông tin cá nhân
@@ -62,9 +64,9 @@ Hệ thống hỗ trợ các chức năng cơ bản sau đối với người d�
     \item Theo dõi các tin tức liên quan đến sức khoẻ và tim mạch
     \item Nhận thông báo và có thể trao đổi trực tiếp với bác sĩ về tình hình sức khoẻ và các kết quả đo được từ thiết bị.
 \end{itemize}
-
+\end{adjustwidth}
 \textbf{Đối với người dùng là bác sĩ:}
-
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
     \item Được cấp tài khoản để sử dụng hệ thống
     \item Cập nhật các thông tin cá nhân
@@ -72,8 +74,9 @@ Hệ thống hỗ trợ các chức năng cơ bản sau đối với người d�
     \item Đánh giá và đưa ra nhận xét về kết quả ECG của bệnh nhân
     \item Trao đổi các thông tin liên quan đến tình hình sức khoẻ và kết quả đo của bệnh nhân.
 \end{itemize}
-
+\end{adjustwidth}
 \textbf{Đối với người dùng là quản trị viên:}
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
     \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, số điện thoại và mật khẩu
     \item Cập nhật thông tin cá nhân
@@ -82,7 +85,7 @@ Hệ thống hỗ trợ các chức năng cơ bản sau đối với người d�
     \item Quản lý các bản ghi dữ liệu điện tim của bệnh nhân
     \item Quản lý các tin tức được đăng trên ứng dụng của người dùng.
 \end{itemize}
-
+\end{adjustwidth}
 \subsubsection{Yêu cầu phi chức năng}
 \begin{itemize}
     \item Hệ thống hỗ trợ ngôn ngữ Tiếng Việt và Tiếng Anh
