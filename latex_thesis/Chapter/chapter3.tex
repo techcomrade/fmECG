@@ -254,7 +254,7 @@ Trong quá trình triển khai ứng dụng, chúng em sử dụng dịch vụ E
    chúng em tối ưu hóa việc quản lý hệ thống, đảm bảo tính sẵn sàng và
     mở rộng khả năng chịu tải cho ứng dụng.
 
-\subsubsection{Triển khai ứng dụng Web trên AWS EC2}
+\subsubsection{Triển khai API và ứng dụng web trên AWS EC2}
 \begin{itemize}
   \item Tạo máy ảo EC2: Chúng em đã tạo một EC2 instance với loại instance t2.micro. Đây là loại instance nhỏ, phù hợp với các ứng dụng có lưu lượng truy cập thấp hoặc giai đoạn phát triển. Instance này sử dụng kiến trúc 64-bit, cho phép chạy các ứng dụng trên cả hệ thống 32-bit và 64-bit. Bộ nhớ của instance là 1 GiB, đủ để chạy ứng dụng Node.js cùng với các dependencies. Dung lượng lưu trữ 8GB, chúng em đã cài đặt hệ điều hành Linux/UNIX để chạy mã nguồn của ứng dụng.
   
@@ -2773,7 +2773,7 @@ Trên đây là phần kiểm thử hiệu năng của ứng dụng di động �
 và khi thực hiện chức năng đều đảm bảo về mặt hiệu năng cũng như trải nghiệm của người dùng, tuy nhiên màn hình theo dõi
 dữ liệu điện tim sẽ cần phải cải thiện sớm trong tương lai.
 
-\subsubsection{Kết luận chương}
+\subsection{Kết luận chương}
   Trong Chương 3, chúng em đã trình bày phần triển khai hệ thống trên những nền tảng cụ thể, kèm với đó là việc thực hiện
   các kiểm thử với mục tiêu rõ ràng, việc kiểm thử đã giúp chúng em có cái nhìn toàn diện cũng như rất chi tiết về cách đánh giá 
   hệ thống trong môi trường phát triển và thực tế, đồng thời chúng em cũng rút ra được những thiết sót và kinh nghiệm
