@@ -129,7 +129,16 @@ Việc thực hiện lắng nghe Characteristic và lấy dữ liệu ra là ch�
 \paragraph{NodeJs}
 \mbox{}
 
-Node.js là một nền tảng phát triển ứng dụng mã nguồn mở cực kỳ mạnh mẽ và đa dạng, giúp các nhà phát triển xây dựng các ứng dụng web và dịch vụ server-side với hiệu suất cao và khả năng mở rộng linh hoạt. Được ra đời vào năm 2009, Node.js đã nhanh chóng trở thành một trong những công nghệ phổ biến nhất trong cộng đồng lập trình viên và được ứng dụng rộng rãi trong các dự án phức tạp cũng như các ứng dụng thời gian thực.
+Node.js là một nền tảng phát triển ứng dụng mã nguồn mở cực kỳ mạnh mẽ và đa dạng, giúp các nhà phát triển xây dựng các ứng dụng web và dịch vụ server-side với hiệu suất cao và khả năng mở rộng linh hoạt \cite{nodejs_1}. Được ra đời vào năm 2009, Node.js đã nhanh chóng trở thành một trong những công nghệ phổ biến nhất trong cộng đồng lập trình viên và được ứng dụng rộng rãi trong các dự án phức tạp cũng như các ứng dụng thời gian thực. 
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=8cm]{Images/server/tech_used/nodejs_arch.jpg}
+  \caption[Kiến trúc của NodeJS]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Kiến trúc của NodeJS}
+  \label{ble_services} %đặt tên cho ảnh
+\end{figure}
 
 Một trong những điểm mạnh nổi bật của Node.js là sự hỗ trợ tốt cho kiến trúc không đồng bộ (asynchronous architecture). Bản chất của kiến trúc này là khả năng xử lý đa luồng (multithreading) không đồng bộ, giúp ứng dụng có thể xử lý nhiều yêu cầu cùng một lúc mà không phải chờ đợi hoàn thành từng yêu cầu trước. Điều này cho phép Node.js xử lý các yêu cầu I/O (Input/Output) nặng như truy vấn cơ sở dữ liệu, đọc/ghi dữ liệu từ tập tin, hay gửi và nhận các yêu cầu HTTP một cách hiệu quả và nhanh chóng. Sự không đồng bộ cũng giúp tăng hiệu suất cho ứng dụng, đồng thời tiết kiệm tài nguyên hệ thống.
 
@@ -137,7 +146,7 @@ Node.js được xây dựng dựa trên JavaScript, ngôn ngữ lập trình ph
 
 Vì Node.js là mã nguồn mở, nên nó rất linh hoạt và có khả năng tùy chỉnh cao. Phát triển viên có thể sửa đổi và mở rộng các tính năng của Node.js tùy theo nhu cầu của dự án một cách dễ dàng. Hơn nữa, Node.js có cộng đồng lớn và năng động, luôn cập nhật và cải tiến mã nguồn để đáp ứng yêu cầu của các dự án phức tạp và đa dạng. Cộng đồng Node.js cũng cung cấp rất nhiều các thư viện và module mở rộng, giúp tăng tính năng và hiệu suất của ứng dụng.
 
-Một trong những ưu điểm nổi bật của Node.js là hỗ trợ đa nền tảng (cross-platform), cho phép chạy ứng dụng trên nhiều hệ điều hành khác nhau như Windows, macOS, Linux, và nhiều nền tảng khác. Điều này giúp đơn giản hóa quá trình triển khai và triển khai ứng dụng trên nhiều môi trường mà không cần thay đổi mã nguồn.
+Một trong những ưu điểm nổi bật của Node.js là hỗ trợ đa nền tảng (cross-platform), cho phép chạy ứng dụng trên nhiều hệ điều hành khác nhau như Windows, macOS, Linux, và nhiều nền tảng khác. Điều này giúp đơn giản hóa quá trình triển khai và triển khai ứng dụng trên nhiều môi trường mà không cần thay đổi mã nguồn. \cite{nodejs_2}
 
 Một ưu điểm khác của Node.js là hỗ trợ tốt cho việc xây dựng các ứng dụng thời gian thực (real-time applications). Điều này rất hữu ích trong việc xây dựng các ứng dụng trò chơi trực tuyến, ứng dụng trò chuyện (chat applications), hay ứng dụng giao tiếp thời gian thực. Cơ chế WebSocket được tích hợp sẵn trong Node.js giúp kết nối và truyền thông dữ liệu giữa server và client một cách liên tục và nhanh chóng.
 
@@ -154,7 +163,7 @@ Tổng kết lại, Node.js là một nền tảng phát triển ứng dụng đ
 \paragraph{Javascript}
 \mbox{}
 
-JavaScript là một ngôn ngữ lập trình thông dịch, đa mục đích và được sử dụng phổ biến trên web. Nó ra đời vào năm 1995 bởi Brendan Eich, khi còn là một ngôn ngữ lập trình đơn giản để cung cấp tính năng tương tác và hiệu ứng động cho trang web. Tuy nhiên, từ đó đến nay, JavaScript đã trở thành một trong những ngôn ngữ lập trình quan trọng nhất trên thế giới, vượt qua giới hạn trang web và mở rộng sang nhiều lĩnh vực phát triển phần mềm khác nhau.
+JavaScript là một ngôn ngữ lập trình thông dịch, đa mục đích và được sử dụng phổ biến trên web. Nó ra đời vào năm 1995 bởi Brendan Eich, khi còn là một ngôn ngữ lập trình đơn giản để cung cấp tính năng tương tác và hiệu ứng động cho trang web \cite{js_1}. Tuy nhiên, từ đó đến nay, JavaScript đã trở thành một trong những ngôn ngữ lập trình quan trọng nhất trên thế giới, vượt qua giới hạn trang web và mở rộng sang nhiều lĩnh vực phát triển phần mềm khác nhau.
 
 Một trong những yếu tố quan trọng đóng góp vào sự phổ biến của JavaScript là việc nó được tích hợp một cách tự nhiên và mạnh mẽ với các trình duyệt web. Trước khi JavaScript xuất hiện, việc tạo ra hiệu ứng động và tương tác trên trang web đòi hỏi sự hỗ trợ của các ngôn ngữ lập trình phía server như PHP hoặc các công nghệ khác. JavaScript đã định hình lại cách các ứng dụng web tương tác và hiển thị nội dung, giúp chúng trở nên đa dạng và mạnh mẽ hơn.
 
@@ -164,7 +173,7 @@ Một điểm mạnh của JavaScript là khả năng xử lý các sự kiện 
 
 Ngoài ra, JavaScript còn hỗ trợ các khái niệm cấu trúc dữ liệu và kiểu dữ liệu linh hoạt như đối tượng (object), mảng (array), và chuỗi (string). Điều này cho phép người phát triển xây dựng các ứng dụng phức tạp và có tính mô đun cao, giúp quản lý mã nguồn dễ dàng và giảm thiểu lỗi trong quá trình phát triển.
 
-Một trong những tính năng đáng chú ý của JavaScript là khả năng thực hiện các yêu cầu mạng bất đồng bộ (asynchronous) thông qua việc sử dụng các API như XMLHttpRequest (XHR) hay Fetch API. Điều này cho phép trang web tương tác với các dịch vụ web và cơ sở dữ liệu một cách hiệu quả mà không làm trì hoãn trình duyệt.
+Một trong những tính năng đáng chú ý của JavaScript là khả năng thực hiện các yêu cầu mạng bất đồng bộ (asynchronous) thông qua việc sử dụng các API như XMLHttpRequest (XHR) hay Fetch API. Điều này cho phép trang web tương tác với các dịch vụ web và cơ sở dữ liệu một cách hiệu quả mà không làm trì hoãn trình duyệt. \cite{js_2}
 
 JavaScript cũng hỗ trợ việc tạo ra các ứng dụng web động, đặc biệt là những ứng dụng đơn trang (single-page applications - SPA). SPA là mô hình phát triển ứng dụng web mà trang web chỉ tải một lần duy nhất khi người dùng truy cập, và sau đó các tương tác tiếp theo được thực hiện một cách bất đồng bộ thông qua JavaScript để cập nhật nội dung và thay đổi giao diện mà không cần tải lại trang. Điều này giúp tăng tốc độ và trải nghiệm người dùng.
 
@@ -179,7 +188,7 @@ Tổng kết lại, JavaScript là một ngôn ngữ lập trình linh hoạt, m
 \paragraph{AdminJS}
 \mbox{}
 
-AdminJS là một framework mã nguồn mở được thiết kế để hỗ trợ phát triển các trang quản lý (admin dashboard) dễ dàng và nhanh chóng. Với AdminJS, người phát triển có thể xây dựng các giao diện quản lý phức tạp và mạnh mẽ một cách dễ dàng và hiệu quả, giúp quản lý và điều hành hệ thống, ứng dụng hoặc dịch vụ một cách thuận tiện và hiệu quả hơn.
+AdminJS là một framework mã nguồn mở được thiết kế để hỗ trợ phát triển các trang quản lý (admin dashboard) dễ dàng và nhanh chóng. Với AdminJS, người phát triển có thể xây dựng các giao diện quản lý phức tạp và mạnh mẽ một cách dễ dàng và hiệu quả, giúp quản lý và điều hành hệ thống, ứng dụng hoặc dịch vụ một cách thuận tiện và hiệu quả hơn. \cite{adminjs_1}
 
 Một trong những ưu điểm nổi bật của AdminJS là tích hợp các tính năng và chức năng phong phú sẵn có, giúp giảm thiểu thời gian và công sức trong việc xây dựng giao diện quản lý. AdminJS cung cấp các thành phần giao diện (UI components) sẵn có cho việc quản lý các bảng dữ liệu (data tables), hiển thị các biểu đồ thống kê, tạo các biểu mẫu nhập liệu (form fields) và nhiều tính năng khác. Nhờ vậy, người phát triển không cần phải viết mã nguồn từ đầu mà vẫn có thể xây dựng các trang quản lý đẹp mắt và chuyên nghiệp.
 
@@ -198,9 +207,9 @@ Tóm lại, AdminJS là một framework mạnh mẽ và linh hoạt để xây d
 \paragraph{MySQL}
 \mbox{}
 
-MySQL là một hệ quản trị cơ sở dữ liệu mã nguồn mở phổ biến và mạnh mẽ, được sử dụng rộng rãi trong nhiều ứng dụng và dự án phát triển phần mềm. MySQL ra đời vào năm 1995, do công ty TcX phát triển và sau đó được mua lại bởi công ty MySQL AB. Hiện nay, MySQL thuộc sở hữu của Oracle Corporation sau khi Oracle mua lại Sun Microsystems - công ty mẹ của MySQL AB vào năm 2010.
+MySQL là một hệ quản trị cơ sở dữ liệu mã nguồn mở phổ biến và mạnh mẽ, được sử dụng rộng rãi trong nhiều ứng dụng và dự án phát triển phần mềm. MySQL ra đời vào năm 1995, do công ty TcX phát triển và sau đó được mua lại bởi công ty MySQL AB. Hiện nay, MySQL thuộc sở hữu của Oracle Corporation sau khi Oracle mua lại Sun Microsystems - công ty mẹ của MySQL AB vào năm 2010. \cite{mysql_1}
 
-MySQL là hệ quản trị cơ sở dữ liệu (DBMS - Database Management System) dựa trên mô hình quan hệ (relational database) và sử dụng ngôn ngữ truy vấn cấu trúc (Structured Query Language - SQL) để thực hiện các thao tác truy vấn dữ liệu. Mô hình quan hệ của MySQL cho phép lưu trữ và quản lý dữ liệu trong các bảng có mối quan hệ với nhau, tạo điều kiện để thực hiện các truy vấn phức tạp và hiệu quả.
+MySQL là hệ quản trị cơ sở dữ liệu (DBMS - Database Management System) dựa trên mô hình quan hệ (relational database) và sử dụng ngôn ngữ truy vấn cấu trúc (Structured Query Language - SQL) để thực hiện các thao tác truy vấn dữ liệu. Mô hình quan hệ của MySQL cho phép lưu trữ và quản lý dữ liệu trong các bảng có mối quan hệ với nhau, tạo điều kiện để thực hiện các truy vấn phức tạp và hiệu quả. \cite{myql_2}
 
 MySQL hỗ trợ nhiều loại dữ liệu phổ biến như số, chuỗi, ngày tháng, boolean, và các kiểu dữ liệu đặc biệt khác như JSON và các kiểu dữ liệu không gian (spatial data types). Điều này giúp người dùng lưu trữ và xử lý các loại dữ liệu khác nhau một cách linh hoạt và hiệu quả.
 
@@ -222,7 +231,7 @@ Tóm lại, MySQL là một hệ quản trị cơ sở dữ liệu mã nguồn m
 \paragraph{Postman}
 \mbox{}
 
-Postman là một ứng dụng máy tính được sử dụng phổ biến trong quá trình phát triển và kiểm thử các dịch vụ web (web service) và các API (Application Programming Interface). Được phát triển bởi công ty Postman Inc., ứng dụng này cung cấp một giao diện đơn giản và dễ sử dụng để gửi các yêu cầu HTTP (HTTP request) và nhận các phản hồi (response) từ các API. Postman giúp người phát triển dễ dàng thử nghiệm và kiểm tra tính năng, hiệu năng và bảo mật của các dịch vụ web và API, từ đó đảm bảo chất lượng và độ tin cậy của ứng dụng.
+Postman là một ứng dụng máy tính được sử dụng phổ biến trong quá trình phát triển và kiểm thử các dịch vụ web (web service) và các API (Application Programming Interface) \cite{postman_1}. Được phát triển bởi công ty Postman Inc., ứng dụng này cung cấp một giao diện đơn giản và dễ sử dụng để gửi các yêu cầu HTTP (HTTP request) và nhận các phản hồi (response) từ các API. Postman giúp người phát triển dễ dàng thử nghiệm và kiểm tra tính năng, hiệu năng và bảo mật của các dịch vụ web và API, từ đó đảm bảo chất lượng và độ tin cậy của ứng dụng.
 
 Một trong những ưu điểm nổi bật của Postman là khả năng gửi các yêu cầu HTTP một cách linh hoạt và dễ dàng. Người dùng có thể tùy chỉnh các yêu cầu HTTP bằng cách thêm các thông số và tham số, cũng như xác định các phương thức HTTP như GET, POST, PUT, DELETE, và nhiều phương thức khác. Điều này giúp người phát triển kiểm tra các chức năng khác nhau của API và dịch vụ web một cách hiệu quả.
 
@@ -248,18 +257,132 @@ Trong quá trình triển khai ứng dụng, chúng em sử dụng dịch vụ E
 \subsubsection{Triển khai ứng dụng Web trên AWS EC2}
 \begin{itemize}
   \item Tạo máy ảo EC2: Chúng em đã tạo một EC2 instance với loại instance t2.micro. Đây là loại instance nhỏ, phù hợp với các ứng dụng có lưu lượng truy cập thấp hoặc giai đoạn phát triển. Instance này sử dụng kiến trúc 64-bit, cho phép chạy các ứng dụng trên cả hệ thống 32-bit và 64-bit. Bộ nhớ của instance là 1 GiB, đủ để chạy ứng dụng Node.js cùng với các dependencies. Dung lượng lưu trữ 8GB, chúng em đã cài đặt hệ điều hành Linux/UNIX để chạy mã nguồn của ứng dụng.
+  
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{Images/server/deploy/create_ec2.PNG}
+    \caption[Tạo máy ảo EC2]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Tạo máy ảo EC2}
+    \label{create_ec2} %đặt tên cho ảnh
+  \end{figure}
+
+  Sau khi tạo thành công, trên trang dashboad quản lý EC2 sẽ xuất hiện máy ảo mà ta đã tạo vừa xong
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{Images/server/deploy/ec2_dashboard.PNG}
+    \caption[Trang dashboad quản lý EC2 instance]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Trang dashboad quản lý EC2 instance}
+    \label{ec2_dashboard} %đặt tên cho ảnh
+  \end{figure}
+
+  Từ trang dashboard, ta sẽ thực hiện kết nối với máy ảo thông qua nút Connect
+
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/deploy/connect_ec2.PNG}
+  \caption[Trang kết nối tới máy ảo]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Trang kết nối tới máy ảo}
+  \label{connect_ec2} %đặt tên cho ảnh
+\end{figure}
+
+
+  Sau khi kết nối thành công trang console của máy ảo sẽ xuất hiện, từ đây ta có thể thực hiện các thao tác mong muốn trên server thông qua console
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.55]{Images/server/deploy/ec2_console.PNG}
+    \caption[Trang console của máy ảo]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Trang console của máy ảo}
+    \label{ec2_console} %đặt tên cho ảnh
+  \end{figure}
+
+
+
   \item Cài đặt các phần mềm và dependencies: Sau khi triển khai máy ảo EC2, chúng em đã cài đặt các phần mềm và dependencies cần thiết để chạy ứng dụng, bao gồm Node.js và các thư viện hỗ trợ và các gói npm cần thiết.
-  \item Tạo và cấu hình môi trường ứng dụng:Chúng em đã tạo môi trường ứng dụng, bao gồm việc cấu hình các biến môi trường, thiết lập các file cấu hình, và chạy các lệnh khởi tạo ban đầu cho ứng dụng.
+  
+
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{Images/server/deploy/list_node_package.PNG}
+    \caption[Các packages và dependencies cần thiết]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Các packages và dependencies cần thiết}
+    \label{ec2_dashboard} %đặt tên cho ảnh
+  \end{figure}
+
+
+  \item Tạo và cấu hình môi trường ứng dụng: Chúng em đã tạo môi trường ứng dụng, bao gồm việc cấu hình các biến môi trường, thiết lập các file cấu hình, và chạy các lệnh khởi tạo ban đầu cho ứng dụng.
   \item Triển khai ứng dụng: Tiếp theo, chúng em tải lên mã nguồn của ứng dụng lên máy ảo EC2 thông qua git
+  
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{Images/server/deploy/git_ec2.PNG}
+    \caption[Tải mã nguồn lên server thông qua git]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Tải mã nguồn lên server thông qua git}
+    \label{ec2_dashboard} %đặt tên cho ảnh
+  \end{figure}
+
   \item Mở cổng cho ứng dụng: Chúng em đã mở cổng mạng trên máy ảo EC2 để cho phép ứng dụng lắng nghe các yêu cầu từ internet.
-  \item Khởi động ứng dụng:Để khởi động ứng dụng, chúng em chạy các lệnh quản lý quá trình như npm start
+  \item Khởi động ứng dụng: Để khởi động ứng dụng, chúng em chạy các lệnh quản lý quá trình như npm start
+  
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{Images/server/deploy/execute_sever.PNG}
+    \caption[Chạy ứng dụng]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Chạy ứng dụng}
+    \label{execute_sever} %đặt tên cho ảnh
+  \end{figure}
+
+
 \end{itemize}
 
 \subsubsection{Triển khai cơ sở dữ liệu trên RDS}
 \begin{itemize}
-  \item Tạo cơ sở dữ liệu RDS: Chúng em đã triển khai một cơ sở dữ liệu MySQL trên dịch vụ RDS của AWS. Cơ sở dữ liệu này được đặt tên là "fm\_ecg" và có mật khẩu "fmecgdatabase" để bảo mật. Địa chỉ host của cơ sở dữ liệu là 
-  "fm-ecg-database.cx3akkmg3hid.ap-southeast-1.rds.amazonaws.com" cho phép EC2 instance kết nối và truy vấn dữ liệu từ cơ sở dữ liệu. Để truy cập và quản lý cơ sở dữ liệu, chúng em sử dụng tài khoản "admin" với các quyền tương ứng.
+  \item Tạo cơ sở dữ liệu RDS: Chúng em đã triển khai một cơ sở dữ liệu MySQL trên dịch vụ RDS của AWS. Cơ sở dữ liệu này được đặt tên là "fm\_ecg" và có mật khẩu "fmecgdatabase" để bảo mật. Địa chỉ host của cơ sở dữ liệu là "fm-ecg-database.cx3akkmg3hid.ap-southeast-1.rds.amazonaws.com" cho phép EC2 instance kết nối và truy vấn dữ liệu từ cơ sở dữ liệu. Để truy cập và quản lý cơ sở dữ liệu, chúng em sử dụng tài khoản "admin" với các quyền tương ứng.
+  
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{Images/server/deploy/create_rds.PNG}
+    \caption[Tạo cơ sở dữ liệu RDS]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Tạo cơ sở dữ liệu RDS}
+    \label{create_rds} %đặt tên cho ảnh
+  \end{figure}
+
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.43]{Images/server/deploy/rds_detail.PNG}
+    \caption[Cơ sở dữ liệu RDS sau khi tạo thành công]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Cơ sở dữ liệu RDS sau khi tạo thành công}
+    \label{rds_detail} %đặt tên cho ảnh
+  \end{figure}
+
   \item Kết nối giữa EC2 và RDS: Chúng em đã cấu hình ứng dụng Node.js chạy trên EC2 instance để kết nối đến cơ sở dữ liệu RDS thông qua thông tin host, tên người dùng và mật khẩu đã cung cấp. Khi ứng dụng gửi các truy vấn SQL đến cơ sở dữ liệu, RDS sẽ xử lý các truy vấn này và trả về kết quả cho ứng dụng.
+  
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{Images/server/deploy/connect_rds_1.PNG}
+    \caption[Kết nối giữa EC2 và RDS trên máy ảo EC2]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Kết nối giữa EC2 và RDS trên máy ảo EC2}
+    \label{rds_detail} %đặt tên cho ảnh
+  \end{figure}
+
+  Sau khi kết nối thành công, ta vào đường dẫn \underline{http://13.250.106.115:8080/} để đăng nhập vào trang quản lý database của hệ thống với tên máy chủ, tài khoản, mật khẩu đã tạo trước đó
+
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{Images/server/deploy/connect_rds_2.PNG}
+    \caption[Cơ sở dữ liệu RDS sau khi tạo thành công]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Cơ sở dữ liệu RDS sau khi tạo thành công}
+    \label{rds_detail} %đặt tên cho ảnh
+  \end{figure}
+
+
   \item Backup và giám sát cơ sở dữ liệu: Chúng em đã thiết lập các chính sách sao lưu định kỳ cho cơ sở dữ liệu RDS để đảm bảo an toàn cho dữ liệu và khả năng khôi phục trong trường hợp xảy ra sự cố.
 \end{itemize}
 
@@ -331,7 +454,7 @@ Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liê
   
   \begin{table}[H]
     \centering
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin profile của người dùng}
     \begin{tabularx}{\textwidth}{
     | >{\raggedright\arraybackslash}m{1cm}
     | >{\raggedright\arraybackslash}X
@@ -395,7 +518,7 @@ Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liê
   
   \begin{table}[H]
     \centering
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API cập nhật thông tin profile của người dùng}
     \begin{tabularx}{\textwidth}{
     | >{\raggedright\arraybackslash}m{1cm}
     | >{\raggedright\arraybackslash}X
@@ -484,7 +607,7 @@ Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liê
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API thay đổi mật khẩu người dùng}
     % \label{table_api_news}
     \\
     \hline
@@ -629,7 +752,7 @@ Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liê
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin của người dùng thông qua ID}
     % \label{table_api_news}
     \\
     \hline
@@ -705,7 +828,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng ký tài khoản}
     % \label{table_api_news}
     \\
     \hline
@@ -838,7 +961,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng nhập}
     % \label{table_api_news}
     \\
     \hline
@@ -919,7 +1042,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng xuất}
     % \label{table_api_news}
     \\
     \hline
@@ -987,7 +1110,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API gửi token đặt lại mật khẩu}
     % \label{table_api_news}
     \\
     \hline
@@ -1066,7 +1189,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đặt lại mật khẩu}
     % \label{table_api_news}
     \\
     \hline
@@ -1233,7 +1356,7 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy nội dung của tin tức theo ID}
     % \label{table_api_news}
     \\
     \hline
@@ -1298,7 +1421,7 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách tin tức}
     % \label{table_api_news}
     \\
     \hline
@@ -1365,7 +1488,7 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách danh mục tin tức}
     % \label{table_api_news}
     \\
     \hline
@@ -1432,7 +1555,7 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin danh mục tin tức theo ID}
     % \label{table_api_news}
     \\
     \hline
@@ -1497,7 +1620,7 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách tin tứu theo ID danh mục tin tức}
     % \label{table_api_news}
     \\
     \hline
@@ -1574,7 +1697,7 @@ Tham khảo bảng \ref{table_api_ecg} để xem thông tin của các api liên
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tải dữ liệu đo ECG lên server}
     % \label{table_api_news}
     \\
     \hline
@@ -1674,7 +1797,7 @@ sensor\_type: Loại cảm biến
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin phiên đo ECG của bệnh nhân}
     % \label{table_api_news}
     \\
     \hline
@@ -1743,7 +1866,7 @@ sensor\_type: Loại cảm biến
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách phiên đo ECG của các bệnh nhân mà bác sĩ đang quản lý}
     % \label{table_api_news}
     \\
     \hline
@@ -1809,7 +1932,7 @@ sensor\_type: Loại cảm biến
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy dữ liệu một phiên đo ECG}
     % \label{table_api_news}
     \\
     \hline
@@ -1868,9 +1991,7 @@ sensor\_type: Loại cảm biến
 \end{enumerate}
 
 
-\paragraph{API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ
-64
-}
+\paragraph{API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ}
 \mbox{}
 
 Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api liên quan
@@ -1886,7 +2007,7 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bệnh nhân mà bác sĩ đang quản lý theo ID bác sĩ}
     % \label{table_api_news}
     \\
     \hline
@@ -1953,7 +2074,7 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}m{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin bác sĩ đang quản lý bệnh nhân theo ID bệnh nhân}
     % \label{table_api_news}
     \\
     \hline
@@ -2022,7 +2143,7 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
   | >{\raggedright\arraybackslash}X
   | >{\raggedright\arraybackslash}m{1cm}|
   }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng của website quản trị}
   % \label{table_api_news}
   \\
   \hline
