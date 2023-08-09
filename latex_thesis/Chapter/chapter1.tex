@@ -9,7 +9,7 @@
 {\numberline{}CHƯƠNG 1. PHÂN TÍCH HỆ THỐNG}
 Trong chương này, chúng em sẽ tiến hành phân tích hệ thống cho dự án đề tài "Hệ thống quản lý ECG" dựa trên các mục tiêu
 đã nêu ra trong Mục Đề xuất hệ thống ở Phần mở đầu. Trước tiên bài toán đặt ra ở hệ thống phần mềm điện tim là có thể có:
-
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item Một thiết bị để có thể giúp mẹ bầu đo được những thông tin cần thiết
   \item Trực quan và tiêu chuẩn hoá những thông tin đo được
@@ -19,23 +19,24 @@ Trong chương này, chúng em sẽ tiến hành phân tích hệ thống cho d�
   \item Quản trị viên sẽ là người có thể phân công bác sĩ để chăm sóc, theo dõi sức khoẻ từ
   xa cho mẹ bầu. 
 \end{itemize}
-
+\end{adjustwidth}
 Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được chúng em trình bày ở các chương dưới.
 
 
 \subsection{Yêu cầu hệ thống}
 \subsubsection{Yêu cầu về người dùng hệ thống}
 Hệ thống được thiết kế để phục vụ các đối tượng sau:
-
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
     \item Bệnh nhân: Người sử dụng hệ thống để thực hiện kiểm tra ECG thông qua Bluetooth và theo dõi sức khỏe của mình. Bệnh nhân có quyền truy cập vào kết quả ECG của mình, được một bác sĩ theo dõi và có thể theo dõi các thông tin liên quan đến điện tim và sức khoẻ.
     \item Bác sĩ: Người sử dụng hệ thống để xem và đánh giá kết quả ECG của bệnh nhân, đưa ra nhận xét và đề xuất điều trị. Bác sĩ có thể trao đổi với bệnh nhân và gửi thông báo quan trọng liên quan đến chăm sóc sức khỏe.
     \item Quản trị viên: Người sử dụng hệ thống để quản lý các tài khoản người dùng, phân công bệnh nhân cho bác sĩ và quản lý mối quan hệ giữa bác sĩ và bệnh nhân.
 \end{itemize}
+\end{adjustwidth}
 
 \subsubsection{Yêu cầu chức năng}
 Các chức năng chính của hệ thống bao gồm: 
-\begin{adjustwidth}{2em}{}
+\begin{adjustwidth}{1.5em}{}
   \begin{itemize}
       \item Ghi lại dữ liệu điện tim: Hệ thống cho phép ghi lại tín hiệu điện tim từ máy đo ECG (Electrocardiogram) hay thiết bị đo điện tim khác. Dữ liệu được chuyển tới ứng dụng của người dùng thông qua Bluetooth để lưu trữ, phân tích và có thể xem lại sau này.
   
@@ -54,6 +55,7 @@ Các chức năng chính của hệ thống bao gồm:
 Hệ thống hỗ trợ các chức năng cơ bản sau đối với người dùng:
 
 \textbf{Đối với người dùng là bệnh nhân:}
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
     \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, ngày sinh, số điện thoại và mật khẩu
     \item Cập nhật các thông tin cá nhân
@@ -62,9 +64,9 @@ Hệ thống hỗ trợ các chức năng cơ bản sau đối với người d�
     \item Theo dõi các tin tức liên quan đến sức khoẻ và tim mạch
     \item Nhận thông báo và có thể trao đổi trực tiếp với bác sĩ về tình hình sức khoẻ và các kết quả đo được từ thiết bị.
 \end{itemize}
-
+\end{adjustwidth}
 \textbf{Đối với người dùng là bác sĩ:}
-
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
     \item Được cấp tài khoản để sử dụng hệ thống
     \item Cập nhật các thông tin cá nhân
@@ -72,8 +74,9 @@ Hệ thống hỗ trợ các chức năng cơ bản sau đối với người d�
     \item Đánh giá và đưa ra nhận xét về kết quả ECG của bệnh nhân
     \item Trao đổi các thông tin liên quan đến tình hình sức khoẻ và kết quả đo của bệnh nhân.
 \end{itemize}
-
+\end{adjustwidth}
 \textbf{Đối với người dùng là quản trị viên:}
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
     \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, số điện thoại và mật khẩu
     \item Cập nhật thông tin cá nhân
@@ -82,7 +85,7 @@ Hệ thống hỗ trợ các chức năng cơ bản sau đối với người d�
     \item Quản lý các bản ghi dữ liệu điện tim của bệnh nhân
     \item Quản lý các tin tức được đăng trên ứng dụng của người dùng.
 \end{itemize}
-
+\end{adjustwidth}
 \subsubsection{Yêu cầu phi chức năng}
 \begin{itemize}
     \item Hệ thống hỗ trợ ngôn ngữ Tiếng Việt và Tiếng Anh
@@ -103,7 +106,7 @@ các đối tượng người dùng mà hệ thống phải hỗ trợ. Phần p
 Dựa vào những phân tích về yêu cầu chức năng, các use case trong hệ thống được chúng em thể hiện ở hình dưới 
   \begin{figure}[H]
     \centering
-    \includegraphics[width=17cm,height=14cm]{Images/use_case/use_case_general.png}
+    \includegraphics[width=16cm,height=14cm]{Images/use_case/use_case_general.png}
     \caption[Sơ đồ use case tổng quát của hệ thống]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ use case tổng quát của hệ thống}
     \label{use_case_general} %đặt tên cho ảnh
@@ -174,21 +177,22 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
   \begin{figure}[H]
     \centering
     \includegraphics[width=15cm,height=6cm]{Images/use_case/use_case_login.png}
-    \caption[Sơ đồ use case chức năng đăng nhập]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ use case chức năng đăng nhập}
+    \caption[Sơ đồ use case chức năng đăng nhập/đăng xuất]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng đăng nhập/đăng xuất}
     \label{use_case_login} %đặt tên cho ảnh
   \end{figure}
 
   \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng đăng nhập}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng đăng nhập/đăng xuất}
     \centering
     \begin{tabularx}{0.9\textwidth}{|c|X|}
       \hline
-      \textbf{Tên chức năng} & \textbf{Đăng nhập} \\
+      \textbf{Tên chức năng} & \textbf{Đăng nhập/Đăng xuất} \\
       \hline
       Tác nhân & Bệnh nhân, Bác sĩ, Quản trị viên \\
       \hline
-      Mô tả & Cho phép người dùng sử dụng tài khoản để truy cập vào App/Web để truy cập các tài nguyên của hệ thống \\
+      Mô tả & Cho phép người dùng sử dụng tài khoản để truy cập vào App/Web để truy cập các tài nguyên của hệ thống và
+      có thể thoát tài khoản khỏi hệ thống\\
       \hline
       Điều kiện trước & Người dùng cần có kết nối Internet \\
       \hline
@@ -522,7 +526,7 @@ tự.
   Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng ký vào hệ thống. Người dùng gửi yêu cầu đăng ký, yêu cầu sẽ
   được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Control
   sẽ xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{backend_register} trong chương sau.
-\subsubsection{Sơ đồ tuần tự chức năng đăng nhập}
+\subsubsection{Sơ đồ tuần tự chức năng đăng nhập/đăng xuất}
 
     \begin{figure}[H]
          \centering
@@ -536,6 +540,19 @@ tự.
   được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Việc Control
   sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hiện trong Hình \ref{backend_login} trong chương sau.
 
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm,height=6cm]{Images/mobile_app/logout.png}
+    \caption[Sơ đồ tuần tự chức năng đăng xuất trên App]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ tuần tự chức năng đăng xuất trên App}
+    \label{logout} %đặt tên cho ảnh
+\end{figure}
+
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng xuất khỏi hệ thống. Người dùng gửi yêu cầu đăng xuất, yêu cầu sẽ
+được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Việc Control
+sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hiện trong Hình \ref{backend_logout} trong chương sau.
+
+
 \subsubsection{Sơ đồ tuần tự chức năng quên mật khẩu}
 
   \begin{figure}[H]
@@ -546,7 +563,7 @@ tự.
         \label{forgot_password} %đặt tên cho ảnh
   \end{figure}
 
-    Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng lấy lại mật khẩu. Người dùng nhập email đã đăng ký tài khoản,
+  Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng lấy lại mật khẩu. Người dùng nhập email đã đăng ký tài khoản,
   và gửi yêu cầu lấy lại mật khẩu, Control xử lý gửi đến email một mã xác thực, người dùng nhập đúng mã xác thực sẽ được thay
   đổi mật khẩu mới. Control xử lý cụ thể yêu cầu được chúng em thể hiện trong Hình \ref{resetPassword} và Hình \ref{resetPasswordToken} trong chương sau.
 
@@ -736,12 +753,24 @@ Tại phần này, chúng em sẽ tiến hành xác định và mô tả các th
     Thiết bị & 
     ID thiết bị, Tên thiết bị \\
     \hline
+    Thông tin hội thoại & 
+    ID hội thoại, Danh sách ID người dùng trong hội thoại, thông tin tin nhắn gần nhất \\
+    \hline
+    Tin nhắn & 
+    ID tin nhắn, Nội dung tin nhắn, ID người gửi tin nhắn, thời gian gửi tin nhắn \\
+    \hline
+    Firebase token người dùng & 
+    ID token, Firebase token, ID người dùng \\
+    \hline
   \end{tabularx}
+
+  Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em xác định được mô hình thực thể liên kết như sau:
+
 \end{table}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=8cm]{Images/server/database/ttlk.png}
+  \includegraphics[width=15cm,height=8cm]{Images/system/fmECG_connection_entity.png}
   \caption[Mô hình thực thể liên kết]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Mô hình thực thể liên kết}
   \label{ttlk} %đặt tên cho ảnh

@@ -30,6 +30,11 @@ BluetoothController --> User: Show list devices found
 User -> BluetoothController: Choose connect to ECG Device
 
 BluetoothController -> ECGDevice: Request connection with specific Service and Characteristic
+note right of BluetoothController #Yellow
+* UUID
+UUID Service: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
+UUID Characteristic: 6E400003-B5A3-F393-E0A9-E50E24DCCA9E
+end note
 activate ECGDevice
 ECGDevice --> BluetoothController: Return response connection
 BluetoothController --> User: Show response, navigate to MeasurementScreen

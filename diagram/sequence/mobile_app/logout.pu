@@ -1,0 +1,25 @@
+@startuml
+
+actor ":User" as User
+boundary ":View User Info" as ClientApp
+control ":Control Logout" as Control
+entity ":Entity Session" as Entity
+autonumber
+
+activate User
+User -> ClientApp: Click button Logout
+activate ClientApp
+ClientApp -> Control: Send request logout
+activate Control
+Control -> Entity: Save session login to database
+activate Entity
+Entity --> Control: Response query
+deactivate Entity
+Control --> ClientApp: Log out user
+deactivate Control
+ClientApp --> User: Navigate to Login screen
+deactivate ClientApp
+
+skinparam style strictuml
+
+@enduml

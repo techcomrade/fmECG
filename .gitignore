@@ -143,5 +143,7 @@ out/
 *.blg
 *.synctex.*
 *.toc
+*.DS_Store
+latex_thesis/main.pdf
 *.nav
 *.snm
