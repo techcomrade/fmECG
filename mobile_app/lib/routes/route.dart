@@ -1,10 +1,9 @@
 
 import 'package:bluetooth_ecg/screens/home_screen.dart';
-import 'package:bluetooth_ecg/screens/login1_screen.dart';
-import 'package:bluetooth_ecg/screens/login_screen.dart';
+import 'package:bluetooth_ecg/screens/auth_screens/login1_screen.dart';
+import 'package:bluetooth_ecg/screens/auth_screens/login_screen.dart';
 import 'package:bluetooth_ecg/screens/main_screen.dart';
-import 'package:bluetooth_ecg/screens/more_device_appear_founding_screen.dart';
-import 'package:bluetooth_ecg/screens/register_screen.dart';
+import 'package:bluetooth_ecg/screens/auth_screens/register_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
@@ -72,11 +71,6 @@ class AppRoutes {
     //     ListingBluetoothDevicesBinding(),
     //   ],
     // ),
-
-    GetPage(
-      name: moreDeviceAppearFoundingScreen,
-      page: () => MoreDeviceAppearFoundingScreen(),
-    ),
     GetPage(
       name: loginScreen,
       page: () => LoginScreen(),

@@ -1,4 +1,5 @@
 \documentclass{article}%tạo một bản báo cáo
+% \documentclass[xcolor=table]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T5]{fontenc} % để sử dụng tiếng việt
 \usepackage[fontsize=13pt]{scrextend} % set fontsize =13pt
@@ -11,6 +12,10 @@
 \usepackage{changepage}
 \usepackage{amsmath}
 \usepackage{xltabular}
+
+\usepackage{multirow}
+% \usepackage{graphicx}
+% \usepackage[table,xcdraw]{xcolor}
 
 \usetikzlibrary{calc} % thư viện tikz
 \usepackage{indentfirst} % thư viện thụt đầu dòng
@@ -71,7 +76,7 @@
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 \lstset{frame=tb,
-  % language=Dart,
+  language=bash,
   aboveskip=3mm,
   belowskip=3mm,
   showstringspaces=false,
@@ -95,6 +100,7 @@
 \input{Cover/cover.tex}
 \input{Chapter/prologue.tex}
 \input{Chapter/declaration.tex}
+\input{Chapter/assign.tex}
 \input{Chapter/table_of_content.tex}
 \input{Chapter/summary.tex}
 \input{Chapter/introduction.tex}

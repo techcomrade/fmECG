@@ -2,22 +2,18 @@
 ' Define class
 
 package Controllers {
-    class AuthProvider {
-        - String token
-        - String firebaseToken
-        - int userId
-        - int roleId
-        + bool isAuth
+    class FileController {
+        String _pathToSaveData
 
-        + **AuthProvider**()
-        + void **registerUser**(Map registerInfo)
-        + void **loginUser**(String email, String password)
-        + void **logoutUser**()
-        + void **sendResetPasswordToken**(String email)
-        + void **resetPassword**(Map infoToReset)
-        + void **setDataLogin**(Map dataLogin)
-        + void **checkAutoLogin**()
-        + void **removeDataLogin**()
+        + **FileController**()
+        + File **setUpFileToSaveDataMeasurement**()
+        + void **createDirectoryFirstTimeWithDevice**()
+        + void **convertRowToStringBeforeSaving**(List dataRow)
+        + void **handleSaveDataToFile**(File fileSave, List rawData)
+        + void **convertDataToCSVFormat**(List rawData)
+        + void **appendDataToFile**(File fileSave, List rawData)
+        + void **saveFilePathCaseNoInternet**(String filePath)
+        + void **deleteFileRecord**(File file)
     }
 
     class ECGRecordController {
@@ -73,11 +69,30 @@ package Controllers {
 
     }
 
+    class AuthProvider {
+        - String token
+        - String firebaseToken
+        - int userId
+        - int roleId
+        + bool isAuth
+
+        + **AuthProvider**()
+        + void **registerUser**(Map registerInfo)
+        + void **loginUser**(String email, String password)
+        + void **logoutUser**()
+        + void **sendResetPasswordToken**(String email)
+        + void **resetPassword**(Map infoToReset)
+        + void **setDataLogin**(Map dataLogin)
+        + void **checkAutoLogin**()
+        + void **removeDataLogin**()
+    }
+
     class FirebaseMessagesController  {
         - Conversation: ConversationModel
         - Message: MessageModel
+        - 
         
-        + **FirebaseMessageController**()
+        + **FirebaseMessagesController**()
         + void**getDeviceToken**()
         + void **saveTokenToFirestore**(int userId, String firebaseToken)
         + void **createConversation**(Map conversationInfo)
@@ -92,9 +107,9 @@ package Controllers {
 
 package Models {
     class ECGRecordModel {
-        + record_id: Interger
-        + user_id: Interger
-        + device_id: Interger
+        + record_id: Integer
+        + user_id: Integer
+        + device_id: Integer
         + data_directory:String
         + start_time: DateTime
         + stop_time: DateTime
@@ -108,10 +123,10 @@ package Models {
     }
 
     class NewsModel {
-        + news_id: Interger
+        + news_id: Integer
         + title: String
         + content: String
-        + category_id: Interger
+        + category_id: Integer
         + author: String
         + url: String
         + image: url
@@ -123,7 +138,7 @@ package Models {
     }
 
     class NewsCategoryModel {
-        + category_id: Interger
+        + category_id: Integer
         + category_name: String
         + updated_at: DateTime
         + created_at: DateTime
@@ -133,27 +148,14 @@ package Models {
 
     }
 
-    class ResetTokenModel {
-        + reset_id: Interger
-        + user_id: Interger
-        + token: String
-        + expiration: DateTime
-        + updated_at: DateTime
-        + created_at: DateTime
-
-        + ResetTokenModel()
-        + fromJson(Map json)
-
-    }
-
     class UserModel {
-        + user_id: Interger
+        + user_id: Integer
         + password: String
         + email: String
         + name: String
         + doB: DateTime
         + phone_numer: String
-        + role: Interger
+        + role: Integer
         + updated_at: DateTime
         + created_at: DateTime
 
@@ -163,7 +165,7 @@ package Models {
     }
 
     class DeviceModel {
-        + device_id: Interger
+        + device_id: Integer
         + device_name: String
         + updated_at: DateTime
         + created_at: DateTime
@@ -174,9 +176,9 @@ package Models {
     }
 
     class PatientDoctorAssignmentModel {
-        + assign_id: Interger
-        + patient_id: Interger
-        + doctor_id: Interger
+        + assign_id: Integer
+        + patient_id: Integer
+        + doctor_id: Integer
         + start_date: DateTime
         + updated_at: DateTime
         + created_at: DateTime
@@ -184,7 +186,26 @@ package Models {
         + PatientDoctorAssignmentModel()
         + fromJson(Map json)
     }
+    
+    class ConversationModel {
+      + conversation_id: String
+      + members_id: Map
+      + latest_message: MessageModel
+      + created_at: DateTime
+    }
 
+    class MessageModel {
+      + message_id: String
+      + conversation_id: String
+      + message_content: String
+      + sender_id: Integer
+      + created_at: DateTime
+    }
+
+    class UserFirebaseTokenModel {
+      + user_id: int
+      + firebase_token: String
+    }
 }
 
 package Views {

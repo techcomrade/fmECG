@@ -15,16 +15,12 @@ autonumber
 actor User as User
 
 
-' box "controller" #LightGoldenRodYellow
-participant BluetoothController as BluetoothController
-' end box
 
-' box "storage" #lightBlue
+participant ECGController as ECGController
+participant BluetoothController as BluetoothController
+
 participant ECGDevice as ECGDevice
 
-' end box
-
-' activate User
 activate User
 User -> BluetoothController: Turn on Bluetooth
 activate BluetoothController
@@ -33,43 +29,21 @@ User -> BluetoothController: Find ECG Device
 BluetoothController --> User: Show list devices found
 User -> BluetoothController: Choose connect to ECG Device
 
-BluetoothController -> ECGDevice: Request connection
+BluetoothController -> ECGDevice: Request connection with specific Service and Characteristic
+note right of BluetoothController #Yellow
+* UUID
+UUID Service: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
+UUID Characteristic: 6E400003-B5A3-F393-E0A9-E50E24DCCA9E
+end note
 activate ECGDevice
 ECGDevice --> BluetoothController: Return response connection
-BluetoothController --> User: Show response connection
+BluetoothController --> User: Show response, navigate to MeasurementScreen
 
-User -> BluetoothController: If connected, send request connect to
-BluetoothController -> ECGDevice: Request discovering Services
-ECGDevice --> BluetoothController: Return 
-
-
-
-' User -> AuthProvider: Open mobile app
-' activate AuthProvider
-' AuthProvider -> LocalStorage: Get login user information
-' activate LocalStorage
-
-' alt Login user information existed
-' LocalStorage --> AuthProvider: Return having information in local storage
-' AuthProvider --> User: Navigate to HomeScreen
-
-' else Login user information not existed
-' LocalStorage --> AuthProvider: Return no information
-' AuthProvider --> User: Show login view
-
-' User -> AuthProvider: Submit email, password
-' AuthProvider -> AuthProvider: Validate with data on server
-
-'   alt Data existed
-'   AuthProvider -> LocalStorage: Save data login
-'   LocalStorage --> AuthProvider: Save data succesfully
-'   deactivate LocalStorage
-'   AuthProvider --> User: Navigate to HomeScreen
-'   else Data not existed
-'   AuthProvider --> User: Submit correct email, password again
-'   deactivate AuthProvider
-'   end
-
-' end
+User -> BluetoothController: Click button to measure ECG
+BluetoothController -> ECGDevice: Request subscribing Characteristic to ECG Device
+ECGDevice --> BluetoothController: Return streaming packet
+BluetoothController --> ECGController: Send packet to handle data
+activate ECGController
+ECGController --> User: Process data to show on chart
 
 @enduml
