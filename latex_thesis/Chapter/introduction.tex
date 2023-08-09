@@ -2,7 +2,6 @@
 \section*{PHẦN MỞ ĐẦU}
 \phantomsection\addcontentsline{toc}{section}{\numberline{} PHẦN MỞ ĐẦU}
 \subsection*{Đặt vấn đề}
-% //TODO: viet lai phan mo dau nay
 \addcontentsline{toc}{section}{\numberline{} Đặt vấn đề}
 % Cuộc cách mạng công nghiệp lần thứ tư (hay còn được gọi là cuộc cách mạng công nghiệp 4.0) đã và đang phát triển với tốc
 % độ rất nhanh, ảnh hưởng đến mọi mặt đời sống xã hội. Nội dung cốt lõi của cuộc cách mạng chính là sự kết hợp giữa 
@@ -14,32 +13,66 @@ Lĩnh vực y tế đang có những bước chuyển mình lớn trong cuộc c
 (hay còn được gọi là cuộc cách mạng công nghiệp 4.0). Đại dịch COVID-19 đã chứng minh được tầm quan trọng của việc áp dụng
 khoa học kỹ thuật vào những sản phẩm y tế giúp đẩy lùi dịch bệnh,
 có thể kể đến như máy rửa tay tự động do TS.Hàn Huy Dũng (đang công tác tại Trường Điện - Điện tử, thuộc Đại học Bách khoa Hà Nội) 
-(thêm reference) cùng các cộng sự sáng chế, và một số ứng dụng di động
+\cite{ref_thay_dzung} cùng các cộng sự sáng chế, và một số ứng dụng di động
 nổi bật được hầu hết người dân Việt Nam sử dụng trong đại dịch COVID-19 như Bluezone - ứng dụng cảnh báo tiếp xúc gần với
 những người nhiễm COVID qua Bluetooth low energy, ứng dụng NCOVI, theo dõi các ca nhiễm và thực hiện khai báo y tế, ứng
 dụng PC-Covid để cập nhật các thông tin tiêm vắc xin, thông tin xét nghiệm. Đây là một tín hiệu cho thấy nước ta đang áp
-dụng công nghệ 4.0 vào trong ngành y tế một cách chủ động. Hiện nay, việc chăm sóc sức khoẻ đang được chú trọng, đặc biệt
-là đối với những mẹ bầu, những người cần theo dõi sức khoẻ định kỳ liên tục, việc di chuyển đến bệnh viện đông đúc để
-thăm khám rất khó khăn, cộng với chi phí không hề rẻ, và tỉ lệ sẩy thai, thai lưu khi phát hiện không kịp thời là khá cao.
-câu hỏi đặt ra là có cách nào có thể giúp các mẹ bầu không cần di chuyển đến bệnh viện mà vẫn có thể theo dõi được sức khoẻ của mình và
-em bé, vẫn được sự chăm sóc, tư vấn của bác sĩ và chi phí ở mức có thể tiếp cận với nhiều gia đình. 
+dụng công nghệ 4.0 vào trong ngành y tế một cách chủ động. Hiện nay, việc chăm sóc sức khoẻ đang được chú trọng, đối với 
+những những người muốn tự theo dõi sức khoẻ bản thân
+thì các thiết bị nhỏ gọn có chức năng hỗ trợ đo và một ứng dụng di động hỗ trợ việc theo dõi sức khoẻ là một trong những
+điều quan trọng và cần thiết. Kể cả đối với những người gặp vấn đề về sức khoẻ, việc đến bệnh viện đông đúc để theo dõi
+và khám là khá khó khăn. Câu hỏi đặt ra là có phương án khả thi nào có thể áp dụng cho việc chăm sóc sức khoẻ một cách cụ thể, 
+người dùng vẫn có thể theo dõi sức khoẻ tại nhà, đồng thời có sự cố vấn và hỗ trợ của những người có chuyên môn không?
 
 \subsection*{Đề xuất hệ thống}
 \phantomsection\addcontentsline{toc}{section}{\numberline{} Đề xuất hệ thống}
-Với nền tảng đã có thiết bị đo điện tim của mẹ và thai nhi bằng điện cực không tiếp xúc thì việc phát triển một hệ thống
-phần mềm để có thể tiếp cận gần hơn với mục tiêu là giúp các mẹ bầu không cần di chuyển, vẫn theo dõi được tim thai của
-cả mẹ và bé, và chi phí tốt với nhiều gia đình là điều mà đồ án chúng em hướng tới. Hệ thống của chúng em sẽ gồm:
 
-- Một ứng dụng di động cho riêng những mẹ bầu để có thể theo dõi trực tiếp tình trạng sức khoẻ của mẹ và thai nhi, đồng
-thời có thể trao đổi với bác sĩ về tình trạng các lần đo, xem tin tức về các thông tin liên quan tới sức khoẻ của mẹ bầu.
+Trong mục Đặt vấn đề, chúng em có trình bày về vấn đề chăm sóc sức khoẻ tại nhà, ở mục này, chúng em xin phép đề xuất một hệ thống
+dựa trên những tiến bộ của khoa học kĩ thuật, với nền tảng là sự kết hợp giữa thiết bị IOT cùng hệ thống ứng dụng theo dõi, lưu trữ,
+giúp tiết kiệm thời gian cũng như tăng khả năng tiếp cận cho nhiều người dùng. 
 
-- Một ứng dụng di động cho bác sĩ để có thể xem được kết quả đo của các bệnh nhân được quản lý, trao đổi được với bệnh nhân.
+Với nền tảng được tiếp cận thiết bị đo điện tim của mẹ và thai nhi bằng điện cực không tiếp xúc trong thời gian gần đây, 
+cùng với đó là việc phát triển các thiết bị IOT đang rất được chú trọng hiện nay, chúng em mong muốn xây dựng được một hệ thống
+có thể kết nối được các thiết bị đo điện tim, thu thập dữ liệu điện tim thời gian thực, đồng thời có thể lưu trữ và phục vụ cho mục đích
+phân tích dữ liệu về sau này. Cụ thể, hệ thống chúng em đề xuất sẽ gồm:
 
-- Một ứng dụng web cho admin để quản lý hệ thống, đặc biệt là có phần phân công bác sĩ quản lý cho bệnh nhân.
+- Một ứng dụng di động cho riêng những người dùng để có thể kết nối với thiết bị đo điện tim để theo dõi trực tiếp tình trạng sức khoẻ, đồng
+thời có thể trao đổi với bác sĩ về tình trạng sau các lần đo, xem tin tức về các thông tin liên quan tới sức khoẻ
 
-- Một server để lưu cơ sở dữ liệu liên quan đến người dùng và dữ liệu đo của người dùng, có thể phục vụ cho công tác nghiên cứu
-sau này.
-(Nếu có) \cite{nhu2019effects}
+- Một ứng dụng di động cho bác sĩ để có thể xem được kết quả đo của các bệnh nhân được quản lý, trao đổi được với bệnh nhân
+
+- Một ứng dụng web cho admin để quản lý hệ thống, đặc biệt là có phần phân công bác sĩ quản lý cho bệnh nhân
+
+- Một server để lưu cơ sở dữ liệu liên quan đến người dùng và dữ liệu đo của người dùng, có thể phục vụ cho công tác nghiên cứu và
+phân tich dữ liệu sau này.
+
+\subsection*{Mục tiêu của đề tài}
+Sau khi đã trình bày đề xuất về một hệ thống theo dõi và quản lý dữ liệu điện tim, mục tiêu chúng em muốn đạt được khi
+làm đề tài này đó là:
+
+- Nắm được cơ sở lý thuyết và cách thiết kế, ứng dụng các thiết bị trong hệ thống IOT
+
+- Thực hiện hoàn chỉnh các ứng dụng được đề ra trong mục Đề xuất hệ thống, các ứng dụng hoạt động ổn định
+
+- Có thể kết hợp tốt với các thiết bị phần cứng đang được hợp tác nghiên cứu
+
+- Cung cấp tài liệu tham khảo một cách đầy đủ, trung thực
+
+\subsection*{Phương pháp nghiên cứu}
+% //TODO: hoàn thành phần phương pháp nghiên cứu
+Trong đồ án lần này, chúng em đã thực hiện kết hợp nhiều phương pháp nghiên cứu
+
+\subsection*{Kết quả đạt được}
+
+Trong suốt quá trình thực hiện đồ án, hai chúng em Đồng Minh Thái, Hoàng Anh Tuấn đã được tìm hiểu và nghiên cứu sâu hơn về cả phần cứng,
+hệ thống IOT, cách kết nối các hệ thống với nhau. Các kết quả đạt được cho đến thời điểm hoàn thiện quyển đồ án bao gồm:
+
+- Hoàn thành quyển đồ án với nội dung chi tiết về quá trình xây dựng và phát triển hệ thống
+
+- Hoàn thành các sản phẩm ứng dụng đã đề ra trong mục Đề xuất hệ thống, các sản phẩm đã có sự kết nối, dữ liệu điện tim được theo dõi
+thời gian thực được lưu trên server, dữ liệu có thể được phân tích và nghiên cứu sau này
+
+- Được phát triển các kỹ năng làm việc nhóm, viết đồ án, kết hợp với team phần cứng, team firmware để các sản phẩm được hoàn thiện hơn.
 
 \subsection*{Cấu trúc đồ án}
 \phantomsection\addcontentsline{toc}{section}{\numberline{} Cấu trúc đồ án}
@@ -54,6 +87,7 @@ và giải pháp tối ưu hiệu nặng.
 - Chương 3: Trình bày khâu triền khai và kiểm thử.
 
 - Chương 4: Kết luận và nêu ra hướng phát triển.
+
 \cleardoublepage
 
-\pagenumbering{arabic} %đánh số thứ tự 1,2,3....
+\pagenumbering{arabic}

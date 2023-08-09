@@ -2239,11 +2239,161 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
 đảm bảo các giao diện hiển thị như mong muốn của người thiết kế và không có lỗi lớn phát sinh khi sử dụng
 ứng dụng trên nhiều thiết bị với nhiều kích thước khác nhau.
 
-% //TODO: thêm ref device preview
 Ứng dụng sẽ sử dụng thư viện Device Preview trong danh sách thư viện Flutter hỗ trợ để giả lập chiều cao, chiều rộng của
-các màn hình phổ biến, mục đích chính kiểm tra ứng dụng có bị tràn, vỡ giao diện hay không. Kết quả kiểm tra được thể hiện
-trong bảng dưới đây: 
+các màn hình phổ biến, mục đích chính kiểm tra ứng dụng có bị tràn, vỡ giao diện hay không. Chúng em sẽ thực hiện kiểm thử
+với tất cả các màn hình được định nhĩa theo lớp trong Hình \ref{mobile_class_view} Kết quả kiểm tra được thể hiện
+trong bảng và hình dưới đây: 
 
+\begin{xltabular}{\textwidth}{
+  | >{\raggedright\arraybackslash}X
+  | >{\raggedright\arraybackslash}X
+  | >{\raggedright\arraybackslash}X
+  | >{\raggedright\arraybackslash}m{1cm}|
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng trong màn AuthScreens}
+  \\
+  \hline
+  \bfseries Thông số thiết bị    &\bfseries Các màn hình
+  &\bfseries Kết quả mong muốn &\bfseries Kết quả\\ \hline
+
+  Máy thật Realme 5 Pro
+
+  Kích thước: 2.9 inch x 6.2 inch
+  & 1. Các màn hình AuthScreens
+
+    2. Các màn hình MainScreens
+
+    3. Các màn hình BluetoothScreens
+
+    4. Các màn hình NewsScreens
+
+    5. Các màn hình UserScreens
+
+    6. Các màn hình ChatScreens
+
+    7. Các màn hình HistoryRecordScreens
+
+  & 1 $\rightarrow$ 7: Hiển thị đầy đủ các thành phần, không bị tràn viền và vỡ giao diện
+  & 2. Ở màn hình chính button thông báo bị overflow (tràn màn hình) 
+  \\ \hline
+   
+  Máy ảo iPhone 12 Pro Max
+
+  Kích thước: 3.1 inch x 6.3 inch
+  & 1. Các màn hình AuthScreens
+
+    2. Các màn hình MainScreens
+
+    3. Các màn hình BluetoothScreens
+
+    4. Các màn hình NewsScreens
+
+    5. Các màn hình UserScreens
+
+    6. Các màn hình ChatScreens
+
+    7. Các màn hình HistoryRecordScreens
+
+  & 1 $\rightarrow$ 7: Hiển thị đầy đủ các thành phần, không bị tràn viền và vỡ giao diện
+  & 2. Không có hiện tượng tràn viền, vỡ giao diện
+  \\ \hline
+
+  Máy ảo Samsung Galaxy S20
+
+  Kích thước: 2.72 inch x 5.97 inch
+  & 1. Các màn hình AuthScreens
+
+    2. Các màn hình MainScreens
+
+    3. Các màn hình BluetoothScreens
+
+    4. Các màn hình NewsScreens
+
+    5. Các màn hình UserScreens
+
+    6. Các màn hình ChatScreens
+
+    7. Các màn hình HistoryRecordScreens
+
+  & 1 $\rightarrow$ 7: Hiển thị đầy đủ các thành phần, không bị tràn viền và vỡ giao diện
+  & 2. Ở màn hình chính button thông báo bị overflow (tràn màn hình)
+  \\ \hline
+\end{xltabular}
+
+Vậy là hầu hết các giao diện đều được hiển thị đủ thành phần, và không có hiện tượng tràn viền, có một vài lỗi nhỏ ở màn
+hình chính ở những thiết bị có chiều rộng màn hình nhỏ. Chúng em sẽ tiếp tục theo dõi và xử lý lỗi giao diện này. Dưới
+đây là hình ảnh chi tiết được ghi lại trong quá trình kiểm thử giao diện:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5cm,height=10cm]{Images/mobile_app/demo/realme_5_pro_device_preview.jpg}
+  \caption[Hình ảnh kiểm thử giao diện màn hình chính ở Realme 5 pro]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Hình ảnh kiểm thử giao diện màn hình chính ở Realme 5 pro}
+  \label{realme_5_pro_device_preview}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5cm,height=10cm]{Images/mobile_app/demo/ip12_pro_max_device_preview.png}
+  \caption[Hình ảnh chuẩn bị kiểm thử giao diện iPhone 12 Pro Max]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Hình ảnh chuẩn bị kiểm thử giao diện iPhone 12 Pro Max}
+  \label{ip12_pro_max_device_preview}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5cm,height=10cm]{Images/mobile_app/demo/ip12_pro_max_device_preview_home_screen.png}
+  \caption[Hình ảnh kiểm thử giao diện màn hình chính ở iPhone 12 Pro Max]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Hình ảnh kiểm thử giao diện màn hình chính ở iPhone 12 Pro Max}
+  \label{ip12_pro_max_device_preview_home_screen}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5cm,height=10cm]{Images/mobile_app/demo/ip12_pro_max_device_preview_message.png}
+  \caption[Hình ảnh kiểm thử giao diện màn hình hội thoại ở iPhone 12 Pro Max]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Hình ảnh kiểm thử giao diện màn hình hội thoại ở iPhone 12 Pro Max}
+  \label{ip12_pro_max_device_preview_message}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5cm,height=10cm]{Images/mobile_app/demo/ip12_pro_max_device_preview_message_2.png}
+  \caption[Hình ảnh kiểm thử giao diện màn hình tin nhắn ở iPhone 12 Pro Max]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Hình ảnh kiểm thử giao diện màn hình tin nhắn ở iPhone 12 Pro Max}
+  \label{ip12_pro_max_device_preview_message_2}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5cm,height=10cm]{Images/mobile_app/demo/ios_device_preview_history_record.png}
+  \caption[Hình ảnh kiểm thử giao diện màn hình lịch sử đo ở iPhone 12 Pro Max]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Hình ảnh kiểm thử giao diện màn hình lịch sử đo ở iPhone 12 Pro Max}
+  \label{ios_device_preview_history_record}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5cm,height=10cm]{Images/mobile_app/demo/android_device_preview_home_screen.png}
+  \caption[Hình ảnh kiểm thử giao diện màn hình chính ở Samsung Galaxy S20]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Hình ảnh kiểm thử giao diện màn hình chính ở Samsung Galaxy S20}
+  \label{android_device_preview_home_screen}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5cm,height=10cm]{Images/mobile_app/demo/android_device_preview_find_device.png}
+  \caption[Hình ảnh kiểm thử giao diện tìm kiếm thiết bị ở Samsung Galaxy S20]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Hình ảnh kiểm thử giao diện tìm kiếm thiết bị ở Samsung Galaxy S20}
+  \label{android_device_preview_find_device}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5cm,height=10cm]{Images/mobile_app/demo/android_device_preview_user_info.png}
+  \caption[Hình ảnh kiểm thử giao diện xem thông tin người dùng ở Samsung Galaxy S20]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Hình ảnh kiểm thử giao diện xem thông tin người dùng ở Samsung Galaxy S20}
+  \label{android_device_preview_user_info}
+\end{figure}
 
 \paragraph{Kiểm thử chức năng}
 \mbox{}
@@ -2315,7 +2465,7 @@ Dưới đây là các kiểm thử cho từng lớp:
   
     & OK
     \\ \hline
-    \end{xltabular}
+  \end{xltabular}
 
   \item BluetoothScreens
 
