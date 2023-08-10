@@ -6,7 +6,9 @@
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 2. THIẾT KẾ HỆ THỐNG}
 
-% //TODO: thêm phần mở đầu chương 2
+Đây là chương chúng em sẽ thực hiện thiết kế từ tổng quan đến chi tiết của hệ thống. Từ việc xây dựng sơ đồ kiến trúc hệ thống,
+đến thiết kế từng chức năng cho cả ứng dụng di động, website và server, nội dung chủ yếu của chương sẽ xoay quanh các hình
+ảnh và sơ đồ nhằm diễn tả chi tiết từng luồng hoạt động của hệ thống và cách các phần trong hệ thống tương tác với nhau.
 
 \subsection{Sơ đồ kiến trúc hệ thống}
 Hệ thống chúng em xây dựng được chia làm ba phần Device, Application và Server. Các chi tiết cụ thể được thể hiện trong
@@ -18,8 +20,6 @@ hình vẽ:
   \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
   \label{fmECG_architecture-System} %đặt tên cho ảnh
 \end{figure}
-
-% //fix lại kiến trúc: bỏ cái nối trực tiếp vào ecg services, website chuyển lên application, database gộp chung
 
 Hình \ref{fmECG_architecture-System} thể hiện ba phần: 
 
@@ -48,6 +48,7 @@ Ngoài ra, hệ thống sẽ phải có kết nối bluetooth low energy giữa 
 Trên đây là tổng quan về kiến trúc hệ thống, phần tiếp dưới đây chúng em xin phép trình bày kỹ hơn về từng khối nhỏ hơn
 dựa vào những đối tượng đã được xác định trong hệ thống.
 
+\newpage
 \subsection{Sơ đồ khối phần mềm}
 
 \subsubsection{Ứng dụng di động cho bệnh nhân}
@@ -55,7 +56,7 @@ dựa vào những đối tượng đã được xác định trong hệ thống
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-Patient.drawio.png}
+  \includegraphics[width=12cm,height=10cm]{Images/system/fmECG_architecture-Patient.drawio.png}
   \caption[Sơ đồ khối cho App bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bệnh nhân}
   \label{fmECG_architecture-Patient} %đặt tên cho ảnh
 \end{figure}
@@ -78,7 +79,7 @@ Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Devi
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-Doctors.drawio.png}
+  \includegraphics[width=10cm,height=12.5cm]{Images/system/fmECG_architecture-Doctors.drawio.png}
   \caption[Sơ đồ khói cho App bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bác sĩ}
   \label{fmECG_architecture-Doctors} %đặt tên cho ảnh
 \end{figure}
@@ -91,7 +92,7 @@ và Bluetooth để phục vụ việc đo như bệnh nhân.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-Admin.drawio.png}
+  \includegraphics[width=10cm,height=12.5cm]{Images/system/fmECG_architecture-Admin.drawio.png}
   \caption[Sơ đồ khối cho Website quản trị viên]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho Website quản trị viên}
   \label{fmECG_architecture-Admin} %đặt tên cho ảnh
 \end{figure}
@@ -659,7 +660,7 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho Ap
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/splash_screen_demo.jpg}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/splash_screen_demo.jpg}
   \caption[Giao diện màn hình khởi động]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn hình khởi động}
   \label{demo_splash_screen} %đặt tên cho ảnh
 \end{figure}
@@ -668,21 +669,20 @@ Màn hình khởi động gồm một icon tượng trưng cho máy đo điện 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/login.png}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/login.png}
   \caption[Giao diện trang đăng nhập]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng nhập}
   \label{demo_login} %đặt tên cho ảnh
 \end{figure}
 
+\newpage
 Trang đăng nhập gồm có logo, sau đó là hai ô để nhập email và mật khẩu, cùng một nút màu xanh cho người dùng nhấn để kiểm tra 
 việc đăng nhập vào
 trang chủ nếu email và mật khẩu của người dùng được xác thực. Nếu việc xác thực không thành công, giao diện sẽ hiển thị
-một dòng chữ dưới hai ô nhập.
-
-Ngoài ra nếu người dùng chưa có tài khoản thì có thể chọn đăng ký ở dưới để chuyển sang trang đăng ký.
+một dòng chữ dưới hai ô nhập. Ngoài ra nếu người dùng chưa có tài khoản thì có thể chọn đăng ký ở dưới để chuyển sang trang đăng ký.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/register.png}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/register.png}
   \caption[Giao diện trang đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng ký tài khoản}
   \label{demo_register} %đặt tên cho ảnh
 \end{figure}
@@ -692,7 +692,7 @@ Login ở bên dưới để chuyển sang giao diện đăng ký.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/home_screen.png}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/home_screen.png}
   \caption[Giao diện màn hình chính]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn hình chính}
   \label{demo_home_screen} %đặt tên cho ảnh
 \end{figure}
@@ -710,18 +710,18 @@ Phần tổng quan bên dưới sẽ thể hiện dữ liệu đã được phâ
 sang trang theo dõi điện tim. Dưới cùng là các tin tức để người dùng có thể theo dõi, giới hạn ở năm bài viết. Các nút điều hướng có nhiệm vụ chuyển trang,
 và giúp cho người dùng biết mình đang ở trang nào.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/all_news.png}
-  \caption[Giao diện trang tất cả tin túc]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tất cả tin tức}
-  \label{demo_all_news}
-\end{figure}
-Trang tất cả tin tức có giao diện gần giống với giao diện của tin tức ở ngoài màn hình chính, điểm khác biệt là ở trang này,
-tất cả các tin tức sẽ được hiển thị thay vì chỉ có năm tin như ở màn hình chính.
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/all_news.png}
+%   \caption[Giao diện trang tất cả tin túc]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tất cả tin tức}
+%   \label{demo_all_news}
+% \end{figure}
+% Trang tất cả tin tức có giao diện gần giống với giao diện của tin tức ở ngoài màn hình chính, điểm khác biệt là ở trang này,
+% tất cả các tin tức sẽ được hiển thị thay vì chỉ có năm tin như ở màn hình chính.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/detail_news.png}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/detail_news.png}
   \caption[Giao diện trang chi tiết tin tức]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang chi tiết tin tức}
   \label{demo_detail_news}
 \end{figure}
@@ -731,7 +731,7 @@ giúp người dùng quay lại.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/history.png}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/history.png}
   \caption[Giao diện trang lịch sử các lần đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang lịch sử các lần đo}
   \label{demo_history}
 \end{figure}
@@ -742,7 +742,7 @@ có thể click vào một phiên đo để hiển thị dữ liệu phiên đo 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/detail_record.png}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/detail_record.png}
   \caption[Giao diện trang biểu đồ dữ liệu một phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang biểu đồ dữ liệu một phiên đo}
   \label{demo_detail_record}
 \end{figure}
@@ -753,7 +753,7 @@ click vào phần chú thích của một đường ở trên biểu đồ để
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/chat_preview.png}
+  \includegraphics[width=4.5cm,height=9cm]{Images/mobile_app/demo/chat_preview.png}
   \caption[Giao diện trang tất cả hội thoại]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tất cả hội thoại}
   \label{demo_chat_preview}
 \end{figure}
@@ -764,7 +764,7 @@ thì sẽ có một cuộc hội thoại được tạo giữa hai người mộ
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/chat_detail.png}
+  \includegraphics[width=4.5cm,height=9 cm]{Images/mobile_app/demo/chat_detail.png}
   \caption[Giao diện trang chi tiết hội thoại]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang chi tiết hội thoại}
   \label{demo_chat_detail}
 \end{figure}
@@ -798,7 +798,7 @@ popup hiện lên nếu kết nối thành công. Người dùng nhấn tiến h
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/demo_real_time_chart_2.jpg}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/demo_real_time_chart_2.jpg}
   \caption[Giao diện trang theo dõi dữ liệu điện tim real-time màn hình dọc]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện theo dõi dữ liệu điện tim real-time màn hình dọc}
   \label{demo_real_time_chart_2}
 \end{figure}
@@ -986,22 +986,18 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
 
 \subsubsection{Ứng dụng di động}
 
-
 Ứng dụng di động được tổ chức theo mô hình MVC, với ba khối chính là Models, Views và Controllers:
-  
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item Khối "Models": Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu.
- 
-  \item Khối "Controllers": Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng.
-
-  \item Khối "Views": Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng.
+  \item Khối "Models": Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu
+  \item Khối "Controllers": Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng
+  \item Khối "Views": Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng
 \end{itemize}
-
+\end{adjustwidth}
 Chi tiết từng lớp và phần giải thích cho mỗi khối được chúng em thể hiện bằng hình và lời trong các mục bên dưới. 
 
 \begin{enumerate}[a)]
   \item Danh sách các class diagram cho ứng dụng di động
-    
 
   \begin{figure}[H]
     \centering
@@ -1642,7 +1638,6 @@ kế việc lưu dữ liệu đăng nhập.
 
 \subsubsection{Chức năng kết nối và nhận/lưu dữ liệu từ thiết bị điện tim}
 \mbox{}
-
 Chức năng kết nối và thực hiện đo với thiết bị điện tim là một trong những chức năng quan trọng nhất của ứng dụng. Chức năng này yêu cầu
 ứng dụng phải bật được bluetooth. Đầu tiên để có thể tiến hành đo, chúng ta phải thực hiện một kết nối bluetooth giữa ứng dụng di động và
 thiết bị đo điện tim. Sau khi dã kết nối thành công, dựa vào cơ chế của bluetooth low energy \cite{intro_ble}, chúng ta sẽ thiết lập để ứng dụng lắng

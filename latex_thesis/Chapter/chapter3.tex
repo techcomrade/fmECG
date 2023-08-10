@@ -456,11 +456,11 @@ Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liê
     \centering
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin profile của người dùng}
     \begin{tabularx}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \hline
     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
@@ -513,18 +513,18 @@ Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liê
     \label{table_api_news}
   \end{table}
   
-
+  % TODO: Note new page
   \item URL: PUT api/users/profile
   
   \begin{table}[H]
     \centering
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API cập nhật thông tin profile của người dùng}
     \begin{tabularx}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{1cm}|
+    | >{\raggedright\arraybackslash}p{1cm}|
     }
     \hline
     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
@@ -593,13 +593,9 @@ Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liê
     \end{tabularx}
     \label{table_api_news}
   \end{table}
-  
-
 
   \item URL: PUT api/users/change-password
   
-\break
-
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
@@ -749,8 +745,8 @@ Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liê
   
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
@@ -827,7 +823,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{2.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
@@ -910,7 +906,8 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
 
     TC-3
-    & User chưa có tài khoản trên hệ thống, req.password và req.confirm\_password không trùng nhau
+    & User chưa có tài khoản trên hệ thống, req.password và req.-
+    confirm\_password không trùng nhau
     & Thông tin đăng ký tài khoản
 
     \{
@@ -960,7 +957,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
@@ -1041,7 +1038,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
@@ -1109,7 +1106,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
@@ -1129,8 +1126,8 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
     \{
 
     "email": email user
-\}
-  
+
+    \}
     & 
   
     Status code: 200 OK
@@ -1158,7 +1155,8 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
     \{
 
     "email": email user
-\}
+
+    \}
    &
   
     Status code: 404 Not Found
@@ -1188,7 +1186,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{2.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
@@ -1303,7 +1301,8 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
 
     TC-4
-    & req.password và req.confirm\_password không trùng
+    & req.password và req-
+    .confirm\_password không trùng
     & Thông tin reset mật khẩu
 
     \{
@@ -1330,12 +1329,8 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
     "msg": "Password confirmation does not match"
   
     \}
-    
     & OK
-  
-    \\ \hline
-
-  
+    \\ \hline  
     \end{xltabular}
 
 
@@ -1347,16 +1342,14 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 \mbox{}
 
 Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liên quan
-
+\newpage
 \begin{enumerate}[a)]
   \item URL: GET api/news/{:newsId}
   
-
-
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{2cm}
+    | >{\raggedright\arraybackslash}p{2cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
@@ -1413,15 +1406,13 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
     \end{xltabular}
 
-
-
+  % //TODO: new page
   \item URL: GET api/news
-  
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
@@ -1487,8 +1478,8 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
@@ -1550,8 +1541,7 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
 
 
   \item URL: GET api/category/{:categoryId}
-  
-
+  \newpage
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}X
@@ -1613,7 +1603,7 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
     \end{xltabular}
 
 
-
+  % //TODO: new page
   \item URL: GET api/news/category/{:categoryId}
   
   
@@ -1696,7 +1686,7 @@ Tham khảo bảng \ref{table_api_ecg} để xem thông tin của các api liên
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
@@ -1792,12 +1782,10 @@ sensor\_type: Loại cảm biến
 
   \item URL: GET api/ecg-records/patient/{:patientId}
   
-
-  
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
@@ -1865,8 +1853,8 @@ sensor\_type: Loại cảm biến
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
@@ -2003,11 +1991,10 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
 \begin{enumerate}[a)]
   \item URL: GET api/doctor/{:doctorId}/patients
   
-\break
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
@@ -2066,10 +2053,8 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
   
     \end{xltabular}
 
-
+  \break
   \item URL: GET api/patient/{:patientId}/doctor
-  
-
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
@@ -2132,14 +2117,9 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
   
     \end{xltabular}
 
-
-
 \end{enumerate}
 
-
 \subsubsection{Kiểm thử ứng dụng web}
-
-
 
 \begin{xltabular}{\textwidth}{
   | >{\raggedright\arraybackslash}p{2cm}
@@ -2382,19 +2362,19 @@ trong bảng và hình dưới đây:
   Máy thật Realme 5 Pro
 
   Kích thước: 2.9 inch x 6.2 inch
-  & 1. Các màn hình AuthScreens
+  & 1. AuthScreens
 
-    2. Các màn hình MainScreens
+    2. MainScreens
 
-    3. Các màn hình BluetoothScreens
+    3. BluetoothScreens
 
-    4. Các màn hình NewsScreens
+    4. NewsScreens
 
-    5. Các màn hình UserScreens
+    5. UserScreens
 
-    6. Các màn hình ChatScreens
+    6. ChatScreens
 
-    7. Các màn hình HistoryRecordScreens
+    7. HistoryRecordScreens
 
   & 1 $\rightarrow$ 7: Hiển thị đầy đủ các thành phần, không bị tràn viền và vỡ giao diện
   & 2. Ở màn hình chính button thông báo bị overflow (tràn màn hình) 
@@ -2403,19 +2383,19 @@ trong bảng và hình dưới đây:
   Máy ảo iPhone 12 Pro Max
 
   Kích thước: 3.1 inch x 6.3 inch
-  & 1. Các màn hình AuthScreens
+  & 1. AuthScreens
 
-    2. Các màn hình MainScreens
+    2. MainScreens
 
-    3. Các màn hình BluetoothScreens
+    3. BluetoothScreens
 
-    4. Các màn hình NewsScreens
+    4. NewsScreens
 
-    5. Các màn hình UserScreens
+    5. UserScreens
 
-    6. Các màn hình ChatScreens
+    6. ChatScreens
 
-    7. Các màn hình HistoryRecordScreens
+    7. HistoryRecordScreens
 
   & 1 $\rightarrow$ 7: Hiển thị đầy đủ các thành phần, không bị tràn viền và vỡ giao diện
   & 2. Không có hiện tượng tràn viền, vỡ giao diện
@@ -2424,19 +2404,19 @@ trong bảng và hình dưới đây:
   Máy ảo Samsung Galaxy S20
 
   Kích thước: 2.72 inch x 5.97 inch
-  & 1. Các màn hình AuthScreens
+  & 1. AuthScreens
 
-    2. Các màn hình MainScreens
+    2. MainScreens
 
-    3. Các màn hình BluetoothScreens
+    3. BluetoothScreens
 
-    4. Các màn hình NewsScreens
+    4. NewsScreens
 
-    5. Các màn hình UserScreens
+    5. UserScreens
 
-    6. Các màn hình ChatScreens
+    6. ChatScreens
 
-    7. Các màn hình HistoryRecordScreens
+    7. HistoryRecordScreens
 
   & 1 $\rightarrow$ 7: Hiển thị đầy đủ các thành phần, không bị tràn viền và vỡ giao diện
   & 2. Ở màn hình chính button thông báo bị overflow (tràn màn hình)
@@ -2536,9 +2516,6 @@ Dưới đây là các kiểm thử cho từng lớp:
       \item Chức năng quên mật khẩu
     \end{itemize}
 
-\break
-
-
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{2cm}
     | >{\raggedright\arraybackslash}X
@@ -2592,7 +2569,7 @@ Dưới đây là các kiểm thử cho từng lớp:
     & OK
     \\ \hline
   \end{xltabular}
-
+  \break
   \item BluetoothScreens
 
   Các màn hình thuộc BluetoothScreens có thể được theo dõi ở class BluetoothScreens trong Hình \ref{mobile_class_view}.
