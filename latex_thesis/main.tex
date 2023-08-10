@@ -14,7 +14,7 @@
 \usepackage{amsmath}
 \usepackage{xltabular}
 \usepackage{setspace}
-
+\usepackage{pdfpages}
 \usepackage{multirow}
 % \usepackage{graphicx}
 % \usepackage[table,xcdraw]{xcolor}
@@ -97,7 +97,12 @@
 \begin{document}
 
 \input{Cover/cover.tex}
-\input{Chapter/evaluation.tex}
+% \includepdf[pages={1},scale=1]{PDF/SEEE_Evaluation_Dong_Minh_Thai.pdf}
+\includepdf[pages={1},scale=1]{PDF/SEEE_Evaluation_Hoang_Anh_Tuan.pdf}
+\cleardoublepage
+
+\includepdf[pages={1},scale=1]{PDF/SEEE_Danhgia2-anh_Tuan.pdf}
+\cleardoublepage
 
 \input{Chapter/prologue.tex}
 \input{Chapter/declaration.tex}
