@@ -987,13 +987,13 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
 \subsubsection{Ứng dụng di động}
 
 Ứng dụng di động được tổ chức theo mô hình MVC, với ba khối chính là Models, Views và Controllers:
-  
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item Khối "Models": Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu
   \item Khối "Controllers": Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng
   \item Khối "Views": Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng
 \end{itemize}
-
+\end{adjustwidth}
 Chi tiết từng lớp và phần giải thích cho mỗi khối được chúng em thể hiện bằng hình và lời trong các mục bên dưới. 
 
 \begin{enumerate}[a)]
@@ -1638,7 +1638,6 @@ kế việc lưu dữ liệu đăng nhập.
 
 \subsubsection{Chức năng kết nối và nhận/lưu dữ liệu từ thiết bị điện tim}
 \mbox{}
-
 Chức năng kết nối và thực hiện đo với thiết bị điện tim là một trong những chức năng quan trọng nhất của ứng dụng. Chức năng này yêu cầu
 ứng dụng phải bật được bluetooth. Đầu tiên để có thể tiến hành đo, chúng ta phải thực hiện một kết nối bluetooth giữa ứng dụng di động và
 thiết bị đo điện tim. Sau khi dã kết nối thành công, dựa vào cơ chế của bluetooth low energy \cite{intro_ble}, chúng ta sẽ thiết lập để ứng dụng lắng
