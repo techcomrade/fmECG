@@ -54,6 +54,24 @@ class ECGRecordController {
     }
   }
 
+  static Future<void> getAllECGRecordByDoctor(int userId) async {
+    try {
+      final String url = APIConstant.apiUrlProduction + 'ecg-records/doctor/$userId';
+
+      int time = DateTime.now().millisecondsSinceEpoch;
+      final Response response = await Dio().get(url);
+      int real = DateTime.now().millisecondsSinceEpoch - time;
+
+      final responseData = response.data;
+      if (responseData["status"] == "success") {
+        List ecgRecordsPreview = responseData["data"];
+        ecgProvider.setECGRecordsPreview(ecgRecordsPreview);
+      }
+    } catch (e) {
+      print('error when get all records: $e');
+    }
+  }
+
   static Future<void> getDataECGRecordById(int recordId) async {
     try {
       final String url = APIConstant.apiUrlProduction + 'ecg-records/record-data/$recordId';

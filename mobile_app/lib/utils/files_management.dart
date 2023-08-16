@@ -35,7 +35,7 @@ class FilesManagement {
     String dataConverted = convertDataToCSVFormat(rawData);
     await appendDataToFileV2(file, dataConverted);
   }
-
+  
   static String convertDataToCSVFormat(List data) {
     final removingBracketsRegex = RegExp(r'\[|\]');
     String dataConverted = data.join("\n").replaceAll(removingBracketsRegex, "");

@@ -23,6 +23,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   Stream<QuerySnapshot>? conversationStream;
+  int userId = 0;
 
   @override
   void initState() {
@@ -59,7 +60,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void getConversationStream() async {
-    int userId = await Utils.getUserId();
+    userId = await Utils.getUserId();
     conversationStream = await FmECGFirebaseMessage().getAllConversationsInfo(userId);
     setState(() {});
   }
@@ -188,6 +189,16 @@ class _ChatScreenState extends State<ChatScreen> {
                           scrollDirection: Axis.vertical,
                           itemBuilder: (context, index) {
                             final conversation = conversations[index];
+                            final Map memberIds = conversation["member_ids"];
+                            String otherId = "";
+                            memberIds.forEach((key, value) {
+                              print('key:$key');
+                              if (key != userId.toString()) {
+                                otherId = key;
+                              } else {
+                                otherId = "Unknown";
+                              }
+                            });
                             return InkWell(
                               onTap: () => Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (context) {
@@ -218,7 +229,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Text("${conversation["conversation_id"]}",
+                                                Text("${otherId}",
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15

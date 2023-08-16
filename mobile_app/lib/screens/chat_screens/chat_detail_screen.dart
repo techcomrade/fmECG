@@ -37,7 +37,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   }
   void _scrollToBottom() {
     _messageScrollController.animateTo(
-      _messageScrollController.position.maxScrollExtent + 60.0,
+      _messageScrollController.position.maxScrollExtent,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
@@ -47,7 +47,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final userId = context.read<AuthProvider>().userId;
-    print('userId:$userId');
+    final roleId = context.read<AuthProvider>().roleId;
     return Scaffold(
       backgroundColor: ColorConstant.quinary,
       body: SafeArea(
@@ -67,7 +67,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                   onPressed: () => Navigator.pop(context),
                   icon: Icon(PhosphorIcons.regular.arrowLeft)
                 ),
-                Text('Bác sĩ Thái',
+                // nguoiwf dang chat voi minh chu khong phai minh
+                Text(roleId != 0 ? 'Bệnh nhân' : "Bác sĩ", 
                 style: TextStyle(
                   color: ColorConstant.primary ,
                   fontSize: 26,

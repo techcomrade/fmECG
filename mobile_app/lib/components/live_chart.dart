@@ -22,7 +22,7 @@ class LiveChartSample extends StatefulWidget {
 class _LiveChartSampleState extends State<LiveChartSample> {
   _LiveChartSampleState() {
     timer =
-        Timer.periodic(const Duration(milliseconds: 100), _updateDataSource);
+        Timer.periodic(const Duration(milliseconds: 50), _updateDataSource);
   }
 
   Timer? timer;
@@ -58,29 +58,30 @@ class _LiveChartSampleState extends State<LiveChartSample> {
             onPressed: () async {
               timer?.cancel();
               _chartSeriesController = null;
-              // final DateTime stopTime = DateTime.now();            
-              // final SharedPreferences preferences = await SharedPreferences.getInstance();
-              // final Map userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
+              final DateTime stopTime = DateTime.now();            
+              final SharedPreferences preferences = await SharedPreferences.getInstance();
+              final Map userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
 
-              // if (userDataDecoded["roleId"] == -1 || userDataDecoded["token"] == "") {
-              //   return Utils.showDialogLoginRequirement(context);
-              // }
+              if (userDataDecoded["roleId"] == -1 || userDataDecoded["token"] == "") {
+                return Utils.showDialogLoginRequirement(context);
+              }
 
-              // final int userId = userDataDecoded["userId"] ?? 0;
-              // final int deviceId = 2;
-              // final String startTimeAsTimeStamp = widget.fileToSave.path.split("/").last.split('.').first;
-              // final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(int.parse(startTimeAsTimeStamp));
+              final int userId = userDataDecoded["userId"] ?? 0;
+              final int deviceId = 2;
+              final String startTimeAsTimeStamp = widget.fileToSave.path.split("/").last.split('.').first;
+              final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(int.parse(startTimeAsTimeStamp));
 
-              // final Map fileUploadInformation = {
-              //   "filePath": widget.fileToSave.path,
-              //   "userId": userId,
-              //   "deviceId": deviceId,
-              //   "startTime": startTime,
-              //   "stopTime": stopTime,
-              // };
-              // Future.delayed(Duration(milliseconds: 500), () {
-              //   ECGRecordController.uploadFileToDB(fileUploadInformation);
-              // });
+              final Map fileUploadInformation = {
+                "filePath": widget.fileToSave.path,
+                "userId": userId.toString(),
+                "deviceId": deviceId,
+                "startTime": startTime,
+                "stopTime": stopTime,
+              };
+              Future.delayed(Duration(milliseconds: 500), () {
+                ECGRecordController.uploadFileToDB(fileUploadInformation);
+              });
+              print('gndf:$samples');
               FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
             }, 
             child: Text('End measurement')
@@ -128,21 +129,24 @@ class _LiveChartSampleState extends State<LiveChartSample> {
 
   ///Continously updating the data source based on timer
   void _updateDataSource(Timer timer) {
-    List<int> fakeRows = List.generate(239, (_) => _getRandomInt(0, 255));
-    fakeRows[9] = 228;
-    final List packetHandled = ECGDataController.handlePacketData(fakeRows);
-    samples = samples + packetHandled;
-    List dataShowOnChart = [];
+    // List<int> fakeRows = List.generate(239, (_) => _getRandomInt(0, 255));
+    // fakeRows[9] = 228;
+    // final List packetHandled = ECGDataController.handlePacketData(fakeRows);
+    // samples = samples + packetHandled;
+    // List dataShowOnChart = [];
 
-    for (int i = 0; i < packetHandled.length; i ++) {
-      List dataChannel = packetHandled[i].sublist(1, 5);
-      dataShowOnChart = ECGDataController.calculateDataPointToShow(dataChannel);
-    }
-    chartData!.add(_ChartData(count, dataShowOnChart[0]));
-    // List<double> dataChannelsToSave = ECGDataController.handleDataRowFromBluetooth(fakeRows);
-    // List<double> dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(dataChannelsToSave);
-    // _ChartData newData = _ChartData(count, dataChannelsToShowOnChart[0]);
-    // chartData!.add(newData);
+    // for (int i = 0; i < packetHandled.length; i ++) {
+    //   List dataChannel = packetHandled[i].sublist(1, 5);
+    //   dataShowOnChart = ECGDataController.calculateDataPointToShow(dataChannel);
+    // }
+    // chartData!.add(_ChartData(count, dataShowOnChart[0]));
+    
+     List<int> fakeRows = List.generate(16, (_) => _getRandomInt(1, 244));
+    List<dynamic> dataChannelsToSave = ECGDataController.handleDataRowFromBluetooth(fakeRows);
+    samples = samples + [dataChannelsToSave];
+    List<dynamic> dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(dataChannelsToSave);
+    _ChartData newData = _ChartData(count, dataChannelsToShowOnChart[0]);
+    chartData!.add(newData);
 
     if (chartData!.length >= 20) {
       chartData!.removeAt(0);

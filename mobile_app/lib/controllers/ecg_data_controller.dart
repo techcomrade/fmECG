@@ -104,6 +104,10 @@ class ECGDataController {
     return dataPoints;
   }
 
+  static double calculateOnePointData(double rawData) {
+    return (rawData * REFERENCE_VOLTAGE) / (math.pow(2, 23) - 1).toDouble();
+  }
+
   static List handlePacketData(List<int> bytes) {
     final int numberSample = (bytes[9] / 4 / 3).toInt();
     final int countPacket = bytes[10];

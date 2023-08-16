@@ -1,4 +1,5 @@
 import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
+import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/screens/history_screens/history_record_chart.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
@@ -19,19 +20,25 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   void getAllRecords() async {
-    final int userId = await Utils.getUserId(); 
-    ECGRecordController.getAllECGRecords(userId);
+    final int userId = await Utils.getUserId();
+    final int roleId = context.read<AuthProvider>().roleId;
+    if (roleId == 0) {
+      ECGRecordController.getAllECGRecords(userId);
+    } else if (roleId == 1) {
+      ECGRecordController.getAllECGRecordByDoctor(userId);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final List allECGRecordsPreview = context.watch<ECGProvider>().ecgRecordsPreview;
+    final int roleId = context.read<AuthProvider>().roleId;
 
       return Scaffold(
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 16.0, top: 16.0),
+              padding: const EdgeInsets.only(left: 16.0, top: 30.0),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
@@ -65,13 +72,28 @@ class _HistoryScreenState extends State<HistoryScreen> {
               child: ListView.builder(
                 itemCount: allECGRecordsPreview.length,
                 itemBuilder: (contextECGRecords, index) {
-                  final int recordId = allECGRecordsPreview[index]["record_id"];
-                  final String recordName = allECGRecordsPreview[index]["data_directory"]
-                                            .split("/").last.split('.').first;
-                  final DateTime recordCreatedAt = DateTime.parse(allECGRecordsPreview[index]["created_at"]);
-                  final String recordCreatedFormat = DateFormat("EEEE, dd-MM-yyyy", "vi").format(recordCreatedAt);
+                  if (roleId != 0) {
+                    return ExpansionTile(
+                      title: Text("${ allECGRecordsPreview[index]["user_id"]}"),
+                      children: 
+                        allECGRecordsPreview[index]["data"].map<Widget>((record) {
+                          final recordId = record["record_id"];
+                          final String recordName = record["data_directory"]
+                                                    .split("/").last.split('.').first;
+                          final DateTime recordCreatedAt = DateTime.parse(record["start_time"]);
+                          final String recordCreatedFormat = DateFormat("EEEE, dd-MM-yyyy", "vi").format(recordCreatedAt);
+                          return buildHistoryCard(recordId, recordName, recordCreatedFormat);
+                        }).toList()
+                    );
+                  } else {
+                    final int recordId = allECGRecordsPreview[index]["record_id"];
+                    final String recordName = allECGRecordsPreview[index]["data_directory"]
+                                              .split("/").last.split('.').first;
+                    final DateTime recordCreatedAt = DateTime.parse(allECGRecordsPreview[index]["created_at"]);
+                    final String recordCreatedFormat = DateFormat("EEEE, dd-MM-yyyy", "vi").format(recordCreatedAt);
 
-                  return buildHistoryCard(recordId, recordName, recordCreatedFormat);
+                    return buildHistoryCard(recordId, recordName, recordCreatedFormat);
+                  }
                 },
               ),
             ),

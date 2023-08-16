@@ -1,4 +1,5 @@
 /// Package import
+import 'package:bluetooth_ecg/controllers/ecg_data_controller.dart';
 import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:flutter/material.dart';
@@ -96,13 +97,13 @@ class _HistoryRecordChartState extends State<HistoryRecordChart>  {
       LineSeries(
         dataSource: chartData!,
         xValueMapper: (pieceData, _) => pieceData["timestamp"],
-        yValueMapper: (pieceData, _) => double.parse(pieceData["ch1"] ?? "0"),
+        yValueMapper: (pieceData, _) => ECGDataController.calculateOnePointData(double.parse(pieceData["ch1"] ?? "0")),
         name: 'Channel 01'
       ),
       LineSeries(
         dataSource: chartData!,
         xValueMapper: (pieceData, _) => pieceData["timestamp"],
-        yValueMapper: (pieceData, _) => double.parse(pieceData["ch2"] ?? "0"),
+        yValueMapper: (pieceData, _) => ECGDataController.calculateOnePointData(double.parse(pieceData["ch2"] ?? "0")),
         name: 'Channel 02'
       ),
     ];

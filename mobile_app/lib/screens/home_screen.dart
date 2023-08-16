@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
@@ -35,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   late File fileToSave;
   bool isShowChart = false;
+  Map userData = {};
 
   Map allNews = {}; 
   @override
@@ -42,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     getDoctorAssigned();
     NewsController.getAllNews();
+    getUserData();
   }
 
 
@@ -59,6 +62,15 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  getUserData() async {
+    final preferences = await SharedPreferences.getInstance();
+    if (!preferences.containsKey('userData')) {
+      return;
+    }
+
+    userData = json.decode((preferences.getString('userData') ?? ""));
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -67,7 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List allNews = context.watch<NewsProvider>().allNews;
-
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
       child: SingleChildScrollView(
@@ -92,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Text("Chào mừng đến với fmECG"),
                           Text(
-                            "Thai Dong",
+                            "${userData["userId"] ?? "Thai Dong"}",
                             style: TextStyle(
                               color: ColorConstant.primary,
                               fontWeight: FontWeight.bold,
