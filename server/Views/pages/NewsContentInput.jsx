@@ -54,7 +54,7 @@ const NewsContentInput = (props) => {
       {isEditorReady && (
         <Editor
           key={property.path}
-          apiKey="n7nq4gqye1xzif2wjbh0xm8t86k3y55y6x0z57qgd9nt6rv1"
+          apiKey="1vmakcycqhy1e9j6taeelgcuicl9urq0dxu7qcrwv4sw71oh"
           value={editorValue}
           onEditorChange={handleEditorChange}
           init={{
