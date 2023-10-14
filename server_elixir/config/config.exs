@@ -7,6 +7,12 @@
 # General application configuration
 import Config
 
+config :server_elixir, FmECG.Repo,
+  database: "server_elixir_repo",
+  username: "user",
+  password: "pass",
+  hostname: "localhost"
+
 config :server_elixir,
   ecto_repos: [ServerElixir.Repo]
 
