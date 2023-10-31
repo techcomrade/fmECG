@@ -10,6 +10,7 @@ defmodule FmecgElixir.User do
     field :email, :string
     field :date_of_birth, :naive_datetime
     field :phone_number, :string
+    field :token, :string
 
     timestamps()
   end
