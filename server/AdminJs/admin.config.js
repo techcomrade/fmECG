@@ -12,8 +12,6 @@ const PatientResource = require('./Resource/patientResource.js');
 const DoctorResource = require('./Resource/doctorResource.js');
 const AdminResource = require('./Resource/adminResource.js');
 
-
-
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
   Database: AdminJSSequelize.Database,
@@ -44,7 +42,7 @@ const adminJsOptions = {
     UserResource
   ],
   dashboard: {
-    component: Components.Dashboard,
+    component: Components.Dashboard
   },
   locale,
   componentLoader,
@@ -54,7 +52,10 @@ const adminJsOptions = {
     withMadeWithLove: false,
     loginWelcome: "false"
   },
-  loginPath: '/admin/login'
+  loginPath: '/admin/login',
+  assets: {
+    styles: ["/sidebar.scss"],
+  }
 };
 
 
