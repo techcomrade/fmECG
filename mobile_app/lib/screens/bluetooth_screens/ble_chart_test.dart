@@ -149,7 +149,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-              icon: Icon(PhosphorIcons.regular.arrow_left),
+              icon: Icon(PhosphorIcons.regular.arrowLeft),
               onPressed: () => Navigator.pop(context)),
           title: const Text("Trang đo dữ liệu"),
         ),
