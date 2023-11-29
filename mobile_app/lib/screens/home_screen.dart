@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const DarkLightSwitch(),
                     const SizedBox(width: 8),
                     InkWell(
-                      child: Icon(PhosphorIcons.bell()),
+                      child: Icon(PhosphorIcons.regular.bell),
                     )
                   ])
                 ],

@@ -1,7 +1,6 @@
 package com.example.bluetooth_ecg;
 
 import io.flutter.embedding.android.FlutterActivity;
-package com.example.method_channel;
 
 import android.content.ContextWrapper;
 import android.content.Intent;
