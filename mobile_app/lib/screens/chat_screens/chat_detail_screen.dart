@@ -9,15 +9,13 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({
-    Key? key, 
-    required this.conversation
-  }) : super(key: key);
+  const ChatDetailScreen({Key? key, required this.conversation})
+      : super(key: key);
 
   final Map conversation;
 
   @override
-  _ChatDetailScreenState  createState() => _ChatDetailScreenState();
+  _ChatDetailScreenState createState() => _ChatDetailScreenState();
 }
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
@@ -32,9 +30,11 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   }
 
   void getMessageStream() async {
-    messageStream = await FmECGFirebaseMessage().getMessageConversation(widget.conversation["conversation_id"]);
+    messageStream = await FmECGFirebaseMessage()
+        .getMessageConversation(widget.conversation["conversation_id"]);
     setState(() {});
   }
+
   void _scrollToBottom() {
     _messageScrollController.animateTo(
       _messageScrollController.position.maxScrollExtent + 60.0,
@@ -49,123 +49,121 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
     final userId = context.read<AuthProvider>().userId;
     print('userId:$userId');
     return Scaffold(
-      backgroundColor: ColorConstant.quinary,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Container(
-              height: screenSize.height * 0.085,
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.grey[300]
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: Icon(PhosphorIcons.regular.arrowLeft)
-                ),
-                Text('Bác sĩ Thái',
-                style: TextStyle(
-                  color: ColorConstant.primary ,
-                  fontSize: 26,
-                )),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    height: 35,
-                    width: 35,
-                    decoration: BoxDecoration(
-                    color: ColorConstant.gray80014,
-                    borderRadius: BorderRadius.circular(25),
-                    ),         
-                    child: IconButton(onPressed: (){},
-                      icon: Icon(PhosphorIcons.regular.phone,
-                      color: ColorConstant.black900,
-                      size: 20,
-                    )),),
-                )]),
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  StreamBuilder<QuerySnapshot>(
-                    stream: messageStream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        final List messages = snapshot.data!.docs.map((document) => document.data()).toList();
-                        
-                        return Expanded(
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(maxHeight: screenSize.height * 0.8), 
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: ListView.builder(
-                                physics: const ClampingScrollPhysics(),
-                                controller: _messageScrollController,
-                                shrinkWrap: true,
-                                itemCount: messages.length,
-                                itemBuilder: (context, index) {
-                                  final message = messages[index];
-                                  final bool isSender = message["sender_id"] == userId;
-                                  return MessageTile(
-                                    message: message["message_content"], 
-                                    sender: "Thai", 
-                                    sentByMe: isSender
-                                  );
-                                },),
-                            ),
-                          ),
-                        );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    }
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+        backgroundColor: ColorConstant.quinary,
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                height: screenSize.height * 0.085,
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(color: Colors.grey[300]),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: Icon(PhosphorIcons.regular.arrowArcLeft)),
+                      Text('Bác sĩ Thái',
+                          style: TextStyle(
+                            color: ColorConstant.primary,
+                            fontSize: 26,
+                          )),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          height: 35,
+                          width: 35,
+                          decoration: BoxDecoration(
+                            color: ColorConstant.gray80014,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                PhosphorIcons.regular.phone,
+                                color: ColorConstant.black900,
+                                size: 20,
+                              )),
+                        ),
+                      )
+                    ]),
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    StreamBuilder<QuerySnapshot>(
+                        stream: messageStream,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            final List messages = snapshot.data!.docs
+                                .map((document) => document.data())
+                                .toList();
+
+                            return Expanded(
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    maxHeight: screenSize.height * 0.8),
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: ListView.builder(
+                                    physics: const ClampingScrollPhysics(),
+                                    controller: _messageScrollController,
+                                    shrinkWrap: true,
+                                    itemCount: messages.length,
+                                    itemBuilder: (context, index) {
+                                      final message = messages[index];
+                                      final bool isSender =
+                                          message["sender_id"] == userId;
+                                      return MessageTile(
+                                          message: message["message_content"],
+                                          sender: "Thai",
+                                          sentByMe: isSender);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else {
+                            return CircularProgressIndicator();
+                          }
+                        }),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Container(
                         width: screenSize.width - 80,
                         height: screenSize.height * 0.06,
                         margin: const EdgeInsets.only(right: 5, top: 2),
                         child: CustomTextFormField(
                           controller: _textMessageController,
-                          prefix: Icon(
-                            PhosphorIcons.regular.smiley,
-                            size: 30,
-                            color:ColorConstant.black900
-                            ),
+                          prefix: Icon(PhosphorIcons.regular.smiley,
+                              size: 30, color: ColorConstant.black900),
                           hintText: 'Nhập tin nhắn',
-                          suffix: IconButton(icon: Icon(PhosphorIcons.regular.camera,
-                          color: ColorConstant.black900,
-                          size: 30,),
-                          onPressed: () {
-                          },
+                          suffix: IconButton(
+                            icon: Icon(
+                              PhosphorIcons.regular.camera,
+                              color: ColorConstant.black900,
+                              size: 30,
                             ),
+                            onPressed: () {},
+                          ),
                         ),
                       ),
                       Container(
                         decoration: BoxDecoration(
-                        color: ColorConstant.primary,
-                        borderRadius: BorderRadius.circular(50)
-                        ),
+                            color: ColorConstant.primary,
+                            borderRadius: BorderRadius.circular(50)),
                         child: IconButton(
-                          icon: Icon(
-                            PhosphorIcons.light.paperPlaneRight,
-                            color: ColorConstant.whiteA700,
-                            size:25
-                          ),
-
+                          icon: Icon(PhosphorIcons.regular.paperPlaneRight,
+                              color: ColorConstant.whiteA700, size: 25),
                           onPressed: () async {
-                            final conversationId = widget.conversation["conversation_id"];
-                            final String messageContent = _textMessageController.text;
+                            final conversationId =
+                                widget.conversation["conversation_id"];
+                            final String messageContent =
+                                _textMessageController.text;
                             final messageId = Utils.getRandomNumber(4);
                             final timeSent = DateTime.now().toUtc();
-              
+
                             Map<String, dynamic> message = {
                               'conversation_id': conversationId,
                               'message_content': messageContent,
@@ -173,21 +171,20 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                               'sender_id': userId,
                               'sent_at': FieldValue.serverTimestamp()
                             };
-                            await FmECGFirebaseMessage().sendMessageConversation(message);
+                            await FmECGFirebaseMessage()
+                                .sendMessageConversation(message);
                             _textMessageController.clear();
                             _scrollToBottom();
                           },
                         ),
                       )
-                    ]
-                  )
-                ],
-               ),
-             ),
-          ],
-        ),
-      )
-      );
+                    ])
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 }
 
@@ -245,6 +242,3 @@ class _MessageTileState extends State<MessageTile> {
     );
   }
 }
-
-
-
