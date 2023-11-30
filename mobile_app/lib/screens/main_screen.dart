@@ -17,6 +17,7 @@ class MainScreen extends StatefulWidget {
   @override
   _MainScreenState createState() => _MainScreenState();
 }
+
 Color LIME = Color(0xFF094D55);
 
 class _MainScreenState extends State<MainScreen> {
@@ -35,26 +36,26 @@ class _MainScreenState extends State<MainScreen> {
     requestPermissionFirebase();
     Timer.run(() async {
       // de o phan dang nhap => luu token ngay sau khi dang nhap tren firebase
-      final String firebaseToken = await FmECGFirebaseMessage().getDeviceToken();
+      final String firebaseToken =
+          await FmECGFirebaseMessage().getDeviceToken();
       // await FmECGFirebaseMessage().saveTokenToFirestore(firebaseToken, 3010);
     });
-    
   }
 
   void requestPermissionFirebase() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      sound: true,
-      criticalAlert: false,
-      provisional: false
-    );
+        alert: true,
+        announcement: false,
+        badge: true,
+        sound: true,
+        criticalAlert: false,
+        provisional: false);
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('permis');
-    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
       print('provisional ');
     } else {
       print('declined');

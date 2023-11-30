@@ -31,12 +31,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final ScrollController _scrollController = ScrollController();
   late File fileToSave;
   bool isShowChart = false;
 
-  Map allNews = {}; 
+  Map allNews = {};
   @override
   void initState() {
     super.initState();
@@ -44,14 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
     NewsController.getAllNews();
   }
 
-
   void getDoctorAssigned() async {
     int patientId = await Utils.getUserId();
     UserController.getDoctorAssigned(patientId);
   }
 
   Future<bool> _requestManageStorage() async {
-    final PermissionStatus status = await Permission.manageExternalStorage.request();  
+    final PermissionStatus status =
+        await Permission.manageExternalStorage.request();
     if (status == PermissionStatus.granted) {
       return true;
     } else {
@@ -82,33 +81,31 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      CircularAvatar(imageAsset: 'assets/images/doctor.png', radius: 27),
-                      const SizedBox(width: 8),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Chào mừng đến với fmECG"),
-                          Text(
-                            "Thai Dong",
-                            style: TextStyle(
-                              color: ColorConstant.primary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ],
-                      ),
-                    ]
-                  ),
-                  Row(
-                    children: [
-                      const DarkLightSwitch(),
-                      const SizedBox(width: 8),
-                      InkWell(
-                        child: Icon(PhosphorIcons.regular.bell),
-                      )
+                  Row(children: [
+                    CircularAvatar(
+                        imageAsset: 'assets/images/doctor.png', radius: 27),
+                    const SizedBox(width: 8),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Chào mừng đến với fmECG"),
+                        Text(
+                          "Thai Dong",
+                          style: TextStyle(
+                            color: ColorConstant.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
+                  ]),
+                  Row(children: [
+                    const DarkLightSwitch(),
+                    const SizedBox(width: 8),
+                    InkWell(
+                      child: Icon(PhosphorIcons.regular.bell),
+                    )
                   ])
                 ],
               ),
@@ -121,12 +118,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     alignment: Alignment.topLeft,
-                    child: Text("Tổng quan",
+                    child: Text(
+                      "Tổng quan",
                       style: TextStyle(
-                        color: ColorConstant.quaternary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22
-                      ),
+                          color: ColorConstant.quaternary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -135,10 +132,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     runSpacing: 15,
                     alignment: WrapAlignment.spaceAround,
                     children: [
-                      NumberCard(number: 82.0, text: "Nhịp tim (bpm)", subText: "Mẹ", color1: ColorConstant.primary, color2: ColorConstant.primary),
-                      NumberCard(number: 72.9, text: "Biến thiên nhịp tim (bpm)", subText: "Mẹ", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
-                      NumberCard(number: 82.6, text: "Nhịp tim (bpm)", subText: "Thai nhi", color1: ColorConstant.primary, color2: ColorConstant.primary),
-                      NumberCard(number: 86.0, text: "Biến thiên nhịp tim (bpm)", subText: "Thai nhi", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
+                      NumberCard(
+                          number: 82.0,
+                          text: "Nhịp tim (bpm)",
+                          subText: "Mẹ",
+                          color1: ColorConstant.primary,
+                          color2: ColorConstant.primary),
+                      NumberCard(
+                          number: 72.9,
+                          text: "Biến thiên nhịp tim (bpm)",
+                          subText: "Mẹ",
+                          color1: ColorConstant.primary,
+                          color2: ColorConstant.quaternary),
+                      NumberCard(
+                          number: 82.6,
+                          text: "Nhịp tim (bpm)",
+                          subText: "Thai nhi",
+                          color1: ColorConstant.primary,
+                          color2: ColorConstant.primary),
+                      NumberCard(
+                          number: 86.0,
+                          text: "Biến thiên nhịp tim (bpm)",
+                          subText: "Thai nhi",
+                          color1: ColorConstant.primary,
+                          color2: ColorConstant.quaternary),
                     ],
                   )
                 ],
@@ -149,140 +166,138 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Tín hiệu điện tim",
+                  Text(
+                    "Tín hiệu điện tim",
                     style: TextStyle(
-                      color: ColorConstant.quaternary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22
-                    ),
+                        color: ColorConstant.quaternary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22),
                   ),
                   const SizedBox(height: 10),
-                  !isShowChart ? ImageCard(
-                    imageAsset: 'assets/images/heart_rate_example.jpeg', 
-                    functionScanBluetooth: () {
-                      Navigator.push(context,
-                        MaterialPageRoute(
-                          builder: (context) => BleReactiveScreen(),
-                        )
-                      );
-                    }, 
-                    temporaryNothing: () async {
-                      bool isAccessFiles = await _requestManageStorage();
-                      if (isAccessFiles) {
-                        FilesManagement.createDirectoryFirstTimeWithDevice();
-                        fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
-                        setState(() {
-                          isShowChart = true;
-                        });
-                      } else {
-                        // show dialog need permission
-                        print('phone does not grant permission');
-                      }
-                    }
-                  ) 
-                  : LiveChartSample(fileToSave: fileToSave),
+                  !isShowChart
+                      ? ImageCard(
+                          imageAsset: 'assets/images/heart_rate_example.jpeg',
+                          functionScanBluetooth: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BleReactiveScreen(),
+                                ));
+                          },
+                          temporaryNothing: () async {
+                            bool isAccessFiles = await _requestManageStorage();
+                            if (isAccessFiles) {
+                              FilesManagement
+                                  .createDirectoryFirstTimeWithDevice();
+                              fileToSave = await FilesManagement
+                                  .setUpFileToSaveDataMeasurement();
+                              setState(() {
+                                isShowChart = true;
+                              });
+                            } else {
+                              // show dialog need permission
+                              print('phone does not grant permission');
+                            }
+                          })
+                      : LiveChartSample(fileToSave: fileToSave),
                 ],
               ),
             ),
 
             const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Các tin tức",
-                  style: TextStyle(
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text(
+                "Các tin tức",
+                style: TextStyle(
                     color: ColorConstant.quaternary,
                     fontWeight: FontWeight.bold,
-                    fontSize: 22
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                      Navigator.push(context, 
-                        MaterialPageRoute(builder:(context) => const NewsAllScreen())
-                    );
-                  },
-                  child: const Text("Xem tất cả"),
-                )
-              ]
-            ),
+                    fontSize: 22),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NewsAllScreen()));
+                },
+                child: const Text("Xem tất cả"),
+              )
+            ]),
 
-            if(allNews.isNotEmpty)
-            ListView.builder(
-              padding: const EdgeInsets.only(top: 10),
-              shrinkWrap: true,
-              itemCount: 4,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final news = allNews[index];
-                final String imagePresentUrl = news["image"] ?? "";
-                final int newsId = news["news_id"];
-                final String newsCategory = news["category_name"];
-                final DateTime newsCreatedAt = DateTime.parse(news["created_at"]);
-                final String newsCreatedAtFormat = DateFormat("EEEE, dd-MM-yyyy", "vi").format(newsCreatedAt);
-                final String newsTitle = news["title"].length > 100 ? 
-                                          news["title"].substring(0, 100) : news["title"];
-            
-                return InkWell(
-                  onTap: () async {
-                    await NewsController.getNewsById(newsId);
-                    Navigator.push(context, 
-                      MaterialPageRoute(builder:(context) => const NewsDetailScreen())
-                    );
-                  },
-                  splashColor: ColorConstant.primary,
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            imagePresentUrl,
-                            width: 90,
+            if (allNews.isNotEmpty)
+              ListView.builder(
+                  padding: const EdgeInsets.only(top: 10),
+                  shrinkWrap: true,
+                  itemCount: 4,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final news = allNews[index];
+                    final String imagePresentUrl = news["image"] ?? "";
+                    final int newsId = news["news_id"];
+                    final String newsCategory = news["category_name"];
+                    final DateTime newsCreatedAt =
+                        DateTime.parse(news["created_at"]);
+                    final String newsCreatedAtFormat =
+                        DateFormat("EEEE, dd-MM-yyyy", "vi")
+                            .format(newsCreatedAt);
+                    final String newsTitle = news["title"].length > 100
+                        ? news["title"].substring(0, 100)
+                        : news["title"];
+
+                    return InkWell(
+                      onTap: () async {
+                        await NewsController.getNewsById(newsId);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const NewsDetailScreen()));
+                      },
+                      splashColor: ColorConstant.primary,
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        child: Row(children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              imagePresentUrl,
+                              width: 90,
+                              height: 90,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          Container(
                             height: 90,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Container(
-                          height: 90,
-                          // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
-                          width: 210,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("$newsCategory", 
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey[600]
-                                )
-                              ),
-                              Text("$newsTitle", 
-                                overflow: TextOverflow.ellipsis, 
-                                maxLines: 2,
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black
-                                )
-                              ),
-                              Text("$newsCreatedAtFormat",
-                                style: TextStyle(
-                                  color: Colors.grey[700],
-                                )
-                              ),
-                            ]
-                          ),
-                        )
-                      ]
-                    ),
-                  ),
-                );
-              }
-            ),
+                            // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
+                            width: 210,
+                            child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("$newsCategory",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey[600])),
+                                  Text("$newsTitle",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: const TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black)),
+                                  Text("$newsCreatedAtFormat",
+                                      style: TextStyle(
+                                        color: Colors.grey[700],
+                                      )),
+                                ]),
+                          )
+                        ]),
+                      ),
+                    );
+                  }),
           ],
         ),
         // child: LiveChartSample()
@@ -301,14 +316,13 @@ class DarkLightSwitch extends StatefulWidget {
 }
 
 class _DarkLightSwitchState extends State<DarkLightSwitch> {
-
   bool isDarkSwitch = false;
 
   @override
   void initState() {
-
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return FlutterSwitch(
@@ -340,7 +354,8 @@ class _DarkLightSwitchState extends State<DarkLightSwitch> {
       ),
       onToggle: (val) {
         Provider.of<AuthProvider>(context, listen: false).isAutoTheme = false;
-        ThemeType theme = Provider.of<AuthProvider>(context, listen: false).theme;
+        ThemeType theme =
+            Provider.of<AuthProvider>(context, listen: false).theme;
         final auth = Provider.of<AuthProvider>(context, listen: false);
         setState(() {
           isDarkSwitch = val;
@@ -405,7 +420,7 @@ class NumberCard extends StatelessWidget {
     required this.text,
     required this.subText,
     required this.color1,
-    required this.color2, 
+    required this.color2,
   });
 
   @override
@@ -451,7 +466,6 @@ class NumberCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          
         ],
       ),
     );
