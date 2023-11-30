@@ -1,12 +1,24 @@
 import 'dart:io';
 
+import 'package:bluetooth_ecg/constants/theme.dart';
+import 'package:bluetooth_ecg/generated/l10n.dart';
+import 'package:bluetooth_ecg/providers/bluetooth_provider.dart';
+import 'package:bluetooth_ecg/providers/ecg_provider.dart';
+import 'package:bluetooth_ecg/providers/news_provider.dart';
+import 'package:bluetooth_ecg/providers/user_provider.dart';
+import 'package:bluetooth_ecg/routes/route.dart';
+import 'package:bluetooth_ecg/screens/auth_screens/login1_screen.dart';
+import 'package:bluetooth_ecg/screens/main_screen.dart';
+import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
-
-import 'package:flutter/services.dart';
+import 'providers/auth_provider.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -54,24 +66,6 @@ class FmECGApp extends StatefulWidget {
 }
 
 class FmECGAppState extends State<FmECGApp> {
-  static const platform = MethodChannel("com.example.method_channel/java");
-
-  // Get battery level.
-  String _batteryLevel = 'Unknown battery level.';
-
-  Future<void> _getBatteryLevel() async {
-    String batteryLevel;
-    try {
-      final result = await platform.invokeMethod<int>('getBatteryLevel');
-      batteryLevel = 'Battery level at $result % .';
-    } on PlatformException catch (e) {
-      batteryLevel = "Failed to get battery level: '${e.message}'.";
-    }
-
-    setState(() {
-      _batteryLevel = batteryLevel;
-    });
-  }
 
   @override
   void initState() {
@@ -80,26 +74,7 @@ class FmECGAppState extends State<FmECGApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Test native"),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(_batteryLevel),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _getBatteryLevel,
-          tooltip: 'Increment',
-          child: const Icon(Icons.battery_0_bar),
-        ),
-      ),
-    ); /*MultiProvider(
+    return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
@@ -121,18 +96,19 @@ class FmECGAppState extends State<FmECGApp> {
                   },
                 )),
             darkTheme: ThemeECG.darkTheme,
-            home: auth.isAuth ? MainScreen() :
-              FutureBuilder(
-                future: auth.checkAutoLogin(),
-                builder: (ctx, authResultSnapshot) {
-                  if (authResultSnapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (authResultSnapshot.hasError) {
-                    return Text('Error: ${authResultSnapshot.error}');
-                  } else {
-                    return Login1Screen();
-                  }
-                }),
+            home: MainScreen(),
+            // auth.isAuth ? MainScreen() :
+            //   FutureBuilder(
+            //     future: auth.checkAutoLogin(),
+            //     builder: (ctx, authResultSnapshot) {
+            //       if (authResultSnapshot.connectionState == ConnectionState.waiting) {
+            //         return const CircularProgressIndicator();
+            //       } else if (authResultSnapshot.hasError) {
+            //         return Text('Error: ${authResultSnapshot.error}');
+            //       } else {
+            //         return Login1Screen();
+            //       }
+            //     }),
             localizationsDelegates: const [
               S.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -142,6 +118,6 @@ class FmECGAppState extends State<FmECGApp> {
             getPages : AppRoutes.pages,
           );
       }),
-    );*/
+    );
   }
 }
