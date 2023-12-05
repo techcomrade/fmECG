@@ -130,7 +130,7 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: const Center(child: Text("fmECG thông báo")),
+          title: const Center(child: Text("MyBP thông báo")),
           content: state.connectionState == DeviceConnectionState.connected ? 
             Text("Bạn đã kết nối thành công!", textAlign: TextAlign.center) : Text("Bạn đã kết nối chưa thành công!"),
           actions: [
@@ -286,7 +286,7 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text('fmECG', 
+            Text('My BP',
               style: TextStyle(
                 fontSize: 28,
                 color: ColorConstant.quaternary,

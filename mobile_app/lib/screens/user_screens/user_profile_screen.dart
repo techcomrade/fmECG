@@ -16,9 +16,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: 'Thai Dong');
-    _emailController = TextEditingController(text: 'thai.dong@gmail.com');
-    _bioController = TextEditingController(text: 'fmECG is my life');
+    _nameController = TextEditingController(text: 'User');
+    _emailController = TextEditingController(text: 'user@gmail.com');
+    _bioController = TextEditingController(text: 'MyBP is my life');
     _locationController = TextEditingController(text: 'Hanoi');
   }
 

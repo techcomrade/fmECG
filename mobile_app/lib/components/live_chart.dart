@@ -50,14 +50,23 @@ class _LiveChartSampleState extends State<LiveChartSample> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        _buildLiveLineChart(),
-        Align(
-          alignment: Alignment.center,
-          child: ElevatedButton(
-            onPressed: () async {
-              timer?.cancel();
-              _chartSeriesController = null;
+        children: [
+          Container(
+            height: 220, // Đặt chiều cao nhỏ hơn cho biểu đồ thứ nhất
+            width: 500, // Đặt chiều rộng nhỏ hơn cho biểu đồ thứ nhất
+            child: _buildLiveLineChart(),
+          ),
+          Container(
+            height: 220, // Đặt chiều cao nhỏ hơn cho biểu đồ thứ hai
+            width: 500, // Đặt chiều rộng nhỏ hơn cho biểu đồ thứ hai
+            child: _buildLiveLineChart1(),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: ElevatedButton(
+                onPressed: () async {
+                  timer?.cancel();
+                  _chartSeriesController = null;
               // final DateTime stopTime = DateTime.now();            
               // final SharedPreferences preferences = await SharedPreferences.getInstance();
               // final Map userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
@@ -92,16 +101,17 @@ class _LiveChartSampleState extends State<LiveChartSample> {
 
   SfCartesianChart _buildLiveLineChart() {
     return SfCartesianChart(
-      title: ChartTitle(
-        text: "Biểu đồ nhịp tim thời gian thực",
-        alignment: ChartAlignment.center,
-      ),
+      // title: ChartTitle(
+      //   text: "BIỂU ĐỒ HUYẾT ÁP REAL-TIME",
+      //   alignment: ChartAlignment.center,
+      // ),
       enableAxisAnimation: true,
       plotAreaBorderWidth: 0,
       primaryXAxis: NumericAxis(
         zoomPosition: 0.3,
         edgeLabelPlacement: EdgeLabelPlacement.shift
       ),
+
       primaryYAxis: NumericAxis(
         edgeLabelPlacement: EdgeLabelPlacement.shift,
         majorGridLines: const MajorGridLines(width: 1)),
@@ -115,9 +125,43 @@ class _LiveChartSampleState extends State<LiveChartSample> {
           onRendererCreated: (ChartSeriesController controller) {
             _chartSeriesController = controller;
           },
-          legendItemText: "Người mẹ",
+          legendItemText: "PPG",
           dataSource: chartData!,
           color: Color(0XFF7BB4EA),
+          xValueMapper: (_ChartData sales, _) => sales.country,
+          yValueMapper: (_ChartData sales, _) => sales.sales,
+          // animationDuration: 0,
+        ),
+      ],
+    );
+  }
+  SfCartesianChart _buildLiveLineChart1() {
+    return SfCartesianChart(
+      title: ChartTitle(
+        alignment: ChartAlignment.center,
+      ),
+      enableAxisAnimation: true,
+      plotAreaBorderWidth: 0,
+      primaryXAxis: NumericAxis(
+          zoomPosition: 0.3,
+          edgeLabelPlacement: EdgeLabelPlacement.shift
+      ),
+      primaryYAxis: NumericAxis(
+          edgeLabelPlacement: EdgeLabelPlacement.shift,
+          majorGridLines: const MajorGridLines(width: 1)),
+      legend: Legend(
+          isVisible: true,
+          isResponsive: true,
+          position: LegendPosition.top
+      ),
+      series:[
+        LineSeries(
+          onRendererCreated: (ChartSeriesController controller) {
+            _chartSeriesController = controller;
+          },
+          legendItemText: "PCG",
+          dataSource: chartData!,
+          color: Color(0xFFE11239),
           xValueMapper: (_ChartData sales, _) => sales.country,
           yValueMapper: (_ChartData sales, _) => sales.sales,
           // animationDuration: 0,

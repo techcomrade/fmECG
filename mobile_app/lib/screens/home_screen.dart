@@ -90,9 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Chào mừng đến với fmECG"),
+                          Text("Chào mừng đến với MyBP"),
                           Text(
-                            "Thai Dong",
+                            "User",
                             style: TextStyle(
                               color: ColorConstant.primary,
                               fontWeight: FontWeight.bold,
@@ -121,13 +121,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     alignment: Alignment.topLeft,
-                    child: Text("Tổng quan",
-                      style: TextStyle(
-                        color: ColorConstant.quaternary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22
-                      ),
-                    ),
+                    // child: Text("Tổng quan",
+                    //   style: TextStyle(
+                    //     color: ColorConstant.quaternary,
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 22
+                    //   ),
+                    // ),
                   ),
                   const SizedBox(height: 10),
                   Wrap(
@@ -135,10 +135,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     runSpacing: 15,
                     alignment: WrapAlignment.spaceAround,
                     children: [
-                      NumberCard(number: 82.0, text: "Nhịp tim (bpm)", subText: "Mẹ", color1: ColorConstant.primary, color2: ColorConstant.primary),
-                      NumberCard(number: 72.9, text: "Biến thiên nhịp tim (bpm)", subText: "Mẹ", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
-                      NumberCard(number: 82.6, text: "Nhịp tim (bpm)", subText: "Thai nhi", color1: ColorConstant.primary, color2: ColorConstant.primary),
-                      NumberCard(number: 86.0, text: "Biến thiên nhịp tim (bpm)", subText: "Thai nhi", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
+                      NumberCard(number: 110.0, text: "Huyết áp tâm thu", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
+                      NumberCard(number: 90.0, text: "Huyết áp tâm trương", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
+                      NumberCard(number: 65.5, text: "Nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
+                      // NumberCard(number: 86.0, text: "Biến thiên nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
                     ],
                   )
                 ],
@@ -149,13 +149,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Tín hiệu điện tim",
-                    style: TextStyle(
-                      color: ColorConstant.quaternary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22
-                    ),
-                  ),
+                  // Text("Các loại huyết áp",
+                  //   style: TextStyle(
+                  //     color: ColorConstant.quaternary,
+                  //     fontWeight: FontWeight.bold,
+                  //     fontSize: 22
+                  //   ),
+                  // ),
                   const SizedBox(height: 10),
                   !isShowChart ? ImageCard(
                     imageAsset: 'assets/images/heart_rate_example.jpeg', 
@@ -411,7 +411,7 @@ class NumberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150.0,
+      width: 100.0,
       height: 100.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
@@ -494,9 +494,9 @@ class ImageCard extends StatelessWidget {
                 child: Text("Scan bluetooth"),
               ),
               ElevatedButton(
-                onPressed: temporaryNothing,
-                child: Text("Test live chart"),
-              ),
+                 onPressed: temporaryNothing,
+                 child: Text("Test live chart"),
+               ),
             ],
           ),
         ],

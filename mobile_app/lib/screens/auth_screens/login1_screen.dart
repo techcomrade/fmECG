@@ -128,7 +128,7 @@ class _Login1ScreenState extends State<Login1Screen> {
                   height: 100,  
                 ),
                 // welcome
-                Text("Welcome to fmECG!", 
+                Text("Welcome to My BP",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
