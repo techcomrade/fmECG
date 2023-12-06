@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     //     fontWeight: FontWeight.bold,
                     //     fontSize: 22
                     //   ),
-                    // ),
+                    // ),c
                   ),
                   const SizedBox(height: 10),
                   Wrap(
@@ -135,9 +135,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     runSpacing: 15,
                     alignment: WrapAlignment.spaceAround,
                     children: [
-                      NumberCard(number: 110.0, text: "Huyết áp tâm thu", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
-                      NumberCard(number: 90.0, text: "Huyết áp tâm trương", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
-                      NumberCard(number: 65.5, text: "Nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
+                      NumberCard(number: 140, text: "Huyết áp tâm thu", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
+                      NumberCard(number: 100, text: "Huyết áp tâm trương", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
+                      NumberCard(number: 101, text: "Nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
                       // NumberCard(number: 86.0, text: "Biến thiên nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
                     ],
                   )
@@ -180,7 +180,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     }
                   ) 
-                  : LiveChartSample(fileToSave: fileToSave),
+                  : LiveChartSample(
+                      fileToSave: fileToSave, 
+                      callBackToPreview: () => setState(() {
+                        isShowChart = false;
+                      }),
+                    ),
                 ],
               ),
             ),
@@ -394,7 +399,7 @@ class SquareContainer extends StatelessWidget {
 }
 
 class NumberCard extends StatelessWidget {
-  final double number;
+  final int number;
   final String text;
   final String subText;
   final Color color1;
@@ -411,8 +416,8 @@ class NumberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100.0,
-      height: 100.0,
+      width: 110.0,
+      height: 110.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
         gradient: LinearGradient(
@@ -438,7 +443,7 @@ class NumberCard extends StatelessWidget {
           Text(
             subText,
             style: TextStyle(
-              fontSize: 16.0,
+              fontSize: 12.0,
               color: ColorConstant.description,
             ),
           ),
@@ -446,7 +451,7 @@ class NumberCard extends StatelessWidget {
           Text(
             '$number',
             style: TextStyle(
-              fontSize: 30.0,
+              fontSize: 17.0,
               color: ColorConstant.description,
               fontWeight: FontWeight.bold,
             ),
