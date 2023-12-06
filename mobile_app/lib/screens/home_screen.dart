@@ -180,7 +180,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     }
                   ) 
-                  : LiveChartSample(fileToSave: fileToSave),
+                  : LiveChartSample(
+                      fileToSave: fileToSave, 
+                      callBackToPreview: () => setState(() {
+                        isShowChart = false;
+                      }),
+                    ),
                 ],
               ),
             ),
