@@ -4,8 +4,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 export const LineChartComponent = (props) => {
   return (
         <LineChart
-          width={600} 
-          height={300}
+          width={props.width ? props.width : 500} 
+          height={props.height ? props.height : 300}
           data={props.data}
           margin={{
             top: 20,
