@@ -136,20 +136,20 @@ class _ParametersScreenState extends State<ParametersScreen> {
                           number: 180,
                           text: "Huyết áp tâm thu",
                           subText: "mmHg",
-                          color1: ColorConstant.primary,
-                          color2: ColorConstant.primary),
+                          color1: ColorConstant.cardcolor,
+                          color2: ColorConstant.cardcolor),
                       NumberCard(
                           number: 110,
                           text: "Huyết áp tâm trương",
                           subText: "mmHg",
-                          color1: ColorConstant.primary,
-                          color2: ColorConstant.primary),
+                          color1: ColorConstant.cardcolor,
+                          color2: ColorConstant.cardcolor),
                       NumberCard(
                           number: 70,
                           text: "Nhịp tim",
                           subText: "bpm",
-                          color1: ColorConstant.primary,
-                          color2: ColorConstant.primary),
+                          color1: ColorConstant.cardcolor,
+                          color2: ColorConstant.cardcolor),
                       // NumberCard(number: 86.0, text: "Biến thiên nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
                     ],
                   )
@@ -271,7 +271,7 @@ class NumberCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
         gradient: LinearGradient(
-          colors: [Colors.redAccent, Colors.pinkAccent],
+          colors: [Colors.white, Colors.white],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -300,7 +300,7 @@ class NumberCard extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15.0,
-              color: Colors.white, // Màu sắc cho text giữ nguyên
+              color: Colors.black, // Màu sắc cho text giữ nguyên
             ),
           ),
           const SizedBox(height: 5.0),
@@ -308,7 +308,7 @@ class NumberCard extends StatelessWidget {
             '$number',
             style: TextStyle(
               fontSize: 20.0,
-              color: Colors.white, // Màu sắc cho số liệu giữ nguyên
+              color: Colors.black, // Màu sắc cho số liệu giữ nguyên
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -317,7 +317,7 @@ class NumberCard extends StatelessWidget {
             subText,
             style: TextStyle(
               fontSize: 10.0,
-              color: Colors.white, // Màu sắc cho subtext giữ nguyên
+              color: Colors.black, // Màu sắc cho subtext giữ nguyên
             ),
           ),
         ],

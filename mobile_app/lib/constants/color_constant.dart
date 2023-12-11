@@ -2,12 +2,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class ColorConstant {
-  static Color primary = Color(0xFFD55758);
+  static Color primary = Color(0xFF2A1111);
   static Color tertiary = const Color(0xFF7BE5C5);
   static Color quaternary = const Color(0xFF131010);
   static Color quinary = const Color(0xFFF7F9FB);
   static Color description = const Color(0XFFEDEDED);
-
+  static Color cardcolor = const Color(0xFF693030);
   static Color black9007e = fromHex('#7e000000');
   static Color blueGray100 = fromHex('#cfcfcf');
   static Color gray500 = fromHex('#979797');

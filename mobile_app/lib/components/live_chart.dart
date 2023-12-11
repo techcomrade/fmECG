@@ -121,7 +121,7 @@ class _LiveChartSampleState extends State<LiveChartSample> {
                     widget.callBackToPreview!.call();
                   }
                 }, 
-                child: const Text('Back to Preview')
+                child: const Text('Quay lại')
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -134,7 +134,7 @@ class _LiveChartSampleState extends State<LiveChartSample> {
                     });
                   }
               }, 
-              child: Text(!isButtonEndMeasurement ? "Start Demo Chart" : "End Measurement")
+              child: Text(!isButtonEndMeasurement ? "Start Demo Chart" : "Kết thúc")
         ),
             ],
           ),

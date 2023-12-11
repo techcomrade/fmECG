@@ -115,13 +115,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Các loại huyết áp",
+/*                  Text("Các loại huyết áp",
                     style: TextStyle(
                       color: ColorConstant.quaternary,
                       fontWeight: FontWeight.bold,
                       fontSize: 22
                     ),
-                  ),
+                  ),*/
                   const SizedBox(height: 10),
                   !isShowChart
                       ? ImageCard(
@@ -267,69 +267,7 @@ class SquareContainer extends StatelessWidget {
   }
 }
 
-class NumberCard extends StatelessWidget {
-  final double number;
-  final String text;
-  final String subText;
-  final Color color1;
-  final Color color2;
 
-  NumberCard({
-    required this.number,
-    required this.text,
-    required this.subText,
-    required this.color1,
-    required this.color2,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 100.0,
-      height: 100.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        gradient: LinearGradient(
-          colors: [color1, color2],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15.0,
-              color: ColorConstant.description,
-            ),
-          ),
-          const SizedBox(height: 3.0),
-          Text(
-            subText,
-            style: TextStyle(
-              fontSize: 10.0,
-              color: ColorConstant.description,
-            ),
-          ),
-          const SizedBox(height: 5.0),
-          Text(
-            '$number',
-            style: TextStyle(
-              fontSize: 15.0,
-              color: ColorConstant.description,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class ImageCard extends StatelessWidget {
   final String imageAsset;
