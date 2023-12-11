@@ -2,11 +2,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class ColorConstant {
-
-  static Color primary = const Color(0xFF1FB25C);
-  static Color secondary = const Color(0xFFEE9CDA);
+  static Color primary = Color(0xFFD55758);
   static Color tertiary = const Color(0xFF7BE5C5);
-  static Color quaternary = const Color(0xFF222566);
+  static Color quaternary = const Color(0xFF131010);
   static Color quinary = const Color(0xFFF7F9FB);
   static Color description = const Color(0XFFEDEDED);
 

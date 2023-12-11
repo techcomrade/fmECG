@@ -25,12 +25,12 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
-class HomeScreen extends StatefulWidget {
+class ParametersScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ParametersScreenState createState() => _ParametersScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ParametersScreenState extends State<ParametersScreen> {
   final ScrollController _scrollController = ScrollController();
   late File fileToSave;
   bool isShowChart = false;
@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<bool> _requestManageStorage() async {
     final PermissionStatus status =
-        await Permission.manageExternalStorage.request();
+    await Permission.manageExternalStorage.request();
     if (status == PermissionStatus.granted) {
       return true;
     } else {
@@ -110,50 +110,49 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+
             const SizedBox(height: 30),
             SizedBox(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("Các loại huyết áp",
-                    style: TextStyle(
-                      color: ColorConstant.quaternary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text("Tổng quan",
+                      style: TextStyle(
+                        color: ColorConstant.quaternary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
-                  !isShowChart
-                      ? ImageCard(
-                          imageAsset: 'assets/images/heart_rate_example.jpeg',
-                          functionScanBluetooth: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BleReactiveScreen(),
-                                ));
-                          },
-                          temporaryNothing: () async {
-                            bool isAccessFiles = await _requestManageStorage();
-                            if (isAccessFiles) {
-                              FilesManagement
-                                  .createDirectoryFirstTimeWithDevice();
-                              fileToSave = await FilesManagement
-                                  .setUpFileToSaveDataMeasurement();
-                              setState(() {
-                                isShowChart = true;
-                              });
-                            } else {
-                              // show dialog need permission
-                              print('phone does not grant permission');
-                            }
-                          })
-                      : LiveChartSample(
-                          fileToSave: fileToSave,
-                          callBackToPreview: () => setState(() {
-                            isShowChart = false;
-                          }),
-                        ),
+                  Wrap(
+                    spacing: 15,
+                    runSpacing: 15,
+                    alignment: WrapAlignment.spaceAround,
+                    children: [
+                      NumberCard(
+                          number: 180,
+                          text: "Huyết áp tâm thu",
+                          subText: "mmHg",
+                          color1: ColorConstant.primary,
+                          color2: ColorConstant.primary),
+                      NumberCard(
+                          number: 110,
+                          text: "Huyết áp tâm trương",
+                          subText: "mmHg",
+                          color1: ColorConstant.primary,
+                          color2: ColorConstant.primary),
+                      NumberCard(
+                          number: 70,
+                          text: "Nhịp tim",
+                          subText: "bpm",
+                          color1: ColorConstant.primary,
+                          color2: ColorConstant.primary),
+                      // NumberCard(number: 86.0, text: "Biến thiên nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -229,43 +228,7 @@ class _DarkLightSwitchState extends State<DarkLightSwitch> {
   }
 }
 
-class SquareContainer extends StatelessWidget {
-  final IconData icon;
-  final String text;
 
-  SquareContainer({required this.icon, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 100.0,
-      height: 100.0,
-      decoration: BoxDecoration(
-        color: ColorConstant.description,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            color: ColorConstant.quaternary,
-            size: 35.0,
-          ),
-          const SizedBox(height: 10.0),
-          Text(
-            text,
-            style: TextStyle(
-              color: ColorConstant.quaternary,
-              fontSize: 15.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class NumberCard extends StatelessWidget {
   final double number;
@@ -273,6 +236,8 @@ class NumberCard extends StatelessWidget {
   final String subText;
   final Color color1;
   final Color color2;
+  final bool isWarning;
+  final bool isCritical;
 
   NumberCard({
     required this.number,
@@ -280,32 +245,71 @@ class NumberCard extends StatelessWidget {
     required this.subText,
     required this.color1,
     required this.color2,
+    this.isWarning = false,
+    this.isCritical = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    Color iconColor = Colors.red; // Màu mặc định cho icon
+    IconData icon = Icons.error; // Biểu tượng mặc định
+
+    if (isWarning) {
+      iconColor = Colors.yellow;
+      icon = Icons.warning; // Biểu tượng cảnh báo
+    }
+
+    if (isCritical) {
+      iconColor = Colors.red;
+      icon = Icons.error; // Biểu tượng nguy cấp
+    }
+
     return Container(
-      width: 100.0,
-      height: 100.0,
+      width: 150.0,
+      height: 150.0,
+      padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(15.0),
         gradient: LinearGradient(
-          colors: [color1, color2],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+          colors: [Colors.redAccent, Colors.pinkAccent],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 4,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Icon(
+            icon,
+            color: iconColor,
+            size: 24.0,
+          ),
+          const SizedBox(height: 3.0),
           Text(
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15.0,
-              color: ColorConstant.description,
+              color: Colors.white, // Màu sắc cho text giữ nguyên
+            ),
+          ),
+          const SizedBox(height: 5.0),
+          Text(
+            '$number',
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.white, // Màu sắc cho số liệu giữ nguyên
+              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 3.0),
@@ -313,16 +317,7 @@ class NumberCard extends StatelessWidget {
             subText,
             style: TextStyle(
               fontSize: 10.0,
-              color: ColorConstant.description,
-            ),
-          ),
-          const SizedBox(height: 5.0),
-          Text(
-            '$number',
-            style: TextStyle(
-              fontSize: 15.0,
-              color: ColorConstant.description,
-              fontWeight: FontWeight.bold,
+              color: Colors.white, // Màu sắc cho subtext giữ nguyên
             ),
           ),
         ],
@@ -331,51 +326,6 @@ class NumberCard extends StatelessWidget {
   }
 }
 
-class ImageCard extends StatelessWidget {
-  final String imageAsset;
-  final Function() functionScanBluetooth;
-  final Function() temporaryNothing;
 
-  ImageCard({
-    required this.imageAsset,
-    required this.functionScanBluetooth,
-    required this.temporaryNothing,
-  });
 
-  @override
-  Widget build(BuildContext context) {
 
-    return Card(
-      color: ColorConstant.quinary,
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: Column(
-        children: [
-
-          Image.asset(
-            imageAsset,
-            width: double.infinity,
-            height: 200.0,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 12.0),
-          ButtonBar(
-            alignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: functionScanBluetooth,
-                child: Text("Scan bluetooth"),
-              ),
-              ElevatedButton(
-                onPressed: temporaryNothing,
-                child: Text("Test live chart"),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}

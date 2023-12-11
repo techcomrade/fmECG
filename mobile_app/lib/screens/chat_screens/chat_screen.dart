@@ -76,7 +76,7 @@ class _ChatScreenState extends State<ChatScreen> {
         centerTitle: true,
         title: Column(
           children: [
-            Text('fmECG', 
+            Text('MyBP',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: ColorConstant.whiteA700,

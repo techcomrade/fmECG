@@ -8,6 +8,7 @@ import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screens/history_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
+import 'package:bluetooth_ecg/screens/parameters_screen.dart';
 import 'package:bluetooth_ecg/screens/user_screens/user_profile_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -24,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     HomeScreen(),
+    ParametersScreen(),
     HistoryScreen(),
     ChatScreen(),
     UserProfileScreen()
@@ -77,6 +79,10 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: PhosphorIcon(PhosphorIcons.regular.house),
             label: S.current.home,
+          ),
+          BottomNavigationBarItem(
+            icon: PhosphorIcon(PhosphorIcons.regular.house),
+            label: S.current.parameters,
           ),
           BottomNavigationBarItem(
             icon: PhosphorIcon(PhosphorIcons.regular.chartLine),
