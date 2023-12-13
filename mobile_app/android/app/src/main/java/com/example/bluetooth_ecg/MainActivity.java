@@ -17,6 +17,10 @@ import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
 
+
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+import com.chaquo.python.android.AndroidPlatform;
 public class MainActivity extends FlutterActivity {
     private static final String CHANNEL = "com.example.method_channel/java";
 
@@ -26,16 +30,19 @@ public class MainActivity extends FlutterActivity {
         new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL).
                 setMethodCallHandler(
                         (call, result) -> {
-                            if (call.method.equals("getBatteryLevel")) {
-                                int batteryLevel = getBatteryLevel();
+                            // if (call.method.equals("getBatteryLevel")) {
+                            //     int batteryLevel = getBatteryLevel();
 
-                                if (batteryLevel != -1) {
-                                    result.success(batteryLevel);
-                                } else {
-                                    result.error("UNAVAILABLE", "Battery level not available.", null);
-                                }
-                            } else {
-                                result.notImplemented();
+                            //     if (batteryLevel != -1) {
+                            //         result.success(batteryLevel);
+                            //     } else {
+                            //         result.error("UNAVAILABLE", "Battery level not available.", null);
+                            //     }
+                            // } else {
+                            //     result.notImplemented();
+                            // }
+                            if (call.method.equals("helloWorldPython")) {
+                                result.success(helloWorldPython());
                             }
                         });
     }
@@ -56,5 +63,17 @@ public class MainActivity extends FlutterActivity {
 
 
         return batteryLevel;
+    }
+
+    private String helloWorldPython() {
+        if (!Python.isStarted()) {
+            Python.start(new AndroidPlatform(this));
+        }
+
+        Python py = Python.getInstance();
+        // get file python (PyObject)
+        PyObject module = py.getModule("native");
+        PyObject text = module.callAttr("helloWorld");
+        return text.toString();
     }
 }

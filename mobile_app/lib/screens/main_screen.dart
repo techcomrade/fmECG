@@ -1,14 +1,12 @@
-import 'dart:async';
 
-import 'package:bluetooth_ecg/controllers/firebase_messages_controller.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screens/history_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
 import 'package:bluetooth_ecg/screens/user_screens/user_profile_screen.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -30,34 +28,34 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    requestPermissionFirebase();
-    Timer.run(() async {
-      // de o phan dang nhap => luu token ngay sau khi dang nhap tren firebase
-      final String firebaseToken =
-          await FmECGFirebaseMessage().getDeviceToken();
-      // await FmECGFirebaseMessage().saveTokenToFirestore(firebaseToken, 3010);
-    });
+    // requestPermissionFirebase();
+    // Timer.run(() async {
+    //   // de o phan dang nhap => luu token ngay sau khi dang nhap tren firebase
+    //   final String firebaseToken =
+    //       await FmECGFirebaseMessage().getDeviceToken();
+    //   // await FmECGFirebaseMessage().saveTokenToFirestore(firebaseToken, 3010);
+    // });
   }
 
-  void requestPermissionFirebase() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    NotificationSettings settings = await messaging.requestPermission(
-        alert: true,
-        announcement: false,
-        badge: true,
-        sound: true,
-        criticalAlert: false,
-        provisional: false);
+  // void requestPermissionFirebase() async {
+  //   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  //   NotificationSettings settings = await messaging.requestPermission(
+  //       alert: true,
+  //       announcement: false,
+  //       badge: true,
+  //       sound: true,
+  //       criticalAlert: false,
+  //       provisional: false);
 
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('permis');
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
-      print('provisional ');
-    } else {
-      print('declined');
-    }
-  }
+  //   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+  //     print('permis');
+  //   } else if (settings.authorizationStatus ==
+  //       AuthorizationStatus.provisional) {
+  //     print('provisional ');
+  //   } else {
+  //     print('declined');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
