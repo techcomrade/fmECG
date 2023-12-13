@@ -29,19 +29,23 @@ class _MainScreenState extends State<MainScreen> {
     UserProfileScreen()
   ];
 
-  String _text = '';
+  String _textSBP = '';
+  String _textDBP = '';
+  String _textHeartRate = '';
+  String _textDeviation = '';
   Future<void> _getText() async {
     String text;
     try {
-      final result = await platform.invokeMethod<String>('helloWorldPython');
-      text = result!;
+      final result = await platform.invokeMethod('helloWorldPython');
+      setState(() {
+        _textSBP = result != null ? result!["sbp"].toString() : "";
+        _textDBP = result != null ? result!["dbp"].toString() : "";
+        _textHeartRate = result != null ? result!["heart_rate"].toString() : "";
+        _textDeviation = result != null ? result!["standard_deviation"].toString() : "";
+      });
     } on PlatformException catch (e) {
       text = "Failed to get text: '${e.message}'.";
     }
-
-    setState(() {
-      _text = text;
-    });
   }
 
   @override
@@ -83,7 +87,10 @@ class _MainScreenState extends State<MainScreen> {
         body: Center(
           child: Column(
             children: [
-              Text(_text),
+              Text("SBP: ${_textSBP}"),
+              Text("DBP: ${_textDBP}"),
+              Text("Heart Rate: ${_textHeartRate}"),
+              Text("Deviation: ${_textDeviation}"),
               ElevatedButton(
                 onPressed: _getText,
                 child: const Text("Call python "),
