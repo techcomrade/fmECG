@@ -23,7 +23,7 @@ import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 
 import java.util.HashMap;
-
+import java.util.Set;
 public class MainActivity extends FlutterActivity {
     private static final String CHANNEL = "com.example.method_channel/java";
 
@@ -68,7 +68,7 @@ public class MainActivity extends FlutterActivity {
         return batteryLevel;
     }
 
-    private HashMap<String, Double> helloWorldPython() {
+    private HashMap<String, String> helloWorldPython() {
         if (!Python.isStarted()) {
             Python.start(new AndroidPlatform(this));
         }
@@ -77,15 +77,23 @@ public class MainActivity extends FlutterActivity {
         // get file python (PyObject)
         PyObject module = py.getModule("native");
         PyObject data = module.callAttr("helloWorld");
-        System.out.println("Hello " + data);
+       // System.out.println("Hello " + data);
         
 
-        HashMap<String,Double> map = new HashMap<>();
-        System.out.println(data.asMap().get("sbp").toString());
-        map.put("sbp", data.asMap().get("sbp").toDouble());
-        map.put("dbp", data.asMap().get("dbp").toDouble());
-        map.put("heart_rate", data.asMap().get("heart_rate").toDouble());
-        map.put("standard_deviation", data.asMap().get("standard_deviation").toDouble());
+        HashMap<String,String> map = new HashMap<>();
+        //System.out.println(data.asMap().get("sbp").toString());
+
+        Set<PyObject> pyKeySet = data.callAttr("keys").asSet();
+
+        for ( PyObject pyKey:pyKeySet) {
+            String key = pyKey.toString();
+            map.put(key, data.callAttr("get",key).toString());
+           
+        }
+        // map.put("sbp", data.asMap().get("sbp").toDouble());
+        // map.put("dbp", data.asMap().get("dbp").toDouble());
+        // map.put("heart_rate", data.asMap().get("heart_rate").toDouble());
+        // map.put("standard_deviation", data.asMap().get("standard_deviation").toDouble());
         
         return map;
     }
