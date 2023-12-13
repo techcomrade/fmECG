@@ -57,6 +57,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  chaquopy:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: cef05f52d934c9aa7c506cdfb51ebfad3004d556
+      url: "https://github.com/thaidmfinnick/chaquopy_flutter.git"
+    source: git
+    version: "0.0.18"
   characters:
     dependency: transitive
     description:
