@@ -5,6 +5,7 @@ import 'package:bluetooth_ecg/screens/history_screens/history_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
 import 'package:bluetooth_ecg/screens/user_screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 
@@ -16,6 +17,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  static const platform = MethodChannel("com.example.method_channel/java");
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
@@ -24,6 +26,25 @@ class _MainScreenState extends State<MainScreen> {
     const ChatScreen(),
     const UserProfileScreen()
   ];
+
+  String _textSBP = '';
+  String _textDBP = '';
+  String _textHeartRate = '';
+  String _textDeviation = '';
+  Future<void> _getText() async {
+    String text;
+    try {
+      final result = await platform.invokeMethod('helloWorldPython');
+      setState(() {
+        _textSBP = result != null ? result!["sbp"].toString() : "";
+        _textDBP = result != null ? result!["dbp"].toString() : "";
+        _textHeartRate = result != null ? result!["heart_rate"].toString() : "";
+        _textDeviation = result != null ? result!["standard_deviation"].toString() : "";
+      });
+    } on PlatformException catch (e) {
+      text = "Failed to get text: '${e.message}'.";
+    }
+  }
 
   @override
   void initState() {

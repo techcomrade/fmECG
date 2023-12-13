@@ -21,6 +21,9 @@ import io.flutter.plugin.common.MethodChannel;
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
+
+import java.util.HashMap;
+
 public class MainActivity extends FlutterActivity {
     private static final String CHANNEL = "com.example.method_channel/java";
 
@@ -65,7 +68,7 @@ public class MainActivity extends FlutterActivity {
         return batteryLevel;
     }
 
-    private String helloWorldPython() {
+    private HashMap<String, Double> helloWorldPython() {
         if (!Python.isStarted()) {
             Python.start(new AndroidPlatform(this));
         }
@@ -73,7 +76,17 @@ public class MainActivity extends FlutterActivity {
         Python py = Python.getInstance();
         // get file python (PyObject)
         PyObject module = py.getModule("native");
-        PyObject text = module.callAttr("helloWorld");
-        return text.toString();
+        PyObject data = module.callAttr("helloWorld");
+        System.out.println("Hello " + data);
+        
+
+        HashMap<String,Double> map = new HashMap<>();
+        System.out.println(data.asMap().get("sbp").toString());
+        map.put("sbp", data.asMap().get("sbp").toDouble());
+        map.put("dbp", data.asMap().get("dbp").toDouble());
+        map.put("heart_rate", data.asMap().get("heart_rate").toDouble());
+        map.put("standard_deviation", data.asMap().get("standard_deviation").toDouble());
+        
+        return map;
     }
 }
