@@ -2,6 +2,8 @@ import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:chaquopy/chaquopy.dart';
+
 
 class UserProfileScreen extends StatefulWidget {
   @override
@@ -18,6 +20,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   // Get battery level.
   String _batteryLevel = 'Unknown battery level.';
+  String testDataPython = "";
 
   Future<void> _getBatteryLevel() async {
     String batteryLevel;
@@ -31,6 +34,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     setState(() {
       _batteryLevel = batteryLevel;
     });
+  }
+
+  _runPython() async {
+    // "def method(): \n A = 10 \n B = 10 \n return A+B \n print(method())";
+    // String text = "def method(): \n A = 10 \n B = 10 \n return A+B \n print(method())";
+    String code = "def method():\n";
+    code +=" A=10\nB=5\n";
+    code +=" return A+B";
+    print('code:$code');
+    // code +="print(method())";
+    final _result = await Chaquopy.executeCode(code);
+    setState(() {
+      testDataPython = _result["textOutputOrError"] ?? '';
+    });
+
   }
 
   @override
@@ -62,12 +80,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(_batteryLevel),
+              Text(testDataPython),
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: _getBatteryLevel,
+          onPressed: _runPython,
           tooltip: 'Increment',
           child: const Icon(Icons.battery_0_bar),
         ),

@@ -30,6 +30,7 @@
    <application
         android:label="fmECG Patient"
         android:requestLegacyExternalStorage="true"
+        android:name="com.chaquo.python.android.PyApplication"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:exported="true"

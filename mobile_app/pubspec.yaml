@@ -64,6 +64,7 @@ dependencies:
   # other lib
   flutter_localizations:
     sdk: flutter
+  chaquopy: ^0.0.19
 
 dependency_overrides:
   # language
