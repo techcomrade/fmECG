@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     runSpacing: 15,
                     alignment: WrapAlignment.spaceAround,
                     children: [
-                      NumberCard(number: 140, text: "Huyết áp tâm thu", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
+                      NumberCard(number: 150, text: "Huyết áp tâm thu", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
                       NumberCard(number: 100, text: "Huyết áp tâm trương", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
                       NumberCard(number: 101, text: "Nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
                       // NumberCard(number: 86.0, text: "Biến thiên nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
@@ -188,105 +188,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                 ],
               ),
-            ),
-
-            const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Các tin tức",
-                  style: TextStyle(
-                    color: ColorConstant.quaternary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                      Navigator.push(context, 
-                        MaterialPageRoute(builder:(context) => const NewsAllScreen())
-                    );
-                  },
-                  child: const Text("Xem tất cả"),
-                )
-              ]
-            ),
-
-            if(allNews.isNotEmpty)
-            ListView.builder(
-              padding: const EdgeInsets.only(top: 10),
-              shrinkWrap: true,
-              itemCount: 4,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final news = allNews[index];
-                final String imagePresentUrl = news["image"] ?? "";
-                final int newsId = news["news_id"];
-                final String newsCategory = news["category_name"];
-                final DateTime newsCreatedAt = DateTime.parse(news["created_at"]);
-                final String newsCreatedAtFormat = DateFormat("EEEE, dd-MM-yyyy", "vi").format(newsCreatedAt);
-                final String newsTitle = news["title"].length > 100 ? 
-                                          news["title"].substring(0, 100) : news["title"];
-            
-                return InkWell(
-                  onTap: () async {
-                    await NewsController.getNewsById(newsId);
-                    Navigator.push(context, 
-                      MaterialPageRoute(builder:(context) => const NewsDetailScreen())
-                    );
-                  },
-                  splashColor: ColorConstant.primary,
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            imagePresentUrl,
-                            width: 90,
-                            height: 90,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Container(
-                          height: 90,
-                          // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
-                          width: 210,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("$newsCategory", 
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey[600]
-                                )
-                              ),
-                              Text("$newsTitle", 
-                                overflow: TextOverflow.ellipsis, 
-                                maxLines: 2,
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black
-                                )
-                              ),
-                              Text("$newsCreatedAtFormat",
-                                style: TextStyle(
-                                  color: Colors.grey[700],
-                                )
-                              ),
-                            ]
-                          ),
-                        )
-                      ]
-                    ),
-                  ),
-                );
-              }
             ),
           ],
         ),
@@ -496,11 +397,11 @@ class ImageCard extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: functionScanBluetooth,
-                child: Text("Scan bluetooth"),
+                child: Text("Thực hiện đo"),
               ),
               ElevatedButton(
                  onPressed: temporaryNothing,
-                 child: Text("Test live chart"),
+                 child: Text("Thử đo"),
                ),
             ],
           ),

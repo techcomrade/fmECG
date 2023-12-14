@@ -6,6 +6,7 @@ import 'package:bluetooth_ecg/utils/files_management.dart';
 class ECGDataController {
   static const double REFERENCE_VOLTAGE = 4.5;
   static const List<int> CHANNELS_NUMBER = [1, 2, 3, 4];
+
   /// Explanation for handling data ECG
 
   /// bytes (1 row data) variable: 1 list int include 16 numbers corresponding to 16 bytes (uint8).
@@ -22,7 +23,8 @@ class ECGDataController {
 
     CHANNELS_NUMBER.forEach((channelNumber) {
       if (channelNumber == 4) return; //tạm thời chưa sử dụng channelNumber4
-      List<int> channelBytes = getChannelsSplittedBytes(channelsBytes, channelNumber);
+      List<int> channelBytes = getChannelsSplittedBytes(
+          channelsBytes, channelNumber);
       double channelFigure = calculateByteToDecimal(channelBytes);
       row.add(channelFigure);
     });
@@ -32,7 +34,7 @@ class ECGDataController {
 
   static List<int> getStatusBytes(List<int> bytes) {
     if (bytes.length >= 3) {
-      final List<int> statusBytes = bytes.sublist(0,3);
+      final List<int> statusBytes = bytes.sublist(0, 3);
       return statusBytes;
     } else {
       // error data
@@ -41,14 +43,18 @@ class ECGDataController {
   }
 
   static List<int> getChannelsBytes(List<int> bytes) {
-    if (bytes.length >= 12) {
-      final List<int> statusBytes = bytes.sublist(3, 15);
-      return statusBytes;
+    const int requiredLength = 15;
+    if (bytes.length >= requiredLength) {
+      return bytes.sublist(
+          3, 15); // Assuming you need bytes from index 3 to 14.
     } else {
-      // error data
-      return List.generate(12, (_) => -1);
+      // Handle error: either throw an exception or handle it gracefully.
+      print('Error: bytes array is too short.');
+      return List.filled(
+          12, -1); // Or handle it in a way that suits your application.
     }
   }
+
 
   static int getCountByte(List<int> bytes) {
     if (bytes.isNotEmpty) {
@@ -64,19 +70,19 @@ class ECGDataController {
     // 3 bytes / channel
     switch (order) {
       case 1: // first channel 
-        List<int> firstChannel = bytes.sublist(0,3);
+        List<int> firstChannel = bytes.sublist(0, 3);
         return firstChannel;
       case 2: // second channel 
-        List<int> secondChannel = bytes.sublist(3,6);
+        List<int> secondChannel = bytes.sublist(3, 6);
         return secondChannel;
       case 3: // third channel 
-        List<int> thirdChannel = bytes.sublist(6,9);
+        List<int> thirdChannel = bytes.sublist(6, 9);
         return thirdChannel;
       case 4: // fourth channel (test channel) 
-        List<int> testChannel = bytes.sublist(9,12);
+        List<int> testChannel = bytes.sublist(9, 12);
         return testChannel;
       default:
-        // error bytes
+      // error bytes
         return List.generate(3, (_) => -1);
     }
   }
@@ -84,7 +90,8 @@ class ECGDataController {
   static double calculateByteToDecimal(List<int> threeBytes) {
     num finalDecimal = 0;
     if (threeBytes.isNotEmpty && threeBytes.length == 3) {
-      num decimalValue = threeBytes[0] * math.pow(2, 16) + threeBytes[1] * math.pow(2, 8) + threeBytes[2];
+      num decimalValue = threeBytes[0] * math.pow(2, 16) +
+          threeBytes[1] * math.pow(2, 8) + threeBytes[2];
       if (decimalValue >= math.pow(2, 23)) {
         finalDecimal = decimalValue - math.pow(2, 24);
       } else {
@@ -100,10 +107,10 @@ class ECGDataController {
   //TODO: HANDLE LIST<TYPE> 
   static List calculateDataPointToShow(List row) {
     List dataPoints = row.map((decimalValue) =>
-                                    (decimalValue * REFERENCE_VOLTAGE) / (math.pow(2, 23) - 1).toDouble()).toList();
+    (decimalValue * REFERENCE_VOLTAGE) / (math.pow(2, 23) - 1).toDouble())
+        .toList();
     return dataPoints;
   }
-
 
   static List handlePacketData(List<int> bytes) {
     final int numberSample = (bytes[9] / 4 / 3).toInt();
@@ -111,7 +118,8 @@ class ECGDataController {
     final rowLength = bytes.length;
     final dataECG = bytes.sublist(11, rowLength);
 
-    final Map<int, List<int>> dataSeperated = separateDataIntoEachSample(dataECG, numberSample);
+    final Map<int, List<int>> dataSeperated = separateDataIntoEachSample(
+        dataECG, numberSample);
     List dataToSave = [];
 
     dataSeperated.forEach((key, sample) {
@@ -142,11 +150,17 @@ class ECGDataController {
 
   static separateDataIntoEachSample(List<int> data, int numberSample) {
     Map<int, List<int>> dataSeperated = {};
-    for (int i = 1; i <= numberSample; i++) {
-      List<int> row = data.sublist((i-1) * 12, (i-1) * 12 + 12);
-      dataSeperated.addAll({
-        i: row
-      });
+    int expectedLength = numberSample * 12;
+
+    if (data.length >= expectedLength) {
+      for (int i = 1; i <= numberSample; i++) {
+        List<int> row = data.sublist((i - 1) * 12, i * 12);
+        dataSeperated.addAll({
+          i: row
+        });
+      }
+    } else {
+      // Xử lý lỗi hoặc thông báo lỗi
     }
     return dataSeperated;
   }
