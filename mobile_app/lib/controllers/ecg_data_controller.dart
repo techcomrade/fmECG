@@ -16,7 +16,7 @@ class ECGDataController {
     // final List<int> statusBytes = getStatusBytes(bytes);
     final List<int> channelsBytes = getChannelsBytes(bytes);
     // final int countByte = getCountByte(bytes);
-    
+
     /// 1 row include calculated figure for each channel like sample: [figureChannel1, figureChannel2, figureChannel3, figureChannel4]
     final List<double> row = [];
 
@@ -99,10 +99,11 @@ class ECGDataController {
   // tính điện áp để vẽ ra biểu đồ
   //TODO: HANDLE LIST<TYPE> 
   static List calculateDataPointToShow(List row) {
-    List dataPoints = row.map((decimalValue) => 
+    List dataPoints = row.map((decimalValue) =>
                                     (decimalValue * REFERENCE_VOLTAGE) / (math.pow(2, 23) - 1).toDouble()).toList();
     return dataPoints;
   }
+
 
   static List handlePacketData(List<int> bytes) {
     final int numberSample = (bytes[9] / 4 / 3).toInt();
