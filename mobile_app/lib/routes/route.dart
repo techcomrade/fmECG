@@ -33,7 +33,7 @@ class AppRoutes {
   static const String appNavigationScreen = '/app_navigation_screen';
 
   static String initialRoute = '/initialRoute';
-  static String homeScreen = '/homes_creen';
+  static String homeScreen = '/home_screen';
   static String mainScreen = '/main_screen';
 
   static List<GetPage> pages = [
