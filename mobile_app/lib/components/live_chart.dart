@@ -232,15 +232,17 @@ class _LiveChartSampleState extends State<LiveChartSample> {
     /// DATA KIỂU CŨ CỦA ANH TÀI
     /// 
     List<int> fakeRows = List.generate(16, (_) => _getRandomInt(1, 244));
+    print("Dữ liệu mẫu giả: $fakeRows");
     List<double> dataChannelsToSave = ECGDataController.handleDataRowFromBluetooth(fakeRows);
+    print("Dữ liệu sau khi chia (test): $dataChannelsToSave");
     List dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(dataChannelsToSave);
-
+    print("Dữ liệu sau khi xử lý (test): $dataChannelsToShowOnChart");
     _ChartData newDataPPG = _ChartData(count, dataChannelsToShowOnChart[0]);
     chartDataPPG.add(newDataPPG);
-
+    print("Dữ liệu sau khi xử lý (test): ${dataChannelsToShowOnChart[0]}");
     _ChartData newDataPCG = _ChartData(count, dataChannelsToShowOnChart[1]);
     chartDataPCG.add(newDataPCG);
-
+    print("Dữ liệu sau khi xử lý (test): ${dataChannelsToShowOnChart[1]}");
     // 0 is fake data
     samples.add([0,	0, 0, 0, 0, 0, ...dataChannelsToSave]);
 

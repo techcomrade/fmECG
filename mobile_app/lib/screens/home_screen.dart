@@ -121,13 +121,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     alignment: Alignment.topLeft,
-                    // child: Text("Tổng quan",
-                    //   style: TextStyle(
-                    //     color: ColorConstant.quaternary,
-                    //     fontWeight: FontWeight.bold,
-                    //     fontSize: 22
-                    //   ),
-                    // ),c
+                    child: Text("Tổng quan",
+                      style: TextStyle(
+                        color: ColorConstant.quaternary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Wrap(
@@ -149,13 +149,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text("Các loại huyết áp",
-                  //   style: TextStyle(
-                  //     color: ColorConstant.quaternary,
-                  //     fontWeight: FontWeight.bold,
-                  //     fontSize: 22
-                  //   ),
-                  // ),
+                  Text("Đo huyết áp",
+                    style: TextStyle(
+                      color: ColorConstant.quaternary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   !isShowChart ? ImageCard(
                     imageAsset: 'assets/images/heart_rate_example.jpeg', 
