@@ -6,9 +6,10 @@ const Authen2 = require('../models/Authen2Model');
 const jwt =require('jsonwebtoken');
 var authCtrl = {};
 
-authCtrl.insertToken = async function(accessToken, refreshToken) {
+authCtrl.insertToken = async function(accessToken, refreshToken, id) {
     await Authen2.insertDatatoDB({
         id: 1,
+        user_id: id,
         accessToken: accessToken,
         refreshToken: refreshToken
     }, 'authen')
@@ -21,18 +22,18 @@ authCtrl.login = async function(req, res) {
         console.log(user[0]);
         if(user[0]) {
             console.log(user[0]);
-            bcrypt.compare(req.body.password, user[0].password, (err, same) => {
-                if(err) throw err;
+            bcrypt.compare(req.body.password, user[0].password)
+             .then(same => {
                 if(same) {
                     console.log("Valid Username && Password");
-                    const accesToken = jwt.sign({
+                    const accessToken = jwt.sign({
                         id: user[0].id,
                         email: user[0].email,
                         password: user[0].password
                     },
                     process.env.JWT_KEY,
                     {
-                        expiresIn: "30s"
+                        expiresIn: 30 * 100
                     }
                     )
                     const refreshToken = jwt.sign({
@@ -42,13 +43,13 @@ authCtrl.login = async function(req, res) {
                     },
                     process.env.JWT_REFRESH_KEY,
                     {
-                        expiresIn: "24h"
+                        expiresIn: 24 * 60 * 60 * 1000
                     }
                     )
-                    console.log(accesToken, refreshToken);
-                    authCtrl.insertToken(accesToken, refreshToken);
+                    console.log(accessToken, refreshToken, user[0].id);
+                    authCtrl.insertToken(accessToken, refreshToken, user[0].id);
                     res.status(200).json({
-                        token: accesToken,
+                        token: accessToken,
                         refreshToken: refreshToken,
                         user: user[0].email,
                         message: "Token added successfully"
@@ -71,4 +72,4 @@ authCtrl.login = async function(req, res) {
     }) 
 }
 
-module.exports = authCtrl.login;
+module.exports = authCtrl;

@@ -10,8 +10,8 @@ class User extends CommonModel {
     displaybyId(id) { 
         return `SELECT * FROM user where id = ${id} and delete_flag = 0`;
     }
-    findOnebyEmail(email){
-        return `SELECT * FROM user where email = '${email}'`;
+    findOnebyEmail(Email){
+        return `SELECT * FROM user where email = '${Email}'`;
     }
 }
 
