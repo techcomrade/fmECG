@@ -31,12 +31,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final ScrollController _scrollController = ScrollController();
   late File fileToSave;
   bool isShowChart = false;
 
-  Map allNews = {}; 
+  Map allNews = {};
   @override
   void initState() {
     super.initState();
@@ -44,14 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
     NewsController.getAllNews();
   }
 
-
   void getDoctorAssigned() async {
     int patientId = await Utils.getUserId();
     UserController.getDoctorAssigned(patientId);
   }
 
   Future<bool> _requestManageStorage() async {
-    final PermissionStatus status = await Permission.manageExternalStorage.request();  
+    final PermissionStatus status =
+        await Permission.manageExternalStorage.request();
     if (status == PermissionStatus.granted) {
       return true;
     } else {
@@ -121,12 +120,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     alignment: Alignment.topLeft,
-                    child: Text("Tổng quan",
+                    child: Text(
+                      "Tổng quan",
                       style: TextStyle(
-                        color: ColorConstant.quaternary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22
-                      ),
+                          color: ColorConstant.quaternary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -151,10 +150,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text("Đo huyết áp",
                     style: TextStyle(
-                      color: ColorConstant.quaternary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22
-                    ),
+                        color: ColorConstant.quaternary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22),
                   ),
                   const SizedBox(height: 10),
                   !isShowChart ? ImageCard(
@@ -207,14 +205,13 @@ class DarkLightSwitch extends StatefulWidget {
 }
 
 class _DarkLightSwitchState extends State<DarkLightSwitch> {
-
   bool isDarkSwitch = false;
 
   @override
   void initState() {
-
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return FlutterSwitch(
@@ -246,7 +243,8 @@ class _DarkLightSwitchState extends State<DarkLightSwitch> {
       ),
       onToggle: (val) {
         Provider.of<AuthProvider>(context, listen: false).isAutoTheme = false;
-        ThemeType theme = Provider.of<AuthProvider>(context, listen: false).theme;
+        ThemeType theme =
+            Provider.of<AuthProvider>(context, listen: false).theme;
         final auth = Provider.of<AuthProvider>(context, listen: false);
         setState(() {
           isDarkSwitch = val;
@@ -311,7 +309,7 @@ class NumberCard extends StatelessWidget {
     required this.text,
     required this.subText,
     required this.color1,
-    required this.color2, 
+    required this.color2,
   });
 
   @override
@@ -357,7 +355,6 @@ class NumberCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          
         ],
       ),
     );
