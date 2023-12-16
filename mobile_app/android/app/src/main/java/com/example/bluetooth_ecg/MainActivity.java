@@ -31,23 +31,23 @@ public class MainActivity extends FlutterActivity {
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
         super.configureFlutterEngine(flutterEngine);
         new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL).
-                setMethodCallHandler(
-                        (call, result) -> {
-                            // if (call.method.equals("getBatteryLevel")) {
-                            //     int batteryLevel = getBatteryLevel();
+          setMethodCallHandler(
+            (call, result) -> {
+                // if (call.method.equals("getBatteryLevel")) {
+                //     int batteryLevel = getBatteryLevel();
 
-                            //     if (batteryLevel != -1) {
-                            //         result.success(batteryLevel);
-                            //     } else {
-                            //         result.error("UNAVAILABLE", "Battery level not available.", null);
-                            //     }
-                            // } else {
-                            //     result.notImplemented();
-                            // }
-                            if (call.method.equals("helloWorldPython")) {
-                                result.success(helloWorldPython());
-                            }
-                        });
+                //     if (batteryLevel != -1) {
+                //         result.success(batteryLevel);
+                //     } else {
+                //         result.error("UNAVAILABLE", "Battery level not available.", null);
+                //     }
+                // } else {
+                //     result.notImplemented();
+                // }
+                if (call.method.equals("helloWorldPython")) {
+                    result.success(helloWorldPython());
+                }
+            });
     }
 
 
@@ -74,15 +74,10 @@ public class MainActivity extends FlutterActivity {
         }
 
         Python py = Python.getInstance();
-        // get file python (PyObject)
         PyObject module = py.getModule("native");
         PyObject data = module.callAttr("helloWorld");
-       // System.out.println("Hello " + data);
-        
 
         HashMap<String,String> map = new HashMap<>();
-        //System.out.println(data.asMap().get("sbp").toString());
-
         Set<PyObject> pyKeySet = data.callAttr("keys").asSet();
 
         for ( PyObject pyKey:pyKeySet) {
@@ -90,11 +85,6 @@ public class MainActivity extends FlutterActivity {
             map.put(key, data.callAttr("get",key).toString());
            
         }
-        // map.put("sbp", data.asMap().get("sbp").toDouble());
-        // map.put("dbp", data.asMap().get("dbp").toDouble());
-        // map.put("heart_rate", data.asMap().get("heart_rate").toDouble());
-        // map.put("standard_deviation", data.asMap().get("standard_deviation").toDouble());
-        
         return map;
     }
 }

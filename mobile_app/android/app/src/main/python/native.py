@@ -6,26 +6,7 @@ import heartpy as hp
 import random
 from os.path import dirname, join
 
-
-
 def helloWorld():
-  # # Đọc file cần phân tích
-  # filename = join(dirname(__file__), "93 66 87 trang.txt")
-  # with open(filename, 'r') as file:
-  #     # Đọc nội dung từ tệp
-  #     content = file.read()
-
-  # # Loại bỏ tất cả các dấu cách và thay thế chúng bằng dấu phẩy
-  # content_without_spaces = content.replace("\t", ",")
-
-  # # Tạo hoặc mở tệp mới để lưu nội dung đã xử lý
-  # filesave = join(dirname(__file__), "PPG_PCG_file.csv")
-  # with open('PPG_PCG_file.csv', 'w') as new_file:
-  #     # Ghi nội dung đã xử lý vào tệp mới
-  #     new_file.write(content_without_spaces)
-
-
-  # file_name = 'PPG_PCG_file.csv'  # Thay 'your_csv_file.csv' bằng tên thực tế của tệp
   import csv
 
   ppg_data = []
