@@ -36,18 +36,21 @@ public class MainActivity extends FlutterActivity {
                             // if (call.method.equals("getBatteryLevel")) {
                             //     int batteryLevel = getBatteryLevel();
 
-                            //     if (batteryLevel != -1) {
-                            //         result.success(batteryLevel);
-                            //     } else {
-                            //         result.error("UNAVAILABLE", "Battery level not available.", null);
-                            //     }
-                            // } else {
-                            //     result.notImplemented();
-                            // }
-                            if (call.method.equals("helloWorldPython")) {
-                                result.success(helloWorldPython());
-                            }
-                        });
+                //     if (batteryLevel != -1) {
+                //         result.success(batteryLevel);
+                //     } else {
+                //         result.error("UNAVAILABLE", "Battery level not available.", null);
+                //     }
+                // } else {
+                //     result.notImplemented();
+                // }
+                if (call.method.equals("helloWorldPython")) {
+                  byte[] dataBytes = call.argument("bytes");
+                    System.out.println("hello: " + dataBytes);
+                    // result.success(true);
+                    result.success(helloWorldPython(dataBytes));
+                }
+            });
     }
 
 
@@ -68,17 +71,19 @@ public class MainActivity extends FlutterActivity {
         return batteryLevel;
     }
 
-    private HashMap<String, String> helloWorldPython() {
+    private HashMap<String, String> helloWorldPython(
+      byte[] bytesData
+    ) {
         if (!Python.isStarted()) {
             Python.start(new AndroidPlatform(this));
         }
 
+        System.out.println("hello222: " + bytesData);
+
         Python py = Python.getInstance();
         // get file python (PyObject)
         PyObject module = py.getModule("native");
-        PyObject data = module.callAttr("helloWorld");
-       // System.out.println("Hello " + data);
-        
+        PyObject data = module.callAttr("helloWorld", bytesData);
 
         HashMap<String,String> map = new HashMap<>();
         //System.out.println(data.asMap().get("sbp").toString());

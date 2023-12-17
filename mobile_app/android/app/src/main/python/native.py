@@ -6,45 +6,35 @@ import heartpy as hp
 import random
 from os.path import dirname, join
 
-
-
-def helloWorld():
-  # # Đọc file cần phân tích
-  # filename = join(dirname(__file__), "93 66 87 trang.txt")
-  # with open(filename, 'r') as file:
-  #     # Đọc nội dung từ tệp
-  #     content = file.read()
-
-  # # Loại bỏ tất cả các dấu cách và thay thế chúng bằng dấu phẩy
-  # content_without_spaces = content.replace("\t", ",")
-
-  # # Tạo hoặc mở tệp mới để lưu nội dung đã xử lý
-  # filesave = join(dirname(__file__), "PPG_PCG_file.csv")
-  # with open('PPG_PCG_file.csv', 'w') as new_file:
-  #     # Ghi nội dung đã xử lý vào tệp mới
-  #     new_file.write(content_without_spaces)
-
-
-  # file_name = 'PPG_PCG_file.csv'  # Thay 'your_csv_file.csv' bằng tên thực tế của tệp
+def helloWorld(bytes_data):
+  print(f'bytee: {bytes_data}')
   import csv
 
   ppg_data = []
   pcg_data = []
   fs = 500
   windowsize = int(fs* 0.1)
-  filename = join(dirname(__file__), "1701789950297.csv")
-  with open(filename, mode='r') as csv_file:
-      csv_reader = csv.reader(csv_file)
-
-      # Duyệt qua từng dòng trong tệp CSV
-      for row in csv_reader:
-          if len(row) >= 9:  # Đảm bảo có ít nhất 7 cột trong mỗi dòng
-              column_7_data = float(row[7])
-              column_6_data = float(row[6])# Lấy dữ liệu từ cột thứ 7 (0-based index)
-              ppg_data.append(column_7_data)
-              pcg_data.append(column_6_data)
-              # Sử dụng dữ liệu từ cột thứ 7 ở đây, ví dụ:
-              #print(column_data)
+  
+  # with dynamic content
+  import io
+  content_file = io.BytesIO(bytes_data)
+  decoded_data = content_file.getvalue().decode('utf-8')
+  csv_reader = csv.reader(io.StringIO(decoded_data))
+  
+  # with fixed content
+  # filename = join(dirname(__file__), "1701789950297.csv")
+  # with open(filename, mode='r') as csv_file:
+  #     csv_reader = csv.reader(csv_file)
+  # Duyệt qua từng dòng trong tệp CSV
+  for row in csv_reader:
+      print(f'zzzz: {row}')
+      if len(row) >= 9:  # Đảm bảo có ít nhất 7 cột trong mỗi dòng
+          column_7_data = float(row[7])
+          column_6_data = float(row[6])# Lấy dữ liệu từ cột thứ 7 (0-based index)
+          ppg_data.append(column_7_data)
+          pcg_data.append(column_6_data)
+          # Sử dụng dữ liệu từ cột thứ 7 ở đây, ví dụ:
+          #print(column_data)
   def split_and_extract_middle(data):
       # Chia mảng thành 3 phần gần bằng nhau
       n = len(data)
