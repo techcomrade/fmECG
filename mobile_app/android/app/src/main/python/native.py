@@ -6,26 +6,35 @@ import heartpy as hp
 import random
 from os.path import dirname, join
 
-def helloWorld():
+def helloWorld(bytes_data):
+  print(f'bytee: {bytes_data}')
   import csv
 
   ppg_data = []
   pcg_data = []
   fs = 500
   windowsize = int(fs* 0.1)
-  filename = join(dirname(__file__), "1701789950297.csv")
-  with open(filename, mode='r') as csv_file:
-      csv_reader = csv.reader(csv_file)
-
-      # Duyệt qua từng dòng trong tệp CSV
-      for row in csv_reader:
-          if len(row) >= 9:  # Đảm bảo có ít nhất 7 cột trong mỗi dòng
-              column_7_data = float(row[7])
-              column_6_data = float(row[6])# Lấy dữ liệu từ cột thứ 7 (0-based index)
-              ppg_data.append(column_7_data)
-              pcg_data.append(column_6_data)
-              # Sử dụng dữ liệu từ cột thứ 7 ở đây, ví dụ:
-              #print(column_data)
+  
+  # with dynamic content
+  import io
+  content_file = io.BytesIO(bytes_data)
+  decoded_data = content_file.getvalue().decode('utf-8')
+  csv_reader = csv.reader(io.StringIO(decoded_data))
+  
+  # with fixed content
+  # filename = join(dirname(__file__), "1701789950297.csv")
+  # with open(filename, mode='r') as csv_file:
+  #     csv_reader = csv.reader(csv_file)
+  # Duyệt qua từng dòng trong tệp CSV
+  for row in csv_reader:
+      print(f'zzzz: {row}')
+      if len(row) >= 9:  # Đảm bảo có ít nhất 7 cột trong mỗi dòng
+          column_7_data = float(row[7])
+          column_6_data = float(row[6])# Lấy dữ liệu từ cột thứ 7 (0-based index)
+          ppg_data.append(column_7_data)
+          pcg_data.append(column_6_data)
+          # Sử dụng dữ liệu từ cột thứ 7 ở đây, ví dụ:
+          #print(column_data)
   def split_and_extract_middle(data):
       # Chia mảng thành 3 phần gần bằng nhau
       n = len(data)

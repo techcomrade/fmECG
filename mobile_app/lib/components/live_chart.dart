@@ -8,6 +8,7 @@ import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -21,6 +22,7 @@ class LiveChartSample extends StatefulWidget {
 }
 
 class _LiveChartSampleState extends State<LiveChartSample> {
+  static const platform = MethodChannel("com.example.method_channel/java");
 
   Timer? timer;
   List<_ChartData> chartDataPPG = [];
@@ -85,10 +87,15 @@ class _LiveChartSampleState extends State<LiveChartSample> {
     };
 
     // send files to db
-    FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
+    await FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
+
     Future.delayed(const Duration(milliseconds: 500), () {
       ECGRecordController.uploadFileToDB(fileUploadInformation);
     });
+
+    final bytesInFile = await widget.fileToSave.readAsBytes();
+    print('zzz:$bytesInFile');
+    final data = await platform.invokeMethod('helloWorldPython', {'bytes': bytesInFile});
 
     setState(() {
       _clearChartData();
@@ -237,10 +244,10 @@ class _LiveChartSampleState extends State<LiveChartSample> {
     print("Dữ liệu sau khi chia (test): $dataChannelsToSave");
     List dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(dataChannelsToSave);
     print("Dữ liệu sau khi xử lý (test): $dataChannelsToShowOnChart");
-    _ChartData newDataPPG = _ChartData(count, dataChannelsToShowOnChart[0]);
+    _ChartData newDataPPG = _ChartData(count, (dataChannelsToShowOnChart[0]/10).round().toDouble());
     chartDataPPG.add(newDataPPG);
     print("Dữ liệu sau khi xử lý (test): ${dataChannelsToShowOnChart[0]}");
-    _ChartData newDataPCG = _ChartData(count, dataChannelsToShowOnChart[1]);
+    _ChartData newDataPCG = _ChartData(count, (dataChannelsToShowOnChart[1]/10).round().toDouble());
     chartDataPCG.add(newDataPCG);
     print("Dữ liệu sau khi xử lý (test): ${dataChannelsToShowOnChart[1]}");
     // 0 is fake data

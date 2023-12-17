@@ -6,6 +6,7 @@
   import 'package:bluetooth_ecg/utils/files_management.dart';
   import 'package:bluetooth_ecg/utils/utils.dart';
   import 'package:flutter/material.dart';
+  import 'package:flutter/services.dart';
   import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
   import 'package:phosphor_flutter/phosphor_flutter.dart';
   import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +29,8 @@
   }
 
   class _BleLiveChartTestState extends State<BleLiveChartTest> {
+    static const platform = MethodChannel("com.example.method_channel/java");
+    
     final flutterReactiveBle = FlutterReactiveBle();
     List<_ChartData>? chartDataChannel;
     List<_ChartData>? chartDataChannel2;
@@ -42,12 +45,18 @@
     late StreamSubscription<List<int>> subscribeStream;
     late StreamController<List> _dataStreamController;
 
+    final ScrollController _scrollController = ScrollController();
+
     Stream<List> get _dataStream => _dataStreamController.stream;
     List samples = [];
     bool isMeasuring = false;
     bool isUploaded = false;
+    bool isCalculated = false;
 
-
+    String _textSBP = '';
+    String _textDBP = '';
+    String _textHeartRate = '';
+    String _textDeviation = '';
 
     @override
     void initState() {
@@ -114,6 +123,22 @@
       Future.delayed(const Duration(milliseconds: 500), () {
         ECGRecordController.uploadFileToDB(fileUploadInformation);
       });
+
+      try {
+        final bytesInFile = await widget.fileToSave.readAsBytes();
+        final data = await platform.invokeMethod('helloWorldPython', {'bytes': bytesInFile});
+        if (data != null) {
+          setState(() {
+            isCalculated = true;
+            _textSBP = data!["sbp"].toString();
+            _textDBP = data!["dbp"].toString();
+            _textHeartRate = data!["heart_rate"].toString();
+            _textDeviation = data!["standard_deviation"].toString();
+          });
+        }
+      } catch (e) {
+        Utils.showDialogWarningError(context, false, "Error when processing Python");
+      }
     }
 
     _clearDataInChart() {
@@ -137,53 +162,70 @@
             ),
             title: const Text("Trang đo dữ liệu"),
           ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('BIỂU ĐỒ DỮ LIỆU HUYẾT ÁP CỦA BẠN'),
-              // Text('RSSI: ${widget.deviceConnected.rssi}'),
-              StreamBuilder<List>(
-                  stream: _dataStream,
-                  builder: (context, snapshot) {
-                    return _buildLiveLineChart();
-                  }
-              ),
-              StreamBuilder<List>(
-                  stream: _dataStream,
-                  builder: (context, snapshot) {
-                    return _buildLiveLineChart1();
-                  }
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: () async {
-                        if (isMeasuring) {
-                          _resetMeasuring();
-                        } else {
-                          subscribeCharacteristic();
-                          setState(() {
-                            isMeasuring = true;
-                          });
-                        }
-                      },
-                      child: Text(isMeasuring ? 'Reset biểu đồ' : 'Bắt đầu đo')
-                  ),
-                  ElevatedButton(
-                      onPressed: samples.isEmpty ? null : () async {
-                        await _handleSaveRecordInFile();
-
-                        const snackBar = SnackBar(
-                          content: Text('Đã lưu kết quả đo vào bộ nhớ!'),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      },
-                      child: const Text("Lưu kết quả đo")
-                  )
-                ],
-              )
-            ],
+          body: SingleChildScrollView(
+            controller: _scrollController,
+            physics: const ClampingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('BIỂU ĐỒ DỮ LIỆU HUYẾT ÁP CỦA BẠN'),
+                // Text('RSSI: ${widget.deviceConnected.rssi}'),
+                StreamBuilder<List>(
+                    stream: _dataStream,
+                    builder: (context, snapshot) {
+                      return _buildLiveLineChart();
+                    }
+                ),
+                StreamBuilder<List>(
+                    stream: _dataStream,
+                    builder: (context, snapshot) {
+                      return _buildLiveLineChart1();
+                    }
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () async {
+                          if (isMeasuring) {
+                            _resetMeasuring();
+                          } else {
+                            subscribeCharacteristic();
+                            setState(() {
+                              isMeasuring = true;
+                            });
+                          }
+                        },
+                        child: Text(isMeasuring ? 'Reset biểu đồ' : 'Bắt đầu đo')
+                    ),
+                    ElevatedButton(
+                        onPressed: samples.isEmpty ? null : () async {
+                          await _handleSaveRecordInFile();
+          
+                          const snackBar = SnackBar(
+                            content: Text('Đã lưu kết quả đo vào bộ nhớ!'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
+                        child: const Text("Lưu kết quả đo")
+                    )
+                  ],
+                ),
+                const SizedBox(height: 20),
+                if (isCalculated)
+                Column(
+                  children: [
+                    Text('Data processed by Python Engine: '),
+                    const SizedBox(height: 5),
+                    Text("SBP: ${_textSBP}"),
+                    Text("DBP: ${_textDBP}"),
+                    Text("Heart Rate: ${_textHeartRate}"),
+                    Text("Deviation: ${_textDeviation}"),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              ],
+            ),
           )
       );
     }
@@ -413,12 +455,12 @@
       subscribeStream =
           flutterReactiveBle.subscribeToCharacteristic(
               widget.bluetoothCharacteristic).listen((value) {
-            print("Received Data: $value");
+            // print("Received Data: $value");
              List<double> packetHandled = ECGDataController.handleDataRowFromBluetooth(value);
-            print("Processed Data: ${packetHandled.length}"); // In dữ liệu đã xử lý
-            print("Processed Data dữ liệu sau khi chia: $packetHandled");
+            // print("Processed Data: ${packetHandled.length}"); // In dữ liệu đã xử lý
+            // print("Processed Data dữ liệu sau khi chia: $packetHandled");
             List dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(packetHandled);
-            samples.addAll(packetHandled);
+            samples.add([0,	0, 0, 0, 0, 0, ...packetHandled]);
 
             if (samples.length == 50000) {
               FilesManagement.handleSaveDataToFileV2(
