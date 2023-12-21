@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../util/db');
-const User = require('./userModel');
+const User = require('./UserModel.js');
 
 const EcgRecords = sequelize.define('ecg_record', {
   record_id: {

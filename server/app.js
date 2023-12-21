@@ -7,7 +7,7 @@ const newsRoute = require('./Routes/newsRoute');
 const ecgRecordsRoute = require('./Routes/ecgRecordRoute');
 const dasboardHelperRoute = require('./Routes/dasboardHelperRoute');
 const PatientDoctorAssignmentRoute = require('./Routes/patientDoctorAssignmentRoute');
-
+const routes = require('./Routes/route');
 
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -33,14 +33,15 @@ sequelize.sync().then(result => {
 app.use(cookieParser());
 
 app.use(bodyParser.json())
-app.use('/', authRoute);
-app.use('/users', usersRoute);
-app.use('/', newsRoute);
-app.use('/ecg-records', ecgRecordsRoute);
-app.use('/admin', adminRouter);
-app.use('/', dasboardHelperRoute);
-app.use('/', PatientDoctorAssignmentRoute);
+// app.use('/', authRoute);
+// app.use('/users', usersRoute);
+// app.use('/', newsRoute);
+// app.use('/ecg-records', ecgRecordsRoute);
+// app.use('/admin', adminRouter);
+// app.use('/', dasboardHelperRoute);
+// app.use('/', PatientDoctorAssignmentRoute);
 
+app.use('/', routes);
 
 app.use(express.json());
 
