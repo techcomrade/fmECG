@@ -87,46 +87,71 @@
       FilesManagement.deleteFileRecord(widget.fileToSave);
       setState(() {
         isMeasuring = false;
+        isCalculated = true;
       });
+
     }
 
     _handleSaveRecordInFile() async {
-      final DateTime stopTime = DateTime.now();
-      final SharedPreferences preferences = await SharedPreferences
-          .getInstance();
-      final Map userDataDecoded = json.decode(
-          (preferences.getString('userData') ?? ""));
+      subscribeStream.cancel();
+      _dataStreamController.close();
+      _clearDataInChart();
+      // final DateTime stopTime = DateTime.now();
+      // final SharedPreferences preferences = await SharedPreferences
+      //     .getInstance();
+      // final Map userDataDecoded = json.decode(
+      //     (preferences.getString('userData') ?? ""));
 
-      if (userDataDecoded["roleId"] == -1 || userDataDecoded["token"] == "") {
-        return Utils.showDialogLoginRequirement(context);
-      }
+      // if (userDataDecoded["roleId"] == -1 || userDataDecoded["token"] == "") {
+      //   return Utils.showDialogLoginRequirement(context);
+      // }
 
-      final int userId = userDataDecoded["userId"] ?? 0;
-      final String deviceId = widget.deviceConnected.id;
-      final String startTimeAsTimeStamp = widget.fileToSave.path
-          .split("/")
-          .last
-          .split('.')
-          .first;
-      final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(
-          int.parse(startTimeAsTimeStamp));
+      // final int userId = userDataDecoded["userId"] ?? 0;
+      // final String deviceId = widget.deviceConnected.id;
+      // final String startTimeAsTimeStamp = widget.fileToSave.path
+      //     .split("/")
+      //     .last
+      //     .split('.')
+      //     .first;
+      // final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(
+      //     int.parse(startTimeAsTimeStamp));
 
-      final Map fileUploadInformation = {
-        "filePath": widget.fileToSave.path,
-        "userId": userId,
-        "deviceId": deviceId,
-        "startTime": startTime,
-        "stopTime": stopTime,
-      };
+      // final Map fileUploadInformation = {
+      //   "filePath": widget.fileToSave.path,
+      //   "userId": userId,
+      //   "deviceId": deviceId,
+      //   "startTime": startTime,
+      //   "stopTime": stopTime,
+      // };
       await FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
 
-      Future.delayed(const Duration(milliseconds: 500), () {
-        ECGRecordController.uploadFileToDB(fileUploadInformation);
+      // Future.delayed(const Duration(milliseconds: 500), () {
+      //   ECGRecordController.uploadFileToDB(fileUploadInformation);
+      // });
+
+      setState(() {
+        samples.clear();
       });
 
       try {
         final bytesInFile = await widget.fileToSave.readAsBytes();
+        showDialog(context: context, builder: (ctxx) {
+          return Dialog(
+            child: Container(
+              height: 90,
+              child: Column(
+                children: [
+                  const SizedBox(height: 5),
+                  Text('Số liệu đang được xử lý bằng Python'),
+                  const SizedBox(height: 10),
+                  CircularProgressIndicator()
+                ],
+              ),
+            ),
+          );
+          });
         final data = await platform.invokeMethod('helloWorldPython', {'bytes': bytesInFile});
+        Navigator.pop(context);
         if (data != null) {
           setState(() {
             isCalculated = true;
@@ -135,9 +160,38 @@
             _textHeartRate = data!["heart_rate"].toString();
             _textDeviation = data!["standard_deviation"].toString();
           });
+          showDialog(context: context, builder: (ctxx) {
+            return Dialog(
+              child: Container(
+                height: 160,
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text('Dữ liệu sau khi được xử lý: ', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),)),
+                    const SizedBox(height: 5),
+                    Text("SBP: ${double.parse(_textSBP).round()}"),
+                    Text("DBP: ${double.parse(_textDBP).round()}"),
+                    Text("Heart Rate: ${double.parse(_textHeartRate).round()}"),
+                    Text("Deviation: ${double.parse(_textDeviation).round()}"),
+                    const SizedBox(height: 5),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Close", 
+                          style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),),
+                      ),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              ),
+            );
+          });
         }
       } catch (e) {
-        Utils.showDialogWarningError(context, false, "Error when processing Python");
+        Navigator.pop(context);
+        Utils.showDialogWarningError(context, false, "Lỗi khi xử lý dữ liệu với Python");
       }
     }
 
@@ -190,16 +244,17 @@
                           if (isMeasuring) {
                             _resetMeasuring();
                           } else {
-                            subscribeCharacteristic();
                             setState(() {
                               isMeasuring = true;
                             });
+                            subscribeCharacteristic();
                           }
                         },
                         child: Text(isMeasuring ? 'Reset biểu đồ' : 'Bắt đầu đo')
                     ),
                     ElevatedButton(
-                        onPressed: samples.isEmpty ? null : () async {
+                        onPressed: isMeasuring == false ? null : () async {
+
                           await _handleSaveRecordInFile();
           
                           const snackBar = SnackBar(
@@ -215,7 +270,7 @@
                 if (isCalculated)
                 Column(
                   children: [
-                    Text('Data processed by Python Engine: '),
+                    Text('Dữ liệu sau khi được xử lý: '),
                     const SizedBox(height: 5),
                     Text("SBP: ${_textSBP}"),
                     Text("DBP: ${_textDBP}"),

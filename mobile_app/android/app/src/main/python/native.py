@@ -125,8 +125,8 @@ def helloWorld(bytes_data):
   gamma3 = 1.613189
   VTT_a = sum(VTT)/len(VTT)
   ET_a = sum(ET)/len(ET)
-  VTT_a = 0.22962
-  ET_a = 0.25503
+  # VTT_a = 0.22962
+  # ET_a = 0.25503
   sbp = a1 * VTT_a + a2
   dbp = sbp - gamma1*ET_a/(VTT_a*VTT_a) - gamma2/(VTT_a*VTT_a) - gamma3
 
