@@ -20,6 +20,5 @@ if (dummyDataEnabled) {
     createUsers(1, 500);
   }
 
-
 const http = require("http").createServer(app);
-http.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
+http.listen(process.env.APP_PORT, () => console.log(`Server running on port ${process.env.APP_PORT}`));
