@@ -4,7 +4,6 @@ const knex = require('../config/knex');
 const database = require('../config/database');
 const Authen2 = require('../models/Authen2Model');
 const jwt =require('jsonwebtoken');
-const LoginGoogleService = require('../models/LoginGoogleService');
 const loginGoogleService = require('../services/loginGoogleService');
 
 class AuthenticationController {

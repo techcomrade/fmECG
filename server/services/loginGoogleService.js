@@ -1,5 +1,5 @@
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-strategy').trategy;
+const GoogleStrategy = require('passport-google-strategy').Strategy;
 const authController = require('../Controllers/authController');
 
 class LoginGoogleService {
