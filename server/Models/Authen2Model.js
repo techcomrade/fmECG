@@ -10,9 +10,7 @@ class Authen2 extends CommonModel {
     displaybyId(id) { 
         return `SELECT * FROM user where id = ${id} and delete_flag = 0`;
     }
-    // findOnebyEmail(id){
-    //     return `SELECT * FROM user where email = '${email}'`;
-    // }
+   
 }
 
 module.exports = new Authen2;
