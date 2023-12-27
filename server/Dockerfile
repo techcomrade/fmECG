@@ -1,10 +1,12 @@
 FROM node:20-alpine
 
-COPY package.json /fmECG_server/
-COPY . /fmECG_server/
+WORKDIR /fmECG_server/
 
-WORKDIR /fmECG_server
+COPY package.json .
 
 RUN npm install
+
+# phải run npm install trước
+COPY . .
 
 CMD [ "npm", "start" ]
