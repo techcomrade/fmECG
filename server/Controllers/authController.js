@@ -11,7 +11,7 @@ class AuthenticationController {
         res.render('authenLogin');
     }
 
-    async Login(req, res) {
+    async login(req, res) {
         await User.queryDB(User.findOnebyEmail(req.body.email))
         .then((user) => {
             if(user[0]) {
