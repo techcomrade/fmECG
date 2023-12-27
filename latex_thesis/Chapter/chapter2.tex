@@ -6,7 +6,9 @@
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 2. THIẾT KẾ HỆ THỐNG}
 
-% //TODO: thêm phần mở đầu chương 2
+Đây là chương chúng em sẽ thực hiện thiết kế từ tổng quan đến chi tiết của hệ thống. Từ việc xây dựng sơ đồ kiến trúc hệ thống,
+đến thiết kế từng chức năng cho cả ứng dụng di động, website và server, nội dung chủ yếu của chương sẽ xoay quanh các hình
+ảnh và sơ đồ nhằm diễn tả chi tiết từng luồng hoạt động của hệ thống và cách các phần trong hệ thống tương tác với nhau.
 
 \subsection{Sơ đồ kiến trúc hệ thống}
 Hệ thống chúng em xây dựng được chia làm ba phần Device, Application và Server. Các chi tiết cụ thể được thể hiện trong
@@ -18,8 +20,6 @@ hình vẽ:
   \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
   \label{fmECG_architecture-System} %đặt tên cho ảnh
 \end{figure}
-
-% //fix lại kiến trúc: bỏ cái nối trực tiếp vào ecg services, website chuyển lên application, database gộp chung
 
 Hình \ref{fmECG_architecture-System} thể hiện ba phần: 
 
@@ -48,6 +48,7 @@ Ngoài ra, hệ thống sẽ phải có kết nối bluetooth low energy giữa 
 Trên đây là tổng quan về kiến trúc hệ thống, phần tiếp dưới đây chúng em xin phép trình bày kỹ hơn về từng khối nhỏ hơn
 dựa vào những đối tượng đã được xác định trong hệ thống.
 
+\newpage
 \subsection{Sơ đồ khối phần mềm}
 
 \subsubsection{Ứng dụng di động cho bệnh nhân}
@@ -55,7 +56,7 @@ dựa vào những đối tượng đã được xác định trong hệ thống
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-Patient.drawio.png}
+  \includegraphics[width=15cm,height=15cm]{Images/system/fmECG_architecture-Patient.drawio.png}
   \caption[Sơ đồ khối cho App bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bệnh nhân}
   \label{fmECG_architecture-Patient} %đặt tên cho ảnh
 \end{figure}
@@ -78,7 +79,7 @@ Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Devi
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-Doctors.drawio.png}
+  \includegraphics[width=12cm,height=14cm]{Images/system/fmECG_architecture-Doctors.drawio.png}
   \caption[Sơ đồ khói cho App bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bác sĩ}
   \label{fmECG_architecture-Doctors} %đặt tên cho ảnh
 \end{figure}
@@ -91,7 +92,7 @@ và Bluetooth để phục vụ việc đo như bệnh nhân.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=18cm]{Images/system/fmECG_architecture-Admin.drawio.png}
+  \includegraphics[width=12cm,height=14cm]{Images/system/fmECG_architecture-Admin.drawio.png}
   \caption[Sơ đồ khối cho Website quản trị viên]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho Website quản trị viên}
   \label{fmECG_architecture-Admin} %đặt tên cho ảnh
 \end{figure}
@@ -659,7 +660,7 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho Ap
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/splash_screen_demo.jpg}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/splash_screen_demo.jpg}
   \caption[Giao diện màn hình khởi động]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn hình khởi động}
   \label{demo_splash_screen} %đặt tên cho ảnh
 \end{figure}
@@ -668,21 +669,20 @@ Màn hình khởi động gồm một icon tượng trưng cho máy đo điện 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/login.png}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/login.png}
   \caption[Giao diện trang đăng nhập]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng nhập}
   \label{demo_login} %đặt tên cho ảnh
 \end{figure}
 
+\newpage
 Trang đăng nhập gồm có logo, sau đó là hai ô để nhập email và mật khẩu, cùng một nút màu xanh cho người dùng nhấn để kiểm tra 
 việc đăng nhập vào
 trang chủ nếu email và mật khẩu của người dùng được xác thực. Nếu việc xác thực không thành công, giao diện sẽ hiển thị
-một dòng chữ dưới hai ô nhập.
-
-Ngoài ra nếu người dùng chưa có tài khoản thì có thể chọn đăng ký ở dưới để chuyển sang trang đăng ký.
+một dòng chữ dưới hai ô nhập. Ngoài ra nếu người dùng chưa có tài khoản thì có thể chọn đăng ký ở dưới để chuyển sang trang đăng ký.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/register.png}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/register.png}
   \caption[Giao diện trang đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng ký tài khoản}
   \label{demo_register} %đặt tên cho ảnh
 \end{figure}
@@ -692,7 +692,7 @@ Login ở bên dưới để chuyển sang giao diện đăng ký.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/home_screen.png}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/home_screen.png}
   \caption[Giao diện màn hình chính]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn hình chính}
   \label{demo_home_screen} %đặt tên cho ảnh
 \end{figure}
@@ -710,18 +710,18 @@ Phần tổng quan bên dưới sẽ thể hiện dữ liệu đã được phâ
 sang trang theo dõi điện tim. Dưới cùng là các tin tức để người dùng có thể theo dõi, giới hạn ở năm bài viết. Các nút điều hướng có nhiệm vụ chuyển trang,
 và giúp cho người dùng biết mình đang ở trang nào.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/all_news.png}
-  \caption[Giao diện trang tất cả tin túc]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tất cả tin tức}
-  \label{demo_all_news}
-\end{figure}
-Trang tất cả tin tức có giao diện gần giống với giao diện của tin tức ở ngoài màn hình chính, điểm khác biệt là ở trang này,
-tất cả các tin tức sẽ được hiển thị thay vì chỉ có năm tin như ở màn hình chính.
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/all_news.png}
+%   \caption[Giao diện trang tất cả tin túc]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tất cả tin tức}
+%   \label{demo_all_news}
+% \end{figure}
+% Trang tất cả tin tức có giao diện gần giống với giao diện của tin tức ở ngoài màn hình chính, điểm khác biệt là ở trang này,
+% tất cả các tin tức sẽ được hiển thị thay vì chỉ có năm tin như ở màn hình chính.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/detail_news.png}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/detail_news.png}
   \caption[Giao diện trang chi tiết tin tức]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang chi tiết tin tức}
   \label{demo_detail_news}
 \end{figure}
@@ -731,7 +731,7 @@ giúp người dùng quay lại.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/history.png}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/history.png}
   \caption[Giao diện trang lịch sử các lần đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang lịch sử các lần đo}
   \label{demo_history}
 \end{figure}
@@ -742,7 +742,7 @@ có thể click vào một phiên đo để hiển thị dữ liệu phiên đo 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/detail_record.png}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/detail_record.png}
   \caption[Giao diện trang biểu đồ dữ liệu một phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang biểu đồ dữ liệu một phiên đo}
   \label{demo_detail_record}
 \end{figure}
@@ -753,7 +753,7 @@ click vào phần chú thích của một đường ở trên biểu đồ để
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/chat_preview.png}
+  \includegraphics[width=4.5cm,height=9cm]{Images/mobile_app/demo/chat_preview.png}
   \caption[Giao diện trang tất cả hội thoại]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tất cả hội thoại}
   \label{demo_chat_preview}
 \end{figure}
@@ -764,7 +764,7 @@ thì sẽ có một cuộc hội thoại được tạo giữa hai người mộ
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/chat_detail.png}
+  \includegraphics[width=4.5cm,height=9 cm]{Images/mobile_app/demo/chat_detail.png}
   \caption[Giao diện trang chi tiết hội thoại]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang chi tiết hội thoại}
   \label{demo_chat_detail}
 \end{figure}
@@ -798,7 +798,7 @@ popup hiện lên nếu kết nối thành công. Người dùng nhấn tiến h
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=6cm,height=12cm]{Images/mobile_app/demo/demo_real_time_chart_2.jpg}
+  \includegraphics[width=5cm,height=9cm]{Images/mobile_app/demo/demo_real_time_chart_2.jpg}
   \caption[Giao diện trang theo dõi dữ liệu điện tim real-time màn hình dọc]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện theo dõi dữ liệu điện tim real-time màn hình dọc}
   \label{demo_real_time_chart_2}
 \end{figure}
@@ -827,6 +827,11 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \label{login} %đặt tên cho ảnh
 \end{figure}
 
+Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình này sẽ bao
+ gồm hai trường thông tin là Email và Password để admin đăng nhập vào trang quản trị
+ nếu hai trường thông tin email và password là chính xác thì sẽ chuyển hướng đến trang dashboard 
+ quản lý như hình \ref{dashboard}, còn nếu sai thông tin thì sẽ có popup thông báo sai email hoặc mật khẩu hiện lên
+ 
 
 \begin{figure}[H]
   \centering
@@ -835,6 +840,11 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \label{dashboard} %đặt tên cho ảnh
 \end{figure}
 
+Hình \ref{dashboard} mô tả giao trang dashboard, trong màn hình này ở phần bên trái sẽ là các
+đường dẫn đến trang quản lý từng resource(bệnh nhân, bác sĩ, admin, tin tức, danh mục tin tức, phiên đo
+ ECG, phân công bệnh nhân - bác sĩ) còn ở giữa sẽ là thông tin tổng số các resource hiện đang có trên hệ thống
+ và biểu đồ thống kê số lượng người dùng đăng ký hệ thống theo tuần hoặc theo tháng
+
 
 \begin{figure}[H]
   \centering
@@ -842,7 +852,11 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \caption[Giao diện trang quản lý bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý bệnh nhân}
   \label{patient_list} %đặt tên cho ảnh
 \end{figure}
-
+Hình \ref{patient_list} mô tả giao diện trang quản lý bệnh nhân, trang này sẽ hiển thị  danh sách thông tin của
+ các bệnh nhân đang có trên hệ thống, bên cạnh đó khi tích vào mỗi bệnh nhân tương ứng sẽ có các 
+ lựa chọn để xem chi tiết thông tin bệnh nhân, cập nhật thông tin hay xóa thông tin. Và ở trang này 
+ sẽ có thêm các nút bấm để tạo mới thông tin bệnh nhân và filter để lọc các bệnh nhân theo các lựa 
+ chọn lọc tương ứng
 
 \begin{figure}[H]
   \centering
@@ -850,6 +864,9 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \caption[Giao diện trang quản lý bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý bác sĩ}
   \label{list_doctor} %đặt tên cho ảnh
 \end{figure}
+Hình \ref{list_doctor} mô tả giao diện trang quản lý bác sĩ, trang này sẽ có các chức năng tương tự 
+như trang quản lý bệnh nhân ở hình \ref{patient_list} nhưng có thông tin ở đây sẽ dành cho người 
+dùng có vai trò là bác sĩ
 
 \begin{figure}[H]
   \centering
@@ -857,30 +874,41 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \caption[Giao diện trang quản lý Admin]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý Admin}
   \label{admin_list} %đặt tên cho ảnh
 \end{figure}
+Hình \ref{admin_list} mô tả giao diện trang quản lý admin, trang này sẽ có các chức năng tương tự 
+như trang quản lý bệnh nhân ở hình \ref{patient_list} nhưng có thông tin ở đây sẽ dành cho người 
+dùng có vai trò là admin
 
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{Images/server/webUI/user_create.PNG}
-  \caption[Giao diện trang tạo thông tin người dùng(bệnh nhân, bác sĩ, admin)]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tạo thông tin người dùng(bệnh nhân, bác sĩ, admin)}
-  \label{admin_list} %đặt tên cho ảnh
+  \caption[Giao diện trang tạo thông tin người dùng (bệnh nhân, bác sĩ, admin)]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tạo thông tin người dùng (bệnh nhân, bác sĩ, admin)}
+  \label{user_create} %đặt tên cho ảnh
 \end{figure}
+Hình \ref{user_create} mô tả giao diện trang thêm thông tin người dùng (bệnh nhân, bác sĩ, admin), trang này sẽ chứa các trường
+ thông tin tên, email, số điện thoại, ngày sinh, mật khẩu để admin tạo tài khoản cho người dùng. Khi admin tạo xong thì sẽ nhấn nút Save để lưu dữ liệu. Với 
+ mỗi vai trò người dùng khác nhau sẽ là đường dẫn khác nhau để nhập thông tin người dùng với vai trò 
+ tương ứng, vậy nên ở trang này sẽ không có trường vai trò
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{Images/server/webUI/user_edit.PNG}
-  \caption[Giao diện trang cập nhật thông tin người dùng(bệnh nhân, bác sĩ, admin)]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang cập nhật thông tin người dùng(bệnh nhân, bác sĩ, admin)}
+  \caption[Giao diện trang cập nhật thông tin người dùng (bệnh nhân, bác sĩ, admin)]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang cập nhật thông tin người dùng (bệnh nhân, bác sĩ, admin)}
   \label{user_edit} %đặt tên cho ảnh
 \end{figure}
-
+Hình \ref{user_edit} mô tả giao diện trang cập nhật thông tin người dùng (bệnh nhân, bác sĩ, admin). 
+Trang này sẽ có các trường thông tin tên, email, số điện thoại, ngày sinh, mật khẩu. Trên các trường
+này sẽ hiển thị các thông tin trước đó của người dùng. Admin muốn cập nhật trường thông tin nào thì sẽ chọn 
+trường đó để cập nhật lại dữ liệu, sau khi cập nhật xong sẽ nhấn nút Save để lưu dữ liệu. Lưu ý trường email là trường không thể cập nhật
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{Images/server/webUI/doctor_show.PNG}
-  \caption[Giao diện trang xem thông tin người dùng(bệnh nhân, bác sĩ, admin)]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang xem thông tin người dùng(bệnh nhân, bác sĩ, admin)}
-  \label{user_edit} %đặt tên cho ảnh
+  \caption[Giao diện trang xem thông tin người dùng (bệnh nhân, bác sĩ, admin)]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang xem thông tin người dùng (bệnh nhân, bác sĩ, admin)}
+  \label{doctor_show} %đặt tên cho ảnh
 \end{figure}
-
+Hình \ref{doctor_show} mô tả giao diện trang xem thông tin người dùng (bệnh nhân, bác sĩ, admin), trang này sẽ chứa các thông tin của 
+người dùng. Trên trang này cũng có các nút Edit và Delete để cập nhật và xóa thông tin người dùng tương ứng
 
 
 \begin{figure}[H]
@@ -889,6 +917,11 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \caption[Giao diện trang quản lý tin tức]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý tin tức}
   \label{news_list} %đặt tên cho ảnh
 \end{figure}
+Hình \ref{news_list} mô tả giao diện trang quản lý tin tức, trang này sẽ hiển thị  danh sách thông tin của
+các tin tức có trên hệ thống, bên cạnh đó khi tích vào mỗi tin tức tương ứng sẽ có các 
+lựa chọn để xem chi tiết thông tin tin tức, cập nhật hay xóa tin tức. Và ở trang này 
+sẽ có thêm các nút bấm để tạo mới tin tức và filter để lọc các tin tức theo các lựa 
+chọn lọc tương ứng
 
 \begin{figure}[H]
   \centering
@@ -897,6 +930,11 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \label{news_show} %đặt tên cho ảnh
 \end{figure}
 
+Hình \ref{news_show} mô tả giao diện trang xem thông tin tin tức, trang này sẽ chứa các thông tin của 
+tin tức (ID tin tức, tên danh mục tin tức, tên tiêu đề, đường dẫn, tác giả, hình ảnh, 
+nội dung tin tức). Trên trang này cũng có các nút Edit và Delete để cập nhật và xóa tin tức tương ứng
+
+
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{Images/server/webUI/news_create.png}
@@ -904,14 +942,23 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \label{news_create} %đặt tên cho ảnh
 \end{figure}
 
+Hình \ref{news_create} mô tả giao diện trang thêm thông tin tin tức, trang này sẽ chứa các trường
+danh mục tin tức, tên tiêu đề, tác giả, hình ảnh, 
+nội dung tin tức để admin tạo tin tức. Ở trường nội dung tin tức 
+sẽ là trường thông tin đưới dạng richtext để admin có thể thêm chữ, hình ảnh hay thực hiện các thao tác chỉnh sửa cỡ chữ, giao diện ... để cho nội dung bài báo được đẹp, dễ nhìn. Khi admin tạo xong thì sẽ nhấn nút Save để lưu dữ liệu.
+
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{Images/server/webUI/news_edit.PNG}
   \caption[Giao diện trang cập nhật thông tin tin tức]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang cập nhật thông tin tin tức}
-  \label{news_show} %đặt tên cho ảnh
+  \label{news_edit} %đặt tên cho ảnh
 \end{figure}
-
+Hình \ref{news_edit} mô tả giao diện trang cập nhật tin tức.  
+Trang này sẽ có các trường thông tin danh mục tin tức, tên tiêu đề, tác giả, hình ảnh, 
+nội dung tin tức. Trên các trường
+này sẽ hiển thị các thông tin trước đó. Admin muốn cập nhật trường thông tin nào thì sẽ chọn 
+trường đó để cập nhật lại dữ liệu, sau khi cập nhật xong sẽ nhấn nút Save để lưu dữ liệu.
 
 \begin{figure}[H]
   \centering
@@ -919,6 +966,12 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \caption[Giao diện trang quản lý danh mục tin tức]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý danh mục tin tức}
   \label{news_category_list} %đặt tên cho ảnh
 \end{figure}
+Hình \ref{news_category_list} mô tả giao diện trang quản lý danh mục tin tức, trang này sẽ hiển thị danh sách thông tin của
+các danh mục tin tức có trên hệ thống, bên cạnh đó khi tích vào mỗi danh mục tin tức tương ứng sẽ có các 
+lựa chọn để xem chi tiết thông tin danh mục tin tức, cập nhật hay xóa danh mục tin tức. Và ở trang này 
+sẽ có thêm các nút bấm để tạo mới danh mục tin tức và filter để lọc các tin tức theo các lựa 
+chọn lọc tương ứng
+
 
 
 \begin{figure}[H]
@@ -927,6 +980,8 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \caption[Giao diện trang xem thông tin danh mục tin tức]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang xem thông tin danh mục tin tức}
   \label{news_category_show} %đặt tên cho ảnh
 \end{figure}
+Hình \ref{news_category_show} mô tả giao diện trang xem thông tin danh mục tin tức, trang này sẽ chứa các thông tin của 
+danh mục tin tức (ID danh mục tin tức, tên danh mục tin tức, mô tả). Trên trang này cũng có các nút Edit và Delete để cập nhật và xóa danh mục tin tức tương ứng
 
 
 \begin{figure}[H]
@@ -935,6 +990,8 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \caption[Giao diện trang tạo thông tin danh mục tin tức]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang tạo thông tin danh mục tin tức}
   \label{news_category_create} %đặt tên cho ảnh
 \end{figure}
+Hình \ref{news_category_create} mô tả giao diện trang thêm danh mục tin tức, trang này sẽ chứa các trường
+tên danh mục tin tức, mô tả để admin tạo danh mục tin tức. Khi admin tạo xong thì sẽ nhấn nút Save để lưu dữ liệu.
 
 \begin{figure}[H]
   \centering
@@ -942,7 +999,10 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \caption[Giao diện trang cập nhật thông tin danh mục tin tức]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang cập nhật thông tin danh mục tin tức}
   \label{news_category_edit} %đặt tên cho ảnh
 \end{figure}
-
+Hình \ref{news_category_edit} mô tả giao diện trang cập nhật danh mục tin tức.  
+Trang này sẽ có các trường thông tin tên danh mục tin tức, mô tả. Trên các trường
+này sẽ hiển thị các thông tin trước đó. Admin muốn cập nhật trường thông tin nào thì sẽ chọn 
+trường đó để cập nhật lại dữ liệu, sau khi cập nhật xong sẽ nhấn nút Save để lưu dữ liệu.
 
 \begin{figure}[H]
   \centering
@@ -950,6 +1010,11 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \caption[Giao diện trang quản lý phiên đo ECG]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý phiên đo ECG}
   \label{ecg_record_list} %đặt tên cho ảnh
 \end{figure}
+Hình \ref{ecg_record_list} mô tả giao diện trang quản lý phiên đo ECG, trang này sẽ hiển thị danh sách thông tin của
+các phiên đo ECG có trên hệ thống, bên cạnh đó khi tích vào phiên đo ECG tương ứng sẽ có các 
+lựa chọn để xem chi tiết thông tin phiên đo ECG, xóa danh mục tin tức. Và ở trang này 
+sẽ có nút bấm để lọc các phiên đo ECG theo các lựa 
+chọn lọc tương ứng
 
 \begin{figure}[H]
   \centering
@@ -957,6 +1022,11 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \caption[Giao diện trang xem thông tin phiên đo ECG]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang xem thông tin phiên đo ECG}
   \label{ecg_record_show} %đặt tên cho ảnh
 \end{figure}
+Hình \ref{ecg_record_show} mô tả giao diện trang xem thông tin phiên đo ECG, trang này sẽ chứa các thông tin của 
+phiên đo ECG (ID phiên đo, email bệnh nhân, ID thiết bị, thời 
+gian bắt đầu đo, thời gian kết thúc đo, loại cảm biến, dữ liệu đo). 
+Trên trang này cũng có các nút Delete và Export data để xóa và tải
+ dữ liệu phiên đo ECG tương ứng.
 
 
 \begin{figure}[H]
@@ -965,6 +1035,12 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \caption[Giao diện trang quản lý danh sách phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý danh sách phân công bệnh nhân - bác sĩ}
   \label{pat_doc_list} %đặt tên cho ảnh
 \end{figure}
+Hình \ref{pat_doc_list} mô tả giao diện trang quản lý dữ liệu phân công bệnh nhân - bác sĩ, trang này sẽ hiển thị danh sách thông tin của
+các dữ liệu phân công có trên hệ thống, bên cạnh đó khi tích vào mỗi dữ liệu phân công tương ứng sẽ có các 
+lựa chọn để xem chi tiết thông tin dữ liệu phân công, xóa danh mục dữ liệu phân công. Và ở trang này 
+sẽ có thêm các nút bấm để tạo mới dữ liệu phân công và filter để lọc các dữ liệu phân công theo các lựa 
+chọn lọc tương ứng
+
 
 \begin{figure}[H]
   \centering
@@ -972,6 +1048,10 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \caption[Giao diện trang xem thông tin phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang xem thông tin phân công bệnh nhân - bác sĩ}
   \label{pat_doc_show} %đặt tên cho ảnh
 \end{figure}
+Hình \ref{pat_doc_show} mô tả giao diện trang xem thông tin dữ liệu phân công bệnh nhân - bác sĩ, trang này sẽ chứa các thông tin của 
+dữ liệu phân công bệnh nhân - bác sĩ (ID , email bệnh nhân, email bác sĩ, thời 
+gian bắt đầu phân công). 
+Trên trang này cũng có các nút Edit và Delete để cập nhật và xóa dữ liệu phân công tương ứng
 
 \begin{figure}[H]
   \centering
@@ -980,28 +1060,28 @@ Dưới đây là các giao diện thực tế mà chúng em thiết kế cho tr
   \label{pat_doc_create} %đặt tên cho ảnh
 \end{figure}
 
+Hình \ref{pat_doc_create} mô tả giao diện trang thêm dữ liệu phân công bệnh nhân - bác sĩ, trang này sẽ chứa các trường
+email bệnh nhân, email bác sĩ, thời 
+gian bắt đầu phân công để admin tạo dữ liệu phân công. Khi admin tạo xong thì sẽ nhấn nút Save để lưu dữ liệu.
+
 
 
 \subsection{Sơ đồ lớp cho ứng dụng di động, website và server}
 
 \subsubsection{Ứng dụng di động}
 
-
 Ứng dụng di động được tổ chức theo mô hình MVC, với ba khối chính là Models, Views và Controllers:
-  
+\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item Khối "Models": Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu.
- 
-  \item Khối "Controllers": Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng.
-
-  \item Khối "Views": Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng.
+  \item Khối "Models": Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu
+  \item Khối "Controllers": Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng
+  \item Khối "Views": Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng
 \end{itemize}
-
+\end{adjustwidth}
 Chi tiết từng lớp và phần giải thích cho mỗi khối được chúng em thể hiện bằng hình và lời trong các mục bên dưới. 
 
 \begin{enumerate}[a)]
   \item Danh sách các class diagram cho ứng dụng di động
-    
 
   \begin{figure}[H]
     \centering
@@ -1150,15 +1230,21 @@ Chi tiết từng lớp và phần giải thích cho mỗi khối được chún
   \caption[Mối quan hệ giữa các class ở phía server]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía server}
   \label{class_relation} %đặt tên cho ảnh
 \end{figure}
-
-
+Hình \ref{class_relation} mô tả mối quan hệ giữa các class ở phía server để cung cấp API 
+Các class ở package Controllers sử dụng  đối tượng của các class ở package Models. 
+Và tương tự các class ở package Routes cũng sử dụng  đối tượng của các class ở package Controllers.
+ 
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm,height=15cm]{Images/server/class/class_admin_relation.png}
   \caption[Mối quan hệ giữa các class ở phía website quản trị]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía website quản trị}
   \label{class_admin_relation} %đặt tên cho ảnh
 \end{figure}
-
+Hình \ref{class_admin_relation} mô tả mối quan hệ giữa các class ở phía website quản trị. 
+Các class ở package Resources sử dụng  đối tượng của các class ở package Models. 
+Class ở package Components sử dụng  đối tượng của các class ở package Views. 
+Rồi class AdminController ở package Controllers sử dụng  đối tượng của các class ở package Resources và Components. 
+Và class AdminRoute ở package Routes sử dụng  đối tượng của class AdminController
 \end{enumerate}
 
 
@@ -1642,7 +1728,6 @@ kế việc lưu dữ liệu đăng nhập.
 
 \subsubsection{Chức năng kết nối và nhận/lưu dữ liệu từ thiết bị điện tim}
 \mbox{}
-
 Chức năng kết nối và thực hiện đo với thiết bị điện tim là một trong những chức năng quan trọng nhất của ứng dụng. Chức năng này yêu cầu
 ứng dụng phải bật được bluetooth. Đầu tiên để có thể tiến hành đo, chúng ta phải thực hiện một kết nối bluetooth giữa ứng dụng di động và
 thiết bị đo điện tim. Sau khi dã kết nối thành công, dựa vào cơ chế của bluetooth low energy \cite{intro_ble}, chúng ta sẽ thiết lập để ứng dụng lắng

@@ -4,6 +4,7 @@
 \usepackage[T5]{fontenc} % để sử dụng tiếng việt
 \usepackage[fontsize=13pt]{scrextend} % set fontsize =13pt
 \usepackage[paperheight=29.7cm,paperwidth=21cm,right=2cm,left=3cm,top=2cm,bottom=2.5cm]{geometry} % chuẩn A4, căn lề trái phải trên dưới
+% \usepackage[paperheight=29.7cm,paperwidth=21cm,right=2cm,left=3cm,top=2cm,bottom=2.5cm,twoside]{geometry}% Chuẩn A4, căn lề phải, trái, trên, dưới.
 \usepackage{mathptmx} %timenewRoman
 \usepackage{graphicx} % thư viện chèn ảnh 
 \usepackage{float} % set vị trí chèn ảnh 
@@ -12,7 +13,8 @@
 \usepackage{changepage}
 \usepackage{amsmath}
 \usepackage{xltabular}
-
+\usepackage{setspace}
+\usepackage{pdfpages}
 \usepackage{multirow}
 % \usepackage{graphicx}
 % \usepackage[table,xcdraw]{xcolor}
@@ -92,21 +94,25 @@
   tabsize=3
 }
 
-
-
-
 \begin{document}
 
 \input{Cover/cover.tex}
-\input{Chapter/evaluation.tex}
+% \includepdf[pages={1},scale=1]{PDF/SEEE_Evaluation_Dong_Minh_Thai.pdf}
+\includepdf[pages={1},scale=1]{PDF/SEEE_Evaluation_Hoang_Anh_Tuan.pdf}
+\cleardoublepage
+
+\includepdf[pages={1},scale=1]{PDF/SEEE_Danhgia2-anh_Tuan.pdf}
+\cleardoublepage
 
 \input{Chapter/prologue.tex}
 \input{Chapter/declaration.tex}
 \input{Chapter/assign.tex}
+
 \input{Chapter/table_of_content.tex}
 \input{Chapter/summary.tex}
 \input{Chapter/introduction.tex}
 
+\pagenumbering{arabic}
 \input{Chapter/chapter1.tex}
 \input{Chapter/chapter2.tex}
 \input{Chapter/chapter3.tex}

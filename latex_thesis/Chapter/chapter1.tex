@@ -4,56 +4,44 @@
 \setcounter{subsection}{0} %LƯU Ý MỖI LẦN THÊM CHƯƠNG MỚI CẦN THÊM CÂU NÀY ĐỂ RESET THỨ TỰ CỦA SUBSECTON VỀ 1
 \setcounter{table}{0} % LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
-\addcontentsline{toc}{section}
-% \addcontentsline{toc}{section}
-{\numberline{}CHƯƠNG 1. PHÂN TÍCH HỆ THỐNG}
-Trong chương này, chúng em sẽ tiến hành phân tích hệ thống cho dự án đề tài "Hệ thống quản lý ECG" dựa trên các mục tiêu
-đã nêu ra trong Mục Đề xuất hệ thống ở Phần mở đầu. Trước tiên bài toán đặt ra ở hệ thống phần mềm điện tim là có thể có:
+\addcontentsline{toc}{section}{\numberline{}CHƯƠNG 1. PHÂN TÍCH HỆ THỐNG}
+Trong chương này, chúng em sẽ tiến hành phân tích hệ thống cho dự án đề tài "Hệ thống theo dõi và quản lý dữ liệu điện tim" dựa trên các mục tiêu
+đã nêu ra trong Mục Đề xuất hệ thống ở Phần mở đầu. Trước tiên bài toán đặt ra ở hệ thống là:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item Một thiết bị để có thể giúp mẹ bầu đo được những thông tin cần thiết
+  \item Một ứng dụng để có thể giúp người dùng/bệnh nhân theo dõi được những thông tin cần về sức khoẻ tim mạch
   \item Trực quan và tiêu chuẩn hoá những thông tin đo được
-    bằng hình ảnh hoặc số liệu để bác sĩ có thể dựa vào đó để đưa ra những đánh giá cho mẹ bầu. Ngoài ra những thông tin này
+    bằng hình ảnh hoặc số liệu để bác sĩ có thể dựa vào đó để đưa ra những đánh giá cho người dùng. Ngoài ra những thông tin này
     có thể hữu ích trong việc theo dõi sức khỏe tim mạch, theo dõi hiệu quả của liệu pháp 
     và hỗ trợ quyết định của người dùng
   \item Quản trị viên sẽ là người có thể phân công bác sĩ để chăm sóc, theo dõi sức khoẻ từ
-  xa cho mẹ bầu. 
+  xa cho bệnh nhân
 \end{itemize}
 \end{adjustwidth}
 Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được chúng em trình bày ở các chương dưới.
-
 
 \subsection{Yêu cầu hệ thống}
 \subsubsection{Yêu cầu về người dùng hệ thống}
 Hệ thống được thiết kế để phục vụ các đối tượng sau:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-    \item Bệnh nhân: Người sử dụng hệ thống để thực hiện kiểm tra ECG thông qua Bluetooth và theo dõi sức khỏe của mình. Bệnh nhân có quyền truy cập vào kết quả ECG của mình, được một bác sĩ theo dõi và có thể theo dõi các thông tin liên quan đến điện tim và sức khoẻ.
-    \item Bác sĩ: Người sử dụng hệ thống để xem và đánh giá kết quả ECG của bệnh nhân, đưa ra nhận xét và đề xuất điều trị. Bác sĩ có thể trao đổi với bệnh nhân và gửi thông báo quan trọng liên quan đến chăm sóc sức khỏe.
-    \item Quản trị viên: Người sử dụng hệ thống để quản lý các tài khoản người dùng, phân công bệnh nhân cho bác sĩ và quản lý mối quan hệ giữa bác sĩ và bệnh nhân.
+    \item Bệnh nhân: Người sử dụng hệ thống để thực hiện theo dõi dữ liệu điện tim thông qua Bluetooth. Bệnh nhân có quyền truy cập vào kết quả ECG của mình, có thể được một bác sĩ phụ trách và theo dõi các thông tin liên quan đến điện tim và sức khoẻ
+    \item Bác sĩ: Người sử dụng hệ thống để xem và đánh giá kết quả dữ liệu điện tim của bệnh nhân, đưa ra nhận xét và đề xuất điều trị. Bác sĩ có thể trao đổi với bệnh nhân thông qua tin nhắn và gửi thông báo quan trọng liên quan đến chăm sóc sức khỏe
+    \item Quản trị viên: Người sử dụng hệ thống để quản lý các tài khoản người dùng, phân công bệnh nhân cho bác sĩ và quản lý mối quan hệ giữa bác sĩ và bệnh nhân, quản lý các bản dữ liệu đo
 \end{itemize}
 \end{adjustwidth}
 
 \subsubsection{Yêu cầu chức năng}
-Các chức năng chính của hệ thống bao gồm: 
+Các chức năng chính của hệ thống bao gồm:
 \begin{adjustwidth}{1.5em}{}
   \begin{itemize}
-      \item Ghi lại dữ liệu điện tim: Hệ thống cho phép ghi lại tín hiệu điện tim từ máy đo ECG (Electrocardiogram) hay thiết bị đo điện tim khác. Dữ liệu được chuyển tới ứng dụng của người dùng thông qua Bluetooth để lưu trữ, phân tích và có thể xem lại sau này.
-  
-      \item Hiển thị và phân tích dữ liệu: Hệ thống hiển thị dữ liệu điện tim theo dạng đồ thị. Hệ thống cũng hỗ trợ xuất ra các tệp đã được chuẩn hoá cho các dữ liệu chuỗi thời gian (time-series database) để phục vụ mục đích phân tích và nghiên cứu sâu hơn.
-  
-      \item Lưu trữ: Hệ thống hỗ trợ lưu dữ liệu mà người dùng đo được từ thiết bị trên cả ứng dụng và trên server của hệ thống. Dữ liệu điện tim cũng được đồng bộ hóa và lưu trữ trên máy chủ của hệ thống. Qua quá trình đồng bộ hóa, dữ liệu từ ứng dụng được truyền đến máy chủ và được lưu trữ an toàn và bảo mật trên hệ thống. Việc lưu trữ dữ liệu điện tim trên cả ứng dụng và máy chủ giúp đảm bảo rằng dữ liệu quan trọng này được lưu trữ một cách đáng tin cậy và có sẵn cho phân tích hoặc sử dụng tương lai.
-  
-      \item Trao đổi và chia sẻ thông tin về dữ liệu điện tim: Hệ thống giúp người dùng có thể trao đổi trực tiếp với nhau, chia sẻ kết quả đo điện tim, hỏi đáp về các vấn đề sức khỏe hoặc thảo luận về các quyết định. Điều này mang lại sự tiện lợi và hỗ trợ đáng kể cho người dùng trong việc xác định về tình trạng sức khoẻ hiện tại của bản thân.
+      \item Ghi lại dữ liệu điện tim: Hệ thống cho phép ghi lại tín hiệu điện tim từ máy đo ECG (Electrocardiogram) hay thiết bị đo điện tim khác với dữ liệu được truyền qua Bluetooth. Dữ liệu được chuyển tới ứng dụng của người dùng thông qua Bluetooth để lưu trữ, phân tích và có thể xem lại sau này
+      \item Hiển thị và phân tích dữ liệu: Hệ thống hiển thị dữ liệu điện tim theo dạng đồ thị. Hệ thống cũng hỗ trợ xuất ra các tệp đã được chuẩn hoá cho các dữ liệu chuỗi thời gian (time-series database) để phục vụ mục đích phân tích và nghiên cứu sâu hơn
+      \item Lưu trữ: Hệ thống hỗ trợ lưu dữ liệu mà người dùng đo được từ thiết bị trên cả ứng dụng và trên server của hệ thống. Dữ liệu điện tim cũng được đồng bộ hóa và lưu trữ trên máy chủ của hệ thống. Qua quá trình đồng bộ hóa, dữ liệu từ ứng dụng được truyền đến máy chủ và được lưu trữ an toàn và bảo mật trên hệ thống. Việc lưu trữ dữ liệu điện tim trên cả ứng dụng và máy chủ giúp đảm bảo rằng dữ liệu quan trọng này được lưu trữ một cách đáng tin cậy và có sẵn cho phân tích hoặc sử dụng tương lai
+      \item Trao đổi và chia sẻ thông tin về dữ liệu điện tim: Hệ thống giúp người dùng có thể trao đổi trực tiếp với nhau, chia sẻ kết quả đo điện tim, hỏi đáp về các vấn đề sức khỏe hoặc thảo luận về các quyết định. Điều này mang lại sự tiện lợi và hỗ trợ đáng kể cho người dùng trong việc xác định về tình trạng sức khoẻ hiện tại của bản thân
   \end{itemize}
-  \end{adjustwidth}
-  
-  
-
-  
-  
-Hệ thống hỗ trợ các chức năng cơ bản sau đối với người dùng:
-
+\end{adjustwidth}
+% Hệ thống hỗ trợ các chức năng cơ bản sau đối với người dùng:
 \textbf{Đối với người dùng là bệnh nhân:}
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
@@ -62,7 +50,7 @@ Hệ thống hỗ trợ các chức năng cơ bản sau đối với người d�
     \item Được theo dõi điện tim trực tiếp khi kết nối ứng dụng di động với thiết bị đo điện tim thông qua Bluetooth
     \item Xem kết quả ECG của mình, bao gồm biểu đồ và các thông số liên quan
     \item Theo dõi các tin tức liên quan đến sức khoẻ và tim mạch
-    \item Nhận thông báo và có thể trao đổi trực tiếp với bác sĩ về tình hình sức khoẻ và các kết quả đo được từ thiết bị.
+    \item Nhận thông báo và có thể trao đổi trực tiếp với bác sĩ về tình hình sức khoẻ và các kết quả đo được từ thiết bị
 \end{itemize}
 \end{adjustwidth}
 \textbf{Đối với người dùng là bác sĩ:}
@@ -72,7 +60,7 @@ Hệ thống hỗ trợ các chức năng cơ bản sau đối với người d�
     \item Cập nhật các thông tin cá nhân
     \item Xem danh sách bệnh nhân được phân công cho mình và xem kết quả ECG của từng bệnh nhân
     \item Đánh giá và đưa ra nhận xét về kết quả ECG của bệnh nhân
-    \item Trao đổi các thông tin liên quan đến tình hình sức khoẻ và kết quả đo của bệnh nhân.
+    \item Trao đổi các thông tin liên quan đến tình hình sức khoẻ và kết quả đo của bệnh nhân
 \end{itemize}
 \end{adjustwidth}
 \textbf{Đối với người dùng là quản trị viên:}
@@ -83,22 +71,23 @@ Hệ thống hỗ trợ các chức năng cơ bản sau đối với người d�
     \item Quản lý danh sách người dùng trong hệ thống, bao gồm bệnh nhân và bác sĩ
     \item Phân công bệnh nhân cho các bác sĩ và quản lý mối quan hệ giữa bác sĩ và bệnh nhân
     \item Quản lý các bản ghi dữ liệu điện tim của bệnh nhân
-    \item Quản lý các tin tức được đăng trên ứng dụng của người dùng.
+    \item Quản lý các tin tức được đăng trên ứng dụng của người dùng
 \end{itemize}
 \end{adjustwidth}
+
 \subsubsection{Yêu cầu phi chức năng}
 \begin{itemize}
     \item Hệ thống hỗ trợ ngôn ngữ Tiếng Việt và Tiếng Anh
     \item Hệ thống có thể tương thích với các loại thiết bị phổ biến hiện nay (với Android: Android 10+, IOS: IOS > 12.1)
     \item Hệ thống đảm bảo tính bảo mật và quyền riêng tư thông tin của người dùng
     \item Hệ thống phải có giao diện người dùng thân thiện, dễ sử dụng để có thể tương tác mà không gặp quá nhiều khó khăn
-    \item Thời gian phản hồi của hệ thống phải nhanh chóng và ổn định.
+    \item Thời gian phản hồi của hệ thống phải nhanh chóng và ổn định
     % \item Hệ thống cần sao lưu dữ liệu định kỳ để đảm bảo tính an toàn và khả năng khôi phục dữ liệu khi cần thiết.
 \end{itemize}
 
 Thông qua việc phân tích yêu cầu hệ thống, chúng ta có cái nhìn tổng quan về các chức năng, yêu cầu phi chức năng và 
 các đối tượng người dùng mà hệ thống phải hỗ trợ. Phần phân tích này sẽ cung cấp cơ sở cho việc thiết kế và phát triển hệ thống quản lý ECG, 
-đáp ứng đầy đủ các yêu cầu của người dùng và đảm bảo hiệu suất, bảo mật và tính khả dụng của hệ thống.
+đáp ứng đầy đủ các yêu cầu của người dùng và đảm bảo hiệu suất, bảo mật và tính khả dụng của hệ thống
 % \subsection{Phân tích tổng quan hệ thống}
 
 \subsection{Sơ đồ use case}
@@ -115,7 +104,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
 \subsubsection{Use case chức năng đăng ký tài khoản}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/use_case/use_case_register.png}
+    \includegraphics[width=12cm,height=4.8cm]{Images/use_case/use_case_register.png}
     \caption[Sơ đồ use case chức năng đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ use case chức năng đăng ký tài khoản}
     \label{use_case_register} %đặt tên cho ảnh
@@ -146,7 +135,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
 \subsubsection{Use case chức năng quên mật khẩu}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/use_case/use_case_forgot_password.png}
+    \includegraphics[width=12cm,height=4.8cm]{Images/use_case/use_case_forgot_password.png}
     \caption[Sơ đồ use case chức năng quên mật khẩu]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ use case chức năng quên mật khẩu}
     \label{use_case_forgot_password} %đặt tên cho ảnh
@@ -176,7 +165,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
 \subsubsection{Use case chức năng đăng nhập}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/use_case/use_case_login.png}
+    \includegraphics[width=12cm,height=4.8cm]{Images/use_case/use_case_login.png}
     \caption[Sơ đồ use case chức năng đăng nhập/đăng xuất]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ use case chức năng đăng nhập/đăng xuất}
     \label{use_case_login} %đặt tên cho ảnh
@@ -207,7 +196,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
 \subsubsection{Use case chức năng xem lịch sử các lần đo}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/use_case/use_case_view_history_record.png}
+    \includegraphics[width=12cm,height=4.8cm]{Images/use_case/use_case_view_history_record.png}
     \caption[Sơ đồ use case chức năng xem lịch sử các lần đo]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ use case chức năng xem lịch sử các lần đo}
     \label{use_case_view_history_record} %đặt tên cho ảnh
@@ -239,7 +228,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
 \subsubsection{Use case chức năng quản lý thông tin cá nhân}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/use_case/use_case_manage_info.png}
+    \includegraphics[width=12cm,height=4.8cm]{Images/use_case/use_case_manage_info.png}
     \caption[Sơ đồ use case chức năng quản lý thông tin cá nhân]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ use case chức năng quản lý thông tin cá nhân}
     \label{use_case_manage_info} %đặt tên cho ảnh
@@ -271,7 +260,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
 \subsubsection{Use case chức năng quản lý dịch vụ nhắn tin}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/use_case/use_case_send_receive_message.png}
+    \includegraphics[width=12cm,height=4.8cm]{Images/use_case/use_case_send_receive_message.png}
     \caption[Sơ đồ use case chức năng quản lý dịch vụ nhắn tin]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ use case chức năng quản lý dịch vụ nhắn tin}
     \label{use_case_send_receive_message} %đặt tên cho ảnh
@@ -302,7 +291,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
 \subsubsection{Use case chức năng quản lý đo điện tim}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/use_case/use_case_measure_ecg.png}
+    \includegraphics[width=12cm,height=4.8cm]{Images/use_case/use_case_measure_ecg.png}
     \caption[Sơ đồ use case chức năng quản lý đo điện tim]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ use case chức năng quản lý đo điện tim}
     \label{use_case_measure_ecg} %đặt tên cho ảnh
@@ -332,7 +321,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
 \subsubsection{Use case chức năng quản lý dịch vụ Bluetooth}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/use_case/use_case_bluetooth.png}
+    \includegraphics[width=12cm,height=4.8cm]{Images/use_case/use_case_bluetooth.png}
     \caption[Sơ đồ use case chức năng quản lý dịch vụ Bluetooth]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ use case chức năng quản lý dịch vụ Bluetooth}
     \label{use_case_bluetooth} %đặt tên cho ảnh
@@ -373,7 +362,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \centering
     \begin{tabularx}{0.9\textwidth}{|c|X|}
       \hline
-      \textbf{Tên chức năng} & \textbf{quản lý bài đăng và nhãn bài đăng} \\
+      \textbf{Tên chức năng} & \textbf{Quản lý bài đăng và nhãn bài đăng} \\
       \hline
       Tác nhân & Bệnh nhân, Quản trị viên \\
       \hline
@@ -483,7 +472,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
 \subsubsection{Use case chức năng quản lý phân công bác sĩ - bệnh nhân}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm,height=6cm]{Images/use_case/use_case_assign_doctor.png}
+    \includegraphics[width=12cm,height=4.8cm]{Images/use_case/use_case_assign_doctor.png}
     \caption[Sơ đồ use case chức năng quản lý phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ use case chức năng quản lý phân công bác sĩ - bệnh nhân}
     \label{use_case_assign_doctor} %đặt tên cho ảnh
@@ -494,7 +483,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \centering
     \begin{tabularx}{0.9\textwidth}{|c|X|}
       \hline
-      \textbf{Tên chức năng} & \textbf{quản lý phân công bác sĩ - bệnh nhân} \\
+      \textbf{Tên chức năng} & \textbf{Quản lý phân công bác sĩ - bệnh nhân} \\
       \hline
       Tác nhân & Quản trị viên \\
       \hline
@@ -511,14 +500,14 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
   \end{table}
 
-\newpage
+% \newpage
 \subsection{Sơ đồ tuần tự}
 Để phân tích cụ thể hơn từng luồng trong hệ thống qua use case, chúng em xin phép được trình bày các sơ đồ tuần
 tự. 
 \subsubsection{Sơ đồ tuần tự chức năng đăng ký}
   \begin{figure}[H]
         \centering
-        \includegraphics[width=16cm,height=12cm]{Images/mobile_app/register.png}
+        \includegraphics[width=12.9cm,height=9.4cm]{Images/mobile_app/register.png}
         \caption[Sơ đồ tuần tự chức năng đăng ký trên App]{\bfseries \fontsize{12pt}{0pt}
         \selectfont Sơ đồ tuần tự chức năng đăng ký trên App}
         \label{register} %đặt tên cho ảnh
@@ -557,7 +546,7 @@ sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hi�
 
   \begin{figure}[H]
         \centering
-        \includegraphics[width=16cm,height=12cm]{Images/mobile_app/forgot_password.png}
+        \includegraphics[width=12.9cm,height=10cm]{Images/mobile_app/forgot_password.png}
         \caption[Sơ đồ tuần tự chức năng quên mật khẩu trên App]{\bfseries \fontsize{12pt}{0pt}
         \selectfont Sơ đồ tuần tự chức năng quên mật khẩu trên App}
         \label{forgot_password} %đặt tên cho ảnh
@@ -571,7 +560,7 @@ sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hi�
 
     \begin{figure}[H]
          \centering
-         \includegraphics[width=16cm,height=11cm]{Images/mobile_app/view_record_timeline.png}
+         \includegraphics[width=12cm,height=6cm]{Images/mobile_app/view_record_timeline.png}
          \caption[Sơ đồ tuần tự chức năng xem lịch sử các lần đo trên App]{\bfseries \fontsize{12pt}{0pt}
          \selectfont Sơ đồ tuần tự chức năng xem lịch sử các lần đo trên App}
          \label{view_record_timeline} %đặt tên cho ảnh
@@ -586,7 +575,7 @@ sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hi�
 
   \begin{figure}[H]
         \centering
-        \includegraphics[width=16cm,height=11cm]{Images/mobile_app/change_user_information.png}
+        \includegraphics[width=12cm,height=6cm]{Images/mobile_app/change_user_information.png}
         \caption[Sơ đồ tuần tự chức năng thay đổi thông tin cá nhân trên App]{\bfseries \fontsize{12pt}{0pt}
         \selectfont Sơ đồ tuần tự chức năng thay đổi thông tin cá nhân trên App}
         \label{change_user_information} %đặt tên cho ảnh
@@ -600,7 +589,7 @@ sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hi�
 
   \begin{figure}[H]
         \centering
-        \includegraphics[width=16cm,height=11cm]{Images/mobile_app/change_password.png}
+        \includegraphics[width=16cm,height=9cm]{Images/mobile_app/change_password.png}
         \caption[Sơ đồ tuần tự chức năng đổi mật khẩu trên App]{\bfseries \fontsize{12pt}{0pt}
         \selectfont Sơ đồ tuần tự chức năng đổi mật khẩu trên App}
         \label{change_password} %đặt tên cho ảnh
@@ -628,7 +617,7 @@ sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hi�
 
   \begin{figure}[H]
         \centering
-        \includegraphics[width=16cm,height=11cm]{Images/mobile_app/view_news.png}
+        \includegraphics[width=15cm,height=8cm]{Images/mobile_app/view_news.png}
         \caption[ Sơ đồ tuần tự chức năng xem bài đăng tin tứctrên App]{\bfseries \fontsize{12pt}{0pt}
         \selectfont Sơ đồ tuần tự chức năng xem bài đăng tin tức trên App}
         \label{view_news} %đặt tên cho ảnh
@@ -643,7 +632,7 @@ sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hi�
 
   \begin{figure}[H]
         \centering
-        \includegraphics[width=16cm,height=12cm]{Images/mobile_app/turn_on_off_bluetooth.png}
+        \includegraphics[width=14cm,height=10cm]{Images/mobile_app/turn_on_off_bluetooth.png}
         \caption[Sơ đồ tuần tự chức năng bật/tắt Bluetooth trên App]{\bfseries \fontsize{12pt}{0pt}
         \selectfont Sơ đồ tuần tự chức năng bật/tắt Bluetooth trên App}
         \label{turn_on_off_bluetooth} %đặt tên cho ảnh
@@ -656,7 +645,7 @@ sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hi�
 
   \begin{figure}[H]
         \centering
-        \includegraphics[width=16cm,height=10cm]{Images/mobile_app/connect_with_device.png}
+        \includegraphics[width=14cm,height=6cm]{Images/mobile_app/connect_with_device.png}
         \caption[Sơ đồ tuần tự chức năng kết nối Bluetooth với thiết bị đo điện tim trên App]{\bfseries \fontsize{12pt}{0pt}
         \selectfont Sơ đồ tuần tự chức năng kết nối Bluetooth với thiết bị đo điện tim trên App}
         \label{connect_with_device} %đặt tên cho ảnh
@@ -670,7 +659,7 @@ sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hi�
 
   \begin{figure}[H]
         \centering
-        \includegraphics[width=16cm,height=9cm]{Images/mobile_app/disconnect_with_device.png}
+        \includegraphics[width=12cm,height=3.5cm]{Images/mobile_app/disconnect_with_device.png}
         \caption[Sơ đồ tuần tự chức năng ngắt kết nối Bluetooth với thiết bị đo điện tim trên App]{\bfseries \fontsize{12pt}{0pt}
         \selectfont Sơ đồ tuần tự chức năng ngắt kết nối Bluetooth với thiết bị đo điện tim trên App}
         \label{disconnect_with_device} %đặt tên cho ảnh
@@ -698,7 +687,7 @@ sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hi�
 
   \begin{figure}[H]
         \centering
-        \includegraphics[width=16cm,height=9cm]{Images/mobile_app/end_measuring_ecg.png}
+        \includegraphics[width=12cm,height=5cm]{Images/mobile_app/end_measuring_ecg.png}
         \caption[Sơ đồ tuần tự chức năng kết thúc quá trình đo điện tim trên App]{\bfseries \fontsize{12pt}{0pt}
         \selectfont Sơ đồ tuần tự chức năng kết thúc quá trình đo điện tim trên App}
         \label{end_measuring_ecg} %đặt tên cho ảnh
