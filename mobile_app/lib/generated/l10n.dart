@@ -89,14 +89,7 @@ class S {
       args: [],
     );
   }
-  String get parameters {
-    return Intl.message(
-      'Parameters',
-      name: 'Parameters',
-      desc: '',
-      args: [],
-    );
-  }
+
   /// `History`
   String get history {
     return Intl.message(

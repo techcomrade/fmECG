@@ -8,6 +8,8 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+  final TextEditingController _phoneController = TextEditingController();
+  bool _isEditing = false;
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController  = TextEditingController();
   TextEditingController _bioController = TextEditingController();
@@ -76,6 +78,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 prefixIcon: Icon(Icons.location_on),
               ),
             ),
+
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {

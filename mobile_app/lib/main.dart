@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:telephony/telephony.dart';
 import 'package:bluetooth_ecg/constants/theme.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
@@ -18,7 +18,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
 import 'screens/auth_screens/login1_screen.dart';
 
 @pragma('vm:entry-point')
