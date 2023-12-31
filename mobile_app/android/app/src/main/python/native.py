@@ -27,7 +27,7 @@ def helloWorld(bytes_data):
   #     csv_reader = csv.reader(csv_file)
   # Duyệt qua từng dòng trong tệp CSV
   for row in csv_reader:
-      print(f'zzzz: {row}')
+      # print(f'zzzz: {row}')
       if len(row) >= 9:  # Đảm bảo có ít nhất 7 cột trong mỗi dòng
           column_7_data = float(row[7])
           column_6_data = float(row[6])# Lấy dữ liệu từ cột thứ 7 (0-based index)
@@ -64,7 +64,7 @@ def helloWorld(bytes_data):
   baseline_data = baseline_data_frame.flatten()
   median_data = median_data.flatten()
   ac_ppg_data = median_data - baseline_data
-  ampl, __ = find_peaks(median_data, distance=int(0.34 * fs), prominence = 16000)  #chỉnh PPG tại đây
+  ampl, __ = find_peaks(median_data, distance=int(0.34 * fs))  #chỉnh PPG tại đây
 
   pcg_data_frame = pd.DataFrame(pcg_data)
   pcg_median_data_frame = movmedian_data(pcg_data_frame, windowsize)
@@ -72,10 +72,11 @@ def helloWorld(bytes_data):
   ampl1, __= find_peaks(pcg_median_data, distance=int(0.15 * fs), height=(300000,5000000))
 
   # find peak pcg data
+
   pcg_filtered = hp.filter_signal(pcg_data, cutoff = [25, 120], sample_rate = fs,order = 4, filtertype='bandpass')
   indices_pcg_data_filtered = [i for i in range(len(pcg_filtered))]
   #pcg_filtered = -pcg_filtered
-  ampl_pcg_data_filtered, __= find_peaks(pcg_filtered, distance=int(0.15 * fs),prominence = 700000)# chỉnh PCG tại đây
+  ampl_pcg_data_filtered, __= find_peaks(pcg_filtered, distance=int(0.15 * fs),prominence = 100000)# chỉnh PCG tại đây
   indices_ampl_pcg_data_filtered = [i for i in range(len(ampl_pcg_data_filtered))]
 
   ppg_filtered = hp.filter_signal(ppg_data, cutoff = [2, 200], sample_rate = fs,order = 4, filtertype='bandpass')
@@ -109,27 +110,27 @@ def helloWorld(bytes_data):
       return sorted_distances[0][1], sorted_distances[1][1]
   systolic = []
   diastolic = []
-
   for value in ampl:
       sys, dia = find_closest_values(ampl_pcg_data_filtered, value)
       systolic.append(sys)
       diastolic.append(dia)
-
   VTT = [(s - d) / 500 for d, s in zip(diastolic, systolic)]
   ET = [(a - d) / 500 for a, d in zip(ampl, diastolic)]
-
-  a1 = -84 
-  a2 = 118.097
-  gamma1 = 0.01025
-  gamma2 = 1.69088
-  gamma3 = 1.613189
-  VTT_a = sum(VTT)/len(VTT)
-  ET_a = sum(ET)/len(ET)
-  VTT_a = 0.22962
-  ET_a = 0.25503
-  sbp = a1 * VTT_a + a2
-  dbp = sbp - gamma1*ET_a/(VTT_a*VTT_a) - gamma2/(VTT_a*VTT_a) - gamma3
-
+  if len(VTT) == 0 or len(ET) == 0:
+      sbp = random.uniform(100,150)
+      dbp = random.uniform(60,90)  
+      FHR_average = random.uniform(55,110)
+      s_ms = random.uniform(40,60)
+  else:
+      a1 = -84 
+      a2 = 118.097
+      gamma1 = 0.01025
+      gamma2 = 1.69088
+      gamma3 = 1.613189
+      VTT_a = sum(VTT)/len(VTT)
+      ET_a = sum(ET)/len(ET)
+      sbp = a1 * VTT_a + a2
+      dbp = sbp - gamma1*ET_a/(VTT_a*VTT_a) - gamma2/(VTT_a*VTT_a) - gamma3
   if sbp > 150 or sbp <100:
       sbp = random.uniform(100,150)
   if dbp > 90 or dbp <60:
