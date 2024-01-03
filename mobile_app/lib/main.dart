@@ -7,6 +7,7 @@ import 'package:bluetooth_ecg/providers/bluetooth_provider.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
+import 'package:bluetooth_ecg/screens/login_screen/log_in_screen.dart';
 import 'package:bluetooth_ecg/screens/main_screen.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -31,6 +32,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   print("Handling a background message: ${message.notification?.body}");
 }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -52,7 +54,7 @@ void main() async {
       runApp(const FmECGApp());
     });
   } else {
-      runApp(const FmECGApp());
+    runApp(const FmECGApp());
   }
 }
 
@@ -81,43 +83,46 @@ class FmECGAppState extends State<FmECGApp> {
         ChangeNotifierProvider(create: (_) => BluetoothProvider()),
         ChangeNotifierProvider(create: (_) => ECGProvider()),
       ],
-      child: Consumer<AuthProvider>(
-        builder: (ctx, auth, _) {
-          Utils.globalContext = ctx;
-          return GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: (auth.theme == ThemeType.DARK
-              ? ThemeECG.darkTheme
-              : ThemeECG.lightTheme).copyWith(
-                pageTransitionsTheme: const PageTransitionsTheme(
-                  builders: <TargetPlatform, PageTransitionsBuilder>{
-                    TargetPlatform.android: ZoomPageTransitionsBuilder(),
-                  },
-                )),
-            darkTheme: ThemeECG.darkTheme,
-            home: auth.isAuth ? MainScreen() :
-              FutureBuilder(
-                future: auth.checkAutoLogin(),
-                builder: (ctx, authResultSnapshot) {
-                  if (authResultSnapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (authResultSnapshot.hasError) {
-                    return Text('Error: ${authResultSnapshot.error}');
-                  } else {
-                    return Login1Screen();
-                  }
-                }),
-            localizationsDelegates: const [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            getPages : AppRoutes.pages,
-          );
+      child: Consumer<AuthProvider>(builder: (ctx, auth, _) {
+        Utils.globalContext = ctx;
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: (auth.theme == ThemeType.DARK
+                  ? ThemeECG.darkTheme
+                  : ThemeECG.lightTheme)
+              .copyWith(
+                  pageTransitionsTheme: const PageTransitionsTheme(
+            builders: <TargetPlatform, PageTransitionsBuilder>{
+              TargetPlatform.android: ZoomPageTransitionsBuilder(),
+            },
+          )),
+          darkTheme: ThemeECG.darkTheme,
+
+          home: const SignInScreen(),
+          // auth.isAuth
+          //     ? MainScreen()
+          //     : FutureBuilder(
+          //         future: auth.checkAutoLogin(),
+          //         builder: (ctx, authResultSnapshot) {
+          //           if (authResultSnapshot.connectionState ==
+          //               ConnectionState.waiting) {
+          //             return const CircularProgressIndicator();
+          //           } else if (authResultSnapshot.hasError) {
+          //             return Text('Error: ${authResultSnapshot.error}');
+          //           } else {
+          //             return Login1Screen();
+          //           }
+          //         },
+          //       ),
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          getPages: AppRoutes.pages,
+        );
       }),
     );
   }
 }
-
-
