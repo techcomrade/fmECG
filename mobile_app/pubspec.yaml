@@ -51,7 +51,7 @@ dependencies:
 
   # assets lib
   cupertino_icons: ^1.0.2
-  phosphor_flutter: ^2.0.0
+  phosphor_flutter: 2.0.0
   cached_network_image: ^3.2.0
   flutter_spinkit: any
   flutter_switch: ^0.3.2

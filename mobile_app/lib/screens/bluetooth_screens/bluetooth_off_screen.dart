@@ -33,9 +33,10 @@ class BluetoothOffScreen extends StatelessWidget {
             // Text('Vui lòng bật Bluetooth để tiếp tục'),
             ElevatedButton(
               child: const Text('Bật Bluetooth'),
-              onPressed: Platform.isAndroid
-                  ? () => FlutterBluePlus.instance.turnOn()
-                  : null,
+              onPressed: null,
+              // Platform.isAndroid
+              //     ? () => FlutterBluePlus.instance.turnOn()
+              //     : null,
             ),
           ],
         ),
