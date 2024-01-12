@@ -35,18 +35,24 @@ class _HomeScreenState extends State<HomeScreen> {
   late File fileToSave;
   bool isShowChart = false;
 
+  final TextEditingController _phoneController = TextEditingController();
+  bool _isEditing = false;
+  final FocusNode focusInputPhone = FocusNode();
+  String phoneNumberWarning = "";
+
   Map allNews = {};
   @override
   void initState() {
     super.initState();
-    getDoctorAssigned();
-    NewsController.getAllNews();
+    _getInitPhoneNumber();
+    // getDoctorAssigned();
+    // NewsController.getAllNews();
   }
 
-  void getDoctorAssigned() async {
-    int patientId = await Utils.getUserId();
-    UserController.getDoctorAssigned(patientId);
-  }
+  // void getDoctorAssigned() async {
+  //   int patientId = await Utils.getUserId();
+  //   UserController.getDoctorAssigned(patientId);
+  // }
 
   Future<bool> _requestManageStorage() async {
     final PermissionStatus status =
@@ -61,11 +67,29 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     super.dispose();
+    _phoneController.dispose();
+    focusInputPhone.dispose();
+  }
+
+  _savePhoneNumberToSharedPrefs(String phoneNumber) async {
+    const String keyToSave = "phone_number_warning";
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(keyToSave, phoneNumber);
+  }
+
+  _getInitPhoneNumber() async {
+    const String keyInit = "phone_number_warning";
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    final bool isExistPhoneNumber = preferences.containsKey(keyInit);
+    if (isExistPhoneNumber) {
+      _phoneController.text = preferences.getString(keyInit)!;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final List allNews = context.watch<NewsProvider>().allNews;
+    // final List allNews = context.watch<NewsProvider>().allNews;
 
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
@@ -187,6 +211,66 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+            const SizedBox(height: 20),
+              Container(
+                alignment: Alignment.topLeft,
+                padding: EdgeInsets.only(bottom: 10),
+                child: Text(
+                  "Số người thân",
+                  style: TextStyle(
+                    color: ColorConstant.quaternary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                  ),
+                ),
+              ),
+
+              // Ô nhập liệu số điện thoại
+              TextFormField(
+                controller: _phoneController,
+                keyboardType: TextInputType.phone,
+                enabled: _isEditing,
+                focusNode: focusInputPhone,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.black
+                    )
+                  ),
+                  hintText: 'Nhập số điện thoại',
+                  labelText: 'Số điện thoại',
+                ),
+                onChanged: (text) => setState(() {
+                  phoneNumberWarning = _phoneController.text;
+                }),
+              ),
+
+              // Nút chỉnh sửa và lưu
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,  // Căn giữa các nút
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _isEditing = true;
+                      });
+                      focusInputPhone.requestFocus();
+                    },
+                    child: Text('Chỉnh sửa'),
+                  ),
+                  SizedBox(width: 20),  // Khoảng cách giữa các nút
+                  ElevatedButton(
+                    onPressed: phoneNumberWarning == "" ? null : () async {
+                      await _savePhoneNumberToSharedPrefs(_phoneController.text);
+                      setState(() {
+                        _isEditing = false;
+                        phoneNumberWarning = "";
+                      });
+                    },
+                    child: Text('Lưu'),
+                  ),
+                ],
+              ),
           ],
         ),
         // child: LiveChartSample()
