@@ -1,11 +1,3 @@
-
-import 'package:bluetooth_ecg/screens/home_screen.dart';
-import 'package:bluetooth_ecg/screens/auth_screens/login1_screen.dart';
-import 'package:bluetooth_ecg/screens/auth_screens/login_screen.dart';
-import 'package:bluetooth_ecg/screens/main_screen.dart';
-import 'package:bluetooth_ecg/screens/auth_screens/register_screen.dart';
-import 'package:get/get.dart';
-
 class AppRoutes {
   static const String allowPermissionBluetoothScreen =
       '/allow_permission_bluetooth_screen';
@@ -35,56 +27,4 @@ class AppRoutes {
   static String initialRoute = '/initialRoute';
   static String homeScreen = '/homes_creen';
   static String mainScreen = '/main_screen';
-
-  static List<GetPage> pages = [
-    // GetPage(
-    //   name: allowPermissionBluetoothScreen,
-    //   page: () => AllowPermissionBluetoothScreen(),
-    //   bindings: [
-    //     AllowPermissionBluetoothBinding(),
-    //   ],
-    // ),
-    GetPage(
-      name: registerScreen,
-      page: () => RegisterScreen(),
-
-    ),
-    GetPage(
-      name: homeScreen,
-      page: () => HomeScreen(),
-    ),
-    GetPage(
-      name: mainScreen,
-      page: () => MainScreen(),
-    ),
-    // GetPage(
-    //   name: scanningBluetoothDeviceScreen,
-    //   page: () => ScanningBluetoothDeviceScreen(),
-    //   bindings: [
-    //     ScanningBluetoothDeviceBinding(),
-    //   ],
-    // ),
-    // GetPage(
-    //   name: listingBluetoothDevicesScreen,
-    //   page: () => ListingBluetoothDevicesScreen(),
-    //   bindings: [
-    //     ListingBluetoothDevicesBinding(),
-    //   ],
-    // ),
-    GetPage(
-      name: loginScreen,
-      page: () => LoginScreen(),
-
-    ),
-    GetPage(
-      name: login1Screen,
-      page: () => Login1Screen(),
-
-    ),
-    GetPage(
-      name: initialRoute,
-      page: () => LoginScreen(),
-
-    )
-  ];
 }

@@ -42,6 +42,9 @@ build/Release
 node_modules/
 jspm_packages/
 uploads/
+.adminjs/
+mobile_app/pubspec.lock
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
@@ -68,12 +71,13 @@ web_modules/
 
 # Output of 'npm pack'
 *.tgz
+package-lock.json
 
 # Yarn Integrity file
 .yarn-integrity
 
 # dotenv environment variable files
-.env
+*.env
 .env.development.local
 .env.test.local
 .env.production.local

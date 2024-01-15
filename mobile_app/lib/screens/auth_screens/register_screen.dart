@@ -3,14 +3,8 @@ import 'package:bluetooth_ecg/components/submit_button.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/routes/route.dart';
-import 'package:bluetooth_ecg/theme/app_decoration.dart';
-import 'package:bluetooth_ecg/theme/app_style.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
-import 'package:bluetooth_ecg/utils/size.dart';
-import 'package:bluetooth_ecg/utils/validation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:provider/provider.dart';
 
 // ignore_for_file: must_be_immutable
@@ -180,9 +174,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       )
     );
-  }
-
-  onTapArrowLeft() {
-    Get.toNamed(AppRoutes.moreDeviceAppearFoundingScreen);
   }
 }

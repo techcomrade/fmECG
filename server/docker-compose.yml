@@ -9,7 +9,8 @@ services:
     expose:
       - 3000
     volumes:
-      - .:/app
+      - .:/fmECG_server/
+      - /fmECG_server/node_modules
     depends_on:
       - database
       - phpmyadmin
