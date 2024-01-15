@@ -124,8 +124,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                 ),
                               )),
                           Positioned(
-                              //bottom: BorderSide.strokeAlignOutside,
-                              //right: BorderSide.strokeAlignOutside,
+                              // bottom:BorderSide.strokeAlignOutside,
+                              // right: BorderSide.strokeAlignOutside,
                               child: Container(
                             width: 10,
                             height: 10,
