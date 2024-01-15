@@ -1,9 +1,9 @@
-import 'package:bluetooth_ecg/components/custom_text_form_field.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/controllers/firebase_messages_controller.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
@@ -134,11 +134,11 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                         width: screenSize.width - 80,
                         height: screenSize.height * 0.06,
                         margin: const EdgeInsets.only(right: 5, top: 2),
-                        child: CustomTextFormField(
+                        child: CupertinoTextField(
                           controller: _textMessageController,
                           prefix: Icon(PhosphorIcons.regular.smiley,
                               size: 30, color: ColorConstant.black900),
-                          hintText: 'Nhập tin nhắn',
+                          // hintText: 'Nhập tin nhắn',
                           suffix: IconButton(
                             icon: Icon(
                               PhosphorIcons.regular.camera,

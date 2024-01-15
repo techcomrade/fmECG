@@ -43,6 +43,7 @@ node_modules/
 jspm_packages/
 uploads/
 .adminjs/
+mobile_app/pubspec.lock
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/

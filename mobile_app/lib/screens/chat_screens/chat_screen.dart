@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bluetooth_ecg/components/custom_text_form_field.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/controllers/firebase_messages_controller.dart';
 import 'package:bluetooth_ecg/models/doctor_info.dart';
@@ -8,6 +7,7 @@ import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_detail_screen.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
@@ -154,11 +154,11 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
-                      child: CustomTextFormField(
-                        hintText: 'Search',
-                        alignment: Alignment.topCenter,
+                      child: CupertinoTextField(
+                        // hintText: 'Search',
+                        // alignment: Alignment.topCenter,
                         prefix: Icon(PhosphorIcons.regular.magnifyingGlass),
-                        width: 320,
+                        // width: 320,
                       ),
                     ),
                     StreamBuilder<QuerySnapshot>(
