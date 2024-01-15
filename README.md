@@ -42,4 +42,7 @@ Make sure you have turned on Android simulator.
 cd mobile_app
 flutter run
 ```
+
 or `Run without Debugging on VSCode`.
+
+Login to App: thaikaka@gmail.com / 12345678
