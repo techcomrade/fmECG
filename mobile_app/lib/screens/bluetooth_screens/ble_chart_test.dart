@@ -13,9 +13,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class BleLiveChartTest extends StatefulWidget {
   const BleLiveChartTest({
-    Key? key, 
-    required this.bluetoothCharacteristic, 
-    required this.fileToSave, 
+    Key? key,
+    required this.bluetoothCharacteristic,
+    required this.fileToSave,
     required this.deviceConnected,
   }) : super(key: key);
 
@@ -62,31 +62,33 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
     _clearDataInChart();
     subscribeStream.cancel();
     _dataStreamController.close();
-    
+
     super.dispose();
   }
 
   subscribeCharacteristic() {
-    subscribeStream =
-      flutterReactiveBle.subscribeToCharacteristic(widget.bluetoothCharacteristic).listen((value) {
-        final List packetHandled = ECGDataController.handlePacketData(value);
-        samples = samples + packetHandled;
+    subscribeStream = flutterReactiveBle
+        .subscribeToCharacteristic(widget.bluetoothCharacteristic)
+        .listen((value) {
+      final List packetHandled = ECGDataController.handlePacketData(value);
+      samples = samples + packetHandled;
 
-        if (samples.length == 50000) {
-          FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
-          samples.clear();
-        }
+      if (samples.length == 50000) {
+        FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
+        samples.clear();
+      }
 
-        for (int i = 0; i < packetHandled.length; i ++) {
-          List dataChannel = packetHandled[i].sublist(1, 5);
-          List dataShowOnChart = [];
-          if (i % 10 == 0) {
-            dataShowOnChart = ECGDataController.calculateDataPointToShow(dataChannel);
-            _updateDataSource(dataShowOnChart);
-          }
-          _dataStreamController.add(dataShowOnChart);
+      for (int i = 0; i < packetHandled.length; i++) {
+        List dataChannel = packetHandled[i].sublist(1, 5);
+        List dataShowOnChart = [];
+        if (i % 10 == 0) {
+          dataShowOnChart =
+              ECGDataController.calculateDataPointToShow(dataChannel);
+          _updateDataSource(dataShowOnChart);
         }
-      });
+        _dataStreamController.add(dataShowOnChart);
+      }
+    });
   }
 
   _resetMeasuring() {
@@ -101,9 +103,10 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   }
 
   _handleSaveRecordInFile() async {
-    final DateTime stopTime = DateTime.now();            
+    final DateTime stopTime = DateTime.now();
     final SharedPreferences preferences = await SharedPreferences.getInstance();
-    final Map userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
+    final Map userDataDecoded =
+        json.decode((preferences.getString('userData') ?? ""));
 
     if (userDataDecoded["roleId"] == -1 || userDataDecoded["token"] == "") {
       return Utils.showDialogLoginRequirement(context);
@@ -111,8 +114,10 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
 
     final int userId = userDataDecoded["userId"] ?? 0;
     final String deviceId = widget.deviceConnected.id;
-    final String startTimeAsTimeStamp = widget.fileToSave.path.split("/").last.split('.').first;
-    final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(int.parse(startTimeAsTimeStamp));
+    final String startTimeAsTimeStamp =
+        widget.fileToSave.path.split("/").last.split('.').first;
+    final DateTime startTime =
+        DateTime.fromMillisecondsSinceEpoch(int.parse(startTimeAsTimeStamp));
 
     final Map fileUploadInformation = {
       "filePath": widget.fileToSave.path,
@@ -142,132 +147,124 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(PhosphorIcons.regular.arrowLeft), 
-          onPressed: () => Navigator.pop(context)
+        appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(PhosphorIcons.regular.arrowArcLeft),
+              onPressed: () => Navigator.pop(context)),
+          title: const Text("Trang đo dữ liệu"),
         ),
-        title: const Text("Trang đo dữ liệu"),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('RSSI: ${widget.deviceConnected.rssi}'),
-          StreamBuilder<List>(
-            stream: _dataStream,
-            builder: (context, snapshot) {
-              return _buildLiveLineChart();
-            }
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () async {
-                  if (isMeasuring) {
-                    _resetMeasuring();
-                  } else {
-                    subscribeCharacteristic();
-                    setState(() {
-                      isMeasuring = true;
-                    });
-                  }
-                }, 
-                child: Text(isMeasuring ? 'Reset biểu đồ' : 'Bắt đầu đo')
-              ),
-              ElevatedButton(
-                onPressed: samples.isEmpty ? null : () async {
-                  await _handleSaveRecordInFile();
-  
-                  const snackBar = SnackBar(
-                    content: Text('Đã lưu kết quả đo vào bộ nhớ!'),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }, 
-                child: const Text("Lưu kết quả đo")
-              )
-            ],
-          )
-        ],
-      )
-    );
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('RSSI: ${widget.deviceConnected.rssi}'),
+            StreamBuilder<List>(
+                stream: _dataStream,
+                builder: (context, snapshot) {
+                  return _buildLiveLineChart();
+                }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                    onPressed: () async {
+                      if (isMeasuring) {
+                        _resetMeasuring();
+                      } else {
+                        subscribeCharacteristic();
+                        setState(() {
+                          isMeasuring = true;
+                        });
+                      }
+                    },
+                    child: Text(isMeasuring ? 'Reset biểu đồ' : 'Bắt đầu đo')),
+                ElevatedButton(
+                    onPressed: samples.isEmpty
+                        ? null
+                        : () async {
+                            await _handleSaveRecordInFile();
+
+                            const snackBar = SnackBar(
+                              content: Text('Đã lưu kết quả đo vào bộ nhớ!'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          },
+                    child: const Text("Lưu kết quả đo"))
+              ],
+            )
+          ],
+        ));
   }
 
   /// Returns the realtime Cartesian line chart.
   SfCartesianChart _buildLiveLineChart() => SfCartesianChart(
-        title: ChartTitle(
-        text: "Biểu đồ đo điện tim thời gian thực",
-        alignment: ChartAlignment.center,
-      ),
-      // plotAreaBackgroundColor: Color(0XFF006A89),
-      plotAreaBorderWidth: 0,
-      primaryXAxis: NumericAxis(
-        zoomPosition: 0.2,
-        // maximum: 400,
-        interval: 50,
-        // majorGridLines: MajorGridLines(
-        //   color: Colors.red,
-        // ),
-        // minorGridLines: MinorGridLines(
-        //   color: Colors.red,
-        // ),
-        edgeLabelPlacement: EdgeLabelPlacement.shift
-      ),
-      primaryYAxis: NumericAxis(
-        edgeLabelPlacement: EdgeLabelPlacement.shift,
-        majorGridLines: const MajorGridLines(width: 1)),
-      legend: Legend(
-        isVisible: true,
-        isResponsive: true,
-        position: LegendPosition.top
-      ),
-      enableAxisAnimation: true,
-      series: [
-        FastLineSeries<_ChartData, int>(
-          onRendererCreated: (ChartSeriesController controller) {
-            _chartSeriesController = controller;
-          },
-          dataSource: chartDataChannel!,
-          color: Color.fromARGB(255, 42, 25, 228),
-          xValueMapper: (_ChartData sales, _) => sales.country,
-          yValueMapper: (_ChartData sales, _) => sales.sales,
-          animationDuration: 0,
-          legendItemText: "Kênh 1"
-        ),
-        FastLineSeries<_ChartData, int>(
-          onRendererCreated: (ChartSeriesController controller) {
-            _chartSeriesController2 = controller;
-          },
-          dataSource: chartDataChannel2!,
-          color: Color.fromARGB(255, 228, 25, 25),
-          xValueMapper: (_ChartData sales, _) => sales.country,
-          yValueMapper: (_ChartData sales, _) => sales.sales,
-          animationDuration: 0,
-          legendItemText: "Kênh 2"
-        ),
-        FastLineSeries<_ChartData, int>(
-          onRendererCreated: (ChartSeriesController controller) {
-            _chartSeriesController3 = controller;
-          },
-          dataSource: chartDataChannel3!,
-          color: Color.fromARGB(255, 25, 228, 45),
-          xValueMapper: (_ChartData sales, _) => sales.country,
-          yValueMapper: (_ChartData sales, _) => sales.sales,
-          animationDuration: 0,
-          legendItemText: "Kênh 3"
-        ),
-        FastLineSeries<_ChartData, int>(
-          onRendererCreated: (ChartSeriesController controller) {
-            _chartSeriesController4 = controller;
-          },
-          dataSource: chartDataChannel4!,
-          color: Color.fromARGB(255, 214, 228, 25),
-          xValueMapper: (_ChartData sales, _) => sales.country,
-          yValueMapper: (_ChartData sales, _) => sales.sales,
-          animationDuration: 0,
-          legendItemText: "Kênh 4"
-        )
-      ]);
+          title: ChartTitle(
+            text: "Biểu đồ đo điện tim thời gian thực",
+            alignment: ChartAlignment.center,
+          ),
+          // plotAreaBackgroundColor: Color(0XFF006A89),
+          plotAreaBorderWidth: 0,
+          primaryXAxis: NumericAxis(
+              zoomPosition: 0.2,
+              // maximum: 400,
+              interval: 50,
+              // majorGridLines: MajorGridLines(
+              //   color: Colors.red,
+              // ),
+              // minorGridLines: MinorGridLines(
+              //   color: Colors.red,
+              // ),
+              edgeLabelPlacement: EdgeLabelPlacement.shift),
+          primaryYAxis: NumericAxis(
+              edgeLabelPlacement: EdgeLabelPlacement.shift,
+              majorGridLines: const MajorGridLines(width: 1)),
+          legend: Legend(
+              isVisible: true,
+              isResponsive: true,
+              position: LegendPosition.top),
+          enableAxisAnimation: true,
+          series: [
+            FastLineSeries<_ChartData, int>(
+                onRendererCreated: (ChartSeriesController controller) {
+                  _chartSeriesController = controller;
+                },
+                dataSource: chartDataChannel!,
+                color: Color.fromARGB(255, 42, 25, 228),
+                xValueMapper: (_ChartData sales, _) => sales.country,
+                yValueMapper: (_ChartData sales, _) => sales.sales,
+                animationDuration: 0,
+                legendItemText: "Kênh 1"),
+            FastLineSeries<_ChartData, int>(
+                onRendererCreated: (ChartSeriesController controller) {
+                  _chartSeriesController2 = controller;
+                },
+                dataSource: chartDataChannel2!,
+                color: Color.fromARGB(255, 228, 25, 25),
+                xValueMapper: (_ChartData sales, _) => sales.country,
+                yValueMapper: (_ChartData sales, _) => sales.sales,
+                animationDuration: 0,
+                legendItemText: "Kênh 2"),
+            FastLineSeries<_ChartData, int>(
+                onRendererCreated: (ChartSeriesController controller) {
+                  _chartSeriesController3 = controller;
+                },
+                dataSource: chartDataChannel3!,
+                color: Color.fromARGB(255, 25, 228, 45),
+                xValueMapper: (_ChartData sales, _) => sales.country,
+                yValueMapper: (_ChartData sales, _) => sales.sales,
+                animationDuration: 0,
+                legendItemText: "Kênh 3"),
+            FastLineSeries<_ChartData, int>(
+                onRendererCreated: (ChartSeriesController controller) {
+                  _chartSeriesController4 = controller;
+                },
+                dataSource: chartDataChannel4!,
+                color: Color.fromARGB(255, 214, 228, 25),
+                xValueMapper: (_ChartData sales, _) => sales.country,
+                yValueMapper: (_ChartData sales, _) => sales.sales,
+                animationDuration: 0,
+                legendItemText: "Kênh 4")
+          ]);
 
   ///Continously updating the data source based on timer
   void _updateDataSource(List row) {

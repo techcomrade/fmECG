@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bluetooth_ecg/components/custom_text_form_field.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/controllers/firebase_messages_controller.dart';
 import 'package:bluetooth_ecg/models/doctor_info.dart';
@@ -8,6 +7,7 @@ import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_detail_screen.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
@@ -93,8 +93,8 @@ class _ChatScreenState extends State<ChatScreen> {
             Container(
               color: ColorConstant.blueA200,
               width: double.infinity,
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.only(top: 5),
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.only(top: 5),
               child: SizedBox(
                 width: double.infinity,
                 height: 70,
@@ -108,14 +108,14 @@ class _ChatScreenState extends State<ChatScreen> {
                       return Container(
                         width: 80,
                         height: 80,
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Stack(children: [
                           Container(
                               decoration: BoxDecoration(
                                 color: ColorConstant.whiteA700,
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              padding: EdgeInsets.all(1),
+                              padding: const EdgeInsets.all(1),
                               child: GestureDetector(
                                 onTap: () => {},
                                 child: Image.asset(
@@ -142,10 +142,10 @@ class _ChatScreenState extends State<ChatScreen> {
             Container(
                 width: double.infinity,
                 height: size.height * 0.65 + 4.4,
-                margin: EdgeInsets.only(top: 20),
+                margin: const EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
                     color: ColorConstant.whiteA700,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(50),
                         topRight: Radius.circular(50))),
                 child: Column(
@@ -153,12 +153,12 @@ class _ChatScreenState extends State<ChatScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.fromLTRB(10, 15, 10, 10),
-                      child: CustomTextFormField(
-                        hintText: 'Search',
-                        alignment: Alignment.topCenter,
-                        prefix: Icon(PhosphorIcons.bold.magnifyingGlass),
-                        width: 320,
+                      padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+                      child: CupertinoTextField(
+                        // hintText: 'Search',
+                        // alignment: Alignment.topCenter,
+                        prefix: Icon(PhosphorIcons.regular.magnifyingGlass),
+                        // width: 320,
                       ),
                     ),
                     StreamBuilder<QuerySnapshot>(
@@ -188,8 +188,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                   child: Container(
                                       width: double.infinity,
                                       height: 100,
-                                      padding:
-                                          EdgeInsets.fromLTRB(15, 15, 5, 10),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          15, 15, 5, 10),
                                       decoration: BoxDecoration(
                                           color: ColorConstant.whiteA700),
                                       child: Container(
@@ -197,12 +197,12 @@ class _ChatScreenState extends State<ChatScreen> {
                                         child: Row(
                                           children: [
                                             Container(
-                                              margin: EdgeInsets.all(5),
+                                              margin: const EdgeInsets.all(5),
                                               child: Image.asset(
                                                   doctors[index].image),
                                               color: ColorConstant.whiteA700,
                                             ),
-                                            Container(
+                                            SizedBox(
                                               width: size.width / 1.4,
                                               child: Column(
                                                 crossAxisAlignment:
@@ -217,12 +217,12 @@ class _ChatScreenState extends State<ChatScreen> {
                                                     children: [
                                                       Text(
                                                         "${conversation["conversation_id"]}",
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 15),
                                                       ),
-                                                      Text(
+                                                      const Text(
                                                         '20.00',
                                                         style: TextStyle(
                                                             fontSize: 12),
@@ -234,10 +234,12 @@ class _ChatScreenState extends State<ChatScreen> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      Text('Tin nhắn mới'),
+                                                      const Text(
+                                                          'Tin nhắn mới'),
                                                       Container(
                                                         padding:
-                                                            EdgeInsets.fromLTRB(
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
                                                                 5, 2, 5, 2),
                                                         decoration:
                                                             BoxDecoration(
@@ -247,7 +249,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                           color: ColorConstant
                                                               .primary,
                                                         ),
-                                                        child: Text(
+                                                        child: const Text(
                                                           '1',
                                                           style: TextStyle(
                                                             fontWeight:
@@ -267,7 +269,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               },
                             );
                           } else {
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator();
                           }
                         })
                   ],

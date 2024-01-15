@@ -1,245 +1,86 @@
-const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken');
-const User = require('../Models/userModel');
-const ResetToken = require('../Models/resetTokenModel');
-const crypto = require('crypto');
-const nodemailer = require('nodemailer');
-const path = require('path');
+const User = require('../Models/userModel')
+const bcrypt = require('bcrypt');
+const knex = require('../config/knex');
+const database = require('../config/database');
+const Authen2 = require('../models/Authen2Model');
+const jwt =require('jsonwebtoken');
+const loginGoogleService = require('../services/loginGoogleService');
 
-require('dotenv').config({ path: path.resolve(__dirname, '../config.env') })
-
-
-exports.register = async (req, res, next) => {
-  try {
-    const { password, confirm_password, name, email, doB, phone_number, role } = req.body;
-    // Check if the role is not 2 (admin)
-    if (role === 2) {
-      return res.status(400).json({ status: 'error', msg: 'Admin cannot register an account' });
+class AuthenticationController {
+    view(req, res) {
+        res.render('authenLogin');
     }
 
-    // Check if email is duplicated
-    const existingUser = await User.findOne({ where: { email } });
-    if (existingUser) {
-      return res.status(400).json({ status: 'error', msg: 'Email is already in use' });
-    }
-
-    // Check if password and confirm_password match
-    if (password !== confirm_password) {
-      return res.status(400).json({ status: 'error', msg: 'Passwords do not match' });
-    }
-
-    // Encrypt the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create a new user record
-    const newUser = await User.create({
-      name,
-      email,
-      password: hashedPassword,
-      doB,
-      phone_number,
-      role,
-    });
-
-    // Remove password field from the response
-    const { password: _password, ...userWithoutPassword } = newUser.dataValues;
-
-    res.json({ status: 'success', data: userWithoutPassword });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ status: 'error', msg: 'An error occurred during registration' });
-  }
-};
-
-exports.login = async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-
-    // Find the user by email
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-      return res.status(401).json({ status: 'error', msg: 'Invalid email or password' });
-    }
-
-    // Compare the password
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return res.status(401).json({ status: 'error', msg: 'Invalid email or password' });
-    }
-
-    // Generate a token with a 90-day expiration time
-    const token = jwt.sign(
-      { userId: user.user_id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '90d' }
-    );
-
-    const cookieOptions = {
-      expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), // 90 days in milliseconds
-      httpOnly: true,
-    };
-
-    // Remove password field from the user object
-    const { password: _password, ...userWithoutPassword } = user.dataValues;
-
-    // Set the token as a cookie
-    res.cookie('jwt', token, cookieOptions);
-
-    res.json({ status: 'success', token, user: userWithoutPassword });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ status: 'error', msg: 'An error occurred during login' });
-  }
-};
-
-
-exports.logout = (req, res) => {
-  try {
-    // Check if the token cookie exists
-    if (!req.cookies.token) {
-      return res.status(401).json({ status: 'error', msg: 'No token found' });
-    }
-
-    // Clear the token cookie
-    res.clearCookie('jwt');
-
-    res.json({ status: 'success', msg: 'Logged out successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ status: 'error', msg: 'An error occurred during logout' });
-  }
-};
-
-exports.resetPasswordToken = async (req, res) => {
-  try {
-    const { email } = req.body;
-
-    const user = await User.findOne({ where: { email } });
-
-    if (!user) {
-      return res.status(404).json({ status: 'error', msg: 'User not found' });
-    }
-
-    const resetToken = crypto.randomBytes(3).toString('hex');
-    const resetTokenExpiration = Date.now() + 60*10000; // 10 minutes expiration
-
-    // Save reset token and expiration in the ResetToken table
-    await ResetToken.create({ user_id: user.user_id, token: resetToken, expiration: resetTokenExpiration });
-
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: process.env.EMAIL_HOST,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.EMAIL_HOST,
-      to: email,
-      subject: 'Password Reset',
-      text: `You are receiving this email because you (or someone else) has requested to reset your password.\n\n`
-        + `This is your reset password token:\n\n`
-        + `${resetToken}\n\n`
-        + `This token is valid for 10 minutes.\n\n`
-        + `If you did not request this, please ignore this email and your password will remain unchanged.`,
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error(error);
-        return res.status(500).json({ status: 'error', msg: 'An error occurred while sending the reset token email' });
-      }
-      console.log('Reset token email sent:', info.response);
-      res.json({ status: 'success', msg: 'Reset token sent to email', resetToken});
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ status: 'error', msg: 'An error occurred while resetting the password' });
-  }
-};
-
-exports.resetPassword = async (req, res) => {
-  try {
-
-    const { resetToken, password, confirm_password, email } = req.body;
-
-    // Check if the reset token exists and is associated with a user
-    const resetTokenData = await ResetToken.findOne({ where: { token: resetToken } });
-
-    // If reset token not found, return an error
-    if (!resetTokenData) {
-      return res.status(400).json({ status: 'error', msg: 'Invalid reset token' });
-    }
-
-    // Check if the reset token has expired
-    if (resetTokenData.expiration < new Date()) {
-      // Delete the expired reset token from the database
-      await resetTokenData.destroy();
-      return res.status(400).json({ status: 'error', msg: 'Reset token has expired' });
-    }
-
-    // Find the associated user by the reset token
-    const user = await User.findOne({ where: { user_id: resetTokenData.user_id } });
-
-    // If user not found, return an error
-    if (!user) {
-      return res.status(404).json({ status: 'error', msg: 'User not found' });
-    }
-
-    // Check if the email in the request body matches the user's email
-    if (user.email !== email) {
-      return res.status(400).json({ status: 'error', msg: 'Invalid reset token' });
-    }
-
-    // Check if the password and confirm_password match
-    if (password !== confirm_password) {
-      return res.status(400).json({ status: 'error', msg: 'Password confirmation does not match' });
-    }
-
-    // Hash the new password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Update the user's password and remove the reset token data
-    user.password = hashedPassword;
-    await user.save();
-    await resetTokenData.destroy();
-
-    res.json({ status: 'success', msg: 'Password reset successful' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ status: 'error', msg: 'An error occurred while resetting the password' });
-  }
-};
-
-exports.isLogin = async (req, res) => {
-  try {
-    // Check if the token cookie exists
-    const token = req.cookies.jwt;
-    if (!token) {
-      return res.status(401).json({ status: 'error', msg: 'No token found' });
-    }
-
-    // Verify and decode the token
-    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
-      if (err) {
-        if (err.name === 'TokenExpiredError') {
-          // Token has expired
-          // Log out the user
-          return res.redirect('/logout'); // Redirect to the logout route or call the logout function directly
+    async login(req, res) {
+        await User.queryDB(User.findOnebyEmail(req.body.email))
+        .then((user) => {
+            if(user[0]) {
+            console.log(user[0]);
+            bcrypt.compare(req.body.passwword, user[0].password).then(same => {
+                if(same) {
+                    console.log('valid Username & password');
+                    const accessToken = jwt.sign({
+                        id: user[0].id,
+                        email: user[0].email,
+                        password: user[0].password
+                    },
+                    process.env.JWT_KEY,
+                    {
+                        expiresIn: 30 * 100
+                    }
+                    )
+                    const refreshToken = jwt.sign({
+                        id: user[0].id,
+                        email: user[0].email,
+                        password: user[0].password
+                    },
+                    process.env.JWT_REFRESH_KEY,
+                    {
+                        expiresIn: 24 * 60 * 60 * 1000
+                    }
+                    )
+                    console.log(accessToken, refreshToken);
+                    this.insertToken(accessToken, refreshToken, user[0].id);
+                    res.status(200).json({
+                        token: accessToken,
+                        refreshToken: refreshToken,
+                        user: user[0].email,
+                        message: 'Token added successfully'
+                    })
+                }
+                else res. status(403).json({
+                    message: 'Password mismatch',
+                    success: false
+                })
+            })
         }
-        // Token is invalid for some other reason
-        return res.status(401).json({ status: 'error', msg: 'Invalid token' });
-      }
+        else res.status(403).json({
+            message: 'User mismatch',
+            success: false
+        })
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(403).json({
+          message: "Error",
+        });
+    })
+    }
+    async insertToken(accessToken, refreshToken, id) {
+        await Authen2.insertDatatoDB({
+            id: 1,
+            user_id: id,
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        }, 'authen')
+    }
+    googleLogin(){
+        loginGoogleService.loginGoogle;
+    }
+    callbackLoginGoogle(){
+        loginGoogleService.callbackLoginGoogle;
+    }
+}
 
-      // Token verification successful
-      // Perform additional checks or operations here if needed (Maybe)
 
-      // Return the decoded token
-      res.json({ status: 'success', user: decodedToken });
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ status: 'error', msg: 'An error occurred' });
-  }
-};
+module.exports = new AuthenticationController();

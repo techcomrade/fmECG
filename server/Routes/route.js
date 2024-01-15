@@ -1,5 +1,7 @@
 const express = require('express');
-const route = express.Router();
+const authCtrl = require('../Controllers/authController')
+const homeController = require('../Controllers/homeController');
+let router = express.Router();
 // const {} = require ('')
 // const { indexView } = require('../Controllers/homeController.js');
 
@@ -8,5 +10,6 @@ const route = express.Router();
 // route.use('/', authcontroller.islogin);
 // route.get('/', indexView);
 
-
-module.exports = route;
+router.get('/login', homeController.login);
+router.post('/login/store', authCtrl.login);
+module.exports = router;
