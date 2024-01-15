@@ -1,6 +1,6 @@
 class APIConstant {
   static String apiUrl = "http://192.168.1.7:2000/";
-  static String apiUrlProduction = "http://13.250.106.115/";
+  static String apiUrlProduction = "http://13.213.55.18/";
 
   // static getDebugMode() {
   //   assert(() {
