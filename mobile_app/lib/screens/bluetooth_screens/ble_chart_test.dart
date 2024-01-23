@@ -105,8 +105,6 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   }
 
   _resetMeasuring() {
-    // subscribeStream.cancel();
-    // _dataStreamController.close();
     _clearDataInChart();
     samples.clear();
     FilesManagement.deleteFileRecord(widget.fileToSave);
@@ -120,38 +118,8 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
     subscribeStream.cancel();
     _dataStreamController.close();
     _clearDataInChart();
-    // final DateTime stopTime = DateTime.now();
-    // final SharedPreferences preferences = await SharedPreferences
-    //     .getInstance();
-    // final Map userDataDecoded = json.decode(
-    //     (preferences.getString('userData') ?? ""));
 
-    // if (userDataDecoded["roleId"] == -1 || userDataDecoded["token"] == "") {
-    //   return Utils.showDialogLoginRequirement(context);
-    // }
-
-    // final int userId = userDataDecoded["userId"] ?? 0;
-    // final String deviceId = widget.deviceConnected.id;
-    // final String startTimeAsTimeStamp = widget.fileToSave.path
-    //     .split("/")
-    //     .last
-    //     .split('.')
-    //     .first;
-    // final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(
-    //     int.parse(startTimeAsTimeStamp));
-
-    // final Map fileUploadInformation = {
-    //   "filePath": widget.fileToSave.path,
-    //   "userId": userId,
-    //   "deviceId": deviceId,
-    //   "startTime": startTime,
-    //   "stopTime": stopTime,
-    // };
     await FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
-
-    // Future.delayed(const Duration(milliseconds: 500), () {
-    //   ECGRecordController.uploadFileToDB(fileUploadInformation);
-    // });
 
     setState(() {
       samples.clear();
@@ -184,65 +152,102 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           _textHeartRate = data!["heart_rate"].toString();
           _textDeviation = data!["standard_deviation"].toString();
         });
-        showDialog(context: context, builder: (ctxx) {
-          return Dialog(
-            child: Container(
-              height: 200,
-              child: Column(
-                children: [
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Text('Dữ liệu sau khi được xử lý: ', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),)),
-                  const SizedBox(height: 5),
-                  Text("SBP: ${double.parse(_textSBP).round()}"),
-                  Text("DBP: ${double.parse(_textDBP).round()}"),
-                  Text("Heart Rate: ${double.parse(_textHeartRate).round()}"),
-                  Text("Deviation: ${double.parse(_textDeviation).round()}"),
-                  const SizedBox(height: 5),
+        showDialog(
+          context: context,
+          builder: (ctxx) {
 
-                  if (int.parse(_textSBP) > 140 && int.parse(_textDBP) < 90)
-                  const Text('Cần cảnh báo tới người thân!'),
-                  if (isNotSetupPhoneNumber)
-                  const Text("Vui lòng setup số điện thoại người thân ở trang chủ!"),
-                  const SizedBox(height: 5),
+            final isNormalPressure = int.parse(_textSBP) < 120 && int.parse(_textDBP) < 80;
+            final isHighPressure =  int.parse(_textSBP) >= 120 && int.parse(_textSBP) < 130 && int.parse(_textDBP) < 80;
+            final isHighPressure1 =  int.parse(_textSBP) >= 130 && int.parse(_textSBP) < 140 && int.parse(_textDBP) >= 80 && int.parse(_textDBP) < 90;
+            final isHighPressure2 = int.parse(_textSBP) > 140 && int.parse(_textDBP) > 90;
+            final isHighPressure3 = int.parse(_textSBP) > 180 && int.parse(_textDBP) > 120;
+            final isNormalHeartRate = int.parse(_textHeartRate) >= 60 && int.parse(_textHeartRate) <= 100;
+            final isLowHeartRate = int.parse(_textHeartRate) < 60 ;
+            final isHighHeartRate = int.parse(_textHeartRate) > 100 ;
+            final isManyHeartRate = int.parse(_textDeviation) > 50 ;
+            final isPhoneNumberNotSet = isNotSetupPhoneNumber;
 
-                  Row(children: [
-                    if (int.parse(_textSBP) > 140 && int.parse(_textDBP) < 90)
-                    ElevatedButton(
-                      onPressed: () async {
-                        String phoneNumber = await _getPhoneNumberFromPrefs();
-                        if (phoneNumber != "") {
-                          final Telephony telephony = Telephony.instance;
-                          String warningEmoji = "⚠️"; // Emoji cảnh báo, chỉ hoạt động nếu điện thoại hỗ trợ emoji
-                          String message = "Cảnh báo $warningEmoji\nHuyết áp người thân cao:\n$_textSBP/$_textDBP so với ngưỡng 140/90";
-                          await telephony.sendSms(to:phoneNumber, message: message);
-                        } else {
-                          setState(() {
-                            isNotSetupPhoneNumber = true;
-                          });
-                        }
-                      },
-                      child: const Text("Send SMS", 
-                        style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
+            String message = "";
+
+            if (isHighPressure) {
+              message = "Cảnh báo: Huyết áp cao. Hãy theo dõi và chăm sóc sức khỏe!";
+            } else if (isHighPressure1) {
+              message = "Cảnh báo: Tăng huyết áp Độ 1. Hãy theo dõi và chăm sóc sức khỏe!";
+            } else if (isHighPressure2) {
+              message = "Cảnh báo khẩn: Tăng huyết áp Độ 2. Hãy theo dõi và chăm sóc sức khỏe!";
+            } else if (isHighPressure3) {
+              message = "Cảnh báo nguy cấp: Huyết áp cực kỳ cao! Đây có thể là tình huống khẩn cấp. Liên hệ bác sĩ ngay!";
+            } else if (isLowHeartRate) {
+              message = "Thông báo: Nhịp tim thấp. Nếu cảm thấy không khỏe, hãy liên hệ bác sĩ.";
+            } else if (isHighHeartRate) {
+              message = "Cảnh báo: Nhịp tim cao. Cần theo dõi và có thể cần tư vấn y tế.";
+            } else if (isManyHeartRate) {
+              message = "Chú ý: Sự chênh lệch lớn trong nhịp tim được ghi nhận. Nên kiểm tra sức khỏe.";
+            }
+
+            return Dialog(
+              child: Container(
+                height: 200,
+                child: Column(
+                  children: [
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Text('Dữ liệu sau khi được xử lý: ', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
                     ),
+                    const SizedBox(height: 5),
+                    Text("SBP: ${double.parse(_textSBP).round()}"),
+                    Text("DBP: ${double.parse(_textDBP).round()}"),
+                    Text("Heart Rate: ${double.parse(_textHeartRate).round()}"),
+                    Text("Deviation: ${double.parse(_textDeviation).round()}"),
+                    const SizedBox(height: 5),
 
-                    if (int.parse(_textSBP) > 140 && int.parse(_textDBP) < 90)
-                    const SizedBox(width: 8),
+                    // Display the warning message if any condition is met
+                    if (message.isNotEmpty)
+                      Text(message),
+                    if (isPhoneNumberNotSet)
+                      const Text("Vui lòng setup số điện thoại người thân ở trang chủ!"),
+                    const SizedBox(height: 5),
 
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text("Close", 
-                        style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
-                    ),
-                  ],)
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
+                    Row(
+                      children: [
+                        if (message.isNotEmpty)
+                          ElevatedButton(
+                            onPressed: () async {
+                              String phoneNumber = await _getPhoneNumberFromPrefs();
+                              if (phoneNumber != "") {
+                                final Telephony telephony = Telephony.instance;
+                                await telephony.sendSms(to: phoneNumber, message: message);
+                              } else {
+                                setState(() {
+                                  isNotSetupPhoneNumber = true;
+                                });
+                              }
+                            },
+                            child: const Text("Send SMS",
+                                style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
+                          ),
+
+                        if (message.isNotEmpty)
+                          const SizedBox(width: 8),
+
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Close",
+                              style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
+                        ),
+                      ],
+                    )
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
               ),
-            ),
-          );
-        });
+            );
+          },
+        );
+
+
       }
     } catch (e) {
       Navigator.pop(context);
@@ -353,82 +358,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
     );
   }
 
-  /// Returns the realtime Cartesian line chart.
-  // SfCartesianChart _buildLiveLineChart() =>
-  //     SfCartesianChart(
-  //         // title: ChartTitle(
-  //         //   text: "Biểu đồ đo điện tim thời gian thực",
-  //         //   alignment: ChartAlignment.center,
-  //         // ),
-  //         // plotAreaBackgroundColor: Color(0XFF006A89),
-  //         plotAreaBorderWidth: 0,
-  //         primaryXAxis: NumericAxis(
-  //             zoomPosition: 0.2,
-  //             // maximum: 400,
-  //             interval: 50,
-  //             // majorGridLines: MajorGridLines(
-  //             //   color: Colors.red,
-  //             // ),
-  //             // minorGridLines: MinorGridLines(
-  //             //   color: Colors.red,
-  //             // ),
-  //             edgeLabelPlacement: EdgeLabelPlacement.shift
-  //         ),
-  //         primaryYAxis: NumericAxis(
-  //             edgeLabelPlacement: EdgeLabelPlacement.shift,
-  //             majorGridLines: const MajorGridLines(width: 1)),
-  //         legend: Legend(
-  //             isVisible: true,
-  //             isResponsive: true,
-  //             position: LegendPosition.top
-  //         ),
-  //         enableAxisAnimation: true,
-  //         series: [
-  //           FastLineSeries<_ChartData, int>(
-  //               onRendererCreated: (ChartSeriesController controller) {
-  //                 _chartSeriesController = controller;
-  //               },
-  //               dataSource: chartDataChannel!,
-  //               color: Color.fromARGB(255, 42, 25, 228),
-  //               xValueMapper: (_ChartData sales, _) => sales.country,
-  //               yValueMapper: (_ChartData sales, _) => sales.sales,
-  //               animationDuration: 0,
-  //               legendItemText: "Kênh 1"
-  //           ),
-  //           FastLineSeries<_ChartData, int>(
-  //               onRendererCreated: (ChartSeriesController controller) {
-  //                 _chartSeriesController2 = controller;
-  //               },
-  //               dataSource: chartDataChannel2!,
-  //               color: Color.fromARGB(255, 228, 25, 25),
-  //               xValueMapper: (_ChartData sales, _) => sales.country,
-  //               yValueMapper: (_ChartData sales, _) => sales.sales,
-  //               animationDuration: 0,
-  //               legendItemText: "Kênh 2"
-  //           ),
-  //           FastLineSeries<_ChartData, int>(
-  //               onRendererCreated: (ChartSeriesController controller) {
-  //                 _chartSeriesController3 = controller;
-  //               },
-  //               dataSource: chartDataChannel3!,
-  //               color: Color.fromARGB(255, 25, 228, 45),
-  //               xValueMapper: (_ChartData sales, _) => sales.country,
-  //               yValueMapper: (_ChartData sales, _) => sales.sales,
-  //               animationDuration: 0,
-  //               legendItemText: "Kênh 3"
-  //           ),
-  //           FastLineSeries<_ChartData, int>(
-  //               onRendererCreated: (ChartSeriesController controller) {
-  //                 _chartSeriesController4 = controller;
-  //               },
-  //               dataSource: chartDataChannel4!,
-  //               color: Color.fromARGB(255, 214, 228, 25),
-  //               xValueMapper: (_ChartData sales, _) => sales.country,
-  //               yValueMapper: (_ChartData sales, _) => sales.sales,
-  //               animationDuration: 0,
-  //               legendItemText: "Kênh 4"
-  //           )
-  //         ]);
+
   SfCartesianChart _buildLiveLineChart() =>
       SfCartesianChart(
         // title: ChartTitle(
@@ -468,11 +398,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
 
           SfCartesianChart _buildLiveLineChart1() =>
             SfCartesianChart(
-        // title: ChartTitle(
-        //   text: "Biểu đồ đo điện tim thời gian thực",
-        //   alignment: ChartAlignment.center,
-        // ),
-        // plotAreaBackgroundColor: Color(0XFF006A89),
+
           plotAreaBorderWidth: 0,
           primaryXAxis: NumericAxis(
               zoomPosition: 0.2,
@@ -503,9 +429,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                 legendItemText: "PCG"
             ),
           ]);
-  ///Continously updating the data source based on timer
-  ///
-  ///
+
   void _updateChartData(List dataChannelsToShowOnChart) {
     _ChartData newData = _ChartData(
         count, dataChannelsToShowOnChart[0]);
@@ -513,13 +437,6 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
         count, dataChannelsToShowOnChart[1]);
     _ChartData newData3 = _ChartData(
         count, dataChannelsToShowOnChart[2]);
-    // _ChartData newData4 = _ChartData(count, row[3]);
-    // print("Channel 1 Data: ${newData.sales}");
-    // print("Channel 2 Data: ${newData2.sales}");
-    // print("Channel 3 Data: ${newData3.sales}");
-    // print("Channel 1 Data cột: ${newData.country}");
-    // print("Channel 2 Data cột: ${newData2.country}");
-    // print("Channel 3 Data cột: ${newData3.country}");
     chartDataChannel!.add(newData);
     chartDataChannel2!.add(newData2);
     chartDataChannel3!.add(newData3);
@@ -561,17 +478,6 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
       );
     }
 
-    // if (chartDataChannel4!.length >= 50) {
-    //   chartDataChannel4!.removeAt(0);
-    //   _chartSeriesController4?.updateDataSource(
-    //     addedDataIndexes: <int>[chartDataChannel4!.length - 1],
-    //     removedDataIndexes: <int>[0],
-    //   );
-    // } else {
-    //   _chartSeriesController4?.updateDataSource(
-    //     addedDataIndexes: <int>[chartDataChannel4!.length - 1],
-    //   );
-    // }
   }
 }
 /// Private calss for storing the chart series data points.
