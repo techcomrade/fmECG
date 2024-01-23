@@ -59,6 +59,7 @@ dependencies:
   permission_handler: ^10.2.0
   flutter_html: ^2.2.1
   flutter_native_splash: 2.2.0
+  telephony: ^0.2.0
   
 
   # other lib
