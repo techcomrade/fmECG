@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:bluetooth_ecg/controllers/ecg_data_controller.dart';
-import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
+// import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -144,6 +143,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
         });
       final data = await platform.invokeMethod('helloWorldPython', {'bytes': bytesInFile});
       Navigator.pop(context);
+
       if (data != null) {
         setState(() {
           isCalculated = true;
@@ -155,17 +155,20 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
         showDialog(
           context: context,
           builder: (ctxx) {
+            int sbpNumber = double.parse(_textSBP).round();
+            int dbpNumber = double.parse(_textDBP).round();
+            int heartRateNumber = double.parse(_textHeartRate).round();
+            int deviationNumber = double.parse(_textDeviation).round();
 
-            final isNormalPressure = int.parse(_textSBP) < 120 && int.parse(_textDBP) < 80;
-            final isHighPressure =  int.parse(_textSBP) >= 120 && int.parse(_textSBP) < 130 && int.parse(_textDBP) < 80;
-            final isHighPressure1 =  int.parse(_textSBP) >= 130 && int.parse(_textSBP) < 140 && int.parse(_textDBP) >= 80 && int.parse(_textDBP) < 90;
-            final isHighPressure2 = int.parse(_textSBP) > 140 && int.parse(_textDBP) > 90;
-            final isHighPressure3 = int.parse(_textSBP) > 180 && int.parse(_textDBP) > 120;
-            final isNormalHeartRate = int.parse(_textHeartRate) >= 60 && int.parse(_textHeartRate) <= 100;
-            final isLowHeartRate = int.parse(_textHeartRate) < 60 ;
-            final isHighHeartRate = int.parse(_textHeartRate) > 100 ;
-            final isManyHeartRate = int.parse(_textDeviation) > 50 ;
-            final isPhoneNumberNotSet = isNotSetupPhoneNumber;
+            final bool isNormalPressure = sbpNumber < 120 && dbpNumber < 80;
+            final bool isHighPressure =  sbpNumber >= 120 && sbpNumber < 130 && dbpNumber < 80;
+            final bool isHighPressure1 =  sbpNumber >= 130 && sbpNumber < 140 && dbpNumber >= 80 && dbpNumber < 90;
+            final bool isHighPressure2 = sbpNumber > 140 && dbpNumber > 90;
+            final bool isHighPressure3 = sbpNumber > 180 && dbpNumber > 120;
+            final bool isNormalHeartRate = heartRateNumber >= 60 && heartRateNumber <= 100;
+            final bool isLowHeartRate = heartRateNumber < 60 ;
+            final bool isHighHeartRate = heartRateNumber > 100 ;
+            final bool isManyHeartRate = deviationNumber > 50 ;
 
             String message = "";
 
@@ -187,7 +190,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
 
             return Dialog(
               child: Container(
-                height: 200,
+                height: 205,
                 child: Column(
                   children: [
                     const Align(
@@ -195,20 +198,26 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                       child: Text('Dữ liệu sau khi được xử lý: ', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
                     ),
                     const SizedBox(height: 5),
-                    Text("SBP: ${double.parse(_textSBP).round()}"),
-                    Text("DBP: ${double.parse(_textDBP).round()}"),
-                    Text("Heart Rate: ${double.parse(_textHeartRate).round()}"),
-                    Text("Deviation: ${double.parse(_textDeviation).round()}"),
+                    Text("SBP: $sbpNumber"),
+                    Text("DBP: $dbpNumber"),
+                    Text("Heart Rate: $heartRateNumber"),
+                    Text("Deviation: $deviationNumber"),
                     const SizedBox(height: 5),
 
                     // Display the warning message if any condition is met
                     if (message.isNotEmpty)
-                      Text(message),
-                    if (isPhoneNumberNotSet)
+                      Text(message, 
+                        style: const TextStyle(
+                          color: Colors.red, 
+                          fontWeight: FontWeight.w500
+                        )
+                      ),
+                    if (isNotSetupPhoneNumber)
                       const Text("Vui lòng setup số điện thoại người thân ở trang chủ!"),
                     const SizedBox(height: 5),
 
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         if (message.isNotEmpty)
                           ElevatedButton(
@@ -246,8 +255,6 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
             );
           },
         );
-
-
       }
     } catch (e) {
       Navigator.pop(context);
@@ -359,76 +366,63 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   }
 
 
-  SfCartesianChart _buildLiveLineChart() =>
-      SfCartesianChart(
-        // title: ChartTitle(
-        //   text: "Biểu đồ đo điện tim thời gian thực",
-        //   alignment: ChartAlignment.center,
-        // ),
-        // plotAreaBackgroundColor: Color(0XFF006A89),
-          plotAreaBorderWidth: 0,
-          primaryXAxis: NumericAxis(
-              zoomPosition: 0.2,
-              interval: 50,
+  SfCartesianChart _buildLiveLineChart() => SfCartesianChart(
+    // title: ChartTitle(
+    //   text: "Biểu đồ đo điện tim thời gian thực",
+    //   alignment: ChartAlignment.center,
+    // ),
+    // plotAreaBackgroundColor: Color(0XFF006A89),
+    plotAreaBorderWidth: 0,
+    primaryXAxis: NumericAxis(zoomPosition: 0.2, interval: 50, edgeLabelPlacement: EdgeLabelPlacement.shift),
+    primaryYAxis:
+        NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift, majorGridLines: const MajorGridLines(width: 1)),
+    legend: Legend(isVisible: true, isResponsive: true, position: LegendPosition.top),
+    enableAxisAnimation: true,
+    series: [
+      FastLineSeries<_ChartData, int>(
+        onRendererCreated: (ChartSeriesController controller) {
+          _chartSeriesController = controller;
+        },
+        dataSource: chartDataChannel!,
+        color: Color.fromARGB(255, 42, 25, 228),
+        xValueMapper: (_ChartData sales, _) => sales.country,
+        yValueMapper: (_ChartData sales, _) => sales.sales,
+        animationDuration: 0,
+        legendItemText: "PPG"
+      ),
+    ]
+  );
 
-              edgeLabelPlacement: EdgeLabelPlacement.shift
-          ),
-          primaryYAxis: NumericAxis(
-              edgeLabelPlacement: EdgeLabelPlacement.shift,
-              majorGridLines: const MajorGridLines(width: 1)),
-          legend: Legend(
-              isVisible: true,
-              isResponsive: true,
-              position: LegendPosition.top
-          ),
-          enableAxisAnimation: true,
-          series: [
-            FastLineSeries<_ChartData, int>(
-                onRendererCreated: (ChartSeriesController controller) {
-                  _chartSeriesController = controller;
-                },
-                dataSource: chartDataChannel!,
-                color: Color.fromARGB(255, 42, 25, 228),
-                xValueMapper: (_ChartData sales, _) => sales.country,
-                yValueMapper: (_ChartData sales, _) => sales.sales,
-                animationDuration: 0,
-                legendItemText: "PPG"
-            ),
-          ]);
-
-          SfCartesianChart _buildLiveLineChart1() =>
-            SfCartesianChart(
-
-          plotAreaBorderWidth: 0,
-          primaryXAxis: NumericAxis(
-              zoomPosition: 0.2,
-              interval: 50,
-
-              edgeLabelPlacement: EdgeLabelPlacement.shift
-          ),
-          primaryYAxis: NumericAxis(
-              edgeLabelPlacement: EdgeLabelPlacement.shift,
-              majorGridLines: const MajorGridLines(width: 1)),
-          legend: Legend(
-              isVisible: true,
-              isResponsive: true,
-              position: LegendPosition.top
-          ),
-          enableAxisAnimation: true,
-          series: [
-
-            FastLineSeries<_ChartData, int>(
-                onRendererCreated: (ChartSeriesController controller) {
-                  _chartSeriesController3 = controller;
-                },
-                dataSource: chartDataChannel3!,
-                color: Color.fromARGB(255, 228, 25, 25),
-                xValueMapper: (_ChartData sales, _) => sales.country,
-                yValueMapper: (_ChartData sales, _) => sales.sales,
-                animationDuration: 0,
-                legendItemText: "PCG"
-            ),
-          ]);
+  SfCartesianChart _buildLiveLineChart1() => SfCartesianChart(
+    plotAreaBorderWidth: 0,
+    primaryXAxis: NumericAxis(
+        zoomPosition: 0.2,
+        interval: 50,
+        edgeLabelPlacement: EdgeLabelPlacement.shift
+    ),
+    primaryYAxis: NumericAxis(
+        edgeLabelPlacement: EdgeLabelPlacement.shift,
+        majorGridLines: const MajorGridLines(width: 1)),
+    legend: Legend(
+        isVisible: true,
+        isResponsive: true,
+        position: LegendPosition.top
+    ),
+    enableAxisAnimation: true,
+    series: [
+      FastLineSeries<_ChartData, int>(
+        onRendererCreated: (ChartSeriesController controller) {
+          _chartSeriesController3 = controller;
+        },
+        dataSource: chartDataChannel3!,
+        color: Color.fromARGB(255, 228, 25, 25),
+        xValueMapper: (_ChartData sales, _) => sales.country,
+        yValueMapper: (_ChartData sales, _) => sales.sales,
+        animationDuration: 0,
+        legendItemText: "PCG"
+      ),
+    ]
+  );
 
   void _updateChartData(List dataChannelsToShowOnChart) {
     _ChartData newData = _ChartData(
