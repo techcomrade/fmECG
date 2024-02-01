@@ -3,6 +3,7 @@
    <uses-feature
         android:name="android.hardware.bluetooth_le"
         android:required="true" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <!-- Request legacy Bluetooth permissions on older devices. -->
     <uses-permission android:name="android.permission.BLUETOOTH"

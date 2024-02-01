@@ -91,6 +91,18 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
     });
   }
 
+  Future<void> sendSMSAutomatically(String message) async {
+    String phoneNumber = await _getPhoneNumberFromPrefs();
+    if (phoneNumber.isNotEmpty) {
+      final Telephony telephony = Telephony.instance;
+      await telephony.sendSms(to: phoneNumber, message: message);
+    } else {
+      setState(() {
+        isNotSetupPhoneNumber = true;
+      });
+    }
+  }
+
   _handleSaveRecordInFile() async {
     subscribeStream.cancel();
     _dataStreamController.close();
@@ -148,23 +160,33 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
             final bool isHighHeartRate = heartRateNumber > 100 ;
             final bool isManyHeartRate = deviationNumber > 50 ;
 
-            String message = "";
+            String smsMessage = "";
+            if (isHighPressure || isHighPressure1 || isHighPressure2 || isHighPressure3 ||
+                isLowHeartRate || isHighHeartRate || isManyHeartRate) {
+              smsMessage = "Thông báo về tình trạng sức khỏe: ";
+              if (isHighPressure) {
+                smsMessage += "Huyết áp cao. ";
+              } else if (isHighPressure1) {
+                smsMessage += "Tăng huyết áp Độ 1. ";
+              } else if (isHighPressure2) {
+                smsMessage += "Tăng huyết áp Độ 2. ";
+              } else if (isHighPressure3) {
+                smsMessage += "Huyết áp cực kỳ cao! ";
+              }
 
-            if (isHighPressure) {
-              message = "Cảnh báo: Huyết áp cao. Hãy theo dõi và chăm sóc sức khỏe!";
-            } else if (isHighPressure1) {
-              message = "Cảnh báo: Tăng huyết áp Độ 1. Hãy theo dõi và chăm sóc sức khỏe!";
-            } else if (isHighPressure2) {
-              message = "Cảnh báo khẩn: Tăng huyết áp Độ 2. Hãy theo dõi và chăm sóc sức khỏe!";
-            } else if (isHighPressure3) {
-              message = "Cảnh báo nguy cấp: Huyết áp cực kỳ cao! Đây có thể là tình huống khẩn cấp. Liên hệ bác sĩ ngay!";
-            } else if (isLowHeartRate) {
-              message = "Thông báo: Nhịp tim thấp. Nếu cảm thấy không khỏe, hãy liên hệ bác sĩ.";
-            } else if (isHighHeartRate) {
-              message = "Cảnh báo: Nhịp tim cao. Cần theo dõi và có thể cần tư vấn y tế.";
-            } else if (isManyHeartRate) {
-              message = "Chú ý: Sự chênh lệch lớn trong nhịp tim được ghi nhận. Nên kiểm tra sức khỏe.";
+              if (isLowHeartRate) {
+                smsMessage += "Nhịp tim thấp. ";
+              } else if (isHighHeartRate) {
+                smsMessage += "Nhịp tim cao. ";
+              }
+
+              if (isManyHeartRate) {
+                smsMessage += "Sự chênh lệch lớn trong nhịp tim. ";
+              }
+
+              sendSMSAutomatically(smsMessage);
             }
+
 
             return Dialog(
               child: Container(
@@ -181,51 +203,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                     Text("Heart Rate: $heartRateNumber"),
                     Text("Deviation: $deviationNumber"),
                     const SizedBox(height: 5),
-
-                    // Display the warning message if any condition is met
-                    if (message.isNotEmpty)
-                      Text(message, 
-                        style: const TextStyle(
-                          color: Colors.red, 
-                          fontWeight: FontWeight.w500
-                        )
-                      ),
-                    if (isNotSetupPhoneNumber)
-                      const Text("Vui lòng setup số điện thoại người thân ở trang chủ!"),
-                    const SizedBox(height: 5),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (message.isNotEmpty)
-                          ElevatedButton(
-                            onPressed: () async {
-                              String phoneNumber = await _getPhoneNumberFromPrefs();
-                              if (phoneNumber != "") {
-                                final Telephony telephony = Telephony.instance;
-                                await telephony.sendSms(to: phoneNumber, message: message);
-                              } else {
-                                setState(() {
-                                  isNotSetupPhoneNumber = true;
-                                });
-                              }
-                            },
-                            child: const Text("Send SMS",
-                                style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
-                          ),
-
-                        if (message.isNotEmpty)
-                          const SizedBox(width: 8),
-
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text("Close",
-                              style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
-                        ),
-                      ],
-                    )
+                    // Display the warning message if any condition is me
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
@@ -238,6 +216,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
       Navigator.pop(context);
       Utils.showDialogWarningError(context, false, "Lỗi khi xử lý dữ liệu với Python");
     }
+
   }
 
   _clearDataInChart() {

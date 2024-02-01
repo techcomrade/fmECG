@@ -158,10 +158,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     runSpacing: 15,
                     alignment: WrapAlignment.spaceAround,
                     children: [
-                      NumberCard(number: 150, text: "Huyết áp tâm thu", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
-                      NumberCard(number: 100, text: "Huyết áp tâm trương", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
-                      NumberCard(number: 101, text: "Nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
-                      // NumberCard(number: 86.0, text: "Biến thiên nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
+                      NumberCard(number: 190 , text: "Huyết áp tâm thu", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
+                      NumberCard(number: 125, text: "Huyết áp tâm trương", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
+                      NumberCard(number: 84, text: "Nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
+                      NumberCard(number: 86, text: "Biến thiên nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
                     ],
                   )
                 ],
@@ -399,8 +399,8 @@ class NumberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 110.0,
-      height: 110.0,
+      width: 140.0,
+      height: 120.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
         gradient: LinearGradient(
