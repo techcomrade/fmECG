@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Login1Screen extends StatefulWidget {
+  const Login1Screen({Key? key}) : super(key: key);
+
   @override
   State<Login1Screen> createState() => _Login1ScreenState();
 }
@@ -112,7 +114,7 @@ class _Login1ScreenState extends State<Login1Screen> {
             ),
             if (!showLoginError)
               // Display error message if needed
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 8.0),
                 child: Text(
                   'Tài khoản hoặc mật khẩu không đúng',

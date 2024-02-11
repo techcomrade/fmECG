@@ -55,7 +55,7 @@ class FmECGFirebaseMessage {
 
   getAllConversationsInfo(int userId) {
     final allConversationsQuery = database.collection("conversations")
-                                .where('member_ids.${userId}', isEqualTo: true)
+                                .where('member_ids.$userId', isEqualTo: true)
                                 .snapshots();
     return allConversationsQuery;
   }

@@ -24,7 +24,7 @@ class NewsAllScreen extends StatelessWidget {
           ? Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ListView.builder(
-                  padding: EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 15),
                   shrinkWrap: true,
                   itemCount: allNews.length,
                   physics: const ClampingScrollPhysics(),
@@ -48,11 +48,11 @@ class NewsAllScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => NewsDetailScreen()));
+                                builder: (context) => const NewsDetailScreen()));
                       },
                       splashColor: ColorConstant.primary,
                       child: Container(
-                        margin: EdgeInsets.only(bottom: 10),
+                        margin: const EdgeInsets.only(bottom: 10),
                         child: Row(children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
@@ -63,8 +63,8 @@ class NewsAllScreen extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          SizedBox(width: 15),
-                          Container(
+                          const SizedBox(width: 15),
+                          SizedBox(
                             height: 85,
                             // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
                             width: 210,
@@ -73,19 +73,19 @@ class NewsAllScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("$newsCategory",
+                                  Text(newsCategory,
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey[600])),
-                                  Text("$newsTitle",
+                                  Text(newsTitle,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
                                       style: const TextStyle(
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black)),
-                                  Text("$newsCreatedAtFormat",
+                                  Text(newsCreatedAtFormat,
                                       style: TextStyle(
                                         color: Colors.grey[700],
                                       )),
@@ -96,7 +96,7 @@ class NewsAllScreen extends StatelessWidget {
                     );
                   }),
             )
-          : CircularProgressIndicator(),
+          : const CircularProgressIndicator(),
     );
   }
 }

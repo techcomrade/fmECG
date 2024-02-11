@@ -3,12 +3,11 @@ import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HistoryRecordChart extends StatefulWidget {
-  HistoryRecordChart({
+  const HistoryRecordChart({
     Key? key, 
     required this.recordId
   }) : super(key: key);
@@ -52,10 +51,10 @@ class _HistoryRecordChartState extends State<HistoryRecordChart>  {
 
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.all(15),
+        margin: const EdgeInsets.all(15),
         child: Center(
           child: chartData != null && chartData!.isNotEmpty ?
-            _buildDefaultLineChart() : CircularProgressIndicator()
+            _buildDefaultLineChart() : const CircularProgressIndicator()
           )
       )
     );

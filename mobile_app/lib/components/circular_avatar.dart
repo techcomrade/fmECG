@@ -4,7 +4,7 @@ class CircularAvatar extends StatelessWidget {
   final String imageAsset;
   final double radius;
 
-  CircularAvatar({required this.imageAsset, this.radius = 10.0});
+  const CircularAvatar({Key? key, required this.imageAsset, this.radius = 10.0}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

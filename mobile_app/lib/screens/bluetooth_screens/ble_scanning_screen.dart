@@ -132,11 +132,11 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
         return AlertDialog(
           title: const Center(child: Text("fmECG thông báo")),
           content: state.connectionState == DeviceConnectionState.connected ? 
-            Text("Bạn đã kết nối thành công!", textAlign: TextAlign.center) : Text("Bạn đã kết nối chưa thành công!"),
+            const Text("Bạn đã kết nối thành công!", textAlign: TextAlign.center) : const Text("Bạn đã kết nối chưa thành công!"),
           actions: [
             Center(
               child: ElevatedButton(
-                child: Text('Tiến hành đo'),
+                child: const Text('Tiến hành đo'),
                 onPressed: () async {
                   Navigator.pop(context);
                   await _navigateToChart();
@@ -255,8 +255,8 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
                 },
                 child: Container(
                   padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       topRight: Radius.circular(6), 
                       bottomRight: Radius.circular(6)
                     ),
@@ -309,10 +309,10 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-              ElevatedButton(onPressed: _startScanning, child: Text('Tìm kiếm')),
-              ElevatedButton(onPressed: _stopScanning, child: Text('Dừng')),
+              ElevatedButton(onPressed: _startScanning, child: const Text('Tìm kiếm')),
+              ElevatedButton(onPressed: _stopScanning, child: const Text('Dừng')),
               ElevatedButton(onPressed: deviceConnected != null ? () => _disconnectDevice(deviceConnected!.id) : null, 
-                child: Text('Ngắt kết nối')
+                child: const Text('Ngắt kết nối')
               ),
             ]),
 
@@ -363,7 +363,7 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
             Container(
               height: screenHeight * 0.1,
               alignment: Alignment.center,
-              child: _isScanning ? Column(children: [
+              child: _isScanning ? Column(children: const [
                 Text("Đang quét để tìm kiếm thiết bị"),
                 CircularProgressIndicator(),
               ]) : 

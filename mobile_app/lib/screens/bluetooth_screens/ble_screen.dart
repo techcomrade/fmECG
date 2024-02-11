@@ -10,6 +10,8 @@ Uuid _UART_RX   = Uuid.parse("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
 Uuid _UART_TX   = Uuid.parse("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
 
 class BleReactiveScreen extends StatefulWidget {
+  const BleReactiveScreen({Key? key}) : super(key: key);
+
   @override
   _BleReactiveScreenState createState() => _BleReactiveScreenState();
 }
@@ -118,7 +120,7 @@ class _BleReactiveScreenState extends State<BleReactiveScreen> {
     _scanStream.cancel();
     _currentConnectionStream = flutterReactiveBle.connectToAdvertisingDevice(
       id: _deviceNeedConnecting.id,
-      prescanDuration: Duration(seconds: 1),
+      prescanDuration: const Duration(seconds: 1),
       withServices: [_UART_UUID, _UART_TX],
     );
 
@@ -184,7 +186,7 @@ class _BleReactiveScreenState extends State<BleReactiveScreen> {
           builder: (c, snapshot) {
             final state = snapshot.data;
             if (state == BleStatus.ready) {
-              return BleScanningAndConnectingScreen();
+              return const BleScanningAndConnectingScreen();
             } else {
             return BluetoothOffScreen(state: state);
             }
