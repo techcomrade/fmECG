@@ -1,4 +1,3 @@
-import 'package:bluetooth_ecg/screens/auth_screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {

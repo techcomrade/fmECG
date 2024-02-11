@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'dart:math' as math;
 
-import 'package:bluetooth_ecg/utils/files_management.dart';
 
 class ECGDataController {
   static const double REFERENCE_VOLTAGE = 4.5;
@@ -20,12 +18,12 @@ class ECGDataController {
     /// 1 row include calculated figure for each channel like sample: [figureChannel1, figureChannel2, figureChannel3, figureChannel4]
     final List<double> row = [];
 
-    CHANNELS_NUMBER.forEach((channelNumber) {
-      if (channelNumber == 4) return; //tạm thời chưa sử dụng channelNumber4
+    for (var channelNumber in CHANNELS_NUMBER) {
+      if (channelNumber == 4) continue; //tạm thời chưa sử dụng channelNumber4
       List<int> channelBytes = getChannelsSplittedBytes(channelsBytes, channelNumber);
       double channelFigure = calculateByteToDecimal(channelBytes);
       row.add(channelFigure);
-    });
+    }
 
     return row;
   }
@@ -105,7 +103,7 @@ class ECGDataController {
   }
 
   static List handlePacketData(List<int> bytes) {
-    final int numberSample = (bytes[9] / 4 / 3).toInt();
+    final int numberSample = bytes[9] / 4 ~/ 3;
     final int countPacket = bytes[10];
     final rowLength = bytes.length;
     final dataECG = bytes.sublist(11, rowLength);
@@ -130,11 +128,11 @@ class ECGDataController {
     /// [figureChannel1, figureChannel2, figureChannel3, figureChannel4]
     final List<double> row = [];
 
-    CHANNELS_NUMBER.forEach((channelNumber) {
+    for (var channelNumber in CHANNELS_NUMBER) {
       List<int> channelBytes = getChannelsSplittedBytes(bytes, channelNumber);
       double channelFigure = calculateByteToDecimal(channelBytes);
       row.add(channelFigure);
-    });
+    }
 
     return row;
   }

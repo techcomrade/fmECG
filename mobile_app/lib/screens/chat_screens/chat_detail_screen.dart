@@ -56,7 +56,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             children: [
               Container(
                 height: screenSize.height * 0.085,
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(color: Colors.grey[300]),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -126,7 +126,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                               ),
                             );
                           } else {
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator();
                           }
                         }),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [

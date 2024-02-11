@@ -1,9 +1,9 @@
-import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 class UserProfileScreen extends StatefulWidget {
+  const UserProfileScreen({Key? key}) : super(key: key);
+
   @override
   _UserProfileScreenState createState() => _UserProfileScreenState();
 }
