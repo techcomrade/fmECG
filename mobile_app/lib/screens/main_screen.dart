@@ -1,10 +1,7 @@
 import 'dart:async';
 
-import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/controllers/firebase_messages_controller.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
-import 'package:bluetooth_ecg/main.dart';
-import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screens/history_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
@@ -14,20 +11,22 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
-Color LIME = Color(0xFF094D55);
+Color LIME = const Color(0xFF094D55);
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    HomeScreen(),
-    HistoryScreen(),
-    ChatScreen(),
-    UserProfileScreen()
+    const HomeScreen(),
+    const HistoryScreen(),
+    const ChatScreen(),
+    const UserProfileScreen()
   ];
 
   @override

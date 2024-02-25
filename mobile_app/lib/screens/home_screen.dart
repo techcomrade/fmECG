@@ -2,14 +2,10 @@ import 'dart:io';
 
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
-import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
 import 'package:bluetooth_ecg/controllers/news_controller.dart';
 import 'package:bluetooth_ecg/controllers/user_controller.dart';
-import 'package:bluetooth_ecg/models/user_model.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
-import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
-import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_screen.dart';
 import 'package:bluetooth_ecg/screens/news_screens/news_all_screens.dart';
 import 'package:bluetooth_ecg/screens/news_screens/news_detail_screen.dart';
@@ -18,14 +14,14 @@ import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:bluetooth_ecg/components/live_chart.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -82,14 +78,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(children: [
-                    CircularAvatar(
+                    const CircularAvatar(
                         imageAsset: 'assets/images/doctor.png', radius: 27),
                     const SizedBox(width: 8),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Chào mừng đến với fmECG"),
+                        const Text("Chào mừng đến với fmECG"),
                         Text(
                           "Thai Dong",
                           style: TextStyle(
@@ -181,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => BleReactiveScreen(),
+                                  builder: (context) => const BleReactiveScreen(),
                                 ));
                           },
                           temporaryNothing: () async {
@@ -266,8 +262,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          SizedBox(width: 20),
-                          Container(
+                          const SizedBox(width: 20),
+                          SizedBox(
                             height: 90,
                             // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
                             width: 210,
@@ -276,19 +272,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("$newsCategory",
+                                  Text(newsCategory,
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey[600])),
-                                  Text("$newsTitle",
+                                  Text(newsTitle,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
                                       style: const TextStyle(
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black)),
-                                  Text("$newsCreatedAtFormat",
+                                  Text(newsCreatedAtFormat,
                                       style: TextStyle(
                                         color: Colors.grey[700],
                                       )),
@@ -332,30 +328,28 @@ class _DarkLightSwitchState extends State<DarkLightSwitch> {
       value: isDarkSwitch,
       borderRadius: 20.0,
       padding: 1.5,
-      activeToggleColor: Color(0xFF6E40C9),
-      inactiveToggleColor: Color(0xFF2F363D),
+      activeToggleColor: const Color(0xFF6E40C9),
+      inactiveToggleColor: const Color(0xFF2F363D),
       activeSwitchBorder: Border.all(
-        color: Color(0xFF3C1E70),
+        color: const Color(0xFF3C1E70),
         width: 3.0,
       ),
       inactiveSwitchBorder: Border.all(
-        color: Color(0xFFD1D5DA),
+        color: const Color(0xFFD1D5DA),
         width: 3.0,
       ),
-      activeColor: Color(0xFF271052),
+      activeColor: const Color(0xFF271052),
       inactiveColor: Colors.white,
-      activeIcon: Icon(
+      activeIcon: const Icon(
         Icons.nightlight_round,
         color: Color(0xFFF8E3A1),
       ),
-      inactiveIcon: Icon(
+      inactiveIcon: const Icon(
         Icons.wb_sunny,
         color: Color(0xFFFFDF5D),
       ),
       onToggle: (val) {
         Provider.of<AuthProvider>(context, listen: false).isAutoTheme = false;
-        ThemeType theme =
-            Provider.of<AuthProvider>(context, listen: false).theme;
         final auth = Provider.of<AuthProvider>(context, listen: false);
         setState(() {
           isDarkSwitch = val;
@@ -374,7 +368,7 @@ class SquareContainer extends StatelessWidget {
   final IconData icon;
   final String text;
 
-  SquareContainer({required this.icon, required this.text});
+  const SquareContainer({Key? key, required this.icon, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -415,13 +409,13 @@ class NumberCard extends StatelessWidget {
   final Color color1;
   final Color color2;
 
-  NumberCard({
+  const NumberCard({Key? key, 
     required this.number,
     required this.text,
     required this.subText,
     required this.color1,
     required this.color2,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -477,11 +471,11 @@ class ImageCard extends StatelessWidget {
   final Function() functionScanBluetooth;
   final Function() temporaryNothing;
 
-  ImageCard({
+  const ImageCard({Key? key, 
     required this.imageAsset,
     required this.functionScanBluetooth,
     required this.temporaryNothing,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -499,17 +493,17 @@ class ImageCard extends StatelessWidget {
             height: 200.0,
             fit: BoxFit.cover,
           ),
-          SizedBox(height: 12.0),
+          const SizedBox(height: 12.0),
           ButtonBar(
             alignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
                 onPressed: functionScanBluetooth,
-                child: Text("Scan bluetooth"),
+                child: const Text("Scan bluetooth"),
               ),
               ElevatedButton(
                 onPressed: temporaryNothing,
-                child: Text("Test live chart"),
+                child: const Text("Test live chart"),
               ),
             ],
           ),

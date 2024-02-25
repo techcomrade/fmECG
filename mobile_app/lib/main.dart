@@ -93,7 +93,7 @@ class FmECGAppState extends State<FmECGApp> {
                   },
                 )),
             darkTheme: ThemeECG.darkTheme,
-            home: MainScreen(),
+            home: const MainScreen(),
             // auth.isAuth ? MainScreen() :
             //   FutureBuilder(
             //     future: auth.checkAutoLogin(),

@@ -5,13 +5,13 @@ class ThemeECG {
   static ThemeData lightTheme = ThemeData(
     primaryColor: ColorConstant.primary,
     scaffoldBackgroundColor: ColorConstant.quinary,
-    navigationBarTheme: NavigationBarThemeData(
+    navigationBarTheme: const NavigationBarThemeData(
       backgroundColor: Colors.red,
     ),
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: Colors.red,
     ),
-    colorScheme: ColorScheme.light(
+    colorScheme: const ColorScheme.light(
     ),
     // appBarTheme: AppBarTheme(
     //   backgroundColor: ColorConstant.primary,
@@ -53,7 +53,7 @@ class ThemeECG {
       selectedItemColor: ColorConstant.primary,
       unselectedItemColor: Colors.white,
     ),
-    buttonTheme: ButtonThemeData(
+    buttonTheme: const ButtonThemeData(
       buttonColor: Colors.red
     ),
     fontFamily: "Roboto"

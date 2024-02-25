@@ -2,8 +2,6 @@
 import 'package:bluetooth_ecg/generated/l10n.dart';
 
 extension ErrorMessage on S {
-  String get _unknownError => 'Unknown error';
-
   String getErrorMessage(Object error) {
     ArgumentError.checkNotNull(error);
 

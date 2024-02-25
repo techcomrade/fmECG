@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 class HistoryScreen extends StatefulWidget {
+  const HistoryScreen({Key? key}) : super(key: key);
+
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
 }
@@ -30,8 +32,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
       return Scaffold(
         body: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, top: 16.0),
+            const Padding(
+              padding: EdgeInsets.only(left: 16.0, top: 16.0),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
@@ -43,7 +45,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             if (allECGRecordsPreview.isNotEmpty)
             Expanded(
               // child: ListView(
@@ -90,8 +92,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
         );
       },
       child: Container(
-        padding: EdgeInsets.all(16),
-        margin: EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -99,7 +101,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             BoxShadow(
               color: Colors.black.withOpacity(0.2),
               blurRadius: 5,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -112,7 +114,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 shape: BoxShape.circle,
                 color: Colors.grey[200],
               ),
-              child: Center(
+              child: const Center(
                 child: Icon(
                   Icons.favorite_border,
                   color: Color.fromARGB(255, 57, 5, 243),
@@ -120,7 +122,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -128,17 +130,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 children: [
                   Text(
                     '$inputText $recordId',
-                    style: TextStyle(fontSize: 14),
+                    style: const TextStyle(fontSize: 14),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
-                    '$date',
-                    style: TextStyle(fontSize: 14),
+                    date,
+                    style: const TextStyle(fontSize: 14),
                   ),
                 ],
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Container(
               width: 100,
               height: 40,
@@ -149,11 +151,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.check, color: Colors.white),
-                  SizedBox(width: 4),
+                  const Icon(Icons.check, color: Colors.white),
+                  const SizedBox(width: 4),
                   Text(
                     '$recordId BPM',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ],
               ),
@@ -173,7 +175,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
             blurRadius: 5,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -183,19 +185,19 @@ class _HistoryScreenState extends State<HistoryScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             IconButton(
-              icon: Icon(Icons.home),
+              icon: const Icon(Icons.home),
               onPressed: () {},
             ),
             IconButton(
-              icon: Icon(Icons.bar_chart),
+              icon: const Icon(Icons.bar_chart),
               onPressed: () {},
             ),
             IconButton(
-              icon: Icon(Icons.chat),
+              icon: const Icon(Icons.chat),
               onPressed: () {},
             ),
             IconButton(
-              icon: Icon(Icons.people),
+              icon: const Icon(Icons.people),
               onPressed: () {},
             ),
           ],
