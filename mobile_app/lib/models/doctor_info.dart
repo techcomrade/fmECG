@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class DoctorDetail {
   int status;
@@ -10,16 +9,14 @@ class DoctorDetail {
   factory DoctorDetail.fromJson(Map<String, dynamic> json) => DoctorDetail(
     status : json['status'],
     msg : json['msg'],
-    data :(json['data'] != null ? new Data.fromJson(json['data']) : null)!
+    data :(json['data'] != null ? Data.fromJson(json['data']) : null)!
   );
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['msg'] = this.msg;
-    if (this.data != null) {
-      data['data'] = this.data.toJson();
-    }
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['msg'] = msg;
+    data['data'] = this.data.toJson();
     return data;
   }
 }
@@ -92,30 +89,28 @@ class Data {
   );
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['department_id'] = this.departmentId;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['password'] = this.password;
-    data['phone_no'] = this.phoneNo;
-    data['working_hour'] = this.workingHour;
-    data['about_us'] = this.aboutUs;
-    data['service'] = this.service;
-    data['image'] = this.image;
-    data['facebook_id'] = this.facebookId;
-    data['twitter_id'] = this.twitterId;
-    data['google_id'] = this.googleId;
-    data['instagram_id'] = this.instagramId;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['department_name'] = this.departmentName;
-    data['ratting'] = this.ratting;
-    if (this.timeTabledata != null) {
-      data['time_tabledata'] =
-          this.timeTabledata.map((v) => v.toJson()).toList();
-    }
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['department_id'] = departmentId;
+    data['name'] = name;
+    data['email'] = email;
+    data['password'] = password;
+    data['phone_no'] = phoneNo;
+    data['working_hour'] = workingHour;
+    data['about_us'] = aboutUs;
+    data['service'] = service;
+    data['image'] = image;
+    data['facebook_id'] = facebookId;
+    data['twitter_id'] = twitterId;
+    data['google_id'] = googleId;
+    data['instagram_id'] = instagramId;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['department_name'] = departmentName;
+    data['ratting'] = ratting;
+    data['time_tabledata'] =
+        timeTabledata.map((v) => v.toJson()).toList();
     return data;
   }
 }
@@ -149,14 +144,14 @@ class TimeTabledata {
   );
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['doctor_id'] = this.doctorId;
-    data['day'] = this.day;
-    data['from'] = this.from;
-    data['to'] = this.to;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['doctor_id'] = doctorId;
+    data['day'] = day;
+    data['from'] = from;
+    data['to'] = to;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

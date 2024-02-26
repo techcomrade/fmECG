@@ -1,14 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:bluetooth_ecg/controllers/ecg_data_controller.dart';
-import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
-import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class LiveChartSample extends StatefulWidget {
@@ -83,7 +79,7 @@ class _LiveChartSampleState extends State<LiveChartSample> {
               // });
               FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
             }, 
-            child: Text('End measurement')
+            child: const Text('End measurement')
           ),
         )
       ]
@@ -117,7 +113,7 @@ class _LiveChartSampleState extends State<LiveChartSample> {
           },
           legendItemText: "Người mẹ",
           dataSource: chartData!,
-          color: Color(0XFF7BB4EA),
+          color: const Color(0XFF7BB4EA),
           xValueMapper: (_ChartData sales, _) => sales.country,
           yValueMapper: (_ChartData sales, _) => sales.sales,
           // animationDuration: 0,

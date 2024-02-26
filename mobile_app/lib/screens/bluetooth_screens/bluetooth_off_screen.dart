@@ -27,7 +27,7 @@ class BluetoothOffScreen extends StatelessWidget {
               'Bluetooth hiện đang ở chế độ ${state != null ? state.toString().substring(10) : 'not available'}.',
               style: Theme.of(context)
                   .primaryTextTheme
-                  .subtitle2
+                  .titleSmall
                   ?.copyWith(color: Colors.white),
             ),
             // Text('Vui lòng bật Bluetooth để tiếp tục'),

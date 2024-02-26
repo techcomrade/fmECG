@@ -6,7 +6,6 @@ import 'package:bluetooth_ecg/providers/bluetooth_provider.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
-import 'package:bluetooth_ecg/routes/route.dart';
 import 'package:bluetooth_ecg/screens/main_screen.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -94,7 +93,7 @@ class FmECGAppState extends State<FmECGApp> {
                   },
                 )),
             darkTheme: ThemeECG.darkTheme,
-            home: MainScreen(),
+            home: const MainScreen(),
             // auth.isAuth ? MainScreen() :
             //   FutureBuilder(
             //     future: auth.checkAutoLogin(),

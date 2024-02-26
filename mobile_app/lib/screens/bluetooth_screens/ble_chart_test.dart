@@ -229,7 +229,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                   _chartSeriesController = controller;
                 },
                 dataSource: chartDataChannel!,
-                color: Color.fromARGB(255, 42, 25, 228),
+                color: const Color.fromARGB(255, 42, 25, 228),
                 xValueMapper: (_ChartData sales, _) => sales.country,
                 yValueMapper: (_ChartData sales, _) => sales.sales,
                 animationDuration: 0,
@@ -239,7 +239,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                   _chartSeriesController2 = controller;
                 },
                 dataSource: chartDataChannel2!,
-                color: Color.fromARGB(255, 228, 25, 25),
+                color: const Color.fromARGB(255, 228, 25, 25),
                 xValueMapper: (_ChartData sales, _) => sales.country,
                 yValueMapper: (_ChartData sales, _) => sales.sales,
                 animationDuration: 0,
@@ -249,7 +249,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                   _chartSeriesController3 = controller;
                 },
                 dataSource: chartDataChannel3!,
-                color: Color.fromARGB(255, 25, 228, 45),
+                color: const Color.fromARGB(255, 25, 228, 45),
                 xValueMapper: (_ChartData sales, _) => sales.country,
                 yValueMapper: (_ChartData sales, _) => sales.sales,
                 animationDuration: 0,
@@ -259,7 +259,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                   _chartSeriesController4 = controller;
                 },
                 dataSource: chartDataChannel4!,
-                color: Color.fromARGB(255, 214, 228, 25),
+                color: const Color.fromARGB(255, 214, 228, 25),
                 xValueMapper: (_ChartData sales, _) => sales.country,
                 yValueMapper: (_ChartData sales, _) => sales.sales,
                 animationDuration: 0,

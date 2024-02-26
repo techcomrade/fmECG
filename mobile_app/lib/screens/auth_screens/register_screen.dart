@@ -2,13 +2,14 @@
 import 'package:bluetooth_ecg/components/submit_button.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
-import 'package:bluetooth_ecg/routes/route.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // ignore_for_file: must_be_immutable
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
+
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
@@ -17,7 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final paddingLoginHorizontal30 = const EdgeInsets.symmetric(horizontal: 30);
   bool isSigningUp = false; 
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FocusNode focusNodeEmail = FocusNode();
   FocusNode focusNodePassword = FocusNode();
   FocusNode focusNodeConfirmPassword = FocusNode();
@@ -164,7 +165,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                    Text("Already have an account?"),
+                    const Text("Already have an account?"),
                     Text("  Login", style: TextStyle(color: ColorConstant.primary, fontWeight: FontWeight.bold),)
                   ],)
                 ]

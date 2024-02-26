@@ -96,6 +96,7 @@ flutter:
     - assets/doctordetails/
     - assets/departmentScreen/
     - assets/chatScreen/
+    - assets/logo/
 
   fonts:
     - family: Recoleta

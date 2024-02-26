@@ -51,11 +51,11 @@ class Utils {
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: Text("Có lỗi xảy ra"),
-          content: Text("Bạn phải đăng nhập để thực hiện chức năng này!"),
+          title: const Text("Có lỗi xảy ra"),
+          content: const Text("Bạn phải đăng nhập để thực hiện chức năng này!"),
           actions: [
             TextButton(
-              child: Text('Trở về'),
+              child: const Text('Trở về'),
               onPressed: () {
                 Navigator.pop(context);
               },
