@@ -12,15 +12,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    # if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     steps:
-    - name: auto merge with label
-      uses: "pascalgn/automerge-action@v0.16.2"
-      env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    # - name: auto merge with label
+    #   uses: "pascalgn/automerge-action@v0.16.2"
+    #   env:
+    #     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     - uses: actions/checkout@v4
       with:
-        ref: development
+        ref: test-cicd
     
     - name: Bump version and push tag
       uses: anothrNick/github-tag-action@1.64.0
