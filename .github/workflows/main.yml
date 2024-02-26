@@ -2,7 +2,7 @@ name: CI/CD for Mobile App
 on: 
   push:
     branches:
-      - development
+      - test-cicd
   # push:
   #   branches: 
   #     - feature/add_cicd
