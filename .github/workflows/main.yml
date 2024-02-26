@@ -2,7 +2,7 @@ name: CI/CD for Mobile App
 on: 
   push:
     branches:
-      - main
+      - development
   # push:
   #   branches: 
   #     - feature/add_cicd
@@ -12,6 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     steps:
     - name: auto merge with label
       uses: "pascalgn/automerge-action@v0.16.2"
@@ -19,7 +20,7 @@ jobs:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     - uses: actions/checkout@v4
       with:
-        ref: test
+        ref: development
     
     - name: Bump version and push tag
       uses: anothrNick/github-tag-action@1.64.0
