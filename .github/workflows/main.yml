@@ -1,23 +1,40 @@
 name: CI/CD for Mobile App
 on: 
   push:
-    branches: 
-      - feature/add_cicd
-    tags: 
-      - v*
+    branches:
+      - development
+  # push:
+  #   branches: 
+  #     - feature/add_cicd
+  #   tags: 
+  #     - v*
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     steps:
-    - uses: actions/checkout@v3
+    - name: auto merge with label
+      uses: "pascalgn/automerge-action@v0.16.2"
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    - uses: actions/checkout@v4
+      with:
+        ref: development
+    
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.64.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+        PRERELEASE: true
+    
     - uses: subosito/flutter-action@v2
       with:
-        flutter-version: "3.7.9"
-        channel: stable
+        flutter-version: '3.7.9'
+        channel: 'stable'
         cache: true
-    - name: Check Flutter version
-      run: flutter --version
+    - run: flutter --version
 
     - name: Install dependencies 
       run: cd mobile_app && flutter pub get
