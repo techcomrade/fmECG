@@ -1,0 +1,44 @@
+name: CI/CD for Mobile App
+on: 
+  push:
+    branches:
+      - main
+  # pull_request:
+  #   branches:
+  #     - development
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: test-cicd
+        fetch-depth: '0'
+    
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.64.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+        PRERELEASE: true
+    
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.7.9'
+        channel: 'stable'
+        cache: true
+    - run: flutter --version
+
+    - name: Install dependencies 
+      run: cd mobile_app && flutter pub get
+    # - name: Run test
+    #   run: flutter test --coverage
+    - name: Build APK
+      run: cd mobile_app && flutter build apk --no-shrink --no-tree-shake-icons
+    - name: Create a Release APK
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "mobile_app/build/app/outputs/apk/release/*.apk"
+        token: ${{ secrets.TOKEN }}
