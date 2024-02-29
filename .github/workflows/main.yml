@@ -8,19 +8,55 @@ on:
   #     - feature/add_cicd
   #   tags: 
   #     - v*
-
+    
 jobs:
-  build:
+  auto-add-label-desktop:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.title, 'desktop') || contains(github.event.pull_request.title, 'mobile')
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: auto add label
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-label desktop
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  auto-add-label-mobile:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.title, 'mobile')
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: auto add label
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-label mobile
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  auto-build: 
     runs-on: ubuntu-latest
     steps:
-    - name: auto merge with label
+    - name: auto merge with label (automerge)
       uses: "pascalgn/automerge-action@v0.16.2"
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
     - uses: actions/checkout@v4
       with:
-        ref: test-cicd
+        fetch-tags: true
+        fetch-depth: '0'
+
+    - name: 'Get Previous tag'
+      id: previoustag
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    - name: 'Get next minor version'
+      id: semvers
+      uses: "WyriHaximus/github-action-next-semvers@v1"
+      with:
+        version: ${{ steps.previoustag.outputs.tag }}
       
     - name: Bump version and push tag
       uses: anothrNick/github-tag-action@1.64.0
@@ -47,4 +83,4 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "mobile_app/build/app/outputs/apk/release/*.apk"
-        token: ${{ secrets.TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}

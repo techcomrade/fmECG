@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: create pull request
-        run: gh pr create -B test-cicd -H ${{ github.event.pull_request.head.ref }} --title '${{ github.event.pull_request.title}}' --body 'create by bot from pull development' --label automerge
+        run: gh pr create -B test-cicd -H ${{ github.event.pull_request.head.ref }} --title '${{ github.event.pull_request.title }}' --body 'create by bot from pull development' --label automerge
         env:
             GITHUB_TOKEN: ${{ secrets.PAT }}
 
