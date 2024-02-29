@@ -10,15 +10,27 @@ on:
   #     - v*
     
 jobs:
-  auto-add-label-desktop:
+  auto-add-label-web:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.title, 'desktop') || contains(github.event.pull_request.title, 'mobile')
+    if: contains(github.event.pull_request.title, 'web')
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
 
       - name: auto add label
-        run: gh pr edit ${{ github.event.pull_request.number }} --add-label desktop
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-label web
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  auto-add-label-server:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.title, 'server')
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: auto add label
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-label server
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
