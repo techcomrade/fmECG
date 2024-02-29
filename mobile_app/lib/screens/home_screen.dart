@@ -26,6 +26,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -54,9 +55,70 @@ class _HomeScreenState extends State<HomeScreen> {
   //   UserController.getDoctorAssigned(patientId);
   // }
 
+  _handleSaveRecordInFile() async {
+    // Giả sử bạn đã có dữ liệu từ việc đo hoặc xử lý dữ liệu
+    int sbpNumber = 180; // Giả sử số liệu đo được
+    int dbpNumber = 50; // Giả sử số liệu đo được
+    int heartRateNumber = 70; // Giả sử số liệu đo được
+    int deviationNumber = 5; // Giả sử số liệu đo được
+    double position = calculateIndicatorPosition(sbpNumber, dbpNumber);
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("Kết quả đo"),
+              centerTitle: true,
+            ),
+            body: Container(
+              padding: EdgeInsets.all(20),
+              child: SingleChildScrollView( // Sử dụng SingleChildScrollView để có thể cuộn nếu nội dung quá dài
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Tổng quan",
+                        style: TextStyle(
+                            color: ColorConstant.primary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    BloodPressureIndicator(indicatorPosition: position),
+                    const SizedBox(height: 40),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        NumberCard(number: sbpNumber, text: "Tâm thu", subText: "mmHg", color1: Colors.red, percentage: sbpNumber/250),
+                        NumberCard(number: dbpNumber, text: "Tâm trương", subText: "mmHg", color1: Colors.blue, percentage: dbpNumber/200),
+                      ],
+                    ),
+                    SizedBox(height: 40), // Khoảng cách giữa hai hàng
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        NumberCard(number: heartRateNumber, text: "Nhịp tim", subText: "bpm", color1: Colors.green, percentage: heartRateNumber/150),
+                        NumberCard(number: deviationNumber, text: "Biến thiên", subText: "bpm", color1: Colors.purple, percentage: deviationNumber/150),
+                      ],
+                    ),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+
   Future<bool> _requestManageStorage() async {
     final PermissionStatus status =
-        await Permission.manageExternalStorage.request();
+    await Permission.manageExternalStorage.request();
     if (status == PermissionStatus.granted) {
       return true;
     } else {
@@ -106,64 +168,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
-                    children: [
-                      CircularAvatar(imageAsset: 'assets/images/doctor.png', radius: 27),
-                      const SizedBox(width: 8),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Chào mừng đến với MyBP"),
-                          Text(
-                            "User",
-                            style: TextStyle(
-                              color: ColorConstant.primary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ],
-                      ),
-                    ]
+                      children: [
+                        CircularAvatar(imageAsset: 'assets/images/doctor.png', radius: 27),
+                        const SizedBox(width: 8),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Chào mừng đến với MyBP"),
+                            Text(
+                              "User",
+                              style: TextStyle(
+                                color: ColorConstant.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ],
+                        ),
+                      ]
                   ),
                   Row(
-                    children: [
-                      const DarkLightSwitch(),
-                      const SizedBox(width: 8),
-                      InkWell(
-                        child: Icon(PhosphorIcons.regular.bell),
-                      )
-                  ])
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 30),
-            SizedBox(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Tổng quan",
-                      style: TextStyle(
-                          color: ColorConstant.quaternary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Wrap(
-                    spacing: 15,
-                    runSpacing: 15,
-                    alignment: WrapAlignment.spaceAround,
-                    children: [
-                      NumberCard(number: 190 , text: "Huyết áp tâm thu", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
-                      NumberCard(number: 125, text: "Huyết áp tâm trương", subText: "mmHg", color1: ColorConstant.primary, color2: ColorConstant.primary),
-                      NumberCard(number: 84, text: "Nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
-                      NumberCard(number: 86, text: "Biến thiên nhịp tim", subText: "bpm", color1: ColorConstant.primary, color2: ColorConstant.quaternary),
-                    ],
-                  )
+                      children: [
+                        const DarkLightSwitch(),
+                        const SizedBox(width: 8),
+                        InkWell(
+                          child: Icon(PhosphorIcons.regular.bell),
+                        )
+                      ])
                 ],
               ),
             ),
@@ -180,97 +211,104 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 10),
                   !isShowChart ? ImageCard(
-                    imageAsset: 'assets/images/heart_rate_example.jpeg', 
-                    functionScanBluetooth: () {
-                      Navigator.push(context,
-                        MaterialPageRoute(
-                          builder: (context) => BleReactiveScreen(),
-                        )
-                      );
-                    }, 
-                    temporaryNothing: () async {
-                      bool isAccessFiles = await _requestManageStorage();
-                      if (isAccessFiles) {
-                        FilesManagement.createDirectoryFirstTimeWithDevice();
-                        fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
-                        setState(() {
-                          isShowChart = true;
-                        });
-                      } else {
-                        // show dialog need permission
-                        print('phone does not grant permission');
+                      imageAsset: 'assets/images/heart_rate_example.jpeg',
+                      functionScanBluetooth: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(
+                              builder: (context) => BleReactiveScreen(),
+                            )
+                        );
+                      },
+                      temporaryNothing: () async {
+                        bool isAccessFiles = await _requestManageStorage();
+                        if (isAccessFiles) {
+                          FilesManagement.createDirectoryFirstTimeWithDevice();
+                          fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
+                          setState(() {
+                            isShowChart = true;
+                          });
+                        } else {
+                          // show dialog need permission
+                          print('phone does not grant permission');
+                        }
                       }
-                    }
-                  ) 
-                  : LiveChartSample(
-                      fileToSave: fileToSave, 
-                      callBackToPreview: () => setState(() {
-                        isShowChart = false;
-                      }),
-                    ),
+                  )
+                      : LiveChartSample(
+                    fileToSave: fileToSave,
+                    callBackToPreview: () => setState(() {
+                      isShowChart = false;
+                    }),
+                  ),
                 ],
               ),
             ),
+            ElevatedButton(
+              onPressed: _handleSaveRecordInFile,
+              child: Text('Xem Kết Quả Đo'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // Màu nền của nút
+              ),
+            ),
             const SizedBox(height: 20),
-              Container(
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.only(bottom: 10),
-                child: Text(
-                  "Số người thân",
-                  style: TextStyle(
-                    color: ColorConstant.quaternary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22,
-                  ),
+            Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(bottom: 10),
+              child: Text(
+                "Số người thân",
+                style: TextStyle(
+                  color: ColorConstant.quaternary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
                 ),
               ),
+            ),
 
-              // Ô nhập liệu số điện thoại
-              TextFormField(
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-                enabled: _isEditing,
-                focusNode: focusInputPhone,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
+            // Ô nhập liệu số điện thoại
+            TextFormField(
+              controller: _phoneController,
+              keyboardType: TextInputType.phone,
+              enabled: _isEditing,
+              focusNode: focusInputPhone,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.black
+                        color: Colors.black
                     )
-                  ),
-                  hintText: 'Nhập số điện thoại',
-                  labelText: 'Số điện thoại',
                 ),
-                onChanged: (text) => setState(() {
-                  phoneNumberWarning = _phoneController.text;
-                }),
+                hintText: 'Nhập số điện thoại',
+                labelText: 'Số điện thoại',
               ),
+              onChanged: (text) => setState(() {
+                phoneNumberWarning = _phoneController.text;
+              }),
+            ),
 
-              // Nút chỉnh sửa và lưu
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,  // Căn giữa các nút
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isEditing = true;
-                      });
-                      focusInputPhone.requestFocus();
-                    },
-                    child: Text('Chỉnh sửa'),
-                  ),
-                  SizedBox(width: 20),  // Khoảng cách giữa các nút
-                  ElevatedButton(
-                    onPressed: phoneNumberWarning == "" ? null : () async {
-                      await _savePhoneNumberToSharedPrefs(_phoneController.text);
-                      setState(() {
-                        _isEditing = false;
-                        phoneNumberWarning = "";
-                      });
-                    },
-                    child: Text('Lưu'),
-                  ),
-                ],
-              ),
+            // Nút chỉnh sửa và lưu
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,  // Căn giữa các nút
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _isEditing = true;
+                    });
+                    focusInputPhone.requestFocus();
+                  },
+                  child: Text('Chỉnh sửa'),
+                ),
+                SizedBox(width: 20),  // Khoảng cách giữa các nút
+                ElevatedButton(
+                  onPressed: phoneNumberWarning == "" ? null : () async {
+                    await _savePhoneNumberToSharedPrefs(_phoneController.text);
+                    setState(() {
+                      _isEditing = false;
+                      phoneNumberWarning = "";
+                    });
+                  },
+                  child: Text('Lưu'),
+                ),
+              ],
+            ),
           ],
         ),
         // child: LiveChartSample()
@@ -352,8 +390,8 @@ class SquareContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100.0,
-      height: 100.0,
+      width: 140.0,
+      height: 140.0,
       decoration: BoxDecoration(
         color: ColorConstant.description,
         borderRadius: BorderRadius.circular(12),
@@ -385,63 +423,109 @@ class NumberCard extends StatelessWidget {
   final int number;
   final String text;
   final String subText;
-  final Color color1;
-  final Color color2;
+  final Color color1; // Màu sắc cho phần đã đạt
+  final double percentage; // Phần trăm tiến độ, ví dụ: 170/200
 
   NumberCard({
     required this.number,
     required this.text,
     required this.subText,
     required this.color1,
-    required this.color2,
+    required this.percentage,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 140.0,
-      height: 120.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        gradient: LinearGradient(
-          colors: [color1, color2],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+    // Tính toán góc cho phần tiến trình
+    double progressAngle = 2 * 3.14 * percentage;
+    return Center(
+      child: CustomPaint(
+        size: Size(130, 130), // Kích thước của CustomPaint
+        painter: CircleProgressPainter(
+          progressAngle: progressAngle,
+          progressColor: color1,
+          backgroundColor: Colors.grey[300]!,
+        ),
+        child: Container(
+          width: 110.0,
+          height: 110.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  text,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10.0,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  '$number',
+                  style: TextStyle(
+                    fontSize: 19.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  subText,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15.0,
-              color: ColorConstant.description,
-            ),
-          ),
-          const SizedBox(height: 3.0),
-          Text(
-            subText,
-            style: TextStyle(
-              fontSize: 12.0,
-              color: ColorConstant.description,
-            ),
-          ),
-          const SizedBox(height: 5.0),
-          Text(
-            '$number',
-            style: TextStyle(
-              fontSize: 17.0,
-              color: ColorConstant.description,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
     );
+  }
+}
+
+class CircleProgressPainter extends CustomPainter {
+  final double progressAngle;
+  final Color progressColor;
+  final Color backgroundColor;
+
+  CircleProgressPainter({
+    required this.progressAngle,
+    required this.progressColor,
+    required this.backgroundColor,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint backgroundPaint = Paint()
+      ..color = backgroundColor
+      ..strokeWidth = 10
+      ..style = PaintingStyle.stroke;
+
+    Paint progressPaint = Paint()
+      ..color = progressColor
+      ..strokeWidth = 10
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    Offset center = Offset(size.width / 2, size.height / 2);
+    double radius = size.width / 2;
+
+    canvas.drawCircle(center, radius, backgroundPaint);
+
+    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -3.14 / 2, progressAngle, false, progressPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
   }
 }
 
@@ -481,9 +565,9 @@ class ImageCard extends StatelessWidget {
                 child: Text("Thực hiện đo"),
               ),
               ElevatedButton(
-                 onPressed: temporaryNothing,
-                 child: Text("Thử đo"),
-               ),
+                onPressed: temporaryNothing,
+                child: Text("Thử đo"),
+              ),
             ],
           ),
         ],
@@ -491,3 +575,111 @@ class ImageCard extends StatelessWidget {
     );
   }
 }
+
+class BloodPressureIndicatorPainter extends CustomPainter {
+  final double indicatorPosition; // Giá trị từ 0 (bắt đầu) đến 1 (kết thúc) của thanh
+
+  BloodPressureIndicatorPainter({required this.indicatorPosition});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const List<Color> colors = [
+      Colors.green, // Bình thường
+      Colors.yellow, // Huyết áp cao
+      Colors.orange, // Tăng huyết áp Độ 1
+      Colors.redAccent, // Tăng huyết áp Độ 2
+      Colors.purple, // Huyết áp cực kỳ cao
+    ];
+
+    double sectionWidth = size.width / colors.length;
+
+    // Vẽ thanh ngang đa màu
+    for (int i = 0; i < colors.length; i++) {
+      Paint paint = Paint()..color = colors[i];
+      canvas.drawRect(
+        Rect.fromLTWH(i * sectionWidth, 0, sectionWidth, size.height),
+        paint,
+      );
+    }
+
+    // Vẽ vạch chỉ thị
+    double indicatorX = indicatorPosition * size.width;
+    Paint indicatorPaint = Paint()
+      ..color = Colors.black
+      ..strokeWidth = 3;
+    canvas.drawLine(
+      Offset(indicatorX, 0),
+      Offset(indicatorX, size.height),
+      indicatorPaint,
+    );
+// Tính toán vị trí và kích thước của trái tim
+    double heartWidth = 20.0;
+    double heartHeight = 20.0;
+    Offset heartPosition = Offset(indicatorX - heartWidth / 2, size.height + 10); // Điều chỉnh vị trí phù hợp
+
+// Tạo path cho hình trái tim
+    Path heartPath = Path()
+      ..moveTo(heartPosition.dx + heartWidth / 2, heartPosition.dy + heartHeight / 4)
+      ..cubicTo(
+          heartPosition.dx + heartWidth / 2, heartPosition.dy,
+          heartPosition.dx, heartPosition.dy,
+          heartPosition.dx, heartPosition.dy + heartHeight / 4)
+      ..cubicTo(
+          heartPosition.dx, heartPosition.dy + 3 * heartHeight / 4,
+          heartPosition.dx + heartWidth / 2, heartPosition.dy + heartHeight,
+          heartPosition.dx + heartWidth / 2, heartPosition.dy + 3 * heartHeight / 4)
+      ..cubicTo(
+          heartPosition.dx + heartWidth / 2, heartPosition.dy + heartHeight,
+          heartPosition.dx + heartWidth, heartPosition.dy + 3 * heartHeight / 4,
+          heartPosition.dx + heartWidth, heartPosition.dy + heartHeight / 4)
+      ..cubicTo(
+          heartPosition.dx + heartWidth, heartPosition.dy,
+          heartPosition.dx + heartWidth / 2, heartPosition.dy,
+          heartPosition.dx + heartWidth / 2, heartPosition.dy + heartHeight / 4)
+      ..close();
+
+// Vẽ trái tim
+    Paint heartPaint = Paint()
+      ..color = Colors.pink
+      ..style = PaintingStyle.fill; // Hoặc .stroke để chỉ vẽ viền
+
+    canvas.drawPath(heartPath, heartPaint);
+
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+}
+
+class BloodPressureIndicator extends StatelessWidget {
+  final double indicatorPosition; // Giá trị từ 0 đến 1, tùy vào mức độ huyết áp
+
+  const BloodPressureIndicator({Key? key, required this.indicatorPosition}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity, // Chiều rộng tối đa
+      height: 10, // Chiều cao cố định, điều chỉnh tùy vào nhu cầu
+      child: CustomPaint(
+        painter: BloodPressureIndicatorPainter(indicatorPosition: indicatorPosition),
+      ),
+    );
+  }
+}
+
+
+double calculateIndicatorPosition(int sbpNumber, int dbpNumber) {
+  if (sbpNumber > 180 || dbpNumber > 120) {
+    return 0.9; // Huyết áp cực kỳ cao
+  } else if (sbpNumber >= 140 || dbpNumber >= 90) {
+    return 0.7; // Tăng huyết áp Độ 2
+  } else if (sbpNumber >= 130 || dbpNumber >= 80) {
+    return 0.5; // Tăng huyết áp Độ 1
+  } else if (sbpNumber >= 120) {
+    return 0.3; // Huyết áp cao
+  } else {
+    return 0.1; // Bình thường
+  }
+}
+

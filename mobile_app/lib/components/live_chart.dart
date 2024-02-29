@@ -222,60 +222,46 @@ class _LiveChartSampleState extends State<LiveChartSample> {
 
   ///Continously updating the data source based on timer
   void _updateDataSource(Timer timer) {
-    /// DATA KIEU MOI
-    /// 
-    // List<int> fakeRows = List.generate(239, (_) => _getRandomInt(0, 255));
-    // fakeRows[9] = 228;
-    // final List packetHandled = ECGDataController.handlePacketData(fakeRows);
-    // samples = samples + packetHandled;
-    // List dataShowOnChart = [];
 
-    // for (int i = 0; i < packetHandled.length; i ++) {
-    //   List dataChannel = packetHandled[i].sublist(1, 5);
-    //   dataShowOnChart = ECGDataController.calculateDataPointToShow(dataChannel);
-    // }
-    // chartData!.add(_ChartData(count, dataShowOnChart[0]));
-
-    /// DATA KIỂU CŨ CỦA ANH TÀI
-    /// 
     List<int> fakeRows = List.generate(16, (_) => _getRandomInt(1, 244));
     print("Dữ liệu mẫu giả: $fakeRows");
     List<double> dataChannelsToSave = ECGDataController.handleDataRowFromBluetooth(fakeRows);
     print("Dữ liệu sau khi chia (test): $dataChannelsToSave");
     List dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(dataChannelsToSave);
     print("Dữ liệu sau khi xử lý (test): $dataChannelsToShowOnChart");
-    _ChartData newDataPPG = _ChartData(count, (dataChannelsToShowOnChart[0]/10).round().toDouble());
-    chartDataPPG.add(newDataPPG);
+    // chartDataPPG.add(newDataPPG);
     print("Dữ liệu sau khi xử lý (test): ${dataChannelsToShowOnChart[0]}");
-    _ChartData newDataPCG = _ChartData(count, (dataChannelsToShowOnChart[1]/10).round().toDouble());
-    chartDataPCG.add(newDataPCG);
+    // chartDataPCG.add(newDataPCG);
     print("Dữ liệu sau khi xử lý (test): ${dataChannelsToShowOnChart[1]}");
     // 0 is fake data
     samples.add([0,	0, 0, 0, 0, 0, ...dataChannelsToSave]);
 
-    if (chartDataPPG.length >= 20) {
-      chartDataPPG.removeAt(0);
+    _ChartData newDataPPG = _ChartData(count % 100, (dataChannelsToShowOnChart[0]).round().toDouble()); // Sử dụng % để bắt đầu lại từ 0 sau mỗi 20 điểm
+    _ChartData newDataPCG = _ChartData(count % 100, (dataChannelsToShowOnChart[1]).round().toDouble());
+
+    // Nếu đã có đủ 20 điểm dữ liệu, cập nhật điểm dữ liệu thay vì thêm mới
+    if (chartDataPPG.length == 100) {
+      chartDataPPG[count % 100] = newDataPPG; // Thay thế điểm dữ liệu cũ
+      chartDataPCG[count % 100] = newDataPCG;
+
       _chartSeriesControllerPPG?.updateDataSource(
-        addedDataIndexes: <int>[chartDataPPG.length - 1],
-        removedDataIndexes: <int>[0],
+        updatedDataIndexes: <int>[count % 100], // Chỉ cập nhật điểm dữ liệu cụ thể
+      );
+      _chartSeriesControllerPCG?.updateDataSource(
+        updatedDataIndexes: <int>[count % 100],
       );
     } else {
+      chartDataPPG.add(newDataPPG);
+      chartDataPCG.add(newDataPCG);
+
       _chartSeriesControllerPPG?.updateDataSource(
         addedDataIndexes: <int>[chartDataPPG.length - 1],
+      );
+      _chartSeriesControllerPCG?.updateDataSource(
+        addedDataIndexes: <int>[chartDataPCG.length - 1],
       );
     }
 
-    if (chartDataPCG.length >= 20) {
-      chartDataPCG.removeAt(0);
-      _chartSeriesControllerPCG?.updateDataSource(
-        addedDataIndexes: <int>[chartDataPCG.length - 1],
-        removedDataIndexes: <int>[0],
-      );
-    } else {
-      _chartSeriesControllerPCG?.updateDataSource(
-        addedDataIndexes: <int>[chartDataPCG.length - 1],
-      );
-    }
     count = count + 1;
   }
 

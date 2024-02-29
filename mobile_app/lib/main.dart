@@ -100,7 +100,7 @@ class FmECGAppState extends State<FmECGApp> {
             // auth.isAuth ? MainScreen() :
             //   FutureBuilder(
             //     future: auth.checkAutoLogin(),
-            //     builder: (ctx, authResultSnapshot) {
+            //     builder: (ctx, authResulftSnapshot) {
             //       if (authResultSnapshot.connectionState == ConnectionState.waiting) {
             //         return const CircularProgressIndicator();
             //       } else if (authResultSnapshot.hasError) {
