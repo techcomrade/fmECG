@@ -57,8 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _handleSaveRecordInFile() async {
     // Giả sử bạn đã có dữ liệu từ việc đo hoặc xử lý dữ liệu
-    int sbpNumber = 180; // Giả sử số liệu đo được
-    int dbpNumber = 50; // Giả sử số liệu đo được
+    int sbpNumber = 120; // Giả sử số liệu đo được
+    int dbpNumber = 80; // Giả sử số liệu đo được
     int heartRateNumber = 70; // Giả sử số liệu đo được
     int deviationNumber = 5; // Giả sử số liệu đo được
     double position = calculateIndicatorPosition(sbpNumber, dbpNumber);
@@ -104,6 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         NumberCard(number: deviationNumber, text: "Biến thiên", subText: "bpm", color1: Colors.purple, percentage: deviationNumber/150),
                       ],
                     ),
+                    SizedBox(height: 10), // Thêm một khoảng cách nếu cần
+                    BloodPressureLegendTable(),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
@@ -605,46 +607,13 @@ class BloodPressureIndicatorPainter extends CustomPainter {
     // Vẽ vạch chỉ thị
     double indicatorX = indicatorPosition * size.width;
     Paint indicatorPaint = Paint()
-      ..color = Colors.black
+      ..color = Colors.black54
       ..strokeWidth = 3;
     canvas.drawLine(
       Offset(indicatorX, 0),
       Offset(indicatorX, size.height),
       indicatorPaint,
     );
-// Tính toán vị trí và kích thước của trái tim
-    double heartWidth = 20.0;
-    double heartHeight = 20.0;
-    Offset heartPosition = Offset(indicatorX - heartWidth / 2, size.height + 10); // Điều chỉnh vị trí phù hợp
-
-// Tạo path cho hình trái tim
-    Path heartPath = Path()
-      ..moveTo(heartPosition.dx + heartWidth / 2, heartPosition.dy + heartHeight / 4)
-      ..cubicTo(
-          heartPosition.dx + heartWidth / 2, heartPosition.dy,
-          heartPosition.dx, heartPosition.dy,
-          heartPosition.dx, heartPosition.dy + heartHeight / 4)
-      ..cubicTo(
-          heartPosition.dx, heartPosition.dy + 3 * heartHeight / 4,
-          heartPosition.dx + heartWidth / 2, heartPosition.dy + heartHeight,
-          heartPosition.dx + heartWidth / 2, heartPosition.dy + 3 * heartHeight / 4)
-      ..cubicTo(
-          heartPosition.dx + heartWidth / 2, heartPosition.dy + heartHeight,
-          heartPosition.dx + heartWidth, heartPosition.dy + 3 * heartHeight / 4,
-          heartPosition.dx + heartWidth, heartPosition.dy + heartHeight / 4)
-      ..cubicTo(
-          heartPosition.dx + heartWidth, heartPosition.dy,
-          heartPosition.dx + heartWidth / 2, heartPosition.dy,
-          heartPosition.dx + heartWidth / 2, heartPosition.dy + heartHeight / 4)
-      ..close();
-
-// Vẽ trái tim
-    Paint heartPaint = Paint()
-      ..color = Colors.pink
-      ..style = PaintingStyle.fill; // Hoặc .stroke để chỉ vẽ viền
-
-    canvas.drawPath(heartPath, heartPaint);
-
   }
 
   @override
@@ -652,22 +621,38 @@ class BloodPressureIndicatorPainter extends CustomPainter {
 }
 
 class BloodPressureIndicator extends StatelessWidget {
-  final double indicatorPosition; // Giá trị từ 0 đến 1, tùy vào mức độ huyết áp
+  final double indicatorPosition; // Value from 0 to 1 for blood pressure level
 
   const BloodPressureIndicator({Key? key, required this.indicatorPosition}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity, // Chiều rộng tối đa
-      height: 10, // Chiều cao cố định, điều chỉnh tùy vào nhu cầu
-      child: CustomPaint(
-        painter: BloodPressureIndicatorPainter(indicatorPosition: indicatorPosition),
-      ),
+    // Calculate the icon's horizontal position based on the indicatorPosition
+    // Assuming the total width is the screen width for simplicity
+    double screenWidth = MediaQuery.of(context).size.width;
+    double iconPosition = screenWidth * indicatorPosition; // Adjust for the icon's size
+
+    return Stack(
+      children: [
+        SizedBox(
+          width: double.infinity, // Full width
+          height: 20, // Increased height to accommodate the icon
+          child: CustomPaint(
+            painter: BloodPressureIndicatorPainter(indicatorPosition: indicatorPosition),
+          ),
+        ),
+        Transform.translate(
+          offset: Offset(screenWidth * indicatorPosition - 45 * (indicatorPosition + 0.2), 25), // Giả sử icon có kích thước là 24x24 pixels
+          child: Icon(
+            Icons.favorite,
+            color: Colors.pink,
+            size: 24, // Kích thước của icon
+          ),
+        ),
+      ],
     );
   }
 }
-
 
 double calculateIndicatorPosition(int sbpNumber, int dbpNumber) {
   if (sbpNumber > 180 || dbpNumber > 120) {
@@ -683,3 +668,45 @@ double calculateIndicatorPosition(int sbpNumber, int dbpNumber) {
   }
 }
 
+class BloodPressureLegendTable extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Tùy chỉnh cỡ chữ ở đây
+    TextStyle textStyle = TextStyle(fontSize: 10); // Giảm cỡ chữ xuống còn 14
+
+    return DataTable(
+      columns: const [
+        DataColumn(label: Text('')),
+        DataColumn(label: Text('Trạng thái')),
+        DataColumn(label: Text('PPG/PCG')),
+      ],
+      rows: [
+        DataRow(cells: [
+          DataCell(CircleAvatar(backgroundColor: Colors.purple)),
+          DataCell(Text('Huyết Áp Cực Kỳ Cao', style: textStyle)),
+          DataCell(Text('> 180 hoặc > 120', style: textStyle)),
+        ]),
+        DataRow(cells: [
+          DataCell(CircleAvatar(backgroundColor: Colors.redAccent)),
+          DataCell(Text('Tăng Huyết Áp Độ 2', style: textStyle)),
+          DataCell(Text('>= 140 hoặc >= 90', style: textStyle)),
+        ]),
+        DataRow(cells: [
+          DataCell(CircleAvatar(backgroundColor: Colors.orange)),
+          DataCell(Text('Tăng Huyết Áp Độ 1', style: textStyle)),
+          DataCell(Text('>= 130 hoặc >= 80', style: textStyle)),
+        ]),
+        DataRow(cells: [
+          DataCell(CircleAvatar(backgroundColor: Colors.yellow)),
+          DataCell(Text('Huyết Áp Cao', style: textStyle)),
+          DataCell(Text('>= 120', style: textStyle)),
+        ]),
+        DataRow(cells: [
+          DataCell(CircleAvatar(backgroundColor: Colors.green)),
+          DataCell(Text('Bình Thường', style: textStyle)),
+          DataCell(Text('< 120', style: textStyle)),
+        ]),
+      ],
+    );
+  }
+}
