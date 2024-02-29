@@ -10,38 +10,27 @@ on:
   #     - v*
     
 jobs:
-  auto-add-label-web:
+  auto-add-label:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.title, 'web')
+    if: contains(github.event.pull_request.title, 'web') || contains(github.event.pull_request.title, 'server') || contains(github.event.pull_request.title, 'mobile')
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
 
-      - name: auto add label
+      - if: contains(github.event.pull_request.title, 'web')
+        name: auto add label web
         run: gh pr edit ${{ github.event.pull_request.number }} --add-label web
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
-  auto-add-label-server:
-    runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.title, 'server')
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
 
-      - name: auto add label
+      - if: contains(github.event.pull_request.title, 'server')
+        name: auto add label server
         run: gh pr edit ${{ github.event.pull_request.number }} --add-label server
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
-  auto-add-label-mobile:
-    runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.title, 'mobile')
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-
-      - name: auto add label
+      
+      - if: contains(github.event.pull_request.title, 'mobile')
+        name: auto add label mobile
         run: gh pr edit ${{ github.event.pull_request.number }} --add-label mobile
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -62,6 +51,8 @@ jobs:
     - name: 'Get Previous tag'
       id: previoustag
       uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      with:
+        fallback: 0.0.0
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     - name: 'Get next minor version'
