@@ -2,166 +2,83 @@ import { Table, Modal, Button, Input, Space } from 'antd';
 import { exportColumnTable, exportDataTable, exportTableName } from '../../models/manage.table';
 import { useEffect, useRef, useState } from 'react';
 import { showDeleteConfirm } from '../Modal/ModalDelete';
-import ModalEditCourse  from '../Modal/ModalEdit/ModalEditCourse';
-import ModalEditQuestion  from '../Modal/ModalEdit/ModalEditQuestion';
-import ModalEditUser from '../Modal/ModalEdit/ModalEditUser';
-import ModalEditChapter from '../Modal/ModalEdit/ModalEditChapter';
-import ModalEditSection from '../Modal/ModalEdit/ModalEditSection';
 import { useNavigate } from 'react-router-dom';
-import { SearchOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import './dataTable.scss'
+import ModalEdit from '../Modal/ModalEdit';
 
 const DataTable = () => {
     const [column, setColumn] = useState([]);
     const [tableData, setTableData] = useState([]);
+    const [index, setIndex] = useState();
     const [showModalEdit, setShowModalEdit] = useState(false);
-    const [idEdit, setId] = useState();
-    const [index, setIndex] = useState()
-    const navigate = useNavigate();
+     const navigate = useNavigate();
 
-    const url = window.location.pathname;
-    const urlArray = url.split("/");
-    const table = urlArray.pop();
-    const fatherId = urlArray.pop();
-    
-    useEffect(() => {
-        const columnTable = exportColumnTable(table, callBack, getColumnSearchProps);
-        setSearchText('');
-        setSearchedColumn('');
-        setColumn(columnTable);
-        const getTableData = async () => {
-            const data = await exportDataTable(table, fatherId);
-            if (data) setTableData(data);
-        };
-        getTableData();
-    }, [url]);
-
-    // Call when click button
-    const callBack = (type, id, index) => {
-        if (type === 'edit') {
-            setId(id);
-            setIndex(index);
-            setShowModalEdit(true);
-        }
-        if (type === 'delete') showDeleteConfirm(table, id);
-    }
-
-    // Show modal create
-    const showModalCreate = (table) => {
-        table = table.slice(0, -1);
-        navigate('/create-' + table)
-    }
-
-    // Filter table
-    const [searchText, setSearchText] = useState('');
-    const [searchedColumn, setSearchedColumn] = useState('');
-    const searchInput = useRef(null);
-    const handleSearch = (selectedKeys, confirm, dataIndex) => {
-        confirm();
-        setSearchText(selectedKeys[0]);
-        setSearchedColumn(dataIndex);
-    };
-    const handleReset = (clearFilters) => {
-        clearFilters();
-        setSearchText('');
-    };
-    const getColumnSearchProps = (dataIndex) => ({
-        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
-        <div
-            style={{
-            padding: 8,
-            }}
-            onKeyDown={(e) => e.stopPropagation()}
-        >
-            <Input
-            ref={searchInput}
-            placeholder={`Search ${dataIndex}`}
-            value={selectedKeys[0]}
-            onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-            onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            style={{
-                marginBottom: 8,
-                display: 'block',
-            }}
-            />
-            <Space>
-            <Button
-                type="primary"
-                onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                icon={<SearchOutlined />}
-                size="small"
-                style={{
-                width: 90,
-                }}
-            >
-                Search
-            </Button>
-            <Button
-                onClick={() => clearFilters && handleReset(clearFilters)}
-                size="small"
-                style={{
-                width: 90,
-                }}
-            >
-                Reset
-            </Button>
-            <Button
-                type="link"
-                size="small"
-                onClick={() => {
-                confirm({
-                    closeDropdown: false,
-                });
-                setSearchText(selectedKeys[0]);
-                setSearchedColumn(dataIndex);
-                }}
-            >
-                Filter
-            </Button>
-            <Button
-                type="link"
-                size="small"
-                onClick={() => {
-                close();
-                }}
-            >
-                close
-            </Button>
-            </Space>
-        </div>
-        ),
-        filterIcon: (filtered) => (
-        <SearchOutlined
-            style={{
-            color: filtered ? '#1677ff' : undefined,
-            }}
-        />
-        ),
-        onFilter: (value, record) => 
-            record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
-        ,
-        onFilterDropdownOpenChange: (visible) => {
-        if (visible) {
-            setTimeout(() => searchInput.current?.select(), 100);
-        }
+    const data = [
+        {
+            index: 0,
+            name: 'ABC',
+            gender: 'Male',
+            birthday: '10/02/1999',
+            email: '',
+            key: 1
         },
-        render: (text) =>
-        searchedColumn === dataIndex ? (
-            ''
-        ) : (
-            text
-        ),
-    });
+        {
+            index: 1,
+            name: 'ABC',
+            gender: 'Male',
+            birthday: '10/02/1999',
+            email: '',
+            key: 2
+        }
+    ]
+
+    useEffect(() => {
+        const columnTable = exportColumnTable('users');
+        setColumn(columnTable);
+    }, []);
+
+    const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+            const delBtnClassList = document.getElementsByClassName('delete-btn')[0].classList;
+            const editBtnClassList = document.getElementsByClassName('edit-btn')[0].classList;
+            if(selectedRows.length === 1 ) {
+                editBtnClassList.remove('hide');
+                setIndex(selectedRows[0].index);
+            }
+            else editBtnClassList.add('hide');
+
+            if (selectedRows.length > 0){
+                delBtnClassList.remove('hide');
+            }
+            else delBtnClassList.toggle('hide');
+        },
+        getCheckboxProps: (record) => ({
+          disabled: record.name === 'Disabled User',
+          // Column configuration not to be checked
+          name: record.name,
+        }),
+    };
+    const [selectionType, setSelectionType] = useState('checkbox');
+
+    const handleEditBtn = () => {
+        setShowModalEdit(true);
+    }
 
     return (
         <>
-            <h2>Bảng {exportTableName(table)}</h2>
-            <Button onClick={() => showModalCreate(table)} style={{left: '90%', bottom: '10px'}}>Tạo</Button>
-            <Table bordered columns={column} dataSource={tableData}/>
-            { showModalEdit && table === "courses" ? <ModalEditCourse id={idEdit} isOpen={showModalEdit} handleCancel={() => setShowModalEdit(false)}/> : "" }
-            { showModalEdit && table === "questions" ? <ModalEditQuestion id={idEdit} isOpen={showModalEdit} handleCancel={() => setShowModalEdit(false)} data={tableData[index]}/> : "" }
-            { showModalEdit && table === "users" ? <ModalEditUser id={idEdit} isOpen={showModalEdit} handleCancel={() => setShowModalEdit(false)}/> : "" }
-            { showModalEdit && table === "chapters" ? <ModalEditChapter id={idEdit} isOpen={showModalEdit} handleCancel={() => setShowModalEdit(false)}/> : "" }
-            { showModalEdit && table === "sections" ? <ModalEditSection id={idEdit} isOpen={showModalEdit} handleCancel={() => setShowModalEdit(false)} data={tableData[index]}/> : "" }
+            <h2>Bảng {}</h2>
+            <div className='list-btn-actions'>
+                <Button icon={<PlusOutlined />}>Add</Button>
+                <Button icon={<EditOutlined /> } onClick={handleEditBtn} className='edit-btn hide'>Edit</Button>
+                <Button icon={<DeleteOutlined />} className='delete-btn hide'>Delete</Button>
+            </div>
+            <Table rowSelection={{
+                type: selectionType,
+                ...rowSelection,
+                }}
+                bordered columns={column} dataSource={data}/>
+            <ModalEdit isOpen={showModalEdit} handleCancel={() => setShowModalEdit(false)} columns={column}/>
         </>
     );
 } 
