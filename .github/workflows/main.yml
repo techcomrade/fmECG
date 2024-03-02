@@ -1,8 +1,8 @@
 name: automatic build app add add label
 on: 
-  pull_request:
+  push:
     branches:
-      - test-cicd
+      - main
     
 jobs:
   auto-add-label:
