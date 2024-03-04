@@ -27,7 +27,7 @@ authCtrl.login = async function(req, res) {
                     console.log("Valid Username && Password");
                     const accesToken = jwt.sign({
                         id: user[0].id,
-                        email: user[0].email,
+                        email: user[0].email, 
                         password: user[0].password
                     },
                     process.env.JWT_KEY,
