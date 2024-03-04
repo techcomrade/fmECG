@@ -1,0 +1,23 @@
+name: automatic create pull request for test branch
+
+on:
+  pull_request:
+    branches:
+      - test-cicd
+
+jobs:
+  create-pull-request-to-test-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: create pull request
+        run: gh pr create -B test-cicd -H ${{ github.event.pull_request.head.ref }} --title '${{ github.event.pull_request.title }}' --body 'create by bot from pull development' --label automerge
+        env:
+            GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      # - name: Dump GitHub context
+      #   env:
+      #     GITHUB_CONTEXT: ${{ toJson(github) }}
+      #   run: echo "$GITHUB_CONTEXT"

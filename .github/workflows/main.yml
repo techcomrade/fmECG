@@ -1,26 +1,61 @@
-name: CI/CD for Mobile App
+name: automatic build app add add label
 on: 
   push:
     branches:
       - main
-  # push:
-  #   branches: 
-  #     - feature/add_cicd
-  #   tags: 
-  #     - v*
-
+    
 jobs:
-  build:
+  auto-add-label:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.title, 'web') || contains(github.event.pull_request.title, 'server') || contains(github.event.pull_request.title, 'mobile')
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - if: contains(github.event.pull_request.title, 'web')
+        name: auto add label web
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-label web
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: contains(github.event.pull_request.title, 'server')
+        name: auto add label server
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-label server
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - if: contains(github.event.pull_request.title, 'mobile')
+        name: auto add label mobile
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-label mobile
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  auto-build: 
     runs-on: ubuntu-latest
     steps:
-    - name: auto merge with label
+    - name: auto merge with label (automerge)
       uses: "pascalgn/automerge-action@v0.16.2"
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
     - uses: actions/checkout@v4
       with:
-        ref: test
-    
+        fetch-tags: true
+        fetch-depth: '0'
+
+    - name: 'Get Previous tag'
+      id: previoustag
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      with:
+        fallback: 0.0.0
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    - name: 'Get next minor version'
+      id: semvers
+      uses: "WyriHaximus/github-action-next-semvers@v1"
+      with:
+        version: ${{ steps.previoustag.outputs.tag }}
+      
     - name: Bump version and push tag
       uses: anothrNick/github-tag-action@1.64.0
       env:
@@ -46,4 +81,4 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "mobile_app/build/app/outputs/apk/release/*.apk"
-        token: ${{ secrets.TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
