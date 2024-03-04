@@ -3,7 +3,7 @@ name: automatic create pull request for test branch
 on:
   pull_request:
     branches:
-      - development
+      - test-cicd
 
 jobs:
   create-pull-request-to-test-branch:
