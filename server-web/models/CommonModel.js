@@ -18,7 +18,7 @@ class CommonModel {
         try 
         {
             if(dataInsert && table) {
-                if(table == 'user')
+                if(table == 'account')
                 {
                     bcrypt.hash(dataInsert.password, 10, async (err, hash) => {
                         if(err) throw err;
@@ -34,7 +34,6 @@ class CommonModel {
         }
         catch(err) { console.error(err); return false; }
     }
-
     async updateDatabyId(dataInsert, table, updateId) {
         console.log(dataInsert);
         try {
@@ -43,7 +42,6 @@ class CommonModel {
         }   else return false;
         }
         catch(err) { console.error(err); return false; }
-
-}
+    }
 }
 module.exports = CommonModel;

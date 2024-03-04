@@ -14,11 +14,16 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json({ type: 'application/json' }))
 app.use(bodyParser.raw());
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 app.use(cors());
 app.use(compression());
 // Router
 app.use('/api', routes);
+
+const registerController = require('./controllers/registerController');
+const newUserController = require('./controllers/newUserController');
+app.get('/auth/register', newUserController);
+app.post('/users/register', registerController);
 
 app.listen(port, () => {
     console.log(`Server is running at http://${host}:${port}`);
