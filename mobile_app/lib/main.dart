@@ -95,20 +95,36 @@ class FmECGAppState extends State<FmECGApp> {
           darkTheme: ThemeECG.darkTheme,
           //home: const MainScreen(),
           home: //const Login1Screen(),
-              auth.isAuth
-                  ? const MainScreen()
-                  : FutureBuilder(
-                      future: auth.checkAutoLogin(),
-                      builder: (ctx, authResultSnapshot) {
-                        if (authResultSnapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        } else if (authResultSnapshot.hasError) {
-                          return Text('Error: ${authResultSnapshot.error}');
-                        } else {
-                          return const Login1Screen();
-                        }
-                      }),
+              // auth.isAuth
+              //     ? const MainScreen()
+              //     :
+              FutureBuilder(
+                  future: auth.isAuth,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
+
+                    // return FutureBuilder(
+                    //     future: auth.checkAutoLogin(),
+                    //     builder: (ctx, authResultSnapshot) {
+                    //       if (authResultSnapshot.connectionState ==
+                    //           ConnectionState.waiting) {
+                    //         return const CircularProgressIndicator();
+                    //       } else if (authResultSnapshot.hasError) {
+                    //         return Text('Error: ${authResultSnapshot.error}');
+                    //       } else {
+                    //         return const Login1Screen();
+                    //       }
+                    //     });
+                    else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.hasData && snapshot.data == true) {
+                      return const MainScreen();
+                    } else {
+                      return const Login1Screen();
+                    }
+                  }),
           localizationsDelegates: const [
             S.delegate,
             GlobalMaterialLocalizations.delegate,

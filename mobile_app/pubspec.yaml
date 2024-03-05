@@ -63,6 +63,7 @@ dependencies:
   # other lib
   flutter_localizations:
     sdk: flutter
+  firebase_auth: ^4.16.0
 
 dependency_overrides:
   # language
