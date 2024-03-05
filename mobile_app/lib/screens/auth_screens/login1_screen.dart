@@ -1,6 +1,7 @@
 import 'package:bluetooth_ecg/components/submit_button.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
+import 'package:bluetooth_ecg/screens/auth_screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -145,9 +146,11 @@ class _Login1ScreenState extends State<Login1Screen> {
                           _obscureText = !_obscureText;
                         });
                       },
-                      child: Icon(_obscureText
-                          ? Icons.visibility_off
-                          : Icons.visibility),
+                      child: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.black),
                     ),
                   ),
                   style: const TextStyle(color: Colors.black),
@@ -236,10 +239,17 @@ class _Login1ScreenState extends State<Login1Screen> {
                 "Don't have an account?",
                 style: TextStyle(color: Colors.black),
               ),
-              Text(
-                "  Sign up",
-                style: TextStyle(
-                    color: ColorConstant.primary, fontWeight: FontWeight.bold),
+              TextButton(
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterScreen())),
+                child: Text(
+                  "  Sign up",
+                  style: TextStyle(
+                      color: ColorConstant.primary,
+                      fontWeight: FontWeight.bold),
+                ),
               )
             ],
           )
