@@ -20,8 +20,7 @@ app.use(compression());
 // Router
 app.use('/api', routes);
 
-const loginController = require("./controllers/LoginController");
-app.get('/login', loginController);
+
 
 app.listen(port, () => {
     console.log(`Server is running at http://${host}:${port}`);
