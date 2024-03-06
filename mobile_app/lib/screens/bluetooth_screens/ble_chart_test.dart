@@ -32,7 +32,7 @@ class BleLiveChartTest extends StatefulWidget {
 
 class _BleLiveChartTestState extends State<BleLiveChartTest> {
   static const platform = MethodChannel("com.example.method_channel/java");
-  
+
   final flutterReactiveBle = FlutterReactiveBle();
   List<_ChartData>? chartDataChannel;
   List<_ChartData>? chartDataChannel2;
@@ -132,7 +132,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
             ),
           ),
         );
-        });
+      });
       final data = await platform.invokeMethod('helloWorldPython', {'bytes': bytesInFile});
       Navigator.pop(context);
 
@@ -144,49 +144,48 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           _textHeartRate = data!["heart_rate"].toString();
           _textDeviation = data!["standard_deviation"].toString();
         });
-
-            int sbpNumber = double.parse(_textSBP).round();
-            int dbpNumber = double.parse(_textDBP).round();
-            int heartRateNumber = double.parse(_textHeartRate).round();
-            int deviationNumber = double.parse(_textDeviation).round();
+        int sbpNumber = double.parse(_textSBP).round();
+        int dbpNumber = double.parse(_textDBP).round();
+        int heartRateNumber = double.parse(_textHeartRate).round();
+        int deviationNumber = double.parse(_textDeviation).round();
         double position = calculateIndicatorPosition(sbpNumber, dbpNumber);
 
-            final bool isNormalPressure = sbpNumber < 120 && dbpNumber < 80;
-            final bool isHighPressure =  sbpNumber >= 120 && sbpNumber < 130 && dbpNumber < 80;
-            final bool isHighPressure1 =  sbpNumber >= 130 && sbpNumber < 140 && dbpNumber >= 80 && dbpNumber < 90;
-            final bool isHighPressure2 = sbpNumber > 140 && dbpNumber > 90;
-            final bool isHighPressure3 = sbpNumber > 180 && dbpNumber > 120;
-            final bool isNormalHeartRate = heartRateNumber >= 60 && heartRateNumber <= 100;
-            final bool isLowHeartRate = heartRateNumber < 60 ;
-            final bool isHighHeartRate = heartRateNumber > 100 ;
-            final bool isManyHeartRate = deviationNumber > 50 ;
+        final bool isNormalPressure = sbpNumber < 120 && dbpNumber < 80;
+        final bool isHighPressure =  sbpNumber >= 120 && sbpNumber < 130 && dbpNumber < 80;
+        final bool isHighPressure1 =  sbpNumber >= 130 && sbpNumber < 140 && dbpNumber >= 80 && dbpNumber < 90;
+        final bool isHighPressure2 = sbpNumber > 140 && dbpNumber > 90;
+        final bool isHighPressure3 = sbpNumber > 180 && dbpNumber > 120;
+        final bool isNormalHeartRate = heartRateNumber >= 60 && heartRateNumber <= 100;
+        final bool isLowHeartRate = heartRateNumber < 60 ;
+        final bool isHighHeartRate = heartRateNumber > 100 ;
+        final bool isManyHeartRate = deviationNumber > 50 ;
 
-            String smsMessage = "";
-            if (isHighPressure || isHighPressure1 || isHighPressure2 || isHighPressure3 ||
-                isLowHeartRate || isHighHeartRate || isManyHeartRate) {
-              smsMessage = "Thông báo về tình trạng sức khỏe: ";
-              if (isHighPressure) {
-                smsMessage += "Huyết áp cao. ";
-              } else if (isHighPressure1) {
-                smsMessage += "Tăng huyết áp Độ 1. ";
-              } else if (isHighPressure2) {
-                smsMessage += "Tăng huyết áp Độ 2. ";
-              } else if (isHighPressure3) {
-                smsMessage += "Huyết áp cực kỳ cao! ";
-              }
+        String smsMessage = "";
+        if (isHighPressure || isHighPressure1 || isHighPressure2 || isHighPressure3 ||
+            isLowHeartRate || isHighHeartRate || isManyHeartRate) {
+          smsMessage = "Thông báo về tình trạng sức khỏe: ";
+          if (isHighPressure) {
+            smsMessage += "Huyết áp cao. ";
+          } else if (isHighPressure1) {
+            smsMessage += "Tăng huyết áp Độ 1. ";
+          } else if (isHighPressure2) {
+            smsMessage += "Tăng huyết áp Độ 2. ";
+          } else if (isHighPressure3) {
+            smsMessage += "Huyết áp cực kỳ cao! ";
+          }
 
-              if (isLowHeartRate) {
-                smsMessage += "Nhịp tim thấp. ";
-              } else if (isHighHeartRate) {
-                smsMessage += "Nhịp tim cao. ";
-              }
+          if (isLowHeartRate) {
+            smsMessage += "Nhịp tim thấp. ";
+          } else if (isHighHeartRate) {
+            smsMessage += "Nhịp tim cao. ";
+          }
 
-              if (isManyHeartRate) {
-                smsMessage += "Sự chênh lệch lớn trong nhịp tim. ";
-              }
+          if (isManyHeartRate) {
+            smsMessage += "Sự chênh lệch lớn trong nhịp tim. ";
+          }
 
-              sendSMSAutomatically(smsMessage);
-            }
+          sendSMSAutomatically(smsMessage);
+        }
 
 
         Navigator.of(context).push(
@@ -222,7 +221,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                             NumberCard(number: dbpNumber, text: "Tâm trương", subText: "mmHg", color1: Colors.blue, percentage: dbpNumber/200),
                           ],
                         ),
-                        SizedBox(height: 40), // Khoảng cách giữa hai hàng
+                        SizedBox(height: 30), // Khoảng cách giữa hai hàng
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -230,7 +229,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                             NumberCard(number: deviationNumber, text: "Biến thiên", subText: "bpm", color1: Colors.purple, percentage: deviationNumber/150),
                           ],
                         ),
-                        SizedBox(height: 10), // Thêm một khoảng cách nếu cần
+                        SizedBox(height: 10),
                         BloodPressureLegendTable(),
                       ],
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -324,7 +323,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                       onPressed: isMeasuring == false ? null : () async {
 
                         await _handleSaveRecordInFile();
-        
+
                         const snackBar = SnackBar(
                           content: Text('Đã lưu kết quả đo vào bộ nhớ!'),
                         );
@@ -336,17 +335,17 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
               ),
               const SizedBox(height: 20),
               if (isCalculated)
-              Column(
-                children: [
-                  Text('Dữ liệu sau khi được xử lý: '),
-                  const SizedBox(height: 5),
-                  Text("SBP: ${_textSBP}"),
-                  Text("DBP: ${_textDBP}"),
-                  Text("Heart Rate: ${_textHeartRate}"),
-                  Text("Deviation: ${_textDeviation}"),
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
+                Column(
+                  children: [
+                    Text('Dữ liệu sau khi được xử lý: '),
+                    const SizedBox(height: 5),
+                    Text("SBP: ${_textSBP}"),
+                    Text("DBP: ${_textDBP}"),
+                    Text("Heart Rate: ${_textHeartRate}"),
+                    Text("Deviation: ${_textDeviation}"),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
             ],
           ),
         )
@@ -360,56 +359,56 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
     //   alignment: ChartAlignment.center,
     // ),
     // plotAreaBackgroundColor: Color(0XFF006A89),
-    plotAreaBorderWidth: 0,
-    primaryXAxis: NumericAxis(zoomPosition: 0.2, interval: 50, edgeLabelPlacement: EdgeLabelPlacement.shift),
-    primaryYAxis:
-        NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift, majorGridLines: const MajorGridLines(width: 1)),
-    legend: Legend(isVisible: true, isResponsive: true, position: LegendPosition.top),
-    enableAxisAnimation: true,
-    series: [
-      FastLineSeries<_ChartData, int>(
-        onRendererCreated: (ChartSeriesController controller) {
-          _chartSeriesController = controller;
-        },
-        dataSource: chartDataChannel!,
-        color: Color.fromARGB(255, 42, 25, 228),
-        xValueMapper: (_ChartData sales, _) => sales.country,
-        yValueMapper: (_ChartData sales, _) => sales.sales,
-        animationDuration: 0,
-        legendItemText: "PPG"
-      ),
-    ]
+      plotAreaBorderWidth: 0,
+      primaryXAxis: NumericAxis(zoomPosition: 0.2, interval: 50, edgeLabelPlacement: EdgeLabelPlacement.shift),
+      primaryYAxis:
+      NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift, majorGridLines: const MajorGridLines(width: 1)),
+      legend: Legend(isVisible: true, isResponsive: true, position: LegendPosition.top),
+      enableAxisAnimation: true,
+      series: [
+        FastLineSeries<_ChartData, int>(
+            onRendererCreated: (ChartSeriesController controller) {
+              _chartSeriesController = controller;
+            },
+            dataSource: chartDataChannel!,
+            color: Color.fromARGB(255, 42, 25, 228),
+            xValueMapper: (_ChartData sales, _) => sales.country,
+            yValueMapper: (_ChartData sales, _) => sales.sales,
+            animationDuration: 0,
+            legendItemText: "PPG"
+        ),
+      ]
   );
 
   SfCartesianChart _buildLiveLineChart1() => SfCartesianChart(
-    plotAreaBorderWidth: 0,
-    primaryXAxis: NumericAxis(
-        zoomPosition: 0.2,
-        interval: 50,
-        edgeLabelPlacement: EdgeLabelPlacement.shift
-    ),
-    primaryYAxis: NumericAxis(
-        edgeLabelPlacement: EdgeLabelPlacement.shift,
-        majorGridLines: const MajorGridLines(width: 1)),
-    legend: Legend(
-        isVisible: true,
-        isResponsive: true,
-        position: LegendPosition.top
-    ),
-    enableAxisAnimation: true,
-    series: [
-      FastLineSeries<_ChartData, int>(
-        onRendererCreated: (ChartSeriesController controller) {
-          _chartSeriesController3 = controller;
-        },
-        dataSource: chartDataChannel3!,
-        color: Color.fromARGB(255, 228, 25, 25),
-        xValueMapper: (_ChartData sales, _) => sales.country,
-        yValueMapper: (_ChartData sales, _) => sales.sales,
-        animationDuration: 0,
-        legendItemText: "PCG"
+      plotAreaBorderWidth: 0,
+      primaryXAxis: NumericAxis(
+          zoomPosition: 0.2,
+          interval: 50,
+          edgeLabelPlacement: EdgeLabelPlacement.shift
       ),
-    ]
+      primaryYAxis: NumericAxis(
+          edgeLabelPlacement: EdgeLabelPlacement.shift,
+          majorGridLines: const MajorGridLines(width: 1)),
+      legend: Legend(
+          isVisible: true,
+          isResponsive: true,
+          position: LegendPosition.top
+      ),
+      enableAxisAnimation: true,
+      series: [
+        FastLineSeries<_ChartData, int>(
+            onRendererCreated: (ChartSeriesController controller) {
+              _chartSeriesController3 = controller;
+            },
+            dataSource: chartDataChannel3!,
+            color: Color.fromARGB(255, 228, 25, 25),
+            xValueMapper: (_ChartData sales, _) => sales.country,
+            yValueMapper: (_ChartData sales, _) => sales.sales,
+            animationDuration: 0,
+            legendItemText: "PCG"
+        ),
+      ]
   );
 
   void _updateChartData(List dataChannelsToShowOnChart) {
@@ -467,7 +466,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
         flutterReactiveBle.subscribeToCharacteristic(
             widget.bluetoothCharacteristic).listen((value) {
           // print("Received Data: $value");
-            List<double> packetHandled = ECGDataController.handleDataRowFromBluetooth(value);
+          List<double> packetHandled = ECGDataController.handleDataRowFromBluetooth(value);
           // print("Processed Data: ${packetHandled.length}"); // In dữ liệu đã xử lý
           // print("Processed Data dữ liệu sau khi chia: $packetHandled");
           List dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(packetHandled);
@@ -498,8 +497,8 @@ class NumberCard extends StatelessWidget {
   final int number;
   final String text;
   final String subText;
-  final Color color1; // Màu sắc cho phần đã đạt
-  final double percentage; // Phần trăm tiến độ, ví dụ: 170/200
+  final Color color1;
+  final double percentage;
 
   NumberCard({
     required this.number,
@@ -604,6 +603,53 @@ class CircleProgressPainter extends CustomPainter {
   }
 }
 
+class ImageCard extends StatelessWidget {
+  final String imageAsset;
+  final Function() functionScanBluetooth;
+  final Function() temporaryNothing;
+
+  ImageCard({
+    required this.imageAsset,
+    required this.functionScanBluetooth,
+    required this.temporaryNothing,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: ColorConstant.quinary,
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Column(
+        children: [
+          Image.asset(
+            imageAsset,
+            width: double.infinity,
+            height: 200.0,
+            fit: BoxFit.cover,
+          ),
+          SizedBox(height: 12.0),
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: functionScanBluetooth,
+                child: Text("Thực hiện đo"),
+              ),
+              ElevatedButton(
+                onPressed: temporaryNothing,
+                child: Text("Thử đo"),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class BloodPressureIndicatorPainter extends CustomPainter {
   final double indicatorPosition; // Giá trị từ 0 (bắt đầu) đến 1 (kết thúc) của thanh
 
@@ -668,7 +714,7 @@ class BloodPressureIndicator extends StatelessWidget {
           ),
         ),
         Transform.translate(
-          offset: Offset(screenWidth * indicatorPosition - 45 * (indicatorPosition + 0.2), 25), // Giả sử icon có kích thước là 24x24 pixels
+          offset: Offset(screenWidth * indicatorPosition - 40 * indicatorPosition - 11.5, 25), // Giả sử icon có kích thước là 24x24 pixels
           child: Icon(
             Icons.favorite,
             color: Colors.pink,
