@@ -3,7 +3,7 @@ class CommonModel {
     async queryDB(sql){
         try {
             let data = await knex.raw(sql);
-           // console.log(data);
+            console.log(data);
             if(data[0].length != 0) return data[0];
             return false;
         }
@@ -26,12 +26,6 @@ class CommonModel {
             console.error(err); 
             return false; 
         }
-    }
-
-    async checkDuplicate(table, column, value) {
-        const sql = `SELECT * FROM ${table} WHERE ${column} = '${value}'`;
-        const result = await this.queryDB(sql);
-        return result.length > 0;
     }
 }
 
