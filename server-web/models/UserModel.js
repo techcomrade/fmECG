@@ -1,18 +1,18 @@
 const database = require('../config/database');
 const CommonModel = require('./CommonModel');
 
-class UserModel extends CommonModel {
+class User extends CommonModel {
 
-    // getTableName() { return 'users'; }
-    async getAllData() {
-        return await this.executeQuery("SELECT * FROM nguoi_dung");
+    getTableName() { return 'users'; }
+    getAllData() {
+        return `SELECT * FROM account WHERE delete_flag = 0`;
     }
-    async displayById(id) {
-        return await this.executeQuery("SELECT * FROM account WHERE id = ${id} and delete_flag = 0");
+    displayById(id) {
+        return `SELECT * FROM account WHERE id = ${id} and delete_flag = 0`;
     }
-    async findOneById(id) {
-        return await this.executeQuery("SELECT * FROM account WHERE id = ${id}");
+    findOneById(id) {
+        return `SELECT * FROM account WHERE id = ${id}`;
     }
 }
 
-module.exports = new UserModel;
+module.exports = new User;
