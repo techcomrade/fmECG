@@ -1,5 +1,4 @@
 const knex = require('../config/knex.js');
-const bcrypt = require("bcrypt");
 class CommonModel {
     async queryDB(sql){
         try {
@@ -11,37 +10,29 @@ class CommonModel {
         catch(err) {
             console.error(err);
             return false;
-    }
-    
-}
-    async insertDatatoDB(dataInsert, table){
-        try 
-        {
-            if(dataInsert && table) {
-                if(table == 'account')
-                {
-                    bcrypt.hash(dataInsert.password, 10, async (err, hash) => {
-                        if(err) throw err;
-                        dataInsert.password = hash;
-                        await knex(table).insert(dataInsert);
-                        return true;
-                    })
-                }
-                else await knex(table).insert(dataInsert);
-                return true;
-            }
-            else { return false; }
         }
-        catch(err) { console.error(err); return false; }
     }
+
     async updateDatabyId(dataInsert, table, updateId) {
         console.log(dataInsert);
         try {
             if(dataInsert && table && updateId) {
-                await knex(table).where({id: updateId}).update(dataInsert); return true;
-        }   else return false;
+                await knex(table).where({id: updateId}).update(dataInsert); 
+                return true;
+            }   
+            else return false;
         }
-        catch(err) { console.error(err); return false; }
+        catch(err) { 
+            console.error(err); 
+            return false; 
+        }
+    }
+
+    async checkDuplicate(table, column, value) {
+        const sql = `SELECT * FROM ${table} WHERE ${column} = '${value}'`;
+        const result = await this.queryDB(sql);
+        return result.length > 0;
     }
 }
+
 module.exports = CommonModel;
