@@ -3,9 +3,6 @@ const { v4: uuidv4 } = require('uuid');
 const brcypt = require('bcrypt')
 
 class accountController {
-    renderRegister(req, res) {
-        res.render('register')
-    }
     async newAccount(req, res) {
         const account = req.body;
         console.log(account);
