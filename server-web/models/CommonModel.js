@@ -12,7 +12,6 @@ class CommonModel {
             return false;
         }
     }
-
     async updateDatabyId(dataInsert, table, updateId) {
         console.log(dataInsert);
         try {
@@ -27,6 +26,5 @@ class CommonModel {
             return false; 
         }
     }
-}
-
+}   
 module.exports = CommonModel;
