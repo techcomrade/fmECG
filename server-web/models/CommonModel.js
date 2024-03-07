@@ -1,5 +1,5 @@
 const knex = require('../config/knex.js');
-const bcrypt = require("bcrypt");
+
 class CommonModel {
     async executeQuery(sql){
         try {
