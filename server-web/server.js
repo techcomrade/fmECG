@@ -22,6 +22,8 @@ app.use(express.urlencoded({limit: '100mb'}));
 // Router
 app.use('/api', routes);
 
+
+
 app.listen(port, () => {
     console.log(`Server is running at http://${host}:${port}`);
 })
