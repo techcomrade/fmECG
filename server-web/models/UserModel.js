@@ -12,6 +12,7 @@ class User extends CommonModel {
     }
     findOneById(id) {
         return `SELECT * FROM account WHERE id = ${id}`;
+        
     }
 }
 
