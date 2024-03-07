@@ -188,4 +188,16 @@ ALTER TABLE `patient_doctor_assignment`
 -- ALTER TABLE `blood_pressure_rec`
 --     MODIFY `id` varchar(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
+CREATE TABLE account (
+    id varchar(255) NOT NULL,
+    email varchar(255) NOT NULL,
+    password varchar(255) NOT NULL,
+    create_time varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE token (
+    id varchar(255) NOT NULL,
+    token varchar(255) NOT NULL,
+    create_time varchar(255) NOT NULL,
+    delete_flag int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
