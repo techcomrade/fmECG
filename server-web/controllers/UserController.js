@@ -36,7 +36,7 @@ class UserController {
     }
   }
 
-  async getAllUser(req, res, next) {
+  async getAllData(req, res, next) {
     await UserModel.getAllData()
     .then((data) => {
       res.json(data);
