@@ -15,7 +15,6 @@ class UserModel extends CommonModel{
             `SELECT COUNT(*) FROM account WHERE email = '${email}'`
         )
         return emails[0]['COUNT(*)'] > 0; 
-        
     }
 }
 
