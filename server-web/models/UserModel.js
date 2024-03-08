@@ -8,14 +8,13 @@ class UserModel extends CommonModel{
         return await this.executeQuery(`SELECT * FROM account WHERE email = '${email}'`);
     }
     async register(dataInsert){
-        return await this.executeQuery(`INSERT INTO account (id, email, pass, create_time) VALUES ('${dataInsert.id}', '${dataInsert.email}', '${dataInsert.pass}', '${dataInsert.create_time}')`)
+        return await this.executeQuery(`INSERT INTO account (id, email, password, create_time) VALUES ('${dataInsert.id}', '${dataInsert.email}', '${dataInsert.password}', '${dataInsert.create_time}')`)
     }
     async checkExistEmail(email){
         const emails = await this.executeQuery(
             `SELECT COUNT(*) FROM account WHERE email = '${email}'`
         )
         return emails[0]['COUNT(*)'] > 0; 
-        
     }
 }
 
