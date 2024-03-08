@@ -7,9 +7,9 @@ class AuthenModel extends CommonModel {
       `INSERT INTO token (id, token, create_time, delete_flag) VALUES ('${dataInsert.id}', '${dataInsert.token}', '${dataInsert.create_time}', '${dataInsert.delete_flag}')`
     );
   }
-  async getAllData(){
+  async getAllData() {
     return await this.executeQuery(`SELECT * FROM token`);
-}
+  }
 }
 
 module.exports = new AuthenModel();

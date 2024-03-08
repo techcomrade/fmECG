@@ -36,10 +36,10 @@ class UserController {
     }
   }
 
-  async getAllUser(req, res, next) {
+  async getAllData(req, res, next) {
     await UserModel.getAllData()
     .then((data) => {
-      console.log(data);
+      res.json(data);
     })
     .catch((error) => {
       console.log(error);
