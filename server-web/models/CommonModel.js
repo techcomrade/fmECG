@@ -8,6 +8,7 @@ class CommonModel {
             return false;
         }
         catch(err) {
+            console.error(err);
             return false;
     }
 }
@@ -29,7 +30,7 @@ class CommonModel {
             else {return false;}
         }
         catch(err) {
-            res.json(err);
+            console.error(err);
             return false;
         }
     }
