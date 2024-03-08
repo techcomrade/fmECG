@@ -1,11 +1,10 @@
 const express = require('express');
-const UserRouter = require('./UserRouter')
+const authController = require('../controllers/AuthenController');
 
-const router = express.Router();
+let router = express.Router();
 
-const AuthenRouter = require('./AuthenRouter');
-
-router.use('/login', AuthenRouter);
-router.use('/user', UserRouter)
+router.get('/test',(req,res)=>{
+    res.send("ok")
+})
 
 module.exports = router;
