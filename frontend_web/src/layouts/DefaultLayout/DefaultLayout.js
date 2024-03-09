@@ -4,6 +4,7 @@ import { Layout, Col, theme } from "antd";
 import { useState, useEffect } from 'react';
 import './DefaultLayout.css'
 import { getLocalStorage } from '../../utils/storageUtils';
+import { Routes } from "../../routes/route";
 
 const { Header, Content, Sider } = Layout;
 
@@ -32,7 +33,7 @@ const DefaultLayout = ({children}) => {
                     <Layout>
                         <Content className="main-content">
                             <Col span={22} offset={1} className="children-content">
-                                <div className="content">{children}</div>
+                                <div className="content"><Routes /></div>
                             </Col>
                         </Content>
                     </Layout>

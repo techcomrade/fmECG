@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Image, Upload, Form, Input, Button, Select, DatePicker } from "antd";
-import avatarDemo from "../../assets/icons/avatar.svg";
+import { Row, Col, Form, Input, Button, Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import { showNotiSuccess } from "../../components/Notification";
 const { Option } = Select;
