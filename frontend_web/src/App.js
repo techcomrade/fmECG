@@ -1,17 +1,18 @@
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
 import { useCookies } from "react-cookie";
 import NotAuth from "./pages/NotAuth/notauth";
-import { Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   const [cookies, setCookie] = useCookies();
-
+  console.log(cookies);
+  
   return (
-    <Router>
+    <BrowserRouter>
       <div className="App">
         {!cookies ? <NotAuth />: <DefaultLayout />}
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 
