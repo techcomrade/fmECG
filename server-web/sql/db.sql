@@ -2,8 +2,8 @@ SET SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO';
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-DROP TABLE IF EXISTS `fmecg`;
-CREATE TABLE `fmecg`;
+DROP DATABASE IF EXISTS `fmecg`;
+CREATE DATABASE `fmecg`;
 USE `fmecg`;
 
 DROP TABLE IF EXISTS `reset_tokens`;
