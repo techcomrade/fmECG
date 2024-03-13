@@ -7,7 +7,8 @@ require('dotenv').config({ path: '.env' })
 const routes = require('./routes/index');
 const port = process.env.APP_PORT || 3000;
 const host = process.env.APP_HOST || 'localhost';
-
+const connection = require('./mysql');
+const createDatabase = require('./createDatabase');
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -26,3 +27,14 @@ app.listen(port, () => {
     console.log(`Server is running at http://${host}:${port}`);
 })
 
+connection.connect( async () => {
+    try {
+        console.log("Connected to MYSQL Server");
+        let check = await createDatabase.create("test1234");
+        console.log(check);
+    }
+    catch (err) {
+        console.log(err);
+        return ;
+    }
+})
