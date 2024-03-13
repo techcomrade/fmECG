@@ -27,14 +27,3 @@ app.listen(port, () => {
     console.log(`Server is running at http://${host}:${port}`);
 })
 
-connection.connect( async () => {
-    try {
-        console.log("Connected to MYSQL Server");
-        let check = await createDatabase.create("test1234");
-        console.log(check);
-    }
-    catch (err) {
-        console.log(err);
-        return ;
-    }
-})
