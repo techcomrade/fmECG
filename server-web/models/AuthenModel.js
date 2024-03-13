@@ -1,4 +1,4 @@
-const { insertDatatoDB } = require("../../server/models/Authen2Model");
+
 const CommonModel = require("./CommonModel");
 
 class AuthenModel extends CommonModel {
