@@ -12,8 +12,8 @@ CREATE TABLE `tokens` (
     `account_id` varchar(255) NOT NULL,
     `access_token` varchar(255) NOT NULL,
     `refresh_token` varchar(255) NOT NULL,
-    `created_at` datetime NOT NULL,
-    `updated_at` datetime NOT NULL
+    `created_at` bigint NOT NULL,
+    `updated_at` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -22,11 +22,10 @@ CREATE TABLE `patient_doctor_assignment` (
    `id` varchar(255) NOT NULL,
    `patient_id` varchar(255) NOT NULL,
    `doctor_id` varchar(255) NOT NULL,
-   `start_date` datetime NOT NULL,
-   `created_at` datetime NOT NULL,
-   `updated_at` datetime NOT NULL
+   `start_date` bigint NOT NULL,
+   `created_at` bigint NOT NULL,
+   `updated_at` bigint NOT NULL
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
-
 
 
 DROP TABLE IF EXISTS `heart_rec`;
@@ -43,16 +42,6 @@ CREATE TABLE `blood_pressure_rec` (
    `data_blood_pressure_rec_url` varchar(45) NOT NULL
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `records`;
-CREATE TABLE `records` (
-   `id` varchar(255) NOT NULL,
-   `user_id` varchar(255) NOT NULL,
-   `heart_rec_id` varchar(255) NOT NULL,
-   `blood_pressure_rec_id` varchar(255) NOT NULL,
-   `created_at` datetime NOT NULL,
-   `updated_at` datetime NOT NULL
-)ENGINE = InnoDB DEFAULT CHARSET=utf8; 
-
 DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news` (
    `id` varchar(255) NOT NULL,
@@ -62,8 +51,8 @@ CREATE TABLE `news` (
    `author` varchar(255) NOT NULL,
    `url` varchar(255) NOT NULL,
    `image` varchar(255) NOT NULL,
-   `created_at` datetime NOT NULL,
-   `updated_at` datetime NOT NULL
+   `created_at` bigint NOT NULL,
+   `updated_at` bigint NOT NULL
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `news_categories`;
@@ -71,8 +60,8 @@ CREATE TABLE `news_categories` (
    `id` varchar(255) NOT NULL,
    `category_name` varchar(255) NOT NULL,
    `category_description` varchar(255) NOT NULL, 
-   `created_at` datetime NOT NULL,
-   `updated_at` datetime NOT NULL
+   `created_at` bigint NOT NULL,
+   `updated_at` bigint NOT NULL
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `authen`;
@@ -80,24 +69,45 @@ CREATE TABLE `authen` (
     `id` varchar(255) NOT NULL,
     `email` varchar(255) NOT NULL,
     `password` varchar(255) NOT NULL,
-    `created_at` datetime NOT NULL,
-    `updated_at` datetime NOT NULL
+    `created_at` bigint NOT NULL,
+    `updated_at` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
     `id` varchar(255) NOT NULL,
     `account_id` varchar(255) NOT NULL,
     `username` varchar(255) NOT NULL,
-    `birth_date` datetime NOT NULL,
-    `phone_number` varchar(255) NOT NULL,
+    `birth_date` bigint NOT NULL,
+    `phone_number` varchar(255),
     `email` varchar(255) NOT NULL,
-    `image` varchar(255) NOT NULL,
-    `role` varchar(255) NOT NULL,
-    `created_at` datetime NOT NULL,
-    `updated_at` datetime NOT NULL
+    `image` varchar(500),
+    `role` int NOT NULL,
+    `created_at` bigint NOT NULL,
+    `updated_at` bigint NOT NULL
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
---- add primary key
+
+DROP TABLE IF EXISTS `devices`;
+CREATE TABLE `devices`(
+    `id` varchar(255) NOT NULL,
+    `user_id` varchar(255) NOT NULL,
+    `device_name` varchar(255) NOT NULL,
+    `information` varchar(255),
+    `device_type` int NOT NULL,
+    `start_date` bigint NOT NULL,
+    `end_date` bigint NOT NULL
+)ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `records`;
+CREATE TABLE `records` (
+   `id` varchar(255) NOT NULL,
+   `user_id` varchar(255) NOT NULL,
+   `device_id` varchar(255) NOT NULL,
+   `start_time` bigint NOT NULL,
+   `end_time` bigint NOT NULL,
+   `created_at` bigint NOT NULL,
+   `updated_at` bigint NOT NULL
+)ENGINE = InnoDB DEFAULT CHARSET=utf8; 
 
 ALTER TABLE `authen`
     ADD PRIMARY KEY (`id`);
@@ -105,7 +115,7 @@ ALTER TABLE `authen`
 ALTER TABLE `tokens`
     ADD PRIMARY KEY (`id`);
     
-ALTER TABLE `user`
+ALTER TABLE `users`
     ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `patient_doctor_assignment`
@@ -126,16 +136,20 @@ ALTER TABLE `news_categories`
 ALTER TABLE `news`
     ADD PRIMARY KEY (`id`);
 
--- add foreign key constraints
+ALTER TABLE `devices`
+    ADD PRIMARY KEY (`id`);
 
-ALTER TABLE `user`
+ALTER TABLE `users`
     ADD FOREIGN KEY (`account_id`) REFERENCES `authen`(`id`);
 
 ALTER TABLE `tokens`
     ADD FOREIGN KEY (`account_id`) REFERENCES `authen`(`id`);
 
 ALTER TABLE `records`
-    ADD FOREIGN KEY (`user_id`) REFERENCES `user`(`id`);
+    ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
+
+ALTER TABLE `records`
+    ADD FOREIGN KEY (`device_id`) REFERENCES `devices`(`id`);
 
 ALTER TABLE `heart_rec`
     ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
@@ -147,26 +161,11 @@ ALTER TABLE `news`
     ADD FOREIGN KEY (`category_id`) REFERENCES `news_categories`(`id`);
 
 ALTER TABLE `patient_doctor_assignment`
-    ADD FOREIGN KEY (`patient_id`) REFERENCES `user`(`id`);
+    ADD FOREIGN KEY (`patient_id`) REFERENCES `users`(`id`);
 
 ALTER TABLE `patient_doctor_assignment`
-    ADD FOREIGN KEY (`doctor_id`) REFERENCES `user`(`id`);
--- --- auto increment
+    ADD FOREIGN KEY (`doctor_id`) REFERENCES `users`(`id`);
 
--- ALTER TABLE `authen`
---     MODIFY `id` varchar(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
---     
--- ALTER TABLE `user`
---     MODIFY `id` varchar(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
+ALTER TABLE `devices` 
+    ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
 
--- ALTER TABLE `patient_doctor_assignment`
---     MODIFY `id` varchar(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
-
--- ALTER TABLE `ecg_records`
---     MODIFY `id` varchar(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
-
--- ALTER TABLE `heart_rec`
---     MODIFY `id` varchar(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;g
-
--- ALTER TABLE `blood_pressure_rec`
---     MODIFY `id` varchar(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;

@@ -1,30 +1,48 @@
 const path = require('path');
 const fs = require('fs');
-const connection = require('./mysql');
+const mysql = require('mysql');
+const { query } = require('express');
+require('dotenv').config();
 
-class Migration{
-    async executeMigrations() {
+const connection = mysql.createConnection({
+    host: process.env.DB_HOST || '127.0.0.1',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    charset: 'utf8'
+})
+
+connection.connect( async () => {
+    try {
+        console.log("Connected to MYSQL Server");
+        await executeMigrations();
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
+
+
+const executeMigrations = async () => {
         try {
-            const migrationDir = "./migrations";
+            const migrationDir = "./sql";
             fs.readdir(migrationDir, (err, files) => {
-                files.sort();
-                files.forEach(file => {
-                    const migrationScript = fs.readFileSync(
-                        path.join(migrationDir, file),
-                        "utf8"
-                    );
-                    connection.query(migrationScript, async () => {
-                        console.log(`Migration script ${file} executed successfully`);
-                    })
+                const migrationScript = fs.readFileSync(
+                    path.join(migrationDir, files[0]),
+                    "utf8"
+                ).toString().split(';');
+                migrationScript.forEach(async (query) => {
+                    if (query.trim() !== '') {
+                    await connection.query(query);
+                    console.log(`Migration script ${files} executed successfully`);
+                }
                 })
+                connection.end();
             })
-            return true;
         }
         catch (err) {
             console.log(err);
             return false;
         }
     }
-}
 
-module.exports = new Migration();
+

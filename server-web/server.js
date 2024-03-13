@@ -7,8 +7,7 @@ require('dotenv').config({ path: '.env' })
 const routes = require('./routes/index');
 const port = process.env.APP_PORT || 3000;
 const host = process.env.APP_HOST || 'localhost';
-const connection = require('./mysql');
-const createDatabase = require('./createDatabase');
+
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }))
