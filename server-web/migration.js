@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const mysql = require('mysql');
-const { query } = require('express');
 require('dotenv').config();
 
 const connection = mysql.createConnection({
