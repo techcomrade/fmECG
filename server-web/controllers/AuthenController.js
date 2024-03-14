@@ -1,5 +1,4 @@
-const UserModel = require("../models/UserModel");
-const AuthenModel = require("../models/AccountModel");
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
@@ -49,13 +48,7 @@ class AuthenController {
   // }
 
   async getAllData(req, res, next) {
-    await AuthenModel.getAllData()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+   
   }
 }
 
