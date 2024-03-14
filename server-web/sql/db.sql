@@ -31,15 +31,13 @@ CREATE TABLE `patient_doctor_assignment` (
 DROP TABLE IF EXISTS `heart_rec`;
 CREATE TABLE `heart_rec` (
    `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255) NOT NULL,
-   `data_heart_rec_url` varchar(45) NOT NULL
+   `rec_id` varchar(255) NOT NULL
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `blood_pressure_rec`;
 CREATE TABLE `blood_pressure_rec` (
    `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255) NOT NULL,
-   `data_blood_pressure_rec_url` varchar(45) NOT NULL
+   `rec_id` varchar(255) NOT NULL
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `news`;
@@ -103,8 +101,10 @@ CREATE TABLE `records` (
    `id` varchar(255) NOT NULL,
    `user_id` varchar(255) NOT NULL,
    `device_id` varchar(255) NOT NULL,
+   `device_type` int NOT NULL,
    `start_time` bigint NOT NULL,
    `end_time` bigint NOT NULL,
+   `data_rec_url` varchar(45) NOT NULL,
    `created_at` bigint NOT NULL,
    `updated_at` bigint NOT NULL
 )ENGINE = InnoDB DEFAULT CHARSET=utf8; 
@@ -138,6 +138,8 @@ ALTER TABLE `news`
 
 ALTER TABLE `devices`
     ADD PRIMARY KEY (`id`);
+    
+ALTER TABLE `devices` ADD UNIQUE INDEX `device_type_unique_index` (`device_type`);
 
 ALTER TABLE `users`
     ADD FOREIGN KEY (`account_id`) REFERENCES `authen`(`id`);
@@ -150,6 +152,9 @@ ALTER TABLE `records`
 
 ALTER TABLE `records`
     ADD FOREIGN KEY (`device_id`) REFERENCES `devices`(`id`);
+
+ALTER TABLE `records`
+    ADD FOREIGN KEY (`device_type`) REFERENCES `devices`(`device_type`);
 
 ALTER TABLE `heart_rec`
     ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
