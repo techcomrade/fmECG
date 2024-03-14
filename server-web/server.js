@@ -9,7 +9,7 @@ const port = process.env.APP_PORT || 3000;
 const host = process.env.APP_HOST || 'localhost';
 
 
-app.set('view engine', 'ejs');
+app.set('view engine', 'quyen');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json({ type: 'application/json' }))
 app.use(bodyParser.raw());
