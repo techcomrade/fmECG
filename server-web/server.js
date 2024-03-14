@@ -7,10 +7,6 @@ require("dotenv").config({ path: ".env" });
 const routes = require("./routes/index");
 const port = process.env.APP_PORT || 3000;
 const host = process.env.APP_HOST || "localhost";
-const knex = require("knex");
-const knexConfig = require("./knexfile");
-
-const db = knex(knexConfig);
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,13 +24,3 @@ app.use("/api", routes);
 app.listen(port, () => {
   console.log(`Server is running at http://${host}:${port}`);
 });
-
-db.migrate
-  .latest()
-  .then(() => {
-    console.log("Migrations ran successfully");
-  })
-  .catch((err) => {
-    console.log(err);
-    return;
-  });
