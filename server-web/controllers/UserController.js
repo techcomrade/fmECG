@@ -1,4 +1,4 @@
-const UserModel = require("../models/UserModel");
+const UserService = require('../services/UserService')
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 
@@ -35,7 +35,13 @@ class UserController {
   //     return res.status(400).json("Register error");
   //   }
   // }
+  async getAll (req,res,next) {
+    const users = await UserService.getAll();
 
+      return res.status(200).json(users);
+    
+    // return res.status(400).json("get users failed");
+  }
 }
 
 module.exports = new UserController();

@@ -5,8 +5,6 @@ class NewsModel extends CommonModel{
         return await this.executeQuery(`SELECT * FROM account`);
     }
 
-   
-
 }
 
 
