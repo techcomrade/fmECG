@@ -1,0 +1,5 @@
+class CommonService{
+    async tranctionSQL(){
+        
+    }
+}
