@@ -14,9 +14,5 @@ const connection = {
 module.exports = {
     client: process.env.DB_CLIENT,
     connection,
-    migrations: {
-        tableName: 'migrations',
-        directory: process.cwd() + '/server/migrations',
-      },
     debug: false,
 };
