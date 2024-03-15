@@ -159,7 +159,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                             child: const Text(
                               "Log in",
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
