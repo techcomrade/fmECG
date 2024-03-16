@@ -1,6 +1,4 @@
 const AccountService = require("../services/AccountService");
-const { v4: uuidv4 } = require("uuid");
-const bcrypt = require("bcrypt");
 
 class AccountController {
   async register(req, res) {
@@ -11,8 +9,8 @@ class AccountController {
         return res.status(400).json("Email exist");
       } else {
         try {
-          account.id = uuidv4();
-          account.password = await bcrypt.hash(account.password, 10);
+          account.id = AccountService.renderID();
+          account.password = await AccountService.hashPassword(account.password);
           AccountService.register(account)
             .then(() => {
               return res.status(200).json({
@@ -34,10 +32,9 @@ class AccountController {
   }
   async getAll(req, res) {
     const accounts = await AccountService.getAll();
-    if(accounts.length) {
+    if (accounts.length) {
       return res.status(200).json(accounts);
-    }
-    else {
+    } else {
       return res.status(400).json("get users failed");
     }
   }
