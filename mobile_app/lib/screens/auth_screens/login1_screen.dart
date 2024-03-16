@@ -1,6 +1,7 @@
 import 'package:bluetooth_ecg/components/submit_button.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
+import 'package:bluetooth_ecg/screens/auth_screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,21 @@ class _Login1ScreenState extends State<Login1Screen> {
   bool showLoginError = true; // Thêm biến showLoginError và khởi tạo là false
 
   final paddingLoginHorizontal30 = const EdgeInsets.symmetric(horizontal: 30);
+
+  bool _obscureText = true;
+
+  bool isValidEmail(String emailTyped) {
+    // regular expression: example@email.vn (not begin with .): test@vais.vn
+    final emailRegExp =
+        RegExp(r"^[a-zA-Z0-9][a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    return emailRegExp.hasMatch(emailTyped);
+  }
+
+  bool isValidPassword(String passwordTyped) {
+    // regular expression: 8 digit +:Test1234
+    final passwordRegExp = RegExp(r'\S{8,}');
+    return passwordRegExp.hasMatch(passwordTyped);
+  }
 
   @override
   void initState() {
@@ -78,9 +94,10 @@ class _Login1ScreenState extends State<Login1Screen> {
                   borderRadius: BorderRadius.circular(12)),
               margin: paddingLoginHorizontal30,
               child: TextFormField(
-                controller: _emailController,
-                focusNode: focusNodeEmail,
-                decoration: InputDecoration(
+                  controller: _emailController,
+                  focusNode: focusNodeEmail,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Email",
                     hintStyle: TextStyle(
@@ -88,8 +105,21 @@ class _Login1ScreenState extends State<Login1Screen> {
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
                     contentPadding:
-                        const EdgeInsets.only(left: 20, top: 20, bottom: 20)),
-              ),
+                        const EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                  ),
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
+                  validator: (value) {
+                    if (!isValidEmail(value!)) {
+                      return "Enter valid email: example@email.com";
+                    }
+                    if (value.isEmpty) {
+                      return "Email can't left empty";
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction),
             ),
             const SizedBox(height: 10),
             Container(
@@ -98,10 +128,10 @@ class _Login1ScreenState extends State<Login1Screen> {
                   borderRadius: BorderRadius.circular(12)),
               margin: paddingLoginHorizontal30,
               child: TextFormField(
-                obscureText: true,
-                controller: _passwordController,
-                focusNode: focusNodePassword,
-                decoration: InputDecoration(
+                  obscureText: _obscureText,
+                  controller: _passwordController,
+                  focusNode: focusNodePassword,
+                  decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Password",
                     hintStyle: TextStyle(
@@ -109,8 +139,31 @@ class _Login1ScreenState extends State<Login1Screen> {
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
                     contentPadding:
-                        const EdgeInsets.only(left: 20, top: 20, bottom: 20)),
-              ),
+                        const EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                      child: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.black),
+                    ),
+                  ),
+                  style: const TextStyle(color: Colors.black),
+                  validator: (value) {
+                    if (!isValidPassword(value!)) {
+                      return "Enter valid password: at least 8 digit";
+                    }
+                    if (value.isEmpty) {
+                      return "Password can't left empty";
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction),
             ),
             if (!showLoginError)
               // Display error message if needed
@@ -182,11 +235,21 @@ class _Login1ScreenState extends State<Login1Screen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Don't have an account?"),
-              Text(
-                "  Sign up",
-                style: TextStyle(
-                    color: ColorConstant.primary, fontWeight: FontWeight.bold),
+              const Text(
+                "Don't have an account?",
+                style: TextStyle(color: Colors.black),
+              ),
+              TextButton(
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterScreen())),
+                child: Text(
+                  "  Sign up",
+                  style: TextStyle(
+                      color: ColorConstant.primary,
+                      fontWeight: FontWeight.bold),
+                ),
               )
             ],
           )
