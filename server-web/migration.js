@@ -31,8 +31,13 @@ const executeMigrations = async () => {
                 ).toString().split(';');
                 migrationScript.forEach(async (query) => {
                     if (query.trim() !== '') {
-                    await connection.query(query);
-                    console.log(`Migration script ${files} executed successfully`);
+                    await connection.query(query, (err,s) =>{
+                        if(s){ 
+                            console.log(`Migration script ${files} executed successfully`);
+                            return true;
+                        }
+                        console.log(err);
+                    })
                 }
                 })
                 connection.end();
