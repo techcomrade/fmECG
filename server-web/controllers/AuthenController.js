@@ -1,9 +1,33 @@
-
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const { v4: uuidv4 } = require("uuid");
+const AuthenService = require("../services/AuthenService");
 
 class AuthenController {
+  async register(req, res) {
+    const account = req.body;
+    if (account.email && account.password) {
+      const checkExistEmail = await AuthenService.checkEmail(account.email);
+      if (checkExistEmail) {
+        return res.status(400).json("Email exist");
+      } else {
+        try {
+          await AuthenService.register(account)
+            .then(() => {
+              return res.status(200).json({
+                id: account.id,
+                email: account.email,
+                password: account.password,
+              });
+            })
+            .catch((err) => {
+              return res.status(500).json(err);
+            });
+        } catch (err) {
+          return res.status(500).json(err);
+        }
+      }
+    } else {
+      return res.status(400).json("Register error");
+    }
+  }
   // async login(req, res, next) {
   //   await UserModel.findByEmail(req.body.email)
   //     .then((user) => {
@@ -47,8 +71,13 @@ class AuthenController {
   //     });
   // }
 
-  async getAllData(req, res, next) {
-   
+  async getAllData(req, res) {
+    const accounts = await AuthenService.getAll();
+    if (accounts.length) {
+      return res.status(200).json(accounts);
+    } else {
+      return res.status(400).json("Get accounts failed");
+    }
   }
 }
 
