@@ -1,4 +1,9 @@
 const AuthenService = require("../services/AuthenService");
+const TokenModel = require("../models/TokenModel");
+const AccountModel = require("../models/AccountModel");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { v4: uuidv4 } = require("uuid");
 
 class AuthenController {
   async register(req, res) {
@@ -28,48 +33,65 @@ class AuthenController {
       return res.status(400).json("Register error");
     }
   }
-  // async login(req, res, next) {
-  //   await UserModel.findByEmail(req.body.email)
-  //     .then((user) => {
-  //       if (user[0]) {
-  //         bcrypt.compare(req.body.pass, user[0].pass, (err, same) => {
-  //           if (err) throw err;
-  //           if (same) {
-  //             const token = jwt.sign(
-  //               {
-  //                 id: user[0].id,
-  //                 email: user[0].email,
-  //                 pass: user[0].pass,
-  //                 create_time: user[0].create_time,
-  //               },
-  //               process.env.JWT_KEY,
-  //               {
-  //                 expiresIn: "30s",
-  //               }
-  //             );
-  //             AuthenModel.insertToken({
-  //               id: uuidv4(),
-  //               token: token,
-  //               create_time: new Date().toDateString(),
-  //               delete_flag: 0,
-  //             });
-  //             res.status(200).json({
-  //               id: uuidv4(),
-  //               token: token,
-  //               create_time: new Date().toDateString(),
-  //               delete_flag: 0,
-  //               message: "Token added successfully",
-  //             });
-  //           }
-  //         });
-  //       }
-  //     })
+  async login(req, res, next) {
+    await AccountModel.executeQuery(
+      AccountModel.checkExistEmail(req.body.email)
+    )
+      .then((account) => {
+        if (account[0]) {
+          bcrypt.compare(req.body.password, account[0].password, (err, same) => {
+            if (err) throw err;
+            if (same) {
+              const accessToken = jwt.sign(
+                {
+                  id: account[0].id,
+                  email: account[0].email,
+                  password: account[0].password,
+                },
+                process.env.JWT_KEY,
+                {
+                  expiresIn: 30 * 100,
+                }
+              );
+              const refreshToken = jwt.sign(
+                {
+                  id: account[0].id,
+                  email: account[0].email,
+                  password: account[0].password,
+                },
+                process.env.JWT_REFRESH_KEY,
+                {
+                  expiresIn: 24 * 60 * 60 * 1000,
+                }
+              );
+              const timestamps = Date.now();
+              TokenModel.add({
+                id: uuidv4(),
+                account_id: account[0].id,
+                access_token: accessToken,
+                refresh_token: refreshToken,
+                created_at: Date.now(),
+                updated_at: Date.now()
+              });
+              res.status(200).json({
+                id: uuidv4(),
+                account_id: account[0].id,
+                access_token: accessToken,
+                refresh_token: refreshToken,
+                created_at: Date.now(),
+                updated_at: Date.now(),
+                message: "Token added successfully"
+              });
+            }
+          });
+        }
+      })
 
-  //     .catch((err) => {
-  //       console.log(error);
-  //       res.status(403).json({ message: err });
-  //     });
-  // }
+      .catch((err) => {
+        console.log(err);
+        res.status(403).json({ message: err });
+      });
+  }
 
   async getAllData(req, res) {
     const accounts = await AuthenService.getAll();
