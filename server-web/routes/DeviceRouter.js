@@ -10,3 +10,4 @@ router.post("/create-device", Device.add);
 router.post("/update/:id", Device.updateById);
 
 module.exports = router;
+    

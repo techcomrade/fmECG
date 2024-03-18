@@ -15,19 +15,17 @@ class DeviceController {
     try {
       const device = req.body;
       console.log(device);
-      if (device) {
-        device.created_at = new Date();
-        device.updated_at = this.created_at;
+      if (device.user_id && device.device_name && device.information && device.device_type && device.start_date && device.end_date) {
         await DeviceService.add(device)
-          .then((device) => {
+          .then((Device) => {
             return res.status(200).json({
-              id: device.id,
-              user_id: device.user_id,
-              name: device.device_name,
-              information: device.information,
-              type: device.device_type,
-              start_date: device.start_date,
-              end_date: device.end_date,
+              id: Device.id,
+              user_id: Device.user_id,
+              name: Device.device_name,
+              information: Device.information,
+              type: Device.device_type,
+              start_date: Device.start_date,
+              end_date: Device.end_date,
             });
           })
           .catch((err) => {
@@ -68,7 +66,7 @@ class DeviceController {
         await DeviceService.checkDevice(id)
           .then(async (checked) => {
             if (checked) {
-              await DeviceService.updateById(device);
+              await DeviceService.updateById(device, id);
               return res.status(200).json("update device successfully");
             }
             return res.status(500).json("no device found");

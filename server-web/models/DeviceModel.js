@@ -11,8 +11,8 @@ class DeviceModel extends CommonModel {
   async deleteById(id) {
     return `DELETE FROM devices WHERE id = '${id};`;
   }
-  async updateById(device) {
-    return `UPDATE device SET user_id = '${device.user_id}', device_name = '${device.device_name}', information = '${device.information}',device_type = '${device.device_type}', start_date = '${device.start_date}',end_date = '${device.end_date}', create_at = '${device.create_at}',updated_at = '${device.updated_at}', WHERE id = '${device.id};`;
+  async updateById(device, id) {
+    return `UPDATE device SET user_id = '${device.user_id}', device_name = '${device.device_name}', information = '${device.information}',device_type = '${device.device_type}', start_date = '${device.start_date}',end_date = '${device.end_date}', updated_at = '${device.updated_at}' WHERE id = '${id};`;
   }
   async checkDevice() {
     return `SELECT * FROM devices WHERE id = '${id}';`;
