@@ -7,6 +7,7 @@ class CommonModel {
       if (data[0]) return data[0];
       return false;
     } catch (err) {
+      console.log(err);
       return false;
     }
   }

@@ -41,35 +41,58 @@ class UserController {
       message: 'Get all users successful!',
       metadata: users
     });
-    // return res.status(400).json("get users failed");
   }
 
   async createUser(req, res, next) {
-    return res.status(200).json({
-      message: 'Create user successful!',
-      metadata: await UserService.createUser(req.body)
-    });
+    const result = await UserService.createUser(req.body);
+    if(result) {
+      return res.status(200).json({
+        message: 'Create user successful!'
+      });
+    }
   }
 
   async getUserById(req, res, next) {
-    return res.status(200).json({
-      message: 'Get user by id successful!',
-      metadata: await UserService.getUserById(req.params.userId)
-    });
+    const foundUser = await UserService.getUserById(req.params.userId);
+    if(foundUser) {
+      return res.status(200).json({
+        message: 'Get user by id successful!',
+        metadata: foundUser
+      });
+    }
+    else {
+      return res.status(404).json({
+        message: 'User not existed!'
+      });
+    }
   }
 
   async updateUser(req, res, next) {
-    return res.status(200).json({
-      message: 'Update user successful!',
-      metadata: await UserService.updateUser(req.params.userId)
-    });
+    const result = await UserService.updateUser(req.body, req.params.userId);
+    if(result) {
+      return res.status(200).json({
+        message: 'Update user successful!'
+      });
+    }
+    else {
+      return res.status(404).json({
+        message: 'User not existed!'
+      });
+    }
   }
 
   async deleteUser(req, res, next) {
-    return res.status(200).json({
-      message: 'Delete user successful!',
-      metadata: await UserService.deleteUserById(req.params.userId)
-    });
+    const result = await UserService.deleteUserById(req.params.userId);
+    if(result) {
+      return res.status(200).json({
+        message: 'Delete user successful!'
+      });
+    }
+    else {
+      return res.status(404).json({
+        message: 'User not existed!'
+      });
+    }
   }
 }
 

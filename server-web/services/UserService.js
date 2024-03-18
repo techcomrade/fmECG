@@ -11,25 +11,17 @@ class UserService extends CommonService {
     }
 
     async createUser(data) {
-        const foundUser = await this.getUserById(data.id);
-        if(foundUser) {
-            
-        }
         return await UserModel.executeQuery(UserModel.add(data));
     }
 
-    async updateUser(data) {
-        const foundUser = await this.getUserById(data.id);
-        if(!foundUser) {
-
-        }
-        return await UserModel.executeQuery(UserModel.updateById(data))
+    async updateUser(data, userId) {
+        return await UserModel.executeQuery(UserModel.updateById(data, userId))
     }
 
     async deleteUserById(userId) {
         const foundUser = await this.getUserById(userId);
         if(!foundUser) {
-
+            return false
         }
         return await UserModel.executeQuery(UserModel.deleteById(userId))
     }
