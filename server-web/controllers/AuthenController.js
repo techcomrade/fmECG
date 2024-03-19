@@ -2,14 +2,17 @@ const AuthenService = require("../services/AuthenService");
 
 class AuthenController {
   async register(req, res) {
-    const account = req.body;
+    const user = req.body;
+    const account = {};
+    account.email = req.body.email;
+    account.password = req.body.password;
     if (account.email && account.password) {
       const checkExistEmail = await AuthenService.checkEmail(account.email);
       if (checkExistEmail) {
         return res.status(400).json("Email exist");
       } else {
         try {
-          await AuthenService.register(account)
+          await AuthenService.register(account, user)
             .then(() => {
               return res.status(200).json({
                 id: account.id,
