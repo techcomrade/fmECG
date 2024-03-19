@@ -5,8 +5,8 @@ class TokenModel extends CommonModel{
         return `SELECT * FROM tokens;`;
     }
     async add(token) {
-        return `INSERT INTO tokens (id, account_id, access_token, refresh_token, created_at, updated_at)
-        VALUES ('${token.id}', '${token.account_id}', '${token.access_token}','${token.refresh_token}','${token.created_at}', '${token.updated_at}');`
+        return this.executeQuery(`INSERT INTO tokens (id, account_id, access_token, refresh_token, created_at, updated_at)
+        VALUES ('${token.id}', '${token.account_id}', '${token.access_token}','${token.refresh_token}','${token.created_at}', '${token.updated_at}');`)
     }
     async deleteById(id) {
         return `DELETE FROM tokens WHERE id = '${id};`

@@ -44,9 +44,7 @@ class AuthenController {
             if (same) {
               const accessToken = jwt.sign(
                 {
-                  id: account[0].id,
-                  email: account[0].email,
-                  password: account[0].password,
+                  id: account[0].id
                 },
                 process.env.JWT_KEY,
                 {
@@ -55,24 +53,21 @@ class AuthenController {
               );
               const refreshToken = jwt.sign(
                 {
-                  id: account[0].id,
-                  email: account[0].email,
-                  password: account[0].password,
+                  id: account[0].id
                 },
                 process.env.JWT_REFRESH_KEY,
                 {
                   expiresIn: 24 * 60 * 60 * 1000,
                 }
               );
-              const timestamps = Date.now();
-              TokenModel.add({
+              TokenModel.executeQuery(TokenModel.add({
                 id: uuidv4(),
                 account_id: account[0].id,
                 access_token: accessToken,
                 refresh_token: refreshToken,
                 created_at: Date.now(),
                 updated_at: Date.now()
-              });
+              }));
               res.status(200).json({
                 id: uuidv4(),
                 account_id: account[0].id,
