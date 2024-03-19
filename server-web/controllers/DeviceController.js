@@ -1,4 +1,5 @@
 const DeviceService = require("../services/deviceService");
+const UserService = require("../services/UserService");
 
 class DeviceController {
   async getAllData(req, res) {
@@ -16,8 +17,14 @@ class DeviceController {
       const device = req.body;
       console.log(device);
       if (device.user_id && device.device_name && device.information && device.device_type && device.start_date && device.end_date) {
-        await DeviceService.add(device)
+          const checkExistUser = await UserService.checkUser(device.user_id);
+          if(!checkExistUser.length){
+            return res.status(400).json("no user found");
+          }
+          console.log(checkExistUser);
+          await DeviceService.add(device)
           .then((Device) => {
+            //console.log(Device);
             return res.status(200).json({
               id: Device.id,
               user_id: Device.user_id,

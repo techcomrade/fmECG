@@ -16,6 +16,9 @@ class UserModel extends CommonModel {
     return `UPDATE users SET account_id = '${user.account_id}', username = '${user.username}', birth = '${user.birth}', phone_number = '${user.phone_number}', image = '${user.image}', role = '${user.role}', updated_at = '${user.updated_at}' 
       WHERE id ='${id}'`;
   }
+  checkUser(id){
+    return `SELECT * FROM users WHERE id = '${id}';`;
+  }
 }
 
 module.exports = new UserModel();
