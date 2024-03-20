@@ -1,4 +1,5 @@
-const UserModel = require('../models/UserModel')
+const UserModel = require('../models/UserModel');
+const { convertArrayToString } = require('../utils/arrayUtils');
 const CommonService = require('./CommonService')
 
 class UserService extends CommonService {
@@ -18,12 +19,21 @@ class UserService extends CommonService {
         return await UserModel.executeQuery(UserModel.updateById(data, userId))
     }
 
-    async deleteUserById(userId) {
-        const foundUser = await this.getUserById(userId);
-        if(!foundUser) {
-            return false
+    // async deleteUserById(userId) {
+    //     const foundUser = await this.getUserById(userId);
+    //     if(!foundUser) {
+    //         return false
+    //     }
+    //     return await UserModel.executeQuery(UserModel.deleteById(userId))
+    // }
+
+    async deleteUserById(arrayId) {
+        if(arrayId.length === 1) {
+            return await UserModel.executeQuery(UserModel.deleteById(arrayId[0]));
         }
-        return await UserModel.executeQuery(UserModel.deleteById(userId))
+        else {
+            return await UserModel.executeQuery(UserModel.deleteByMultipleId(convertArrayToString(arrayId)));
+        }
     }
 }
 
