@@ -46,7 +46,7 @@ class Utils {
     // } else {
     //   return -1;
     // }
-    return -1;
+    return 1;
   }
 
   static Future<void> showDialogLoginRequirement(context) async {

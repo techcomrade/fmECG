@@ -65,269 +65,127 @@ class _HomeScreenState extends State<HomeScreen> {
       child: SingleChildScrollView(
         controller: _scrollController,
         physics: const ClampingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // header
-            SizedBox(
-              height: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Row(children: [
-                  //   const SizedBox(width: 8),
-                  //   Column(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       const Text("Chào mừng đến với fmECG"),
-                  //       Text(
-                  //         "Thai Dong",
-                  //         style: TextStyle(
-                  //           color: ColorConstant.primary,
-                  //           fontWeight: FontWeight.bold,
-                  //         ),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ]),
-                  const IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      size: 35,
-                    ),
-                    onPressed: null,
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          // header
+          SizedBox(
+            height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Row(children: [
+                //   const SizedBox(width: 8),
+                //   Column(
+                //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       const Text("Chào mừng đến với fmECG"),
+                //       Text(
+                //         "Thai Dong",
+                //         style: TextStyle(
+                //           color: ColorConstant.primary,
+                //           fontWeight: FontWeight.bold,
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ]),
+                const IconButton(
+                  icon: Icon(
+                    Icons.menu,
+                    size: 35,
                   ),
-                  Row(children: [
-                    // const DarkLightSwitch(),
+                  onPressed: null,
+                ),
+                Row(children: [
+                  // const DarkLightSwitch(),
 
-                    InkWell(
-                      child: Icon(PhosphorIcons.regular.bell),
-                    ),
-                    SizedBox(
-                      width: width * 0.05,
-                    ),
-                    const CircularAvatar(
-                        imageAsset: 'assets/images/doctor.png', radius: 27),
-                  ])
-                ],
-              ),
-            ),
-
-            SizedBox(height: height * 0.02),
-            SizedBox(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Chào mừng tới fmEcg,\nThai Dong.",
-                      style: TextStyle(
-                          color: ColorConstant.black900,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22),
-                    ),
+                  InkWell(
+                    child: Icon(PhosphorIcons.regular.bell),
                   ),
-                  SizedBox(height: height * 0.05),
-                  Wrap(
-                    spacing: 15,
-                    runSpacing: 15,
-                    alignment: WrapAlignment.spaceAround,
-                    children: [
-                      NumberCard(
-                        leadingIcon: Icon(PhosphorIcons.fill.heartbeat),
-                        number: 82.0,
-                        text: "Nhịp tim",
-                        subText: "Mẹ",
-                        unit: "bpm",
-                        // color1: Colors.grey,
-                        // color2: Colors.grey,
-                        centerImage:
-                            Image.asset("assets/images/hearthrate.jpg"),
-                      ),
-                      NumberCard(
-                        leadingIcon: Icon(PhosphorIcons.fill.stethoscope),
-                        number: 72.9,
-                        text: "Huyết áp",
-                        subText: "Mẹ",
-                        unit: "mmHg",
-                        // color1: Colors.grey,
-                        // color2: Colors.grey,
-                        centerImage:
-                            Image.asset("assets/images/blood_pressurer.jpg"),
-                      ),
-                      NumberCard(
-                        leadingIcon: Icon(PhosphorIcons.fill.heartbeat),
-                        number: 82.6,
-                        text: "Nhịp tim ",
-                        subText: "Thai nhi",
-                        unit: "bpm",
-                        // color1: ColorConstant.primary,
-                        // color1: Colors.grey,
-                        // color2: Colors.grey,
-                        //  color2: ColorConstant.primary,
-                        centerImage:
-                            Image.asset("assets/images/hearthrate.jpg"),
-                      ),
-                      NumberCard(
-                        leadingIcon: Icon(PhosphorIcons.fill.stethoscope),
-                        number: 86.0,
-                        text: "Huyết áp",
-                        subText: "Thai nhi",
-                        unit: "mmHg",
-                        //color1: ColorConstant.primary,
-                        // color1: ColorConstant.teal,
-                        // color2: ColorConstant.teal,
-                        centerImage:
-                            Image.asset("assets/images/blood_pressurer.jpg"),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                  SizedBox(
+                    width: width * 0.05,
+                  ),
+                  const CircularAvatar(
+                      imageAsset: 'assets/images/doctor.png', radius: 27),
+                ])
+              ],
             ),
-            const SizedBox(height: 30),
-            // SizedBox(
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Text(
-            //         "Tín hiệu điện tim",
-            //         style: TextStyle(
-            //             color: ColorConstant.quaternary,
-            //             fontWeight: FontWeight.bold,
-            //             fontSize: 22),
-            //       ),
-            //       const SizedBox(height: 10),
-            //       !isShowChart
-            //           ? ImageCard(
-            //               imageAsset: 'assets/images/heart_rate_example.jpeg',
-            //               functionScanBluetooth: () {
-            //                 Navigator.push(
-            //                     context,
-            //                     MaterialPageRoute(
-            //                       builder: (context) =>
-            //                           const BleReactiveScreen(),
-            //                     ));
-            //               },
-            //               temporaryNothing: () async {
-            //                 bool isAccessFiles = await _requestManageStorage();
-            //                 if (isAccessFiles) {
-            //                   FilesManagement
-            //                       .createDirectoryFirstTimeWithDevice();
-            //                   fileToSave = await FilesManagement
-            //                       .setUpFileToSaveDataMeasurement();
-            //                   setState(() {
-            //                     isShowChart = true;
-            //                   });
-            //                 } else {
-            //                   // show dialog need permission
-            //                   print('phone does not grant permission');
-            //                 }
-            //               })
-            //           : LiveChartSample(fileToSave: fileToSave),
-            //     ],
-            //   ),
-            // ),
+          ),
 
-            // const SizedBox(height: 30),
-            // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            //   Text(
-            //     "Các tin tức",
-            //     style: TextStyle(
-            //         color: ColorConstant.quaternary,
-            //         fontWeight: FontWeight.bold,
-            //         fontSize: 22),
-            //   ),
-            //   ElevatedButton(
-            //     onPressed: () {
-            //       Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (context) => const NewsAllScreen()));
-            //     },
-            //     child: const Text("Xem tất cả"),
-            //   )
-            // ]),
-
-            // if (allNews.isNotEmpty)
-            //   ListView.builder(
-            //       padding: const EdgeInsets.only(top: 10),
-            //       shrinkWrap: true,
-            //       itemCount: 4,
-            //       physics: const NeverScrollableScrollPhysics(),
-            //       itemBuilder: (context, index) {
-            //         final news = allNews[index];
-            //         final String imagePresentUrl = news["image"] ?? "";
-            //         final int newsId = news["news_id"];
-            //         final String newsCategory = news["category_name"];
-            //         final DateTime newsCreatedAt =
-            //             DateTime.parse(news["created_at"]);
-            //         final String newsCreatedAtFormat =
-            //             DateFormat("EEEE, dd-MM-yyyy", "vi")
-            //                 .format(newsCreatedAt);
-            //         final String newsTitle = news["title"].length > 100
-            //             ? news["title"].substring(0, 100)
-            //             : news["title"];
-
-            //         return InkWell(
-            //           onTap: () async {
-            //             await NewsController.getNewsById(newsId);
-            //             Navigator.push(
-            //                 context,
-            //                 MaterialPageRoute(
-            //                     builder: (context) =>
-            //                         const NewsDetailScreen()));
-            //           },
-            //           splashColor: ColorConstant.primary,
-            //           child: Container(
-            //             margin: const EdgeInsets.only(bottom: 10),
-            //             child: Row(children: [
-            //               ClipRRect(
-            //                 borderRadius: BorderRadius.circular(10),
-            //                 child: Image.network(
-            //                   imagePresentUrl,
-            //                   width: 90,
-            //                   height: 90,
-            //                   fit: BoxFit.cover,
-            //                 ),
-            //               ),
-            //               const SizedBox(width: 20),
-            //               SizedBox(
-            //                 height: 90,
-            //                 // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
-            //                 width: 210,
-            //                 child: Column(
-            //                     mainAxisAlignment:
-            //                         MainAxisAlignment.spaceBetween,
-            //                     crossAxisAlignment: CrossAxisAlignment.start,
-            //                     children: [
-            //                       Text(newsCategory,
-            //                           style: TextStyle(
-            //                               fontSize: 14,
-            //                               fontWeight: FontWeight.bold,
-            //                               color: Colors.grey[600])),
-            //                       Text(newsTitle,
-            //                           overflow: TextOverflow.ellipsis,
-            //                           maxLines: 2,
-            //                           style: const TextStyle(
-            //                               fontSize: 17,
-            //                               fontWeight: FontWeight.bold,
-            //                               color: Colors.black)),
-            //                       Text(newsCreatedAtFormat,
-            //                           style: TextStyle(
-            //                             color: Colors.grey[700],
-            //                           )),
-            //                     ]),
-            //               )
-            //             ]),
-            //           ),
-            //         );
-            //       }),
-          ],
-        ),
-        // child: LiveChartSample()
+          SizedBox(height: height * 0.02),
+          SizedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Chào mừng tới fmEcg,\nThai Dong.",
+                    style: TextStyle(
+                        color: ColorConstant.black900,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22),
+                  ),
+                ),
+                SizedBox(height: height * 0.05),
+                Wrap(
+                  spacing: 15,
+                  runSpacing: 15,
+                  alignment: WrapAlignment.spaceAround,
+                  children: [
+                    NumberCard(
+                      leadingIcon: Icon(PhosphorIcons.fill.heartbeat),
+                      number: 82.0,
+                      text: "Nhịp tim",
+                      subText: "Mẹ",
+                      unit: "bpm",
+                      // color1: Colors.grey,
+                      // color2: Colors.grey,
+                      centerImage: Image.asset("assets/images/hearthrate.jpg"),
+                    ),
+                    NumberCard(
+                      leadingIcon: Icon(PhosphorIcons.fill.stethoscope),
+                      number: 72.9,
+                      text: "Huyết áp",
+                      subText: "Mẹ",
+                      unit: "mmHg",
+                      // color1: Colors.grey,
+                      // color2: Colors.grey,
+                      centerImage:
+                          Image.asset("assets/images/blood_pressurer.jpg"),
+                    ),
+                    NumberCard(
+                      leadingIcon: Icon(PhosphorIcons.fill.heartbeat),
+                      number: 82.6,
+                      text: "Nhịp tim ",
+                      subText: "Thai nhi",
+                      unit: "bpm",
+                      // color1: ColorConstant.primary,
+                      // color1: Colors.grey,
+                      // color2: Colors.grey,
+                      //  color2: ColorConstant.primary,
+                      centerImage: Image.asset("assets/images/hearthrate.jpg"),
+                    ),
+                    NumberCard(
+                      leadingIcon: Icon(PhosphorIcons.fill.stethoscope),
+                      number: 86.0,
+                      text: "Huyết áp",
+                      subText: "Thai nhi",
+                      unit: "mmHg",
+                      //color1: ColorConstant.primary,
+                      // color1: ColorConstant.teal,
+                      // color2: ColorConstant.teal,
+                      centerImage:
+                          Image.asset("assets/images/blood_pressurer.jpg"),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 30),
+        ]),
       ),
     );
   }
@@ -439,8 +297,6 @@ class NumberCard extends StatefulWidget {
   final String text;
   final String subText;
   final String unit;
-  // final Color color1;
-  // final Color color2;
   final Icon leadingIcon;
   final Image centerImage;
 
@@ -450,8 +306,6 @@ class NumberCard extends StatefulWidget {
     required this.text,
     required this.subText,
     required this.unit,
-    // required this.color1,
-    // required this.color2,
     required this.leadingIcon,
     required this.centerImage,
   }) : super(key: key);
