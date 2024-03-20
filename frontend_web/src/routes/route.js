@@ -17,7 +17,7 @@ export const Routes = () => {
         <ReactRoutes>
             <Route path="/" element={<Home/>} />
             <Route path="/account" element={<DetailUser/>} />
-            <Route path="/users" element={<DataTable/>} />
+            <Route path="/user" element={<DataTable/>} />
             <Route path="/create-user" element={<CreateUser/>} />
             <Route path="*" element={<NotFound/>} />
         </ReactRoutes>

@@ -52,7 +52,7 @@ const ModalEdit = (props) => {
                             </Form.Item>
                         </Col>
                     )}
-            </Modal>
+      </Modal>
     </>
   );
 };

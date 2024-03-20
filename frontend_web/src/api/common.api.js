@@ -45,7 +45,7 @@ export const httpGetData = (url, data) => {
 export const httpUpdateData = (url, data) => {
     const token = getLocalStorage(JWT_TOKEN);
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.PUT, token, data)
+        axiosRequest(API_URL + url, axiosMethod.PATCH, token, data)
         .then((response) => {
             resolve(response.data)
         })
@@ -57,32 +57,18 @@ export const httpUpdateData = (url, data) => {
     })
 }
 
-export const httpGetDataTable = async (table, filter = null) => {
+export const httpDeleteData = (url, data) => {
+    const token = getLocalStorage(JWT_TOKEN);
     return new Promise((resolve, reject) => {
-        let dataUpload = null;
-        if(!!filter) {
-            filter['table'] = table;
-            dataUpload = filter;
-        }
-        else {
-            dataUpload = {table: table};
-        }
-        return httpPostData(API_URL + 'customers/report',dataUpload)
-        .then((result) => {
-            let data = result.data;
-            if(data.result[0].id !== undefined)
-            for (let i = 0; i < data.result.length; i++) data.result[i].idf = i;
-            else 
-            for (let i = 0; i < data.result.length; i++) data.result[i].id = i;
-            // check filter is right?
-            // ManagerData.checkTableInfoUpdate(tableName,data.result);
-            resolve(data.result);
-          })
-          .catch((error) => {
+        axiosRequest(API_URL + url, axiosMethod.DELETE, token, data)
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
             console.log('error get data', error)
             // checkErrorReturn(error);
             reject(error)
-        });
-        });
+        })
+    })
 }
 

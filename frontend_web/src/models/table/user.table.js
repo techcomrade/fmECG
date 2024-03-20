@@ -2,33 +2,22 @@ import { httpGetData } from "../../api/common.api";
 import { Button, Space } from "antd";
 
 class UserData {
-    getColumnShow(callBack) {
+    getColumnShow() {
       const columns = [
         {
-          title: 'STT',
-          dataIndex: 'index',
-          key: 'id',
-        },
-        {
           title: 'Họ và tên',
-          dataIndex: 'name',
-          key: 'name',
-          // render: (text) => <a>{text}</a>
-        },
-        {
-          title: 'Giới tính',
-          dataIndex: 'gender',
-          key: 'gender',
+          dataIndex: 'username',
+          key: 'username',
         },
         {
           title: 'Ngày sinh',
-          dataIndex: 'birthday',
-          key: 'birthday',
+          dataIndex: 'birth',
+          key: 'birth',
         },
         {
-          title: 'Email',
-          dataIndex: 'email',
-          key: 'email',
+          title: 'Số điện thoại',
+          dataIndex: 'phone_number',
+          key: 'phone_number',
         },
       ];
 
@@ -36,10 +25,9 @@ class UserData {
     }
 
     async getDataShow() {
-      const data = await httpGetData('/users');
+      const data = await httpGetData('/user');
       return data;
     }
-    
 }
   
   

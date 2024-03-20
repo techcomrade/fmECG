@@ -24,7 +24,7 @@ export const MenuList = () => [
         key: "users",
         title: "Người dùng",
         isHide: false,
-        url: "/users",
+        url: "/user",
       },
       {
         key: "/create-user",
