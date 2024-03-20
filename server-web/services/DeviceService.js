@@ -6,9 +6,11 @@ class DeviceService extends CommonService {
   async add(device) {
     device.id = uuidv4();
     device.created_at = Date.now();
-    device.update_at = device.created_at;
+    //device.update_at = device.created_at;
     console.log(device);
-    return await DeviceModel.executeQuery(DeviceModel.add(device));
+    console.log(typeof device.created_at);
+    console.log(device.created_at);
+    return await DeviceModel.executeQuery(DeviceModel.add(device))
   }
   async deleteById(id) {
     return await DeviceModel.executeQuery(DeviceModel.deleteById(id));

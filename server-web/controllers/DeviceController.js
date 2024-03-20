@@ -16,24 +16,17 @@ class DeviceController {
     try {
       const device = req.body;
       console.log(device);
-      if (device.user_id && device.device_name && device.information && device.device_type && device.start_date && device.end_date) {
+      if (device.user_id && device.device_name && device.device_type && device.start_date && device.end_date) {
           const checkExistUser = await UserService.checkUser(device.user_id);
           if(!checkExistUser.length){
             return res.status(400).json("no user found");
           }
-          console.log(checkExistUser);
+          //console.log(checkExistUser);
           await DeviceService.add(device)
-          .then((Device) => {
-            //console.log(Device);
-            return res.status(200).json({
-              id: Device.id,
-              user_id: Device.user_id,
-              name: Device.device_name,
-              information: Device.information,
-              type: Device.device_type,
-              start_date: Device.start_date,
-              end_date: Device.end_date,
-            });
+          .then((checked) => {
+            //console.log(checked);
+            if(checked) return res.status(200).json("add device successfully");
+            return res.status(500).json("err server add failed"); 
           })
           .catch((err) => {
             return res.status(400).json(err, "add device failed");
@@ -69,7 +62,11 @@ class DeviceController {
     try {
       const id = req.params.id;
       const device = req.body;
-      if (device) {
+      if (device.user_id && device.device_name && device.device_type && device.start_date && device.end_date) {
+        const checkExistUser = await UserService.checkUser(device.user_id);
+          if(!checkExistUser.length){
+            return res.status(400).json("no user found");
+          }
         await DeviceService.checkDevice(id)
           .then(async (checked) => {
             if (checked) {
@@ -81,6 +78,9 @@ class DeviceController {
           .catch((err) => {
             return res.status(400).json(err);
           });
+      }
+      else {
+        return res.status(400).json("bad request");
       }
     } catch (err) {
       return res.status(400).json(err, "update device failed");
