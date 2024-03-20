@@ -1,12 +1,12 @@
-import { UnorderedListOutlined, FileTextOutlined, UserOutlined, HomeOutlined, QuestionCircleOutlined, UsergroupAddOutlined} from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme} from 'antd';
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { UserOutlined, HomeOutlined, QuestionCircleOutlined} from '@ant-design/icons';
+import { Layout, theme} from 'antd';
+import React from 'react';
+import { useNavigate } from "react-router-dom"; 
 import MenuBar from '../../components/MenuBar/menubar';
 
 const { Header, Content, Sider } = Layout;
 
-const MenuList = () => [
+export const MenuList = () => [
   {
     key: "/",
     title: "Trang chủ",

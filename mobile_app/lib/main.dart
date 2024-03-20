@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:bluetooth_ecg/app.dart';
 import 'package:bluetooth_ecg/constants/theme.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/bluetooth_provider.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
+import 'package:bluetooth_ecg/screens/auth_screens/login1_screen.dart';
 import 'package:bluetooth_ecg/screens/main_screen.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -63,7 +65,6 @@ class FmECGApp extends StatefulWidget {
 }
 
 class FmECGAppState extends State<FmECGApp> {
-
   @override
   void initState() {
     super.initState();
@@ -79,40 +80,60 @@ class FmECGAppState extends State<FmECGApp> {
         ChangeNotifierProvider(create: (_) => BluetoothProvider()),
         ChangeNotifierProvider(create: (_) => ECGProvider()),
       ],
-      child: Consumer<AuthProvider>(
-        builder: (ctx, auth, _) {
-          Utils.globalContext = ctx;
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: (auth.theme == ThemeType.DARK
-              ? ThemeECG.darkTheme
-              : ThemeECG.lightTheme).copyWith(
-                pageTransitionsTheme: const PageTransitionsTheme(
-                  builders: <TargetPlatform, PageTransitionsBuilder>{
-                    TargetPlatform.android: ZoomPageTransitionsBuilder(),
-                  },
-                )),
-            darkTheme: ThemeECG.darkTheme,
-            home: const MainScreen(),
-            // auth.isAuth ? MainScreen() :
-            //   FutureBuilder(
-            //     future: auth.checkAutoLogin(),
-            //     builder: (ctx, authResultSnapshot) {
-            //       if (authResultSnapshot.connectionState == ConnectionState.waiting) {
-            //         return const CircularProgressIndicator();
-            //       } else if (authResultSnapshot.hasError) {
-            //         return Text('Error: ${authResultSnapshot.error}');
-            //       } else {
-            //         return Login1Screen();
-            //       }
-            //     }),
-            localizationsDelegates: const [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-          );
+      child: Consumer<AuthProvider>(builder: (ctx, auth, _) {
+        Utils.globalContext = ctx;
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: (auth.theme == ThemeType.DARK
+                  ? ThemeECG.darkTheme
+                  : ThemeECG.lightTheme)
+              .copyWith(
+                  pageTransitionsTheme: const PageTransitionsTheme(
+            builders: <TargetPlatform, PageTransitionsBuilder>{
+              TargetPlatform.android: ZoomPageTransitionsBuilder(),
+            },
+          )),
+          darkTheme: ThemeECG.darkTheme,
+          //home: const MainScreen(),
+          home: App(),
+          //const Login1Screen(),
+          // auth.isAuth
+          //     ? const MainScreen()
+          //     :
+          // FutureBuilder(
+          //     future: auth.isAuth,
+          //     builder: (context, snapshot) {
+          //       if (snapshot.connectionState == ConnectionState.waiting) {
+          //         return const CircularProgressIndicator();
+          //       }
+
+          // return FutureBuilder(
+          //     future: auth.checkAutoLogin(),
+          //     builder: (ctx, authResultSnapshot) {
+          //       if (authResultSnapshot.connectionState ==
+          //           ConnectionState.waiting) {
+          //         return const CircularProgressIndicator();
+          //       } else if (authResultSnapshot.hasError) {
+          //         return Text('Error: ${authResultSnapshot.error}');
+          //       } else {
+          //         return const Login1Screen();
+          //       }
+          //     });
+          //   else if (snapshot.hasError) {
+          //     return Text('Error: ${snapshot.error}');
+          //   } else if (snapshot.hasData && snapshot.data == true) {
+          //     return const MainScreen();
+          //   } else {
+          //     return const Login1Screen();
+          //   }
+          // }),
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+        );
       }),
     );
   }

@@ -1,7 +1,6 @@
-import { Table, Modal, Button, Input, Space } from 'antd';
-import { exportColumnTable, exportDataTable, exportTableName } from '../../models/manage.table';
-import { useEffect, useRef, useState } from 'react';
-import { showDeleteConfirm } from '../Modal/ModalDelete';
+import { Table, Button } from 'antd';
+import { exportColumnTable } from '../../models/manage.table';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import './dataTable.scss'

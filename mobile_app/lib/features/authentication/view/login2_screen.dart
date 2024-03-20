@@ -1,18 +1,20 @@
 import 'package:bluetooth_ecg/components/submit_button.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/features/authentication/bloc/authentication_bloc.dart';
+import 'package:bluetooth_ecg/features/authentication/bloc/authentication_event.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/screens/auth_screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Login1Screen extends StatefulWidget {
-  const Login1Screen({Key? key}) : super(key: key);
+class Login2Screen extends StatefulWidget {
+  const Login2Screen({Key? key}) : super(key: key);
 
   @override
-  State<Login1Screen> createState() => _Login1ScreenState();
+  State<Login2Screen> createState() => _Login2ScreenState();
 }
 
-class _Login1ScreenState extends State<Login1Screen> {
+class _Login2ScreenState extends State<Login2Screen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   FocusNode focusNodeEmail = FocusNode();
@@ -42,44 +44,6 @@ class _Login1ScreenState extends State<Login1Screen> {
   @override
   void initState() {
     super.initState();
-  }
-
-  void _loginUser() async {
-    final AuthProvider authProvider = context.read<AuthProvider>();
-    if (loginProcess) return;
-    setState(() {
-      loginProcess = true; // Ẩn thông báo lỗi trước khi thực hiện đăng nhập
-    });
-    final form = _formKey.currentState;
-    if (form != null && form.validate()) {
-      try {
-        // Thử đăng nhập, nhưng không có giá trị trả về để kiểm tra thành công
-        await authProvider.loginUser(
-            _emailController.text, _passwordController.text);
-        // Nếu hàm đăng nhập không ném ra một exception, thì cho rằng thành công
-        setState(() {
-          showLoginError =
-              false; // Đặt showLoginError thành false nếu đăng nhập thành công
-        });
-      } catch (e) {
-        // Xử lý bất kỳ exception nào xảy ra trong quá trình đăng nhập
-        print('Exception during login: $e'); // In ra exception để debug
-        setState(() {
-          showLoginError =
-              true; // Hiển thị thông báo lỗi trong trường hợp có exception
-        });
-      } finally {
-        setState(() {
-          loginProcess = false;
-        });
-      }
-    } else {
-      setState(() {
-        loginProcess = false;
-        showLoginError =
-            true; // Đặt showLoginError thành true nếu form không hợp lệ
-      });
-    }
   }
 
   Widget _formLoginUser() {
@@ -229,7 +193,12 @@ class _Login1ScreenState extends State<Login1Screen> {
               margin: paddingLoginHorizontal30,
               child: loginProcess
                   ? CircularProgressIndicator(color: ColorConstant.primary)
-                  : SubmitButton(onTap: _loginUser, text: "Login")),
+                  : SubmitButton(
+                      onTap: () => context.read<AuthenticationBloc>().add(
+                          LogInRequest(
+                              email: _emailController.text,
+                              password: _passwordController.text)),
+                      text: "Login")),
 
           const SizedBox(height: 50),
           Row(
