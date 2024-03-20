@@ -1,7 +1,7 @@
 const UserService = require('../services/UserService')
 class UserController {
-  async getAll (req, res, next) {
-    console.log(`[G]:::Get all user: `, req.body);
+
+  async getAll (req,res,next) {
     const users = await UserService.getAll();
     return res.status(200).json({
       message: 'Get all users successful!',
