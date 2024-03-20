@@ -9,3 +9,5 @@ export const addKeyElement = (arr) => {
 export const findElementById = (arr, value) => {
     return arr.find(obj => obj.id === value);
 }
+
+export const objectArrayValues = obj => Object.values(obj);
