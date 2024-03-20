@@ -8,6 +8,9 @@ class UserService extends CommonService {
     }
 
     async getUserById(userId) {
+        if(!userId) {
+            return false;
+        }
         return await UserModel.executeQuery(UserModel.getUserById(userId));
     }
 
@@ -16,6 +19,9 @@ class UserService extends CommonService {
     }
 
     async updateUser(data, userId) {
+        if(!data || !userId) {
+            return false;
+        }
         return await UserModel.executeQuery(UserModel.updateById(data, userId))
     }
 
@@ -28,6 +34,10 @@ class UserService extends CommonService {
     // }
 
     async deleteUserById(arrayId) {
+        if(!arrayId) {
+            return false;
+        }
+
         if(arrayId.length === 1) {
             return await UserModel.executeQuery(UserModel.deleteById(arrayId[0]));
         }
