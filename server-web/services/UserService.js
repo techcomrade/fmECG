@@ -19,6 +19,9 @@ class UserService extends CommonService {
         })
         return schema.validate(account);
     }
+    async checkUser(id){
+        return await UserModel.executeQuery(UserModel.checkUser(id));
+    }
 }
 
 module.exports = new UserService()
