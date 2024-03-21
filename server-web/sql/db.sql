@@ -136,7 +136,7 @@ ALTER TABLE `news`
 ALTER TABLE `devices`
     ADD PRIMARY KEY (`id`);
     
-ALTER TABLE `devices` ADD UNIQUE INDEX `device_type_unique_index` (`device_type`);
+-- ALTER TABLE `devices` ADD UNIQUE INDEX `device_type_unique_index` (`device_type`);
 
 ALTER TABLE `users`
     ADD FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`);
@@ -150,8 +150,8 @@ ALTER TABLE `records`
 ALTER TABLE `records`
     ADD FOREIGN KEY (`device_id`) REFERENCES `devices`(`id`);
 
-ALTER TABLE `records`
-    ADD FOREIGN KEY (`device_type`) REFERENCES `devices`(`device_type`);
+-- ALTER TABLE `records`
+--     ADD FOREIGN KEY (`device_type`) REFERENCES `devices`(`device_type`);
 
 ALTER TABLE `heart_rec`
     ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
