@@ -1,30 +1,30 @@
 const AuthenService = require("../services/AuthenService");
+const UserService = require("../services/UserService");
 
 class AuthenController {
   async register(req, res) {
-    const user = req.body;
-    const account = {};
-    account.email = req.body.email;
-    account.password = req.body.password;
+    const account = req.body;
     if (account.email && account.password) {
       const checkExistEmail = await AuthenService.checkEmail(account.email);
       if (checkExistEmail) {
         return res.status(400).json("Email exist");
       } else {
-        try {
-          await AuthenService.register(account, user)
-            .then(() => {
-              return res.status(200).json({
-                id: account.id,
-                email: account.email,
-                password: account.password,
+        if (UserService.validation(account).error === undefined) {
+          try {
+            await AuthenService.register(account)
+              .then(() => {
+                return res.status(200).json("Register successfully");
+              })
+              .catch((err) => {
+                return res.status(500).json(err);
               });
-            })
-            .catch((err) => {
-              return res.status(500).json(err);
-            });
-        } catch (err) {
-          return res.status(500).json(err);
+          } catch (err) {
+            return res.status(500).json(err);
+          }
+        } else {
+          return res
+            .status(400)
+            .json(UserService.validation(account).error.details[0].message);
         }
       }
     } else {
