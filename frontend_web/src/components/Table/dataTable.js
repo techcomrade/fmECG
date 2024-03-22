@@ -1,10 +1,10 @@
 import { Table, Button, Col, Form, Input } from "antd";
-import { exportColumnTable } from "../../models/manage.table";
+import { exportColumnTable, exportTableName } from "../../models/manage.table";
 import { useEffect, useState } from "react";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import "./dataTable.scss";
-import { addKeyElement, findElementById, objectArrayValues } from "../../utils/arrayUtils";
+import { addKeyElement, findElementById } from "../../utils/arrayUtils";
 import {
   deleteData,
   getData,
@@ -125,50 +125,45 @@ const DataTable = () => {
 
     return (
         <>
-        <h2>Bảng {}</h2>
-        <div className="list-btn-actions">
-            <Button icon={<PlusOutlined />}>Add</Button>
-            <Button icon={<EditOutlined />} className="edit-btn hide">
-            Edit
-            </Button>
-            <Button icon={<DeleteOutlined />} className="delete-btn hide">
-            Delete
-            </Button>
-        </div>
-        <Table
-            rowSelection={{
-            type: selectionType,
-            ...rowSelection,
-            }}
-            bordered
-            columns={column}
-            dataSource={tableData}
-        />
-        {/* <ModalEdit isOpen={showModalEdit} handleCancel={() => setShowModalEdit(false)} columns={column}/> */}
-        <Modal
-            title="Chỉnh sửa thông tin"
-            open={showModalEdit}
-            okText="Lưu"
-            okType="primary"
-            onOk={handleSubmitChange}
-            cancelText="Hủy bỏ"
-            onCancel={() => setShowModalEdit(false)}
-        >
-            <br />
-            {column.map((column) => (
-            <Col span={22}>
-                <Form.Item label={column.title}>
-                <Input
-                    name={column.dataIndex}
-                    value={dataEdit[column.dataIndex]}
-                    onChange={(e) =>
-                    handleChangeInput(column.dataIndex, e.target.value)
-                    }
-                />
-                </Form.Item>
-            </Col>
-            ))}
-        </Modal>
+            <h2>Bảng {exportTableName(table)}</h2>
+            <div className="list-btn-actions">
+                <Button icon={<PlusOutlined />}>Add</Button>
+                <Button icon={<EditOutlined />} className="edit-btn hide">Edit</Button>
+                <Button icon={<DeleteOutlined />} className="delete-btn hide">Delete</Button>
+            </div>
+            <Table
+                rowSelection={{
+                type: selectionType,
+                ...rowSelection,
+                }}
+                bordered
+                columns={column}
+                dataSource={tableData}
+            />
+            <Modal
+                title="Chỉnh sửa thông tin"
+                open={showModalEdit}
+                okText="Lưu"
+                okType="primary"
+                onOk={handleSubmitChange}
+                cancelText="Hủy bỏ"
+                onCancel={() => setShowModalEdit(false)}
+            >
+                <br />
+                {column.map((column) => (
+                    <Col span={22}>
+                        <Form.Item label={column.title}>
+                        <Input
+                            name={column.dataIndex}
+                            value={dataEdit[column.dataIndex]}
+                            onChange={(e) =>
+                            handleChangeInput(column.dataIndex, e.target.value)
+                            }
+                        />
+                        </Form.Item>
+                    </Col>
+                ))}
+            </Modal>
         </>
     );
 };
