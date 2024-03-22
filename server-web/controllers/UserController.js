@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 
 class UserController {
   async getAll (req,res,next) {
+    console.log(`[P]:::Get all user: `);
     const users = await UserService.getAll();
     return res.status(200).json({
       message: 'Get all users successful!',
@@ -13,6 +14,7 @@ class UserController {
   }
 
   async createUser(req, res, next) {
+    console.log(`[P]:::Create user: `, req.body);
     return res.status(200).json({
       message: 'Create user successful!',
       metadata: await UserService.createUser(req.body)
@@ -20,24 +22,49 @@ class UserController {
   }
 
   async getUserById(req, res, next) {
-    return res.status(200).json({
-      message: 'Get user by id successful!',
-      metadata: await UserService.getUserById(req.params.userId)
-    });
+    console.log(`[G]:::Get user by id: `, req.params.userId);
+    const foundUser = await UserService.getUserById(req.params.userId);
+    if(foundUser) {
+      return res.status(200).json({
+        message: 'Get user by id successful!',
+        metadata: foundUser
+      });
+    }
+    else {
+      return res.status(404).json({
+        message: 'User not existed!'
+      });
+    }
   }
 
   async updateUser(req, res, next) {
-    return res.status(200).json({
-      message: 'Update user successful!',
-      metadata: await UserService.updateUser(req.params.userId)
-    });
+    console.log(`[P]:::Update user by id: `, req.body);
+    const result = await UserService.updateUser(req.body, req.params.userId);
+    if(result) {
+      return res.status(200).json({
+        message: 'Update user successful!'
+      });
+    }
+    else {
+      return res.status(404).json({
+        message: 'Error when update user!'
+      });
+    }
   }
 
   async deleteUser(req, res, next) {
-    return res.status(200).json({
-      message: 'Delete user successful!',
-      metadata: await UserService.deleteUserById(req.params.userId)
-    });
+    console.log(`[D]:::Delete user by id: `, req.body.id);
+    const result = await UserService.deleteUserById(req.body.id);
+    if(result) {
+      return res.status(200).json({
+        message: 'Delete user successful!'
+      });
+    }
+    else {
+      return res.status(404).json({
+        message: 'Error when delete user!'
+      });
+    }
   }
 }
 
