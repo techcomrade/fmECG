@@ -1,7 +1,7 @@
 const CommonService = require("./CommonService");
 const DeviceModel = require("../models/DeviceModel");
 const { v4: uuidv4 } = require("uuid");
-
+const Joi = require("joi");
 class DeviceService extends CommonService {
   async add(device) {
     device.id = uuidv4();
@@ -25,6 +25,26 @@ class DeviceService extends CommonService {
   async checkDevice(id) {
     const Device = DeviceModel.executeQuery(DeviceModel.checkDevice(id));
     return Device.length > 0;
+  }
+  ValidateDevice(device) {
+    const schema = Joi.object({
+      user_id: Joi.string().required(),
+      device_name: Joi.string().required(),
+      information: Joi.string(),
+      device_type: Joi.number()
+                      .integer()
+                      .min(0)
+                      .max(100)
+                      .required(),
+      start_date: Joi.number()
+                      .integer()
+                      .required(),
+      end_date: Joi.number()
+                   .integer()
+                   .greater(Joi.ref('start_date'))
+                   .required()      
+    });
+    return schema.validate(device);
   }
 }
 

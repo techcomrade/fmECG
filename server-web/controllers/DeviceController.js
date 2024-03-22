@@ -16,7 +16,8 @@ class DeviceController {
     try {
       const device = req.body;
       console.log(device);
-      if (device.user_id && device.device_name && device.device_type && device.start_date && device.end_date) {
+      let validated = DeviceService.ValidateDevice(device).error;
+      if (validated === undefined){
           const checkExistUser = await UserService.checkUser(device.user_id);
           if(!checkExistUser.length){
             return res.status(400).json("no user found");
@@ -32,7 +33,7 @@ class DeviceController {
             return res.status(400).json(err, "add device failed");
           });
       } else {
-        return res.status(500).json(err, "no request received");
+        return res.status(500).json(`invalid request: ${validated.details[0].message}`);
       }
     } catch (err) {
       return res.status(400).json(err, "add device failed");
@@ -62,14 +63,15 @@ class DeviceController {
     try {
       const id = req.params.id;
       const device = req.body;
-      if (device.user_id && device.device_name && device.device_type && device.start_date && device.end_date) {
-        const checkExistUser = await UserService.checkUser(device.user_id);
-          if(!checkExistUser.length){
-            return res.status(400).json("no user found");
-          }
+      let validated = DeviceService.ValidateDevice(device).error;
+      if (validated === undefined) {
         await DeviceService.checkDevice(id)
           .then(async (checked) => {
             if (checked) {
+              const checkExistUser = await UserService.checkUser(device.user_id);
+              if(!checkExistUser.length){
+                return res.status(400).json("no user found");
+              }
               await DeviceService.updateById(device, id);
               return res.status(200).json("update device successfully");
             }
@@ -80,7 +82,7 @@ class DeviceController {
           });
       }
       else {
-        return res.status(400).json("bad request");
+        return res.status(400).json(`invalid request: ${validated.details[0].message}`);
       }
     } catch (err) {
       return res.status(400).json(err, "update device failed");
