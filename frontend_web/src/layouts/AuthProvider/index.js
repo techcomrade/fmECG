@@ -10,7 +10,6 @@ const AuthProvider = ({children}) => {
         if(token == null){
             setLocalStorage('token');
         }
-        console.log(token);
         if(!token) window.location.assign('/login');
     },[getLocalStorage('token')])
     return (

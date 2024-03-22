@@ -5,11 +5,11 @@ const classesFactory = {
 };
 
 const classesFactoryMapping = {
-    users: "userTable",
+    user: "userTable",
 };
 
 const tableNameMapping = {
-    users: "người dùng",
+    user: "người dùng",
 };
 
 export const exportColumnTable = (table, callBack) => {
@@ -21,11 +21,11 @@ export const exportColumnTable = (table, callBack) => {
     return [];
 }
 
-export const exportDataTable = (table, fatherId) => {
+export const exportDataTable = (table) => {
     let nameConverted = classesFactoryMapping[table];
     if (!!nameConverted) {
         let tableSelected = new classesFactory[nameConverted]();
-        if(!!tableSelected) return tableSelected.getDataShow(fatherId);
+        if(!!tableSelected) return tableSelected.getDataShow();
     }
     return [];
 }
