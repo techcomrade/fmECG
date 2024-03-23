@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 
 class AuthenService extends CommonService {
-  async login(user) {}
+  // async login(user) {}
   async checkEmail(email) {
     const emails = await AccountModel.executeQuery(
       AccountModel.checkExistEmail(email)

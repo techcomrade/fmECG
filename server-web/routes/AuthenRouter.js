@@ -4,8 +4,8 @@ const AuthenController = require("../controllers/AuthenController");
 const router = express.Router();
 
 router.get("/", AuthenController.getAllData);
-router.get("/login", AuthenController.login);
+router.post("/login", AuthenController.login);
 
-router.post("/register", AuthenController.register);
+router.post("/create-user", AuthenController.register);
 
 module.exports = router;
