@@ -57,6 +57,21 @@ export const httpUpdateData = (url, data) => {
     })
 }
 
+export const httpDeleteData = (url, data) => {
+    const token = getLocalStorage(JWT_TOKEN);
+    return new Promise((resolve, reject) => {
+        axiosRequest(API_URL + url, axiosMethod.DELETE, token, data)
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            console.log('error delete data', error)
+            // checkErrorReturn(error);
+            reject(error)
+        })
+    })
+}
+
 export const httpGetDataTable = async (table, filter = null) => {
     return new Promise((resolve, reject) => {
         let dataUpload = null;
