@@ -151,14 +151,12 @@ const DataTable = () => {
             >
                 <br />
                 {column.map((column) => (
-                    <Col span={22}>
+                    <Col span={22} key={column.title}>
                         <Form.Item label={column.title}>
                         <Input
                             name={column.dataIndex}
-                            value={dataEdit[column.dataIndex]}
-                            onChange={(e) =>
-                            handleChangeInput(column.dataIndex, e.target.value)
-                            }
+                            value={dataEdit[column.dataIndex]} 
+                            onChange={(e) => handleChangeInput(column.dataIndex, e.target.value)}
                         />
                         </Form.Item>
                     </Col>

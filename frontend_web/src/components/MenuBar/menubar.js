@@ -8,30 +8,29 @@ const MenuBar = ({ menuList, mode, className, ...props }) => {
 
   return (
     <Menu
-    mode={mode}
-    className={className}
-    selectedKeys={['1']}
-    defaultOpenKeys={[]}
+      mode={mode}
+      className={className}
+      selectedKeys={['1']}
+      defaultOpenKeys={[]}
     >
       {
         menuList.filter(item=> !item.isHide)
-        .map(item => {
+        .map((item, index) => {
           if(item.children && item.children.length > 0) {
             return (
               <Menu.SubMenu
-              title={item.title}
-              key={item.title}
-              icon={item.icon}
+                title={item.title}
+                key={item.title}
+                icon={item.icon}
               >
                 {
                   item.children.filter(subMenu => !subMenu.isHide)
                   .map(subMenu => (
-                    
                     <Menu.Item
-                    onClick={() => {
-                      navigate(subMenu.url)
-                    }}
-                    key={subMenu.id}
+                      onClick={() => {
+                        navigate(subMenu.url)
+                      }}
+                      key={subMenu.title}
                     >
                       {subMenu.title}
                     </Menu.Item>
@@ -43,10 +42,10 @@ const MenuBar = ({ menuList, mode, className, ...props }) => {
           else {
             return (
               <Menu.Item
-              key={item.id}
-              icon={item.icon}
-              onClick={() => {
-              navigate(item.url)
+                key={item.title}
+                icon={item.icon}
+                onClick={() => {
+                navigate(item.url)
               }}
               >
                 {item.title}
