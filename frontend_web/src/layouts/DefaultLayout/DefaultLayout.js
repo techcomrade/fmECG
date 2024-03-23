@@ -4,7 +4,7 @@ import { Layout, Col, theme } from "antd";
 import { useState, useEffect } from 'react';
 import './DefaultLayout.css'
 import { getLocalStorage } from '../../utils/storageUtils';
-import { Routes } from "../../routes/route";
+import { Routes } from "../../route";
 
 const { Header, Content, Sider } = Layout;
 
