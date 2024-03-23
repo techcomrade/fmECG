@@ -4,7 +4,7 @@ const DeviceRouter = require("./DeviceRouter");
 
 const router = express.Router();
 
-router.use("/user", AuthenRouter);
+router.use("/auth", AuthenRouter);
 router.use("/device", DeviceRouter);
 
 module.exports = router;
