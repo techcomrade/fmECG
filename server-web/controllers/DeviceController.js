@@ -16,25 +16,20 @@ class DeviceController {
     try {
       const device = req.body;
       console.log(device);
-      let validated = DeviceService.ValidateDevice(device).error;
-      if (validated === undefined){
-          const checkExistUser = await UserService.checkUser(device.user_id);
-          if(!checkExistUser.length){
-            return res.status(400).json("no user found");
-          }
-          //console.log(checkExistUser);
-          await DeviceService.add(device)
-          .then((checked) => {
-            //console.log(checked);
-            if(checked) return res.status(200).json("add device successfully");
-            return res.status(500).json("err server add failed"); 
-          })
-          .catch((err) => {
-            return res.status(400).json(err, "add device failed");
-          });
-      } else {
-        return res.status(500).json(`invalid request: ${validated.details[0].message}`);
+      const checkExistUser = await UserService.checkUser(device.user_id);
+      if (!checkExistUser.length) {
+        return res.status(400).json("no user found");
       }
+      //console.log(checkExistUser);
+      await DeviceService.add(device)
+        .then((checked) => {
+          //console.log(checked);
+          if (checked) return res.status(200).json("add device successfully");
+          return res.status(500).json("err server add failed");
+        })
+        .catch((err) => {
+          return res.status(400).json(err, "add device failed");
+        });
     } catch (err) {
       return res.status(400).json(err, "add device failed");
     }
@@ -63,27 +58,21 @@ class DeviceController {
     try {
       const id = req.params.id;
       const device = req.body;
-      let validated = DeviceService.ValidateDevice(device).error;
-      if (validated === undefined) {
-        await DeviceService.checkDevice(id)
-          .then(async (checked) => {
-            if (checked) {
-              const checkExistUser = await UserService.checkUser(device.user_id);
-              if(!checkExistUser.length){
-                return res.status(400).json("no user found");
-              }
-              await DeviceService.updateById(device, id);
-              return res.status(200).json("update device successfully");
+      await DeviceService.checkDevice(id)
+        .then(async (checked) => {
+          if (checked) {
+            const checkExistUser = await UserService.checkUser(device.user_id);
+            if (!checkExistUser.length) {
+              return res.status(400).json("no user found");
             }
-            return res.status(500).json("no device found");
-          })
-          .catch((err) => {
-            return res.status(400).json(err);
-          });
-      }
-      else {
-        return res.status(400).json(`invalid request: ${validated.details[0].message}`);
-      }
+            await DeviceService.updateById(device, id);
+            return res.status(200).json("update device successfully");
+          }
+          return res.status(500).json("no device found");
+        })
+        .catch((err) => {
+          return res.status(400).json(err);
+        });
     } catch (err) {
       return res.status(400).json(err, "update device failed");
     }
