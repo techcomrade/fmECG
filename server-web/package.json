@@ -24,5 +24,8 @@
     "migration": "node migration.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "sequelize": "^6.37.1"
+  }
 }
