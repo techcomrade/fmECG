@@ -7,7 +7,8 @@ class UserService extends CommonService {
     async getAll(){
         return await UserModel.executeQuery(UserModel.getAllData());
     }
-    validation(account) {
+    
+    validateUser(user) {
         const schema = Joi.object({
             username: Joi.string().required(),
             email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
@@ -18,8 +19,9 @@ class UserService extends CommonService {
             image: Joi.string(),
             role: Joi.number().required(),
         })
-        return schema.validate(account);
+        return schema.validate(user);
     }
+    
     async checkUser(id){
         return await UserModel.executeQuery(UserModel.checkUser(id));
     }

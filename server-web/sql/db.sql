@@ -171,3 +171,83 @@ ALTER TABLE `patient_doctor_assignment`
 ALTER TABLE `devices` 
     ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
 
+INSERT INTO `accounts`(`id`, `email`, `password`) 
+VALUES('86d1470c-de72-457c-a8e1-a616e55f463f', 'duong123@gmail.com', '$2b$10$uwwD.gBLctQVW38zowPXROmiwPCGyVQcYG2yUT4Sud499G5sdfoWK');
+
+INSERT INTO `accounts`(`id`, `email`, `password`) 
+VALUES('1bd51bda-3179-4f27-bcfd-000e5c4a2aa7', 'quyen123@gmail.com', '$2b$10$GzICOaiDcnNJWq87I7/v2.pRxQYQ9xJnLNBj2kdG1YMK3QqYdY/v.');
+
+INSERT INTO `accounts`(`id`, `email`, `password`) 
+VALUES('83573421-9943-4a25-9fe1-00f0477aaba4', 'dung123@gmail.com', '$2b$10$OMBypyU4BeduqysEyWgPXeI2BcjJPS8QF2a9GNEfD5iigwaNfpnk2');
+
+INSERT INTO `accounts`(`id`, `email`, `password`) 
+VALUES('22183931-6fc3-4518-af34-e86c8605b08a', 'uuidd@gmail.com', '$2b$10$Wf.MQGBrpm87sRJOEAfU0eWky/jyuBFV6C/l/pSqkSBzoYkyNA4ce');
+
+INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
+VALUES('f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '86d1470c-de72-457c-a8e1-a616e55f463f', 'duong', '17052003', '0912234888', '01201020120abc', 1, '1711115945125', '1711115945125');
+
+INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
+VALUES('4df9ace1-0229-4756-b850-51a83cb0bb6e', '1bd51bda-3179-4f27-bcfd-000e5c4a2aa7', 'qtv', '1232367', '09122348767', '0101010101abc', 0, '1711118359957', '1711118359957');
+
+INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
+VALUES('37ae5629-54ec-46e0-be65-9af6bd580b2b', '83573421-9943-4a25-9fe1-00f0477aaba4', 'abc', '1232366', '09122348669', '010101010100abc', 0, '1711121415247', '1711121415247');
+
+INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
+VALUES('178d7109-7568-472c-9350-2db42aa152f6', '22183931-6fc3-4518-af34-e86c8605b08a', 'dhsh', '123236811', '091223486384', '01010101010110abc', 1, '1711206172234', '1711206172234');
+
+INSERT INTO `tokens`(`id`, `account_id`, `access_token`, `refresh_token`, `created_at`, `updated_at`)
+VALUES('090abf0e-f775-465c-b25a-8fa38fef8025', '86d1470c-de72-457c-a8e1-a616e55f463f', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyOGVlNTc5LTc3MWItNGQzNC1hNjQ3LWIwNDJlMGMxZGY2MSIsImlhdCI6MTcxMTAyNjUyMiwiZXhwIjoxNzExMDI5NTIyfQ.kH1yuJgfpq5NFzb80LrEf-gV8ksNjYtylSokQHzAIoA', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyOGVlNTc5LTc3MWItNGQzNC1hNjQ3LWIwNDJlMGMxZGY2MSIsImlhdCI6MTcxMTAyNjUyMiwiZXhwIjoxNzk3NDI2NTIyfQ.-AGRKU9-mDSLwLiVoF2CR5aZEQy49rTpfzbCAcEL-S4', '1711161793890', '1711161793890');
+
+INSERT INTO `tokens`(`id`, `account_id`, `access_token`, `refresh_token`, `created_at`, `updated_at`)
+VALUES('9c128953-e6b9-4d21-bb39-fdb0a04ed7bd', '1bd51bda-3179-4f27-bcfd-000e5c4a2aa7', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyOGVlNTc5LTc3MWItNGQzNC1hNjQ3LWIwNDJlMGMxZGY2MSIsImlhdCI6MTcxMDg0Njg2MywiZXhwIjoxNzEwODQ5ODYzfQ.Lx5RyS3fTksxlcUP5WNOMnGh047_8xyiEDKR7EY22g4', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyOGVlNTc5LTc3MWItNGQzNC1hNjQ3LWIwNDJlMGMxZGY2MSIsImlhdCI6MTcxMDg0Njg2MywiZXhwIjoxNzk3MjQ2ODYzfQ.PA8nsFFZ6cWszIPkdHZa1WQN8oVcwNk-VXqp3qt2XiI', '1711161988658', '1711161988658');
+
+INSERT INTO `tokens`(`id`, `account_id`, `access_token`, `refresh_token`, `created_at`, `updated_at`)
+VALUES('f55faa1f-112c-458c-9e20-82de73961148', '83573421-9943-4a25-9fe1-00f0477aaba4', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyOGVlNTc5LTc3MWItNGQzNC1hNjQ3LWIwNDJlMGMxZGY2MSIsImlhdCI6MTcxMDg0NjcyMywiZXhwIjoxNzEwODQ5NzIzfQ.oqHADHSmVk9NlVW2MzSbrvQkd0Uz3pwuZT9Om4_dpuw', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyOGVlNTc5LTc3MWItNGQzNC1hNjQ3LWIwNDJlMGMxZGY2MSIsImlhdCI6MTcxMDg0NjcyMywiZXhwIjoxNzk3MjQ2NzIzfQ.Euiq6SfKr2X6H_wAKwg6EKSjyIz-Uyx3Ip07NPhYnfE', '1711161997681', '1711161997681');
+
+INSERT INTO `tokens`(`id`, `account_id`, `access_token`, `refresh_token`, `created_at`, `updated_at`)
+VALUES('944754d9-bb54-43b4-b9bc-4b5a9f3ed575', '22183931-6fc3-4518-af34-e86c8605b08a', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJhM2RhY2M5LTU2MjgtNDFiMS04MGFlLWE5NTZjMTA1Mjg3NSIsImlhdCI6MTcxMTIwNzY0NywiZXhwIjoxNzExMjEwNjQ3fQ.BsYBYh_z2XYQ4uIwLLRLsca325BcYSIzgw9SZGaZQb0', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJhM2RhY2M5LTU2MjgtNDFiMS04MGFlLWE5NTZjMTA1Mjg3NSIsImlhdCI6MTcxMTIwNzY0NywiZXhwIjoxNzk3NjA3NjQ3fQ.dFx1Lm4B_L9_SojZuS7kAFaBma2N4pgGJZuoSWMWBec', '1711207647969', '1711207647969');
+
+INSERT INTO `news_categories`(`id`, `category_name`, `category_description`, `created_at`, `updated_at`)
+VALUES('b5dc2e2a-dcb1-4903-9054-02e242f5cd55', 'Marvellous', 'some_crazy_thing', '1711118359957', '1711118359957');
+
+INSERT INTO `news_categories`(`id`, `category_name`, `category_description`, `created_at`, `updated_at`)
+VALUES('1272d710-00ab-4e40-b740-60eb6df36354', 'DC', 'some_mad_thing', '1711118359957', '1711118359957');
+
+INSERT INTO `news`(`id`,`title`, `content`, `category_id`, `author`, `url`, `image`, `created_at`, `updated_at`)
+VALUES('65sd8373-78gc-b38s-77sg-2hj7hd890b2s', 'Dr Strange', 'Hello world', 'b5dc2e2a-dcb1-4903-9054-02e242f5cd55', 'quyen', 'https://www.youtube.com/watch?v=mvATWl8ZJwU', '012012120abd', '1711121415247', '1711121415247');
+
+INSERT INTO `news`(`id`,`title`, `content`, `category_id`, `author`, `url`, `image`, `created_at`, `updated_at`)
+VALUES('0dc699f3-15a1-42f6-8199-35b122d3e48f', 'Dr Fate', 'Hi world', '1272d710-00ab-4e40-b740-60eb6df36354', 'duong', 'https://www.youtube.com/watch?v=1zAHkRGJ0s8', '102120abde', '1711122410782', '1711122410782');
+
+INSERT INTO `devices`(`id`, `user_id`, `device_name`, `information`, `device_type`, `start_date`, `end_date`, `created_at`, `updated_at`)
+VALUES('2a3cec92-682a-4d4e-be35-aff01cc5011a', '4df9ace1-0229-4756-b850-51a83cb0bb6e', 'Microlife Watch BP Home', 'do ap suat mau', 1, '1711189128343', '1711239128586', '1711189128343', '1711189318343');
+
+INSERT INTO `devices`(`id`, `user_id`, `device_name`, `information`, `device_type`, `start_date`, `end_date`, `created_at`, `updated_at`)
+VALUES('4404f003-1192-4aae-86e0-69dc273f181c', '4df9ace1-0229-4756-b850-51a83cb0bb6e', 'ECG', 'do dien tim', 2, '1711239328586', '1711319128906', '1711239328586', '1711269112606');
+
+INSERT INTO `devices`(`id`, `user_id`, `device_name`, `information`, `device_type`, `start_date`, `end_date`, `created_at`, `updated_at`)
+VALUES('f224fd99-53fd-44c5-bcd4-5b6e3c960e78', '37ae5629-54ec-46e0-be65-9af6bd580b2b', 'ECG', 'do dien tim', 2, '1711324367820', '1711434712320', '1711324367820', '1711364367231');
+
+INSERT INTO `records`(`id`, `user_id`, `device_id`, `device_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
+VALUES('c9e6669b-f58f-47c7-80b8-43a4163553ff', '4df9ace1-0229-4756-b850-51a83cb0bb6e', '2a3cec92-682a-4d4e-be35-aff01cc5011a', 1, '1711189128343', '1711239128586', 'https://www.verywellhealth.com/best-blood-pressure-monitors-4158050/quyentran', '1711189128343', '1711229128712');
+
+INSERT INTO `blood_pressure_rec`(`id`, `rec_id`)
+VALUES('103ed2e8-24a7-46e2-acad-4a54de5eea02', 'c9e6669b-f58f-47c7-80b8-43a4163553ff');
+
+INSERT INTO `records`(`id`, `user_id`, `device_id`, `device_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
+VALUES('c0f31b49-2449-45fa-8c93-55da998687f4', '4df9ace1-0229-4756-b850-51a83cb0bb6e', '4404f003-1192-4aae-86e0-69dc273f181c', 2, '1711239328586', '1711319128906', 'https://www.docosan.com/blog/tim-mach/dien-tim/quyentran', '1711239328586', '1711288127320');
+
+INSERT INTO `heart_rec`(`id`, `rec_id`)
+VALUES('4e9f6245-b8c7-47a9-b44d-469a8ee91f2c', 'c0f31b49-2449-45fa-8c93-55da998687f4');
+
+INSERT INTO `records`(`id`, `user_id`, `device_id`, `device_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
+VALUES('c2c9f725-2a71-4c5a-b3d2-6a4d774a1a42', '37ae5629-54ec-46e0-be65-9af6bd580b2b', 'f224fd99-53fd-44c5-bcd4-5b6e3c960e78', 2, '1711324367820', '1711434712320', 'https://www.youtube.com/dung', '1711324367820', '1711374913710');
+
+INSERT INTO `heart_rec`(`id`, `rec_id`)
+VALUES('00ebbb28-539d-4cb4-a0e5-5d2e0b9fcb02', 'c2c9f725-2a71-4c5a-b3d2-6a4d774a1a42');
+
+INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `created_at`, `updated_at`)
+VALUES('aec18bd6-a2eb-4521-99fd-f00d867a849f', '4df9ace1-0229-4756-b850-51a83cb0bb6e', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711189128343', '1711173634732', '1711173634732');
+
+INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `created_at`, `updated_at`)
+VALUES('d5e62f91-8314-43a7-931a-8d05607116bb', '37ae5629-54ec-46e0-be65-9af6bd580b2b', '178d7109-7568-472c-9350-2db42aa152f6', '1711204367820', '1711198367820', '1711200678260');
