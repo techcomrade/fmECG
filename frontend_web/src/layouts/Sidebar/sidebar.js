@@ -21,10 +21,10 @@ export const MenuList = () => [
     isHide: false,
     children: [
       {
-        key: "users",
+        key: "user",
         title: "Người dùng",
         isHide: false,
-        url: "/users",
+        url: "/user",
       },
       {
         key: "/create-user",
