@@ -11,7 +11,7 @@ class UserModel extends CommonModel {
 
   add(user) {
     return `INSERT INTO users (id, account_id, username, birth, phone_number, image, role, created_at, updated_at) 
-      VALUES ('${user.id}','${user.account_id}','${user.username}','${user.birth}','${user.phone_number}','${user.image}','${user.role}','${user.created_at}','${user.updated_at}')`
+      VALUES ('${user.id}','${user.account_id}','${user.username}','${user.birth ?? 0}','${user.phone_number ?? ''}','${user.image ?? ''}','${user.role}','${user.created_at}','${user.updated_at}')`
     ;
   }
   deleteById(id) {
