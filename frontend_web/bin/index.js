@@ -26,18 +26,19 @@ app.get("/", (req, res) => {
   if (haveCookie) {
     res.redirect(config.redirect_url);
   } else {
-    res.render("index", { url: `http://127.0.0.1:3001/login` });
+    res.render("index", { url: `http://127.0.0.1:3001` });
   }
 });
 
 app.post("/login", (req, res, next) => {
-  const { username, password } = req.body;
-  if (username === "admin" && password === "1") {
-    res.cookie("token", "login");
-    res.status(200).json("login success");
-  } else {
-    res.status(400).json("failed");
-  }
+  // const { email, password } = req.body;
+  // if (email === "admin" && password === "1") {
+  //   res.cookie("token", "login");
+  //   res.status(200).json("login success");
+  // } else {
+  //   console.log(req.body);
+  //   res.status(400).json("failed");
+  // }
 });
 
 app.get("/logout", (req, res) => {

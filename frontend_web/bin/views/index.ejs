@@ -396,8 +396,8 @@
                 <i class="bx bxs-user"></i>
                 <input
                   type="text"
-                  placeholder="Username"
-                  id="input-user-name"
+                  placeholder="email"
+                  id="input-email"
                 />
               </div>
               <div class="input-group">
@@ -446,7 +446,7 @@
 
     <script>
       let container = document.getElementById("container");
-      var loginUrl = `<%= url %>`;
+      var loginUrl = `http://localhost:3000/api/user/login`;
       console.log(loginUrl);
 
       const toggle = () => {
@@ -458,10 +458,9 @@
         container.classList.add("sign-in");
       }, 200);
       const loginFunction = async () => {
-        const username = document.querySelector("#input-user-name").value;
+        const email = document.querySelector("#input-email").value;
         const password = document.querySelector("#input-password").value;
-        console.log(username);
-        if (username && password) {
+        if (email && password) {
           try {
             const loginResult = await fetch(loginUrl, {
               method: "POST",
@@ -474,21 +473,23 @@
               redirect: "follow",
               referrerPolicy: "no-referrer",
               body: JSON.stringify({
-                username: username,
+                email: email,
                 password: password,
               }),
             });
+            console.log(loginResult);
             if (loginResult.ok) {
-              window.location.reload();
+              console.log("ok roi huhu");
+              // window.location.reload();
             } else {
-              window.alert("wrong username or password");
+              window.alert("wrong password");
             }
           } catch (err) {
             console.log(err);
             window.alert("error login");
           }
         } else {
-          window.alert("input username and password");
+          window.alert("input email and password");
         }
       };
     </script>

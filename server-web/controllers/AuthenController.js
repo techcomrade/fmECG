@@ -34,58 +34,20 @@ class AuthenController {
     }
   }
   async login(req, res, next) {
-    await AccountModel.executeQuery(
-      AccountModel.checkExistEmail(req.body.email)
-    )
-      .then((account) => {
-        if (account[0]) {
-          bcrypt.compare(req.body.password, account[0].password, (err, same) => {
-            if (err) throw err;
-            if (same) {
-              const accessToken = jwt.sign(
-                {
-                  id: account[0].id
-                },
-                process.env.JWT_KEY,
-                {
-                  expiresIn: 30 * 100,
-                }
-              );
-              const refreshToken = jwt.sign(
-                {
-                  id: account[0].id
-                },
-                process.env.JWT_REFRESH_KEY,
-                {
-                  expiresIn: 24 * 60 * 60 * 1000,
-                }
-              );
-              TokenModel.executeQuery(TokenModel.add({
-                id: uuidv4(),
-                account_id: account[0].id,
-                access_token: accessToken,
-                refresh_token: refreshToken,
-                created_at: Date.now(),
-                updated_at: Date.now()
-              }));
-              res.status(200).json({
-                id: uuidv4(),
-                account_id: account[0].id,
-                access_token: accessToken,
-                refresh_token: refreshToken,
-                created_at: Date.now(),
-                updated_at: Date.now(),
-                message: "Token added successfully"
-              });
-            }
-          });
-        }
-      })
-
-      .catch((err) => {
-        console.log(err);
-        res.status(403).json({ message: err });
-      });
+    const account = req.body;
+    const result = await AuthenService.checkAccount(account.email, account.password)
+    console.log(result);
+    if (result){
+      try {
+        await AuthenService.renderToken(account);
+      }
+      catch (err) {
+        return res.status(404).json("Login error");
+      }
+    }
+    else {
+      return res.json("email not found");
+    }
   }
 
   async getAllData(req, res) {
