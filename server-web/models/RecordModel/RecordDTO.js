@@ -1,5 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelize");
+const User = require("../UserModel/UserDTO");
+const Device = require("../DeviceModel/DeviceDTO");
 
 const Record = sequelize.define("records", {
   id: {
@@ -11,7 +13,7 @@ const Record = sequelize.define("records", {
     type: Sequelize.STRING,
     allowNull: false,
     references: {
-      model: users,
+      model: User,
       key: "id",
     },
   },
@@ -19,7 +21,7 @@ const Record = sequelize.define("records", {
     type: Sequelize.STRING,
     allowNull: false,
     references: {
-      model: devices,
+      model: Device,
       key: "id",
     },
   },

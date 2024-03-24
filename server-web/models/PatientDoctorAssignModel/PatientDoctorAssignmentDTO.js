@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelize");
+const User = require("../UserModel/UserDTO");
 
 const Assignment = sequelize.define("patient_doctor_asssignment", {
   id: {
@@ -11,7 +12,7 @@ const Assignment = sequelize.define("patient_doctor_asssignment", {
     type: Sequelize.STRING,
     allowNull: false,
     references: {
-      model: users,
+      model: User,
       key: "id",
     },
   },
@@ -19,7 +20,7 @@ const Assignment = sequelize.define("patient_doctor_asssignment", {
     type: Sequelize.STRING,
     allowNull: false,
     references: {
-      model: users,
+      model: User,
       key: "id",
     },
   },

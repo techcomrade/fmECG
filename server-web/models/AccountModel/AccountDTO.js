@@ -1,21 +1,21 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelize");
-const Record = require("../RecordModel/RecordDTO");
-const blood_rec = sequelize.define(
-  "blood_pressure_rec",
+
+const Account = sequelize.define(
+  "accounts",
   {
     id: {
       type: Sequelize.STRING,
       allowNull: false,
       primaryKey: true,
     },
-    rec_id: {
+    email: {
       type: Sequelize.STRING,
       allowNull: false,
-      references: {
-        model: Record,
-        key: "id",
-      },
+    },
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false,
     },
   },
   {
@@ -23,4 +23,4 @@ const blood_rec = sequelize.define(
   }
 );
 
-module.exports = blood_rec;
+module.exports = Account;

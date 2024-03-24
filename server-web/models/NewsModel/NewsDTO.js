@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelize");
-
+const NewsCategory = require("../NewsCategoryModel/NewsCategoryDTO");
 const News = sequelize.define("news", {
   id: {
     type: Sequelize.STRING,
@@ -20,7 +20,7 @@ const News = sequelize.define("news", {
     type: Sequelize.STRING,
     allowNull: false,
     references: {
-      model: news_categories,
+      model: NewsCategory,
       key: "id",
     },
   },

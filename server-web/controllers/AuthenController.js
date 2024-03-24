@@ -68,12 +68,14 @@ class AuthenController {
   // }
 
   async getAllData(req, res) {
-    const accounts = await AuthenService.getAll();
-    if (accounts.length) {
-      return res.status(200).json(accounts);
-    } else {
-      return res.status(400).json("Get accounts failed");
-    }
+    await AuthenService.getAll()
+      .then((data) => {
+        return res.status(200).json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).json("Get accounts failed");
+      });
   }
 }
 

@@ -172,16 +172,16 @@ ALTER TABLE `devices`
     ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
 
 INSERT INTO `accounts`(`id`, `email`, `password`) 
-VALUES('86d1470c-de72-457c-a8e1-a616e55f463f', 'duong123@gmail.com', '$2b$10$uwwD.gBLctQVW38zowPXROmiwPCGyVQcYG2yUT4Sud499G5sdfoWK');
+VALUES('86d1470c-de72-457c-a8e1-a616e55f463f', 'duong123@gmail.com', '$2b$10$vrYT1waVBk3VNXdHB1dQbOdwtKIyUoQ04wMpfcSWTPnK5S0oAg4ci');
 
 INSERT INTO `accounts`(`id`, `email`, `password`) 
-VALUES('1bd51bda-3179-4f27-bcfd-000e5c4a2aa7', 'quyen123@gmail.com', '$2b$10$GzICOaiDcnNJWq87I7/v2.pRxQYQ9xJnLNBj2kdG1YMK3QqYdY/v.');
+VALUES('1bd51bda-3179-4f27-bcfd-000e5c4a2aa7', 'quyen123@gmail.com', '$2b$10$IMi9aW1ZrYES62fFyzW5OeMhPk.7ohLy4mmE58WRKVfrNLxVmfClS');
 
 INSERT INTO `accounts`(`id`, `email`, `password`) 
-VALUES('83573421-9943-4a25-9fe1-00f0477aaba4', 'dung123@gmail.com', '$2b$10$OMBypyU4BeduqysEyWgPXeI2BcjJPS8QF2a9GNEfD5iigwaNfpnk2');
+VALUES('83573421-9943-4a25-9fe1-00f0477aaba4', 'dung123@gmail.com', '$2b$10$TOMgOvO7oDnVqPlFpi9hwu2qHhxtSb1ia2chhb1zVYxfgb9F089TG');
 
 INSERT INTO `accounts`(`id`, `email`, `password`) 
-VALUES('22183931-6fc3-4518-af34-e86c8605b08a', 'uuidd@gmail.com', '$2b$10$Wf.MQGBrpm87sRJOEAfU0eWky/jyuBFV6C/l/pSqkSBzoYkyNA4ce');
+VALUES('22183931-6fc3-4518-af34-e86c8605b08a', 'uuidd@gmail.com', '$2b$10$a7binaajgY8b3s82rppXHecKuSbcFi1ULGf0v4B/aIaMplhLbbNwC');
 
 INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
 VALUES('f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '86d1470c-de72-457c-a8e1-a616e55f463f', 'duong', '17052003', '0912234888', '01201020120abc', 1, '1711115945125', '1711115945125');
