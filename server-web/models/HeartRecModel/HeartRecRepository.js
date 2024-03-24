@@ -2,7 +2,7 @@ const CommonModel = require("../../models/CommonModel");
 
 class HeartRecModel extends CommonModel{
     async getAllData(){
-        return `SELECT * FROM heart_rec`;
+        return `SELECT * FROM heart_rec;`;
     }
     async add(record) {
         return `INSERT INTO heart_rec(id, rec_id)

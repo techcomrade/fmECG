@@ -2,6 +2,7 @@ const CommonService = require("./CommonService");
 const AccountModel = require("../models/AccountModel");
 const UserModel = require("../models/UserModel");
 const UserService = require("./UserService");
+const AccountRepository = require('../models/AccountModel/AccountRespository');
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 
@@ -31,7 +32,7 @@ class AuthenService extends CommonService {
     await UserModel.executeQuery(UserModel.add(user));
   }
   async getAll() {
-    return await AccountModel.executeQuery(AccountModel.getAllData());
+    return await AccountRepository.getAllData();
   }
 }
 module.exports = new AuthenService();

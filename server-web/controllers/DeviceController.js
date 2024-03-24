@@ -15,15 +15,12 @@ class DeviceController {
   async add(req, res) {
     try {
       const device = req.body;
-      console.log(device);
       const checkExistUser = await UserService.checkUser(device.user_id);
       if (!checkExistUser.length) {
         return res.status(400).json("no user found");
       }
-      //console.log(checkExistUser);
       await DeviceService.add(device)
         .then((checked) => {
-          //console.log(checked);
           if (checked) return res.status(200).json("add device successfully");
           return res.status(500).json("err server add failed");
         })

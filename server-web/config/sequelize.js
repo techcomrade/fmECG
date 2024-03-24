@@ -8,7 +8,6 @@ const connection = {
   database: process.env.DB_NAME,
   charset: "utf8",
   port: process.env.DB_PORT || 3306,
-  connectionLimit: 10,
 };
 
 const sequelize = new Sequelize(
@@ -24,6 +23,9 @@ const sequelize = new Sequelize(
       min: 0,
       idle: 10000,
     },
+    define:{
+      underscored: true,
+    }
   }
 );
 

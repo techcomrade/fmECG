@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelize");
+const Account = require('../AccountModel/AccountDTO') 
 
 const User = sequelize.define("users", {
   id: {
@@ -11,7 +12,7 @@ const User = sequelize.define("users", {
     type: Sequelize.STRING,
     allowNull: false,
     references: {
-      model: accounts,
+      model: Account,
       key: "id",
     },
   },
