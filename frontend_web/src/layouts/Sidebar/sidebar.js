@@ -1,10 +1,9 @@
 import { UserOutlined, HomeOutlined, QuestionCircleOutlined} from '@ant-design/icons';
 import { Layout, theme} from 'antd';
 import React from 'react';
-import { useNavigate } from "react-router-dom"; 
 import MenuBar from '../../components/MenuBar/menubar';
 
-const { Header, Content, Sider } = Layout;
+const { Sider } = Layout;
 
 export const MenuList = () => [
   {
@@ -48,7 +47,6 @@ const Sidebar = ({children}) => {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  const navigate = useNavigate();
 
   return (
     <Sider
