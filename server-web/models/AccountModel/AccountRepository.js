@@ -6,12 +6,16 @@ class AccountRepository extends CommonModel {
   async getAllData() {
     return await AccountDTO.findAll();
   }
-  async add(account) {
+  async add(account, t) {
     return await AccountDTO.create({
       id: account.id,
       email: account.email,
       password: account.password,
-    });
+    },
+    t && {
+      transaction: t
+    }
+    );
   }
   async deleteById(id) {
     return await AccountDTO.destroy({

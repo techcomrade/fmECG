@@ -10,13 +10,12 @@ class AuthenController {
       } else {
         try {
           await AuthenService.register(account)
-            .then(() => {
-              return res.status(200).json("Register successfully");
-            })
-            .catch((err) => {
-              return res.status(500).json(err);
-            });
+            
+          res.status(200).json("Register successfully");
+            
         } catch (err) {
+          console.log("controler: ",err);
+
           return res.status(500).json(err);
         }
       }

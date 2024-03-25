@@ -1,7 +1,7 @@
 const CommonService = require("./CommonService");
 const AccountModel = require("../models/AccountModel");
-const AccountRepository = require('../models/AccountModel/AccountRepository');
-const UserRepository = require('../models/UserModel/UserRepository');
+const AccountRepository = require("../models/AccountModel/AccountRepository");
+const UserRepository = require("../models/UserModel/UserRepository");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 
@@ -25,8 +25,10 @@ class AuthenService extends CommonService {
       image: account.image,
       role: account.role,
     };
-      await AccountRepository.add(account);
-      await UserRepository.add(user);
+    return await this.transaction(async (t) => {
+      await AccountRepository.add(account, t);
+      await UserRepository.add({}, t);
+    });
   }
   async getAll() {
     await AccountRepository.getAllData();

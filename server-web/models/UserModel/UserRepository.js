@@ -12,7 +12,7 @@ class UserModel extends CommonModel {
     }});
   }
 
-  async add(user) {
+  async add(user,t) {
     return await UserDTO.create({
       id: user.id,
       account_id: user.account_id,
@@ -21,7 +21,11 @@ class UserModel extends CommonModel {
       phone_number: user.phone_number ?? "",
       image: user.image ?? "",
       role: user.role,
-    });
+    },
+    t && {
+      transaction: t
+    }
+    );
   }
   async deleteById(id) {
     return await UserDTO.destroy({where: {
