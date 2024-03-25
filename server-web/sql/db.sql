@@ -63,7 +63,7 @@ CREATE TABLE `news_categories` (
 DROP TABLE IF EXISTS `accounts`;
 CREATE TABLE `accounts` (
     `id` varchar(255) NOT NULL,
-    `email` varchar(255) NOT NULL,
+    `email` varchar(255) UNIQUE NOT NULL,
     `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

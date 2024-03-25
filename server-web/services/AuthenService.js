@@ -1,8 +1,7 @@
 const CommonService = require("./CommonService");
 const AccountModel = require("../models/AccountModel");
-const UserModel = require("../models/UserModel");
-const UserService = require("./UserService");
-const AccountRepository = require('../models/AccountModel/AccountRespository');
+const AccountRepository = require('../models/AccountModel/AccountRepository');
+const UserRepository = require('../models/UserModel/UserRepository');
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 
@@ -25,14 +24,12 @@ class AuthenService extends CommonService {
       phone_number: account.phone_number,
       image: account.image,
       role: account.role,
-      created_at: Number(new Date()),
-      updated_at: Number(new Date()),
     };
-    await AccountModel.executeQuery(AccountModel.add(account));
-    await UserModel.executeQuery(UserModel.add(user));
+      await AccountRepository.add(account);
+      await UserRepository.add(user);
   }
   async getAll() {
-    return await AccountRepository.getAllData();
+    await AccountRepository.getAllData();
   }
 }
 module.exports = new AuthenService();

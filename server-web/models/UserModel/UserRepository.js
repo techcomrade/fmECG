@@ -1,34 +1,47 @@
 const CommonModel = require("../../models/CommonModel");
+const UserDTO = require("./UserDTO");
 
 class UserModel extends CommonModel {
-  getAllData() {
-    return `SELECT * FROM users`;
+  async getAllData() {
+    return await UserDTO.findAll();
   }
 
-  getUserById(id) {
-    return `SELECT * FROM users WHERE id ='${id}'`;
+  async getUserById(id) {
+    return await UserDTO.findAll({where: {
+      id:id
+    }});
   }
 
-  add(user) {
-    return `INSERT INTO users (id, account_id, username, birth, phone_number, image, role, created_at, updated_at) 
-      VALUES ('${user.id}','${user.account_id}','${user.username}','${user.birth}','${user.phone_number}','${user.image}','${user.role}','${user.created_at}','${user.updated_at}')`
-    ;
+  async add(user) {
+    return await UserDTO.create({
+      id: user.id,
+      account_id: user.account_id,
+      username: user.username,
+      birth: user.birth,
+      phone_number: user.phone_number ?? "",
+      image: user.image ?? "",
+      role: user.role,
+    });
   }
-  deleteById(id) {
-    return `DELETE FROM users WHERE id ='${id}'`;
-  }
-
-  deleteByMultipleId(arrayId) {
-    return `DELETE FROM users WHERE id IN ${arrayId}`;
+  async deleteById(id) {
+    return await UserDTO.destroy({where: {
+      id: id
+    }});
   }
   
-  updateById(user) {
-    return `UPDATE users SET account_id = '${user.account_id}', username = '${user.username}', birth = '${user.birth}', phone_number = '${user.phone_number}', image = '${user.image}', role = '${user.role}', updated_at = '${user.updated_at}' 
-      WHERE id ='${id}'`;
+  async updateById(user) {
+    return await UserDTO.update({
+      username: user.username,
+      birth: user.birth,
+      phone_number: user.phone_number,
+      image: user.image,
+      role: user.role
+    },{
+      id: user.id
+    }
+    )
   }
-  checkUser(id){
-    return `SELECT * FROM users WHERE id = '${id}';`;
-  }
+
 }
 
 module.exports = new UserModel();
