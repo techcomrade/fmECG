@@ -30,15 +30,40 @@ app.get("/", (req, res) => {
   }
 });
 
-app.post("/login", (req, res, next) => {
-  // const { email, password } = req.body;
-  // if (email === "admin" && password === "1") {
-  //   res.cookie("token", "login");
-  //   res.status(200).json("login success");
-  // } else {
-  //   console.log(req.body);
-  //   res.status(400).json("failed");
-  // }
+app.post("/login", async (req, res, next) => {
+  const { email, password } = req.body;
+  if (email && password) {
+    try {
+      const loginResult = await fetch("http://localhost:3000/api/user/login", {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      })
+      if (loginResult.ok){
+        res.status(200).json("login success")
+        res.cookie("token", "login")
+      }
+      else {
+        window.alert("wrong password");
+      };
+    } catch (err) {
+      res.status(400).json(err);
+      window.alert("error login");
+    }
+  }
+  else {
+    window.alert("input email and password");
+  }
 });
 
 app.get("/logout", (req, res) => {

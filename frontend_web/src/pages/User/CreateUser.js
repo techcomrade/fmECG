@@ -32,7 +32,6 @@ export default function CreateUser() {
         console.log(dataInsert);
         showNotiSuccess('Bạn đã tạo người dùng mới thành công')
         navigate('/users');
-
     }
   return (
     <div>

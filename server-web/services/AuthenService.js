@@ -2,24 +2,23 @@ const CommonService = require("./CommonService");
 const AccountModel = require("../models/AccountModel");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
+const jwt = require("jsonwebtoken");
+const TokenModel = require("../models/TokenModel");
 
 class AuthenService extends CommonService {
   async checkAccount(email, password) {
-  const account = await AccountModel.executeQuery(AccountModel.checkExistEmail(email));
-  console.log(account[0]);
-  if (account) {
-    bcrypt.compare(password, account[0].password, (err, same) => {
-      if (err) {
-        return err;
-      }
-      else if (same) {
+    const account = await AccountModel.executeQuery(
+      AccountModel.checkExistEmail(email)
+    );
+    try {
+      const compare = await bcrypt.compare(password, account[0].password);
+      if (compare) {
         return true;
-      }
-    });
-  } else {
-    return false;
+      } else return false;
+    } catch (err) {
+      return err;
+    }
   }
-}
 
   async renderToken(account) {
     const accessToken = jwt.sign(

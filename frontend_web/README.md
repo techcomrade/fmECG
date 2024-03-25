@@ -4,4 +4,4 @@
 # description bin folder: 
 1. bin folder is small project that code by nodejs 
 2. it is used for sign in and register feature 
-3. because reactjs can not process cookie and set header for network, so we need to create a small project nodejs for that 
+3. because reactjs can not process cookie and set header for network, so we need to create a small project nodejs for that `

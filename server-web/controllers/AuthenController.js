@@ -35,17 +35,26 @@ class AuthenController {
   }
   async login(req, res, next) {
     const account = req.body;
-    const result = await AuthenService.checkAccount(account.email, account.password)
-    console.log(result);
-    if (result){
+    const result = await AuthenService.checkAccount(
+      account.email,
+      account.password
+    );
+    if (result) {
       try {
-        await AuthenService.renderToken(account);
-      }
-      catch (err) {
+        const accounts = await AccountModel.executeQuery(
+          AccountModel.checkExistEmail(account.email)
+        );
+        if (accounts[0]) {
+          try {
+            AuthenService.renderToken(accounts[0]);
+          } catch (err) {
+            res.status(404).json(err);
+          }
+        }
+      } catch (err) {
         return res.status(404).json("Login error");
       }
-    }
-    else {
+    } else {
       return res.json("email not found");
     }
   }
