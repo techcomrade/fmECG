@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class ColorConstant {
-
   static Color primary = const Color(0xFF3879E9);
   static Color secondary = const Color(0xFFEE9CDA);
   static Color tertiary = const Color(0xFF7BE5C5);
@@ -29,6 +28,7 @@ class ColorConstant {
   static Color gray90063 = fromHex('#632c2929');
   static Color whiteA700 = fromHex('#ffffff');
   static Color black90016 = fromHex('#16000000');
+  static Color teal = fromHex("#16697b");
 
   static Color fromHex(String hexString) {
     final buffer = StringBuffer();
