@@ -11,7 +11,7 @@ const NewsCategory = sequelize.define("news_categories", {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  categorY_description: {
+  category_description: {
     type: Sequelize.STRING,
     allowNull: false,
     description: Sequelize.TEXT,
