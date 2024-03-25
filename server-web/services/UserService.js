@@ -13,7 +13,6 @@ class UserService extends CommonService {
             username: Joi.string().required(),
             email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
             password: Joi.string().required(),
-            repeat_password: Joi.ref('password'),
             birth: Joi.number().required(),
             phone_number: Joi.number(),
             image: Joi.string(),

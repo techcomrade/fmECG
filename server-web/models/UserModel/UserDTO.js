@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelize");
-const Account = require('../AccountModel/AccountDTO') 
+const Account = require("../AccountModel/AccountDTO");
 
 const User = sequelize.define("users", {
   id: {
@@ -21,7 +21,7 @@ const User = sequelize.define("users", {
     allowNull: false,
   },
   birth: {
-    type: Sequelize.STRING,
+    type: Sequelize.BIGINT,
     allowNull: false,
   },
   phone_number: Sequelize.STRING,

@@ -1,12 +1,14 @@
-const CommonModel = require("../../models/CommonModel");
+const BloodPressureDTO = require('./BloodPressureDTO')
+const CommonModel = require("./../CommonModel");
 
-class BloodPressureModel extends CommonModel{
+class BloodPressureModel extends CommonModel {
     async getAllData(){
-        return `SELECT * FROM blood_pressure_rec;`;
+        return await BloodPressureDTO.findAll();
     }
     async add(record) {
-        return `INSERT INTO blood_pressure_rec (id, rec_id)
-        VALUES ('${record.id}', '${record.rec_id}');`
+        return await BloodPressureDTO.create({
+            id: record.id
+        })
     }
     async deleteById(id) {
         return `DELETE FROM blood_pressure_rec WHERE id = '${id};`
