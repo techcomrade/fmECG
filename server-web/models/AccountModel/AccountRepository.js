@@ -1,20 +1,19 @@
 const AccountDTO = require("./AccountDTO");
 
-const CommonModel = require("../CommonModel");
-
-class AccountRepository extends CommonModel {
+class AccountRepository {
   async getAllData() {
     return await AccountDTO.findAll();
   }
   async add(account, t) {
-    return await AccountDTO.create({
-      id: account.id,
-      email: account.email,
-      password: account.password,
-    },
-    t && {
-      transaction: t
-    }
+    return await AccountDTO.create(
+      {
+        id: account.id,
+        email: account.email,
+        password: account.password,
+      },
+      t && {
+        transaction: t,
+      }
     );
   }
   async deleteById(id) {

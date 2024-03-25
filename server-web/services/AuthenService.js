@@ -25,9 +25,9 @@ class AuthenService extends CommonService {
       image: account.image,
       role: account.role,
     };
-    return await this.transaction(async (t) => {
+    await this.transaction(async (t) => {
       await AccountRepository.add(account, t);
-      await UserRepository.add({}, t);
+      await UserRepository.add(user, t);
     });
   }
   async getAll() {
