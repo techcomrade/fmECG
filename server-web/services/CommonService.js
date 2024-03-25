@@ -1,24 +1,19 @@
 const knex = require('../config/knex')
-
+const sequelize = require('../config/sequelize')
 class CommonService{
-    async tranctionSQL(callback){
-        const execute = await knex.transaction();
-        try{
-            await callback(execute);
-            await execute.commit();
-            console.log('Transaction successful');
-        }
-        catch(err)
-        {
-            await execute.rollback(); // Rollback the transaction if an error occurs
-            console.error('Transaction error:', err);
-            throw err; // Propagate the error to the caller
-        }
-        finally
-        {
-            await knex.destroy();
-        }
-    }
+    async transaction (callback){
+        const t = await sequelize.transaction();
+      try {
+        await callback(t); // Execute the provided callback within the transaction
+        await t.commit(); // Commit the transaction
+        console.log('Transaction successful.');
+        return true;
+      } catch (error) {
+        await t.rollback(); // Roll back the transaction on error
+        // console.error('Error during transaction:', error.message);
+        throw error;
+      }
+      }
 }
 
 module.exports = CommonService;

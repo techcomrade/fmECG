@@ -9,15 +9,11 @@ class AuthenController {
         return res.status(400).json("Email exist");
       } else {
         try {
-          await AuthenService.register(account)
-            .then(() => {
-              return res.status(200).json("Register successfully");
-            })
-            .catch((err) => {
-              return res.status(500).json(err);
-            });
+          await AuthenService.register(account);
+          return res.status(200).json("Register successfully");
         } catch (err) {
-          return res.status(500).json(err);
+          console.log("controler: ", err);
+          return res.status(500).json("Register error");
         }
       }
     } else {
