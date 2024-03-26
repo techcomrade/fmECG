@@ -5,19 +5,12 @@ import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/controllers/news_controller.dart';
 import 'package:bluetooth_ecg/controllers/user_controller.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
-import 'package:bluetooth_ecg/providers/news_provider.dart';
-import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_screen.dart';
-import 'package:bluetooth_ecg/screens/news_screens/news_all_screens.dart';
-import 'package:bluetooth_ecg/screens/news_screens/news_detail_screen.dart';
-import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:bluetooth_ecg/components/live_chart.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -28,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
+
   late File fileToSave;
   bool isShowChart = false;
 
@@ -61,242 +55,137 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List allNews = context.watch<NewsProvider>().allNews;
+    final size = MediaQuery.of(context).size;
+    final height = size.height;
+    final width = size.width;
+    //final List allNews = context.watch<NewsProvider>().allNews;
 
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
       child: SingleChildScrollView(
         controller: _scrollController,
         physics: const ClampingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // header
-            SizedBox(
-              height: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(children: [
-                    const CircularAvatar(
-                        imageAsset: 'assets/images/doctor.png', radius: 27),
-                    const SizedBox(width: 8),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("Chào mừng đến với fmECG"),
-                        Text(
-                          "Thai Dong",
-                          style: TextStyle(
-                            color: ColorConstant.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ]),
-                  Row(children: [
-                    const DarkLightSwitch(),
-                    const SizedBox(width: 8),
-                    InkWell(
-                      child: Icon(PhosphorIcons.regular.bell),
-                    )
-                  ])
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 30),
-            SizedBox(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Tổng quan",
-                      style: TextStyle(
-                          color: ColorConstant.quaternary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22),
-                    ),
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          // header
+          SizedBox(
+            height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Row(children: [
+                //   const SizedBox(width: 8),
+                //   Column(
+                //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       const Text("Chào mừng đến với fmECG"),
+                //       Text(
+                //         "Thai Dong",
+                //         style: TextStyle(
+                //           color: ColorConstant.primary,
+                //           fontWeight: FontWeight.bold,
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ]),
+                const IconButton(
+                  icon: Icon(
+                    Icons.menu,
+                    size: 35,
                   ),
-                  const SizedBox(height: 10),
-                  Wrap(
-                    spacing: 15,
-                    runSpacing: 15,
-                    alignment: WrapAlignment.spaceAround,
-                    children: [
-                      NumberCard(
-                          number: 82.0,
-                          text: "Nhịp tim (bpm)",
-                          subText: "Mẹ",
-                          color1: ColorConstant.primary,
-                          color2: ColorConstant.primary),
-                      NumberCard(
-                          number: 72.9,
-                          text: "Biến thiên nhịp tim (bpm)",
-                          subText: "Mẹ",
-                          color1: ColorConstant.primary,
-                          color2: ColorConstant.quaternary),
-                      NumberCard(
-                          number: 82.6,
-                          text: "Nhịp tim (bpm)",
-                          subText: "Thai nhi",
-                          color1: ColorConstant.primary,
-                          color2: ColorConstant.primary),
-                      NumberCard(
-                          number: 86.0,
-                          text: "Biến thiên nhịp tim (bpm)",
-                          subText: "Thai nhi",
-                          color1: ColorConstant.primary,
-                          color2: ColorConstant.quaternary),
-                    ],
-                  )
-                ],
-              ),
+                  onPressed: null,
+                ),
+                Row(children: [
+                  // const DarkLightSwitch(),
+
+                  InkWell(
+                    child: Icon(PhosphorIcons.regular.bell),
+                  ),
+                  SizedBox(
+                    width: width * 0.05,
+                  ),
+                  const CircularAvatar(
+                      imageAsset: 'assets/images/doctor.png', radius: 27),
+                ])
+              ],
             ),
-            const SizedBox(height: 30),
-            SizedBox(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Tín hiệu điện tim",
+          ),
+
+          SizedBox(height: height * 0.02),
+          SizedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Chào mừng tới fmEcg,\nThai Dong.",
                     style: TextStyle(
-                        color: ColorConstant.quaternary,
+                        color: ColorConstant.black900,
                         fontWeight: FontWeight.bold,
                         fontSize: 22),
                   ),
-                  const SizedBox(height: 10),
-                  !isShowChart
-                      ? ImageCard(
-                          imageAsset: 'assets/images/heart_rate_example.jpeg',
-                          functionScanBluetooth: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const BleReactiveScreen(),
-                                ));
-                          },
-                          temporaryNothing: () async {
-                            bool isAccessFiles = await _requestManageStorage();
-                            if (isAccessFiles) {
-                              FilesManagement
-                                  .createDirectoryFirstTimeWithDevice();
-                              fileToSave = await FilesManagement
-                                  .setUpFileToSaveDataMeasurement();
-                              setState(() {
-                                isShowChart = true;
-                              });
-                            } else {
-                              // show dialog need permission
-                              print('phone does not grant permission');
-                            }
-                          })
-                      : LiveChartSample(fileToSave: fileToSave),
-                ],
-              ),
+                ),
+                SizedBox(height: height * 0.05),
+                Wrap(
+                  spacing: 15,
+                  runSpacing: 15,
+                  alignment: WrapAlignment.spaceAround,
+                  children: [
+                    NumberCard(
+                      leadingIcon: Icon(PhosphorIcons.fill.heartbeat),
+                      number: 82.0,
+                      text: "Nhịp tim",
+                      subText: "Mẹ",
+                      unit: "bpm",
+                      // color1: Colors.grey,
+                      // color2: Colors.grey,
+                      centerImage: Image.asset("assets/images/hearthrate.jpg"),
+                    ),
+                    NumberCard(
+                      leadingIcon: Icon(PhosphorIcons.fill.stethoscope),
+                      number: 72.9,
+                      text: "Huyết áp",
+                      subText: "Mẹ",
+                      unit: "mmHg",
+                      // color1: Colors.grey,
+                      // color2: Colors.grey,
+                      centerImage:
+                          Image.asset("assets/images/blood_pressurer.jpg"),
+                    ),
+                    NumberCard(
+                      leadingIcon: Icon(PhosphorIcons.fill.heartbeat),
+                      number: 82.6,
+                      text: "Nhịp tim ",
+                      subText: "Thai nhi",
+                      unit: "bpm",
+                      // color1: ColorConstant.primary,
+                      // color1: Colors.grey,
+                      // color2: Colors.grey,
+                      //  color2: ColorConstant.primary,
+                      centerImage: Image.asset("assets/images/hearthrate.jpg"),
+                    ),
+                    NumberCard(
+                      leadingIcon: Icon(PhosphorIcons.fill.stethoscope),
+                      number: 86.0,
+                      text: "Huyết áp",
+                      subText: "Thai nhi",
+                      unit: "mmHg",
+                      //color1: ColorConstant.primary,
+                      // color1: ColorConstant.teal,
+                      // color2: ColorConstant.teal,
+                      centerImage:
+                          Image.asset("assets/images/blood_pressurer.jpg"),
+                    ),
+                  ],
+                )
+              ],
             ),
-
-            const SizedBox(height: 30),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(
-                "Các tin tức",
-                style: TextStyle(
-                    color: ColorConstant.quaternary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NewsAllScreen()));
-                },
-                child: const Text("Xem tất cả"),
-              )
-            ]),
-
-            if (allNews.isNotEmpty)
-              ListView.builder(
-                  padding: const EdgeInsets.only(top: 10),
-                  shrinkWrap: true,
-                  itemCount: 4,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    final news = allNews[index];
-                    final String imagePresentUrl = news["image"] ?? "";
-                    final int newsId = news["news_id"];
-                    final String newsCategory = news["category_name"];
-                    final DateTime newsCreatedAt =
-                        DateTime.parse(news["created_at"]);
-                    final String newsCreatedAtFormat =
-                        DateFormat("EEEE, dd-MM-yyyy", "vi")
-                            .format(newsCreatedAt);
-                    final String newsTitle = news["title"].length > 100
-                        ? news["title"].substring(0, 100)
-                        : news["title"];
-
-                    return InkWell(
-                      onTap: () async {
-                        await NewsController.getNewsById(newsId);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const NewsDetailScreen()));
-                      },
-                      splashColor: ColorConstant.primary,
-                      child: Container(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        child: Row(children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              imagePresentUrl,
-                              width: 90,
-                              height: 90,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          SizedBox(
-                            height: 90,
-                            // BE CAREFUL: BAD EXPERIENCE WHEN LONG WIDTH
-                            width: 210,
-                            child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(newsCategory,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey[600])),
-                                  Text(newsTitle,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      style: const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black)),
-                                  Text(newsCreatedAtFormat,
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                      )),
-                                ]),
-                          )
-                        ]),
-                      ),
-                    );
-                  }),
-          ],
-        ),
-        // child: LiveChartSample()
+          ),
+          const SizedBox(height: 30),
+        ]),
       ),
     );
   }
@@ -368,7 +257,8 @@ class SquareContainer extends StatelessWidget {
   final IconData icon;
   final String text;
 
-  const SquareContainer({Key? key, required this.icon, required this.text}) : super(key: key);
+  const SquareContainer({Key? key, required this.icon, required this.text})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -402,65 +292,108 @@ class SquareContainer extends StatelessWidget {
   }
 }
 
-class NumberCard extends StatelessWidget {
+class NumberCard extends StatefulWidget {
   final double number;
   final String text;
   final String subText;
-  final Color color1;
-  final Color color2;
+  final String unit;
+  final Icon leadingIcon;
+  final Image centerImage;
 
-  const NumberCard({Key? key, 
+  const NumberCard({
+    Key? key,
     required this.number,
     required this.text,
     required this.subText,
-    required this.color1,
-    required this.color2,
+    required this.unit,
+    required this.leadingIcon,
+    required this.centerImage,
   }) : super(key: key);
 
   @override
+  State<NumberCard> createState() => _NumberCardState();
+}
+
+class _NumberCardState extends State<NumberCard> {
+  bool _isClicked = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150.0,
-      height: 100.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        gradient: LinearGradient(
-          colors: [color1, color2],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+    final size = MediaQuery.of(context).size;
+    final height = size.height;
+    final width = size.width;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _isClicked = !_isClicked;
+        });
+      },
+      child: Container(
+        width: width * 0.4,
+        height: height * 0.3,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          gradient: LinearGradient(
+            colors: _isClicked
+                ? [Colors.teal, Colors.teal]
+                : [Colors.grey, Colors.grey],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15.0,
-              color: ColorConstant.description,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ListTile(
+              leading: widget.leadingIcon,
+              title: Text(
+                widget.text,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: _isClicked
+                      ? ColorConstant.black900
+                      : ColorConstant.description,
+                ),
+              ),
             ),
-          ),
-          const SizedBox(height: 3.0),
-          Text(
-            subText,
-            style: TextStyle(
-              fontSize: 16.0,
-              color: ColorConstant.description,
+            const SizedBox(height: 3.0),
+            Text(
+              widget.subText,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: _isClicked
+                    ? ColorConstant.black900
+                    : ColorConstant.description,
+              ),
             ),
-          ),
-          const SizedBox(height: 5.0),
-          Text(
-            '$number',
-            style: TextStyle(
-              fontSize: 30.0,
-              color: ColorConstant.description,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
+            const SizedBox(height: 10.0),
+            widget.centerImage,
+            const SizedBox(height: 5.0),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+              Text(
+                '${widget.number}',
+                style: TextStyle(
+                  fontSize: 30.0,
+                  color: _isClicked
+                      ? ColorConstant.black900
+                      : ColorConstant.description,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                widget.unit,
+                style: TextStyle(
+                  color: _isClicked
+                      ? ColorConstant.black900
+                      : ColorConstant.description,
+                  fontSize: 15,
+                ),
+              ),
+            ]),
+          ],
+        ),
       ),
     );
   }
@@ -471,7 +404,8 @@ class ImageCard extends StatelessWidget {
   final Function() functionScanBluetooth;
   final Function() temporaryNothing;
 
-  const ImageCard({Key? key, 
+  const ImageCard({
+    Key? key,
     required this.imageAsset,
     required this.functionScanBluetooth,
     required this.temporaryNothing,

@@ -29,6 +29,7 @@ class UserModel {
       }
     );
   }
+
   async deleteById(id) {
     return await UserDTO.destroy({
       where: {

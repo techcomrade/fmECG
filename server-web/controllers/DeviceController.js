@@ -15,7 +15,7 @@ class DeviceController {
   async add(req, res) {
     try {
       const device = req.body;
-      const checkExistUser = await UserService.checkUser(device.user_id);
+      const checkExistUser = await UserService.getUserById(device.user_id);
       if (!checkExistUser.length) {
         return res.status(400).json("no user found");
       }
@@ -58,7 +58,7 @@ class DeviceController {
       await DeviceService.checkDevice(id)
         .then(async (checked) => {
           if (checked) {
-            const checkExistUser = await UserService.checkUser(device.user_id);
+            const checkExistUser = await UserService.getUserById(device.user_id);
             if (!checkExistUser.length) {
               return res.status(400).json("no user found");
             }
