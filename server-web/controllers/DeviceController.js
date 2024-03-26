@@ -9,7 +9,7 @@ class DeviceController {
         else return res.status(400).json("No devices found");
       })
       .catch((err) => {
-        return res.status(400).json(err, "get devices failed");
+        return res.status(400).json(err);
       });
   }
   async add(req, res) {
@@ -25,10 +25,10 @@ class DeviceController {
           return res.status(500).json("err server add failed");
         })
         .catch((err) => {
-          return res.status(400).json(err, "add device failed");
+          return res.status(400).json(err);
         });
     } catch (err) {
-      return res.status(400).json(err, "add device failed");
+      return res.status(400).json(err);
     }
   }
   async delete(req, res) {
@@ -44,11 +44,11 @@ class DeviceController {
             return res.status(500).json("no device found");
           })
           .catch((err) => {
-            return res.status(400).json(err, "error");
+            return res.status(400).json(err);
           });
       }
     } catch (err) {
-      return res.status(400).json(err, "delete device failed");
+      return res.status(400).json(err);
     }
   }
   async update(req, res) {
@@ -71,7 +71,7 @@ class DeviceController {
           return res.status(400).json(err);
         });
     } catch (err) {
-      return res.status(400).json(err, "update device failed");
+      return res.status(400).json(err);
     }
   }
 }
