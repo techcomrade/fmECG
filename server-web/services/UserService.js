@@ -1,11 +1,11 @@
-const UserModel = require('../models/UserModel')
 const CommonService = require('./CommonService')
 const Joi = require('joi')
 const { convertArrayToString } = require('../utils/arrayUtils');
+const UserModel = require('../models/UserModel/UserRepository');
 
 class UserService extends CommonService {
     async getAll(){
-        return await UserModel.executeQuery(UserModel.getAllData());
+        return await UserModel.getAllData();
     }
     
     validateUser(user) {
@@ -20,40 +20,30 @@ class UserService extends CommonService {
         })
         return schema.validate(user);
     }
-    
-    async checkUser(id){
-        return await UserModel.executeQuery(UserModel.checkUser(id));
-    }
 
     async getUserById(userId) {
         if(!userId) {
             return false;
         }
-        return await UserModel.executeQuery(UserModel.getUserById(userId));
+        return await UserModel.getUserById(userId);
     }
 
     async createUser(data) {
-        return await UserModel.executeQuery(UserModel.add(data));
+        return await UserModel.add(data);
     }
 
-    async updateUser(data, userId) {
-        if(!data || !userId) {
+    async updateUser(data) {
+        if(!data) {
             return false;
         }
-        return await UserModel.executeQuery(UserModel.updateById(data, userId))
+        return await UserModel.updateById(data);
     }
 
-    async deleteUserById(arrayId) {
-        if(!arrayId) {
+    async deleteUserById(userId) {
+        if(!userId) {
             return false;
         }
-
-        if(arrayId.length === 1) {
-            return await UserModel.executeQuery(UserModel.deleteById(arrayId[0]));
-        }
-        else {
-            return await UserModel.executeQuery(UserModel.deleteByMultipleId(convertArrayToString(arrayId)));
-        }
+        return await UserModel.deleteById(userId);
     }
 }
 

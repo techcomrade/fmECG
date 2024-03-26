@@ -1,12 +1,14 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelize");
 const Account = require("../AccountModel/AccountDTO");
+const Assignment = require("../PatientDoctorAssignModel/PatientDoctorAssignmentDTO");
 
 const User = sequelize.define("users", {
   id: {
     type: Sequelize.STRING,
     allowNull: false,
     primaryKey: true,
+    onDelete: 'cascade' 
   },
   account_id: {
     type: Sequelize.STRING,
@@ -32,6 +34,12 @@ const User = sequelize.define("users", {
   },
   created_at: Sequelize.BIGINT,
   updated_at: Sequelize.BIGINT,
+},{
+  associate: function(models) {
+    User.hasMany(models.Assignment, {
+      onDelete: 'cascade',
+    });
+  },
 });
 
 module.exports = User;

@@ -39,7 +39,7 @@ class UserController {
 
   async updateUser(req, res, next) {
     console.log(`[P]:::Update user by id: `, req.body);
-    const result = await UserService.updateUser(req.body, req.params.userId);
+    const result = await UserService.updateUser(req.body);
     if(result) {
       return res.status(200).json({
         message: 'Update user successful!'

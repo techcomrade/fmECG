@@ -23,6 +23,7 @@ class UserModel extends CommonModel {
       role: user.role,
     });
   }
+
   async deleteById(id) {
     return await UserDTO.destroy({where: {
       id: id
@@ -37,7 +38,9 @@ class UserModel extends CommonModel {
       image: user.image,
       role: user.role
     },{
-      id: user.id
+      where: {
+        id: user.id
+      }
     }
     )
   }
