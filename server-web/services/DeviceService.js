@@ -1,5 +1,5 @@
 const CommonService = require("./CommonService");
-const DeviceModel = require("../models/DeviceModel/DeviceDTO");
+const DeviceModel = require("../models/DeviceModel/DeviceRepository");
 const { v4: uuidv4 } = require("uuid");
 const Joi = require("joi");
 
@@ -20,8 +20,9 @@ class DeviceService extends CommonService {
     return await DeviceModel.getAllData();
   }
   async checkDevice(id) {
-    const Device = DeviceModel.checkById(id);
-    return Device.length > 0;
+    const Device = await DeviceModel.checkById(id);
+    if(Device) return true;
+    return false;
   }
   ValidateDevice(device) {
     const schema = Joi.object({

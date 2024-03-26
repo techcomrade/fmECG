@@ -35,16 +35,16 @@ class DeviceController {
     try {
       const device_id = req.params.id;
       if (device_id) {
-        await DeviceService.checkDevice(id)
+        await DeviceService.checkDevice(device_id)
           .then(async (checked) => {
             if (checked) {
-              await DeviceService.deleteById(id);
+              await DeviceService.deleteById(device_id);
               return res.status(200).json("delete device successfully");
             }
             return res.status(500).json("no device found");
           })
           .catch((err) => {
-            return res.status(400).json(err);
+            return res.status(400).json(err, "error");
           });
       }
     } catch (err) {
