@@ -10,7 +10,6 @@ class UserController {
       message: 'Get all users successful!',
       metadata: users
     });
-    // return res.status(400).json("get users failed");
   }
 
   async createUser(req, res, next) {

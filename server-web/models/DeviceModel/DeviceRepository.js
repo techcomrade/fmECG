@@ -1,6 +1,5 @@
-const CommonModel = require("../../models/CommonModel");
-const DeviceDTO = require('./DeviceDTO')
-class DeviceModel extends CommonModel {
+const DeviceDTO = require("./DeviceDTO");
+class DeviceModel {
   async getAllData() {
     return await DeviceDTO.findAll();
   }
@@ -16,11 +15,12 @@ class DeviceModel extends CommonModel {
     });
   }
   async deleteById(id) {
-    return await DeviceDTO.destroy({where:{
-      id: id
-    }});
+    return await DeviceDTO.destroy({
+      where: {
+        id: id,
+      },
+    });
   }
-  
 }
 
 module.exports = new DeviceModel();

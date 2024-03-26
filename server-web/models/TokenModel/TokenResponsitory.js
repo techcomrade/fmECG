@@ -1,6 +1,8 @@
-const CommonModel = require("../../models/CommonModel");
+const TokenDTO = require("./TokenDTO");
 
-class TokenRepository extends CommonModel{
-
+class TokenRepository {
+  async getAllData() {
+    return await TokenDTO.findAll();
+  }
 }
 module.exports = new TokenRepository();

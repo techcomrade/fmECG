@@ -1,12 +1,9 @@
-const BloodPressureDTO = require('./BloodPressureDTO')
-const CommonModel = require("./../CommonModel");
+const BloodPressureDTO = require("./BloodPressureDTO");
 
-class BloodPressureModel extends CommonModel {
-    async getAllData(){
-        return await BloodPressureDTO.findAll();
-    }
-    
+class BloodPressureModel {
+  async getAllData() {
+    return await BloodPressureDTO.findAll();
+  }
 }
-
 
 module.exports = new BloodPressureModel();
