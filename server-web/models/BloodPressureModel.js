@@ -1,17 +1,17 @@
 const CommonModel = require("./CommonModel");
 
 class BloodPressureModel extends CommonModel{
-    async getAllData(){
+    getAllData(){
         return `SELECT * FROM blood_pressure_rec;`;
     }
-    async add(record) {
+    add(record) {
         return `INSERT INTO blood_pressure_rec (id, rec_id)
         VALUES ('${record.id}', '${record.rec_id}');`
     }
-    async deleteById(id) {
+    deleteById(id) {
         return `DELETE FROM blood_pressure_rec WHERE id = '${id};`
     }
-    async updateById(record){
+    updateById(record){
         return `UPDATE blood_pressure_rec SET rec_id = '${record.rec_id}' WHERE id = '${record.id};`;
     }
 

@@ -451,7 +451,7 @@
     setTimeout(() => {
       container.classList.add("sign-in");
     }, 200);
-    const loginFunction = async () => {
+    const loginFunction = async (res, req) => {
       const email = document.querySelector("#input-email").value;
       const password = document.querySelector("#input-password").value;
       if (email && password) {
@@ -471,21 +471,18 @@
               password: password,
             }),
           });
-          if (loginResult.ok) {
-            res.status(200).json("login success");
-            res.cookie("token", "login");
-          } else {
-            window.alert("wrong password");
+          if (!loginResult.ok) {
+            throw new Error("Login failed");
+          }
+          else if (loginResult.ok) {
+            window.location.reload();
           }
         } catch (err) {
-          res.status(400).json(err);
-          window.alert("error login");
+          window.alert("wrong email or password");
         }
       } else {
         window.alert("input email and password");
       }
-
-
     } 
   </script>
 </body>

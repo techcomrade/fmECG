@@ -10,13 +10,20 @@ class AuthenService extends CommonService {
     const account = await AccountModel.executeQuery(
       AccountModel.checkExistEmail(email)
     );
-    try {
-      const compare = await bcrypt.compare(password, account[0].password);
-      if (compare) {
-        return true;
-      } else return false;
-    } catch (err) {
-      return err;
+    if (!account[0]){
+      return false;
+    }
+    else {
+      try {
+        const compare = await bcrypt.compare(password, account[0].password);
+        if (compare) {
+          return true;
+        } else {
+          return false;
+        }
+      } catch (err) {
+        return err;
+      }
     }
   }
 

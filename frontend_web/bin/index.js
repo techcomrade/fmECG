@@ -30,9 +30,7 @@ app.get("/", (req, res) => {
   }
 });
 
-app.post("/login", (req, res) => {
-  
-});
+app.post("/login");
 
 app.get("/logout", (req, res) => {
   res.cookie("token", "");
