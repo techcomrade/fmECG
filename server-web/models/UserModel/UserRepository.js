@@ -37,10 +37,9 @@ class UserModel extends CommonModel {
       phone_number: user.phone_number,
       image: user.image,
       role: user.role
-    },{
-      where: {
+    },
+    {
         id: user.id
-      }
     }
     )
   }
