@@ -1,7 +1,12 @@
 const HeartRecDTO = require("./HeartRecDTO");
-class HeartRecMode {
+class HeartRecModel {
   async getAllData() {
     return await HeartRecDTO.findAll();
+  }
+  async deleteById(id) {
+    return await HeartRecDTO.destroy({
+      where: { id: id }
+    });
   }
 }
 

@@ -7,9 +7,7 @@ class UserModel {
 
   async getUserById(id) {
     return await UserDTO.findAll({
-      where: {
-        id: id,
-      },
+      where: { id: id }
     });
   }
 
@@ -32,9 +30,7 @@ class UserModel {
 
   async deleteById(id) {
     return await UserDTO.destroy({
-      where: {
-        id: id,
-      },
+      where: { id: id },
     });
   }
 
@@ -48,7 +44,7 @@ class UserModel {
         role: user.role,
       },
       {
-        id: user.id,
+        where: { id: user.id }
       }
     );
   }
