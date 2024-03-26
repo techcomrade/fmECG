@@ -39,28 +39,21 @@ class AuthenController {
       account.email,
       account.password
     );
-    console.log(result);
     if (result) {
       try {
         const accounts = await AccountModel.executeQuery(
           AccountModel.checkExistEmail(account.email)
         );
-        if (accounts[0]) {
-          try {
-            AuthenService.renderToken(accounts[0]);
-          } catch (err) {
-            res.status(404).json(err);
-          }
-        }
-        else {
-          res.status(404).json("account not found");
+        try {
+          AuthenService.renderToken(accounts[0]);
+        } catch (err) {
+          res.status(404).json(err);
         }
       } catch (err) {
-        return res.status(404).json("Login error");
+        return res.status(404).json("err");
       }
     } else {
       res.status(404).json("Login error");
-      // window.alert("wrong email or password")
     }
   }
 
