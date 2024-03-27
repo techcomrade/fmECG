@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelize");
+const users = require('../../models/UserModel/UserDTO');
 
 const Device = sequelize.define("devices", {
   id: {

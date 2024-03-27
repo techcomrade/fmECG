@@ -36,11 +36,11 @@ class AccountRepository {
       }
     );
   }
-  async checkExistEmail(email) {
-    return await AccountDTO.findAll({
+  async getAccountByEmail(email) {
+    return await AccountDTO.findOne({
       where: {
         email: email,
-      },
+      }
     });
   }
 }

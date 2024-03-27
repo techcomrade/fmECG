@@ -5,6 +5,7 @@ const AuthenMiddleware = require("../middlewares/AuthenMiddleware");
 const router = express.Router();
 
 router.get("/", AuthenController.getAllData);
+router.post("/login", AuthenMiddleware.validateAccount,AuthenController.login)
 router.post("/register", AuthenMiddleware.validateUser, AuthenController.register);
 
 module.exports = router;

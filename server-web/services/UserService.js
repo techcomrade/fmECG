@@ -40,9 +40,7 @@ class UserService extends CommonService {
     }
 
     async deleteUserById(userId) {
-        if(!userId) {
-            return false;
-        }
+        
         return await UserModel.deleteById(userId);
     }
 }

@@ -1,4 +1,4 @@
-import { httpDeleteData, httpGetData, httpPostData, httpUpdateData } from "../../api/common.api";
+import { httpDeleteData, httpGetData, httpPostData } from "../../api/common.api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const loadStatus = {
@@ -22,11 +22,25 @@ export const getData = createAsyncThunk(
   }
 );
 
+export const createData = createAsyncThunk(
+  "/create-user",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpPostData('/user', params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
+
 export const updateData = createAsyncThunk(
   "/update-user",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpPostData(`/user/update/${params.id}`, params);
+      const response = await httpPostData(`/user/update`, params);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -55,6 +69,7 @@ const userSlice = createSlice({
     initialState: {
       data: [],
       loadDataStatus: loadStatus.None,
+      loadCreateDataStatus: loadStatus.None,
       loadUpdateUserStatus: loadStatus.None,
       loadDeleteUserStatus: loadStatus.None,
     },
@@ -62,6 +77,9 @@ const userSlice = createSlice({
       resetLoadDataStatus: (state, action) => {
         state.data = [];
         state.loadDataStatus = loadStatus.None;
+      },
+      resetCreateUserStatus: (state, action) => {
+        state.loadCreateDataStatus = loadStatus.None;
       },
       resetUpdateUserStatus: (state, action) => {
         state.loadUpdateUserStatus = loadStatus.None;
@@ -82,6 +100,15 @@ const userSlice = createSlice({
         .addCase(getData.rejected, (state, action) => {
           state.data = [];
           state.loadDataStatus = loadStatus.Failed;
+        })
+        .addCase(createData.pending, (state, action) => {
+          state.loadCreateDataStatus = loadStatus.Loading;
+        })
+        .addCase(createData.fulfilled, (state, action) => {
+          state.loadCreateDataStatus = loadStatus.Success;
+        })
+        .addCase(createData.rejected, (state, action) => {
+          state.loadCreateDataStatus = loadStatus.Failed;
         })
         .addCase(updateData.pending, (state, action) => {
           state.loadUpdateUserStatus = loadStatus.Loading;
