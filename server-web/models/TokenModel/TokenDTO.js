@@ -16,6 +16,10 @@ const Token = sequelize.define("tokens", {
       key: "id",
     },
   },
+  access_token: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   refresh_token: {
     type: Sequelize.STRING,
     allowNull: false,
