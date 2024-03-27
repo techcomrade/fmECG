@@ -18,20 +18,7 @@ export const MenuList = () => [
     title: "Quản lí người dùng",
     icon: <QuestionCircleOutlined />,
     isHide: false,
-    children: [
-      {
-        key: "user",
-        title: "Người dùng",
-        isHide: false,
-        url: "/user",
-      },
-      {
-        key: "/create-user",
-        title: "Tạo người dùng",
-        isHide: false,
-        url: "/create-user",
-      },
-    ],
+    url: "/user",
   },
   {
     key: "/my_account",

@@ -1,7 +1,7 @@
 import { API_URL, JWT_TOKEN } from "../configs/config";
 import { setLocalStorage, clearLocalStorage, getLocalStorage} from "../utils/storageUtils";
 import { axiosRequest, axiosMethod } from "../utils/axios";
-import { showNotiWarning } from "../components/Notification";
+import { showNotiError, showNotiWarning } from "../components/Notification";
 // import { checkErrorReturn } from "../../utils/commonUtils";
 // import { SpinLoading } from "../../components/Spin/SpinLoading";
 
@@ -37,6 +37,9 @@ export const httpGetData = (url, data) => {
                 showNotiWarning('Bạn đã hết phiên đăng nhập');
                 window.location.href = '/login';
                 reject(error)
+            }
+            else {
+                showNotiError(error.message);
             }
         })
     })

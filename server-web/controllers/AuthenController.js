@@ -1,6 +1,13 @@
 const AuthenService = require("../services/AuthenService");
 
 class AuthenController {
+  async login(req, res) {
+    const account = req.body;
+    const loginResult = await AuthenService.login(account);
+    return loginResult
+      ? res.status(200).json("login successfully")
+      : res.status(400).json("login failed");
+  }
   async register(req, res) {
     const account = req.body;
     if (account.email && account.password) {
