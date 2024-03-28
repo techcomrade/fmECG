@@ -4,7 +4,7 @@ const app = require("./app");
 const {createUsers, deleteAllUsers} = require('./dummy/dummyUser');
 
 
-dotenv.config({ path: "./config.env" });
+dotenv.config({ path: "./config_thai" });
 
 
 app.get("/", (req, res) => {
