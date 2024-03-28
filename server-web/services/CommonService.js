@@ -1,5 +1,6 @@
-const knex = require('../config/knex')
 const sequelize = require('../config/sequelize')
+const Joi = require("joi");
+
 class CommonService{
     async transaction (callback){
         const t = await sequelize.transaction();
@@ -14,6 +15,12 @@ class CommonService{
         throw error;
       }
       }
+    validateId (id) {
+      const schema = Joi.object({
+        id: Joi.string().guid({ version: 'uuidv4' }).required()
+    })
+    return schema.validate(id);
+    }
 }
 
 module.exports = CommonService;

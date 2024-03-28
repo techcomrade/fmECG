@@ -14,11 +14,14 @@ class DeviceModel {
       end_date: device.end_date,
     });
   }
-  async deleteById(id) {
+  async deleteById(id,t) {
     return await DeviceDTO.destroy({
       where: {
         id: id,
       },
+    },
+    t && {
+      transaction: t,
     });
   }
   async checkById(id) {

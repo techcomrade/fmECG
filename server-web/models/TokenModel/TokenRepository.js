@@ -21,11 +21,14 @@ class TokenRepository {
       },
     });
   }
-  async deleteById(id) {
+  async deleteById(id,t) {
     return await TokenDTO.destroy({
       where: {
         id: id,
       },
+    },
+    t && {
+      transaction: t,
     });
   }
 }
