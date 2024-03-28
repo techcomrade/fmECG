@@ -1,15 +1,19 @@
 import userTable from "./table/user.table";
+import deviceTable from "./table/device.table";
 
 const classesFactory = {
     userTable,
+    deviceTable
 };
 
 const classesFactoryMapping = {
     user: "userTable",
+    device: "deviceTable"
 };
 
 const tableNameMapping = {
     user: "người dùng",
+    device: "thiết bị"
 };
 
 export const exportColumnTable = (table, callBack) => {
