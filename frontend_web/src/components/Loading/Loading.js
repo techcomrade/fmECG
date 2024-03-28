@@ -3,23 +3,15 @@ import { LoadingOutlined } from '@ant-design/icons';
 import "./Loading.css"
 import { useState } from 'react';
 
-const Loading = (props) => {
-  const backdrop =  document.getElementsByClassName('loader-container')[0].classList;
-  if(props.loading){
-    backdrop.remove('none')
-  }
-  else {
-    backdrop.add('none')
-  }
-
+const Loading = () => {
   return (
     <>
-        <div className="loader-container none">
+        <div className="loader-container">
             <Spin 
-                spinning={props.loading}  
+                spinning={'spinning'}  
                 size='large'
                 indicator={
-                    <LoadingOutlined style={{fontSize: 80,}} spin />
+                    <LoadingOutlined style={{fontSize: 70,}} spin />
                 }
             />
         </div>
