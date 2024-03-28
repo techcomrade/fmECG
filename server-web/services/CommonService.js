@@ -11,7 +11,6 @@ class CommonService{
         return true;
       } catch (error) {
         await t.rollback(); // Roll back the transaction on error
-        // console.error('Error during transaction:', error.message);
         throw error;
       }
       }
