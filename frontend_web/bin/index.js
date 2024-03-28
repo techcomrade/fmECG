@@ -4,7 +4,6 @@ const config = require("./config");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,7 +11,7 @@ app.use(bodyParser.json({ type: "application/json" }));
 app.set("host", config.default_app_host);
 app.use(bodyParser.raw());
 app.set("port", config.default_app_port);
-
+app.use(express.static("views"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(cookieParser());
@@ -30,14 +29,35 @@ app.get("/", (req, res) => {
   }
 });
 
-app.post("/login", (req, res, next) => {
+app.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
-  if (username === "admin" && password === "1") {
-    res.cookie("token", "login");
-    res.status(200).json("login success");
-  } else {
-    res.status(400).json("failed");
-  }
+  await fetch(`${config.default_api_url}/api/auth/login`, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({
+      email: username,
+      password: password,
+    }),
+  })
+    .then((result) => {
+      console.log(result);
+      if (result.ok) {
+        res.cookie("token", "login");
+        return res.status(200).json("login successfully");
+      }
+      return res.status(400).json("login failed");
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(400).json("login failed");
+    });
 });
 
 app.get("/logout", (req, res) => {
@@ -45,6 +65,7 @@ app.get("/logout", (req, res) => {
   res.send("logout success");
 });
 
+// catching error bin 
 app.use((err, req, next) => {
   if (err.stack) {
     console.log(
