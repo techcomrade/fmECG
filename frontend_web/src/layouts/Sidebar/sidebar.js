@@ -1,4 +1,4 @@
-import { UserOutlined, HomeOutlined, QuestionCircleOutlined} from '@ant-design/icons';
+import { UserOutlined, HomeOutlined, UnorderedListOutlined} from '@ant-design/icons';
 import { Layout, theme} from 'antd';
 import React from 'react';
 import MenuBar from '../../components/MenuBar/menubar';
@@ -16,9 +16,16 @@ export const MenuList = () => [
   {
     key: "/manage_users",
     title: "Quản lí người dùng",
-    icon: <QuestionCircleOutlined />,
+    icon: <UnorderedListOutlined />,
     isHide: false,
     url: "/user",
+  },
+  {
+    key: "/manage_devices",
+    title: "Quản lí thiết bị",
+    icon: <UnorderedListOutlined />,
+    isHide: false,
+    url: "/device",
   },
   {
     key: "/my_account",

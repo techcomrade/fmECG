@@ -12,6 +12,7 @@ export const Routes = () => {
             <Route path="/" element={<Home/>} />
             <Route path="/account" element={<DetailUser/>} />
             <Route path="/user" element={<DataTable/>} />
+            <Route path="/device" element={<DataTable/>} />
             <Route path="*" element={<NotFound/>} />
         </ReactRoutes>
     )
