@@ -1,5 +1,5 @@
 const HeartRecDTO = require("./HeartRecDTO");
-class HeartRecMode {
+class HeartRecModel {
   async getAllData() {
     return await HeartRecDTO.findAll();
   }
