@@ -2,12 +2,6 @@ import { API_URL, JWT_TOKEN } from "../configs/config";
 import { setLocalStorage, clearLocalStorage, getLocalStorage} from "../utils/storageUtils";
 import { axiosRequest, axiosMethod } from "../utils/axios";
 import { showNotiError, showNotiWarning } from "../components/Notification";
-// import { checkErrorReturn } from "../../utils/commonUtils";
-// import { SpinLoading } from "../../components/Spin/SpinLoading";
-
-// export const showLoading = () => {
-//     <SpinLoading />
-// }
 
 export const httpPostData = (url, data) => {
     const token = getLocalStorage(JWT_TOKEN);
