@@ -1,4 +1,4 @@
-const DeviceService = require("../services/deviceService.js");
+const DeviceService = require("../services/DeviceService");
 class DeviceMiddleware {
   async validateData(req, res, next) {
     let validated = DeviceService.ValidateDevice(req.body).error;
