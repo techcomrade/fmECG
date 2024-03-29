@@ -26,6 +26,11 @@ class DeviceData {
 
         return columns;
     }
+
+    getFunction() {
+        return {
+        }
+      }
 }
   
   

@@ -40,3 +40,12 @@ export const exportTableName = (table) => {
     else
         return '';
 }
+
+export const exportFunction = (table) => {
+    let nameConverted = classesFactoryMapping[table];
+    if (!!nameConverted) {
+        let tableSelected = new classesFactory[nameConverted]();
+        if(!!tableSelected) return tableSelected.getFunction();
+    }
+    return [];
+}

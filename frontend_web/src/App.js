@@ -8,8 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        {/* {!hasCookie ? <NotAuth />: <DefaultLayout />} */}
-        <DefaultLayout />
+        {!hasCookie ? <NotAuth />: <DefaultLayout />}
       </div>
     </BrowserRouter>
   );
