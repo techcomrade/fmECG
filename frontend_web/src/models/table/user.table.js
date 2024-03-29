@@ -1,8 +1,7 @@
-import { httpGetData } from "../../api/common.api";
-import { Button, Space } from "antd";
+import { createData, deleteData, getData, updateData } from "../../redux/reducer/userSlice";
 
 class UserData {
-    getColumnShow(callBack) {
+    getColumnShow() {
       const columns = [
         {
           title: 'Họ và tên',
@@ -24,11 +23,14 @@ class UserData {
         return columns;
     }
 
-    async getDataShow() {
-      const data = await httpGetData('/users');
-      return data;
+    getFunction() {
+      return {
+        createData: createData,
+        getData: getData,
+        updateData: updateData,
+        deleteData: deleteData
+      }
     }
-    
 }
   
   
