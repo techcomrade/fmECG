@@ -41,6 +41,13 @@ class BloodPressureModel {
       }
     );
   }
+  async getRecordByRecordId(recordId) {
+    return await BloodPressureDTO.findOne({
+      where: {
+        rec_id: recordId,
+      },
+    });
+  }
 }
 
 module.exports = new BloodPressureModel();
