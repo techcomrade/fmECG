@@ -30,37 +30,35 @@ class BloodPressureController {
   async delete(req, res) {
     const record_id = req.params.id;
     if (record_id) {
-      await BloodPressureService.getRecordById(record_id)
-        .then(async (checked) => {
-          if (checked) {
-            await BloodPressureService.deleteById(record_id);
-            return res.status(200).json("delete record successfully");
-          }
-          return res.status(500).json("no record found");
+      let checkExistRecord = await BloodPressureService.getRecordById(
+        record_id
+      );
+      if (!checkExistRecord.dataValues)
+        return res.status(400).json("no record_id found");
+      await BloodPressureService.deleteById(record_id)
+        .then(() => {
+          return res.status(200).json("delete record successfully");
         })
         .catch((err) => {
-          return res.status(400).json("delete record failed");
+          return res.status(500).json("no record found");
         });
     }
   }
   async update(req, res) {
     const id = req.params.id;
     const record = req.body;
-    await BloodPressureService.getRecordById(id)
-      .then(async (checked) => {
-        if (checked) {
-          const checkExistRecord = await RecordService.getRecordById(
-            record.rec_id
-          );
-          if (!checkExistRecord)
-            return res.status(400).json("no record_id found");
-          await BloodPressureService.updateById(record, id);
-          return res.status(200).json("update record successfully");
-        }
-        return res.status(500).json("record not found");
+    let checkExistBPRecord = await BloodPressureService.getRecordById(id);
+    if (!checkExistBPRecord.dataValues)
+      return res.status(400).json("no recordBP_id found");
+    const checkExistRecord = await RecordService.getRecordById(record.rec_id);
+    if (!checkExistRecord.dataValues)
+      return res.status(400).json("no record_id found");
+    await BloodPressureService.updateById(record, id)
+      .then(() => {
+        return res.status(200).json("update record successfully");
       })
       .catch((err) => {
-        return res.status(400).json("update record error");
+        return res.status(500).json("error updating record");
       });
   }
 }
