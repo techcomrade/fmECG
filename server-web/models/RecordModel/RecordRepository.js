@@ -3,7 +3,6 @@ class RecordRepository {
   async getAllData() {
     return await RecordDTO.findAll();
   }
-<<<<<<< HEAD
 
   async getRecordById(id) {
     return await RecordDTO.findAll({
@@ -70,23 +69,14 @@ class RecordRepository {
         transaction: t,
       }
     );
-=======
-  async getRecordsByUserId(id){
-    return await RecordDTO.findAll({where:{
-      user_id:id
-    }})
   }
-  async deleteById(id,t){
-    return await RecordDTO.destroy({
+
+  async getRecordsByDeviceId(id) {
+    return await RecordDTO.findAll({
       where: {
-        id:id
-      }
-    },
-    t && {
-      transaction: t,
-    })
->>>>>>> d362c074fbca3e75b96e06aff1f2125268797cdd
+        device_id: id,
+      },
+    });
   }
 }
-
 module.exports = new RecordRepository();

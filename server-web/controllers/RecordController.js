@@ -15,11 +15,10 @@ class RecordController {
       await RecordService.add(req.body);
       return res.status(200).json({
         message: "Create records successful!",
-        metadata: req.body,
       });
     } catch (err) {
       return res.status(400).json({
-        message: "Create record failed!"
+        message: "Create record failed!",
       });
     }
   }
@@ -29,13 +28,13 @@ class RecordController {
     const record = await RecordService.getRecordById(req.params.recordId);
     if (record) {
       return res.status(200).json({
-        message: "Get record by id successful!",
+        message: "Get records by id successful!",
         metadata: record,
       });
-    } else
-      return res.status(404).json({
-        message: "Record not existed!",
-      });
+    }
+    return res.status(404).json({
+      message: "Record not existed!",
+    });
   }
 
   async getRecordByDeviceId(req, res, next) {
@@ -45,72 +44,58 @@ class RecordController {
     );
     if (recordByDevice) {
       return res.status(200).json({
-        message: "Get record by device id successful!",
+        message: "Get records by device id successful!",
         metadata: recordByDevice,
       });
-    } else
-      return res.status(404).json({
-        message: "Record not existed!",
-      });
+    }
+    return res.status(404).json({
+      message: "Record not existed!",
+    });
   }
 
   async updateRecordById(req, res, next) {
     console.log(`[P]:::Update record by id: `, req.params.recordId, req.body);
-    try {
-      const id = req.params.recordId;
-      const checkRecord = await RecordService.getRecordById(id);
-      if (checkRecord) {
-        await RecordService.updateRecordById(req.body, id)
-          .then(() => {
-            return res.status(200).json({
-              message: "Update record successful!",
-              metadata: req.body,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            return res.status(400).json({
-              message: "Error when update record!",
-            });
-          });
-      } else
-        return res.status(404).json({
-          message: "Id not found!",
-        });
-    } catch (err) {
-      return res.status(500).json({
-        message: "Error when update record!",
+    const id = req.params.recordId;
+    const checkRecord = await RecordService.getRecordById(id);
+    if (!checkRecord) {
+      return res.status(404).json({
+        message: "Id not found!",
       });
     }
+    await RecordService.updateRecordById(id)
+      .then(() => {
+        return res.status(200).json({
+          message: "Update record by id successful!",
+          metadata: req.body,
+        });
+      })
+      .catch((err) => {
+        return res.status(400).json({
+          message: "Error when update record!",
+        });
+      });
   }
 
   async deleteRecordById(req, res, next) {
     console.log(`[P]:::Delete record by id: `, req.body.id);
-    try {
-      const id = req.body.id;
-      const checkRecord = await RecordService.getRecordById(id);
-      if (checkRecord) {
-        await RecordService.deleteRecordById(id)
-          .then(() => {
-            return res.status(200).json({
-              message: "Delete record successful!",
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            return res.status(400).json({
-              message: "Error when delete record!",
-            });
-          });
-      } else
-        return res.status(400).json({
-          message: "Id not found!",
-        });
-    } catch (err) {
-      return res.status(500).json({
-        message: "Error when delete record!",
+    const id = req.body.id;
+    const checkRecord = await RecordService.getRecordById(id);
+    if (!checkRecord) {
+      return res.status(400).json({
+        message: "Id not found!",
       });
     }
+    await RecordService.deleteRecordById(id)
+      .then(() => {
+        return res.status(200).json({
+          message: "Delete record successful!",
+        });
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          message: "Error when delete record!",
+        });
+      });
   }
 }
 

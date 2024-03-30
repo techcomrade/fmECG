@@ -1,7 +1,7 @@
 const CommonService = require("./CommonService");
 const RecordRepository = require("../models/RecordModel/RecordRepository");
-// const HeartRecRepository = require("../models/HeartRecModel/HeartRecRepository");
-// const BloodRecRepository = require("../models/HeartRecModel/HeartRecRepository");
+const HeartRecRepository = require("../models/HeartRecModel/HeartRecRepository");
+const BloodPressureRepository = require("../models/BloodPressureModel/BloodPressureRepository");
 const { v4: uuidv4 } = require("uuid");
 class RecordService extends CommonService {
   async getAll() {
@@ -10,9 +10,7 @@ class RecordService extends CommonService {
 
   async add(record) {
     record.id = uuidv4();
-    return await this.transaction(async (t) => {
-      await RecordRepository.add(record, t);
-    });
+    return await RecordRepository.add(record);
   }
 
   async getRecordById(id) {
@@ -28,15 +26,13 @@ class RecordService extends CommonService {
   }
 
   async updateRecordById(record, id) {
-    return await this.transaction(async (t) => {
-      await RecordRepository.updateById(record, id, t);
-    });
+    return await RecordRepository.updateById(record, id);
   }
 
   async deleteRecordById(id) {
     return await this.transaction(async (t) => {
-      // await HeartRecRepository.deleteById(id, t);
-      // await BloodRecRepository.deleteById(id, t);
+      await HeartRecRepository.deleteByRecordId(id, t);
+      await BloodPressureRepository.deleteByRecordId(id, t);
       await RecordRepository.deleteById(id, t);
     });
   }
