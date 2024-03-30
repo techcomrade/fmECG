@@ -3,13 +3,17 @@ const RecordService = require("../services/RecordService");
 
 class BloodPressureController {
   async getAllData(req, res) {
+    console.log(`[P]:::Get all bloodPressure records`);
     await BloodPressureService.getAllData()
       .then((rec) => {
-        if (rec.length) return res.status(200).json(rec);
+        if (rec.length)
+          return res.status(200).json({
+            message: "Get all bloodPressure records",
+            metadata: rec,
+          });
         return res.status(400).json("No record found");
       })
       .catch((err) => {
-        console.log(err);
         return res.status(400).json("get records failed");
       });
   }
