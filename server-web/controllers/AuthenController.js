@@ -5,8 +5,12 @@ class AuthenController {
     const account = req.body;
     const loginResult = await AuthenService.login(account);
     return loginResult
-      ? res.status(200).json("login successfully")
-      : res.status(400).json("login failed");
+      ? res.status(200).json({
+          message: "login successfully",
+        })
+      : res.status(400).json({
+          message: "login failed",
+        });
   }
   async register(req, res) {
     const account = req.body;
