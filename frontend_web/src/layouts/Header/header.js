@@ -7,13 +7,16 @@ import {
   SearchOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { removeLocalStorage } from "../../utils/storageUtils";
+import { showNotiError } from "../../components/Notification";
+import { httpGetBinData } from "../../api/bin.api";
 
 
 const Header = (item) => {
-  const handleLogOut = () => {
-    removeLocalStorage('username');
-    removeLocalStorage('token');
+  const redirectAPI = process.env.REACT_APP_BIN;
+
+  const handleLogOut = async () => {
+    const isLogout = await httpGetBinData('/logout')
+    window.location.href = redirectAPI;
   };
   
   const items = [
@@ -64,7 +67,7 @@ const Header = (item) => {
             >
                 <a onClick={(e) => e.preventDefault()}>
                   <Space>
-                  <Button >{item.userName}</Button>
+                    <Button >{item.userName}</Button>
                   </Space>
                 </a>
             </Dropdown>
