@@ -2,7 +2,7 @@ const BloodPressureService = require("../services/BloodPressureService");
 
 class BloodPressureMiddleware {
   async validateData(req, res, next) {
-    let validated = BloodPressureService.validateData(req.body).error;
+    let validated = BloodPressureService.ValidateBloodPressureRec(req.body).error;
     if (validated === true) next();
     return res
       .status(500)
