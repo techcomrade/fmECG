@@ -12,7 +12,7 @@ class AuthenController {
     const account = req.body;
     if (account.email && account.password) {
       const checkExistEmail = await AuthenService.checkEmail(account.email);
-      if (checkExistEmail) {
+      if (!checkExistEmail) {
         return res.status(400).json("Email exist");
       } else {
         try {
