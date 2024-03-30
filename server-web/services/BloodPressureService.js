@@ -23,6 +23,9 @@ class BloodPressureService extends CommonService {
   async getRecordByRecordId(rec_id) {
     return await BloodPressureModel.getRecordByRecordId(rec_id);
   }
+  async deleteByRecordId(rec_id) {
+    return await BloodPressureModel.deleteByRecordId(rec_id);
+  }
   ValidateBloodPressureRec(rec) {
     const schema = Joi.object({
       rec_id: Joi.string().required(),

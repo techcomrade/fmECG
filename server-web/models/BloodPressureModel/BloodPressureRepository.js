@@ -16,6 +16,13 @@ class BloodPressureModel {
       }
     );
   }
+  async deleteByRecordId(rec_id) {
+    return await BloodPressureDTO.destroy({
+      where: {
+        rec_id: rec_id,
+      }
+    })
+  }
   async add(rec) {
     return await BloodPressureDTO.create({
       id: rec.id,
