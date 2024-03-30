@@ -19,7 +19,6 @@ class AuthenController {
           await AuthenService.register(account);
           return res.status(200).json("Register successfully");
         } catch (err) {
-          console.log("controler: ", err);
           return res.status(500).json("Register error");
         }
       }

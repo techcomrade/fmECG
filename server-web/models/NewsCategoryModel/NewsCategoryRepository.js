@@ -10,11 +10,14 @@ class NewsCategoryModel {
       category_description: category.category_description,
     });
   }
-  async deleteById(id) {
+  async deleteById(id,t) {
     return await NewsCategoryDTO.destroy({
       where: {
         id: id,
       },
+    },
+    t && {
+      transaction: t,
     });
   }
   async updateById(category) {

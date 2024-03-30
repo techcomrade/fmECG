@@ -1,8 +1,8 @@
 const CommonService = require("./CommonService");
 const AccountRepository = require("../models/AccountModel/AccountRepository");
 const UserRepository = require("../models/UserModel/UserRepository");
-const TokenRepository = require("../models/TokenModel/TokenReponsitory");
-const TokenService = require("./TokenService");
+const TokenRepository = require("../models/TokenModel/TokenRepository");
+const TokenService = require('./TokenService');
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
 const { v4: uuidv4 } = require("uuid");

@@ -9,17 +9,10 @@ import { Routes } from "../route";
 const { Header, Content, Sider } = Layout;
 
 const DefaultLayout = ({children}) => {
-    const [isLogin, setIsLogin] = useState('true');
     const [state,setState] = useState('false');
-    const handleLogin = () =>{
-      setIsLogin(!isLogin);
-      setState(!state);
-      console.log(isLogin);
-    }
     const userName = getLocalStorage('username');
     const token = getLocalStorage('token')
     useEffect(()=>{
-      
     },[state])
 
     return(

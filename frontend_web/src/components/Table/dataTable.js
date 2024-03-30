@@ -1,73 +1,56 @@
 import { Table, Button, Col, Form, Input } from "antd";
-import { exportColumnTable, exportTableName } from "../../models/manage.table";
 import { useEffect, useState } from "react";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import "./dataTable.scss";
 import { addKeyElement, findElementById } from "../../utils/arrayUtils";
-import {
-    createData,
-    deleteData,
-    getData,
-    loadStatus,
-    updateData,
-} from "../../redux/reducer/userSlice";
+import { loadStatus } from "../../redux/reducer/userSlice";
 import { Modal } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { showNotiSuccess } from "../Notification";
 const { confirm } = Modal;
 
-const DataTable = () => {
-    const [column, setColumn] = useState([]);
+const DataTable = (props) => {
     const [tableData, setTableData] = useState([]);
     const [showModalEdit, setShowModalEdit] = useState(false);
     const [showModalCreate, setShowModalCreate] = useState(false);
     const [dataEdit, setDataEdit] = useState([]);
     const [dataCreate, setDataCreate] = useState({});
 
-
     const dispatch = useDispatch();
-    const dataState = useSelector((state) => state.user);
-
-    const url = window.location.pathname;
-    const urlArray = url.split("/");
-    const table = urlArray.pop();
+    const dataState = props.state || {};
+    const table = props.table;
 
     // Get data
     useEffect(() => {
-        setColumn(exportColumnTable(table));
-        dispatch(getData());
-    }, []);
-
-    useEffect(() => {
-    if (dataState.loadDataStatus === loadStatus.Success) {
-        const rawData = dataState.data.metadata;
-        if (rawData) {
-            setTableData(addKeyElement(rawData));
+        if (dataState.loadDataStatus === loadStatus.Success) {
+            const rawData = dataState.data.metadata;
+            if (rawData) {
+                setTableData(addKeyElement(rawData));
+            }
         }
-    }
     }, [dataState.loadDataStatus]);
 
     // Reload data when update success
     useEffect(() => {
         if (dataState.loadCreateDataStatus === loadStatus.Success) {
-            dispatch(getData());
+            dispatch(props.func.getData());
         }
     }, [dataState.loadCreateDataStatus]);
 
     // Reload data when update success
     useEffect(() => {
-        if (dataState.loadUpdateUserStatus === loadStatus.Success) {
-            dispatch(getData());
+        if (dataState.loadUpdateDataStatus === loadStatus.Success) {
+            dispatch(props.func.getData());
         }
-    }, [dataState.loadUpdateUserStatus]);
+    }, [dataState.loadUpdateDataStatus]);
 
     // Reload data when delete success
     useEffect(() => {
-        if (dataState.loadDeleteUserStatus === loadStatus.Success) {
-            dispatch(getData());
+        if (dataState.loadDeleteDataStatus === loadStatus.Success) {
+            dispatch(props.func.getData());
         }
-    }, [dataState.loadDeleteUserStatus]);
+    }, [dataState.loadDeleteDataStatus]);
 
     // Select row
     const rowSelection = {
@@ -115,7 +98,7 @@ const DataTable = () => {
         okType: "danger",
         cancelText: "Không",
         async onOk() {
-            dispatch(deleteData({id}));
+            dispatch(props.func.deleteData({id}));
             showNotiSuccess("Bạn đã xóa thành công");
         },
         onCancel() {},
@@ -129,7 +112,7 @@ const DataTable = () => {
     };
 
     const handleSubmitChange = async () => {
-        dispatch(updateData(dataEdit));
+        dispatch(props.func.updateData(dataEdit));
         setShowModalEdit(false);
         showNotiSuccess("Bạn đã cập nhật thành công");
     };
@@ -149,7 +132,7 @@ const DataTable = () => {
 
     return (
         <>
-            <h2>Bảng {exportTableName(table)}</h2>
+            <h2>Bảng {props.name}</h2>
             <div className="list-btn-actions">
                 <Button icon={<PlusOutlined />} onClick = {() => setShowModalCreate(true)}>Tạo</Button>
                 <Button icon={<EditOutlined />} className="edit-btn hide">Chỉnh sửa</Button>
@@ -161,7 +144,7 @@ const DataTable = () => {
                 ...rowSelection,
                 }}
                 bordered
-                columns={column}
+                columns={props.column}
                 dataSource={tableData}
             />
             <Modal
@@ -174,7 +157,7 @@ const DataTable = () => {
                 onCancel={() => setShowModalEdit(false)}
             >
                 <br />
-                {column.map((column) => (
+                {props.column.map((column) => (
                     <Col span={22} key={column.title}>
                         <Form.Item label={column.title}>
                         <Input
@@ -199,7 +182,7 @@ const DataTable = () => {
                 }}
             >
                 <br />
-                {column.map((column) => (
+                {props.column.map((column) => (
                     <Col span={22} key={column.title}>
                         <Form.Item label={column.title}>
                         <Input

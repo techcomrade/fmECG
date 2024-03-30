@@ -39,5 +39,12 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      // Check if the cookie exists (replace 'myCookieName' with your actual cookie name)
+      const cookieExists = document.cookie.includes('token');
+  
+      // Set a global variable to indicate whether the cookie exists
+      window.hasCookie = cookieExists;
+    </script>
   </body>
 </html>

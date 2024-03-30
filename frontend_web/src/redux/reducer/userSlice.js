@@ -70,22 +70,22 @@ const userSlice = createSlice({
       data: [],
       loadDataStatus: loadStatus.None,
       loadCreateDataStatus: loadStatus.None,
-      loadUpdateUserStatus: loadStatus.None,
-      loadDeleteUserStatus: loadStatus.None,
+      loadUpdateDataStatus: loadStatus.None,
+      loadDeleteDataStatus: loadStatus.None,
     },
     reducers: {
       resetLoadDataStatus: (state, action) => {
         state.data = [];
         state.loadDataStatus = loadStatus.None;
       },
-      resetCreateUserStatus: (state, action) => {
+      resetCreateDataStatus: (state, action) => {
         state.loadCreateDataStatus = loadStatus.None;
       },
-      resetUpdateUserStatus: (state, action) => {
-        state.loadUpdateUserStatus = loadStatus.None;
+      resetUpdateDataStatus: (state, action) => {
+        state.loadUpdateDataStatus = loadStatus.None;
       },
-      resetDeleteUserStatus: (state, action) => {
-        state.loadDeleteUserStatus = loadStatus.None;
+      resetDeleteDataStatus: (state, action) => {
+        state.loadDeleteDataStatus = loadStatus.None;
       },
     },
     extraReducers: (builder) => {
@@ -111,22 +111,22 @@ const userSlice = createSlice({
           state.loadCreateDataStatus = loadStatus.Failed;
         })
         .addCase(updateData.pending, (state, action) => {
-          state.loadUpdateUserStatus = loadStatus.Loading;
+          state.loadUpdateDataStatus = loadStatus.Loading;
         })
         .addCase(updateData.fulfilled, (state, action) => {
-          state.loadUpdateUserStatus = loadStatus.Success;
+          state.loadUpdateDataStatus = loadStatus.Success;
         })
         .addCase(updateData.rejected, (state, action) => {
-          state.loadUpdateUserStatus = loadStatus.Failed;
+          state.loadUpdateDataStatus = loadStatus.Failed;
         })
         .addCase(deleteData.pending, (state, action) => {
-          state.loadDeleteUserStatus = loadStatus.Loading;
+          state.loadDeleteDataStatus = loadStatus.Loading;
         })
         .addCase(deleteData.fulfilled, (state, action) => {
-          state.loadDeleteUserStatus = loadStatus.Success;
+          state.loadDeleteDataStatus = loadStatus.Success;
         })
         .addCase(deleteData.rejected, (state, action) => {
-          state.loadDeleteUserStatus = loadStatus.Failed;
+          state.loadDeleteDataStatus = loadStatus.Failed;
         })
     }
 });

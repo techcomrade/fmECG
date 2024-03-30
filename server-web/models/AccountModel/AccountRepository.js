@@ -16,11 +16,14 @@ class AccountRepository {
       }
     );
   }
-  async deleteById(id) {
+  async deleteById(id,t) {
     return await AccountDTO.destroy({
       where: {
         id: id,
       },
+    },
+    t && {
+      transaction: t,
     });
   }
   async updateById(account) {
