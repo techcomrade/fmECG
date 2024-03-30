@@ -8,6 +8,7 @@ class AuthenController {
       ? res.status(200).json("login successfully")
       : res.status(400).json("login failed");
   }
+
   async register(req, res) {
     const account = req.body;
     if (account.email && account.password) {
@@ -22,8 +23,6 @@ class AuthenController {
           return res.status(500).json("Register error");
         }
       }
-    } else {
-      return res.status(400).json("Register error");
     }
   }
 
