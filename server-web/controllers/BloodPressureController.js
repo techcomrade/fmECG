@@ -60,10 +60,13 @@ class BloodPressureController {
         })
         .catch((err) => {
           return res.status(500).json({
-            message: "no record found",
+            message: "delete record failed",
           });
         });
     }
+    else res.status(500).json({
+      message: "no record found",
+    });
   }
   async update(req, res) {
     const id = req.params.id;
