@@ -19,6 +19,7 @@ class RecordRepository {
       },
     });
   }
+
   async add(record, t) {
     return await RecordDTO.create(
       {
@@ -69,14 +70,6 @@ class RecordRepository {
         transaction: t,
       }
     );
-  }
-
-  async getRecordsByDeviceId(id) {
-    return await RecordDTO.findAll({
-      where: {
-        device_id: id,
-      },
-    });
   }
 }
 module.exports = new RecordRepository();
