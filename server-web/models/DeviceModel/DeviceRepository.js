@@ -30,6 +30,13 @@ class DeviceModel {
         id: id,
       }});
   }
+  async checkByUserId(user_id) {
+    return await DeviceDTO.findAll({
+      where: {
+        user_id: user_id,
+      }
+    })
+  }
   async updateById(device, id) {
     return await DeviceDTO.update({
       user_id: device.user_id,

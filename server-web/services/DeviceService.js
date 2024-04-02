@@ -24,6 +24,9 @@ class DeviceService extends CommonService {
     if(Device) return true;
     return false;
   }
+  async getDeviceByUserId(userId) {
+    return await DeviceModel.getDeviceByUserId(userId);
+  }
   ValidateDevice(device) {
     const schema = Joi.object({
       user_id: Joi.string().required(),
