@@ -24,7 +24,7 @@ class BloodPressureController {
   async add(req, res) {
     const record = req.body;
     const checkExistRecord = await RecordService.getRecordById(record.rec_id);
-    if (!checkExistRecord.dataValues)
+    if (!checkExistRecord?.dataValues)
       return res.status(400).json({
         message: "no record_id found",
       });
@@ -48,7 +48,7 @@ class BloodPressureController {
       let checkExistRecord = await BloodPressureService.getRecordById(
         record_id
       );
-      if (!checkExistRecord.dataValues)
+      if (!checkExistRecord?.dataValues)
         return res.status(400).json({
           message: "no record_id found",
         });
@@ -72,12 +72,12 @@ class BloodPressureController {
     const id = req.params.id;
     const record = req.body;
     let checkExistBPRecord = await BloodPressureService.getRecordById(id);
-    if (!checkExistBPRecord.dataValues)
+    if (!checkExistBPRecord?.dataValues)
       return res.status(400).json({
         message: "no recordBP_id found",
       });
     const checkExistRecord = await RecordService.getRecordById(record.rec_id);
-    if (!checkExistRecord.dataValues)
+    if (!checkExistRecord?.dataValues)
       return res.status(400).json("no record_id found");
     await BloodPressureService.updateById(record, id)
       .then(() => {
