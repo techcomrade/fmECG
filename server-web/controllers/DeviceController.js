@@ -22,9 +22,11 @@ class DeviceController {
       });
   }
   async add(req, res) {
+    console.log(`[P]:::Add device data`, req.body);
     const device = req.body;
     const checkExistUser = await UserService.getUserById(device.user_id);
-    if (!checkExistUser.length) {
+    console.log(checkExistUser);
+    if (!checkExistUser[0]?.dataValues) {
       return res.status(400).json({
         message: "no user found",
       });
@@ -46,10 +48,15 @@ class DeviceController {
       });
   }
   async delete(req, res) {
+    console.log(`[P]:::Delete device data`, req.params.id);
     const device_id = req.params.id;
     if (device_id) {
       let checkExistDevice = await DeviceService.checkDevice(device_id);
-      if (checkExistDevice) {
+      if (!checkExistDevice?.dataValues) {
+        return res.status(400).json({
+          message: "no device found",
+        });
+      }
         await DeviceService.deleteById(device_id)
           .then((checked) => {
             if (checked)
@@ -66,19 +73,16 @@ class DeviceController {
               message: "delete device failed",
             });
           });
-      } else
-        return res.status(400).json({
-          message: "no device found",
-        });
-    }
+      } 
   }
   async update(req, res) {
+    console.log(`[P]:Update device data`, req.body);
     const id = req.params.id;
     const device = req.body;
     let checkExistDevice = await DeviceService.checkDevice(id);
-    if (checkExistDevice) {
+    if (checkExistDevice?.dataValues) {
       const checkExistUser = await UserService.getUserById(device.user_id);
-      if (!checkExistUser.length) {
+      if (!checkExistUser[0]?.dataValues) {
         return res.status(400).json({
           message: "no user found",
         });
