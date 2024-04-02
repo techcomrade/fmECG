@@ -22,9 +22,10 @@ class BloodPressureController {
       });
   }
   async add(req, res) {
+    console.log(`[P]:::Add bloodPressure record`, req.body);
     const record = req.body;
     const checkExistRecord = await RecordService.getRecordById(record.rec_id);
-    if (!checkExistRecord.dataValues)
+    if (!checkExistRecord?.dataValues)
       return res.status(400).json({
         message: "no record_id found",
       });
@@ -43,12 +44,13 @@ class BloodPressureController {
       });
   }
   async delete(req, res) {
+    console.log(`[P]:::Delete BloodPressure record by id`, req.params.id);
     const record_id = req.params.id;
     if (record_id) {
       let checkExistRecord = await BloodPressureService.getRecordById(
         record_id
       );
-      if (!checkExistRecord.dataValues)
+      if (!checkExistRecord?.dataValues)
         return res.status(400).json({
           message: "no record_id found",
         });
@@ -60,21 +62,25 @@ class BloodPressureController {
         })
         .catch((err) => {
           return res.status(500).json({
-            message: "no record found",
+            message: "delete record failed",
           });
         });
     }
+    else res.status(500).json({
+      message: "no record found",
+    });
   }
   async update(req, res) {
+    console.log(`[P]:::Update BloodPressure by id`,  req.body);
     const id = req.params.id;
     const record = req.body;
     let checkExistBPRecord = await BloodPressureService.getRecordById(id);
-    if (!checkExistBPRecord.dataValues)
+    if (!checkExistBPRecord?.dataValues)
       return res.status(400).json({
         message: "no recordBP_id found",
       });
     const checkExistRecord = await RecordService.getRecordById(record.rec_id);
-    if (!checkExistRecord.dataValues)
+    if (!checkExistRecord?.dataValues)
       return res.status(400).json("no record_id found");
     await BloodPressureService.updateById(record, id)
       .then(() => {
