@@ -22,6 +22,7 @@ class BloodPressureController {
       });
   }
   async add(req, res) {
+    console.log(`[P]:::Add bloodPressure record`, req.body);
     const record = req.body;
     const checkExistRecord = await RecordService.getRecordById(record.rec_id);
     if (!checkExistRecord?.dataValues)
@@ -43,6 +44,7 @@ class BloodPressureController {
       });
   }
   async delete(req, res) {
+    console.log(`[P]:::Delete BloodPressure record by id`, req.params.id);
     const record_id = req.params.id;
     if (record_id) {
       let checkExistRecord = await BloodPressureService.getRecordById(
@@ -69,6 +71,7 @@ class BloodPressureController {
     });
   }
   async update(req, res) {
+    console.log(`[P]:::Update BloodPressure by id`,  req.body);
     const id = req.params.id;
     const record = req.body;
     let checkExistBPRecord = await BloodPressureService.getRecordById(id);
