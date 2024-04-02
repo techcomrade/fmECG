@@ -11,26 +11,48 @@
       <!-- FORM SECTION -->
       <div class="row">
         <!-- SIGN UP -->
-        <div class="col align-items-center flex-col sign-up">
-          <div class="form-wrapper align-items-center">
+        <div class="col flex-col sign-up">
+          <div class="form-wrapper">
             <div class="form sign-up">
               <div class="input-group">
                 <i class="bx bxs-user"></i>
-                <input type="text" placeholder="Username" />
+                <input type="text" placeholder="Username" id="sign-up-username" required />
               </div>
               <div class="input-group">
                 <i class="bx bx-mail-send"></i>
-                <input type="email" placeholder="Email" />
+                <input type="email" placeholder="Email" id="sign-up-email" required />
               </div>
               <div class="input-group">
                 <i class="bx bxs-lock-alt"></i>
-                <input type="password" placeholder="Password" />
+                <input type="password" placeholder="Password" id="sign-up-password" required />
               </div>
               <div class="input-group">
                 <i class="bx bxs-lock-alt"></i>
-                <input type="password" placeholder="Confirm password" />
+                <input type="password" placeholder="Confirm password" id="confirm-password" required />
               </div>
-              <button>Sign up</button>
+              <div class="input-group">
+                <i class="bx bxs-role"></i>
+                  <select id="sign-up-role" required>
+                    <option value="">Choose a role</option>
+                    <option value="0">Patient</option>
+                    <option value="1">Doctor</option>
+                  </select>
+              </div>       
+              <div class="input-group">
+                <i class="bx bxs-birth"></i>
+                <label for="birthday">Date of birth:</label>
+                <input type="date" placeholder="Birth" id="sign-up-birth" required/>
+              </div>
+              <div class="input-group">
+                <i class="bx bxs-phone"></i>
+                <input type="text" placeholder="Phone Number" id="sign-up-phone-number" />
+              </div>
+              <div class="input-group">
+                <i class="bx bxs-img"></i>
+                <label for="img">Select an image:</label>
+                <input type="file" id="sign-up-img" />
+              </div>
+              <button onclick="signupFunction()" >Sign up</button>
               <p>
                 <span> Already have an account? </span>
                 <b onclick="toggle()" class="pointer"> Sign in here </b>
@@ -150,6 +172,60 @@
           window.alert("input username and password");
         }
       };
+
+      var signupUrl ="http://localhost:3000/api/auth/register";
+      const signupFunction = async () => {
+        const username = document.querySelector("#sign-up-username").value;
+        const email = document.querySelector("#sign-up-email").value;
+        const password = document.querySelector("#sign-up-password").value;
+
+        const birthConvert = document.querySelector("#sign-up-birth").value;
+        const birth = Date.parse(birthConvert);
+
+        const role = document.querySelector("#sign-up-role").value;
+        const confirmPassword = document.querySelector("#confirm-password").value;
+        const phone_number = document.querySelector("#sign-up-phone-number").value;
+
+        // const inputImg = document.querySelector("#sign-up-img").files[0];
+        // const fReader = new FileReader();
+        // fReader.readAsDataURL(inputImg);
+
+        if(username && email && password && role && birth && confirmPassword && confirmPassword === password) {
+          try {
+            const image = e.target.result;
+            console.log(image)
+            const signupResult = await fetch(signupUrl, {
+              method: "POST",
+              mode: "cors", 
+              cache: "no-cache", 
+              credentials: "same-origin", 
+              headers: {
+                "Content-Type": "application/json",
+              },
+              redirect: "follow",
+              referrerPolicy: "no-referrer",
+              body: JSON.stringify({
+                username: username,
+                email: email,
+                password: password,
+                role: role,
+                birth: birth,
+                phone_number: phone_number,
+                image: image,
+              }),
+            });
+            if (signupResult.ok) {
+              window.location.reload();
+            } else {
+              window.alert("Something went wrong, please try again!")
+            }       
+          } catch(err) {
+            window.alert("Error when sign up!");
+          }
+        } else {
+          window.alert("Please fill out all required fields!");
+        }
+      }
     </script>
   </body>
 </html>
