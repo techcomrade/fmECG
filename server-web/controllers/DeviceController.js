@@ -3,77 +3,105 @@ const UserService = require("../services/UserService");
 
 class DeviceController {
   async getAllData(req, res) {
+    console.log(`[P]:::Get all devices data`);
     await DeviceService.getAllData()
       .then((devices) => {
-        if (devices.length) return res.status(200).json(devices);
-        else return res.status(400).json("No devices found");
+        if (devices.length)
+          return res.status(200).json({
+            message: "get all devices",
+            metaData: devices,
+          });
+        return res.status(400).json({
+          message: "No devices found",
+        });
       })
       .catch((err) => {
-        return res.status(400).json("get devices failed");
+        return res.status(400).json({
+          message: "get devices failed",
+        });
       });
   }
   async add(req, res) {
-    try {
-      const device = req.body;
-      const checkExistUser = await UserService.getUserById(device.user_id);
-      if (!checkExistUser.length) {
-        return res.status(400).json("no user found");
-      }
-      await DeviceService.add(device)
-        .then((checked) => {
-          if (checked) return res.status(200).json("add device successfully");
-          return res.status(500).json("err server add failed");
-        })
-        .catch((err) => {
-          return res.status(400).json( "add device failed");
-        });
-    } catch (err) {
-      return res.status(400).json("add device failed");
+    console.log(`[P]:::Add device data`, req.body);
+    const device = req.body;
+    const checkExistUser = await UserService.getUserById(device.user_id);
+    console.log(checkExistUser);
+    if (!checkExistUser[0]?.dataValues) {
+      return res.status(400).json({
+        message: "no user found",
+      });
     }
+    await DeviceService.add(device)
+      .then((checked) => {
+        if (checked)
+          return res.status(200).json({
+            message: "add device successfully",
+          });
+        return res.status(500).json({
+          message: "err server add failed",
+        });
+      })
+      .catch((err) => {
+        return res.status(400).json({
+          message: "add device failed",
+        });
+      });
   }
   async delete(req, res) {
-    try {
-      const device_id = req.params.id;
-      if (device_id) {
-        await DeviceService.checkDevice(device_id)
-          .then(async (checked) => {
-          
-            if (checked) {
-              await DeviceService.deleteById(device_id);
-              return res.status(200).json("delete device successfully");
-            }
-            return res.status(500).json("no device found");
+    console.log(`[P]:::Delete device data`, req.params.id);
+    const device_id = req.params.id;
+    if (device_id) {
+      let checkExistDevice = await DeviceService.checkDevice(device_id);
+      if (!checkExistDevice?.dataValues) {
+        return res.status(400).json({
+          message: "no device found",
+        });
+      }
+        await DeviceService.deleteById(device_id)
+          .then((checked) => {
+            if (checked)
+              return res.status(200).json({
+                message: "delete device successfully",
+              });
+            else
+              return res.status(500).json({
+                message: "delete device failed",
+              });
           })
           .catch((err) => {
-            return res.status(400).json("error");
+            return res.status(500).json({
+              message: "delete device failed",
+            });
           });
-      }
-    } catch (err) {
-      return res.status(400).json("delete device failed");
-    }
+      } 
   }
   async update(req, res) {
-    try {
-      const id = req.params.id;
-      const device = req.body;
-      await DeviceService.checkDevice(id)
-        .then(async (checked) => {
-          if (checked) {
-            const checkExistUser = await UserService.getUserById(device.user_id);
-            if (!checkExistUser.length) {
-              return res.status(400).json("no user found");
-            }
-            await DeviceService.updateById(device, id);
-            return res.status(200).json("update device successfully");
-          }
-          return res.status(500).json("no device found");
+    console.log(`[P]:Update device data`, req.body);
+    const id = req.params.id;
+    const device = req.body;
+    let checkExistDevice = await DeviceService.checkDevice(id);
+    if (checkExistDevice?.dataValues) {
+      const checkExistUser = await UserService.getUserById(device.user_id);
+      if (!checkExistUser[0]?.dataValues) {
+        return res.status(400).json({
+          message: "no user found",
+        });
+      }
+      await DeviceService.updateById(device, id)
+        .then(() => {
+          return res.status(200).json({
+            message: "update device successfully",
+          });
         })
         .catch((err) => {
-          return res.status(400).json("check device failed");
+          return res.status(500).json({
+            message: "update device failed",
+          });
         });
-    } catch (err) {
-      return res.status(400).json("update device failed");
-    }
+    } else
+      return res.status(400).json({
+        message: "no device found",
+      });
   }
 }
 
