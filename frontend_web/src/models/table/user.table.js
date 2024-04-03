@@ -1,4 +1,4 @@
-import { createData, deleteData, getData, updateData } from "../../redux/reducer/userSlice";
+import { createUser, deleteUser, getUser, updateUser } from "../../redux/reducer/userSlice";
 
 class UserData {
     getColumnShow() {
@@ -25,10 +25,10 @@ class UserData {
 
     getFunction() {
       return {
-        createData: createData,
-        getData: getData,
-        updateData: updateData,
-        deleteData: deleteData
+        createData: createUser,
+        getData: getUser,
+        updateData: updateUser,
+        deleteData: deleteUser
       }
     }
 }

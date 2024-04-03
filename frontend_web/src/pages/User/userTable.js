@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import DataTable from "../../components/Table/dataTable";
 import { useEffect } from "react";
-import { getData } from "../../redux/reducer/userSlice";
+import { getUser } from "../../redux/reducer/userSlice";
 import { exportColumnTable, exportFunction, exportTableName } from "../../models/manage.table";
 
 const UserTable = () => {
@@ -12,7 +12,7 @@ const UserTable = () => {
     const column = exportColumnTable(table);
 
     useEffect(() => {
-        dispatch(getData());
+        dispatch(getUser());
     }, []);
 
     return (

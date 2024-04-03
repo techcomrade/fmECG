@@ -1,10 +1,10 @@
-import { Table, Button, Col, Form, Input } from "antd";
+import { Table, Button, Col, Form, Input, DatePicker } from "antd";
 import { useEffect, useState } from "react";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { loadStatus } from "../../redux/reducer/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "./dataTable.scss";
 import { addKeyElement, findElementById } from "../../utils/arrayUtils";
-import { loadStatus } from "../../redux/reducer/userSlice";
 import { Modal } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { showNotiSuccess } from "../Notification";
@@ -25,6 +25,7 @@ const DataTable = (props) => {
     useEffect(() => {
         if (dataState.loadDataStatus === loadStatus.Success) {
             const rawData = dataState.data.metadata;
+            console.log(dataState);
             if (rawData) {
                 setTableData(addKeyElement(rawData));
             }
@@ -160,11 +161,17 @@ const DataTable = (props) => {
                 {props.column.map((column) => (
                     <Col span={22} key={column.title}>
                         <Form.Item label={column.title}>
-                        <Input
-                            name={column.dataIndex}
-                            value={dataEdit[column.dataIndex]} 
-                            onChange={(e) => handleChangeInput(column.dataIndex, e.target.value)}
-                        />
+                        {column.dataIndex.includes('date') ? 
+                            <DatePicker 
+                                format={'DD/MM/YYYY'} 
+                                name={column.dataIndex}
+                                defaultValue={dataEdit[column.dataIndex]} 
+                                onChange={(dateString) => handleChangeInput(column.dataIndex, dateString)} 
+                            /> : <Input
+                                name={column.dataIndex}
+                                value={dataEdit[column.dataIndex]} 
+                                onChange={(e) => handleChangeInput(column.dataIndex, e.target.value)}
+                            />}
                         </Form.Item>
                     </Col>
                 ))}
@@ -185,11 +192,18 @@ const DataTable = (props) => {
                 {props.column.map((column) => (
                     <Col span={22} key={column.title}>
                         <Form.Item label={column.title}>
-                        <Input
-                            name={column.dataIndex}
-                            value={dataCreate[column.dataIndex]} 
-                            onChange={(e) => handleChangeInputCreate(column.dataIndex, e.target.value)}
-                        />
+                        {column.dataIndex.includes('date') ? 
+                            <DatePicker 
+                                format={'DD/MM/YYYY'} 
+                                name={column.dataIndex}
+                                defaultValue={dataCreate[column.dataIndex]} 
+                                onChange={(dateString) => handleChangeInputCreate(column.dataIndex, dateString)}
+                            /> : <Input
+                                name={column.dataIndex}
+                                value={dataCreate[column.dataIndex]} 
+                                onChange={(e) => handleChangeInputCreate(column.dataIndex, e.target.value)}
+                            />
+                        }
                         </Form.Item>
                     </Col>
                 ))}

@@ -1,3 +1,4 @@
+import { createDevice, deleteDevice, getDevice, updateDevice } from "../../redux/reducer/deviceSlice";
 
 class DeviceData {
     getColumnShow() {
@@ -29,6 +30,10 @@ class DeviceData {
 
     getFunction() {
         return {
+            createData: createDevice,
+            getData: getDevice,
+            updateData: updateDevice,
+            deleteData: deleteDevice
         }
       }
 }
