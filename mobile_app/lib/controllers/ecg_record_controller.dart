@@ -39,10 +39,7 @@ class ECGRecordController {
   static Future<void> getAllECGRecords(int userId) async {
     try {
       final String url = APIConstant.apiUrlProduction + 'ecg-records/patient/$userId';
-
-      int time = DateTime.now().millisecondsSinceEpoch;
       final Response response = await Dio().get(url);
-      int real = DateTime.now().millisecondsSinceEpoch - time;
 
       final responseData = response.data;
       if (responseData["status"] == "success") {
@@ -58,9 +55,7 @@ class ECGRecordController {
     try {
       final String url = APIConstant.apiUrlProduction + 'ecg-records/record-data/$recordId';
 
-      int time = DateTime.now().millisecondsSinceEpoch;
       final Response response = await Dio().get(url);
-      int real = DateTime.now().millisecondsSinceEpoch - time;
       final responseData = response.data;
       if (responseData["status"] == "success") {
         List ecgRecordData = responseData["data"];

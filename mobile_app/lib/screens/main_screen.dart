@@ -17,8 +17,6 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-Color LIME = const Color(0xFF094D55);
-
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 

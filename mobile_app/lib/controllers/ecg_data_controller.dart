@@ -2,8 +2,8 @@ import 'dart:math' as math;
 
 
 class ECGDataController {
-  static const double REFERENCE_VOLTAGE = 4.5;
-  static const List<int> CHANNELS_NUMBER = [1, 2, 3, 4];
+  static const double referenceVoltage = 4.5;
+  static const List<int> channelsNumber = [1, 2, 3, 4];
   /// Explanation for handling data ECG
 
   /// bytes (1 row data) variable: 1 list int include 16 numbers corresponding to 16 bytes (uint8).
@@ -18,7 +18,7 @@ class ECGDataController {
     /// 1 row include calculated figure for each channel like sample: [figureChannel1, figureChannel2, figureChannel3, figureChannel4]
     final List<double> row = [];
 
-    for (var channelNumber in CHANNELS_NUMBER) {
+    for (var channelNumber in channelsNumber) {
       if (channelNumber == 4) continue; //tạm thời chưa sử dụng channelNumber4
       List<int> channelBytes = getChannelsSplittedBytes(channelsBytes, channelNumber);
       double channelFigure = calculateByteToDecimal(channelBytes);
@@ -95,10 +95,9 @@ class ECGDataController {
   }
 
   // tính điện áp để vẽ ra biểu đồ
-  //TODO: HANDLE LIST<TYPE> 
   static List calculateDataPointToShow(List row) {
     List dataPoints = row.map((decimalValue) => 
-                                    (decimalValue * REFERENCE_VOLTAGE) / (math.pow(2, 23) - 1).toDouble()).toList();
+                                    (decimalValue * referenceVoltage) / (math.pow(2, 23) - 1).toDouble()).toList();
     return dataPoints;
   }
 
@@ -128,7 +127,7 @@ class ECGDataController {
     /// [figureChannel1, figureChannel2, figureChannel3, figureChannel4]
     final List<double> row = [];
 
-    for (var channelNumber in CHANNELS_NUMBER) {
+    for (var channelNumber in channelsNumber) {
       List<int> channelBytes = getChannelsSplittedBytes(bytes, channelNumber);
       double channelFigure = calculateByteToDecimal(channelBytes);
       row.add(channelFigure);
