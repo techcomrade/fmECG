@@ -82,7 +82,7 @@ class FmECGAppState extends State<FmECGApp> {
         Utils.globalContext = ctx;
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: (auth.theme == ThemeType.DARK
+          theme: (auth.theme == ThemeType.dark
                   ? ThemeECG.darkTheme
                   : ThemeECG.lightTheme)
               .copyWith(
