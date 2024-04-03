@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum ThemeType { DARK, LIGHT }
+enum ThemeType { dark, light }
 
 UserProvider userProvider =
     Provider.of<UserProvider>(Utils.globalContext!, listen: false);
@@ -19,7 +19,7 @@ UserProvider userProvider =
 class AuthProvider extends ChangeNotifier {
   String _token = "";
   final String _firebaseToken = "";
-  var _expiryDate;
+  DateTime? _expiryDate;
   final int _userId = 0;
   final int _roleId = -1;
   String _locale = 'en';
@@ -74,12 +74,12 @@ class AuthProvider extends ChangeNotifier {
   //   if (status) notifyListeners();
   // }
 
-  ThemeType get theme => _isDarkTheme ? ThemeType.DARK : ThemeType.LIGHT;
+  ThemeType get theme => _isDarkTheme ? ThemeType.dark : ThemeType.light;
   set theme(ThemeType type) => setTheme(type, false);
 
   void setTheme(ThemeType type, bool isAuto) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    _isDarkTheme = type == ThemeType.DARK;
+    _isDarkTheme = type == ThemeType.dark;
     await preferences.setBool('isAutoTheme', isAuto);
     bool status = await preferences.setBool('isDark', _isDarkTheme);
 
@@ -96,7 +96,7 @@ class AuthProvider extends ChangeNotifier {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var theme = preferences.getBool('isDark');
     _isDarkTheme = theme ?? true;
-    return _isDarkTheme ? ThemeType.DARK : ThemeType.LIGHT;
+    return _isDarkTheme ? ThemeType.dark : ThemeType.light;
   }
 
   bool get isAutoTheme => _isAutoTheme;
@@ -153,8 +153,7 @@ class AuthProvider extends ChangeNotifier {
     bool isFirebaseTokenExisted =
         await FmECGFirebaseMessage().checkFirebaseTokenExist(_firebaseToken);
     if (!isFirebaseTokenExisted) {
-      await FmECGFirebaseMessage()
-          .saveTokenToFirestore(_userId, _firebaseToken);
+      await FmECGFirebaseMessage().saveTokenToFirestore(_userId, _firebaseToken);
     }
   }
 

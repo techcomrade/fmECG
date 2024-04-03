@@ -37,13 +37,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   Widget _buildListTile({required String title, required IconData icon, required Color iconColor, VoidCallback? onTap}) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4), // Khoảng cách giữa các ListTile
+      margin: const EdgeInsets.symmetric(vertical: 4), // Khoảng cách giữa các ListTile
       decoration: BoxDecoration(
         border: Border.all(color: Colors.white10), // Viền xám cho mỗi ListTile
         borderRadius: BorderRadius.circular(10), // Góc bo tròn
       ),
       child: ListTile(
-        title: Text(title, style: TextStyle(
+        title: Text(title, style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize:13,
         ),
@@ -65,26 +65,26 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(13.0),
+            padding: const EdgeInsets.all(13.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 20),
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 60,
                   backgroundImage: AssetImage('assets/images/doctor.png'),
                   backgroundColor: Colors.transparent, // Set the background color to transparent
 
                 ),
-                SizedBox(height: 5),
-                Text(
+                const SizedBox(height: 5),
+                const Text(
                   'Viet Hoang',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
                 ),
-                Text(
+                const Text(
                   'Hà Nội, Việt Nam',
                   style: TextStyle(
                     fontWeight: FontWeight.normal,
@@ -92,19 +92,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     color: Colors.black54,
                   ),
                 ),
-                SizedBox(height: 20),
-                Container(
+                const SizedBox(height: 20),
+                SizedBox(
                   height: 100,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
-                      InfoCard(title: 'Age', value: '30', unit: 'years'),
-                      InfoCard(title: 'Weight', value: '90', unit: 'kg'),
-                      InfoCard(title: 'Height', value: '190', unit: 'cm'),
+                      const InfoCard(title: 'Age', value: '30', unit: 'years'),
+                      const InfoCard(title: 'Weight', value: '90', unit: 'kg'),
+                      const InfoCard(title: 'Height', value: '190', unit: 'cm'),
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _buildListTile(title: 'Personal Info', icon: Icons.person, iconColor: Colors.blue, onTap: () {}),
                 _buildListTile(title: 'My Appointments', icon: Icons.calendar_today, iconColor: Colors.orange, onTap: () {}),
                 _buildListTile(title: 'My Doctors', icon: Icons.local_hospital, iconColor: Colors.red, onTap: () {}),
@@ -134,7 +134,7 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(5),
+      margin: const EdgeInsets.all(5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
@@ -149,16 +149,16 @@ class InfoCard extends StatelessWidget {
           children: <Widget>[
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black45,
                 fontSize: 10,
                 fontWeight: FontWeight.normal,
               ),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
               '$value $unit',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
