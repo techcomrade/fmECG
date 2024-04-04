@@ -49,6 +49,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.align-center {
   text-align: center;
 }
 
@@ -68,6 +71,14 @@ body {
   transition-delay: 1s;
 }
 
+.fa-eye {
+  right: 4%;
+}
+
+.fa-eye-slash {
+  right: 4%;
+}
+
 .input-group {
   position: relative;
   width: 100%;
@@ -77,7 +88,6 @@ body {
 .input-group i {
   position: absolute;
   top: 50%;
-  left: 1rem;
   transform: translateY(-50%);
   font-size: 1.4rem;
   color: var(--gray-2);
