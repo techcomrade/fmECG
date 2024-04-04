@@ -5,5 +5,5 @@
 4. Run 'npm run migration' to migration sql 
 5. Run 'npm start' to run server-web
 
-# Note
+## Note
 Password for all of account is "123456a@"

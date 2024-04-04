@@ -18,6 +18,7 @@ Project fmECG is Application for measuring ECG pregnant's data that uses Flutter
 ### NodeJS (server)
 You can choose one of two following approach:
 1. Using localhost 
+
 Make sure you turn on MySQL server (or turn on with xampp) and config .env file with your SQL server
 ```bash
 cd server
@@ -36,6 +37,7 @@ If terminal shows `Connection to MySQL database has been established successfull
 
 ### ReactJS (frontend)
 1. Run the bin folder (required NodeJS v18 or higher version)
+
 Bin is a small NodeJS project to authenticate in front-end with cookies because ReactJS can not process cookies and set header for network. 
 ```bash
 cd frontend_web
