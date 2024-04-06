@@ -7,10 +7,6 @@ class DeviceModel {
         exclude: ['created_at', 'updated_at']
       }    
     });
-    devices.map(val => {
-      val.start_date = convertDateNormal(val.start_date);
-      val.end_date = convertDateNormal(val.end_date);
-    })
     return devices;
   }
   
