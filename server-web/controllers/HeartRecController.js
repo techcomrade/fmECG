@@ -12,7 +12,7 @@ class HeartRecController {
   }
 
   async getHeartRecByDeviceId(req, res) {
-    console.log(`[P]:::Get all heart_rec by email: `, req.body.device_id);
+    console.log(`[P]:::Get all heart_rec by device_id: `, req.body.device_id);
     const foundHeartRec = await HeartRecService.getHeartRecByEmail(req.body.device_id);
     if(foundHeartRec) {
         return res.status(200).json({
@@ -39,6 +39,17 @@ class HeartRecController {
           message: "Error when delete heart_rec!",
         });
       }
+  }
+
+  async updateHeartRecByDeviceId(req, res) {
+    console.log(`[P]:::Update HeartRec by device_id`,  req.body.device_id);
+    const device_id = req.body.device_id;
+    let checkExistHeartRec = await HeartRecService.getHeartRecByDeviceId(device_id);
+    if (!checkExistHeartRec?.dataValues) {
+      return res.status(400).json({
+        message: 'no HeartRec found'
+      })
+    }
   }
 }
 

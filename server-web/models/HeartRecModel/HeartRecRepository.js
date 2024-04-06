@@ -23,9 +23,14 @@ class HeartRecModel {
   async getHeartRecByDeviceId(device_id) {
     return await HeartRecDTO.fineOne({
       where: {
-        id: device_id,
-      },
+        id: device_id
+      }
     });
+  }
+  async updateHeartRecByDeviceId(device_id) {
+    where: {
+      id: device_id
+    }
   }
 }
 

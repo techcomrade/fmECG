@@ -6,7 +6,7 @@ const HeartRecRouter = require("./HeartRecRouter");
 
 const router = express.Router();
 
-router.use("/heartrec", HeartRecRouter);
+router.use("/heart_rec", HeartRecRouter);
 
 router.use("/auth", AuthenRouter);
 
