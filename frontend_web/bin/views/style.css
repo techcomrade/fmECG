@@ -72,11 +72,13 @@ body {
 }
 
 .fa-eye {
-  right: 4%;
+  right: 5%;
+  font-size: 1.1em !important;
 }
 
 .fa-eye-slash {
-  right: 4%;
+  right: 5%;
+  font-size: 1.1em !important;
 }
 
 .input-group {

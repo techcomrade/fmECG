@@ -219,15 +219,13 @@
         const role = document.querySelector("#sign-up-role").value;
         const confirmPassword = document.querySelector("#confirm-password").value;
         const phone_number = document.querySelector("#sign-up-phone-number").value;
+        const image = document.querySelector("#sign-up-img").value ?? "";
 
-        // const inputImg = document.querySelector("#sign-up-img").files[0];
         // const fReader = new FileReader();
         // fReader.readAsDataURL(inputImg);
 
-        if(username && email && password && role && birth && confirmPassword && confirmPassword === password) {
+        if(confirmPassword && confirmPassword === password) {
           try {
-            const image = e.target.result;
-            console.log(image)
             const signupResult = await fetch(signupUrl, {
               method: "POST",
               mode: "cors", 
@@ -251,13 +249,21 @@
             if (signupResult.ok) {
               window.location.reload();
             } else {
-              window.alert("Something went wrong, please try again!")
+              let data = await signupResult.json()
+              console.log(data.message)
+              window.alert(data.message)
             }       
           } catch(err) {
+            let data = await signupResult.json()
+            console.log(data.message)
             window.alert("Error when sign up!");
           }
-        } else {
-          window.alert("Please fill out all required fields!");
+        }
+        if(!confirmPassword) {
+          window.alert("\"Confirm password\" is not allowed to be empty");
+        }
+        if(confirmPassword && confirmPassword !== password) {
+          window.alert("Confirm password is wrong, please try again");
         }
       }
     </script>
