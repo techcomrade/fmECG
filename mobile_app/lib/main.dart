@@ -7,8 +7,6 @@ import 'package:bluetooth_ecg/providers/bluetooth_provider.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
-import 'package:bluetooth_ecg/screens/auth_screens/login1_screen.dart';
-import 'package:bluetooth_ecg/screens/main_screen.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +82,7 @@ class FmECGAppState extends State<FmECGApp> {
         Utils.globalContext = ctx;
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: (auth.theme == ThemeType.DARK
+          theme: (auth.theme == ThemeType.dark
                   ? ThemeECG.darkTheme
                   : ThemeECG.lightTheme)
               .copyWith(
@@ -95,7 +93,7 @@ class FmECGAppState extends State<FmECGApp> {
           )),
           darkTheme: ThemeECG.darkTheme,
           //home: const MainScreen(),
-          home: App(),
+          home: const App(),
           //const Login1Screen(),
           // auth.isAuth
           //     ? const MainScreen()

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class App extends StatelessWidget {
-  const App();
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class App extends StatelessWidget {
 }
 
 class BlocNavigate extends StatefulWidget {
-  const BlocNavigate();
+  const BlocNavigate({Key? key}) : super(key: key);
 
   @override
   State<BlocNavigate> createState() => _BlocNavigateState();
