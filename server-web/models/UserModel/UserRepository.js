@@ -30,25 +30,46 @@ class UserModel {
     );
   }
 
-  async deleteById(id) {
-    return await UserDTO.destroy({
-      where: {
-        id: id,
+  async deleteById(id, t) {
+    return await UserDTO.destroy(
+      {
+        where: {
+          id: id,
+        },
       },
-    });
+      t && {
+        transaction: t,
+      }
+    );
   }
 
-  async updateById(user) {
+  async updateById(user, t) {
     return await UserDTO.update(
       {
         username: user.username,
         birth: user.birth,
         phone_number: user.phone_number,
         image: user.image,
-        role: user.role,
       },
       {
-        id: user.id,
+        where: {
+          id: user.id,
+        },
+      },
+      t && {
+        transaction: t,
+      }
+    );
+  }
+  async updateRoleById(id, role) {
+    return await UserDTO.update(
+      {
+        role: role,
+      },
+      {
+        where: {
+          id: id,
+        },
       }
     );
   }

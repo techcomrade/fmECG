@@ -3,6 +3,7 @@ class HeartRecModel {
   async getAllData() {
     return await HeartRecDTO.findAll();
   }
+
   async add(heart_rec, t) {
     return await HeartRecDTO.create(
       {
@@ -13,13 +14,7 @@ class HeartRecModel {
       }
     );
   }
-  async deleteById(id) {
-    return await HeartRecDTO.destroy({
-      where: {
-        id: id,
-      },
-    });
-  }
+  
   async getHeartRecByDeviceId(device_id) {
     return await HeartRecDTO.fineOne({
       where: {
@@ -31,6 +26,17 @@ class HeartRecModel {
     where: {
       id: device_id
     }
+
+  async deleteById(id,t){
+    return await HeartRecDTO.destroy({
+      where:{
+        id:id
+      }
+    },
+    t && {
+      transaction: t,
+    })
+
   }
 }
 

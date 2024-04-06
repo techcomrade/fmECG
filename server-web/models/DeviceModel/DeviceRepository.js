@@ -14,11 +14,14 @@ class DeviceModel {
       end_date: device.end_date,
     });
   }
-  async deleteById(id) {
+  async deleteById(id,t) {
     return await DeviceDTO.destroy({
       where: {
         id: id,
       },
+    },
+    t && {
+      transaction: t,
     });
   }
   async checkById(id) {
@@ -26,6 +29,13 @@ class DeviceModel {
       where: {
         id: id,
       }});
+  }
+  async checkByUserId(user_id) {
+    return await DeviceDTO.findAll({
+      where: {
+        user_id: user_id,
+      }
+    })
   }
   async updateById(device, id) {
     return await DeviceDTO.update({

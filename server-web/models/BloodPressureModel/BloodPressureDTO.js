@@ -20,6 +20,7 @@ const blood_rec = sequelize.define(
   },
   {
     timestamps: false,
+    freezeTableName: true,
   }
 );
 

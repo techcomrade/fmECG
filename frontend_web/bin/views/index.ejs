@@ -5,33 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login admin server</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   </head>
   <body>
     <div id="container" class="container">
       <!-- FORM SECTION -->
       <div class="row">
         <!-- SIGN UP -->
-        <div class="col align-items-center flex-col sign-up">
-          <div class="form-wrapper align-items-center">
+        <div class="col align-items-center sign-up">
+          <div class="form-wrapper ">
             <div class="form sign-up">
               <div class="input-group">
                 <i class="bx bxs-user"></i>
-                <input type="text" placeholder="Username" />
+                <label for="username-label">Username </label>
+                <input type="text" placeholder="Username" id="sign-up-username" required />
               </div>
               <div class="input-group">
                 <i class="bx bx-mail-send"></i>
-                <input type="email" placeholder="Email" />
+                <label for="email-label">Email </label>
+                <input type="email" placeholder="Email" id="sign-up-email" required />
               </div>
               <div class="input-group">
                 <i class="bx bxs-lock-alt"></i>
-                <input type="password" placeholder="Password" />
+                <label for="passwor-label">Password </label>
+                <input type="password" placeholder="Password" id="sign-up-password" required />
+                <i class="fa-solid fa-eye" id="show-password"></i>
               </div>
               <div class="input-group">
                 <i class="bx bxs-lock-alt"></i>
-                <input type="password" placeholder="Confirm password" />
+                <label for="cf-password-label">Confirm Password </label>
+                <input type="password" placeholder="Confirm Password" id="confirm-password" required />
+                <i class="fa-solid fa-eye" id="show-confirm-password"></i>
               </div>
-              <button>Sign up</button>
-              <p>
+              <div class="input-group">
+                <i class="bx bxs-role"></i>
+                <label for="role-label">Role </label>
+                  <select id="sign-up-role" required>
+                    <option value="">Choose a role</option>
+                    <option value="0">Patient</option>
+                    <option value="1">Doctor</option>
+                  </select>
+              </div>       
+              <div class="input-group">
+                <i class="bx bxs-birth"></i>
+                <label for="birthday-label">Date of birth </label>
+                <input type="date" id="sign-up-birth" required/>
+              </div>
+              <div class="input-group">
+                <i class="bx bxs-phone"></i>
+                <label for="phone-number-label">Phone Number </label>
+                <input type="text" placeholder="Phone Number" id="sign-up-phone-number" />
+              </div>
+              <div class="input-group">
+                <i class="bx bxs-img"></i>
+                <label for="img">Select an image </label>
+                <input type="file" id="sign-up-img" />
+              </div>
+              <button onclick="signupFunction()" >Sign up</button>
+              <p class="align-center">
                 <span> Already have an account? </span>
                 <b onclick="toggle()" class="pointer"> Sign in here </b>
               </p>
@@ -41,10 +72,11 @@
         <!-- END SIGN UP -->
         <!-- SIGN IN -->
         <div class="col align-items-center flex-col sign-in">
-          <div class="form-wrapper align-items-center">
+          <div class="form-wrapper">
             <div class="form sign-in">
               <div class="input-group">
                 <i class="bx bxs-user"></i>
+                <label for="username-login">Username</label>
                 <input
                   type="text"
                   placeholder="Username"
@@ -53,17 +85,19 @@
               </div>
               <div class="input-group">
                 <i class="bx bxs-lock-alt"></i>
+                <label for="password-login">Password</label>
                 <input
                   type="password"
                   placeholder="Password"
                   id="input-password"
                 />
+                <i class="fa-solid fa-eye" id="show-password-sign-in"></i>
               </div>
               <button onclick="loginFunction()">Sign in</button>
-              <p>
+              <p class="align-center">
                 <b> Forgot password? </b>
               </p>
-              <p>
+              <p class="align-center">
                 <span> Don't have an account? </span>
                 <b onclick="toggle()" class="pointer"> Sign up here </b>
               </p>
@@ -101,18 +135,66 @@
     </div>
 
     <script>
+      // show/hide password in sign up
+      const showPassword = document.querySelector("#show-password");
+      const passwordField = document.querySelector("#sign-up-password");
+      showPassword.addEventListener("click", () => {
+        const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+        passwordField.setAttribute("type", type);
+        if(showPassword.classList.contains("fa-eye") && passwordField.getAttribute("type") === "text") {
+          showPassword.classList.remove("fa-eye");
+          showPassword.classList.add("fa-eye-slash");
+        }
+        if(showPassword.classList.contains("fa-eye-slash") && passwordField.getAttribute("type") === "password" ) {
+          showPassword.classList.remove("fa-eye-slash");
+          showPassword.classList.add("fa-eye");
+        }
+      })
+
+      const showConfirmPassword = document.querySelector("#show-confirm-password");
+      const confirmPassword = document.querySelector("#confirm-password");
+      showConfirmPassword.addEventListener("click", () => {
+        const type = confirmPassword.getAttribute("type") === "password" ? "text" : "password";
+        confirmPassword.setAttribute("type", type);
+        if(showConfirmPassword.classList.contains("fa-eye") && confirmPassword.getAttribute("type") === "text") {
+          showConfirmPassword.classList.remove("fa-eye");
+          showConfirmPassword.classList.add("fa-eye-slash");
+        }
+        if(showConfirmPassword.classList.contains("fa-eye-slash") && confirmPassword.getAttribute("type") === "password" ) {
+          showConfirmPassword.classList.remove("fa-eye-slash");
+          showConfirmPassword.classList.add("fa-eye");
+        }
+      })
+
+      //show/hide password in sign in
+      const showPassSignIn = document.querySelector("#show-password-sign-in");
+      const passwordSignIn = document.querySelector("#input-password");
+      showPassSignIn.addEventListener("click", () => {
+        const type = passwordSignIn.getAttribute("type") === "password" ? "text" : "password";
+        passwordSignIn.setAttribute("type", type);
+        if(showPassSignIn.classList.contains("fa-eye") && passwordSignIn.getAttribute("type") === "text") {
+          showPassSignIn.classList.remove("fa-eye");
+          showPassSignIn.classList.add("fa-eye-slash");
+        }
+        if(showPassSignIn.classList.contains("fa-eye-slash") && passwordSignIn.getAttribute("type") === "password" ) {
+          showPassSignIn.classList.remove("fa-eye-slash");
+          showPassSignIn.classList.add("fa-eye");
+        }
+      })
+
       let container = document.getElementById("container");
-      var loginUrl = `<%= url %>`;
-      console.log(loginUrl);
 
       const toggle = () => {
         container.classList.toggle("sign-in");
         container.classList.toggle("sign-up");
       };
-
       setTimeout(() => {
         container.classList.add("sign-in");
       }, 200);
+
+      //sign in
+      var loginUrl = `<%= url %>`;
+      console.log(loginUrl);
       const loginFunction = async () => {
         const username = document.querySelector("#input-user-name").value;
         const password = document.querySelector("#input-password").value;
@@ -136,6 +218,7 @@
               }),
             });
             if (loginResult.ok) {
+              window.alert("Sign in successful!");
               window.location.reload();
             } else {
               document.getElementById('myModal').style.display = 'none';
@@ -150,6 +233,68 @@
           window.alert("input username and password");
         }
       };
+
+      //sign up
+      var signupUrl ="http://localhost:3000/api/auth/register";
+      const signupFunction = async () => {
+        const username = document.querySelector("#sign-up-username").value;
+        const email = document.querySelector("#sign-up-email").value;
+        const password = document.querySelector("#sign-up-password").value;
+
+        const birthConvert = document.querySelector("#sign-up-birth").value;
+        const birth = Date.parse(birthConvert);
+
+        const role = document.querySelector("#sign-up-role").value;
+        const confirmPassword = document.querySelector("#confirm-password").value;
+        const phone_number = document.querySelector("#sign-up-phone-number").value;
+        const image = document.querySelector("#sign-up-img").value;
+
+        // const fReader = new FileReader();
+        // fReader.readAsDataURL(inputImg);
+
+        if(confirmPassword && confirmPassword === password) {
+          try {
+            const signupResult = await fetch(signupUrl, {
+              method: "POST",
+              mode: "cors", 
+              cache: "no-cache", 
+              credentials: "same-origin", 
+              headers: {
+                "Content-Type": "application/json",
+              },
+              redirect: "follow",
+              referrerPolicy: "no-referrer",
+              body: JSON.stringify({
+                username: username,
+                email: email,
+                password: password,
+                role: role,
+                birth: birth,
+                phone_number: phone_number,
+                image: image,
+              }),
+            });
+            if (signupResult.ok) {
+              window.alert("Sign up successful!");
+              window.location.reload();
+            } else {
+              let data = await signupResult.json();
+              console.log(data.message);
+              window.alert(data.message);
+            }       
+          } catch(err) {
+            let data = await signupResult.json();
+            console.log(data.message);
+            window.alert("Error when sign up!");
+          }
+        }
+        if(!confirmPassword) {
+          window.alert("\"Confirm password\" is not allowed to be empty");
+        }
+        if(confirmPassword && confirmPassword !== password) {
+          window.alert("Confirm password is wrong, please try again");
+        }
+      }
     </script>
   </body>
 </html>

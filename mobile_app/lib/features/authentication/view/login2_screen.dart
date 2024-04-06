@@ -2,7 +2,6 @@ import 'package:bluetooth_ecg/components/submit_button.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_bloc.dart';
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_event.dart';
-import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/screens/auth_screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
