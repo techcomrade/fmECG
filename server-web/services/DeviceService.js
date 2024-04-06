@@ -27,6 +27,7 @@ class DeviceService extends CommonService {
   }
   ValidateDevice(device) {
     const schema = Joi.object({
+      id: Joi.string(),
       user_id: Joi.string().required(),
       device_name: Joi.string().required(),
       information: Joi.string(),

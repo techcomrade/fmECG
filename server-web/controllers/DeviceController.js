@@ -9,13 +9,14 @@ class DeviceController {
         if (devices.length)
           return res.status(200).json({
             message: "get all devices",
-            metaData: devices,
+            metadata: devices,
           });
         return res.status(400).json({
           message: "No devices found",
         });
       })
       .catch((err) => {
+        console.log(err);
         return res.status(400).json({
           message: "get devices failed",
         });
