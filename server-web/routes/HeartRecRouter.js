@@ -5,8 +5,8 @@ const HeartRecMiddleware = require("../middlewares/HeartRecMiddleware");
 const router = express.Router();
 
 router.get("/", HeartRecController.getAllData);
-router.get(":email", HeartRecController.getHeartRecByEmail);
-router.delete("/:id", HeartRecController.delebyId)
+router.get("/:device_id", HeartRecController.getHeartRecByDeviceId);
+router.delete("/:id", HeartRecController.getHeartRecByDeviceId)
 
 
 module.exports = router;

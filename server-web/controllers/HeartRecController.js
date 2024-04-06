@@ -11,12 +11,12 @@ class HeartRecController {
     });
   }
 
-  async getHeartRecByEmail(req, res) {
-    console.log(`[P]:::Get all heart_rec by email: `, req.body.email);
-    const foundHeartRec = await HeartRecService.getHeartRecByEmail(req.body.email);
+  async getHeartRecByDeviceId(req, res) {
+    console.log(`[P]:::Get all heart_rec by email: `, req.body.device_id);
+    const foundHeartRec = await HeartRecService.getHeartRecByEmail(req.body.device_id);
     if(foundHeartRec) {
         return res.status(200).json({
-          message: 'Get heart_rec by email successful!',
+          message: 'Get heart_rec by device_id successful!',
           metadata: foundHeartRec
         });
       }
@@ -27,9 +27,9 @@ class HeartRecController {
       }
   }
 
-  async delebyId(req, res) {
+  async deleteById(req, res) {
     console.log(` [P]:::Delete heart_rec by id: `, req.body.id);
-    const result = await HeartRecController.delebyId(req.body.id);
+    const result = await HeartRecService.getHeartRecByDeviceId(req.body.id);
     if (result) {
         return res.status(200).json({
           message: "Delete heart_rec successful!",

@@ -14,8 +14,8 @@ class HeartRecService extends CommonService {
     async getAllData() {
         return await HeartRecModel.getAllData();
     }
-    async getHeartRecByEmail(email) {
-        return await HeartRecModel.getHeartRecByEmail(email);
+    async getHeartRecByDeviceId(device_id) {
+        return await HeartRecModel.getHeartRecByDeviceId(device_id);
     }
     ValidateHeartRec(heart_rec) {
         const schema = Joi.object({

@@ -20,10 +20,10 @@ class HeartRecModel {
       },
     });
   }
-  async getHeartRecByEmail(id) {
+  async getHeartRecByDeviceId(device_id) {
     return await HeartRecDTO.fineOne({
       where: {
-        id: id,
+        id: device_id,
       },
     });
   }
