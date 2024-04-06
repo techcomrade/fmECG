@@ -17,24 +17,29 @@
             <div class="form sign-up">
               <div class="input-group">
                 <i class="bx bxs-user"></i>
+                <label for="username-label">Username </label>
                 <input type="text" placeholder="Username" id="sign-up-username" required />
               </div>
               <div class="input-group">
                 <i class="bx bx-mail-send"></i>
+                <label for="email-label">Email </label>
                 <input type="email" placeholder="Email" id="sign-up-email" required />
               </div>
               <div class="input-group">
                 <i class="bx bxs-lock-alt"></i>
+                <label for="passwor-label">Password </label>
                 <input type="password" placeholder="Password" id="sign-up-password" required />
                 <i class="fa-solid fa-eye" id="show-password"></i>
               </div>
               <div class="input-group">
                 <i class="bx bxs-lock-alt"></i>
-                <input type="password" placeholder="Confirm password" id="confirm-password" required />
+                <label for="cf-password-label">Confirm Password </label>
+                <input type="password" placeholder="Confirm Password" id="confirm-password" required />
                 <i class="fa-solid fa-eye" id="show-confirm-password"></i>
               </div>
               <div class="input-group">
                 <i class="bx bxs-role"></i>
+                <label for="role-label">Role </label>
                   <select id="sign-up-role" required>
                     <option value="">Choose a role</option>
                     <option value="0">Patient</option>
@@ -43,16 +48,17 @@
               </div>       
               <div class="input-group">
                 <i class="bx bxs-birth"></i>
-                <label for="birthday">Date of birth:</label>
-                <input type="date" placeholder="Birth" id="sign-up-birth" required/>
+                <label for="birthday-label">Date of birth </label>
+                <input type="date" id="sign-up-birth" required/>
               </div>
               <div class="input-group">
                 <i class="bx bxs-phone"></i>
+                <label for="phone-number-label">Phone Number </label>
                 <input type="text" placeholder="Phone Number" id="sign-up-phone-number" />
               </div>
               <div class="input-group">
                 <i class="bx bxs-img"></i>
-                <label for="img">Select an image:</label>
+                <label for="img">Select an image </label>
                 <input type="file" id="sign-up-img" />
               </div>
               <button onclick="signupFunction()" >Sign up</button>
@@ -70,6 +76,7 @@
             <div class="form sign-in">
               <div class="input-group">
                 <i class="bx bxs-user"></i>
+                <label for="username-login">Username</label>
                 <input
                   type="text"
                   placeholder="Username"
@@ -78,11 +85,13 @@
               </div>
               <div class="input-group">
                 <i class="bx bxs-lock-alt"></i>
+                <label for="password-login">Password</label>
                 <input
                   type="password"
                   placeholder="Password"
                   id="input-password"
                 />
+                <i class="fa-solid fa-eye" id="show-password-sign-in"></i>
               </div>
               <button onclick="loginFunction()">Sign in</button>
               <p class="align-center">
@@ -126,10 +135,9 @@
     </div>
 
     <script>
-      let container = document.getElementById("container");
-      
-      const showPassword = document.querySelector("#show-password")
-      const passwordField = document.querySelector("#sign-up-password")
+      // show/hide password in sign up
+      const showPassword = document.querySelector("#show-password");
+      const passwordField = document.querySelector("#sign-up-password");
       showPassword.addEventListener("click", () => {
         const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
         passwordField.setAttribute("type", type);
@@ -143,8 +151,8 @@
         }
       })
 
-      const showConfirmPassword = document.querySelector("#show-confirm-password")
-      const confirmPassword = document.querySelector("#confirm-password")
+      const showConfirmPassword = document.querySelector("#show-confirm-password");
+      const confirmPassword = document.querySelector("#confirm-password");
       showConfirmPassword.addEventListener("click", () => {
         const type = confirmPassword.getAttribute("type") === "password" ? "text" : "password";
         confirmPassword.setAttribute("type", type);
@@ -158,17 +166,35 @@
         }
       })
 
-      var loginUrl = `<%= url %>`;
-      console.log(loginUrl);
+      //show/hide password in sign in
+      const showPassSignIn = document.querySelector("#show-password-sign-in");
+      const passwordSignIn = document.querySelector("#input-password");
+      showPassSignIn.addEventListener("click", () => {
+        const type = passwordSignIn.getAttribute("type") === "password" ? "text" : "password";
+        passwordSignIn.setAttribute("type", type);
+        if(showPassSignIn.classList.contains("fa-eye") && passwordSignIn.getAttribute("type") === "text") {
+          showPassSignIn.classList.remove("fa-eye");
+          showPassSignIn.classList.add("fa-eye-slash");
+        }
+        if(showPassSignIn.classList.contains("fa-eye-slash") && passwordSignIn.getAttribute("type") === "password" ) {
+          showPassSignIn.classList.remove("fa-eye-slash");
+          showPassSignIn.classList.add("fa-eye");
+        }
+      })
+
+      let container = document.getElementById("container");
 
       const toggle = () => {
         container.classList.toggle("sign-in");
         container.classList.toggle("sign-up");
       };
-
       setTimeout(() => {
         container.classList.add("sign-in");
       }, 200);
+
+      //sign in
+      var loginUrl = `<%= url %>`;
+      console.log(loginUrl);
       const loginFunction = async () => {
         const username = document.querySelector("#input-user-name").value;
         const password = document.querySelector("#input-password").value;
@@ -192,6 +218,7 @@
               }),
             });
             if (loginResult.ok) {
+              window.alert("Sign in successful!");
               window.location.reload();
             } else {
               document.getElementById('myModal').style.display = 'none';
@@ -207,6 +234,7 @@
         }
       };
 
+      //sign up
       var signupUrl ="http://localhost:3000/api/auth/register";
       const signupFunction = async () => {
         const username = document.querySelector("#sign-up-username").value;
@@ -219,7 +247,7 @@
         const role = document.querySelector("#sign-up-role").value;
         const confirmPassword = document.querySelector("#confirm-password").value;
         const phone_number = document.querySelector("#sign-up-phone-number").value;
-        const image = document.querySelector("#sign-up-img").value ?? "";
+        const image = document.querySelector("#sign-up-img").value;
 
         // const fReader = new FileReader();
         // fReader.readAsDataURL(inputImg);
@@ -247,15 +275,16 @@
               }),
             });
             if (signupResult.ok) {
+              window.alert("Sign up successful!");
               window.location.reload();
             } else {
-              let data = await signupResult.json()
-              console.log(data.message)
-              window.alert(data.message)
+              let data = await signupResult.json();
+              console.log(data.message);
+              window.alert(data.message);
             }       
           } catch(err) {
-            let data = await signupResult.json()
-            console.log(data.message)
+            let data = await signupResult.json();
+            console.log(data.message);
             window.alert("Error when sign up!");
           }
         }
