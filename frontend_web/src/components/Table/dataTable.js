@@ -8,6 +8,8 @@ import { addKeyElement, findElementById } from "../../utils/arrayUtils";
 import { Modal } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { showNotiSuccess } from "../Notification";
+import dayjs from 'dayjs';
+
 const { confirm } = Modal;
 
 const DataTable = (props) => {
@@ -25,7 +27,7 @@ const DataTable = (props) => {
     useEffect(() => {
         if (dataState.loadDataStatus === loadStatus.Success) {
             const rawData = dataState.data.metadata;
-            console.log(dataState);
+            console.log(rawData);
             if (rawData) {
                 setTableData(addKeyElement(rawData));
             }
@@ -35,6 +37,7 @@ const DataTable = (props) => {
     // Reload data when update success
     useEffect(() => {
         if (dataState.loadCreateDataStatus === loadStatus.Success) {
+            showNotiSuccess("Bạn đã tạo thành công");
             dispatch(props.func.getData());
         }
     }, [dataState.loadCreateDataStatus]);
@@ -42,6 +45,7 @@ const DataTable = (props) => {
     // Reload data when update success
     useEffect(() => {
         if (dataState.loadUpdateDataStatus === loadStatus.Success) {
+            showNotiSuccess("Bạn đã cập nhật thành công");
             dispatch(props.func.getData());
         }
     }, [dataState.loadUpdateDataStatus]);
@@ -49,6 +53,7 @@ const DataTable = (props) => {
     // Reload data when delete success
     useEffect(() => {
         if (dataState.loadDeleteDataStatus === loadStatus.Success) {
+            showNotiSuccess("Bạn đã xóa thành công");
             dispatch(props.func.getData());
         }
     }, [dataState.loadDeleteDataStatus]);
@@ -100,7 +105,6 @@ const DataTable = (props) => {
         cancelText: "Không",
         async onOk() {
             dispatch(props.func.deleteData({id}));
-            showNotiSuccess("Bạn đã xóa thành công");
         },
         onCancel() {},
         });
@@ -113,9 +117,9 @@ const DataTable = (props) => {
     };
 
     const handleSubmitChange = async () => {
-        dispatch(props.func.updateData(dataEdit));
+        const {key, ...dataUpdate} = dataEdit;
+        dispatch(props.func.updateData(dataUpdate));
         setShowModalEdit(false);
-        showNotiSuccess("Bạn đã cập nhật thành công");
     };
 
     const handleChangeInputCreate = (para, value) => {
@@ -148,6 +152,7 @@ const DataTable = (props) => {
                 columns={props.column}
                 dataSource={tableData}
             />
+            {/* Modal update */}
             <Modal
                 title="Chỉnh sửa thông tin"
                 open={showModalEdit}
@@ -158,14 +163,14 @@ const DataTable = (props) => {
                 onCancel={() => setShowModalEdit(false)}
             >
                 <br />
-                {props.column.map((column) => (
+                {props.column.map((column) => ( 
                     <Col span={22} key={column.title}>
                         <Form.Item label={column.title}>
                         {column.dataIndex.includes('date') ? 
                             <DatePicker 
                                 format={'DD/MM/YYYY'} 
                                 name={column.dataIndex}
-                                defaultValue={dataEdit[column.dataIndex]} 
+                                defaultValue={dayjs(dataEdit[column.dataIndex], 'DD/MM/YYYY')} 
                                 onChange={(dateString) => handleChangeInput(column.dataIndex, dateString)} 
                             /> : <Input
                                 name={column.dataIndex}
@@ -176,6 +181,7 @@ const DataTable = (props) => {
                     </Col>
                 ))}
             </Modal>
+            {/* Modal create */}
             <Modal
                 title="Tạo thành phần"
                 open={showModalCreate}

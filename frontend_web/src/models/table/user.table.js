@@ -18,6 +18,11 @@ class UserData {
           dataIndex: 'phone_number',
           key: 'phone_number',
         },
+        {
+          title: 'Thiết bị',
+          dataIndex: 'device',
+          key: 'device',
+        },
       ];
 
         return columns;

@@ -54,7 +54,7 @@ export const deleteDevice = createAsyncThunk(
   "/delete-device",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpDeleteData(`/device/${params}`);
+      const response = await httpDeleteData(`/device/delete/${params.id}`);
       return response;
     } catch (error) {
       return rejectWithValue(
