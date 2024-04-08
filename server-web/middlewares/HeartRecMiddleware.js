@@ -1,4 +1,4 @@
-const HeartRecService = require("../services/HeartRecSevice");
+const HeartRecService = require("../services/HeartRecService");
 
 class HeartRecMiddleware {
     async validateData(req, res, next) {

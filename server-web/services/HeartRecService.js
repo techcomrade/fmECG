@@ -1,4 +1,4 @@
-const CommonService = require('../services/CommonService');
+const CommonService = require('./CommonService');
 const HeartRecModel = require('../models/HeartRecModel/HeartRecRepository');
 const Joi = require("joi");
 const { v4: uuidv4} = require("uuid");
