@@ -1,5 +1,8 @@
 const DeviceService = require("../services/DeviceService");
 const UserService = require("../services/UserService");
+const Record = require("../services/RecordService");
+const BloodPressureRecord = require("../services/BloodPressureService");
+//const HeartRecord = require("../services/HeartRecordService");
 
 class DeviceController {
   async getAllData(req, res) {
@@ -9,7 +12,7 @@ class DeviceController {
         if (devices.length)
           return res.status(200).json({
             message: "get all devices",
-            metaData: devices,
+            metadata: devices,
           });
         return res.status(400).json({
           message: "No devices found",
@@ -57,23 +60,23 @@ class DeviceController {
           message: "no device found",
         });
       }
-        await DeviceService.deleteById(device_id)
-          .then((checked) => {
-            if (checked)
-              return res.status(200).json({
-                message: "delete device successfully",
-              });
-            else
-              return res.status(500).json({
-                message: "delete device failed",
-              });
-          })
-          .catch((err) => {
+      await DeviceService.deleteById(device_id)
+        .then((checked) => {
+          if (checked)
+            return res.status(200).json({
+              message: "delete device successfully",
+            });
+          else
             return res.status(500).json({
               message: "delete device failed",
             });
+        })
+        .catch((err) => {
+          return res.status(500).json({
+            message: "delete device failed",
           });
-      } 
+        });
+    }
   }
   async update(req, res) {
     console.log(`[P]:Update device data`, req.body);
@@ -102,6 +105,38 @@ class DeviceController {
       return res.status(400).json({
         message: "no device found",
       });
+  }
+  async getBloodPressureRecordByDeviceId(req, res) {
+    console.log(`[P]:::Get Blood Pressure record by Device Id`, req.params.id);
+    const id = req.params.id;
+    let checkExistDevice = await DeviceService.checkDevice(id);
+    if (!checkExistDevice?.dataValues) {
+      return res.status(400).json({
+        message: "device not found",
+      });
+    }
+    let checkExistRecord = await Record.getRecordByDeviceId(id);
+    if (!checkExistRecord[0]?.dataValues) {
+      return res.status(400).json({
+        message: "record not found",
+      });
+    }
+    let record_id = checkExistRecord[0].dataValues.id;
+    let checkExistBPRecord = await BloodPressureRecord.getRecordByRecordId(record_id);
+    if (!checkExistBPRecord[0]?.dataValues) {
+      return res.status(400).json({
+        message: "No BloodPressure record by this device",
+      });
+    }
+    let records = [];
+    checkExistBPRecord.forEach(record => {
+      records.push(record.dataValues);
+    })
+    console.log(records);
+    return res.status(200).json({
+      message: "get BP record by device successfully",
+      metadata: records,
+    });
   }
 }
 
