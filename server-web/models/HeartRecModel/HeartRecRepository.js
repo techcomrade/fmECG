@@ -26,7 +26,7 @@ class HeartRecModel {
     where: {
       id: device_id
     }
-
+  }
   async deleteById(id,t){
     return await HeartRecDTO.destroy({
       where:{
