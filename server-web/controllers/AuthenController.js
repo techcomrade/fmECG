@@ -18,13 +18,19 @@ class AuthenController {
     if (account.email && account.password) {
       const checkExistEmail = await AuthenService.checkEmail(account.email);
       if (!checkExistEmail) {
-        return res.status(400).json("Email exist");
+        return res.status(400).json({
+          message: "Email exist, please try again",
+        });
       } else {
         try {
           await AuthenService.register(account);
-          return res.status(200).json("Register successfully");
+          return res.status(200).json({
+            message: "Register successfully",
+          });
         } catch (err) {
-          return res.status(500).json("Register error");
+          return res.status(500).json({
+            message: "Register error",
+          });
         }
       }
     }
