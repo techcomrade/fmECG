@@ -1,5 +1,5 @@
 const { Model } = require("sequelize");
-const HeartRecService = require("../services/HeartRecSevice");
+const HeartRecService = require("../services/HeartRecService");
 
 class HeartRecController {
   async getAllData(req, res) {
