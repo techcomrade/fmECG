@@ -19,14 +19,15 @@ class DeviceService extends CommonService {
   async getAllData() {
     return await DeviceModel.getAllData();
   }
-  async checkDevice(id) {
+  async getDeviceById(id) {
     return await DeviceModel.checkById(id);
   }
   async getDeviceByUserId(userId) {
     return await DeviceModel.checkByUserId(userId);
   }
-  ValidateDevice(device) {
+  ValidateDevice(device, checkId) {
     const schema = Joi.object({
+      id: (checkId) ? Joi.string().required() : Joi.string().allow(' '),
       user_id: Joi.string().required(),
       device_name: Joi.string().required(),
       information: Joi.string(),

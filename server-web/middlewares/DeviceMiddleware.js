@@ -1,7 +1,7 @@
 const DeviceService = require("../services/DeviceService");
 class DeviceMiddleware {
   async validateData(req, res, next) {
-    let validated = DeviceService.ValidateDevice(req.body).error;
+    let validated = DeviceService.ValidateDevice(req.body, req.body.id).error;
     if (validated === undefined) next();
     else
       return res

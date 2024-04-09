@@ -7,9 +7,8 @@ router.get("/", DeviceController.getAllData);
 router.delete("/:id", DeviceController.delete);
 
 router.post("/create", DeviceMiddleware.validateData, DeviceController.add);
-router.post("/update/:id", DeviceMiddleware.validateData, DeviceController.update);
+router.post("/update", DeviceMiddleware.validateData, DeviceController.update);
 
-router.get("/BPrecord/:id", DeviceController.getBloodPressureRecordByDeviceId);
-router.get("/HeartRec/:id", DeviceController.getHeartRecordByDeviceId);
+router.get("/get/:id", DeviceController.getDeviceById);
 
 module.exports = router;
