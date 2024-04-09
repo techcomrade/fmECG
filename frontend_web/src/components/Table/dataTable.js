@@ -9,6 +9,7 @@ import { Modal } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { showNotiSuccess } from "../Notification";
 import dayjs from 'dayjs';
+import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
 
 const { confirm } = Modal;
 
@@ -25,14 +26,11 @@ const DataTable = (props) => {
 
     // Get data
     useEffect(() => {
-        if (dataState.loadDataStatus === loadStatus.Success) {
-            const rawData = dataState.data.metadata;
-            console.log(rawData);
-            if (rawData) {
-                setTableData(addKeyElement(rawData));
-            }
+        const rawData = props.data;
+        if(rawData) {
+            setTableData(addKeyElement(rawData));
         }
-    }, [dataState.loadDataStatus]);
+    }, [props.data]);
 
     // Reload data when update success
     useEffect(() => {
@@ -118,6 +116,11 @@ const DataTable = (props) => {
 
     const handleSubmitChange = async () => {
         const {key, ...dataUpdate} = dataEdit;
+        Object.keys(dataUpdate).forEach(key => {
+            if(key.includes('date') && typeof(dataUpdate[key]) !== 'number') {
+                dataUpdate[key] = convertDateToTime(dataUpdate[key])
+            }
+        })
         dispatch(props.func.updateData(dataUpdate));
         setShowModalEdit(false);
     };
@@ -160,7 +163,10 @@ const DataTable = (props) => {
                 okType="primary"
                 onOk={handleSubmitChange}
                 cancelText="Hủy bỏ"
-                onCancel={() => setShowModalEdit(false)}
+                onCancel={() => {
+                    setDataEdit([])
+                    setShowModalEdit(false)
+                }}
             >
                 <br />
                 {props.column.map((column) => ( 
@@ -170,8 +176,8 @@ const DataTable = (props) => {
                             <DatePicker 
                                 format={'DD/MM/YYYY'} 
                                 name={column.dataIndex}
-                                defaultValue={dayjs(dataEdit[column.dataIndex], 'DD/MM/YYYY')} 
-                                onChange={(dateString) => handleChangeInput(column.dataIndex, dateString)} 
+                                value={dayjs(dataEdit[column.dataIndex], 'DD/MM/YYYY')} 
+                                onChange={(date, dateString) => handleChangeInput(column.dataIndex, dateString)} 
                             /> : <Input
                                 name={column.dataIndex}
                                 value={dataEdit[column.dataIndex]} 
@@ -203,7 +209,7 @@ const DataTable = (props) => {
                                 format={'DD/MM/YYYY'} 
                                 name={column.dataIndex}
                                 defaultValue={dataCreate[column.dataIndex]} 
-                                onChange={(dateString) => handleChangeInputCreate(column.dataIndex, dateString)}
+                                onChange={(date, dateString) => handleChangeInputCreate(column.dataIndex, convertDateToTime(dateString))}
                             /> : <Input
                                 name={column.dataIndex}
                                 value={dataCreate[column.dataIndex]} 
