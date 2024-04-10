@@ -15,10 +15,10 @@ class HeartRecModel {
     );
   }
   
-  async getHeartRecByDeviceId(device_id) {
-    return await HeartRecDTO.fineOne({
+  async getHeartRecByRecordId(record_id) {
+    return await HeartRecDTO.findAll({
       where: {
-        id: device_id
+        rec_id: record_id
       }
     });
   }

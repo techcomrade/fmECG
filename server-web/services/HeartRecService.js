@@ -14,8 +14,8 @@ class HeartRecService extends CommonService {
     async getAllData() {
         return await HeartRecModel.getAllData();
     }
-    async getHeartRecByDeviceId(device_id) {
-        return await HeartRecModel.getHeartRecByDeviceId(device_id);
+    async getHeartRecByRecordId(record_id) {
+        return await HeartRecModel.getHeartRecByRecordId(record_id);
     }
     async updateHeartRecByDeviceId(device_id) {
         return await HeartRecModel.updateHeartRecByDeviceId(device_id);
