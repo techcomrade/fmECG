@@ -4,9 +4,11 @@ const DeviceMiddleware = require("../middlewares/DeviceMiddleware");
 const router = express.Router();
 
 router.get("/", DeviceController.getAllData);
-router.delete("/delete/:id", DeviceController.delete);
+router.delete("/:id", DeviceController.delete);
 
-router.post("/create-device", DeviceMiddleware.validateData, DeviceController.add);
-router.post("/update/:id", DeviceMiddleware.validateData, DeviceController.update);
+router.post("/create", DeviceMiddleware.validateData, DeviceController.add);
+router.post("/update", DeviceMiddleware.validateData, DeviceController.update);
+
+router.get("/get/:id", DeviceController.getDeviceById);
 
 module.exports = router;
