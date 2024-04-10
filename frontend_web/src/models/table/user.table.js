@@ -36,6 +36,11 @@ class UserData {
         deleteData: deleteUser
       }
     }
+
+    checkDateIndex(index) {
+      const dateIndex = ['birth']
+      return dateIndex.includes(index);
+  }
 }
   
   

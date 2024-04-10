@@ -10,6 +10,7 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import { showNotiSuccess } from "../Notification";
 import dayjs from 'dayjs';
 import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
+import { checkDateIndex } from "../../models/manage.table";
 
 const { confirm } = Modal;
 
@@ -117,7 +118,7 @@ const DataTable = (props) => {
     const handleSubmitChange = async () => {
         const {key, ...dataUpdate} = dataEdit;
         Object.keys(dataUpdate).forEach(key => {
-            if(key.includes('date') && typeof(dataUpdate[key]) !== 'number') {
+            if(checkDateIndex(table, key) && typeof(dataUpdate[key]) !== 'number') {
                 dataUpdate[key] = convertDateToTime(dataUpdate[key])
             }
         })
@@ -172,7 +173,7 @@ const DataTable = (props) => {
                 {props.column.map((column) => ( 
                     <Col span={22} key={column.title}>
                         <Form.Item label={column.title}>
-                        {column.dataIndex.includes('date') ? 
+                        {checkDateIndex(table, column.dataIndex) ? 
                             <DatePicker 
                                 format={'DD/MM/YYYY'} 
                                 name={column.dataIndex}
@@ -204,7 +205,7 @@ const DataTable = (props) => {
                 {props.column.map((column) => (
                     <Col span={22} key={column.title}>
                         <Form.Item label={column.title}>
-                        {column.dataIndex.includes('date') ? 
+                        {checkDateIndex(table, column.dataIndex) ? 
                             <DatePicker 
                                 format={'DD/MM/YYYY'} 
                                 name={column.dataIndex}

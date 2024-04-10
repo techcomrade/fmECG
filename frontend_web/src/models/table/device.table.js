@@ -35,7 +35,12 @@ class DeviceData {
             updateData: updateDevice,
             deleteData: deleteDevice
         }
-      }
+    }
+
+    checkDateIndex(index) {
+        const dateIndex = ['start_date', 'end_date']
+        return dateIndex.includes(index);
+    }
 }
   
   
