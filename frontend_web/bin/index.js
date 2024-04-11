@@ -40,11 +40,11 @@ app.listen(port, () => {
   );
 });
 
-app.get("/login/test", (req, res) => {
+app.get("/test", (req, res) => {
   res.send("ok cool");
 });
 
-app.get("/login", (req, res) => {
+app.get("/", (req, res) => {
   const haveCookie = req.cookies?.token;
   if (haveCookie) {
     res.redirect(config.redirect_url);
