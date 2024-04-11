@@ -14,29 +14,37 @@ class HeartRecModel {
       }
     );
   }
-  
+
   async getHeartRecByRecordId(record_id) {
     return await HeartRecDTO.findAll({
       where: {
-        rec_id: record_id
-      }
+        rec_id: record_id,
+      },
     });
   }
   async updateHeartRecByDeviceId(device_id) {
     where: {
-      id: device_id
+      id: device_id;
     }
   }
-  async deleteById(id,t){
-    return await HeartRecDTO.destroy({
-      where:{
-        id:id
+  async deleteById(id, t) {
+    return await HeartRecDTO.destroy(
+      {
+        where: {
+          id: id,
+        },
+      },
+      t && {
+        transaction: t,
       }
-    },
-    t && {
-      transaction: t,
-    })
-
+    );
+  }
+  async deleteByRecordId(rec_id) {
+    return await HeartRecDTO.destroy({
+      where: {
+        rec_id: rec_id,
+      },
+    });
   }
 }
 
