@@ -1,18 +1,19 @@
 import { httpDeleteData, httpGetData, httpPostData } from "../../api/common.api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { convertTimeToDate } from "../../utils/dateUtils";
 
 export const loadStatus = {
-  None: 0,
-  Loading: 1,
-  Success: 2,
-  Failed: 3,
+    None: 0,
+    Loading: 1,
+    Success: 2,
+    Failed: 3,
 };
 
-export const getUser = createAsyncThunk(
-  "/user",
+export const getDevice = createAsyncThunk(
+  "/device",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpGetData('/user');
+      const response = await httpGetData('/device');
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -22,11 +23,11 @@ export const getUser = createAsyncThunk(
   }
 );
 
-export const createUser = createAsyncThunk(
-  "/create-user",
+export const createDevice = createAsyncThunk(
+  "/create-device",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpPostData('/user', params);
+      const response = await httpPostData('/device/create', params);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -36,11 +37,11 @@ export const createUser = createAsyncThunk(
   }
 );
 
-export const updateUser = createAsyncThunk(
-  "/update-user",
+export const updateDevice = createAsyncThunk(
+  "/update-device",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpPostData(`/user/update`, params);
+      const response = await httpPostData(`/device/update/${params.id}`, params);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -50,11 +51,11 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-export const deleteUser = createAsyncThunk(
-  "/delete",
+export const deleteDevice = createAsyncThunk(
+  "/delete-device",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpDeleteData(`/user`, params);
+      const response = await httpDeleteData(`/device/delete/${params.id}`);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -64,8 +65,8 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
-const userSlice = createSlice({
-    name: 'user',
+const deviceSlice = createSlice({
+    name: 'device',
     initialState: {
       data: [],
       loadDataStatus: loadStatus.None,
@@ -90,46 +91,46 @@ const userSlice = createSlice({
     },
     extraReducers: (builder) => {
       builder
-        .addCase(getUser.pending, (state, action) => {
+        .addCase(getDevice.pending, (state, action) => {
           state.loadDataStatus = loadStatus.Loading;
         })
-        .addCase(getUser.fulfilled, (state, action) => {
+        .addCase(getDevice.fulfilled, (state, action) => {
           state.data = action.payload;
           state.loadDataStatus = loadStatus.Success;
         })
-        .addCase(getUser.rejected, (state, action) => {
+        .addCase(getDevice.rejected, (state, action) => {
           state.data = [];
           state.loadDataStatus = loadStatus.Failed;
         })
-        .addCase(createUser.pending, (state, action) => {
+        .addCase(createDevice.pending, (state, action) => {
           state.loadCreateDataStatus = loadStatus.Loading;
         })
-        .addCase(createUser.fulfilled, (state, action) => {
+        .addCase(createDevice.fulfilled, (state, action) => {
           state.loadCreateDataStatus = loadStatus.Success;
         })
-        .addCase(createUser.rejected, (state, action) => {
+        .addCase(createDevice.rejected, (state, action) => {
           state.loadCreateDataStatus = loadStatus.Failed;
         })
-        .addCase(updateUser.pending, (state, action) => {
+        .addCase(updateDevice.pending, (state, action) => {
           state.loadUpdateDataStatus = loadStatus.Loading;
         })
-        .addCase(updateUser.fulfilled, (state, action) => {
+        .addCase(updateDevice.fulfilled, (state, action) => {
           state.loadUpdateDataStatus = loadStatus.Success;
         })
-        .addCase(updateUser.rejected, (state, action) => {
+        .addCase(updateDevice.rejected, (state, action) => {
           state.loadUpdateDataStatus = loadStatus.Failed;
         })
-        .addCase(deleteUser.pending, (state, action) => {
+        .addCase(deleteDevice.pending, (state, action) => {
           state.loadDeleteDataStatus = loadStatus.Loading;
         })
-        .addCase(deleteUser.fulfilled, (state, action) => {
+        .addCase(deleteDevice.fulfilled, (state, action) => {
           state.loadDeleteDataStatus = loadStatus.Success;
         })
-        .addCase(deleteUser.rejected, (state, action) => {
+        .addCase(deleteDevice.rejected, (state, action) => {
           state.loadDeleteDataStatus = loadStatus.Failed;
         })
     }
 });
 
-const { reducer: userReducer } = userSlice;
-export default userReducer;
+const { reducer: deviceReducer } = deviceSlice;
+export default deviceReducer;
