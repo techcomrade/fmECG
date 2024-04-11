@@ -19,28 +19,24 @@ class DeviceService extends CommonService {
   async getAllData() {
     return await DeviceModel.getAllData();
   }
-  async checkDevice(id) {
-    const Device = await DeviceModel.checkById(id);
-    if(Device) return true;
-    return false;
+  async getDeviceById(id) {
+    return await DeviceModel.checkById(id);
   }
-  ValidateDevice(device) {
+  async getDeviceByUserId(userId) {
+    return await DeviceModel.checkByUserId(userId);
+  }
+  ValidateDevice(device, checkId) {
     const schema = Joi.object({
+      id: (checkId) ? Joi.string().required() : Joi.string().allow(' '),
       user_id: Joi.string().required(),
       device_name: Joi.string().required(),
       information: Joi.string(),
-      device_type: Joi.number()
-                      .integer()
-                      .min(0)
-                      .max(100)
-                      .required(),
-      start_date: Joi.number()
-                      .integer()
-                      .required(),
+      device_type: Joi.number().integer().min(0).max(100).required(),
+      start_date: Joi.number().integer().required(),
       end_date: Joi.number()
-                   .integer()
-                   .greater(Joi.ref('start_date'))
-                   .required()      
+        .integer()
+        .greater(Joi.ref("start_date"))
+        .required(),
     });
     return schema.validate(device);
   }

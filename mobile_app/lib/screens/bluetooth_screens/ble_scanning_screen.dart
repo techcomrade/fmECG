@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-Uuid _UART_UUID = Uuid.parse("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
-Uuid _UART_RX   = Uuid.parse("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
-Uuid _UART_TX   = Uuid.parse("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
+Uuid uartUUID = Uuid.parse("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
+Uuid uartRX   = Uuid.parse("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
+Uuid uartTX   = Uuid.parse("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
 
 class BleScanningAndConnectingScreen extends StatefulWidget {
   const BleScanningAndConnectingScreen({Key? key}) : super(key: key);
@@ -89,8 +89,8 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
         _deviceConnectionController.add(state);
         if (state.connectionState == DeviceConnectionState.connected) {
           characteristicToReceiveData = QualifiedCharacteristic(
-            serviceId: _UART_UUID, 
-            characteristicId: _UART_TX, 
+            serviceId: uartUUID, 
+            characteristicId: uartTX, 
             deviceId: deviceId
           );
           deviceConnected = devices.firstWhere((device) => device.id == deviceId);

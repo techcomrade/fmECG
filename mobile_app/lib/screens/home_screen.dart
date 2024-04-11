@@ -8,7 +8,6 @@ import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -36,16 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void getDoctorAssigned() async {
     int patientId = await Utils.getUserId();
     UserController.getDoctorAssigned(patientId);
-  }
-
-  Future<bool> _requestManageStorage() async {
-    final PermissionStatus status =
-        await Permission.manageExternalStorage.request();
-    if (status == PermissionStatus.granted) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   @override
@@ -244,9 +233,9 @@ class _DarkLightSwitchState extends State<DarkLightSwitch> {
           isDarkSwitch = val;
         });
         if (isDarkSwitch) {
-          auth.setTheme(ThemeType.DARK, false);
+          auth.setTheme(ThemeType.dark, false);
         } else {
-          auth.setTheme(ThemeType.LIGHT, false);
+          auth.setTheme(ThemeType.light, false);
         }
       },
     );

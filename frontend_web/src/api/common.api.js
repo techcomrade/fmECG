@@ -12,6 +12,7 @@ export const httpPostData = (url, data) => {
         })
         .catch((error) => {
             console.log('error post data', error);
+            showNotiError(error.response.data)
             // checkErrorReturn(error);
             reject(error)
         })
@@ -48,6 +49,7 @@ export const httpUpdateData = (url, data) => {
         })
         .catch((error) => {
             console.log('error get data', error)
+            showNotiError(error.response.data)
             // checkErrorReturn(error);
             reject(error)
         })
@@ -63,6 +65,7 @@ export const httpDeleteData = (url, data) => {
         })
         .catch((error) => {
             console.log('error delete data', error)
+            showNotiError(error.response.data)
             // checkErrorReturn(error);
             reject(error)
         })
@@ -92,6 +95,7 @@ export const httpGetDataTable = async (table, filter = null) => {
           })
           .catch((error) => {
             console.log('error get data', error)
+            showNotiError(error.response.data)
             // checkErrorReturn(error);
             reject(error)
         });

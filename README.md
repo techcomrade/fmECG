@@ -5,22 +5,25 @@
 - [fmECG](#fmecg)
   - [Project Overview](#project-overview)
   - [Installation](#installation)
-    - [NodeJS (server)](#nodejs-server)
+    - [NodeJS (server-web)](#nodejs-server)
+    - [ReactJS (frontend_web)](#reactjs-frontend)
     - [Flutter (mobile app)](#flutter-mobile-app)
 
 ## Project Overview
 
-Project fmECG is Application for measuring ECG pregnant's data that uses Flutter for Mobile App and NodeJS for back-end. 
+Project fmECG is Application for measuring ECG pregnant's data that uses Flutter for Mobile App, NodeJS for back-end and ReactJS for web admin. 
 
 ## Installation
 
 ### NodeJS (server)
-You can choose one of two following approach:
+Make sure you have .env file in folder. You can choose one of two following approach:
 1. Using localhost 
-Make sure you turn on MySQL (can turn on with xampp)
+
+Make sure you turn on MySQL server (or turn on with xampp) and config .env file with your SQL server
 ```bash
 cd server
 npm install
+npm run migration
 npm start
 ```
 
@@ -30,7 +33,27 @@ Make sure docker is running inside your computer
 cd server
 make app
 ```
-If terminal shows `connected DB`, the back-end has been setup successfully.
+If terminal shows `Connection to MySQL database has been established successfully.`, the back-end has been setup successfully.
+
+### ReactJS (frontend)
+Make sure you have .env file in frontend_web folder. Bin folder doesn't need .env file.
+1. Run the bin folder (required NodeJS v18 or higher version)
+
+Bin is a small NodeJS project to authenticate in front-end with cookies because ReactJS can not process cookies and set header for network. 
+```bash
+cd frontend_web/bin
+npm install
+npm start
+```
+
+2. Run the frontend_web folder
+Make sure you get and config the .env file and run server, bin folder before.
+```bash
+cd frontend_web
+npm install
+npm start
+```
+If terminal shows `webpack compiled successfully`, the front-end has been setup successfully.
 
 ### Flutter (mobile app)
 

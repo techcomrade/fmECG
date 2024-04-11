@@ -1,8 +1,15 @@
+const { convertDateNormal, convertTimeToString } = require("../../utils/processTime");
 const DeviceDTO = require("./DeviceDTO");
 class DeviceModel {
   async getAllData() {
-    return await DeviceDTO.findAll();
+    const devices =  await DeviceDTO.findAll({
+      attributes: {
+        exclude: ['created_at', 'updated_at']
+      }    
+    });
+    return devices;
   }
+  
   async add(device) {
     return await DeviceDTO.create({
       id: device.id,
@@ -30,7 +37,15 @@ class DeviceModel {
         id: id,
       }});
   }
+  async checkByUserId(user_id) {
+    return await DeviceDTO.findAll({
+      where: {
+        user_id: user_id,
+      }
+    })
+  }
   async updateById(device, id) {
+    device.updated_at = Date.now();
     return await DeviceDTO.update({
       user_id: device.user_id,
       device_name: device.device_name,
@@ -38,7 +53,6 @@ class DeviceModel {
       device_type: device.device_type,
       start_date: device.start_date,
       end_date: device.end_date,
-      created_at: device.created_at,
       updated_at: device.updated_at
     }, {
       where: {

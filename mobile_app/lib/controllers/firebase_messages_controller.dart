@@ -45,7 +45,6 @@ class FmECGFirebaseMessage {
     }
   }
 
-  //TODO: add conversationId
   getSpecificConversationInfo() {
     final conversationInfoQuery = database.collection("conversations")
                                           .where('conversation_id', isEqualTo: 1)
@@ -60,7 +59,6 @@ class FmECGFirebaseMessage {
     return allConversationsQuery;
   }
 
-  //TODO: add conversationId
   getMessageConversation(String conversationId) {
     final messageConversationQuery = database.collection("messages")
                                             .where("conversation_id", isEqualTo: conversationId)
