@@ -19,6 +19,28 @@ app.set("views", path.join(__dirname, "views"));
 const port = process.env.REACT_APP_PORT || 3000;
 const host = process.env.REACT_APP_HOST || '127.0.0.1';
 
+// catching error bin 
+app.use((err, req, next) => {
+  if (err.stack) {
+    console.log(
+      `node server error. \nTime: ${new Date()} \nPlease refer to the attached message: \nError code: ${
+        err.code
+      } \nError message: ${err.message} \nError stack: ${err.stack} \n`
+    );
+    err.stack = "";
+    err.message = "internal server error";
+    next(err);
+  } else {
+    next();
+  }
+});
+
+app.listen(port, () => {
+  console.log(
+    `hello Server bin is running at http://${host}:${port}`
+  );
+});
+
 app.get("/login/test", (req, res) => {
   res.send("ok cool");
 });
@@ -66,26 +88,4 @@ app.post("/login", async (req, res, next) => {
 app.get("/logout", (req, res) => {
   res.cookie("token", "");
   res.send("logout success");
-});
-
-// catching error bin 
-app.use((err, req, next) => {
-  if (err.stack) {
-    console.log(
-      `node server error. \nTime: ${new Date()} \nPlease refer to the attached message: \nError code: ${
-        err.code
-      } \nError message: ${err.message} \nError stack: ${err.stack} \n`
-    );
-    err.stack = "";
-    err.message = "internal server error";
-    next(err);
-  } else {
-    next();
-  }
-});
-
-app.listen(port, () => {
-  console.log(
-    `hello Server bin is running at http://${host}:${port}`
-  );
 });
