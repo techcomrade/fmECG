@@ -5,7 +5,6 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const app = express();
-const axios = require('axios');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: "application/json" }));
