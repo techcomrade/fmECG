@@ -332,5 +332,5 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
 class _ChartData {
   _ChartData(this.country, this.sales);
   final int country;
-  final sales;
+  final double sales;
 }

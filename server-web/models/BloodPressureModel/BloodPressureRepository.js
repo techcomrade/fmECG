@@ -49,7 +49,7 @@ class BloodPressureModel {
     );
   }
   async getRecordByRecordId(recordId) {
-    return await BloodPressureDTO.findOne({
+    return await BloodPressureDTO.findAll({
       where: {
         rec_id: recordId,
       },

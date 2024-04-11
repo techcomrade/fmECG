@@ -20,8 +20,8 @@ class UserService extends CommonService {
             email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
             password: Joi.string().required(),
             birth: Joi.number().required(),
-            phone_number: Joi.number(),
-            image: Joi.string(),
+            phone_number: Joi.number().allow(''),
+            image: Joi.string().allow(''),
             role: Joi.number().required(),
         })
         return schema.validate(user);

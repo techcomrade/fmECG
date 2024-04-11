@@ -4,7 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SubmitButton extends StatefulWidget {
   const SubmitButton({Key? key, required this.onTap, required this.text, this.isLoading = false, this.isDisable = false}) : super(key: key);
-  final onTap;
+  final Function() onTap;
   final String text;
   final bool isLoading;
   final bool isDisable;
