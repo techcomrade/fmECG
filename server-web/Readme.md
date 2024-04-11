@@ -7,3 +7,9 @@
 
 ## Note
 Password for all of account is "123456a@"
+
+<!-- Run -->
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'sparclab';
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'sparclab';
+FLUSH PRIVILEGES;
+

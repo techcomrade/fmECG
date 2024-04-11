@@ -5,27 +5,30 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const app = express();
+const axios = require('axios');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: "application/json" }));
-app.set("host", config.default_app_host);
 app.use(bodyParser.raw());
-app.set("port", config.default_app_port);
+app.use(cors());
+app.use(cookieParser());
 app.use(express.static("views"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-app.use(cookieParser());
-app.use(cors());
-app.get("/test", (req, res) => {
+
+const port = process.env.REACT_APP_PORT || 3000;
+const host = process.env.REACT_APP_HOST || '127.0.0.1';
+
+app.get("/login/test", (req, res) => {
   res.send("ok cool");
 });
 
-app.get("/", (req, res) => {
+app.get("/login", (req, res) => {
   const haveCookie = req.cookies?.token;
   if (haveCookie) {
     res.redirect(config.redirect_url);
   } else {
-    res.render("index", { url: `http://127.0.0.1:3001/login` });
+    res.render("index", { url: `${process.env.REACT_APP_LOGIN}/login` });
   }
 });
 
@@ -81,8 +84,8 @@ app.use((err, req, next) => {
   }
 });
 
-app.listen(app.get("port"), app.get("host"), () => {
+app.listen(port, () => {
   console.log(
-    `hello Server is running at http://${app.get("host")}:${app.get("port")}`
+    `hello Server bin is running at http://${host}:${port}`
   );
 });
