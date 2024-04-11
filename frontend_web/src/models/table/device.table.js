@@ -1,3 +1,4 @@
+import { createDevice, deleteDevice, getDevice, updateDevice } from "../../redux/reducer/deviceSlice";
 
 class DeviceData {
     getColumnShow() {
@@ -29,8 +30,17 @@ class DeviceData {
 
     getFunction() {
         return {
+            createData: createDevice,
+            getData: getDevice,
+            updateData: updateDevice,
+            deleteData: deleteDevice
         }
-      }
+    }
+
+    checkDateIndex(index) {
+        const dateIndex = ['start_date', 'end_date']
+        return dateIndex.includes(index);
+    }
 }
   
   
