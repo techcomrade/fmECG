@@ -1,13 +1,17 @@
-import { Table, Button, Col, Form, Input } from "antd";
+import { Table, Button, Col, Form, Input, DatePicker } from "antd";
 import { useEffect, useState } from "react";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { loadStatus } from "../../redux/reducer/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "./dataTable.scss";
 import { addKeyElement, findElementById } from "../../utils/arrayUtils";
-import { loadStatus } from "../../redux/reducer/userSlice";
 import { Modal } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { showNotiSuccess } from "../Notification";
+import dayjs from 'dayjs';
+import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
+import { checkDateIndex } from "../../models/manage.table";
+
 const { confirm } = Modal;
 
 const DataTable = (props) => {
@@ -23,17 +27,16 @@ const DataTable = (props) => {
 
     // Get data
     useEffect(() => {
-        if (dataState.loadDataStatus === loadStatus.Success) {
-            const rawData = dataState.data.metadata;
-            if (rawData) {
-                setTableData(addKeyElement(rawData));
-            }
+        const rawData = props.data;
+        if(rawData) {
+            setTableData(addKeyElement(rawData));
         }
-    }, [dataState.loadDataStatus]);
+    }, [props.data]);
 
     // Reload data when update success
     useEffect(() => {
         if (dataState.loadCreateDataStatus === loadStatus.Success) {
+            showNotiSuccess("Bạn đã tạo thành công");
             dispatch(props.func.getData());
         }
     }, [dataState.loadCreateDataStatus]);
@@ -41,6 +44,7 @@ const DataTable = (props) => {
     // Reload data when update success
     useEffect(() => {
         if (dataState.loadUpdateDataStatus === loadStatus.Success) {
+            showNotiSuccess("Bạn đã cập nhật thành công");
             dispatch(props.func.getData());
         }
     }, [dataState.loadUpdateDataStatus]);
@@ -48,6 +52,7 @@ const DataTable = (props) => {
     // Reload data when delete success
     useEffect(() => {
         if (dataState.loadDeleteDataStatus === loadStatus.Success) {
+            showNotiSuccess("Bạn đã xóa thành công");
             dispatch(props.func.getData());
         }
     }, [dataState.loadDeleteDataStatus]);
@@ -99,7 +104,6 @@ const DataTable = (props) => {
         cancelText: "Không",
         async onOk() {
             dispatch(props.func.deleteData({id}));
-            showNotiSuccess("Bạn đã xóa thành công");
         },
         onCancel() {},
         });
@@ -112,9 +116,14 @@ const DataTable = (props) => {
     };
 
     const handleSubmitChange = async () => {
-        dispatch(props.func.updateData(dataEdit));
+        const {key, ...dataUpdate} = dataEdit;
+        Object.keys(dataUpdate).forEach(key => {
+            if(checkDateIndex(table, key) && typeof(dataUpdate[key]) !== 'number') {
+                dataUpdate[key] = convertDateToTime(dataUpdate[key])
+            }
+        })
+        dispatch(props.func.updateData(dataUpdate));
         setShowModalEdit(false);
-        showNotiSuccess("Bạn đã cập nhật thành công");
     };
 
     const handleChangeInputCreate = (para, value) => {
@@ -147,6 +156,7 @@ const DataTable = (props) => {
                 columns={props.column}
                 dataSource={tableData}
             />
+            {/* Modal update */}
             <Modal
                 title="Chỉnh sửa thông tin"
                 open={showModalEdit}
@@ -154,21 +164,31 @@ const DataTable = (props) => {
                 okType="primary"
                 onOk={handleSubmitChange}
                 cancelText="Hủy bỏ"
-                onCancel={() => setShowModalEdit(false)}
+                onCancel={() => {
+                    setDataEdit([])
+                    setShowModalEdit(false)
+                }}
             >
                 <br />
-                {props.column.map((column) => (
+                {props.column.map((column) => ( 
                     <Col span={22} key={column.title}>
                         <Form.Item label={column.title}>
-                        <Input
-                            name={column.dataIndex}
-                            value={dataEdit[column.dataIndex]} 
-                            onChange={(e) => handleChangeInput(column.dataIndex, e.target.value)}
-                        />
+                        {checkDateIndex(table, column.dataIndex) ? 
+                            <DatePicker 
+                                format={'DD/MM/YYYY'} 
+                                name={column.dataIndex}
+                                value={dayjs(dataEdit[column.dataIndex], 'DD/MM/YYYY')} 
+                                onChange={(date, dateString) => handleChangeInput(column.dataIndex, dateString)} 
+                            /> : <Input
+                                name={column.dataIndex}
+                                value={dataEdit[column.dataIndex]} 
+                                onChange={(e) => handleChangeInput(column.dataIndex, e.target.value)}
+                            />}
                         </Form.Item>
                     </Col>
                 ))}
             </Modal>
+            {/* Modal create */}
             <Modal
                 title="Tạo thành phần"
                 open={showModalCreate}
@@ -185,11 +205,18 @@ const DataTable = (props) => {
                 {props.column.map((column) => (
                     <Col span={22} key={column.title}>
                         <Form.Item label={column.title}>
-                        <Input
-                            name={column.dataIndex}
-                            value={dataCreate[column.dataIndex]} 
-                            onChange={(e) => handleChangeInputCreate(column.dataIndex, e.target.value)}
-                        />
+                        {checkDateIndex(table, column.dataIndex) ? 
+                            <DatePicker 
+                                format={'DD/MM/YYYY'} 
+                                name={column.dataIndex}
+                                defaultValue={dataCreate[column.dataIndex]} 
+                                onChange={(date, dateString) => handleChangeInputCreate(column.dataIndex, convertDateToTime(dateString))}
+                            /> : <Input
+                                name={column.dataIndex}
+                                value={dataCreate[column.dataIndex]} 
+                                onChange={(e) => handleChangeInputCreate(column.dataIndex, e.target.value)}
+                            />
+                        }
                         </Form.Item>
                     </Col>
                 ))}

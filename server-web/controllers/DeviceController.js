@@ -17,6 +17,7 @@ class DeviceController {
         });
       })
       .catch((err) => {
+        console.log(err);
         return res.status(400).json({
           message: "get devices failed",
         });
