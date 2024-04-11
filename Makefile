@@ -2,7 +2,7 @@
 # sudo chown -R $(whoami) ~/.docker
 # docker container rm -f node_fmecg; docker compose -f docker-compose.yml run --rm --name node_fmecg -p 3000:3000 node_app
 app:
-	docker compose -f docker-compose.yml up
+	docker compose -f docker-compose.yml up --build --detach
 
 # giải thích docker command line
 # docker container rm -f fmecg_app: xoá container tên fmecg_app (nếu có)
