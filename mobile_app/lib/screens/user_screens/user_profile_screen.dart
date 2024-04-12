@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../constants/color_constant.dart';
+import 'package:chaquopy/chaquopy.dart';
+
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({Key? key}) : super(key: key);
@@ -14,8 +16,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _bioController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
-
-  // Get battery level.
 
   @override
   void initState() {
