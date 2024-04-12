@@ -1,4 +1,5 @@
 const HeartRecDTO = require("./HeartRecDTO");
+
 class HeartRecModel {
   async getAllData() {
     return await HeartRecDTO.findAll();
@@ -16,27 +17,35 @@ class HeartRecModel {
   }
   
   async getHeartRecByDeviceId(device_id) {
-    return await HeartRecDTO.fineOne({
+    return await HeartRecDTO.findOne({
       where: {
         id: device_id
       }
     });
   }
+  
   async updateHeartRecByDeviceId(device_id) {
-    where: {
-      id: device_id
-    }
-
-  async deleteById(id,t){
-    return await HeartRecDTO.destroy({
-      where:{
-        id:id
+    return await HeartRecDTO.update(
+      { /* update fields go here */ },
+      {
+        where: {
+          id: device_id
+        }
       }
-    },
-    t && {
-      transaction: t,
-    })
+    );
+  }
 
+  async deleteById(id, t) {
+    return await HeartRecDTO.destroy(
+      {
+        where: {
+          id: id
+        }
+      },
+      t && {
+        transaction: t,
+      }
+    );
   }
 }
 
