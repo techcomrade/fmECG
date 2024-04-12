@@ -92,6 +92,7 @@ class _MainScreenState extends State<MainScreen> {
         },
         items: [
           BottomNavigationBarItem(
+            backgroundColor: Colors.blue,
             icon: PhosphorIcon(PhosphorIcons.regular.house),
             label: S.current.home,
           ),

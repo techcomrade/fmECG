@@ -107,12 +107,12 @@ class _LiveChartSampleState extends State<LiveChartSample> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 220, // Đặt chiều cao nhỏ hơn cho biểu đồ thứ nhất
           width: 500, // Đặt chiều rộng nhỏ hơn cho biểu đồ thứ nhất
           child: _buildLiveLineChart(),
         ),
-        Container(
+        SizedBox(
           height: 220, // Đặt chiều cao nhỏ hơn cho biểu đồ thứ hai
           width: 500, // Đặt chiều rộng nhỏ hơn cho biểu đồ thứ hai
           child: _buildLiveLineChart1(),
@@ -177,7 +177,7 @@ class _LiveChartSampleState extends State<LiveChartSample> {
           },
           legendItemText: "PPG",
           dataSource: chartDataPPG,
-          color: Color(0XFF7BB4EA),
+          color: const Color(0XFF7BB4EA),
           xValueMapper: (_ChartData sales, _) => sales.country,
           yValueMapper: (_ChartData sales, _) => sales.sales,
           // animationDuration: 0,
@@ -211,7 +211,7 @@ class _LiveChartSampleState extends State<LiveChartSample> {
           },
           legendItemText: "PCG",
           dataSource: chartDataPCG,
-          color: Color(0xFFE11239),
+          color: const Color(0xFFE11239),
           xValueMapper: (_ChartData sales, _) => sales.country,
           yValueMapper: (_ChartData sales, _) => sales.sales,
           // animationDuration: 0,

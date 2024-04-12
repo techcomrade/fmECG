@@ -2,10 +2,8 @@ import 'dart:io';
 
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
-import 'package:bluetooth_ecg/controllers/news_controller.dart';
-import 'package:bluetooth_ecg/controllers/user_controller.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
-import 'package:bluetooth_ecg/utils/utils.dart';
+import 'package:bluetooth_ecg/screens/preview_calculation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -200,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 20),
               Container(
                 alignment: Alignment.topLeft,
-                padding: EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Text(
                   "Số người thân",
                   style: TextStyle(
@@ -217,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 keyboardType: TextInputType.phone,
                 enabled: _isEditing,
                 focusNode: focusInputPhone,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.black
@@ -242,9 +240,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                       focusInputPhone.requestFocus();
                     },
-                    child: Text('Chỉnh sửa'),
+                    child: const Text('Chỉnh sửa'),
                   ),
-                  SizedBox(width: 20),  // Khoảng cách giữa các nút
+                  const SizedBox(width: 20),  // Khoảng cách giữa các nút
                   ElevatedButton(
                     onPressed: phoneNumberWarning == "" ? null : () async {
                       await _savePhoneNumberToSharedPrefs(_phoneController.text);
@@ -253,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         phoneNumberWarning = "";
                       });
                     },
-                    child: Text('Lưu'),
+                    child: const Text('Lưu'),
                   ),
                 ],
               ),
@@ -373,6 +371,7 @@ class NumberCard extends StatefulWidget {
   final String unit;
   final Icon leadingIcon;
   final Image centerImage;
+  final Function? onTap;
 
   const NumberCard({
     Key? key,
@@ -382,6 +381,7 @@ class NumberCard extends StatefulWidget {
     required this.unit,
     required this.leadingIcon,
     required this.centerImage,
+    this.onTap
   }) : super(key: key);
 
   @override
@@ -401,6 +401,8 @@ class _NumberCardState extends State<NumberCard> {
         setState(() {
           _isClicked = !_isClicked;
         });
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const PreviewCalculation()));
+        widget.onTap?.call();
       },
       child: Container(
         width: width * 0.4,
