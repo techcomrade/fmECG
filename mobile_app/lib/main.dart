@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:bluetooth_ecg/app.dart';
-import 'package:bluetooth_ecg/constants/theme.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/bluetooth_provider.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
@@ -80,20 +79,20 @@ class FmECGAppState extends State<FmECGApp> {
       ],
       child: Consumer<AuthProvider>(builder: (ctx, auth, _) {
         Utils.globalContext = ctx;
-        return MaterialApp(
+        return const MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: (auth.theme == ThemeType.dark
-                  ? ThemeECG.darkTheme
-                  : ThemeECG.lightTheme)
-              .copyWith(
-                  pageTransitionsTheme: const PageTransitionsTheme(
-            builders: <TargetPlatform, PageTransitionsBuilder>{
-              TargetPlatform.android: ZoomPageTransitionsBuilder(),
-            },
-          )),
-          darkTheme: ThemeECG.darkTheme,
+          // theme: (auth.theme == ThemeType.dark
+          //         ? ThemeECG.darkTheme
+          //         : ThemeECG.lightTheme)
+          //     .copyWith(
+          //         pageTransitionsTheme: const PageTransitionsTheme(
+          //   builders: <TargetPlatform, PageTransitionsBuilder>{
+          //     TargetPlatform.android: ZoomPageTransitionsBuilder(),
+          //   },
+          // )),
+          // darkTheme: ThemeECG.darkTheme,
           //home: const MainScreen(),
-          home: const App(),
+          home: App(),
           //const Login1Screen(),
           // auth.isAuth
           //     ? const MainScreen()
@@ -125,7 +124,7 @@ class FmECGAppState extends State<FmECGApp> {
           //     return const Login1Screen();
           //   }
           // }),
-          localizationsDelegates: const [
+          localizationsDelegates: [
             S.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,

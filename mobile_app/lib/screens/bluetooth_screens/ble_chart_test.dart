@@ -127,14 +127,14 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
     try {
       final bytesInFile = await widget.fileToSave.readAsBytes();
       showDialog(context: context, builder: (ctxx) {
-        return Dialog(
-          child: Container(
+        return const Dialog(
+          child: SizedBox(
             height: 90,
             child: Column(
               children: [
-                const SizedBox(height: 5),
+                SizedBox(height: 5),
                 Text('Số liệu đang được xử lý bằng Python'),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 CircularProgressIndicator()
               ],
             ),
@@ -189,7 +189,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
             }
 
             return Dialog(
-              child: Container(
+              child: SizedBox(
                 height: 205,
                 child: Column(
                   children: [
@@ -302,7 +302,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('BIỂU ĐỒ DỮ LIỆU HUYẾT ÁP CỦA BẠN'),
+              const Text('BIỂU ĐỒ DỮ LIỆU HUYẾT ÁP CỦA BẠN'),
               // Text('RSSI: ${widget.deviceConnected.rssi}'),
               StreamBuilder<List>(
                   stream: _dataStream,
@@ -350,12 +350,12 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
               if (isCalculated)
               Column(
                 children: [
-                  Text('Dữ liệu sau khi được xử lý: '),
+                  const Text('Dữ liệu sau khi được xử lý: '),
                   const SizedBox(height: 5),
-                  Text("SBP: ${_textSBP}"),
-                  Text("DBP: ${_textDBP}"),
-                  Text("Heart Rate: ${_textHeartRate}"),
-                  Text("Deviation: ${_textDeviation}"),
+                  Text("SBP: $_textSBP"),
+                  Text("DBP: $_textDBP"),
+                  Text("Heart Rate: $_textHeartRate"),
+                  Text("Deviation: $_textDeviation"),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
@@ -384,7 +384,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           _chartSeriesController = controller;
         },
         dataSource: chartDataChannel!,
-        color: Color.fromARGB(255, 42, 25, 228),
+        color: const Color.fromARGB(255, 42, 25, 228),
         xValueMapper: (_ChartData sales, _) => sales.country,
         yValueMapper: (_ChartData sales, _) => sales.sales,
         animationDuration: 0,
@@ -415,7 +415,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           _chartSeriesController3 = controller;
         },
         dataSource: chartDataChannel3!,
-        color: Color.fromARGB(255, 228, 25, 25),
+        color: const Color.fromARGB(255, 228, 25, 25),
         xValueMapper: (_ChartData sales, _) => sales.country,
         yValueMapper: (_ChartData sales, _) => sales.sales,
         animationDuration: 0,

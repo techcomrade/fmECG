@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../constants/color_constant.dart';
-import 'package:chaquopy/chaquopy.dart';
 
 
 class UserProfileScreen extends StatefulWidget {
@@ -97,10 +96,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   height: 100,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      const InfoCard(title: 'Age', value: '30', unit: 'years'),
-                      const InfoCard(title: 'Weight', value: '90', unit: 'kg'),
-                      const InfoCard(title: 'Height', value: '190', unit: 'cm'),
+                    children: const <Widget>[
+                      InfoCard(title: 'Age', value: '30', unit: 'years'),
+                      InfoCard(title: 'Weight', value: '90', unit: 'kg'),
+                      InfoCard(title: 'Height', value: '190', unit: 'cm'),
                     ],
                   ),
                 ),
