@@ -379,30 +379,6 @@ class BleLiveChartTest extends StatefulWidget {
         );
       }
     }
-
-    subscribeCharacteristic() {
-      subscribeStream =
-          flutterReactiveBle.subscribeToCharacteristic(
-              widget.bluetoothCharacteristic).listen((value) {
-            // print("Received Data: $value");
-             List<double> packetHandled = ECGDataController.handleDataRowFromBluetooth(value);
-            // print("Processed Data: ${packetHandled.length}"); // In dữ liệu đã xử lý
-            // print("Processed Data dữ liệu sau khi chia: $packetHandled");
-            List dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(packetHandled);
-            samples.add([0,	0, 0, 0, 0, 0, ...packetHandled]);
-
-            if (samples.length == 50000) {
-              FilesManagement.handleSaveDataToFileV2(
-                  widget.fileToSave, samples);
-              samples.clear();
-            }
-            if (count % 15 == 0) { // Cập nhật sau mỗi 15 bước
-              _updateChartData(dataChannelsToShowOnChart);
-            }
-            count++;
-          });
-
-    }
   }
 
 /// Private calss for storing the chart series data points.
