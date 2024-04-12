@@ -6,12 +6,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
-        // START: FlutterFire Configuration
-        classpath 'com.google.gms:google-services:4.3.10'
-        // END: FlutterFire Configuration
-        classpath 'com.android.tools.build:gradle:7.1.2'
-        classpath "com.chaquo.python:gradle:14.0.2"
+        classpath 'com.android.tools.build:gradle:8.3.1'
+        classpath "com.chaquo.python:gradle:15.0.1"
+        classpath 'com.google.gms:google-services:4.3.14'
     }
 }
 
@@ -19,6 +16,17 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+    subprojects {
+        afterEvaluate { project ->
+            if (project.hasProperty('android')) {
+                project.android {
+                    if (namespace == null) {
+                        namespace project.group
+                    }
+                }
+            }
+        }
     }
 }
 
