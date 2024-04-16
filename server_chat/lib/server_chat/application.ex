@@ -14,10 +14,9 @@ defmodule ServerChat.Application do
       ServerChat.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: ServerChat.PubSub},
-      # Start Finch
-      {Finch, name: ServerChat.Finch},
       # Start the Endpoint (http/https)
-      ServerChatWeb.Endpoint
+      ServerChatWeb.Endpoint,
+      ServerChat.Fcm.FcmStore
       # Start a worker by calling: ServerChat.Worker.start_link(arg)
       # {ServerChat.Worker, arg}
     ]

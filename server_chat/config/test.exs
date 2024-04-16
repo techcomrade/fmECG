@@ -17,14 +17,8 @@ config :server_chat, ServerChat.Repo,
 # you can enable the server option below.
 config :server_chat, ServerChatWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "VbnZPeL7NEbbtxnQ087Os4uhCXN/+nqvT1EoEDflt4niKeKjQyrjEd78ZSLx4223",
+  secret_key_base: "E4+VeTKOLxqy0Y6d8SC63Y0VA/TNeZ8DRR3WpmZujVyrH73CByugl9p5JJwmbybR",
   server: false
-
-# In test we don't send emails.
-config :server_chat, ServerChat.Mailer, adapter: Swoosh.Adapters.Test
-
-# Disable swoosh api client as it is only required for production adapters.
-config :swoosh, :api_client, false
 
 # Print only warnings and errors during test
 config :logger, level: :warning

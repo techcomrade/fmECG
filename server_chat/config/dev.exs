@@ -23,11 +23,8 @@ config :server_chat, ServerChatWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "YOQ2ufRyn/yDRlG2TAWxiSI9fOT/JWcT51iBoJ19eBaLLvdkxCqYwVvHuCNPJMSB",
-  watchers: [
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
-  ]
+  secret_key_base: "fTlDva75kyGXdinmdb3h6V9i17elSHgAU5DjLYDQLkJ0pmon+pcGFtuEV8lKnYM0",
+  watchers: []
 
 # ## SSL Support
 #
@@ -52,16 +49,6 @@ config :server_chat, ServerChatWeb.Endpoint,
 # configured to run both http and https servers on
 # different ports.
 
-# Watch static and templates for browser reloading.
-config :server_chat, ServerChatWeb.Endpoint,
-  live_reload: [
-    patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
-      ~r"lib/server_chat_web/(controllers|live|components)/.*(ex|heex)$"
-    ]
-  ]
-
 # Enable dev routes for dashboard and mailbox
 config :server_chat, dev_routes: true
 
@@ -74,6 +61,3 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
-
-# Disable swoosh api client as it is only required for production adapters.
-config :swoosh, :api_client, false
