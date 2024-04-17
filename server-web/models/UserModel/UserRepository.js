@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const UserDTO = require("./UserDTO");
 
 class UserModel {
@@ -9,6 +10,14 @@ class UserModel {
     return await UserDTO.findAll({
       where: {
         id: id,
+      },
+    });
+  }
+  
+  async getUserByAccountId(id) {
+    return await UserDTO.findOne({
+      where: {
+        account_id: id,
       },
     });
   }
