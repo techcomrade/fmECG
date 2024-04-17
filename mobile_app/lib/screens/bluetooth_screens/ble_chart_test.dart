@@ -10,6 +10,8 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:telephony/telephony.dart';
+import 'package:geolocator/geolocator.dart' as geo;
+import '../../constants/color_constant.dart';
 
 import '../../constants/color_constant.dart';
 
@@ -47,6 +49,8 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   late StreamSubscription<List<int>> subscribeStream;
   late StreamController<List> _dataStreamController;
 
+  String _currentLocation = '';
+
   final ScrollController _scrollController = ScrollController();
 
   Stream<List> get _dataStream => _dataStreamController.stream;
@@ -78,10 +82,8 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
     _clearDataInChart();
     subscribeStream.cancel();
     _dataStreamController.close();
-
     super.dispose();
   }
-
 
   _resetMeasuring() {
     _clearDataInChart();
@@ -91,6 +93,35 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
       isMeasuring = false;
       isCalculated = true;
     });
+  }
+
+  Future<void> _fetchAndSendLocation(String additionalMessage) async {
+    bool serviceEnabled;
+    geo.LocationPermission permission;
+
+    serviceEnabled = await geo.Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      await geo.Geolocator.openLocationSettings();
+      return;
+    }
+
+    permission = await geo.Geolocator.checkPermission();
+    if (permission == geo.LocationPermission.deniedForever) {
+      await geo.Geolocator.openAppSettings();
+      return;
+    }
+
+    if (permission == geo.LocationPermission.denied) {
+      permission = await geo.Geolocator.requestPermission();
+      if (permission != geo.LocationPermission.whileInUse && permission != geo.LocationPermission.always) {
+        return;
+      }
+    }
+
+    geo.Position position = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
+    _currentLocation = 'https://www.google.com/maps/search/?api=1&query=${position.latitude},${position.longitude}';
+    String message = additionalMessage + "\n Vị trí hiện tại: $_currentLocation";
+    await sendSMSAutomatically(message);
   }
 
   Future<void> sendSMSAutomatically(String message) async {
@@ -144,6 +175,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           _textHeartRate = data!["heart_rate"].toString();
           _textDeviation = data!["standard_deviation"].toString();
         });
+
         int sbpNumber = double.parse(_textSBP).round();
         int dbpNumber = double.parse(_textDBP).round();
         int heartRateNumber = double.parse(_textHeartRate).round();
@@ -184,9 +216,8 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
             smsMessage += "Sự chênh lệch lớn trong nhịp tim. ";
           }
 
-          sendSMSAutomatically(smsMessage);
+          _fetchAndSendLocation(smsMessage);
         }
-
 
         Navigator.of(context).push(
           MaterialPageRoute(
