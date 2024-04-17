@@ -13,6 +13,8 @@ import 'package:telephony/telephony.dart';
 import 'package:geolocator/geolocator.dart' as geo;
 import '../../constants/color_constant.dart';
 
+import '../../constants/color_constant.dart';
+
 class BleLiveChartTest extends StatefulWidget {
   const BleLiveChartTest({
     Key? key,
@@ -173,8 +175,9 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           _textHeartRate = data!["heart_rate"].toString();
           _textDeviation = data!["standard_deviation"].toString();
         });
-        int sbpNumber = 125;
-        int dbpNumber = 78;
+
+        int sbpNumber = double.parse(_textSBP).round();
+        int dbpNumber = double.parse(_textDBP).round();
         int heartRateNumber = double.parse(_textHeartRate).round();
         int deviationNumber = double.parse(_textDeviation).round();
         double position = calculateIndicatorPosition(sbpNumber, dbpNumber);
