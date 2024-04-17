@@ -21,12 +21,14 @@ app.get("/test", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  const haveCookie = req.cookies?.token;
+  const haveCookie = req.cookies?.user;
   if (haveCookie) {
     res.redirect(config.redirect_url);
   } else {
     res.render("index", { url: `http://127.0.0.1:3001/login` });
   }
+
+
 });
 
 app.post("/login", async (req, res, next) => {
@@ -46,22 +48,22 @@ app.post("/login", async (req, res, next) => {
       password: password,
     }),
   })
-    .then((result) => {
-      console.log(result);
+    .then(async (result) => {
       if (result.ok) {
-        res.cookie("token", "login");
+        console.log("hi");
+        const userInfo = await result.json();
+        // console.log(userInfo.metadata.ToString());
+        res.cookie("user", JSON.stringify(userInfo.metadata));
         return res.status(200).json("login successfully");
       }
       return res.status(400).json("login failed");
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       return res.status(400).json("login failed");
     });
 });
-
 app.get("/logout", (req, res) => {
-  res.cookie("token", "");
+  res.clearCookie("user");
   res.send("logout success");
 });
 
