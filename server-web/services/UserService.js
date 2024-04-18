@@ -1,17 +1,22 @@
 const CommonService = require('./CommonService')
 const Joi = require('joi')
 const UserRepository = require('../models/UserModel/UserRepository');
-const AccountRepository = require("../models/AccountModel/AccountRepository");
-const TokenRepository = require("../models/TokenModel/TokenRepository");
-const DeviceRepository = require("../models/DeviceModel/DeviceRepository");
-const RecordRepository = require("../models/RecordModel/RecordRepository");
-const BloodPressureRepository = require("../models/BloodPressureModel/BloodPressureRepository");
-const HeartRecRepository = require("../models/HeartRecModel/HeartRecRepository");
-const PatientDoctorAssignmentRepository = require("../models/PatientDoctorAssignModel/PatientDoctorAssignmentRepository");
+const DeviceRepository = require('../models/DeviceModel/DeviceRepository');
 
 class UserService extends CommonService {
     async getAll(){
-        return await UserRepository.getAllData();
+        const data = await UserRepository.getAllData();
+        const dataUpdate = await Promise.all(
+            data.map(async (user) => {
+                const deviceUser = await DeviceRepository.checkByUserId(user.id); 
+                return ({
+                    ...user,
+                    devices: deviceUser.length
+                });
+                 
+            })
+        )
+        return dataUpdate;
     }
     
     validateUser(user) {
@@ -40,7 +45,12 @@ class UserService extends CommonService {
         if(!userId) {
             return false;
         }
-        return await UserRepository.getUserById(userId);
+        const user = await UserRepository.getUserById(userId);
+        const deviceUser = await DeviceRepository.checkByUserId(userId);
+        return [{
+            ...user[0],
+            devices: deviceUser.length
+        }];
     }
 
     async createUser(data) {

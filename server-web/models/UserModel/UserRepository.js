@@ -3,7 +3,12 @@ const UserDTO = require("./UserDTO");
 
 class UserModel {
   async getAllData() {
-    return await UserDTO.findAll();
+    return await UserDTO.findAll({
+      attributes: {
+        exclude: ['created_at', 'updated_at']
+      },
+      raw: true,   
+    });
   }
 
   async getUserById(id) {
@@ -11,6 +16,10 @@ class UserModel {
       where: {
         id: id,
       },
+      attributes: {
+        exclude: ['created_at', 'updated_at']
+      },
+      raw: true,
     });
   }
   
