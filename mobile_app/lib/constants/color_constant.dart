@@ -9,6 +9,14 @@ class ColorConstant {
   static Color quinary = const Color(0xFFF7F9FB);
   static Color description = const Color(0XFFEDEDED);
 
+  static const Color surface = Color(0xFFFDF8F8);
+  static const Color onSurface = Color(0xFF090909);
+  static const Color surfaceVariant = Color(0xFFEBE2E2);
+  static const Color onSurfaceVariant = Color(0xFF121111);
+  static const Color surfaceContainer = Color(0xffF3EDF7);
+  static const Color outline = Color(0xFF7C7C7C);
+  static const Color outlineVariant = Color(0xFFC8C8C8);
+
   static Color black9007e = fromHex('#7e000000');
   static Color blueGray100 = fromHex('#cfcfcf');
   static Color gray500 = fromHex('#979797');

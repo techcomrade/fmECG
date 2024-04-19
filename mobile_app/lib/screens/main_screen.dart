@@ -1,4 +1,3 @@
-
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screens/history_screen.dart';
@@ -7,7 +6,6 @@ import 'package:bluetooth_ecg/screens/user_screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -39,7 +37,8 @@ class _MainScreenState extends State<MainScreen> {
         _textSBP = result != null ? result!["sbp"].toString() : "";
         _textDBP = result != null ? result!["dbp"].toString() : "";
         _textHeartRate = result != null ? result!["heart_rate"].toString() : "";
-        _textDeviation = result != null ? result!["standard_deviation"].toString() : "";
+        _textDeviation =
+            result != null ? result!["standard_deviation"].toString() : "";
       });
     } on PlatformException catch (e) {
       text = "Failed to get text: '${e.message}'.";
@@ -69,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
   //       provisional: false);
 
   //   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-  //     print('permis');
+  //     print('permis');h
   //   } else if (settings.authorizationStatus ==
   //       AuthorizationStatus.provisional) {
   //     print('provisional ');
@@ -92,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
         },
         items: [
           BottomNavigationBarItem(
-            backgroundColor: Colors.blue,
+            backgroundColor: const Color(0xFF8EDBCE),
             icon: PhosphorIcon(PhosphorIcons.regular.house),
             label: S.current.home,
           ),
