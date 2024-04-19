@@ -41,7 +41,7 @@ export const updateDevice = createAsyncThunk(
   "/update-device",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpPostData(`/device/update/${params.id}`, params);
+      const response = await httpPostData(`/device/update`, params);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -133,4 +133,5 @@ const deviceSlice = createSlice({
 });
 
 const { reducer: deviceReducer } = deviceSlice;
+export const {resetLoadDataStatus, resetCreateDataStatus, resetUpdateDataStatus, resetDeleteDataStatus} = deviceSlice.actions;
 export default deviceReducer;

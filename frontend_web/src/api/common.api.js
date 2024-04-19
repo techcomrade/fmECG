@@ -12,7 +12,7 @@ export const httpPostData = (url, data) => {
         })
         .catch((error) => {
             console.log('error post data', error);
-            showNotiError(error.response.data)
+            showNotiError(error?.response?.data?.message)
             // checkErrorReturn(error);
             reject(error)
         })
