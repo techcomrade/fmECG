@@ -45,12 +45,13 @@ class UserService extends CommonService {
         if(!userId) {
             return false;
         }
-        const user = await UserRepository.getUserById(userId);
+        const data = await UserRepository.getUserById(userId);
         const deviceUser = await DeviceRepository.checkByUserId(userId);
-        return [{
-            ...user[0],
+        data[0].dataValues = {
+            ...data[0].dataValues,
             devices: deviceUser.length
-        }];
+        }
+        return data;
     }
 
     async createUser(data) {

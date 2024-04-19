@@ -19,7 +19,6 @@ class UserModel {
       attributes: {
         exclude: ['created_at', 'updated_at']
       },
-      raw: true,
     });
   }
   
