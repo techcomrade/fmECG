@@ -11,3 +11,5 @@ export const findElementById = (arr, value) => {
 }
 
 export const objectArrayValues = obj => Object.values(obj);
+
+export const toggleElement = (arr, val) => arr.includes(val) ? arr.filter(item => item !== val) : [...arr, val];
