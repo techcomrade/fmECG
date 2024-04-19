@@ -194,7 +194,6 @@
 
       //sign in
       var loginUrl = `<%= url %>`;
-      console.log(loginUrl);
       const loginFunction = async () => {
         const username = document.querySelector("#input-user-name").value;
         const password = document.querySelector("#input-password").value;
@@ -218,7 +217,6 @@
               }),
             });
             if (loginResult.ok) {
-              window.alert("Sign in successful!");
               window.location.reload();
             } else {
               document.getElementById('myModal').style.display = 'none';

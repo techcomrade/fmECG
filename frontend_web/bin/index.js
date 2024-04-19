@@ -50,20 +50,23 @@ app.post("/login", async (req, res, next) => {
   })
     .then(async (result) => {
       if (result.ok) {
-        console.log("hi");
         const userInfo = await result.json();
-        // console.log(userInfo.metadata.ToString());
-        res.cookie("user", JSON.stringify(userInfo.metadata));
+        res.cookie("user", userInfo.metadata.id);
+        res.cookie("access-token", userInfo.metadata.access_token);
+        res.cookie("refresh-token", userInfo.metadata.refresh_token);
         return res.status(200).json("login successfully");
       }
       return res.status(400).json("login failed");
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err);
       return res.status(400).json("login failed");
     });
 });
 app.get("/logout", (req, res) => {
   res.clearCookie("user");
+  res.clearCookie("access-token");
+  res.clearCookie("refresh-token");
   res.send("logout success");
 });
 
