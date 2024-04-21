@@ -1,4 +1,5 @@
 defmodule ServerChat.Utils.ApiHandler do
+  import Plug.Conn
   
   def get(url, headers \\ [], options \\ []) do
     url_get = HTTPoison.get(url, headers, options)
@@ -52,5 +53,16 @@ defmodule ServerChat.Utils.ApiHandler do
           "message" => reason
         }
     end
+  end
+  
+  def send_conn_error(conn, message, code \\ 400, error_code \\ nil) do
+    response = %{success: false}
+    |> Map.put(:message, message)
+    |> Map.put(:error_code, error_code)
+
+    conn
+    |> put_resp_header("content-type", "application/json; charset=UTF-8")
+    |> send_resp(code, Jason.encode!(response))
+    |> halt
   end
 end

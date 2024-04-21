@@ -23,7 +23,7 @@ config :server_chat, ServerChatWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "fTlDva75kyGXdinmdb3h6V9i17elSHgAU5DjLYDQLkJ0pmon+pcGFtuEV8lKnYM0",
+  secret_key_base: "1234",
   watchers: []
 
 # ## SSL Support
