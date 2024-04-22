@@ -1,368 +1,182 @@
-import 'dart:async';
-
+import 'package:bluetooth_ecg/constants/chat_user.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
-import 'package:bluetooth_ecg/controllers/firebase_messages_controller.dart';
-import 'package:bluetooth_ecg/models/doctor_info.dart';
-import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_detail_screen.dart';
-import 'package:bluetooth_ecg/utils/utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+  const ChatScreen({super.key});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  Stream<QuerySnapshot>? conversationStream;
-
-  @override
-  void initState() {
-    super.initState();
-    checkPatientDoctorAssignment();
-    getConversationStream();
-  }
-
-  void checkPatientDoctorAssignment() async {
-    final doctorAssignedInfo = context.read<UserProvider>().doctorAssignedInfo;
-
-    if (doctorAssignedInfo.isNotEmpty) {
-      // check conversation co tren db chua
-      int patientId = await Utils.getUserId();
-      int doctorId = doctorAssignedInfo["user_id"] ?? 0;
-      List userIds = [patientId, doctorId];
-      String conversationId = await FmECGFirebaseMessage()
-          .getSpecificConversationIdByUserIds(userIds);
-      print('conversationId:$conversationId');
-      if (conversationId == "") {
-        print('go heree');
-        final DateTime conversationCreatedAt = DateTime.now().toUtc();
-        Map<String, dynamic> conversationInfo = {
-          'conversation_id': Utils.getRandomNumber(4),
-          'member_ids': {"$patientId": true, "$doctorId": true},
-          'conversation_avatar_url': "dsgdfgdfgdf",
-          'created_at': conversationCreatedAt
-        };
-        await FmECGFirebaseMessage().createConversation(conversationInfo);
-      }
-    }
-  }
-
-  void getConversationStream() async {
-    int userId = await Utils.getUserId();
-    conversationStream =
-        await FmECGFirebaseMessage().getAllConversationsInfo(userId);
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: ColorConstant.blueA200,
-        appBar: AppBar(
-            backgroundColor: ColorConstant.blueA200,
-            elevation: 0,
-            centerTitle: true,
-            title: Column(
-              children: [
-                Text('fmECG',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: ColorConstant.whiteA700,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    )),
-                Text('Trao đổi với bác sĩ',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: ColorConstant.whiteA700,
-                      fontSize: 18,
-                    )),
-              ],
-            )),
-        body: SingleChildScrollView(
-          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Container(
-              color: ColorConstant.blueA200,
-              width: double.infinity,
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.only(top: 5),
-              child: SizedBox(
-                width: double.infinity,
-                height: 70,
+      backgroundColor: ColorConstant.surface,
+      appBar: AppBar(
+        flexibleSpace: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        ),
+        backgroundColor: ColorConstant.surface,
+        toolbarHeight: size.height * 0.1,
+        title: const Text(
+          "Tin nhắn",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        actions: const [
+          IconButton(
+              onPressed: null,
+              icon: Icon(
+                Icons.send,
+                color: Colors.blue,
+              ))
+        ],
+      ),
+      body: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: SizedBox(
+          height: size.height,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Tìm bác sĩ...",
+                    hintStyle:
+                        const TextStyle(color: ColorConstant.onSurfaceVariant),
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: ColorConstant.onSurfaceVariant,
+                      size: 20,
+                    ),
+                    filled: true,
+                    fillColor: ColorConstant.surfaceVariant,
+                    contentPadding: const EdgeInsets.all(8),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(color: Colors.grey.shade100)),
+                  ),
+                ),
+              ),
+              Expanded(
                 child: ListView.builder(
-                    itemCount: doctors.length,
-                    shrinkWrap: true,
-                    addSemanticIndexes: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: const ClampingScrollPhysics(),
+                    itemCount: ChatUsers.chatUsers.length,
+                    //shrinkWrap: true,
+
+                    padding: const EdgeInsets.only(top: 16),
                     itemBuilder: (context, index) {
-                      return Container(
-                        width: 80,
-                        height: 80,
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Stack(children: [
-                          Container(
-                              decoration: BoxDecoration(
-                                color: ColorConstant.whiteA700,
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              padding: const EdgeInsets.all(1),
-                              child: GestureDetector(
-                                onTap: () => {},
-                                child: Image.asset(
-                                  doctors[index].image,
-                                  alignment: Alignment.center,
-                                ),
-                              )),
-                          Positioned(
-                              // bottom:BorderSide.strokeAlignOutside,
-                              // right: BorderSide.strokeAlignOutside,
-                              child: Container(
-                            width: 10,
-                            height: 10,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: ColorConstant.tertiary,
-                            ),
-                          ))
-                        ]),
-                      );
+                      return ConversationList(
+                          index: index,
+                          name: ChatUsers.chatUsers[index].name,
+                          messageText: ChatUsers.chatUsers[index].message,
+                          imageUrl: ChatUsers.chatUsers[index].imageUrl,
+                          time: ChatUsers.chatUsers[index].time,
+                          isMessageRead: (index != 0) ? true : false);
                     }),
               ),
-            ),
-            Container(
-                width: double.infinity,
-                height: size.height * 0.65 + 4.4,
-                margin: const EdgeInsets.only(top: 20),
-                decoration: BoxDecoration(
-                    color: ColorConstant.whiteA700,
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50))),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
-                      child: CupertinoTextField(
-                        // hintText: 'Search',
-                        // alignment: Alignment.topCenter,
-                        prefix: Icon(PhosphorIcons.regular.magnifyingGlass),
-                        // width: 320,
-                      ),
-                    ),
-                    StreamBuilder<QuerySnapshot>(
-                        stream: conversationStream,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            final List conversations =
-                                snapshot.data!.docs.map((document) {
-                              return {
-                                'document_id': document.id,
-                                ...document.data() as Map
-                              };
-                            }).toList();
-
-                            return ListView.builder(
-                              itemCount: conversations.length,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: (context, index) {
-                                final conversation = conversations[index];
-                                return InkWell(
-                                  onTap: () => Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) {
-                                    return ChatDetailScreen(
-                                        conversation: conversation);
-                                  })),
-                                  child: Container(
-                                      width: double.infinity,
-                                      height: 100,
-                                      padding: const EdgeInsets.fromLTRB(
-                                          15, 15, 5, 10),
-                                      decoration: BoxDecoration(
-                                          color: ColorConstant.whiteA700),
-                                      child: Container(
-                                        color: ColorConstant.whiteA700,
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.all(5),
-                                              child: Image.asset(
-                                                  doctors[index].image),
-                                              color: ColorConstant.whiteA700,
-                                            ),
-                                            SizedBox(
-                                              width: size.width / 1.4,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        "${conversation["conversation_id"]}",
-                                                        style: const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      const Text(
-                                                        '20.00',
-                                                        style: TextStyle(
-                                                            fontSize: 12),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      const Text(
-                                                          'Tin nhắn mới'),
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .fromLTRB(
-                                                                5, 2, 5, 2),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20),
-                                                          color: ColorConstant
-                                                              .primary,
-                                                        ),
-                                                        child: const Text(
-                                                          '1',
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w900,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      )),
-                                );
-                              },
-                            );
-                          } else {
-                            return const CircularProgressIndicator();
-                          }
-                        })
-                  ],
-                ))
-          ]),
-        ));
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
-List<Data> doctors = [
-  Data(
-    id: 1,
-    userId: 2,
-    departmentId: 3,
-    name: 'Nguyễn A',
-    email: 'johndoe@example.com',
-    password: 'password',
-    phoneNo: '1234567890',
-    workingHour: '9AM - 5PM',
-    aboutUs: 'We are a team of professionals...',
-    service: 'Service description...',
-    image: 'assets/images/doctor.png',
-    facebookId: 'johndoe',
-    twitterId: 'johndoe',
-    googleId: 'johndoe',
-    instagramId: 'johndoe',
-    createdAt: '2022-01-01T00:00:00.000Z',
-    updatedAt: '2022-01-01T00:00:00.000Z',
-    departmentName: 'Department name...',
-    ratting: 4.5,
-    timeTabledata: [],
-  ),
-  Data(
-      id: 2,
-      userId: 3,
-      departmentId: 4,
-      name: 'Vũ B',
-      email: 'janedoe@example.com',
-      password: 'password',
-      phoneNo: '1234567890',
-      workingHour: '9AM - 5PM',
-      aboutUs: 'We are a team of professionals...',
-      service: 'Service description...',
-      image: 'assets/images/doctor.png',
-      facebookId: 'janedoe',
-      twitterId: 'janedoe',
-      googleId: 'janedoe',
-      instagramId: 'janedoe',
-      createdAt: '2022-01-01T00:00:00.000Z',
-      updatedAt: '2022-01-01T00:00:00.000Z',
-      departmentName: 'Department name...',
-      ratting: 4.5,
-      timeTabledata: []),
-  Data(
-      id: 3,
-      userId: 4,
-      departmentId: 5,
-      name: 'Trần C',
-      email: 'bobsmith@example.com',
-      password: 'password',
-      phoneNo: '1234567890',
-      workingHour: '9AM - 5PM',
-      aboutUs: 'We are a team of professionals...',
-      service: 'Service description...',
-      image: 'assets/images/doctor.png',
-      facebookId: 'bobsmith',
-      twitterId: 'bobsmith',
-      googleId: 'bobsmith',
-      instagramId: 'bobsmith',
-      createdAt: '2022-01-01T00:00:00.000Z',
-      updatedAt: '2022-01-01T00:00:00.000Z',
-      departmentName: 'Department name...',
-      ratting: 4.5,
-      timeTabledata: []),
-  Data(
-      id: 4,
-      userId: 5,
-      departmentId: 6,
-      name: 'Mai D',
-      email: 'alicesmith@example.com',
-      password: 'password',
-      phoneNo: '1234567890',
-      workingHour: '9AM - 5PM',
-      aboutUs: 'We are a team of professionals...',
-      service: 'Service description...',
-      image: 'assets/images/doctor.png',
-      facebookId: 'alicesmith',
-      twitterId: 'alicesmith',
-      googleId: 'alicesmith',
-      instagramId: 'alicesmith',
-      createdAt: '2022-01-01T00 :00 :00.000Z',
-      updatedAt: '2022-01-01T00 :00 :00.000Z',
-      departmentName: 'Department name...',
-      ratting: 4.5,
-      timeTabledata: []),
-];
+class ConversationList extends StatefulWidget {
+  final String name;
+  final String messageText;
+  final String imageUrl;
+  final String time;
+  final bool isMessageRead;
+  final int index;
+  const ConversationList({
+    super.key,
+    required this.name,
+    required this.messageText,
+    required this.imageUrl,
+    required this.time,
+    required this.isMessageRead,
+    required this.index,
+  });
+  @override
+  State<ConversationList> createState() => _ConversationListState();
+}
+
+class _ConversationListState extends State<ConversationList> {
+  late bool isRead = widget.isMessageRead;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+        setState(() {
+          isRead = true;
+        });
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ChatDetailScreen(indexSelect: widget.index)));
+      },
+      child: Container(
+        padding:
+            const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(widget.imageUrl),
+                    maxRadius: 30,
+                  ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  Expanded(
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            widget.name,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          Text(
+                            widget.messageText,
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: !isRead
+                                    ? Colors.black
+                                    : Colors.grey.shade600,
+                                fontWeight: !isRead
+                                    ? FontWeight.bold
+                                    : FontWeight.normal),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              widget.time,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: !isRead ? FontWeight.bold : FontWeight.normal),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
