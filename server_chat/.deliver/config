@@ -1,0 +1,19 @@
+APP="server_chat"
+
+BUILD_HOST="171.244.8.114"
+BUILD_USER="root"
+BUILD_AT="/app_build"
+
+PRODUCTION_HOSTS="171.244.8.114" 
+PRODUCTION_USER="root" 
+DELIVER_TO="/app_release"
+
+pre_erlang_get_and_update_deps() {
+  local _prod_secret_path="/server_config/prod.exs"
+
+  if [ "$TARGET_MIX_ENV" = "prod" ]; then
+    __sync_remote "
+      ln -sfn '$_prod_secret_path' '$BUILD_AT/config/prod.exs'
+    "
+  fi
+}

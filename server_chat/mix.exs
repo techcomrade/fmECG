@@ -42,6 +42,8 @@ defmodule ServerChat.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:jose, "~> 1.11"},
       {:httpoison, "~> 2.2.1"},
+      {:edeliver, ">= 1.9.2"},
+      {:distillery, "~> 2.1", warn_missing: false},
     ]
   end
 
