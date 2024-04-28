@@ -18,10 +18,14 @@ const Spo2_rec = sequelize.define(
         key: "id",
       },
     },
+    dummy_data: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
   {
     timestamps: false,
-    freezeTableName: true
+    freezeTableName: true,
   }
 );
 
