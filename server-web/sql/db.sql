@@ -23,31 +23,36 @@ CREATE TABLE `patient_doctor_assignment` (
    `doctor_id` varchar(255) NOT NULL,
    `start_date` bigint NOT NULL,
    `created_at` bigint,
-   `updated_at` bigint
+   `updated_at` bigint,
+   `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `heart_rec`;
 CREATE TABLE `heart_rec` (
    `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255) NOT NULL
+   `rec_id` varchar(255) NOT NULL,
+   `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `spo2_rec`;
 CREATE TABLE `spo2_rec` (
    `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255) NOT NULL
+   `rec_id` varchar(255) NOT NULL,
+   `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `sound_rec`;
 CREATE TABLE `sound_rec` (
    `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255) NOT NULL
+   `rec_id` varchar(255) NOT NULL,
+   `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `blood_pressure_rec`;
 CREATE TABLE `blood_pressure_rec` (
    `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255) NOT NULL
+   `rec_id` varchar(255) NOT NULL,
+   `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `news`;
@@ -102,7 +107,8 @@ CREATE TABLE `devices`(
     `start_date` bigint NOT NULL,
     `end_date` bigint NOT NULL,
     `created_at` bigint,
-    `updated_at` bigint
+    `updated_at` bigint,
+    `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `records`;
@@ -115,7 +121,8 @@ CREATE TABLE `records` (
    `end_time` bigint NOT NULL,
    `data_rec_url` varchar(45) NOT NULL,
    `created_at` bigint,
-   `updated_at` bigint
+   `updated_at` bigint,
+   `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8; 
 
 ALTER TABLE `accounts`

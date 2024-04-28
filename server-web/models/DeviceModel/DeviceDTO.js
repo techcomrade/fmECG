@@ -42,6 +42,10 @@ const Device = sequelize.define("devices", {
   updated_at: {
     type: Sequelize.BIGINT,
   },
+  dummy_data: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
 });
 
 module.exports = Device;

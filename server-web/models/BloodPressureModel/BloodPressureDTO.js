@@ -17,6 +17,10 @@ const blood_rec = sequelize.define(
         key: "id",
       },
     },
+    dummy_data: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
   {
     timestamps: false,
