@@ -19,7 +19,7 @@ const Sound_rec = sequelize.define(
       },
     },
     dummy_data: {
-      type: DataTypes.BOOLEAN,
+      type: Sequelize.BOOLEAN,
       defaultValue: true,
     },
   },

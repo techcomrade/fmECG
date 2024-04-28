@@ -43,7 +43,7 @@ const Device = sequelize.define("devices", {
     type: Sequelize.BIGINT,
   },
   dummy_data: {
-    type: DataTypes.BOOLEAN,
+    type: Sequelize.BOOLEAN,
     defaultValue: true,
   },
 });
