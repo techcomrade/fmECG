@@ -32,6 +32,18 @@ CREATE TABLE `heart_rec` (
    `rec_id` varchar(255) NOT NULL
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `spo2_rec`;
+CREATE TABLE `spo2_rec` (
+   `id` varchar(255) NOT NULL,
+   `rec_id` varchar(255) NOT NULL
+)ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `sound_rec`;
+CREATE TABLE `sound_rec` (
+   `id` varchar(255) NOT NULL,
+   `rec_id` varchar(255) NOT NULL
+)ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
 DROP TABLE IF EXISTS `blood_pressure_rec`;
 CREATE TABLE `blood_pressure_rec` (
    `id` varchar(255) NOT NULL,
@@ -157,6 +169,12 @@ ALTER TABLE `heart_rec`
     ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
 
 ALTER TABLE `blood_pressure_rec`
+    ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
+
+ALTER TABLE `spo2_rec`
+    ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
+
+ALTER TABLE `sound_rec`
     ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
 
 ALTER TABLE `news`
