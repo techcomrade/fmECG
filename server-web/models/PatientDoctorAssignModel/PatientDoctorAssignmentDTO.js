@@ -35,7 +35,7 @@ const Assignment = sequelize.define("patient_doctor_asssignment", {
     type: Sequelize.BIGINT,
   },
   dummy_data: {
-    type: DataTypes.BOOLEAN,
+    type: Sequelize.BOOLEAN,
     defaultValue: true,
   },
 });
