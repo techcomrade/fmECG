@@ -132,4 +132,5 @@ const userSlice = createSlice({
 });
 
 const { reducer: userReducer } = userSlice;
+export const {resetLoadDataStatus, resetCreateDataStatus, resetUpdateDataStatus, resetDeleteDataStatus} = userSlice.actions;
 export default userReducer;

@@ -1,8 +1,8 @@
 import { Table, Button, Col, Form, Input, DatePicker } from "antd";
 import { useEffect, useState } from "react";
-import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { PlusOutlined, EditOutlined, DeleteOutlined, MobileOutlined } from "@ant-design/icons";
 import { loadStatus } from "../../redux/reducer/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./dataTable.scss";
 import { addKeyElement, findElementById } from "../../utils/arrayUtils";
 import { Modal } from "antd";
@@ -11,6 +11,7 @@ import { showNotiSuccess } from "../Notification";
 import dayjs from 'dayjs';
 import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
 import { checkDateIndex } from "../../models/manage.table";
+import {useNavigate} from "react-router-dom";
 
 const { confirm } = Modal;
 
@@ -24,6 +25,7 @@ const DataTable = (props) => {
     const dispatch = useDispatch();
     const dataState = props.state || {};
     const table = props.table;
+    const navigate = useNavigate();
 
     // Get data
     useEffect(() => {
@@ -37,6 +39,7 @@ const DataTable = (props) => {
     useEffect(() => {
         if (dataState.loadCreateDataStatus === loadStatus.Success) {
             showNotiSuccess("Bạn đã tạo thành công");
+            dispatch(props.func.resetCreateDataStatus());
             dispatch(props.func.getData());
         }
     }, [dataState.loadCreateDataStatus]);
@@ -45,6 +48,8 @@ const DataTable = (props) => {
     useEffect(() => {
         if (dataState.loadUpdateDataStatus === loadStatus.Success) {
             showNotiSuccess("Bạn đã cập nhật thành công");
+            setSelectedRowKeys([]);
+            dispatch(props.func.resetUpdateDataStatus());
             dispatch(props.func.getData());
         }
     }, [dataState.loadUpdateDataStatus]);
@@ -53,18 +58,22 @@ const DataTable = (props) => {
     useEffect(() => {
         if (dataState.loadDeleteDataStatus === loadStatus.Success) {
             showNotiSuccess("Bạn đã xóa thành công");
+            setSelectedRowKeys([]);
+            dispatch(props.func.resetDeleteDataStatus());
             dispatch(props.func.getData());
         }
     }, [dataState.loadDeleteDataStatus]);
 
+    const [selectedState, setSelectedRowKeys] = useState([]);
     // Select row
     const rowSelection = {
+        selectedRowKeys: selectedState,
         onChange: (selectedRowKeys, selectedRows) => {
             const delBtn = document.getElementsByClassName("delete-btn")[0];
             const editBtn = document.getElementsByClassName("edit-btn")[0];
             const delBtnClassList = delBtn.classList;
             const editBtnClassList = editBtn.classList;
-
+            setSelectedRowKeys(selectedRowKeys);
             // Check hide or show edit and delete button
             if (selectedRows.length === 1) {
                 editBtnClassList.remove("hide");
@@ -144,6 +153,7 @@ const DataTable = (props) => {
             <h2>Bảng {props.name}</h2>
             <div className="list-btn-actions">
                 <Button icon={<PlusOutlined />} onClick = {() => setShowModalCreate(true)}>Tạo</Button>
+                {props.table === 'user' ? <Button icon={<MobileOutlined />} onClick = {() => navigate('/device')}>Thêm thiết bị</Button> : ''}
                 <Button icon={<EditOutlined />} className="edit-btn hide">Chỉnh sửa</Button>
                 <Button icon={<DeleteOutlined />} className="delete-btn hide">Xóa</Button>
             </div>
@@ -170,7 +180,7 @@ const DataTable = (props) => {
                 }}
             >
                 <br />
-                {props.column.map((column) => ( 
+                {props.column.map((column) => {if(!!column.isEdit) return( 
                     <Col span={22} key={column.title}>
                         <Form.Item label={column.title}>
                         {checkDateIndex(table, column.dataIndex) ? 
@@ -186,7 +196,7 @@ const DataTable = (props) => {
                             />}
                         </Form.Item>
                     </Col>
-                ))}
+                )})}
             </Modal>
             {/* Modal create */}
             <Modal
@@ -202,7 +212,7 @@ const DataTable = (props) => {
                 }}
             >
                 <br />
-                {props.column.map((column) => (
+                {props.column.map((column) => {if(!!column.isEdit) return(
                     <Col span={22} key={column.title}>
                         <Form.Item label={column.title}>
                         {checkDateIndex(table, column.dataIndex) ? 
@@ -219,7 +229,8 @@ const DataTable = (props) => {
                         }
                         </Form.Item>
                     </Col>
-                ))}
+                )}
+                )}
             </Modal>
         </>
     );

@@ -72,6 +72,15 @@ body {
   transition-delay: 1s;
 }
 
+.sign-up-form {
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.sign-up-form::-webkit-scrollbar {
+  display: none;
+}
+
 .fa-eye {
   right: 4%;
   margin-top: 2.5%;

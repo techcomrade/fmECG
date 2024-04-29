@@ -21,11 +21,11 @@ const UserTable = () => {
     useEffect(() => {
         if (dataState.loadDataStatus === loadStatus.Success) {
             const rawData = dataState.data.metadata;
-            setDataTable(rawData);
-            // data = rawData.map((element, index) => ({
-            //     ...element,
-            //     birth: convertTimeToDate(element.birth)
-            // }))
+            const data = rawData.map((element, index) => ({
+                ...element,
+                birth: convertTimeToDate(element.birth)
+            }))
+            setDataTable(data);
         }
     }, [dataState.loadDataStatus]);
     return (

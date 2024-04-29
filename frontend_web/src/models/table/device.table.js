@@ -1,4 +1,4 @@
-import { createDevice, deleteDevice, getDevice, updateDevice } from "../../redux/reducer/deviceSlice";
+import { createDevice, deleteDevice, getDevice, updateDevice, resetLoadDataStatus, resetCreateDataStatus, resetUpdateDataStatus, resetDeleteDataStatus, } from "../../redux/reducer/deviceSlice";
 
 class DeviceData {
     getColumnShow() {
@@ -7,21 +7,25 @@ class DeviceData {
             title: 'Tên thiết bị',
             dataIndex: 'device_name',
             key: 'device_name',
+            isEdit: true
         },
         {
             title: 'Loại thiết bị',
             dataIndex: 'device_type',
             key: 'device_type',
+            isEdit: true
         },
         {
             title: 'Ngày bắt đầu',
             dataIndex: 'start_date',
             key: 'start_date',
+            isEdit: true
         },
         {
             title: 'Ngày kết thúc',
             dataIndex: 'end_date',
             key: 'end_date',
+            isEdit: true
           },
       ];
 
@@ -33,7 +37,11 @@ class DeviceData {
             createData: createDevice,
             getData: getDevice,
             updateData: updateDevice,
-            deleteData: deleteDevice
+            deleteData: deleteDevice,
+            resetLoadDataStatus: resetLoadDataStatus,
+            resetCreateDataStatus: resetCreateDataStatus,
+            resetDeleteDataStatus: resetDeleteDataStatus,
+            resetUpdateDataStatus: resetUpdateDataStatus
         }
     }
 
