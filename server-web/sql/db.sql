@@ -19,8 +19,8 @@ CREATE TABLE `tokens` (
 DROP TABLE IF EXISTS `patient_doctor_assignment`;
 CREATE TABLE `patient_doctor_assignment` (
    `id` varchar(255) NOT NULL,
-   `patient_id` varchar(255) NOT NULL,
-   `doctor_id` varchar(255) NOT NULL,
+   `patient_id` varchar(255),
+   `doctor_id` varchar(255),
    `start_date` bigint NOT NULL,
    `created_at` bigint,
    `updated_at` bigint,
@@ -30,28 +30,28 @@ CREATE TABLE `patient_doctor_assignment` (
 DROP TABLE IF EXISTS `heart_rec`;
 CREATE TABLE `heart_rec` (
    `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255) NOT NULL,
+   `rec_id` varchar(255),
    `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `spo2_rec`;
 CREATE TABLE `spo2_rec` (
    `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255) NOT NULL,
+   `rec_id` varchar(255),
    `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `sound_rec`;
 CREATE TABLE `sound_rec` (
    `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255) NOT NULL,
+   `rec_id` varchar(255),
    `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `blood_pressure_rec`;
 CREATE TABLE `blood_pressure_rec` (
    `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255) NOT NULL,
+   `rec_id` varchar(255),
    `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
@@ -60,7 +60,7 @@ CREATE TABLE `news` (
    `id` varchar(255) NOT NULL,
    `title` varchar(255) NOT NULL,
    `content` text NOT NULL,
-   `category_id` varchar(255) NOT NULL,
+   `category_id` varchar(255),
    `author` varchar(255) NOT NULL,
    `url` varchar(255) NOT NULL,
    `image` varchar(255) NOT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE `users` (
 DROP TABLE IF EXISTS `devices`;
 CREATE TABLE `devices`(
     `id` varchar(255) NOT NULL,
-    `user_id` varchar(255) NOT NULL,
+    `user_id` varchar(255),
     `device_name` varchar(255) NOT NULL,
     `information` varchar(255),
     `device_type` int NOT NULL,
@@ -114,8 +114,8 @@ CREATE TABLE `devices`(
 DROP TABLE IF EXISTS `records`;
 CREATE TABLE `records` (
    `id` varchar(255) NOT NULL,
-   `user_id` varchar(255) NOT NULL,
-   `device_id` varchar(255) NOT NULL,
+   `user_id` varchar(255),
+   `device_id` varchar(255),
    `device_type` int NOT NULL,
    `start_time` bigint NOT NULL,
    `end_time` bigint NOT NULL,
@@ -195,6 +195,38 @@ ALTER TABLE `patient_doctor_assignment`
 
 ALTER TABLE `devices` 
     ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
+
+
+ALTER TABLE `users`
+    ADD CONSTRAINT fk_users_account FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`);
+
+ALTER TABLE `tokens`
+    ADD CONSTRAINT fk_tokens_account FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`);
+
+ALTER TABLE `records`
+    ADD CONSTRAINT fk_records_user FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL;
+
+ALTER TABLE `records`
+    ADD CONSTRAINT fk_records_device FOREIGN KEY (`device_id`) REFERENCES `devices`(`id`) ON DELETE SET NULL;
+
+ALTER TABLE `heart_rec`
+    ADD CONSTRAINT fk_heart_rec_rec FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`) ON DELETE SET NULL;
+
+ALTER TABLE `blood_pressure_rec`
+    ADD CONSTRAINT fk_blood_pressure_rec_rec FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`) ON DELETE SET NULL;
+
+ALTER TABLE `news`
+    ADD CONSTRAINT fk_news_category FOREIGN KEY (`category_id`) REFERENCES `news_categories`(`id`) ON DELETE SET NULL;
+
+ALTER TABLE `patient_doctor_assignment`
+    ADD CONSTRAINT fk_patient_doctor_assignment_patient FOREIGN KEY (`patient_id`) REFERENCES `users`(`id`) ON DELETE SET NULL;
+
+ALTER TABLE `patient_doctor_assignment`
+    ADD CONSTRAINT fk_patient_doctor_assignment_doctor FOREIGN KEY (`doctor_id`) REFERENCES `users`(`id`) ON DELETE SET NULL;
+
+ALTER TABLE `devices` 
+    ADD CONSTRAINT fk_devices_user FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL;
+
 
 INSERT INTO `accounts`(`id`, `email`, `password`) 
 VALUES('86d1470c-de72-457c-a8e1-a616e55f463f', 'duong123@gmail.com', '$2b$10$vrYT1waVBk3VNXdHB1dQbOdwtKIyUoQ04wMpfcSWTPnK5S0oAg4ci');
