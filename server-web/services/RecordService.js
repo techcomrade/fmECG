@@ -2,7 +2,10 @@ const CommonService = require("./CommonService");
 const RecordRepository = require("../models/RecordModel/RecordRepository");
 const HeartRecRepository = require("../models/HeartRecModel/HeartRecRepository");
 const BloodPressureRepository = require("../models/BloodPressureModel/BloodPressureRepository");
+const FileService = require("./FileService");
+const util = require("util");
 const { v4: uuidv4 } = require("uuid");
+
 class RecordService extends CommonService {
   async getAll() {
     return await RecordRepository.getAllData();
@@ -35,6 +38,10 @@ class RecordService extends CommonService {
       await BloodPressureRepository.deleteByRecordId(id, t);
       await RecordRepository.deleteById(id, t);
     });
+  }
+
+  async uploadFileRecord(){
+   return await FileService.UploadFileTxt();
   }
 }
 

@@ -9,4 +9,7 @@ router.get("/device/:deviceId", RecordController.getRecordByDeviceId);
 router.post("/update/:recordId", RecordController.updateRecordById);
 router.delete("", RecordController.deleteRecordById);
 
+console.log(RecordController.UploadFileRecord, 1234);
+router.post("/uploadfile", RecordController.UploadFileRecord);
+
 module.exports = router;
