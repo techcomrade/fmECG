@@ -14,7 +14,7 @@ class RecordController {
     try {
       await RecordService.add(req.body);
       return res.status(200).json({
-        message: "Create records successful!",
+        message: "Create record successful!",
       });
     } catch (err) {
       return res.status(400).json({
@@ -46,6 +46,48 @@ class RecordController {
       return res.status(200).json({
         message: "Get records by device id successful!",
         metadata: recordByDevice,
+      });
+    }
+    return res.status(404).json({
+      message: "Record not existed!",
+    });
+  }
+
+  async getRecordByUserId(req, res, next) {
+    console.log(`[P]:::Get record by user id: `, req.params.userId);
+    const recordByUser = await RecordService.getRecordByUserId(req.params.userId);
+    if (recordByUser) {
+      return res.status(200).json({
+        message: "Get records by user id successful!",
+        metadata: recordByUser,
+      });
+    }
+    return res.status(404).json({
+      message: "Record not existed!",
+    });
+  }
+
+  async getRecordByStartTime(req, res, next) {
+    console.log(`[P]:::Get record by start time: `, req.params.time);
+    const recordByStartTime = await RecordService.getRecordByStartTime(req.params.time);
+    if (recordByStartTime) {
+      return res.status(200).json({
+        message: "Get records by start time successful!",
+        metadata: recordByStartTime,
+      });
+    }
+    return res.status(404).json({
+      message: "Record not existed!",
+    });
+  }
+
+  async getRecordByEndTime(req, res, next) {
+    console.log(`[P]:::Get record by end time: `, req.params.time);
+    const recordByEndTime = await RecordService.getRecordByEndTime(req.params.time);
+    if (recordByEndTime) {
+      return res.status(200).json({
+        message: "Get records by end time successful!",
+        metadata: recordByEndTime,
       });
     }
     return res.status(404).json({

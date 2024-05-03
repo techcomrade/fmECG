@@ -19,10 +19,28 @@ class RecordService extends CommonService {
     return record;
   }
 
+  async getRecordByUserId(id) {
+    const recordByUser = await RecordRepository.getRecordByUserId(id);
+    if (recordByUser.length === 0) return false;
+    return recordByUser;
+  }
+
   async getRecordByDeviceId(id) {
-    const recordByDevice = await RecordRepository.getRecordsByDeviceId(id);
+    const recordByDevice = await RecordRepository.getRecordByDeviceId(id);
     if (recordByDevice.length === 0) return false;
     return recordByDevice;
+  }
+
+  async getRecordByStartTime(id) {
+    const recordByStartTime = await RecordRepository.getRecordByStartTime(id);
+    if (recordByStartTime.length === 0) return false;
+    return recordByStartTime;
+  }
+
+  async getRecordByEndTime(id) {
+    const recordByEndTime = await RecordRepository.getRecordByEndTime(id);
+    if (recordByEndTime.length === 0) return false;
+    return recordByEndTime;
   }
 
   async updateRecordById(record, id) {
