@@ -5,7 +5,8 @@ defmodule ServerChatWeb.UserSocket do
   channel "message:*",               ServerChatWeb.MessageChannel
   
 
-  def connect(_params, socket, _connect_info) do
+  def connect(params, socket, _connect_info) do
+    IO.inspect(params, label: "gndfgnkdfgjkdfg")
     {:ok, socket}
   end
 

@@ -22,7 +22,7 @@ defmodule ServerChatWeb.AuthPlug do
           _ -> ApiHandler.send_conn_error(conn, "invalid token", 200, 401)
         end
 
-      true -> ApiHandler.send_conn_error(conn, "lack of token aaaa", 200, 402)
+      true -> ApiHandler.send_conn_error(conn, "lack of token", 200, 402)
     end
   end
   

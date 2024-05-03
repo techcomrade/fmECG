@@ -1,7 +1,7 @@
 defmodule ServerChatWeb.MessageChannel do
   use Phoenix.Channel
 
-  def join("message:lobby", _message, socket) do
+  def join("message:122222", _message, socket) do
     {:ok, socket}
   end
 
