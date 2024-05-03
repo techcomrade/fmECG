@@ -1,6 +1,6 @@
 const { response } = require("express");
 const RecordService = require("../services/RecordService");
-const FileService = require("../services/FileService");
+const fileUploader = require("../services/FileService");
 
 class RecordController {
   async getAll(req, res, next) {
@@ -109,14 +109,16 @@ class RecordController {
   
   async UploadFileRecord(req, res, next) {
     try {
-        await FileService(req, res);
-        if (req.file == undefined) {
+  
+        let check = RecordService.uploadFileRecord(req, res, next);
+        if (check == false) {
           return res.status(400).send({ message: "Please upload a file!" });
         }
-
+        
         res.status(200).send({
-          message: "Uploaded the file successfully: " + req.file.originalname,
+          message: "Uploaded the file successfully " 
         });
+     
       } catch (err) {
         console.log(err);
       }

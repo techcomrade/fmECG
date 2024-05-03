@@ -40,8 +40,8 @@ class RecordService extends CommonService {
     });
   }
 
-  async uploadFileRecord(){
-   return await FileService.UploadFileTxt();
+  async uploadFileRecord(req, res){
+   return await FileService.uploadFile(req, res);
   }
 }
 
