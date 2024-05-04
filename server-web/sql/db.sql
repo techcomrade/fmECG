@@ -9,7 +9,7 @@ USE `fmecg`;
 DROP TABLE IF EXISTS `tokens`;
 CREATE TABLE `tokens` (
     `id` varchar(255) NOT NULL,
-    `account_id` varchar(255) NOT NULL,
+    `account_id` varchar(255),
     `access_token` varchar(255) NOT NULL,
     `refresh_token` varchar(255) NOT NULL,
     `created_at` bigint,
@@ -87,7 +87,7 @@ CREATE TABLE `accounts` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
     `id` varchar(255) NOT NULL,
-    `account_id` varchar(255) NOT NULL,
+    `account_id` varchar(255),
     `username` varchar(255) NOT NULL,
     `birth` bigint NOT NULL,
     `phone_number` varchar(255),
@@ -154,54 +154,13 @@ ALTER TABLE `news`
 
 ALTER TABLE `devices`
     ADD PRIMARY KEY (`id`);
-    
--- ALTER TABLE `devices` ADD UNIQUE INDEX `device_type_unique_index` (`device_type`);
-
-ALTER TABLE `users`
-    ADD FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`);
-
-ALTER TABLE `tokens`
-    ADD FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`);
-
-ALTER TABLE `records`
-    ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
-
-ALTER TABLE `records`
-    ADD FOREIGN KEY (`device_id`) REFERENCES `devices`(`id`);
-
--- ALTER TABLE `records`
---     ADD FOREIGN KEY (`device_type`) REFERENCES `devices`(`device_type`);
-
-ALTER TABLE `heart_rec`
-    ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
-
-ALTER TABLE `blood_pressure_rec`
-    ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
-
-ALTER TABLE `spo2_rec`
-    ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
-
-ALTER TABLE `sound_rec`
-    ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
-
-ALTER TABLE `news`
-    ADD FOREIGN KEY (`category_id`) REFERENCES `news_categories`(`id`);
-
-ALTER TABLE `patient_doctor_assignment`
-    ADD FOREIGN KEY (`patient_id`) REFERENCES `users`(`id`);
-
-ALTER TABLE `patient_doctor_assignment`
-    ADD FOREIGN KEY (`doctor_id`) REFERENCES `users`(`id`);
-
-ALTER TABLE `devices` 
-    ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
 
 
 ALTER TABLE `users`
-    ADD CONSTRAINT fk_users_account FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`);
+    ADD CONSTRAINT fk_users_account FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`) ON DELETE SET NULL;
 
 ALTER TABLE `tokens`
-    ADD CONSTRAINT fk_tokens_account FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`);
+    ADD CONSTRAINT fk_tokens_account FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`) ON DELETE SET NULL;
 
 ALTER TABLE `records`
     ADD CONSTRAINT fk_records_user FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL;
