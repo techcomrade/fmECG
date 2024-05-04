@@ -63,9 +63,7 @@ class UserService extends CommonService {
     }
 
     async deleteUserById(userId) {
-        await this.transaction(async (t) =>{
-            
-        })
+        return await UserRepository.deleteById(userId);
     }
 }
 
