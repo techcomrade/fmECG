@@ -7,24 +7,28 @@ class DeviceData {
             title: 'Tên thiết bị',
             dataIndex: 'device_name',
             key: 'device_name',
+            type: 'text',
             isEdit: true
         },
         {
             title: 'Loại thiết bị',
             dataIndex: 'device_type',
             key: 'device_type',
+            type: 'text',
             isEdit: true
         },
         {
             title: 'Ngày bắt đầu',
             dataIndex: 'start_date',
             key: 'start_date',
+            type: 'date',
             isEdit: true
         },
         {
             title: 'Ngày kết thúc',
             dataIndex: 'end_date',
             key: 'end_date',
+            type: 'text',
             isEdit: true
           },
       ];
