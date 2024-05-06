@@ -37,6 +37,7 @@ class DeviceService extends CommonService {
         .integer()
         .greater(Joi.ref("start_date"))
         .required(),
+      dummy_data: Joi.boolean()
     });
     return schema.validate(device);
   }

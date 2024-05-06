@@ -4,9 +4,8 @@ import { axiosRequest, axiosMethod } from "../utils/axios";
 import { showNotiError, showNotiWarning } from "../components/Notification";
 
 export const httpPostData = (url, data) => {
-    const token = getLocalStorage(JWT_TOKEN);
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.POST, token, data)
+        axiosRequest(API_URL + url, axiosMethod.POST, data)
         .then((response) => {
             resolve(response.data)
         })
@@ -20,9 +19,8 @@ export const httpPostData = (url, data) => {
 }
 
 export const httpGetData = (url, data) => {
-    const token = getLocalStorage(JWT_TOKEN);
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.GET, token, data)
+        axiosRequest(API_URL + url, axiosMethod.GET, data)
         .then((response) => {
             resolve(response.data)
         })
@@ -41,9 +39,9 @@ export const httpGetData = (url, data) => {
 }
 
 export const httpUpdateData = (url, data) => {
-    const token = getLocalStorage(JWT_TOKEN);
+
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.PUT, token, data)
+        axiosRequest(API_URL + url, axiosMethod.PUT, data)
         .then((response) => {
             resolve(response.data)
         })
@@ -57,9 +55,9 @@ export const httpUpdateData = (url, data) => {
 }
 
 export const httpDeleteData = (url, data) => {
-    const token = getLocalStorage(JWT_TOKEN);
+
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.DELETE, token, data)
+        axiosRequest(API_URL + url, axiosMethod.DELETE, data)
         .then((response) => {
             resolve(response.data)
         })

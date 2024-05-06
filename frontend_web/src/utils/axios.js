@@ -6,7 +6,6 @@ export const axiosMethod = {
   PUT: 'PUT',
   DELETE: 'DELETE'
 };
-const token = document.cookies;
 export const axiosRequest = (url, method, data) => {
   const axiosConfig = {
     url,
