@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bluetooth_ecg/app.dart';
-import 'package:bluetooth_ecg/constants/api_constant.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
+import 'package:bluetooth_ecg/networks/socket_channel.dart';
 import 'package:bluetooth_ecg/providers/bluetooth_provider.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
@@ -15,7 +14,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'package:web_socket_channel/io.dart';
 import 'firebase_options.dart';
 import 'providers/auth_provider.dart';
 
@@ -38,31 +36,8 @@ void main() async {
   );
   await FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-  String topic = "message:122222";
-  final wsUrl = Uri.parse(APIConstant.socketUrl);
-  final channel = IOWebSocketChannel.connect(wsUrl);
-  final Map<String, dynamic> joinMessage = {
-    'topic': topic,
-    'event': 'phx_join',
-    'payload': {
-      "accessToken": "1234",
-    },
-    'ref': ''
-  };
-  await channel.ready;
-
-  channel.sink.add(json.encode(joinMessage));
-  channel.stream.listen((message) {
-      print('okeee:$message');
-    },
-    onDone: () {
-      print("nani done");
-    },
-    onError: (err) => print("errsocket: $err")
-  );
-  print("WebSocket is connected at ${DateTime.now()}");
-
+  final SocketChannel socketChannel = SocketChannel();
+  await socketChannel.connect();
   if (Platform.isAndroid) {
     WidgetsFlutterBinding.ensureInitialized();
     [
