@@ -28,7 +28,7 @@ CREATE TABLE `patient_doctor_assignment` (
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `heart_rec`;
-CREATE TABLE `heart_rec` (12
+CREATE TABLE `heart_rec` (
    `id` varchar(255) NOT NULL,
    `rec_id` varchar(255),
    `dummy_data` boolean default 0
@@ -89,6 +89,7 @@ CREATE TABLE `users` (
     `id` varchar(255) NOT NULL,
     `account_id` varchar(255),
     `username` varchar(255) NOT NULL,
+    `gender` int,
     `birth` bigint NOT NULL,
     `phone_number` varchar(255),
     `image` varchar(500),
@@ -199,17 +200,17 @@ VALUES('83573421-9943-4a25-9fe1-00f0477aaba4', 'dung123@gmail.com', '$2b$10$TOMg
 INSERT INTO `accounts`(`id`, `email`, `password`) 
 VALUES('22183931-6fc3-4518-af34-e86c8605b08a', 'uuidd@gmail.com', '$2b$10$a7binaajgY8b3s82rppXHecKuSbcFi1ULGf0v4B/aIaMplhLbbNwC');
 
-INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
-VALUES('f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '86d1470c-de72-457c-a8e1-a616e55f463f', 'duong', '17052003', '0912234888', '01201020120abc', 1, '1711115945125', '1711115945125');
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
+VALUES('f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '86d1470c-de72-457c-a8e1-a616e55f463f', 0, 'duong', '17052003', '0912234888', '01201020120abc', 1, '1711115945125', '1711115945125');
 
-INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
-VALUES('4df9ace1-0229-4756-b850-51a83cb0bb6e', '1bd51bda-3179-4f27-bcfd-000e5c4a2aa7', 'qtv', '1232367', '09122348767', '0101010101abc', 0, '1711118359957', '1711118359957');
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
+VALUES('4df9ace1-0229-4756-b850-51a83cb0bb6e', '1bd51bda-3179-4f27-bcfd-000e5c4a2aa7', 1, 'qtv', '1232367', '09122348767', '0101010101abc', 0, '1711118359957', '1711118359957');
 
-INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
-VALUES('37ae5629-54ec-46e0-be65-9af6bd580b2b', '83573421-9943-4a25-9fe1-00f0477aaba4', 'abc', '1232366', '09122348669', '010101010100abc', 0, '1711121415247', '1711121415247');
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
+VALUES('37ae5629-54ec-46e0-be65-9af6bd580b2b', '83573421-9943-4a25-9fe1-00f0477aaba4', 0, 'abc', '1232366', '09122348669', '010101010100abc', 0, '1711121415247', '1711121415247');
 
-INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
-VALUES('178d7109-7568-472c-9350-2db42aa152f6', '22183931-6fc3-4518-af34-e86c8605b08a', 'dhsh', '123236811', '091223486384', '01010101010110abc', 1, '1711206172234', '1711206172234');
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
+VALUES('178d7109-7568-472c-9350-2db42aa152f6', '22183931-6fc3-4518-af34-e86c8605b08a', 1, 'dhsh', '123236811', '091223486384', '01010101010110abc', 1, '1711206172234', '1711206172234');
 
 INSERT INTO `tokens`(`id`, `account_id`, `access_token`, `refresh_token`, `created_at`, `updated_at`)
 VALUES('090abf0e-f775-465c-b25a-8fa38fef8025', '86d1470c-de72-457c-a8e1-a616e55f463f', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyOGVlNTc5LTc3MWItNGQzNC1hNjQ3LWIwNDJlMGMxZGY2MSIsImlhdCI6MTcxMTAyNjUyMiwiZXhwIjoxNzExMDI5NTIyfQ.kH1yuJgfpq5NFzb80LrEf-gV8ksNjYtylSokQHzAIoA', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyOGVlNTc5LTc3MWItNGQzNC1hNjQ3LWIwNDJlMGMxZGY2MSIsImlhdCI6MTcxMTAyNjUyMiwiZXhwIjoxNzk3NDI2NTIyfQ.-AGRKU9-mDSLwLiVoF2CR5aZEQy49rTpfzbCAcEL-S4', '1711161793890', '1711161793890');

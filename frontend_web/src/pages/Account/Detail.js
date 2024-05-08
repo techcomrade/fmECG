@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Row, Col, Image, Upload, Form, Input, Button, Select, DatePicker } from "antd";
 import avatarDemo from "../../assets/icons/avatar.svg";
-import { getLocalStorage } from "../../utils/storageUtils";
-import { httpPostData } from "../../api/common.api";
 import { showNotiError } from "../../components/Notification";
+import dayjs from "dayjs";
+import { getUserById } from "../../redux/reducer/userSlice";
 const { Option } = Select;
 export default function Detail() {
+  const dispatch = useDispatch();
+
   const [accountData, setData] = useState([]);
+  const dataState = useSelector((state) => state.user);
 
   useEffect(() => {
-    
+    dispatch(getUserById())
    }, []);
+
   return (
     <div>
     <Col span={22} offset={1}>
@@ -67,7 +73,16 @@ export default function Detail() {
           </Col>
           <Col span={10} offset={2}>
             <Form.Item label="Ngày sinh">
-                <Input value={accountData.birthday} name="birthday" />  
+            <DatePicker
+                format={"DD/MM/YYYY"}
+                name="ngafy sinh"
+                value={ dayjs()}
+                onChange={(date, dateString) =>
+                  {
+                    
+                  }
+                }
+              />
             </Form.Item>
           </Col>
         </Row>

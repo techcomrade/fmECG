@@ -9,8 +9,8 @@ import {
   resetDeleteDataStatus,
   resetUpdateDataStatus,
   updateRecord,
+  loadStatus
 } from "../../redux/reducer/recordSlice";
-import { loadStatus } from "../../redux/store";
 import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
