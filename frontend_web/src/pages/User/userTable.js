@@ -9,7 +9,7 @@ import {
   deleteUser,
   resetDeleteDataStatus,
 } from "../../redux/reducer/userSlice";
-import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
+import { convertDateToTime, convertGenderToString, convertTimeToDate } from "../../utils/dateUtils";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
@@ -26,6 +26,13 @@ const UserTable = () => {
       dataIndex: "username",
       key: "username",
       type: "text",
+      isEdit: true,
+    },
+    {
+      title: "Giới tính",
+      dataIndex: "gender",
+      key: "gender",
+      type: "select",
       isEdit: true,
     },
     {
@@ -61,6 +68,7 @@ const UserTable = () => {
       const data = rawData.map((element, index) => ({
         ...element,
         birth: convertTimeToDate(element.birth),
+        gender: convertGenderToString(element.gender)
       }));
       setDataTable(data);
     }
@@ -114,6 +122,7 @@ const UserTable = () => {
         column={columns}
         name="Bảng người dùng"
         data={dataTable}
+        loading={dataState.loadDataStatus === loadStatus.Loading}
       />
       <ModalControlData
         ref={modalUpdateRef}

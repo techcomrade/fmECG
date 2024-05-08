@@ -23,7 +23,7 @@ const DeviceTable = () => {
   const [dataTable, setData] = useState([]);
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
-    const user_id = getLocalStorage("user");
+  const user_id = getLocalStorage("user");
   const columns = [
     {
       title: "Tên thiết bị",
@@ -40,12 +40,12 @@ const DeviceTable = () => {
       isEdit: true,
     },
     {
-        title: "Thông tin thiết bị",
-        dataIndex: "information",
-        key: "information",
-        type: "text",
-        isEdit: true,
-      },
+      title: "Thông tin thiết bị",
+      dataIndex: "information",
+      key: "information",
+      type: "text",
+      isEdit: true,
+    },
     {
       title: "Ngày bắt đầu",
       dataIndex: "start_date",
@@ -142,6 +142,7 @@ const DeviceTable = () => {
         data={dataTable}
         column={columns}
         updateSelectedData={setSelectedData}
+        loading={dataState.loadDataStatus === loadStatus.Loading}
       />
       <ModalControlData
         ref={modalUpdateRef}

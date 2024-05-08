@@ -141,6 +141,7 @@ const RecordTable = () => {
         data={dataTable}
         column={columns}
         updateSelectedData={setSelectedData}
+        loading={dataState.loadDataStatus === loadStatus.Loading}
       />
       {/* <ModalControlData
         ref={modalUpdateRef}

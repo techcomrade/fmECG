@@ -98,6 +98,7 @@ const DataTable = (props) => {
           type: props.hasCheckBox,
           ...rowSelection,
         }}
+        loading = {props.loading}
         bordered
         columns={props.column}
         dataSource={tableData}
@@ -110,6 +111,7 @@ const DataTable = (props) => {
 // props.data
 // props.updateSelectedData
 // props.name
+// props.loading
 // props.addButton
 // props.addDeviceButton
 // props.hasCheckBox
