@@ -15,7 +15,7 @@ import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
-import { getCookie } from "../../utils/storageUtils";
+import { getCookie, getLocalStorage } from "../../utils/storageUtils";
 const DeviceTable = () => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.device);
@@ -23,7 +23,7 @@ const DeviceTable = () => {
   const [dataTable, setData] = useState([]);
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
-    const user_id = getCookie("user");
+    const user_id = getLocalStorage("user");
   const columns = [
     {
       title: "Tên thiết bị",
@@ -135,7 +135,7 @@ const DeviceTable = () => {
         editButton
         editFunction={handleEditFunction}
         addButton
-        addFunction={() => modalAddRef.current?.open([], columns)}
+        addFunction={() => modalAddRef.current?.open({}, columns)}
         deleteButton
         deleteFunction={handleDeleteFunction}
         name="Bảng quản lý thiết bị"

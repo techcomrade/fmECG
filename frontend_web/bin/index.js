@@ -21,7 +21,7 @@ app.get("/test", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  const haveCookie = req.cookies?.user;
+  const haveCookie = req.cookies?.access_token;
   if (haveCookie) {
     res.redirect(config.redirect_url);
   } else {
@@ -52,8 +52,8 @@ app.post("/login", async (req, res, next) => {
       if (result.ok) {
         const userInfo = await result.json();
         res.cookie("user", userInfo.metadata.id);
-        res.cookie("access-token", userInfo.metadata.access_token);
-        res.cookie("refresh-token", userInfo.metadata.refresh_token);
+        res.cookie("access_token", userInfo.metadata.access_token, {maxAge: userInfo.metadata.expired_time, httpOnly: false});
+        res.cookie("refresh_token", userInfo.metadata.refresh_token);
         return res.status(200).json("login successfully");
       }
       return res.status(400).json("login failed");
@@ -65,8 +65,8 @@ app.post("/login", async (req, res, next) => {
 });
 app.get("/logout", (req, res) => {
   res.clearCookie("user");
-  res.clearCookie("access-token");
-  res.clearCookie("refresh-token");
+  res.clearCookie("access_token");
+  res.clearCookie("refresh_token");
   res.send("logout success");
 });
 

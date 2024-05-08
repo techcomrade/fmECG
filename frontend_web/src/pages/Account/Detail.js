@@ -6,18 +6,11 @@ import { httpPostData } from "../../api/common.api";
 import { showNotiError } from "../../components/Notification";
 const { Option } = Select;
 export default function Detail() {
-  let [accountData, setData] = useState([]);
-  const [refresh, setRefresh] = useState(false);
+  const [accountData, setData] = useState([]);
+
   useEffect(() => {
-    async function fetchData() {
-      const userName = getLocalStorage('username');
-      await httpPostData('/user-token', {name: userName})
-       .then(data => setData(data[0]))
-       .catch(e => showNotiError(e.message))
-    }
-    fetchData();
-    console.log(accountData);
-   }, [refresh]);
+    
+   }, []);
   return (
     <div>
     <Col span={22} offset={1}>

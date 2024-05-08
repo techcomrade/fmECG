@@ -8,7 +8,6 @@ const User = sequelize.define("users", {
     type: Sequelize.STRING,
     allowNull: false,
     primaryKey: true,
-    onDelete: 'cascade' 
   },
   account_id: {
     type: Sequelize.STRING,
