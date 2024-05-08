@@ -10,7 +10,7 @@ router.get("/device/:deviceId", RecordMiddleware.checkDeviceId, RecordController
 router.get("/user/:userId", RecordMiddleware.checkUserId, RecordController.getRecordByUserId);
 router.get("/start/:time", RecordMiddleware.checkStartTime, RecordController.getRecordByStartTime);
 router.get("/end/:time", RecordMiddleware.checkEndTime, RecordController.getRecordByEndTime);
-router.post("/update/:recordId", RecordController.updateRecordById);
+router.post("/update", RecordController.updateRecordById);
 router.delete("", RecordController.deleteRecordById);
 
 module.exports = router;
