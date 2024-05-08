@@ -32,7 +32,6 @@ const DataTable = (props) => {
   const rowSelection = {
     selectedRowKeys: selectedState,
     onChange: (selectedRowKeys) => {
-      console.log(selectedRowKeys);
       setSelectedRowKeys(selectedRowKeys);
       // Check hide or show edit and delete button
       if (props.editButton) setEditButtton(selectedRowKeys.length === 1);

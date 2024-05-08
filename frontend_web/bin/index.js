@@ -52,8 +52,9 @@ app.post("/login", async (req, res, next) => {
       if (result.ok) {
         const userInfo = await result.json();
         res.cookie("user", userInfo.metadata.id);
-        res.cookie("access_token", userInfo.metadata.access_token, {maxAge: userInfo.metadata.expired_time, httpOnly: false});
+        res.cookie("access_token", userInfo.metadata.access_token, {maxAge: 60000 * userInfo.metadata.expired_time, httpOnly: false});
         res.cookie("refresh_token", userInfo.metadata.refresh_token);
+        
         return res.status(200).json("login successfully");
       }
       return res.status(400).json("login failed");

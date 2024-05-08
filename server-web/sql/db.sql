@@ -28,7 +28,7 @@ CREATE TABLE `patient_doctor_assignment` (
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `heart_rec`;
-CREATE TABLE `heart_rec` (
+CREATE TABLE `heart_rec` (12
    `id` varchar(255) NOT NULL,
    `rec_id` varchar(255),
    `dummy_data` boolean default 0

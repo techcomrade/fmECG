@@ -78,7 +78,7 @@ class RecordController {
 
   async updateRecordById(req, res, next) {
     console.log(`[P]:::Update record by id: `, req.params.recordId, req.body);
-    const id = req.params.recordId;
+    const id = req.body.id;
     if (Object.keys(req.body).length !== 0) {
       const checkRecord = await RecordService.getRecordById(id);
       if (!checkRecord) {
