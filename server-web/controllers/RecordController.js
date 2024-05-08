@@ -109,16 +109,7 @@ class RecordController {
   
   async UploadFileRecord(req, res, next) {
     try {
-  
-        let check = RecordService.uploadFileRecord(req, res, next);
-        if (check == false) {
-          return res.status(400).send({ message: "Please upload a file!" });
-        }
-        
-        res.status(200).send({
-          message: "Uploaded the file successfully " 
-        });
-     
+        await RecordService.uploadFileRecord(req, res, next);
       } catch (err) {
         console.log(err);
       }

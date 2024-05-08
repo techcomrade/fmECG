@@ -1,6 +1,6 @@
 const multer = require('multer');
 const maxSize = 2 * 1024 * 1024;
-
+const fs = require('fs');
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -36,13 +36,16 @@ class FileUploader {
       if (err) {
         return res.status(400).json({ error: err.message });
       }
-      if(req.file) {
-        console.log(req.file);
-        return true;
-      }
-      return false;
-    });
+     next();
+    }); 
   }
+
+  readFile(filename) {
+    const path = '/public/upload' + filename;
+
+  }
+
+
 }
 
 module.exports = new FileUploader();
