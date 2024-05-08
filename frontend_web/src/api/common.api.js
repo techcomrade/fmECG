@@ -25,7 +25,7 @@ export const httpGetData = (url) => {
         })
         .catch((error) => {
             console.log('error get data', error)
-            if(error.response.status === 401 || error.response.status === 403){
+            if(error.response?.status === 401 || error.response?.status === 403){
                 showNotiWarning('Bạn đã hết phiên đăng nhập');
                 window.location.href = '/login';
                 reject(error)
@@ -62,7 +62,7 @@ export const httpDeleteData = (url, data) => {
         })
         .catch((error) => {
             console.log('error delete data', error)
-            showNotiError(error.response.data)
+            showNotiError(error.response?.data)
             // checkErrorReturn(error);
             reject(error)
         })

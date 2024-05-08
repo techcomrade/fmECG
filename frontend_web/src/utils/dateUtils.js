@@ -17,3 +17,24 @@ const today = new Date();
 
   return `${dd}/${mm}/${yyyy}`;
 }
+
+export const convertGenderToString = gender => {
+  switch (gender){
+    case 0:
+      return "Nam";
+    case 1:
+      return "Nữ";
+    default: 
+      return "Không rõ";
+  }
+}
+export const convertStringToGender = gender =>{
+  switch(gender){
+    case "Nam":
+      return 0;
+    case "Nữ":
+      return 1;
+    default:
+      return 2;
+  }
+}

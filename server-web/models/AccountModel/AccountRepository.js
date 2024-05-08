@@ -26,16 +26,18 @@ class AccountRepository {
       transaction: t,
     });
   }
-  async updateById(account) {
+  async updateById(account,t) {
     return await AccountDTO.update(
       {
-        email: account.email,
         password: account.password,
       },
       {
         where: {
           id: account.id,
         },
+      },
+      t && {
+        transaction: t,
       }
     );
   }

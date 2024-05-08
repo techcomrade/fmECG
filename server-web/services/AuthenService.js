@@ -71,6 +71,9 @@ class AuthenService extends CommonService {
   async getAll() {
     await AccountRepository.getAllData();
   }
+  async updatePassword (account){
+    return await AccountRepository.updateById(account);
+  }
   validateAccount(account) {
     const schema = Joi.object({
       email: Joi.string()

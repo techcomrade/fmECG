@@ -5,8 +5,8 @@ const router = express.Router()
 
 router.post('', UserController.createUser);
 router.get('', CommonMiddleware.validationToken, UserController.getAll);
-router.post('/update', CommonMiddleware.validationToken, UserController.updateUser);
-router.get('/:userId', CommonMiddleware.validationToken, UserController.getUserById);
+router.post('/update',  UserController.updateUser);
+router.get('/:userId',  UserController.getUserById);
 router.delete('', UserController.deleteUser);
 
 
