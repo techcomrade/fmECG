@@ -1,16 +1,12 @@
 defmodule ServerChatWeb.MessageChannel do
   use Phoenix.Channel
 
-  def join("message:122222", _message, socket) do
+  def join("message:" <> _user_id, _message, socket) do
     {:ok, socket}
   end
 
-  def join("message:" <> _private_room_id, _params, _socket) do
-    {:error, %{reason: "unauthorized"}}
-  end
-  
-  def handle_in("new_msg", %{"body" => body}, socket) do
-    broadcast!(socket, "new_msg", %{body: body})
-    {:noreply, socket}
+  def handle_in("ping", payload, socket) do
+    IO.inspect(socket.assigns, label: "ngjkgnfkdfngjkfd")
+    {:reply, {:ok, payload}, socket}
   end
 end
