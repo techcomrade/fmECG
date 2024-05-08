@@ -20,6 +20,9 @@ const ModalComponent = (props, ref) => {
   useImperativeHandle(ref, () => ({
     open: (data, colum) => {
       setIsOpen(true);
+      if(data){
+        console.log(data);
+      }
       setData(data);
       setColum(colum);
     },
@@ -44,21 +47,20 @@ const ModalComponent = (props, ref) => {
             {column.type === "text" && (
               <Input
                 name={column.dataIndex}
-                value={data ? data[column.dataIndex]: ""}
+                value={data[column.dataIndex]}
                 onChange={(e) =>
                   handleChangeInput(column.dataIndex, e.target.value)
                 }
+                disabled = {!column.isEdit}
               />
             )}
             {column.type === "date" && (
               <DatePicker
                 format={"DD/MM/YYYY"}
                 name={column.dataIndex}
-                // value={data ? dayjs(data[column.dataIndex], "DD/MM/YYYY"): dayjs()}
-                defaultValue={dayjs()}
+                value={ dayjs(data[column.dataIndex], "DD/MM/YYYY")}
                 onChange={(date, dateString) =>
                   {
-                    console.log();
                     handleChangeInput(column.dataIndex, dateString)
                   }
                 }

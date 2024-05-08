@@ -1,5 +1,5 @@
-import { API_URL, JWT_TOKEN } from "../configs/config";
-import { setLocalStorage, clearLocalStorage, getLocalStorage} from "../utils/storageUtils";
+import { API_URL} from "../configs/config";
+// import { setLocalStorage, clearLocalStorage, getLocalStorage} from "../utils/storageUtils";
 import { axiosRequest, axiosMethod } from "../utils/axios";
 import { showNotiError, showNotiWarning } from "../components/Notification";
 
@@ -12,15 +12,14 @@ export const httpPostData = (url, data) => {
         .catch((error) => {
             console.log('error post data', error);
             showNotiError(error?.response?.data?.message)
-            // checkErrorReturn(error);
             reject(error)
         })
     })
 }
 
-export const httpGetData = (url, data) => {
+export const httpGetData = (url) => {
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.GET, data)
+        axiosRequest(API_URL + url, axiosMethod.GET)
         .then((response) => {
             resolve(response.data)
         })

@@ -9,6 +9,7 @@ const { v4: uuidv4 } = require("uuid");
 
 class AuthenService extends CommonService {
   async login(account) {
+    const expiredTime = 120;
     try {
       const accountData = await AccountRepository.getAccountByEmail(
         account.email
@@ -19,7 +20,7 @@ class AuthenService extends CommonService {
           accountData.dataValues.password
         );
         if (!result) return result;
-        const access_token = TokenService.renderToken(accountData.dataValues.id, 60);
+        const access_token = TokenService.renderToken(accountData.dataValues.id, expiredTime);
         const refresh_token = TokenService.renderToken(
           accountData.dataValues.id,
           120
@@ -36,7 +37,8 @@ class AuthenService extends CommonService {
         
         return {...accountInfo.dataValues,
         access_token: access_token,
-        refresh_token: refresh_token
+        refresh_token: refresh_token,
+        expired_time: expiredTime
         };
       }
       return false;
