@@ -32,6 +32,15 @@ class RecordController {
     });
   }
 
+  async getDataRecord(req, res, next) {
+    console.log(`[P]:::Get data record: `, req.params.length);
+    const data = await RecordService.getDataRecord(req.params.length);
+    return res.status(200).json({
+      message: "Get data record successful!",
+      metadata: data,
+    });
+  }
+
   async getRecordByDeviceId(req, res, next) {
     console.log(`[P]:::Get record by device id: `, req.params.deviceId);
     const recordByDevice = await RecordService.getRecordByDeviceId(

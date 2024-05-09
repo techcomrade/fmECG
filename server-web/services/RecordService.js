@@ -3,7 +3,8 @@ const RecordRepository = require("../models/RecordModel/RecordRepository");
 const HeartRecRepository = require("../models/HeartRecModel/HeartRecRepository");
 const BloodPressureRepository = require("../models/BloodPressureModel/BloodPressureRepository");
 const { v4: uuidv4 } = require("uuid");
-const Joi = require("joi")
+const Joi = require("joi");
+const { dummyArray } = require("../utils/arrayUtils");
 class RecordService extends CommonService {
   async getAll() {
     return await RecordRepository.getAllData();
@@ -64,6 +65,14 @@ class RecordService extends CommonService {
       await BloodPressureRepository.deleteByRecordId(id, t);
       await RecordRepository.deleteById(id, t);
     });
+  }
+
+  getDataRecord(length) {
+    const data = {
+      x: dummyArray(length),
+      y: dummyArray(length)
+    };
+    return data;
   }
 }
 

@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("", RecordController.getAll);
 router.post("", RecordMiddleware.validateRecord, RecordController.createRecord);
+router.get("/data/:length", RecordController.getDataRecord);
 router.get("/:recordId", RecordMiddleware.checkId, RecordController.getRecordById);
 router.get("/device/:deviceId", RecordMiddleware.checkDeviceId, RecordController.getRecordByDeviceId);
 router.get("/user/:userId", RecordMiddleware.checkUserId, RecordController.getRecordByUserId);
