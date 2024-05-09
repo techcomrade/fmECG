@@ -18,6 +18,7 @@ const DataTable = (props) => {
   const [tableData, setTableData] = useState([]);
   const [editButton, setEditButtton] = useState(false);
   const [deleteButton, setDeleteButton] = useState(false);
+  const [chartButton, setChartButton] = useState(false);
   const [selectedState, setSelectedRowKeys] = useState([]);
   const navigate = useNavigate();
   // Get data
@@ -36,6 +37,7 @@ const DataTable = (props) => {
       // Check hide or show edit and delete button
       if (props.editButton) setEditButtton(selectedRowKeys.length === 1);
       if (props.deleteButton) setDeleteButton(selectedRowKeys.length === 1);
+      if (props.chartButton) setChartButton(selectedRowKeys.length === 1);
       props.updateSelectedData?.(selectedRowKeys);
     }
   };
@@ -92,6 +94,13 @@ const DataTable = (props) => {
           </Button>
         )}
         {props?.customButton}
+        {chartButton && props.chartButton && (
+          <Button
+            onClick={() => props?.openChart()}
+          >
+            Đồ thị
+          </Button>
+        )}
       </div>
       <Table
         rowSelection={{
