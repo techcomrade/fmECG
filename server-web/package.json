@@ -24,7 +24,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
+    "start": "export NODE_ENV=dev && nodemon server.js",
+    "prod": "export NODE_ENV=prod && nodemon server.js",
     "migration": "node migration.js"
   },
   "author": "",

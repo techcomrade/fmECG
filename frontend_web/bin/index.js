@@ -27,8 +27,6 @@ app.get("/", (req, res) => {
   } else {
     res.render("index", { url: `http://127.0.0.1:3001/login` });
   }
-
-
 });
 
 app.post("/login", async (req, res, next) => {

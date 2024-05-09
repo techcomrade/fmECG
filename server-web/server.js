@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const compression = require('compression');
-require('dotenv').config({ path: '.env' })
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 const routes = require('./routes/index');
 const port = process.env.APP_PORT || 3000;
 const host = process.env.APP_HOST || 'localhost';
