@@ -16,14 +16,18 @@ import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { getCookie, getLocalStorage } from "../../utils/storageUtils";
+import { Button } from "antd";
+import ModalChart from "../../components/Modal/ModalChart";
 const RecordTable = () => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.record);
   const [selectedData, setSelectedData] = useState([]);
   const [dataTable, setData] = useState([]);
+  const [openChart, setOpenChart] = useState(false);
+
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
-    const user_id = getLocalStorage("user");
+  const user_id = getLocalStorage("user");
   const columns = [
     {
       title: "Tên người dùng",
@@ -142,6 +146,8 @@ const RecordTable = () => {
         column={columns}
         updateSelectedData={setSelectedData}
         loading={dataState.loadDataStatus === loadStatus.Loading}
+        chartButton
+        openChart={() => setOpenChart(true)}
       />
       {/* <ModalControlData
         ref={modalUpdateRef}
@@ -153,6 +159,11 @@ const RecordTable = () => {
         title="Thêm record mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
       /> */}
+      <ModalChart 
+        isOpen={openChart}
+        setIsOpen={setOpenChart}
+        selectedDevice={selectedData}
+      />
     </>
   );
 };
