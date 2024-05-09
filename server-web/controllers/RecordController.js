@@ -1,4 +1,7 @@
+const { response } = require("express");
 const RecordService = require("../services/RecordService");
+const fileUploader = require("../services/FileService");
+
 class RecordController {
   async getAll(req, res, next) {
     console.log(`[P]:::Get all records: `);
@@ -29,6 +32,15 @@ class RecordController {
     return res.status(200).json({
       message: "Get records by id successful!",
       metadata: record,
+    });
+  }
+
+  async getDataRecord(req, res, next) {
+    console.log(`[P]:::Get data record: `, req.params.length);
+    const data = await RecordService.getDataRecord(req.params.length);
+    return res.status(200).json({
+      message: "Get data record successful!",
+      metadata: data,
     });
   }
 
@@ -78,7 +90,7 @@ class RecordController {
 
   async updateRecordById(req, res, next) {
     console.log(`[P]:::Update record by id: `, req.params.recordId, req.body);
-    const id = req.params.recordId;
+    const id = req.body.id;
     if (Object.keys(req.body).length !== 0) {
       const checkRecord = await RecordService.getRecordById(id);
       if (!checkRecord) {
@@ -125,6 +137,14 @@ class RecordController {
           message: "Error when delete record!",
         });
       });
+  }
+  
+  async UploadFileRecord(req, res, next) {
+    try {
+        await RecordService.uploadFileRecord(req, res, next);
+      } catch (err) {
+        console.log(err);
+      }
   }
 }
 

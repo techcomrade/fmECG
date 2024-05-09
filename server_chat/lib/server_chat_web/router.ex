@@ -1,5 +1,13 @@
 defmodule ServerChatWeb.Router do
   use ServerChatWeb, :router
+  
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :put_root_layout, html: {ServerChatWeb.Layouts, :root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -22,5 +30,9 @@ defmodule ServerChatWeb.Router do
         end
       end
     end
+  end
+  
+  scope "/", ServerChatWeb do
+    pipe_through :browser
   end
 end

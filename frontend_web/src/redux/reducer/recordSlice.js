@@ -4,20 +4,18 @@ import {
   httpPostData,
 } from "../../api/common.api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getUserId } from "../../utils/storageUtils";
-
 export const loadStatus = {
-  None: 0,
-  Loading: 1,
-  Success: 2,
-  Failed: 3,
-};
+    None: 0,
+    Loading: 1,
+    Success: 2,
+    Failed: 3,
+  };
 
-export const getUser = createAsyncThunk(
-  "/user",
+export const getRecord = createAsyncThunk(
+  "/record",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpGetData("/user");
+      const response = await httpGetData("/record");
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -27,11 +25,11 @@ export const getUser = createAsyncThunk(
   }
 );
 
-export const createUser = createAsyncThunk(
-  "/create-user",
+export const createRecord = createAsyncThunk(
+  "/create-record",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpPostData("/user", params);
+      const response = await httpPostData("/record/create", params);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -41,11 +39,11 @@ export const createUser = createAsyncThunk(
   }
 );
 
-export const updateUser = createAsyncThunk(
-  "/update-user",
+export const updateRecord = createAsyncThunk(
+  "/update-record",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpPostData(`/user/update`, params);
+      const response = await httpPostData(`/record/update`, params);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -55,11 +53,11 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-export const deleteUser = createAsyncThunk(
-  "/delete",
+export const deleteRecord = createAsyncThunk(
+  "/delete-record",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpDeleteData(`/user`, params);
+      const response = await httpDeleteData(`/record/${params.id}`);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -69,32 +67,14 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
-export const getUserById = createAsyncThunk(
-  "/user/id",
-  async (params, { rejectWithValue }) => {
-    try {
-      const user_id = getUserId();
-      console.log(user_id);
-      const response = await httpGetData(`/user/${user_id}`);
-      return response;
-    } catch (error) {
-      return rejectWithValue(
-        error?.response?.data?.message || error?.response || error
-      );
-    }
-  }
-);
-
-const userSlice = createSlice({
-  name: "user",
+const recordSlice = createSlice({
+  name: "record",
   initialState: {
     data: [],
-    userData: {},
     loadDataStatus: loadStatus.None,
     loadCreateDataStatus: loadStatus.None,
     loadUpdateDataStatus: loadStatus.None,
     loadDeleteDataStatus: loadStatus.None,
-    loadUserDataStatus: loadStatus.None,
   },
   reducers: {
     resetLoadDataStatus: (state, action) => {
@@ -110,71 +90,56 @@ const userSlice = createSlice({
     resetDeleteDataStatus: (state, action) => {
       state.loadDeleteDataStatus = loadStatus.None;
     },
-    resetUserDataStatus: (state, action) => {
-      state.loadUserDataStatus = loadStatus.None;
-    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUser.pending, (state, action) => {
+      .addCase(getRecord.pending, (state, action) => {
         state.loadDataStatus = loadStatus.Loading;
       })
-      .addCase(getUser.fulfilled, (state, action) => {
+      .addCase(getRecord.fulfilled, (state, action) => {
         state.data = action.payload;
+        console.log(action.payload);
         state.loadDataStatus = loadStatus.Success;
       })
-      .addCase(getUser.rejected, (state, action) => {
+      .addCase(getRecord.rejected, (state, action) => {
         state.data = [];
         state.loadDataStatus = loadStatus.Failed;
       })
-      .addCase(createUser.pending, (state, action) => {
+      .addCase(createRecord.pending, (state, action) => {
         state.loadCreateDataStatus = loadStatus.Loading;
       })
-      .addCase(createUser.fulfilled, (state, action) => {
+      .addCase(createRecord.fulfilled, (state, action) => {
         state.loadCreateDataStatus = loadStatus.Success;
       })
-      .addCase(createUser.rejected, (state, action) => {
+      .addCase(createRecord.rejected, (state, action) => {
         state.loadCreateDataStatus = loadStatus.Failed;
       })
-      .addCase(updateUser.pending, (state, action) => {
+      .addCase(updateRecord.pending, (state, action) => {
         state.loadUpdateDataStatus = loadStatus.Loading;
       })
-      .addCase(updateUser.fulfilled, (state, action) => {
+      .addCase(updateRecord.fulfilled, (state, action) => {
         state.loadUpdateDataStatus = loadStatus.Success;
       })
-      .addCase(updateUser.rejected, (state, action) => {
+      .addCase(updateRecord.rejected, (state, action) => {
         state.loadUpdateDataStatus = loadStatus.Failed;
       })
-      .addCase(deleteUser.pending, (state, action) => {
+      .addCase(deleteRecord.pending, (state, action) => {
         state.loadDeleteDataStatus = loadStatus.Loading;
       })
-      .addCase(deleteUser.fulfilled, (state, action) => {
+      .addCase(deleteRecord.fulfilled, (state, action) => {
         state.loadDeleteDataStatus = loadStatus.Success;
       })
-      .addCase(deleteUser.rejected, (state, action) => {
+      .addCase(deleteRecord.rejected, (state, action) => {
         state.loadDeleteDataStatus = loadStatus.Failed;
-      })
-      .addCase(getUserById.pending, (state, action) => {
-        state.loadUserDataStatus = loadStatus.Loading;
-      })
-      .addCase(getUserById.fulfilled, (state, action) => {
-        state.loadUserDataStatus = loadStatus.Success;
-        state.userData = action.payload;
-        console.log(action.payload);
-      })
-      .addCase(getUserById.rejected, (state, action) => {
-        state.loadUserDataStatus = loadStatus.Failed;
-        state.userData = {};
       });
   },
 });
 
-const { reducer: userReducer } = userSlice;
+const { reducer: recordReducer } = recordSlice;
 export const {
   resetLoadDataStatus,
   resetCreateDataStatus,
   resetUpdateDataStatus,
   resetDeleteDataStatus,
-  resetUserDataStatus,
-} = userSlice.actions;
-export default userReducer;
+} = recordSlice.actions;
+export default recordReducer;

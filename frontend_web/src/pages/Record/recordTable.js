@@ -2,67 +2,71 @@ import { useDispatch, useSelector } from "react-redux";
 import DataTable from "../../components/Table/dataTable";
 import { useEffect, useRef, useState } from "react";
 import {
-  createDevice,
-  deleteDevice,
-  getDevice,
-  loadStatus,
+  createRecord,
+  deleteRecord,
+  getRecord,
   resetCreateDataStatus,
   resetDeleteDataStatus,
   resetUpdateDataStatus,
-  updateDevice,
-} from "../../redux/reducer/deviceSlice";
+  updateRecord,
+  loadStatus
+} from "../../redux/reducer/recordSlice";
 import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { getCookie, getLocalStorage } from "../../utils/storageUtils";
-const DeviceTable = () => {
+import { Button } from "antd";
+import ModalChart from "../../components/Modal/ModalChart";
+const RecordTable = () => {
   const dispatch = useDispatch();
-  const dataState = useSelector((state) => state.device);
+  const dataState = useSelector((state) => state.record);
   const [selectedData, setSelectedData] = useState([]);
   const [dataTable, setData] = useState([]);
+  const [openChart, setOpenChart] = useState(false);
+
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
   const user_id = getLocalStorage("user");
   const columns = [
     {
+      title: "Tên người dùng",
+      dataIndex: "user_id",
+      key: "user_id",
+      type: "text",
+      isEdit: true,
+    },
+    {
       title: "Tên thiết bị",
-      dataIndex: "device_name",
-      key: "device_name",
+      dataIndex: "device_id",
+      key: "device_id",
       type: "text",
       isEdit: true,
     },
     {
-      title: "Loại thiết bị",
-      dataIndex: "device_type",
-      key: "device_type",
-      type: "text",
-      isEdit: true,
-    },
-    {
-      title: "Thông tin thiết bị",
-      dataIndex: "information",
-      key: "information",
-      type: "text",
-      isEdit: true,
-    },
+        title: "Loại bản ghi",
+        dataIndex: "device_type",
+        key: "information",
+        type: "text",
+        isEdit: true,
+      },
     {
       title: "Ngày bắt đầu",
-      dataIndex: "start_date",
-      key: "start_date",
+      dataIndex: "start_time",
+      key: "start_time",
       type: "date",
       isEdit: true,
     },
     {
       title: "Ngày kết thúc",
-      dataIndex: "end_date",
-      key: "end_date",
+      dataIndex: "end_time",
+      key: "end_time",
       type: "date",
       isEdit: true,
     },
   ];
   useEffect(() => {
-    dispatch(getDevice());
+    dispatch(getRecord());
   }, []);
 
   // Get data
@@ -71,8 +75,8 @@ const DeviceTable = () => {
       const rawData = dataState.data.metadata;
       const data = rawData.map((element, index) => ({
         ...element,
-        start_date: convertTimeToDate(element.start_date),
-        end_date: convertTimeToDate(element.end_date),
+        start_time: convertTimeToDate(element.start_time),
+        end_time: convertTimeToDate(element.end_time),
       }));
       setData(data);
     }
@@ -81,26 +85,26 @@ const DeviceTable = () => {
   useEffect(() => {
     if (dataState.loadUpdateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã sửa thiết bị thành công");
-      dispatch(getDevice());
+      dispatch(getRecord());
     }
   }, [dataState.loadUpdateDataStatus]);
 
   useEffect(() => {
     if (dataState.loadDeleteDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã xoá thiết bị thành công");
-      dispatch(getDevice());
+      dispatch(getRecord());
     }
   }, [dataState.loadDeleteDataStatus]);
 
   useEffect(() => {
     if (dataState.loadCreateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã xoá thiết bị thành công");
-      dispatch(getDevice());
+      dispatch(getRecord());
     }
   }, [dataState.loadCreateDataStatus]);
 
   const handleDeleteFunction = (id) => {
-    dispatch(deleteDevice({ id: id }));
+    dispatch(deleteRecord({ id: id }));
     dispatch(resetDeleteDataStatus());
   };
 
@@ -109,16 +113,15 @@ const DeviceTable = () => {
     modalUpdateRef.current?.open(userData, columns);
   };
 
-  const handleSubmitEditUser = (data) => {
-    dispatch(updateDevice(handleData(data)));
-    dispatch(resetUpdateDataStatus());
-  };
+  // const handleSubmitEditUser = (data) => {
+  //   dispatch(updateRecord(handleData(data)));
+  //   dispatch(resetUpdateDataStatus());
+  // };
 
-  const handleSubmitAddFunction = (data) => {
-    console.log("hello");
-    dispatch(createDevice(handleData(data)));
-    dispatch(resetCreateDataStatus());
-  };
+  // const handleSubmitAddFunction = (data) => {
+  //   dispatch(createRecord(handleData(data)));
+  //   dispatch(resetCreateDataStatus());
+  // };
   const handleData = (data) => {
     var deviceData = data;
     Object.keys(data).forEach((key) => {
@@ -138,24 +141,31 @@ const DeviceTable = () => {
         addFunction={() => modalAddRef.current?.open({}, columns)}
         deleteButton
         deleteFunction={handleDeleteFunction}
-        name="Bảng quản lý thiết bị"
+        name="Bảng quản lý record"
         data={dataTable}
         column={columns}
         updateSelectedData={setSelectedData}
         loading={dataState.loadDataStatus === loadStatus.Loading}
+        chartButton
+        openChart={() => setOpenChart(true)}
       />
-      <ModalControlData
+      {/* <ModalControlData
         ref={modalUpdateRef}
-        title="Sửa thông tin thiết bị"
+        title="Sửa thông tin record"
         submitFunction={(data) => handleSubmitEditUser(data)}
       />
       <ModalControlData
         ref={modalAddRef}
-        title="Thêm thiết bị mới"
+        title="Thêm record mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
+      /> */}
+      <ModalChart 
+        isOpen={openChart}
+        setIsOpen={setOpenChart}
+        selectedDevice={selectedData}
       />
     </>
   );
 };
 
-export default DeviceTable;
+export default RecordTable;

@@ -2,7 +2,6 @@ import 'package:bluetooth_ecg/providers/news_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_html/flutter_html.dart';
 
 class NewsDetailScreen extends StatefulWidget {
   const NewsDetailScreen({
@@ -31,12 +30,10 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
       ),
       body: SingleChildScrollView(
           child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Html(
-          data: contentNewsInHTML,
-          style: {"p": Style(fontSize: FontSize.larger)},
-        ),
-      )),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text("Content is not loaded")
+        )
+      ),
     );
   }
 }

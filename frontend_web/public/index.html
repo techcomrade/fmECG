@@ -41,13 +41,35 @@
     -->
     <script>
       // Check if the cookie exists (replace 'myCookieName' with your actual cookie name)
-      const access_token = document.cookie.includes('access-token');
-      const refresh_token = document.cookie.includes('refresh-token');
-      const user = document.cookie.includes('user');
-      const cookieData = {
-        access_token: document.cookie.includes('access-token'),
-        refresh_token: document.cookie.includes('refresh-token'),
-        user_id: document.cookie.includes('user')
+      const getCookie = (name) => {
+        const cookie = document.cookie
+          .split("; ")
+          .find((cookie) => cookie.startsWith(name + "="));
+
+        return cookie ? cookie.substring(name.length + 1) : null;
+      };
+      var cookieData = {
+        access_token: "",
+        refresh_token: "",
+        user_id: "",
+      };
+      const access_token = getCookie("access_token");
+      if (access_token) {
+        localStorage.setItem("user", getCookie("user"));
+        localStorage.setItem("access_token", getCookie("access_token"));
+        localStorage.setItem("refresh_token", getCookie("refresh_token"));
+        cookieData = {
+          access_token: localStorage.getItem("access_token"),
+          refresh_token: localStorage.getItem("refresh_token"),
+          user_id: localStorage.getItem("user"),
+        };
+      } else {
+        cookieData = {
+          access_token: "",
+          refresh_token: "",
+          user_id: "",
+        };
+        localStorage.clear();
       }
       // Set a global variable to indicate whether the cookie exists
       window.hasCookie = cookieData;

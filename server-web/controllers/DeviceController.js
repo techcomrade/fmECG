@@ -27,7 +27,6 @@ class DeviceController {
     console.log(`[P]:::Add device data`, req.body);
     const device = req.body;
     const checkExistUser = await UserService.getUserById(device.user_id);
-    console.log(checkExistUser);
     if (!checkExistUser[0]?.dataValues) {
       return res.status(400).json({
         message: "no user found",
