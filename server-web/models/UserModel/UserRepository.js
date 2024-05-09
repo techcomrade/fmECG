@@ -64,6 +64,7 @@ class UserModel {
     return await UserDTO.update(
       {
         username: user.username,
+        gender: user.gender,
         birth: user.birth,
         phone_number: user.phone_number,
         image: user.image,

@@ -1,5 +1,6 @@
 const express = require("express");
 const RecordController = require("../controllers/RecordController");
+const RecordMiddleware = require("../middlewares/RecordMiddleware");
 const router = express.Router();
 const fileUploader = require("../services/FileService");
 const RecordService = require("../services/RecordService");
@@ -9,6 +10,11 @@ router.post("", RecordController.UploadFileRecord, RecordController.createRecord
 router.get("/:recordId", RecordController.getRecordById);
 router.get("/device/:deviceId", RecordController.getRecordByDeviceId);
 router.post("/update/:recordId", RecordController.updateRecordById);
+router.get("/user/:userId", RecordMiddleware.checkUserId, RecordController.getRecordByUserId);
+router.get("/start/:time", RecordMiddleware.checkStartTime, RecordController.getRecordByStartTime);
+router.get("/end/:time", RecordMiddleware.checkEndTime, RecordController.getRecordByEndTime);
+router.post("/update", RecordController.updateRecordById);
+
 router.delete("", RecordController.deleteRecordById);
 
 router.post("/uploadfile", RecordController.UploadFileRecord, (req, res) => {

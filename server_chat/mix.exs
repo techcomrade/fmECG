@@ -4,7 +4,7 @@ defmodule ServerChat.MixProject do
   def project do
     [
       app: :server_chat,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -19,7 +19,7 @@ defmodule ServerChat.MixProject do
   def application do
     [
       mod: {ServerChat.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :edeliver, :ecto, :httpoison, :sasl]
     ]
   end
 
@@ -42,6 +42,13 @@ defmodule ServerChat.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:jose, "~> 1.11"},
       {:httpoison, "~> 2.2.1"},
+      {:edeliver, ">= 1.9.2"},
+      {:distillery,
+        git: "https://github.com/thaidmfinnick/distillery.git",
+        override: true,
+        commit: "f64bf92",
+        runtime: false
+      },
     ]
   end
 
