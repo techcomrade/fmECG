@@ -2,8 +2,12 @@ const CommonService = require("./CommonService");
 const RecordRepository = require("../models/RecordModel/RecordRepository");
 const HeartRecRepository = require("../models/HeartRecModel/HeartRecRepository");
 const BloodPressureRepository = require("../models/BloodPressureModel/BloodPressureRepository");
+const FileService = require("./FileService");
+const util = require("util");
 const { v4: uuidv4 } = require("uuid");
+
 const Joi = require("joi")
+
 class RecordService extends CommonService {
   async getAll() {
     return await RecordRepository.getAllData();
@@ -11,6 +15,8 @@ class RecordService extends CommonService {
 
   async add(record) {
     record.id = uuidv4();
+    let path = './public/upload' + record.filename; 
+    record.data_rec_url = path;
     return await RecordRepository.add(record);
   }
 
@@ -64,6 +70,10 @@ class RecordService extends CommonService {
       await BloodPressureRepository.deleteByRecordId(id, t);
       await RecordRepository.deleteById(id, t);
     });
+  }
+
+  async uploadFileRecord(req, res, next){
+   return FileService.uploadFile(req, res, next);
   }
 }
 

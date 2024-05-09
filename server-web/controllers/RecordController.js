@@ -1,4 +1,7 @@
+const { response } = require("express");
 const RecordService = require("../services/RecordService");
+const fileUploader = require("../services/FileService");
+
 class RecordController {
   async getAll(req, res, next) {
     console.log(`[P]:::Get all records: `);
@@ -125,6 +128,14 @@ class RecordController {
           message: "Error when delete record!",
         });
       });
+  }
+  
+  async UploadFileRecord(req, res, next) {
+    try {
+        await RecordService.uploadFileRecord(req, res, next);
+      } catch (err) {
+        console.log(err);
+      }
   }
 }
 
