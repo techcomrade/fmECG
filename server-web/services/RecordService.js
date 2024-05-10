@@ -15,15 +15,19 @@ class RecordService extends CommonService {
   async getAll() {
     const records = await RecordRepository.getAllData();
     const total = records.length;
-    for(let i = 0; i < total; i++) {
-      const userName = await UserRepository.getUserById(records[i].dataValues.user_id);
-      const deviceName = await DeviceRepository.checkById(records[i].dataValues.device_id);
+    for (let i = 0; i < total; i++) {
+      const userName = await UserRepository.getUserById(
+        records[i].dataValues.user_id
+      );
+      const deviceName = await DeviceRepository.checkById(
+        records[i].dataValues.device_id
+      );
       records[i].dataValues = {
         ...records[i].dataValues,
         username: userName[0].username,
         device_name: deviceName.device_name,
-      }
-    } 
+      };
+    }
     return records;
   }
 
@@ -51,14 +55,21 @@ class RecordService extends CommonService {
 
   async getRecordById(id) {
     const recordById = await RecordRepository.getRecordById(id);
-    const userName = await UserRepository.getUserById(recordById[0].dataValues.user_id);
-    const deviceName = await DeviceRepository.checkById(recordById[0].dataValues.device_id);
-    recordById[0].dataValues = {
-      ...recordById[0].dataValues,
-      username: userName[0].dataValues.username,
-      device_name: deviceName.dataValues.device_name,
+    if (recordById.length != 0) {
+      const userName = await UserRepository.getUserById(
+        recordById[0].dataValues.user_id
+      );
+      const deviceName = await DeviceRepository.checkById(
+        recordById[0].dataValues.device_id
+      );
+      recordById[0].dataValues = {
+        ...recordById[0].dataValues,
+        username: userName[0].dataValues.username,
+        device_name: deviceName.dataValues.device_name,
+      };
+      return recordById;
     }
-    return recordById;
+    return false;
   }
 
   async getRecordByUserId(id) {
@@ -88,7 +99,6 @@ class RecordService extends CommonService {
       await RecordRepository.deleteById(id, t);
     });
   }
-
 
   getDataRecord(length) {
     const data = {

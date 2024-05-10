@@ -89,43 +89,25 @@ class RecordController {
   }
 
   async updateRecordById(req, res, next) {
-    console.log(`[P]:::Update record by id: `, req.params.recordId, req.body);
+    console.log(`[P]:::Update record by id: `, req.body.id);
     const id = req.body.id;
-    if (Object.keys(req.body).length !== 0) {
-      const checkRecord = await RecordService.getRecordById(id);
-      if (!checkRecord) {
-        return res.status(404).json({
-          message: "Id not found!",
+    await RecordService.updateRecordById(req.body, id)
+      .then(() => {
+        return res.status(200).json({
+          message: "Update record by id successful!",
+          metadata: req.body,
         });
-      }
-      await RecordService.updateRecordById(req.body, id)
-        .then(() => {
-          return res.status(200).json({
-            message: "Update record by id successful!",
-            metadata: req.body,
-          });
-        })
-        .catch((err) => {
-          return res.status(400).json({
-            message: "Error when update record!",
-          });
+      })
+      .catch((err) => {
+        return res.status(400).json({
+          message: "Error when update record!",
         });
-    } else {
-      return res.status(400).json({
-        message: "Please enter the information to update the record!",
       });
-    }
   }
 
   async deleteRecordById(req, res, next) {
-    console.log(`[P]:::Delete record by id: `, req.body.id);
-    const id = req.body.id;
-    const checkRecord = await RecordService.getRecordById(id);
-    if (!checkRecord) {
-      return res.status(400).json({
-        message: "Id not found!",
-      });
-    }
+    console.log(`[P]:::Delete record by id: `, req.params.id);
+    const id = req.params.id;
     await RecordService.deleteRecordById(id)
       .then(() => {
         return res.status(200).json({
