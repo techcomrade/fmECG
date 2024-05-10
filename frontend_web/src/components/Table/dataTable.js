@@ -5,6 +5,8 @@ import {
   EditOutlined,
   DeleteOutlined,
   MobileOutlined,
+  FundViewOutlined,
+  DownloadOutlined,
 } from "@ant-design/icons";
 import "./dataTable.scss";
 import { addKeyElement } from "../../utils/arrayUtils";
@@ -19,6 +21,7 @@ const DataTable = (props) => {
   const [editButton, setEditButtton] = useState(false);
   const [deleteButton, setDeleteButton] = useState(false);
   const [chartButton, setChartButton] = useState(false);
+  const [downloadButton,setDownloadButton] = useState(false);
   const [selectedState, setSelectedRowKeys] = useState([]);
   const navigate = useNavigate();
   // Get data
@@ -34,12 +37,13 @@ const DataTable = (props) => {
     selectedRowKeys: selectedState,
     onChange: (selectedRowKeys) => {
       setSelectedRowKeys(selectedRowKeys);
-      // Check hide or show edit and delete button
+      // Check hide or show button
       if (props.editButton) setEditButtton(selectedRowKeys.length === 1);
       if (props.deleteButton) setDeleteButton(selectedRowKeys.length === 1);
       if (props.chartButton) setChartButton(selectedRowKeys.length === 1);
+      if(props.downLoadButton) setDownloadButton(selectedRowKeys.length === 1);
       props.updateSelectedData?.(selectedRowKeys);
-    }
+    },
   };
 
   // Delete modal
@@ -52,7 +56,6 @@ const DataTable = (props) => {
       okType: "danger",
       cancelText: "Không",
       async onOk() {
-        console.log(id);
         props?.deleteFunction(id);
       },
       onCancel() {},
@@ -80,7 +83,7 @@ const DataTable = (props) => {
             icon={<EditOutlined />}
             className="edit-btn"
             onClick={() => props?.editFunction(selectedState[0])}
-          > 
+          >
             Chỉnh sửa
           </Button>
         )}
@@ -96,9 +99,18 @@ const DataTable = (props) => {
         {props?.customButton}
         {chartButton && props.chartButton && (
           <Button
+            icon={<FundViewOutlined />}
             onClick={() => props?.openChart()}
           >
             Đồ thị
+          </Button>
+        )}
+        {downloadButton && props.downLoadButton && (
+          <Button
+            icon={<DownloadOutlined />}
+            onClick={() => props?.downloadFunction(selectedState[0])}
+          >
+            Tải bản ghi
           </Button>
         )}
       </div>
@@ -107,7 +119,7 @@ const DataTable = (props) => {
           type: props.hasCheckBox,
           ...rowSelection,
         }}
-        loading = {props.loading}
+        loading={props.loading}
         bordered
         columns={props.column}
         dataSource={tableData}
@@ -132,5 +144,6 @@ const DataTable = (props) => {
 // props?.addFunction
 // props?.editFunction
 // props?.customButton
-
+// props.downLoadButton
+// props.downloadFunction
 export default DataTable;

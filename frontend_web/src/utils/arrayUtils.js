@@ -18,3 +18,10 @@ export const checkDateTypeKey = (key) => {
     const dateKeyGroups = ["birth","start_date","end_date","created_at","updated_at"];
     return dateKeyGroups.includes(key);
 }
+
+export   const redirectUrl = (url) => {
+    // easy to debug ...
+    if (url) {
+      window.open(url);
+    }
+  };
