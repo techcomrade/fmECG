@@ -2,6 +2,7 @@ const CommonService = require("./CommonService");
 const Joi = require("joi");
 const UserRepository = require("../models/UserModel/UserRepository");
 const DeviceRepository = require("../models/DeviceModel/DeviceRepository");
+const RecordRepository = require("../models/RecordModel/RecordRepository");
 const AuthenService = require("./AuthenService");
 
 class UserService extends CommonService {
@@ -49,9 +50,11 @@ class UserService extends CommonService {
     }
     const data = await UserRepository.getUserById(userId);
     const deviceUser = await DeviceRepository.checkByUserId(userId);
+    const recordUser = await RecordRepository.getRecordByUserId(userId)
     data[0].dataValues = {
       ...data[0].dataValues,
       devices: deviceUser.length,
+      records: recordUser.length,
     };
     return data;
   }

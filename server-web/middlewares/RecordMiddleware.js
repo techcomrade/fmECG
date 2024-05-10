@@ -14,7 +14,7 @@ class RecordMiddleware {
 
   async checkId(req, res, next) {
     const recordById = await RecordService.getRecordById(req.params.recordId);
-    if (recordById.length === 0)
+    if (!recordById)
       return res.status(404).json({
         message: "Record not existed!",
       });
@@ -70,6 +70,25 @@ class RecordMiddleware {
       return res.status(404).json({
         message: "Record not existed!",
       });
+    next();
+  }
+
+  async checkUpdate(req, res, next) {
+    const id = req.body.id;
+    if (id == undefined || id.length == 0)
+      return res.status(400).json({
+        message: "Please enter record id!",
+      });
+    const recordById = await RecordService.getRecordById(id);
+    if (!recordById)
+      return res.status(404).json({
+        message: "Record not existed!",
+      });
+    if (Object.keys(req.body).length === 1) {
+      return res.status(400).json({
+        message: "Please enter the information to update the record!",
+      });
+    }
     next();
   }
 }

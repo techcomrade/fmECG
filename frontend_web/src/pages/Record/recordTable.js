@@ -113,15 +113,15 @@ const RecordTable = () => {
     modalUpdateRef.current?.open(userData, columns);
   };
 
-  const handleSubmitEditUser = (data) => {
-    dispatch(updateRecord(handleData(data)));
-    dispatch(resetUpdateDataStatus());
-  };
+  // const handleSubmitEditUser = (data) => {
+  //   dispatch(updateRecord(handleData(data)));
+  //   dispatch(resetUpdateDataStatus());
+  // };
 
-  const handleSubmitAddFunction = (data) => {
-    dispatch(createRecord(handleData(data)));
-    dispatch(resetCreateDataStatus());
-  };
+  // const handleSubmitAddFunction = (data) => {
+  //   dispatch(createRecord(handleData(data)));
+  //   dispatch(resetCreateDataStatus());
+  // };
   const handleData = (data) => {
     var deviceData = data;
     Object.keys(data).forEach((key) => {
@@ -148,10 +148,8 @@ const RecordTable = () => {
         loading={dataState.loadDataStatus === loadStatus.Loading}
         chartButton
         openChart={() => setOpenChart(true)}
-        downLoadButton
-        downloadFunction = {(id)=>console.log(id)}
       />
-      <ModalControlData
+      {/* <ModalControlData
         ref={modalUpdateRef}
         title="Sửa thông tin record"
         submitFunction={(data) => handleSubmitEditUser(data)}
@@ -160,7 +158,7 @@ const RecordTable = () => {
         ref={modalAddRef}
         title="Thêm record mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
-      />
+      /> */}
       <ModalChart 
         isOpen={openChart}
         setIsOpen={setOpenChart}
