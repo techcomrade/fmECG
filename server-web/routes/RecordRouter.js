@@ -16,8 +16,7 @@ router.get("/device/:deviceId", RecordController.getRecordByDeviceId);
 router.get("/user/:userId", RecordMiddleware.checkUserId, RecordController.getRecordByUserId);
 router.get("/start/:time", RecordMiddleware.checkStartTime, RecordController.getRecordByStartTime);
 router.get("/end/:time", RecordMiddleware.checkEndTime, RecordController.getRecordByEndTime);
-router.post("/update", RecordController.updateRecordById);
-
+router.post("/update/:userId", RecordController.updateRecordById);
 router.delete("", RecordController.deleteRecordById);
 
 router.post("/uploadfile", RecordController.UploadFileRecord, (req, res) => {
