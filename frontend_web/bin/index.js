@@ -21,12 +21,14 @@ app.get("/test", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  const haveCookie = req.cookies?.token;
+  const haveCookie = req.cookies?.access_token;
   if (haveCookie) {
     res.redirect(config.redirect_url);
   } else {
     res.render("index", { url: `http://127.0.0.1:3001/login` });
   }
+
+
 });
 
 app.post("/login", async (req, res, next) => {
@@ -46,10 +48,13 @@ app.post("/login", async (req, res, next) => {
       password: password,
     }),
   })
-    .then((result) => {
-      console.log(result);
+    .then(async (result) => {
       if (result.ok) {
-        res.cookie("token", "login");
+        const userInfo = await result.json();
+        res.cookie("user", userInfo.metadata.id);
+        res.cookie("access_token", userInfo.metadata.access_token, {maxAge: 60000 * userInfo.metadata.expired_time, httpOnly: false});
+        res.cookie("refresh_token", userInfo.metadata.refresh_token);
+        
         return res.status(200).json("login successfully");
       }
       return res.status(400).json("login failed");
@@ -59,9 +64,10 @@ app.post("/login", async (req, res, next) => {
       return res.status(400).json("login failed");
     });
 });
-
 app.get("/logout", (req, res) => {
-  res.cookie("token", "");
+  res.clearCookie("user");
+  res.clearCookie("access_token");
+  res.clearCookie("refresh_token");
   res.send("logout success");
 });
 

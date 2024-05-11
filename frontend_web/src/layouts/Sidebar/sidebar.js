@@ -28,6 +28,13 @@ export const MenuList = () => [
     url: "/device",
   },
   {
+    key: "/manage_records",
+    title: "Quản lí record",
+    icon: <UnorderedListOutlined />,
+    isHide: false,
+    url: "/record",
+  },
+  {
     key: "/my_account",
     title: "Tài khoản",
     icon: <UserOutlined />,

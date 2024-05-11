@@ -10,7 +10,7 @@ const NotAuth = () => {
       title="Error"
       subTitle="Phiên đăng nhập của bạn đã hết hạn, vui lòng đăng nhập lại."
       extra={<Button type="primary">
-        <a href={redirectAPI}>Back to login</a>
+        <a href={"http://127.0.0.1:3001"}>Back to login</a>
       </Button>}
     />
   );

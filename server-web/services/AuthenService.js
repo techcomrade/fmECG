@@ -9,28 +9,37 @@ const { v4: uuidv4 } = require("uuid");
 
 class AuthenService extends CommonService {
   async login(account) {
+    const expiredTime = 120;
     try {
       const accountData = await AccountRepository.getAccountByEmail(
         account.email
       );
       if (accountData?.dataValues) {
-        const result = bcrypt.compare(
+        const result = await bcrypt.compare(
           account.password,
           accountData.dataValues.password
         );
         if (!result) return result;
+        const access_token = TokenService.renderToken(accountData.dataValues.id, expiredTime);
+        const refresh_token = TokenService.renderToken(
+          accountData.dataValues.id,
+          120
+        );
         var token = {
           id: uuidv4(),
           account_id: accountData.dataValues.id,
-          access_token: TokenService.renderToken(accountData.dataValues.id, 60),
-          refresh_token: TokenService.renderToken(
-            accountData.dataValues.id,
-            120
-          ),
+          access_token: access_token,
+          refresh_token: refresh_token,
           created_at: Number(new Date()),
         };
         await TokenRepository.add(token);
-        return true;
+        const accountInfo = await UserRepository.getUserByAccountId(accountData.dataValues?.id)
+        
+        return {...accountInfo.dataValues,
+        access_token: access_token,
+        refresh_token: refresh_token,
+        expired_time: expiredTime
+        };
       }
       return false;
     } catch (e) {
@@ -61,6 +70,9 @@ class AuthenService extends CommonService {
   }
   async getAll() {
     await AccountRepository.getAllData();
+  }
+  async updatePassword (account){
+    return await AccountRepository.updateById(account);
   }
   validateAccount(account) {
     const schema = Joi.object({

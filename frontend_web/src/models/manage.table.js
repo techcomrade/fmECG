@@ -49,3 +49,12 @@ export const exportFunction = (table) => {
     }
     return [];
 }
+
+export const checkDateIndex = (table, index) => {
+    let nameConverted = classesFactoryMapping[table];
+    if (!!nameConverted) {
+        let tableSelected = new classesFactory[nameConverted]();
+        if(!!tableSelected) return tableSelected.checkDateIndex(index);
+    }
+    return false;
+}

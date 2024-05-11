@@ -7,6 +7,7 @@ class AuthenController {
     return loginResult
       ? res.status(200).json({
           message: "login successfully",
+          metadata: loginResult,
         })
       : res.status(400).json({
           message: "login failed",

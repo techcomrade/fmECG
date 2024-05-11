@@ -18,6 +18,10 @@ const Heart_rec = sequelize.define(
         key: "id",
       },
     },
+    dummy_data: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true,
+    },
   },
   {
     timestamps: false,

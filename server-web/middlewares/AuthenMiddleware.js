@@ -16,7 +16,9 @@ class AuthenMiddleware {
     const validation = AuthenService.validateAccount(req.body);
     if (!validation?.error) next();
     else {
-      return res.status(400).json("validate account error");
+      return res.status(400).json({
+        message: "validate account falied",
+      });
     }
   }
 }

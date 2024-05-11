@@ -5,21 +5,18 @@ import { useState, useEffect } from 'react';
 import './DefaultLayout.css'
 import { getLocalStorage } from '../../utils/storageUtils';
 import { Routes } from "../route";
+import { BrowserRouter } from "react-router-dom";
 
 const { Header, Content, Sider } = Layout;
 
 const DefaultLayout = ({children}) => {
-    const [state,setState] = useState('false');
     const userName = getLocalStorage('username');
-    const token = getLocalStorage('token')
-    useEffect(()=>{
-    },[state])
-
     return(
+        <BrowserRouter>
         <div>
             <Layout style={{ height: "100vh" }}>
                 <Header className="header-bar">
-                    <HeaderUser userName = {userName} token = {token}/>
+                    <HeaderUser userName = {userName} token/>
                 </Header>
                 <Layout>
                     <Sidebar />
@@ -33,6 +30,7 @@ const DefaultLayout = ({children}) => {
                 </Layout>
             </Layout>
         </div>
+        </BrowserRouter>
     )
 }
 

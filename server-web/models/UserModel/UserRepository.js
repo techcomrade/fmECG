@@ -1,14 +1,31 @@
+const { where } = require("sequelize");
 const UserDTO = require("./UserDTO");
 
 class UserModel {
   async getAllData() {
-    return await UserDTO.findAll();
+    return await UserDTO.findAll({
+      attributes: {
+        exclude: ['created_at', 'updated_at']
+      },
+      raw: true,   
+    });
   }
 
   async getUserById(id) {
     return await UserDTO.findAll({
       where: {
         id: id,
+      },
+      attributes: {
+        exclude: ['created_at', 'updated_at']
+      },
+    });
+  }
+  
+  async getUserByAccountId(id) {
+    return await UserDTO.findOne({
+      where: {
+        account_id: id,
       },
     });
   }
@@ -47,6 +64,7 @@ class UserModel {
     return await UserDTO.update(
       {
         username: user.username,
+        gender: user.gender,
         birth: user.birth,
         phone_number: user.phone_number,
         image: user.image,
