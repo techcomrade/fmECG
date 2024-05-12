@@ -231,7 +231,11 @@ const RecordTable = () => {
         deviceData[key] = convertDateToTime(data[key]);
       }
     });
-    deviceData.user_id = user_id;
+    deviceData = {
+      ...deviceData,
+      user_id: user_id,
+      data_rec_url: 'http'
+    }
     return deviceData;
   };
 
