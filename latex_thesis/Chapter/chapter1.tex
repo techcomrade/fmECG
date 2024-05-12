@@ -1,33 +1,23 @@
 
-\section*{CHƯƠNG 1. PHÂN TÍCH HỆ THỐNG}
+\section*{CHƯƠNG 1. THU THẬP YÊU CẦU}
 \setcounter{section}{1}
 \setcounter{subsection}{0} %LƯU Ý MỖI LẦN THÊM CHƯƠNG MỚI CẦN THÊM CÂU NÀY ĐỂ RESET THỨ TỰ CỦA SUBSECTON VỀ 1
 \setcounter{table}{0} % LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
-\addcontentsline{toc}{section}{\numberline{}CHƯƠNG 1. PHÂN TÍCH HỆ THỐNG}
-Trong chương này, chúng em sẽ tiến hành phân tích hệ thống cho dự án đề tài "Hệ thống theo dõi và quản lý dữ liệu điện tim" dựa trên các mục tiêu
-đã nêu ra trong Mục Đề xuất hệ thống ở Phần mở đầu. Trước tiên bài toán đặt ra ở hệ thống là:
-\begin{adjustwidth}{1.5em}{}
-\begin{itemize}
-  \item Một ứng dụng để có thể giúp người dùng/bệnh nhân theo dõi được những thông tin cần về sức khoẻ tim mạch
-  \item Trực quan và tiêu chuẩn hoá những thông tin đo được
-    bằng hình ảnh hoặc số liệu để bác sĩ có thể dựa vào đó để đưa ra những đánh giá cho người dùng. Ngoài ra những thông tin này
-    có thể hữu ích trong việc theo dõi sức khỏe tim mạch, theo dõi hiệu quả của liệu pháp 
-    và hỗ trợ quyết định của người dùng
-  \item Quản trị viên sẽ là người có thể phân công bác sĩ để chăm sóc, theo dõi sức khoẻ từ
-  xa cho bệnh nhân
-\end{itemize}
-\end{adjustwidth}
-Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được chúng em trình bày ở các chương dưới.
+\addcontentsline{toc}{section}{\numberline{}CHƯƠNG 1. THU THẬP YÊU CẦU}
+Trong chương này, chúng em sẽ tiến hành thu thập yêu cầu cho dự án đề tài "Hệ thống theo dõi và quản lý dữ liệu điện tim" dựa trên các mục tiêu
+đã nêu ra trong Mục Đề xuất hệ thống ở Phần mở đầu.
+
+\subsection{Các kĩ thuật được sử dụng}
+
 
 \subsection{Yêu cầu hệ thống}
 \subsubsection{Yêu cầu về người dùng hệ thống}
 Hệ thống được thiết kế để phục vụ các đối tượng sau:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-    \item Bệnh nhân: Người sử dụng hệ thống để thực hiện theo dõi dữ liệu điện tim thông qua Bluetooth. Bệnh nhân có quyền truy cập vào kết quả ECG của mình, có thể được một bác sĩ phụ trách và theo dõi các thông tin liên quan đến điện tim và sức khoẻ
-    \item Bác sĩ: Người sử dụng hệ thống để xem và đánh giá kết quả dữ liệu điện tim của bệnh nhân, đưa ra nhận xét và đề xuất điều trị. Bác sĩ có thể trao đổi với bệnh nhân thông qua tin nhắn và gửi thông báo quan trọng liên quan đến chăm sóc sức khỏe
-    \item Quản trị viên: Người sử dụng hệ thống để quản lý các tài khoản người dùng, phân công bệnh nhân cho bác sĩ và quản lý mối quan hệ giữa bác sĩ và bệnh nhân, quản lý các bản dữ liệu đo
+    \item Người dùng: Người sử dụng hệ thống để thực hiện theo dõi dữ liệu điện tim thông qua Bluetooth. Bệnh nhân có quyền truy cập vào kết quả ECG của mình, có thể được một bác sĩ phụ trách và theo dõi các thông tin liên quan đến điện tim và sức khoẻ
+    \item Quản trị viên: Người sử dụng hệ thống để quản lý các tài khoản người dùng, thiết bị, phân công bệnh nhân cho bác sĩ và quản lý mối quan hệ giữa bác sĩ và bệnh nhân, quản lý các bản dữ liệu đo
 \end{itemize}
 \end{adjustwidth}
 
@@ -35,14 +25,14 @@ Hệ thống được thiết kế để phục vụ các đối tượng sau:
 Các chức năng chính của hệ thống bao gồm:
 \begin{adjustwidth}{1.5em}{}
   \begin{itemize}
-      \item Ghi lại dữ liệu điện tim: Hệ thống cho phép ghi lại tín hiệu điện tim từ máy đo ECG (Electrocardiogram) hay thiết bị đo điện tim khác với dữ liệu được truyền qua Bluetooth. Dữ liệu được chuyển tới ứng dụng của người dùng thông qua Bluetooth để lưu trữ, phân tích và có thể xem lại sau này
-      \item Hiển thị và phân tích dữ liệu: Hệ thống hiển thị dữ liệu điện tim theo dạng đồ thị. Hệ thống cũng hỗ trợ xuất ra các tệp đã được chuẩn hoá cho các dữ liệu chuỗi thời gian (time-series database) để phục vụ mục đích phân tích và nghiên cứu sâu hơn
-      \item Lưu trữ: Hệ thống hỗ trợ lưu dữ liệu mà người dùng đo được từ thiết bị trên cả ứng dụng và trên server của hệ thống. Dữ liệu điện tim cũng được đồng bộ hóa và lưu trữ trên máy chủ của hệ thống. Qua quá trình đồng bộ hóa, dữ liệu từ ứng dụng được truyền đến máy chủ và được lưu trữ an toàn và bảo mật trên hệ thống. Việc lưu trữ dữ liệu điện tim trên cả ứng dụng và máy chủ giúp đảm bảo rằng dữ liệu quan trọng này được lưu trữ một cách đáng tin cậy và có sẵn cho phân tích hoặc sử dụng tương lai
-      \item Trao đổi và chia sẻ thông tin về dữ liệu điện tim: Hệ thống giúp người dùng có thể trao đổi trực tiếp với nhau, chia sẻ kết quả đo điện tim, hỏi đáp về các vấn đề sức khỏe hoặc thảo luận về các quyết định. Điều này mang lại sự tiện lợi và hỗ trợ đáng kể cho người dùng trong việc xác định về tình trạng sức khoẻ hiện tại của bản thân
+      \item Ghi lại dữ liệu thiết bị: Hệ thống cho phép ghi lại dữ liệu từ thiết bị y tế được truyền qua Bluetooth. Dữ liệu được chuyển tới ứng dụng của người dùng thông qua Bluetooth để lưu trữ, phân tích và có thể xem lại sau này
+      \item Hiển thị và phân tích dữ liệu: Hệ thống hiển thị dữ liệu y tế theo dạng bảng biểu và đồ thị. Hệ thống cũng hỗ trợ xuất ra các tệp đã được chuẩn hoá cho các dữ liệu chuỗi thời gian (time-series database) để phục vụ mục đích phân tích và nghiên cứu sâu hơn
+      \item Lưu trữ: Hệ thống hỗ trợ lưu dữ liệu mà người dùng đo được từ thiết bị trên cả ứng dụng và trên server của hệ thống. Dữ liệu điện tim cũng được đồng bộ hóa và lưu trữ trên máy chủ của hệ thống. Qua quá trình đồng bộ hóa, dữ liệu từ ứng dụng được truyền đến máy chủ và được lưu trữ an toàn và bảo mật trên hệ thống. Việc lưu trữ dữ liệu trên cả ứng dụng và máy chủ giúp đảm bảo rằng dữ liệu quan trọng này được lưu trữ một cách đáng tin cậy và có sẵn cho phân tích hoặc sử dụng tương lai
+      \item Trao đổi và chia sẻ thông tin về dữ liệu y tế: Hệ thống giúp người dùng có thể trao đổi trực tiếp với nhau, chia sẻ kết quả đo điện tim, hỏi đáp về các vấn đề sức khỏe hoặc thảo luận về các quyết định. Điều này mang lại sự tiện lợi và hỗ trợ đáng kể cho người dùng trong việc xác định về tình trạng sức khoẻ hiện tại của bản thân
   \end{itemize}
 \end{adjustwidth}
 % Hệ thống hỗ trợ các chức năng cơ bản sau đối với người dùng:
-\textbf{Đối với người dùng là bệnh nhân:}
+\textbf{Đối với người dùng:}
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
     \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, ngày sinh, số điện thoại và mật khẩu
@@ -53,24 +43,14 @@ Các chức năng chính của hệ thống bao gồm:
     \item Nhận thông báo và có thể trao đổi trực tiếp với bác sĩ về tình hình sức khoẻ và các kết quả đo được từ thiết bị
 \end{itemize}
 \end{adjustwidth}
-\textbf{Đối với người dùng là bác sĩ:}
-\begin{adjustwidth}{1.5em}{}
-\begin{itemize}
-    \item Được cấp tài khoản để sử dụng hệ thống
-    \item Cập nhật các thông tin cá nhân
-    \item Xem danh sách bệnh nhân được phân công cho mình và xem kết quả ECG của từng bệnh nhân
-    \item Đánh giá và đưa ra nhận xét về kết quả ECG của bệnh nhân
-    \item Trao đổi các thông tin liên quan đến tình hình sức khoẻ và kết quả đo của bệnh nhân
-\end{itemize}
-\end{adjustwidth}
-\textbf{Đối với người dùng là quản trị viên:}
+\textbf{Đối với quản trị viên:}
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
     \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, số điện thoại và mật khẩu
     \item Cập nhật thông tin cá nhân
     \item Quản lý danh sách người dùng trong hệ thống, bao gồm bệnh nhân và bác sĩ
-    \item Phân công bệnh nhân cho các bác sĩ và quản lý mối quan hệ giữa bác sĩ và bệnh nhân
-    \item Quản lý các bản ghi dữ liệu điện tim của bệnh nhân
+    \item Quản lý danh sách thiết bị
+    \item Quản lý các bản ghi dữ liệu của các thiết bị trong hệ thống
     \item Quản lý các tin tức được đăng trên ứng dụng của người dùng
 \end{itemize}
 \end{adjustwidth}
@@ -90,164 +70,10 @@ các đối tượng người dùng mà hệ thống phải hỗ trợ. Phần p
 đáp ứng đầy đủ các yêu cầu của người dùng và đảm bảo hiệu suất, bảo mật và tính khả dụng của hệ thống
 % \subsection{Phân tích tổng quan hệ thống}
 
-\subsection{Sơ đồ use case}
-\subsubsection{Use case tổng quát hệ thống}
-Dựa vào những phân tích về yêu cầu chức năng, các use case trong hệ thống được chúng em thể hiện ở hình dưới 
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=16cm,height=14cm]{Images/use_case/use_case_general.png}
-    \caption[Sơ đồ use case tổng quát của hệ thống]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ use case tổng quát của hệ thống}
-    \label{use_case_general} %đặt tên cho ảnh
-  \end{figure}
-
-\subsubsection{Use case chức năng xem lịch sử các lần đo}
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=12cm,height=4.8cm]{Images/use_case/use_case_view_history_record.png}
-    \caption[Sơ đồ use case chức năng xem lịch sử các lần đo]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ use case chức năng xem lịch sử các lần đo}
-    \label{use_case_view_history_record} %đặt tên cho ảnh
-  \end{figure}
-
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng xem lịch sử các lần đo}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{|c|X|}
-      \hline
-      \textbf{Tên chức năng} & \textbf{Xem lịch sử các lần đo} \\
-      \hline
-      Tác nhân & Bệnh nhân, Bác sĩ \\
-      \hline
-      Mô tả & Cho phép bệnh nhân xem lịch sử các lần đo điện tim và bác sĩ xem được lịch sử các lần đo của bệnh nhân
-      mà mình quản lý \\
-      \hline
-      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
-      \hline
-      Dòng sự kiện chính & 
-      % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{view_record_timeline}, Hình \ref{getEcgRecordsByUserId}, Hình \ref{getEcgRecordsByDoctor} 
-        \\
-      % \end{tabular} \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
-% \newpage
-\subsection{Sơ đồ tuần tự}
-Để phân tích cụ thể hơn từng luồng trong hệ thống qua use case, chúng em xin phép được trình bày các sơ đồ tuần
-tự. 
-\subsubsection{Sơ đồ tuần tự chức năng đăng ký}
-  \begin{figure}[H]
-        \centering
-        \includegraphics[width=12.9cm,height=9.4cm]{Images/mobile_app/register.png}
-        \caption[Sơ đồ tuần tự chức năng đăng ký trên App]{\bfseries \fontsize{12pt}{0pt}
-        \selectfont Sơ đồ tuần tự chức năng đăng ký trên App}
-        \label{register} %đặt tên cho ảnh
-  \end{figure}
-  Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng ký vào hệ thống. Người dùng gửi yêu cầu đăng ký, yêu cầu sẽ
-  được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Control
-  sẽ xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{backend_register} trong chương sau.
-\subsubsection{Sơ đồ tuần tự chức năng đăng nhập/đăng xuất}
-
-    \begin{figure}[H]
-         \centering
-         \includegraphics[width=16cm,height=12cm]{Images/mobile_app/login.png}
-         \caption[Sơ đồ tuần tự chức năng đăng nhập trên App]{\bfseries \fontsize{12pt}{0pt}
-         \selectfont Sơ đồ tuần tự chức năng đăng nhập trên App}
-         \label{login} %đặt tên cho ảnh
-    \end{figure}
-
-  Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng nhập vào hệ thống. Người dùng gửi yêu cầu đăng nhập, yêu cầu sẽ
-  được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Việc Control
-  sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hiện trong Hình \ref{backend_login} trong chương sau.
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=12cm,height=6cm]{Images/mobile_app/logout.png}
-    \caption[Sơ đồ tuần tự chức năng đăng xuất trên App]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ tuần tự chức năng đăng xuất trên App}
-    \label{logout} %đặt tên cho ảnh
-\end{figure}
-
-Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng xuất khỏi hệ thống. Người dùng gửi yêu cầu đăng xuất, yêu cầu sẽ
-được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Việc Control
-sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hiện trong Hình \ref{backend_logout} trong chương sau.
-
-\subsection{Phân tích dữ liệu}
-
-Tại phần này, chúng em sẽ tiến hành xác định và mô tả các thực thể cũng như
- thuộc tính quan trọng trong hệ thống. Việc này giúp chúng ta có cái
-  nhìn tổng quan về các yếu tố chính cần được quản lý và lưu trữ
-   trong cơ sở dữ liệu. Bằng cách làm điều này, chúng ta có thể
-    xây dựng một mô hình dữ liệu cơ bản để hỗ trợ việc thiết kế và
-     triển khai hệ thống một cách hiệu quả.
-
-     Trước hết, chúng em sẽ xác định và mô tả các thực thể chính trong hệ
-      thống. Thực thể là các đối tượng hoặc khái niệm quan
-       trọng mà chúng ta cần theo dõi và quản lý. Sau đó, chúng ta sẽ xác
-        định các thuộc tính liên quan đến mỗi thực thể, các thông tin cần
-         được lưu trữ và quản lý.
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng thực thể và thuộc tính}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|c|X|}
-    \hline
-    \textbf{Thực thể} & \textbf{Thuộc tính} \\
-    \hline
-    Người dùng & 
-    ID người dùng, Mật khẩu, Email, Tên, Ngày sinh, Số điện thoại, Quyền \\
-    \hline
-    Bản ghi ECG & 
-    ID bản ghi ECG, ID người dùng, ID thiết bị, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo, Loại cảm biến \\
-    \hline
-    Danh mục tin tức & 
-    ID danh mục tin tức, Tên danh mục tin tức, Mô tả danh mục tin tức \\
-    \hline
-    Tin tức & 
-    ID tin tức, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn, Đường dẫn hình ảnh \\
-    \hline
-    Phân công bệnh nhân - bác sĩ & 
-    ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu \\
-    \hline
-    Mã thông báo đặt lại mật khẩu & 
-    ID mã thông báo, ID người dùng, Mã thông báo, Thời gian hết hạn \\
-    \hline
-    Phiên đăng nhập & 
-    ID phiên đăng nhập, ID người dùng, Mã phiên đăng nhập, Thời gian hết hạn \\
-    \hline
-    Thiết bị & 
-    ID thiết bị, Tên thiết bị \\
-    \hline
-    Thông tin hội thoại & 
-    ID hội thoại, Danh sách ID người dùng trong hội thoại, thông tin tin nhắn gần nhất \\
-    \hline
-    Tin nhắn & 
-    ID tin nhắn, Nội dung tin nhắn, ID người gửi tin nhắn, thời gian gửi tin nhắn \\
-    \hline
-    Firebase token người dùng & 
-    ID token, Firebase token, ID người dùng \\
-    \hline
-  \end{tabularx}
-
-  
-\end{table}
-Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em xác định được mô hình thực thể liên kết như sau:
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=8cm]{Images/system/fmECG_connection_entity.png}
-  \caption[Mô hình thực thể liên kết]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Mô hình thực thể liên kết}
-  \label{ttlk} %đặt tên cho ảnh
-\end{figure}
-
-
 \subsection{Kết luận chương}
 
-Trong chương này, chúng em đã thực hiện phân tích toàn diện về
- hệ thống cho đề tài , nhằm đáp ứng
+Trong chương này, chúng em đã thực hiện thu thập yêu cầu về
+ hệ thống cho đề tài , nhằm tìm hiểu
   các mục tiêu và yêu cầu đã được đề xuất.
 
 Chúng em đã xác định rõ ràng các khía cạnh quan trọng của hệ thống,
