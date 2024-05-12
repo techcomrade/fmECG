@@ -29,7 +29,7 @@ export const createRecord = createAsyncThunk(
   "/create-record",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpPostData("/record/create", params);
+      const response = await httpPostData("/record", params);
       return response;
     } catch (error) {
       return rejectWithValue(
