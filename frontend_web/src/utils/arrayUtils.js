@@ -15,6 +15,8 @@ export const objectArrayValues = obj => Object.values(obj);
 export const toggleElement = (arr, val) => arr.includes(val) ? arr.filter(item => item !== val) : [...arr, val];
 
 export const checkDateTypeKey = (key) => {
-    const dateKeyGroups = ["birth","start_date","end_date","created_at","updated_at"];
+    const dateKeyGroups = ["birth","start_date","end_date", "start_time", "end_time"];
     return dateKeyGroups.includes(key);
 }
+
+export const dummyArray = (length) => Array.from({length}, () => Math.floor(Math.random() * length));
