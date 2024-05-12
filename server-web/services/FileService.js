@@ -13,7 +13,7 @@ let storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype.includes("csv")) {
+  if (file.mimetype.includes("csv") || file.mimetype === 'text/plain' || file.mimetype === 'audio/wav') {
     console.log("valid");
     cb(null, true);
   } else {
