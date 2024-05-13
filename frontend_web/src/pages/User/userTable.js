@@ -56,6 +56,13 @@ const UserTable = () => {
       type: "text",
       isEdit: false,
     },
+    {
+      title: "Bản ghi",
+      dataIndex: "records",
+      key: "records",
+      type: "text",
+      isEdit: false,
+    },
   ];
   useEffect(() => {
     dispatch(getUser());
