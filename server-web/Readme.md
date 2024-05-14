@@ -7,3 +7,5 @@
 
 ## Note
 Password for all of account is "123456a@"
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'sparclab123';
