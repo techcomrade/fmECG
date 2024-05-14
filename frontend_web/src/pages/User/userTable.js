@@ -9,7 +9,7 @@ import {
   deleteUser,
   resetDeleteDataStatus,
 } from "../../redux/reducer/userSlice";
-import { convertDateToTime, convertGenderToString, convertTimeToDate } from "../../utils/dateUtils";
+import { convertDateToTime, convertGenderToString, convertStringToGender, convertTimeToDate } from "../../utils/dateUtils";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
@@ -57,6 +57,18 @@ const UserTable = () => {
       isEdit: false,
     },
   ];
+
+  const genderSelect = [
+    {
+      value: 0,
+      label: 'Nam'
+    },
+    {
+      value: 1,
+      label: 'Nữ'
+    }
+  ];
+
   useEffect(() => {
     dispatch(getUser());
   }, []);
@@ -76,37 +88,41 @@ const UserTable = () => {
 
   useEffect(() => {
     if (dataState.loadUpdateDataStatus === loadStatus.Success) {
-      showNotiSuccess("Bạn đã sửa user thành công");
+      showNotiSuccess("Bạn đã sửa thông tin người dùng thành công");
       dispatch(getUser());
+      dispatch(resetUpdateDataStatus());
     }
   }, [dataState.loadUpdateDataStatus]);
 
   useEffect(() => {
     if (dataState.loadDeleteDataStatus === loadStatus.Success) {
-      showNotiSuccess("Bạn đã xoá user thành công ");
+      showNotiSuccess("Bạn đã xoá người dùng thành công ");
       dispatch(getUser());
+      dispatch(resetDeleteDataStatus());
     }
   }, [dataState.loadDeleteDataStatus]);
 
   const handleDeleteFunction = (id) => {
     dispatch(deleteUser({ id: id }));
-    dispatch(resetDeleteDataStatus());
   };
 
   const handleEditFunction = () => {
     const userData = findElementById(dataTable, selectedData[0]);
-    modalUpdateRef.current?.open(userData, columns);
+    const dataEdit = {
+      ...userData,
+      gender: convertStringToGender(userData.gender)
+    }
+    modalUpdateRef.current?.open(dataEdit, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    var userData = data;
+    const {account_id, devices, role, ...userData} = data;
     Object.keys(data).forEach((key) => {
       if (checkDateTypeKey(key)) {
         userData[key] = convertDateToTime(data[key]);
       }
     });
     dispatch(updateUser(userData));
-    dispatch(resetUpdateDataStatus());
   };
 
   return (
@@ -128,6 +144,7 @@ const UserTable = () => {
         ref={modalUpdateRef}
         title="Sửa thông tin người dùng"
         submitFunction={(data) => handleSubmitEditUser(data)}
+        select={{'gender': genderSelect}}
       />
     </>
   );

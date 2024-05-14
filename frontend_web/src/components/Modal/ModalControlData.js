@@ -30,8 +30,8 @@ const ModalComponent = (props, ref) => {
   const mapOptions = (options) =>
   options
     ? options.map((option) => ({
-        value: option.id,
-        label: option.username || option.device_name,
+        value: option.id || option.value,
+        label: option.label || option.username || option.device_name,
       }))
     : [];
 
@@ -75,7 +75,7 @@ const ModalComponent = (props, ref) => {
               <DatePicker
                 format={"DD/MM/YYYY"}
                 name={column.dataIndex}
-                value={ dayjs(data[column.dataIndex], "DD/MM/YYYY")}
+                value={data[column.dataIndex] ? dayjs(data[column.dataIndex], "DD/MM/YYYY") : ''}
                 onChange={(date, dateString) =>
                   {
                     handleChangeInput(column.dataIndex, dateString)
