@@ -33,7 +33,7 @@ class RecordService extends CommonService {
 
   async add(record) {
     record.id = uuidv4();
-    let path = './public/upload' + record.filename; 
+    let path = '../server-web/public/upload/' + record.file.filename; 
     record.data_rec_url = path;
     return await RecordRepository.add(record);
   }
@@ -110,7 +110,13 @@ class RecordService extends CommonService {
 
   async uploadFileRecord(req, res, next){
    return FileService.uploadFile(req, res, next);
+  }
 
+  async readFileRecord(path) {
+    return await FileService.readFile(path);
+  }
+  async deleteFile(path) {
+    return await FileService.deleteFile(path);
   }
 }
 

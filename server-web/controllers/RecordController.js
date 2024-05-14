@@ -13,13 +13,14 @@ class RecordController {
   }
 
   async createRecord(req, res, next) {
-    console.log(`[P]:::Create record: `, req.body);
     try {
+      req.body.file = req.file;
       await RecordService.add(req.body);
       return res.status(200).json({
         message: "Create record successful!",
       });
     } catch (err) {
+      console.log(err);
       return res.status(400).json({
         message: "Create record failed!",
       });
@@ -120,13 +121,72 @@ class RecordController {
         });
       });
   }
-  
-  async UploadFileRecord(req, res, next) {
+
+  async uploadFileRecord(req, res, next) {
     try {
-        await RecordService.uploadFileRecord(req, res, next);
-      } catch (err) {
+      await RecordService.uploadFileRecord(req, res, next);
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({
+        message: "Error when upload file",
+      });
+    }
+  }
+  async readFileRecord(req, res) {
+    console.log(`[P]:::Read file record: `, req.params.id);
+    let record = await RecordService.getRecordById(req.params.id);
+    if (!record) {
+      return res.status(500).json({
+        message: "Record not found",
+      });
+    }
+    let path = record[0].dataValues.data_rec_url;
+    console.log(path);
+    await RecordService.readFileRecord(path)
+      .then((data) => {
+        if (data) {
+          return res.status(200).json({
+            data: data,
+            message: "Read file successfully",
+          });
+        }
+        res.status(500).json({
+          message: "no file found",
+        });
+      })
+      .catch((err) => {
         console.log(err);
-      }
+        return res.status(400).json({
+          message: "Error when reading file",
+        });
+      });
+  }
+  async deleteFileRecord(req, res) {
+    console.log(`[P]:::Delete file record: `, req.params.id);
+    let record = await RecordService.getRecordById(req.params.id);
+    if (!record) {
+      return res.status(500).json({
+        message: "No record found",
+      });
+    }
+    let path = record[0].dataValues.data_rec_url;
+    await RecordService.deleteFile(path)
+      .then((check) => {
+        if (check) {
+          return res.status(200).json({
+            message: "Delete file record succesfully",
+          });
+        }
+        return res.status(500).json({
+          message: "Error when deleting file record",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).json({
+          message: "File not found",
+        });
+      });
   }
 }
 
