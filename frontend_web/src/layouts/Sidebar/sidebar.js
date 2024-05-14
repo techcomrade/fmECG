@@ -1,47 +1,56 @@
 import { UserOutlined, HomeOutlined, UnorderedListOutlined} from '@ant-design/icons';
-import { Layout, theme} from 'antd';
+import { Layout, theme, Menu} from 'antd';
 import React from 'react';
-import MenuBar from '../../components/MenuBar/menubar';
+import { useNavigate } from 'react-router-dom';
 
 const { Sider } = Layout;
 
-export const MenuList = () => [
-  {
-    key: "/",
-    title: "Trang chủ",
-    icon: <HomeOutlined />,
-    isHide: false,
-    url: "/",
-  },
-  {
-    key: "/manage_users",
-    title: "Quản lí người dùng",
-    icon: <UnorderedListOutlined />,
-    isHide: false,
-    url: "/user",
-  },
-  {
-    key: "/manage_devices",
-    title: "Quản lí thiết bị",
-    icon: <UnorderedListOutlined />,
-    isHide: false,
-    url: "/device",
-  },
-  {
-    key: "/manage_records",
-    title: "Quản lí record",
-    icon: <UnorderedListOutlined />,
-    isHide: false,
-    url: "/record",
-  },
-  {
-    key: "/my_account",
-    title: "Tài khoản",
-    icon: <UserOutlined />,
-    isHide: false,
-    url: "/account",
-  },
-];
+export const MenuList = () => {
+  const navigate = useNavigate()
+
+  return [
+    {
+      key: "/",
+      label: "Trang chủ",
+      icon: <HomeOutlined />,
+      onClick: () => {
+        navigate('/')
+      }
+    },
+    {
+      key: "/manage_users",
+      label: "Quản lí người dùng",
+      icon: <UnorderedListOutlined />,
+      onClick: () => {
+        navigate('/user')
+      }
+    },
+    {
+      key: "/manage_devices",
+      label: "Quản lí thiết bị",
+      icon: <UnorderedListOutlined />,
+      onClick: () => {
+        navigate('/device')
+      }
+    },
+    {
+      key: "/manage_records",
+      label: "Quản lí record",
+      icon: <UnorderedListOutlined />,
+      onClick: () => {
+        navigate('/record')
+      }
+    },
+    {
+      key: "/my_account",
+      label: "Tài khoản",
+      icon: <UserOutlined />,
+      onClick: () => {
+        navigate('/account')
+      }
+    },
+  ];
+} 
 
 const Sidebar = ({children}) => {
   const {
@@ -54,7 +63,13 @@ const Sidebar = ({children}) => {
         width={200}
         style={{ background: colorBgContainer,}}
     >
-        <MenuBar menuList={MenuList()} mode="inline" />
+        <Menu
+          mode={"inline"}
+          selectedKeys={['1']}
+          defaultOpenKeys={[]}
+          items={MenuList()}
+        >
+        </Menu>
     </Sider>
   )
     
