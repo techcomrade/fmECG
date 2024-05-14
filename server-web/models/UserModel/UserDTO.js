@@ -1,8 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelize");
 const Account = require("../AccountModel/AccountDTO");
-const Assignment = require("../PatientDoctorAssignModel/PatientDoctorAssignmentDTO");
-const { allow } = require("joi");
+
 
 const User = sequelize.define(
   "users",
@@ -26,7 +25,6 @@ const User = sequelize.define(
     },
     gender: {
       type: Sequelize.INTEGER,
-      allowNull: false,
     },
     birth: {
       type: Sequelize.BIGINT,
@@ -34,6 +32,11 @@ const User = sequelize.define(
     },
     phone_number: Sequelize.STRING,
     image: Sequelize.STRING,
+    status: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    information: Sequelize.STRING,
     role: {
       type: Sequelize.INTEGER,
       allowNull: false,
