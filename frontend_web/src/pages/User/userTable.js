@@ -57,7 +57,7 @@ const UserTable = () => {
       isEdit: false,
     },
     {
-      title: "Bản ghi",
+      title: "Số lượng bản ghi",
       dataIndex: "records",
       key: "records",
       type: "text",
