@@ -71,8 +71,13 @@ class UserService extends CommonService {
   }
 
   async updateUser(data) {
+    const { password, ...newData } = data;
     return await this.transaction(async (t) => {
-      await UserRepository.updateById(data, t);
+      // await AuthenService.updatePassword({
+      //   password: password,
+      //   id: data.account_id,
+      // },t);
+      await UserRepository.updateById(newData, t);
     });
   }
 
