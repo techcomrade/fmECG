@@ -13,6 +13,7 @@ import { convertDateToTime, convertGenderToString, convertStringToGender, conver
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
+import { GENDER } from "../../constants";
 
 const UserTable = () => {
   const dispatch = useDispatch();
@@ -33,16 +34,7 @@ const UserTable = () => {
       dataIndex: "gender",
       key: "gender",
       type: "select",
-      dataSelect: [
-        {
-          value: 0,
-          label: 'Nam'
-        },
-        {
-          value: 1,
-          label: 'Nữ'
-        }
-      ],
+      dataSelect: GENDER,
       isEdit: true,
     },
     {
