@@ -11,9 +11,11 @@ class UserService extends CommonService {
     const dataUpdate = await Promise.all(
       data.map(async (user) => {
         const deviceUser = await DeviceRepository.checkByUserId(user.id);
+        const recordUser = await RecordRepository.getRecordByUserId(user.id)
         return {
           ...user,
           devices: deviceUser.length,
+          records: recordUser.length,
         };
       })
     );
@@ -50,7 +52,7 @@ class UserService extends CommonService {
     }
     const data = await UserRepository.getUserById(userId);
     const deviceUser = await DeviceRepository.checkByUserId(userId);
-    const recordUser = await RecordRepository.getRecordByUserId(userId)
+    const recordUser = await RecordRepository.getRecordByUserId(userId);
     data[0].dataValues = {
       ...data[0].dataValues,
       devices: deviceUser.length,
