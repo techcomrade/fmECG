@@ -33,6 +33,16 @@ const UserTable = () => {
       dataIndex: "gender",
       key: "gender",
       type: "select",
+      dataSelect: [
+        {
+          value: 0,
+          label: 'Nam'
+        },
+        {
+          value: 1,
+          label: 'Nữ'
+        }
+      ],
       isEdit: true,
     },
     {
@@ -63,17 +73,6 @@ const UserTable = () => {
       type: "text",
       isEdit: false,
     },
-  ];
-
-  const genderSelect = [
-    {
-      value: 0,
-      label: 'Nam'
-    },
-    {
-      value: 1,
-      label: 'Nữ'
-    }
   ];
 
   useEffect(() => {
@@ -151,7 +150,6 @@ const UserTable = () => {
         ref={modalUpdateRef}
         title="Sửa thông tin người dùng"
         submitFunction={(data) => handleSubmitEditUser(data)}
-        select={{'gender': genderSelect}}
       />
     </>
   );

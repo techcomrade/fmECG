@@ -23,7 +23,7 @@ const ModalComponent = (props, ref) => {
     open: (data, colum) => {
       setIsOpen(true);
       setData(data);
-      setColum(colum);
+      setColum(colum.filter(item => item.isEdit));
     },
   }));
 
@@ -54,7 +54,7 @@ const ModalComponent = (props, ref) => {
           <Form.Item label={column.title}>
             {column.type === 'select' && (
               <Select 
-                options={mapOptions(props?.select[column.dataIndex] || [])}
+                options={mapOptions(column.dataSelect || [])}
                 allowClear
                 onChange={(value) => handleChangeInput(column.dataIndex, value)}
                 value={data[column.dataIndex]}
