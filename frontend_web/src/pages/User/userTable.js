@@ -56,6 +56,13 @@ const UserTable = () => {
       type: "text",
       isEdit: false,
     },
+    {
+      title: "Số lượng bản ghi",
+      dataIndex: "records",
+      key: "records",
+      type: "text",
+      isEdit: false,
+    },
   ];
 
   const genderSelect = [

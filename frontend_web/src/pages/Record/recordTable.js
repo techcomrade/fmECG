@@ -117,15 +117,15 @@ const RecordTable = () => {
   const columns = [
     {
       title: "Tên người dùng",
-      dataIndex: "user_id",
-      key: "user_id",
+      dataIndex: "username",
+      key: "username",
       type: "select",
       isEdit: true,
     },
     {
       title: "Tên thiết bị",
-      dataIndex: "device_id",
-      key: "device_id",
+      dataIndex: "device_name",
+      key: "device_name",
       type: "select",
       isEdit: true,
     },
@@ -158,15 +158,6 @@ const RecordTable = () => {
 
   useEffect(() => {
     dispatch(getRecord());
-    const getOptionData = async() => {
-      const userData = await httpGetData('/user');
-      const deviceData = await httpGetData('/device');
-      setDropData({
-        user_id: userData.metadata,
-        device_id: deviceData.metadata
-      })
-    }
-    getOptionData();
   }, []);
 
   // Get data

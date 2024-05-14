@@ -11,9 +11,11 @@ class UserService extends CommonService {
     const dataUpdate = await Promise.all(
       data.map(async (user) => {
         const deviceUser = await DeviceRepository.checkByUserId(user.id);
+        const recordUser = await RecordRepository.getRecordByUserId(user.id)
         return {
           ...user,
           devices: deviceUser.length,
+          records: recordUser.length,
         };
       })
     );
