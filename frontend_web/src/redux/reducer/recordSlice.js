@@ -98,7 +98,6 @@ const recordSlice = createSlice({
       })
       .addCase(getRecord.fulfilled, (state, action) => {
         state.data = action.payload;
-        console.log(action.payload);
         state.loadDataStatus = loadStatus.Success;
       })
       .addCase(getRecord.rejected, (state, action) => {
