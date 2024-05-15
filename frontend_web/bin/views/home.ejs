@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href= "/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="/logo192.png" />
     <link rel="manifest" href="/manifest.json" />
     <title>React App</title>
-    <script defer="defer" src="/static/js/main.a1c419ca.js"></script>
+    <script defer="defer" src="/static/js/main.ec6b01f0.js"></script>
     <link href="/static/css/main.4eeeee60.css" rel="stylesheet" />
   </head>
   <body>
@@ -31,12 +31,19 @@
         ? (localStorage.setItem("user", getCookie("user")),
           localStorage.setItem("access_token", getCookie("access_token")),
           localStorage.setItem("refresh_token", getCookie("refresh_token")),
+          localStorage.setItem("api", decodeURIComponent(getCookie("api"))),
           (cookieData = {
             access_token: localStorage.getItem("access_token"),
             refresh_token: localStorage.getItem("refresh_token"),
             user_id: localStorage.getItem("user"),
+            api: localStorage.getItem("api"),
           }))
-        : ((cookieData = { access_token: "", refresh_token: "", user_id: "" }),
+        : ((cookieData = {
+            access_token: "",
+            refresh_token: "",
+            user_id: "",
+            api: "",
+          }),
           localStorage.clear()),
         (window.hasCookie = cookieData);
     </script>

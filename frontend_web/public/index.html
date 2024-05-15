@@ -58,16 +58,19 @@
         localStorage.setItem("user", getCookie("user"));
         localStorage.setItem("access_token", getCookie("access_token"));
         localStorage.setItem("refresh_token", getCookie("refresh_token"));
+        localStorage.setItem("api",decodeURIComponent(getCookie("api")));
         cookieData = {
           access_token: localStorage.getItem("access_token"),
           refresh_token: localStorage.getItem("refresh_token"),
           user_id: localStorage.getItem("user"),
+          api: localStorage.getItem("api"),
         };
       } else {
         cookieData = {
           access_token: "",
           refresh_token: "",
           user_id: "",
+          api: ""
         };
         localStorage.clear();
       }
