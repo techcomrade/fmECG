@@ -75,7 +75,8 @@ const ModalComponent = (props, ref) => {
               <DatePicker
                 format={"DD/MM/YYYY"}
                 name={column.dataIndex}
-                value={data[column.dataIndex] ? dayjs(data[column.dataIndex], "DD/MM/YYYY") : ''}
+                value={data[column.dataIndex] ? dayjs(data[column.dataIndex], "DD/MM/YYYY") : null}
+                placeholder={"Select date"}
                 onChange={(date, dateString) =>
                   {
                     handleChangeInput(column.dataIndex, dateString)
