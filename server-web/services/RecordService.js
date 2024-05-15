@@ -10,6 +10,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const Joi = require("joi");
 const { dummyArray } = require("../utils/arrayUtils");
+const { timeEnd } = require("console");
 
 class RecordService extends CommonService {
   async getAll() {
@@ -81,7 +82,15 @@ class RecordService extends CommonService {
   }
 
   async getRecordByStartTime(time) {
-    return await RecordRepository.getRecordByStartTime(time);
+    let result = [];
+    const data = await RecordRepository.getAllData();
+    const parseTime = parseInt(time);
+    for(let i = 0; i < data.length; i++) {
+      console.log((new Date((data[i].dataValues.start_time))).getDate())
+      if(data[i].dataValues.start_time >= (parseTime - 86400000) && data[i].dataValues.start_time <= (parseTime + 86400000))
+        result.push(data[i].dataValues);
+    }
+    return result;
   }
 
   async getRecordByEndTime(time) {
