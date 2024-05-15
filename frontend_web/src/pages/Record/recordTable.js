@@ -48,7 +48,7 @@ const RecordTable = () => {
     setSearchText('');
   };
 
-  const getColumnSearchProps = (dataIndex) => ({
+  const getColumnSearchProps = (dataIndex, title) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
       <div
         style={{
@@ -58,7 +58,7 @@ const RecordTable = () => {
       >
         <Input
           ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
+          placeholder={`Tìm kiếm ${title}`}
           value={selectedKeys[0]}
           onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
@@ -119,15 +119,31 @@ const RecordTable = () => {
       title: "Tên người dùng",
       dataIndex: "username",
       key: "username",
+      isEdit: false,
+    },
+    {
+      title: "Tên người dùng",
+      dataIndex: "user_id",
+      key: "user_id",
       type: "select",
+      dataSelect: dropdownData.user,
       isEdit: true,
+      hidden: true
     },
     {
       title: "Tên thiết bị",
       dataIndex: "device_name",
       key: "device_name",
+      isEdit: false,
+    },
+    {
+      title: "Tên thiết bị",
+      dataIndex: "device_id",
+      key: "device_id",
       type: "select",
+      dataSelect: dropdownData.device,
       isEdit: true,
+      hidden: true
     },
     {
       title: "Loại bản ghi",
@@ -135,7 +151,7 @@ const RecordTable = () => {
       key: "information",
       type: "text",
       isEdit: true,
-      ...getColumnSearchProps('device_type'),
+      ...getColumnSearchProps('device_type', 'loại bản ghi'),
     },
     {
       title: "Ngày bắt đầu",
@@ -143,7 +159,7 @@ const RecordTable = () => {
       key: "start_time",
       type: "date",
       isEdit: true,
-      ...getColumnSearchProps('start_time'),
+      ...getColumnSearchProps('start_time', 'ngày bắt đầu'),
     
     },
     {
@@ -152,12 +168,21 @@ const RecordTable = () => {
       key: "end_time",
       type: "date",
       isEdit: true,
-      ...getColumnSearchProps('end_time'),
+      ...getColumnSearchProps('end_time', 'ngày kết thúc'),
     },
   ];
 
   useEffect(() => {
     dispatch(getRecord());
+    const getOptionData = async() => {
+      const userData = await httpGetData('/user');
+      const deviceData = await httpGetData('/device');
+      setDropData({
+        user: userData.metadata,
+        device: deviceData.metadata
+      })
+    }
+    getOptionData();
   }, []);
 
   // Get data
@@ -241,7 +266,7 @@ const RecordTable = () => {
         deleteFunction={handleDeleteFunction}
         name="Bảng quản lý record"
         data={dataTable}
-        column={columns}
+        column={columns.filter(item => !item.hidden)}
         updateSelectedData={setSelectedData}
         loading={dataState.loadDataStatus === loadStatus.Loading}
         chartButton
@@ -251,13 +276,11 @@ const RecordTable = () => {
         ref={modalUpdateRef}
         title="Sửa thông tin record"
         submitFunction={(data) => handleSubmitEditUser(data)}
-        select={dropdownData}
       />
       <ModalControlData
         ref={modalAddRef}
         title="Thêm record mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
-        select={dropdownData}
       />
       <ModalChart 
         isOpen={openChart}
