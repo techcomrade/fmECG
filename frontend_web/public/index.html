@@ -39,5 +39,40 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      // Check if the cookie exists (replace 'myCookieName' with your actual cookie name)
+      const getCookie = (name) => {
+        const cookie = document.cookie
+          .split("; ")
+          .find((cookie) => cookie.startsWith(name + "="));
+
+        return cookie ? cookie.substring(name.length + 1) : null;
+      };
+      var cookieData = {
+        access_token: "",
+        refresh_token: "",
+        user_id: "",
+      };
+      const access_token = getCookie("access_token");
+      if (access_token) {
+        localStorage.setItem("user", getCookie("user"));
+        localStorage.setItem("access_token", getCookie("access_token"));
+        localStorage.setItem("refresh_token", getCookie("refresh_token"));
+        cookieData = {
+          access_token: localStorage.getItem("access_token"),
+          refresh_token: localStorage.getItem("refresh_token"),
+          user_id: localStorage.getItem("user"),
+        };
+      } else {
+        cookieData = {
+          access_token: "",
+          refresh_token: "",
+          user_id: "",
+        };
+        localStorage.clear();
+      }
+      // Set a global variable to indicate whether the cookie exists
+      window.hasCookie = cookieData;
+    </script>
   </body>
 </html>

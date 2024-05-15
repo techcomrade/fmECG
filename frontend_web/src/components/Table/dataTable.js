@@ -1,86 +1,136 @@
-import { Table, Modal, Button, Input, Space } from 'antd';
-import { exportColumnTable, exportDataTable, exportTableName } from '../../models/manage.table';
-import { useEffect, useRef, useState } from 'react';
-import { showDeleteConfirm } from '../Modal/ModalDelete';
-import { useNavigate } from 'react-router-dom';
-import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import './dataTable.scss'
-import ModalEdit from '../Modal/ModalEdit';
+import { Table, Button } from "antd";
+import { useEffect, useState } from "react";
+import {
+  PlusOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  MobileOutlined,
+} from "@ant-design/icons";
+import "./dataTable.scss";
+import { addKeyElement } from "../../utils/arrayUtils";
+import { Modal } from "antd";
+import { ExclamationCircleFilled } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
-const DataTable = () => {
-    const [column, setColumn] = useState([]);
-    const [tableData, setTableData] = useState([]);
-    const [index, setIndex] = useState();
-    const [showModalEdit, setShowModalEdit] = useState(false);
-     const navigate = useNavigate();
+const { confirm } = Modal;
 
-    const data = [
-        {
-            index: 0,
-            name: 'ABC',
-            gender: 'Male',
-            birthday: '10/02/1999',
-            email: '',
-            key: 1
-        },
-        {
-            index: 1,
-            name: 'ABC',
-            gender: 'Male',
-            birthday: '10/02/1999',
-            email: '',
-            key: 2
-        }
-    ]
-
-    useEffect(() => {
-        const columnTable = exportColumnTable('users');
-        setColumn(columnTable);
-    }, []);
-
-    const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            const delBtnClassList = document.getElementsByClassName('delete-btn')[0].classList;
-            const editBtnClassList = document.getElementsByClassName('edit-btn')[0].classList;
-            if(selectedRows.length === 1 ) {
-                editBtnClassList.remove('hide');
-                setIndex(selectedRows[0].index);
-            }
-            else editBtnClassList.add('hide');
-
-            if (selectedRows.length > 0){
-                delBtnClassList.remove('hide');
-            }
-            else delBtnClassList.toggle('hide');
-        },
-        getCheckboxProps: (record) => ({
-          disabled: record.name === 'Disabled User',
-          // Column configuration not to be checked
-          name: record.name,
-        }),
-    };
-    const [selectionType, setSelectionType] = useState('checkbox');
-
-    const handleEditBtn = () => {
-        setShowModalEdit(true);
+const DataTable = (props) => {
+  const [tableData, setTableData] = useState([]);
+  const [editButton, setEditButtton] = useState(false);
+  const [deleteButton, setDeleteButton] = useState(false);
+  const [chartButton, setChartButton] = useState(false);
+  const [selectedState, setSelectedRowKeys] = useState([]);
+  const navigate = useNavigate();
+  // Get data
+  useEffect(() => {
+    const rawData = props.data;
+    if (rawData) {
+      setTableData(addKeyElement(rawData));
     }
+  }, [props.data]);
 
-    return (
-        <>
-            <h2>Bảng {}</h2>
-            <div className='list-btn-actions'>
-                <Button icon={<PlusOutlined />}>Add</Button>
-                <Button icon={<EditOutlined /> } onClick={handleEditBtn} className='edit-btn hide'>Edit</Button>
-                <Button icon={<DeleteOutlined />} className='delete-btn hide'>Delete</Button>
-            </div>
-            <Table rowSelection={{
-                type: selectionType,
-                ...rowSelection,
-                }}
-                bordered columns={column} dataSource={data}/>
-            <ModalEdit isOpen={showModalEdit} handleCancel={() => setShowModalEdit(false)} columns={column}/>
-        </>
-    );
-} 
+  // Select row
+  const rowSelection = {
+    selectedRowKeys: selectedState,
+    onChange: (selectedRowKeys) => {
+      setSelectedRowKeys(selectedRowKeys);
+      // Check hide or show edit and delete button
+      if (props.editButton) setEditButtton(selectedRowKeys.length === 1);
+      if (props.deleteButton) setDeleteButton(selectedRowKeys.length === 1);
+      if (props.chartButton) setChartButton(selectedRowKeys.length === 1);
+      props.updateSelectedData?.(selectedRowKeys);
+    }
+  };
+
+  // Delete modal
+  const deleteFunction = (id) => {
+    confirm({
+      title: "Xóa thành phần",
+      icon: <ExclamationCircleFilled />,
+      content: "Bạn có chắc muốn xóa thành phần này không",
+      okText: "Xóa",
+      okType: "danger",
+      cancelText: "Không",
+      async onOk() {
+        console.log(id);
+        props?.deleteFunction(id);
+      },
+      onCancel() {},
+    });
+  };
+
+  return (
+    <>
+      <h2>{props.name}</h2>
+      <div className="list-btn-actions">
+        {props.addButton && (
+          <Button icon={<PlusOutlined />} onClick={() => props?.addFunction()}>
+            Tạo
+          </Button>
+        )}
+        {props.addDeviceButton ? (
+          <Button icon={<MobileOutlined />} onClick={() => navigate("/device")}>
+            Thêm thiết bị
+          </Button>
+        ) : (
+          ""
+        )}
+        {editButton && props.editButton && (
+          <Button
+            icon={<EditOutlined />}
+            className="edit-btn"
+            onClick={() => props?.editFunction(selectedState[0])}
+          > 
+            Chỉnh sửa
+          </Button>
+        )}
+        {deleteButton && props.deleteButton && (
+          <Button
+            icon={<DeleteOutlined />}
+            className="delete-btn"
+            onClick={() => deleteFunction(selectedState[0])}
+          >
+            Xóa
+          </Button>
+        )}
+        {props?.customButton}
+        {chartButton && props.chartButton && (
+          <Button
+            onClick={() => props?.openChart()}
+          >
+            Đồ thị
+          </Button>
+        )}
+      </div>
+      <Table
+        rowSelection={{
+          type: props.hasCheckBox,
+          ...rowSelection,
+        }}
+        loading = {props.loading}
+        bordered
+        columns={props.column}
+        dataSource={tableData}
+      />
+    </>
+  );
+};
+
+// props list:
+// props.data
+// props.updateSelectedData
+// props.name
+// props.loading
+// props.addButton
+// props.addDeviceButton
+// props.hasCheckBox
+// props.column
+// props.editButton
+// props.deleteButton
+// props?.updateSelectedData
+// props?.deleteFunction
+// props?.addFunction
+// props?.editFunction
+// props?.customButton
 
 export default DataTable;

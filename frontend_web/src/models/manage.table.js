@@ -1,15 +1,19 @@
 import userTable from "./table/user.table";
+import deviceTable from "./table/device.table";
 
 const classesFactory = {
     userTable,
+    deviceTable
 };
 
 const classesFactoryMapping = {
-    users: "userTable",
+    user: "userTable",
+    device: "deviceTable"
 };
 
 const tableNameMapping = {
-    users: "người dùng",
+    user: "người dùng",
+    device: "thiết bị"
 };
 
 export const exportColumnTable = (table, callBack) => {
@@ -21,11 +25,11 @@ export const exportColumnTable = (table, callBack) => {
     return [];
 }
 
-export const exportDataTable = (table, fatherId) => {
+export const exportDataTable = (table) => {
     let nameConverted = classesFactoryMapping[table];
     if (!!nameConverted) {
         let tableSelected = new classesFactory[nameConverted]();
-        if(!!tableSelected) return tableSelected.getDataShow(fatherId);
+        if(!!tableSelected) return tableSelected.getDataShow();
     }
     return [];
 }
@@ -35,4 +39,22 @@ export const exportTableName = (table) => {
     if(!!nameConverted) return nameConverted 
     else
         return '';
+}
+
+export const exportFunction = (table) => {
+    let nameConverted = classesFactoryMapping[table];
+    if (!!nameConverted) {
+        let tableSelected = new classesFactory[nameConverted]();
+        if(!!tableSelected) return tableSelected.getFunction();
+    }
+    return [];
+}
+
+export const checkDateIndex = (table, index) => {
+    let nameConverted = classesFactoryMapping[table];
+    if (!!nameConverted) {
+        let tableSelected = new classesFactory[nameConverted]();
+        if(!!tableSelected) return tableSelected.checkDateIndex(index);
+    }
+    return false;
 }
