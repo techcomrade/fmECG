@@ -85,12 +85,57 @@ class RecordService extends CommonService {
     let result = [];
     const data = await RecordRepository.getAllData();
     const parseTime = parseInt(time);
-    for(let i = 0; i < data.length; i++) {
-      console.log((new Date((data[i].dataValues.start_time))).getDate())
-      if(data[i].dataValues.start_time >= (parseTime - 86400000) && data[i].dataValues.start_time <= (parseTime + 86400000))
+    for (let i = 0; i < data.length; i++) {
+      console.log(new Date(data[i].dataValues.start_time).getDate());
+      if (
+        data[i].dataValues.start_time >= parseTime - 86400000 &&
+        data[i].dataValues.start_time <= parseTime + 86400000
+      )
         result.push(data[i].dataValues);
     }
     return result;
+  }
+
+  async getRecordByTimeInterval(startTime, endTime) {
+    const start = new Date(parseInt(startTime));
+    const startDate = start.getDate();
+    const startMonth = start.getMonth() + 1;
+
+    const end = new Date(parseInt(endTime));
+    const endDate = end.getDate();
+    const endMonth = end.getMonth() + 1;
+
+    let arr = [];
+    const data = await RecordRepository.getAllData();
+    for (let i = 0; i < data.length; i++) {
+      let date = new Date(data[i].dataValues.start_time);
+      if (startMonth === endMonth) {
+        if (
+          date.getMonth() + 1 === startMonth &&
+          date.getDate() >= startDate &&
+          date.getDate() <= endDate
+        ) {
+          arr.push(data[i].dataValues);
+        }
+      }
+      if (startMonth < endMonth) {
+        if (
+          date.getMonth() + 1 === startMonth &&
+          date.getDate() >= startDate &&
+          date.getDate() <= 31
+        ) {
+          arr.push(data[i].dataValues);
+        }
+        if (
+          date.getMonth() + 1 === endMonth &&
+          date.getDate() >= 1 &&
+          date.getDate() <= endDate
+        ) {
+          arr.push(data[i].dataValues);
+        }
+      } else return false;
+    }
+    return arr;
   }
 
   async getRecordByEndTime(time) {

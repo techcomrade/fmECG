@@ -15,6 +15,7 @@ router.get("/start/:time", RecordMiddleware.checkStartTime, RecordController.get
 router.get("/end/:time", RecordMiddleware.checkEndTime, RecordController.getRecordByEndTime);
 router.post("/update", RecordMiddleware.checkUpdate, RecordController.updateRecordById);
 router.delete("/:recordId", RecordMiddleware.checkId, RecordController.deleteRecordById);
+router.get("/interval/from/:startTime/to/:endTime", RecordController.getRecordByTimeInterval);
 
 router.post("/uploadfile", RecordController.uploadFileRecord, (req, res) => {
   if (req.file) res.status(200).json({ file: req.file });

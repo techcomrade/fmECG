@@ -78,6 +78,22 @@ class RecordController {
     });
   }
 
+  async getRecordByTimeInterval(req, res, next) {
+    console.log(
+      `[P]:::Get record by time interval: `,
+      req.params.startTime,
+      req.params.endTime
+    );
+    const recordByTimeInterval = await RecordService.getRecordByTimeInterval(
+      req.params.startTime,
+      req.params.endTime
+    );
+    return res.status(200).json({
+      message: "Get records by time interval successful!",
+      metadata: recordByTimeInterval,
+    });
+  }
+
   async getRecordByEndTime(req, res, next) {
     console.log(`[P]:::Get record by end time: `, req.params.time);
     const recordByEndTime = await RecordService.getRecordByEndTime(
