@@ -1,3 +1,4 @@
+const { Sequelize } = require("sequelize");
 const RecordDTO = require("./RecordDTO");
 class RecordRepository {
   async getAllData() {
@@ -32,7 +33,17 @@ class RecordRepository {
     return await RecordDTO.findAll({
       where: {
         start_time: time,
-      }
+      },
+    });
+  }
+
+  async getRecordByStartTimeInterval(startTime, endTime) {
+    return await RecordDTO.findAll({
+      where: {
+        start_time: {
+          [Sequelize.Op.between]: [startTime, endTime],
+        },
+      },
     });
   }
 
@@ -40,10 +51,20 @@ class RecordRepository {
     return await RecordDTO.findAll({
       where: {
         end_time: time,
-      }
+      },
     });
   }
 
+  async getRecordByEndTimeInterval(startTime, endTime) {
+    return await RecordDTO.findAll({
+      where: {
+        end_time: {
+          [Sequelize.Op.between]: [startTime, endTime],
+        },
+      },
+    });
+  }
+  
   async add(record, t) {
     return await RecordDTO.create(
       {

@@ -34,7 +34,7 @@ class RecordService extends CommonService {
 
   async add(record) {
     record.id = uuidv4();
-    let path = '../server-web/public/upload/' + record.file.filename; 
+    let path = "../server-web/public/upload/" + record.file.filename;
     record.data_rec_url = path;
     return await RecordRepository.add(record);
   }
@@ -96,50 +96,22 @@ class RecordService extends CommonService {
     return result;
   }
 
-  async getRecordByTimeInterval(startTime, endTime) {
-    const start = new Date(parseInt(startTime));
-    const startDate = start.getDate();
-    const startMonth = start.getMonth() + 1;
-
-    const end = new Date(parseInt(endTime));
-    const endDate = end.getDate();
-    const endMonth = end.getMonth() + 1;
-
-    let arr = [];
-    const data = await RecordRepository.getAllData();
-    for (let i = 0; i < data.length; i++) {
-      let date = new Date(data[i].dataValues.start_time);
-      if (startMonth === endMonth) {
-        if (
-          date.getMonth() + 1 === startMonth &&
-          date.getDate() >= startDate &&
-          date.getDate() <= endDate
-        ) {
-          arr.push(data[i].dataValues);
-        }
-      }
-      if (startMonth < endMonth) {
-        if (
-          date.getMonth() + 1 === startMonth &&
-          date.getDate() >= startDate &&
-          date.getDate() <= 31
-        ) {
-          arr.push(data[i].dataValues);
-        }
-        if (
-          date.getMonth() + 1 === endMonth &&
-          date.getDate() >= 1 &&
-          date.getDate() <= endDate
-        ) {
-          arr.push(data[i].dataValues);
-        }
-      } else return false;
-    }
-    return arr;
+  async getRecordByStartTimeInterval(startTime, endTime) {
+    return await RecordRepository.getRecordByStartTimeInterval(
+      startTime,
+      endTime
+    );
   }
 
   async getRecordByEndTime(time) {
     return await RecordRepository.getRecordByEndTime(time);
+  }
+
+  async getRecordByEndTimeInterval(startTime, endTime) {
+    return await RecordRepository.getRecordByEndTimeInterval(
+      startTime,
+      endTime
+    );
   }
 
   async updateRecordById(record, id) {
@@ -157,13 +129,13 @@ class RecordService extends CommonService {
   getDataRecord(length) {
     const data = {
       x: dummyArray(length),
-      y: dummyArray(length)
+      y: dummyArray(length),
     };
     return data;
   }
 
-  async uploadFileRecord(req, res, next){
-   return FileService.uploadFile(req, res, next);
+  async uploadFileRecord(req, res, next) {
+    return FileService.uploadFile(req, res, next);
   }
 
   async readFileRecord(path) {
