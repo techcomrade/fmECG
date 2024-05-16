@@ -78,6 +78,23 @@ class RecordController {
     });
   }
 
+  async getRecordByStartTimeInterval(req, res, next) {
+    console.log(
+      `[P]:::Get record by start time interval: `,
+      req.params.startTime,
+      req.params.endTime
+    );
+    const recordByStartTimeInterval =
+      await RecordService.getRecordByStartTimeInterval(
+        req.params.startTime,
+        req.params.endTime
+      );
+    return res.status(200).json({
+      message: "Get records by time interval successful!",
+      metadata: recordByStartTimeInterval,
+    });
+  }
+
   async getRecordByEndTime(req, res, next) {
     console.log(`[P]:::Get record by end time: `, req.params.time);
     const recordByEndTime = await RecordService.getRecordByEndTime(
@@ -86,6 +103,23 @@ class RecordController {
     return res.status(200).json({
       message: "Get records by end time successful!",
       metadata: recordByEndTime,
+    });
+  }
+
+  async getRecordByEndTimeInterval(req, res, next) {
+    console.log(
+      `[P]:::Get record by end time interval: `,
+      req.params.startTime,
+      req.params.endTime
+    );
+    const recordByEndTimeInterval =
+      await RecordService.getRecordByEndTimeInterval(
+        req.params.startTime,
+        req.params.endTime
+      );
+    return res.status(200).json({
+      message: "Get records by time interval successful!",
+      metadata: recordByEndTimeInterval,
     });
   }
 

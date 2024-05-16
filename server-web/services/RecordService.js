@@ -33,7 +33,7 @@ class RecordService extends CommonService {
 
   async add(record) {
     record.id = uuidv4();
-    let path = '../server-web/public/upload/' + record.file.filename; 
+    let path = "../server-web/public/upload/" + record.file.filename;
     record.data_rec_url = path;
     return await RecordRepository.add(record);
   }
@@ -81,11 +81,36 @@ class RecordService extends CommonService {
   }
 
   async getRecordByStartTime(time) {
-    return await RecordRepository.getRecordByStartTime(time);
+    let result = [];
+    const data = await RecordRepository.getAllData();
+    const parseTime = parseInt(time);
+    for (let i = 0; i < data.length; i++) {
+      console.log(new Date(data[i].dataValues.start_time).getDate());
+      if (
+        data[i].dataValues.start_time >= parseTime - 86400000 &&
+        data[i].dataValues.start_time <= parseTime + 86400000
+      )
+        result.push(data[i].dataValues);
+    }
+    return result;
+  }
+
+  async getRecordByStartTimeInterval(startTime, endTime) {
+    return await RecordRepository.getRecordByStartTimeInterval(
+      startTime,
+      endTime
+    );
   }
 
   async getRecordByEndTime(time) {
     return await RecordRepository.getRecordByEndTime(time);
+  }
+
+  async getRecordByEndTimeInterval(startTime, endTime) {
+    return await RecordRepository.getRecordByEndTimeInterval(
+      startTime,
+      endTime
+    );
   }
 
   async updateRecordById(record, id) {
@@ -103,13 +128,13 @@ class RecordService extends CommonService {
   getDataRecord(length) {
     const data = {
       x: dummyArray(length),
-      y: dummyArray(length)
+      y: dummyArray(length),
     };
     return data;
   }
 
-  async uploadFileRecord(req, res, next){
-   return FileService.uploadFile(req, res, next);
+  async uploadFileRecord(req, res, next) {
+    return FileService.uploadFile(req, res, next);
   }
 
   async readFileRecord(path) {
