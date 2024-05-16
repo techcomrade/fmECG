@@ -10,7 +10,6 @@ const { v4: uuidv4 } = require("uuid");
 
 const Joi = require("joi");
 const { dummyArray } = require("../utils/arrayUtils");
-const { timeEnd } = require("console");
 
 class RecordService extends CommonService {
   async getAll() {
