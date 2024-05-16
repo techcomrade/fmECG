@@ -1,5 +1,5 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { Modal, Col, Form, DatePicker, Input } from "antd";
+import { Modal, Col, Form, DatePicker, Input, Select } from "antd";
 import { getCurrentTimeToString } from "../../utils/dateUtils";
 import dayjs from 'dayjs';
 
@@ -12,21 +12,29 @@ const ModalComponent = (props, ref) => {
     let preState = { ...data};
     preState[para] = value;
     setData({ ...preState });
-};
-    const handleSubmit = () => {
-        props?.submitFunction(data);
-        setIsOpen(false);
-    }
+  };
+
+  const handleSubmit = () => {
+      props?.submitFunction(data);
+      setIsOpen(false);
+  }
+
   useImperativeHandle(ref, () => ({
     open: (data, colum) => {
       setIsOpen(true);
-      if(data){
-        console.log(data);
-      }
       setData(data);
-      setColum(colum);
+      setColum(colum.filter(item => item.isEdit));
     },
   }));
+
+  const mapOptions = (options) =>
+  options
+    ? options.map((option) => ({
+        value: option.id || option.value,
+        label: option.label || option.username || option.device_name,
+      }))
+    : [];
+
   return (
     <Modal
       title={props.title}
@@ -44,6 +52,15 @@ const ModalComponent = (props, ref) => {
       {column.map((column) => (
         <Col span={22} key={column.title}>
           <Form.Item label={column.title}>
+            {column.type === 'select' && (
+              <Select 
+                options={mapOptions(column.dataSelect || [])}
+                allowClear
+                onChange={(value) => handleChangeInput(column.dataIndex, value)}
+                value={data[column.dataIndex]}
+              >
+              </Select>
+            )}
             {column.type === "text" && (
               <Input
                 name={column.dataIndex}
@@ -58,7 +75,8 @@ const ModalComponent = (props, ref) => {
               <DatePicker
                 format={"DD/MM/YYYY"}
                 name={column.dataIndex}
-                value={ dayjs(data[column.dataIndex], "DD/MM/YYYY")}
+                value={data[column.dataIndex] ? dayjs(data[column.dataIndex], "DD/MM/YYYY") : null}
+                placeholder={"Select date"}
                 onChange={(date, dateString) =>
                   {
                     handleChangeInput(column.dataIndex, dateString)

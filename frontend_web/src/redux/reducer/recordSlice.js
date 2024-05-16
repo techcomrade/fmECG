@@ -29,7 +29,7 @@ export const createRecord = createAsyncThunk(
   "/create-record",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpPostData("/record/create", params);
+      const response = await httpPostData("/record", params);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -98,7 +98,6 @@ const recordSlice = createSlice({
       })
       .addCase(getRecord.fulfilled, (state, action) => {
         state.data = action.payload;
-        console.log(action.payload);
         state.loadDataStatus = loadStatus.Success;
       })
       .addCase(getRecord.rejected, (state, action) => {

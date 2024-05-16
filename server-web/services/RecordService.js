@@ -2,6 +2,8 @@ const CommonService = require("./CommonService");
 const RecordRepository = require("../models/RecordModel/RecordRepository");
 const HeartRecRepository = require("../models/HeartRecModel/HeartRecRepository");
 const BloodPressureRepository = require("../models/BloodPressureModel/BloodPressureRepository");
+const UserRepository = require("../models/UserModel/UserRepository");
+const DeviceRepository = require("../models/DeviceModel/DeviceRepository");
 const FileService = require("./FileService");
 const util = require("util");
 const { v4: uuidv4 } = require("uuid");
@@ -11,12 +13,27 @@ const { dummyArray } = require("../utils/arrayUtils");
 
 class RecordService extends CommonService {
   async getAll() {
-    return await RecordRepository.getAllData();
+    const records = await RecordRepository.getAllData();
+    const total = records.length;
+    for (let i = 0; i < total; i++) {
+      const userName = await UserRepository.getUserById(
+        records[i].dataValues.user_id
+      );
+      const deviceName = await DeviceRepository.checkById(
+        records[i].dataValues.device_id
+      );
+      records[i].dataValues = {
+        ...records[i].dataValues,
+        username: userName[0].username,
+        device_name: deviceName.device_name,
+      };
+    }
+    return records;
   }
 
   async add(record) {
     record.id = uuidv4();
-    let path = './public/upload' + record.filename; 
+    let path = '../server-web/public/upload/' + record.file.filename; 
     record.data_rec_url = path;
     return await RecordRepository.add(record);
   }
@@ -38,27 +55,37 @@ class RecordService extends CommonService {
 
   async getRecordById(id) {
     const recordById = await RecordRepository.getRecordById(id);
-    return recordById;
+    if (recordById.length != 0) {
+      const userName = await UserRepository.getUserById(
+        recordById[0].dataValues.user_id
+      );
+      const deviceName = await DeviceRepository.checkById(
+        recordById[0].dataValues.device_id
+      );
+      recordById[0].dataValues = {
+        ...recordById[0].dataValues,
+        username: userName[0].dataValues.username,
+        device_name: deviceName.dataValues.device_name,
+      };
+      return recordById;
+    }
+    return false;
   }
 
   async getRecordByUserId(id) {
-    const recordByUser = await RecordRepository.getRecordByUserId(id);
-    return recordByUser;
+    return await RecordRepository.getRecordByUserId(id);
   }
 
   async getRecordByDeviceId(id) {
-    const recordByDevice = await RecordRepository.getRecordByDeviceId(id);
-    return recordByDevice;
+    return await RecordRepository.getRecordByDeviceId(id);
   }
 
   async getRecordByStartTime(time) {
-    const recordByStartTime = await RecordRepository.getRecordByStartTime(time);
-    return recordByStartTime;
+    return await RecordRepository.getRecordByStartTime(time);
   }
 
   async getRecordByEndTime(time) {
-    const recordByEndTime = await RecordRepository.getRecordByEndTime(time);
-    return recordByEndTime;
+    return await RecordRepository.getRecordByEndTime(time);
   }
 
   async updateRecordById(record, id) {
@@ -73,7 +100,6 @@ class RecordService extends CommonService {
     });
   }
 
-
   getDataRecord(length) {
     const data = {
       x: dummyArray(length),
@@ -84,7 +110,13 @@ class RecordService extends CommonService {
 
   async uploadFileRecord(req, res, next){
    return FileService.uploadFile(req, res, next);
+  }
 
+  async readFileRecord(path) {
+    return await FileService.readFile(path);
+  }
+  async deleteFile(path) {
+    return await FileService.deleteFile(path);
   }
 }
 
