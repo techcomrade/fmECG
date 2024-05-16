@@ -7,7 +7,7 @@ const path = require("path");
 const app = express();
 require('dotenv').config({ path: '.env.dev' });
 
-app.use(express.static(path.join(__dirname, './public')));
+app.use(express.static(path.join(__dirname, './build')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: "application/json" }));
 app.set("host", config.default_app_host);
@@ -24,7 +24,7 @@ const devEnviroment = process.env.ENVIRONMENT;
 app.get("/", (req, res) => {
   const haveCookie = req.cookies?.access_token;
   if (haveCookie) {
-    if (devEnviroment !== "dev"){
+    if (devEnviroment === "product"){
       res.render("home");
     }
     else {
