@@ -34,7 +34,8 @@ class UserMiddleware {
     }
 
     async checkUserId(req, res, next) {
-        const user = await UserService.getUserById(req.body.id);
+        const user_id = req.params.id ?? req.body.id
+        const user = await UserService.getUserById(user_id);
         if (!user)
           return res.status(404).json({
             message: "User not existed!",
