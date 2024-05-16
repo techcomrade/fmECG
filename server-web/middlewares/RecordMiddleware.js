@@ -73,6 +73,46 @@ class RecordMiddleware {
     next();
   }
 
+  async checkStartTimeInterval(req, res, next) {
+    if (
+      isNaN(Number(req.params.startTime)) ||
+      isNaN(Number(req.params.endTime))
+    )
+      return res.status(400).json({
+        message: "Time is not a number!",
+      });
+    const recordByStartTimeInterval =
+      await RecordService.getRecordByStartTimeInterval(
+        req.params.startTime,
+        req.params.endTime
+      );
+    if (recordByStartTimeInterval.length === 0)
+      return res.status(404).json({
+        message: "Record not existed!",
+      });
+    next();
+  }
+
+  async checkEndTimeInterval(req, res, next) {
+    if (
+      isNaN(Number(req.params.startTime)) ||
+      isNaN(Number(req.params.endTime))
+    )
+      return res.status(400).json({
+        message: "Time is not a number!",
+      });
+    const recordByEndTimeInterval =
+      await RecordService.getRecordByEndTimeInterval(
+        req.params.startTime,
+        req.params.endTime
+      );
+    if (recordByEndTimeInterval.length === 0)
+      return res.status(404).json({
+        message: "Record not existed!",
+      });
+    next();
+  }
+
   async checkUpdate(req, res, next) {
     const id = req.body.id;
     if (id == undefined || id.length == 0)
