@@ -5,35 +5,39 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const app = express();
+require('dotenv').config({ path: '.env.dev' });
 
+app.use(express.static(path.join(__dirname, './public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: "application/json" }));
 app.set("host", config.default_app_host);
 app.use(bodyParser.raw());
 app.set("port", config.default_app_port);
-app.use(express.static("views"));
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "./views"));
+app.set('views', __dirname + '/views');
 app.use(cookieParser());
 app.use(cors());
-app.get("/test", (req, res) => {
-  res.send("ok cool");
-});
+
+const devEnviroment = process.env.ENVIRONMENT;
 
 app.get("/", (req, res) => {
   const haveCookie = req.cookies?.access_token;
   if (haveCookie) {
-    res.redirect(config.redirect_url);
+    if (devEnviroment !== "dev"){
+      res.render("home");
+    }
+    else {
+      res.redirect(config.redirect_url)
+    }
   } else {
-    res.render("index", { url: `http://127.0.0.1:3001/login` });
+    res.render("index", { url: `${config.default_app_host}:${config.default_app_port}/login` });
   }
-
-
 });
 
 app.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
-  await fetch(`${config.default_api_url}/api/auth/login`, {
+  await fetch(`${config.default_api_url}/auth/login`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -54,7 +58,7 @@ app.post("/login", async (req, res, next) => {
         res.cookie("user", userInfo.metadata.id);
         res.cookie("access_token", userInfo.metadata.access_token, {maxAge: 60000 * userInfo.metadata.expired_time, httpOnly: false});
         res.cookie("refresh_token", userInfo.metadata.refresh_token);
-        
+        res.cookie("api",config.default_api_url);
         return res.status(200).json("login successfully");
       }
       return res.status(400).json("login failed");

@@ -37,13 +37,11 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+
 
 # environment
-.env
+.env.prod
+
+
