@@ -109,7 +109,7 @@ const DataTable = (props) => {
         }}
         loading = {props.loading}
         bordered
-        columns={props.column}
+        columns={props.column.filter(item => !item.hidden)}
         dataSource={tableData}
       />
     </>
