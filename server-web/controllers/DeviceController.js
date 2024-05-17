@@ -1,27 +1,41 @@
 const DeviceService = require("../services/DeviceService");
 const UserService = require("../services/UserService");
 const RecordService = require("../services/RecordService");
+const DeviceFreqService = require("../services/DeviceFrequencyService");
 
 class DeviceController {
   async getAllData(req, res) {
     console.log(`[P]:::Get all devices data`);
-    await DeviceService.getAllData()
-      .then((devices) => {
-        if (devices.length)
-          return res.status(200).json({
-            message: "get all devices",
-            metadata: devices,
-          });
+    try {
+      let devices = await DeviceService.getAllData();
+      if (!devices.length)
         return res.status(400).json({
           message: "No devices found",
         });
-      })
-      .catch((err) => {
-        console.log(err);
-        return res.status(400).json({
-          message: "get devices failed",
+      for (const device of devices) {
+        let checkExistDF = await DeviceFreqService.getByDeviceId(device.id);
+        let DFresult = [];
+        checkExistDF.forEach((df) => {
+          let DF = {
+            frequency_name: df.frequency_name,
+            information: df.information,
+            value: df.value,
+          };
+          DFresult.push(DF);
         });
+        device.dataValues.frequency = DFresult;
+      }
+      console.log(devices);
+      return res.status(200).json({
+        message: "get all devices",
+        metadata: devices,
       });
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({
+        message: "get devices failed",
+      });
+    }
   }
   async add(req, res) {
     console.log(`[P]:::Add device data`, req.body);
@@ -43,6 +57,7 @@ class DeviceController {
         });
       })
       .catch((err) => {
+        console.log(err);
         return res.status(400).json({
           message: "add device failed",
         });
@@ -70,6 +85,7 @@ class DeviceController {
             });
         })
         .catch((err) => {
+          console.log(err);
           return res.status(500).json({
             message: "delete device failed",
           });
@@ -101,6 +117,7 @@ class DeviceController {
         });
       })
       .catch((err) => {
+        console.log(err);
         return res.status(500).json({
           message: "update device failed",
         });
@@ -117,12 +134,16 @@ class DeviceController {
         });
       }
       let checkExistRecord = await RecordService.getRecordByDeviceId(id);
-      if (!checkExistRecord[0].dataValues) {
-        return res.status(200).json({
-          message: "Get device by id",
-          metadata: checkExistDevice.dataValues,
-        });
-      }
+      let checkExistDF = await DeviceFreqService.getByDeviceId(id);
+      let DFresult = [];
+      checkExistDF.forEach((df) => {
+        let DF = {
+          frequency_name: df.frequency_name,
+          information: df.information,
+          value: df.value,
+        };
+        DFresult.push(DF);
+      });
 
       return res.status(200).json({
         message: "Get device by id",
@@ -135,6 +156,7 @@ class DeviceController {
           start_date: checkExistDevice.dataValues.start_date,
           end_date: checkExistDevice.dataValues.end_date,
           recordCount: checkExistRecord.length,
+          frequency: DFresult,
         },
       });
     } catch (err) {
