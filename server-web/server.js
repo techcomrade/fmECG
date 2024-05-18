@@ -3,12 +3,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const compression = require('compression');
-// require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
-require('dotenv').config({ path: '.env.dev' });
+require('dotenv').config({ path: ['.env.prod', '.env.dev'] })
 const routes = require('./routes/index');
 const port = process.env.APP_PORT || 3000;
 const host = process.env.APP_HOST || 'localhost';
-
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }))
