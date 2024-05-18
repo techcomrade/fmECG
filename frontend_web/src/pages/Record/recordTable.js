@@ -266,7 +266,7 @@ const RecordTable = () => {
         deleteFunction={handleDeleteFunction}
         name="Bảng quản lý record"
         data={dataTable}
-        column={columns.filter(item => !item.hidden)}
+        column={columns}
         updateSelectedData={setSelectedData}
         loading={dataState.loadDataStatus === loadStatus.Loading}
         chartButton
