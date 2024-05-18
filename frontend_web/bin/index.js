@@ -5,7 +5,6 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const app = express();
-require('dotenv').config({ path: ['.env.prod', '.env.dev'] })
 
 app.use(express.static(path.join(__dirname, './build')));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,12 +18,12 @@ app.set('views', __dirname + '/views');
 app.use(cookieParser());
 app.use(cors());
 
-const devEnviroment = process.env.ENVIRONMENT;
+const devEnvironment = config.default_app_host === '127.0.0.1';
 
 app.get("/", (req, res) => {
   const haveCookie = req.cookies?.access_token;
   if (haveCookie) {
-    if (devEnviroment === "product"){
+    if (!devEnvironment){
       res.render("home");
     }
     else {
