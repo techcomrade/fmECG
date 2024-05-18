@@ -2,14 +2,13 @@ import 'dart:io';
 
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
-import 'package:bluetooth_ecg/controllers/news_controller.dart';
-import 'package:bluetooth_ecg/controllers/user_controller.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
-import 'package:bluetooth_ecg/utils/utils.dart';
+import 'package:bluetooth_ecg/screens/preview_calculation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,157 +23,249 @@ class _HomeScreenState extends State<HomeScreen> {
   late File fileToSave;
   bool isShowChart = false;
 
+  final TextEditingController _phoneController = TextEditingController();
+  bool _isEditing = false;
+  final FocusNode focusInputPhone = FocusNode();
+  String phoneNumberWarning = "";
+
   Map allNews = {};
   @override
   void initState() {
     super.initState();
-    getDoctorAssigned();
-    NewsController.getAllNews();
+    _getInitPhoneNumber();
+    // getDoctorAssigned();
+    // NewsController.getAllNews();
   }
 
-  void getDoctorAssigned() async {
-    int patientId = await Utils.getUserId();
-    UserController.getDoctorAssigned(patientId);
-  }
+  // void getDoctorAssigned() async {
+  //   int patientId = await Utils.getUserId();
+  //   UserController.getDoctorAssigned(patientId);
+  // }
 
   @override
   void dispose() {
     super.dispose();
+    _phoneController.dispose();
+    focusInputPhone.dispose();
+  }
+
+  _savePhoneNumberToSharedPrefs(String phoneNumber) async {
+    const String keyToSave = "phone_number_warning";
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(keyToSave, phoneNumber);
+  }
+
+  _getInitPhoneNumber() async {
+    const String keyInit = "phone_number_warning";
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    final bool isExistPhoneNumber = preferences.containsKey(keyInit);
+    if (isExistPhoneNumber) {
+      _phoneController.text = preferences.getString(keyInit)!;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    int current = 0;
     final size = MediaQuery.of(context).size;
     final height = size.height;
     final width = size.width;
-    //final List allNews = context.watch<NewsProvider>().allNews;
 
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 10),
       child: SingleChildScrollView(
         controller: _scrollController,
         physics: const ClampingScrollPhysics(),
-        child:
-            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          // header
-          SizedBox(
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Row(children: [
-                //   const SizedBox(width: 8),
-                //   Column(
-                //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       const Text("Chào mừng đến với fmECG"),
-                //       Text(
-                //         "Thai Dong",
-                //         style: TextStyle(
-                //           color: ColorConstant.primary,
-                //           fontWeight: FontWeight.bold,
-                //         ),
-                //       )
-                //     ],
-                //   ),
-                // ]),
-                const IconButton(
-                  icon: Icon(
-                    Icons.menu,
-                    size: 35,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // header
+            SizedBox(
+              height: 50,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Row(children: [
+                  //   const SizedBox(width: 8),
+                  //   Column(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       const Text("Chào mừng đến với fmECG"),
+                  //       Text(
+                  //         "Thai Dong",
+                  //         style: TextStyle(
+                  //           color: ColorConstant.primary,
+                  //           fontWeight: FontWeight.bold,
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ]),
+                  const IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      size: 35,
+                    ),
+                    onPressed: null,
                   ),
-                  onPressed: null,
-                ),
-                Row(children: [
-                  // const DarkLightSwitch(),
+                  Row(children: [
+                    // const DarkLightSwitch(),
 
-                  InkWell(
-                    child: Icon(PhosphorIcons.regular.bell),
+                    InkWell(
+                      child: Icon(PhosphorIcons.regular.bell),
+                    ),
+                    SizedBox(
+                      width: width * 0.05,
+                    ),
+                    const CircularAvatar(
+                        imageAsset: 'assets/images/doctor.png', radius: 27),
+                  ])
+                ],
+              ),
+            ),
+
+            SizedBox(height: height * 0.02),
+            SizedBox(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Chào mừng tới fmEcg,\nThai Dong.",
+                      style: TextStyle(
+                          color: ColorConstant.black900,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22),
+                    ),
                   ),
-                  SizedBox(
-                    width: width * 0.05,
-                  ),
-                  const CircularAvatar(
-                      imageAsset: 'assets/images/doctor.png', radius: 27),
-                ])
+                  SizedBox(height: height * 0.05),
+                  Wrap(
+                    spacing: 15,
+                    runSpacing: 15,
+                    alignment: WrapAlignment.spaceAround,
+                    children: [
+                      NumberCard(
+                        leadingIcon: Icon(
+                          PhosphorIcons.fill.heartbeat,
+                          color: Colors.red.shade400,
+                        ),
+                        centerImage:
+                            Image.asset("assets/images/heart_rate.png"),
+                        number: 82.0,
+                        text: "Nhịp tim",
+                        subText: "Mẹ",
+                        unit: "bpm",
+                        // color1: Colors.grey,
+                        // color2: Colors.grey,
+                      ),
+                      NumberCard(
+                        leadingIcon: Icon(PhosphorIcons.fill.stethoscope),
+                        centerImage:
+                            Image.asset("assets/images/blood_pressure.png"),
+                        number: 72.9,
+                        text: "Huyết áp",
+                        subText: "Mẹ",
+                        unit: "mmHg",
+                        // color1: Colors.grey,
+                        // color2: Colors.grey,
+                      ),
+                      NumberCard(
+                        leadingIcon: Icon(PhosphorIcons.fill.heartbeat,
+                            color: Colors.red.shade400),
+                        number: 82.6,
+                        centerImage:
+                            Image.asset("assets/images/heart_rate.png"),
+                        text: "Nhịp tim ",
+                        subText: "Thai nhi",
+                        unit: "bpm",
+                        // color1: ColorConstant.primary,
+                        // color1: Colors.grey,
+                        // color2: Colors.grey,
+                        //  color2: ColorConstant.primary,
+                      ),
+                      NumberCard(
+                        centerImage:
+                            Image.asset("assets/images/blood_pressure.png"),
+                        leadingIcon: Icon(PhosphorIcons.fill.stethoscope),
+                        number: 86.0,
+                        text: "Huyết áp",
+                        subText: "Thai nhi",
+                        unit: "mmHg",
+                        //color1: ColorConstant.primary,
+                        // color1: ColorConstant.teal,
+                        // color2: ColorConstant.teal,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              alignment: Alignment.topLeft,
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text(
+                "Số người thân",
+                style: TextStyle(
+                  color: ColorConstant.quaternary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                ),
+              ),
+            ),
+
+            // Ô nhập liệu số điện thoại
+            TextFormField(
+              controller: _phoneController,
+              keyboardType: TextInputType.phone,
+              enabled: _isEditing,
+              focusNode: focusInputPhone,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                hintText: 'Nhập số điện thoại',
+                labelText: 'Số điện thoại',
+              ),
+              onChanged: (text) => setState(() {
+                phoneNumberWarning = _phoneController.text;
+              }),
+            ),
+
+            // Nút chỉnh sửa và lưu
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, // Căn giữa các nút
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _isEditing = true;
+                    });
+                    focusInputPhone.requestFocus();
+                  },
+                  child: const Text('Chỉnh sửa'),
+                ),
+                const SizedBox(width: 20), // Khoảng cách giữa các nút
+                ElevatedButton(
+                  onPressed: phoneNumberWarning == ""
+                      ? null
+                      : () async {
+                          await _savePhoneNumberToSharedPrefs(
+                              _phoneController.text);
+                          setState(() {
+                            _isEditing = false;
+                            phoneNumberWarning = "";
+                          });
+                        },
+                  child: const Text('Lưu'),
+                ),
               ],
             ),
-          ),
-
-          SizedBox(height: height * 0.02),
-          SizedBox(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Chào mừng tới fmEcg,\nThai Dong.",
-                    style: TextStyle(
-                        color: ColorConstant.black900,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22),
-                  ),
-                ),
-                SizedBox(height: height * 0.05),
-                Wrap(
-                  spacing: 15,
-                  runSpacing: 15,
-                  alignment: WrapAlignment.spaceAround,
-                  children: [
-                    NumberCard(
-                      leadingIcon: Icon(PhosphorIcons.fill.heartbeat),
-                      number: 82.0,
-                      text: "Nhịp tim",
-                      subText: "Mẹ",
-                      unit: "bpm",
-                      // color1: Colors.grey,
-                      // color2: Colors.grey,
-                      centerImage: Image.asset("assets/images/hearthrate.jpg"),
-                    ),
-                    NumberCard(
-                      leadingIcon: Icon(PhosphorIcons.fill.stethoscope),
-                      number: 72.9,
-                      text: "Huyết áp",
-                      subText: "Mẹ",
-                      unit: "mmHg",
-                      // color1: Colors.grey,
-                      // color2: Colors.grey,
-                      centerImage:
-                          Image.asset("assets/images/blood_pressurer.jpg"),
-                    ),
-                    NumberCard(
-                      leadingIcon: Icon(PhosphorIcons.fill.heartbeat),
-                      number: 82.6,
-                      text: "Nhịp tim ",
-                      subText: "Thai nhi",
-                      unit: "bpm",
-                      // color1: ColorConstant.primary,
-                      // color1: Colors.grey,
-                      // color2: Colors.grey,
-                      //  color2: ColorConstant.primary,
-                      centerImage: Image.asset("assets/images/hearthrate.jpg"),
-                    ),
-                    NumberCard(
-                      leadingIcon: Icon(PhosphorIcons.fill.stethoscope),
-                      number: 86.0,
-                      text: "Huyết áp",
-                      subText: "Thai nhi",
-                      unit: "mmHg",
-                      //color1: ColorConstant.primary,
-                      // color1: ColorConstant.teal,
-                      // color2: ColorConstant.teal,
-                      centerImage:
-                          Image.asset("assets/images/blood_pressurer.jpg"),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-          const SizedBox(height: 30),
-        ]),
+          ],
+        ),
+        // child: LiveChartSample()
       ),
     );
   }
@@ -288,16 +379,18 @@ class NumberCard extends StatefulWidget {
   final String unit;
   final Icon leadingIcon;
   final Image centerImage;
+  final Function? onTap;
 
-  const NumberCard({
-    Key? key,
-    required this.number,
-    required this.text,
-    required this.subText,
-    required this.unit,
-    required this.leadingIcon,
-    required this.centerImage,
-  }) : super(key: key);
+  const NumberCard(
+      {Key? key,
+      required this.number,
+      required this.text,
+      required this.subText,
+      required this.unit,
+      required this.centerImage,
+      required this.leadingIcon,
+      this.onTap})
+      : super(key: key);
 
   @override
   State<NumberCard> createState() => _NumberCardState();
@@ -316,6 +409,11 @@ class _NumberCardState extends State<NumberCard> {
         setState(() {
           _isClicked = !_isClicked;
         });
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const PreviewCalculation()));
+        widget.onTap?.call();
       },
       child: Container(
         width: width * 0.4,
@@ -324,8 +422,8 @@ class _NumberCardState extends State<NumberCard> {
           borderRadius: BorderRadius.circular(12.0),
           gradient: LinearGradient(
             colors: _isClicked
-                ? [Colors.teal, Colors.teal]
-                : [Colors.grey, Colors.grey],
+                ? [Colors.teal, Colors.tealAccent]
+                : [Colors.grey, Colors.blueGrey],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -352,14 +450,11 @@ class _NumberCardState extends State<NumberCard> {
               widget.subText,
               style: TextStyle(
                 fontSize: 16.0,
-                color: _isClicked
-                    ? ColorConstant.black900
-                    : ColorConstant.description,
+                color: _isClicked ? Colors.amber : Colors.brown,
               ),
             ),
             const SizedBox(height: 10.0),
-            widget.centerImage,
-            const SizedBox(height: 5.0),
+            Expanded(child: widget.centerImage),
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               Text(
                 '${widget.number}',

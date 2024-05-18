@@ -1,228 +1,136 @@
-import { Table, Button, Col, Form, Input, DatePicker } from "antd";
+import { Table, Button } from "antd";
 import { useEffect, useState } from "react";
-import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { loadStatus } from "../../redux/reducer/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  PlusOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  MobileOutlined,
+} from "@ant-design/icons";
 import "./dataTable.scss";
-import { addKeyElement, findElementById } from "../../utils/arrayUtils";
+import { addKeyElement } from "../../utils/arrayUtils";
 import { Modal } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
-import { showNotiSuccess } from "../Notification";
-import dayjs from 'dayjs';
-import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
-import { checkDateIndex } from "../../models/manage.table";
+import { useNavigate } from "react-router-dom";
 
 const { confirm } = Modal;
 
 const DataTable = (props) => {
-    const [tableData, setTableData] = useState([]);
-    const [showModalEdit, setShowModalEdit] = useState(false);
-    const [showModalCreate, setShowModalCreate] = useState(false);
-    const [dataEdit, setDataEdit] = useState([]);
-    const [dataCreate, setDataCreate] = useState({});
+  const [tableData, setTableData] = useState([]);
+  const [editButton, setEditButtton] = useState(false);
+  const [deleteButton, setDeleteButton] = useState(false);
+  const [chartButton, setChartButton] = useState(false);
+  const [selectedState, setSelectedRowKeys] = useState([]);
+  const navigate = useNavigate();
+  // Get data
+  useEffect(() => {
+    const rawData = props.data;
+    if (rawData) {
+      setTableData(addKeyElement(rawData));
+    }
+  }, [props.data]);
 
-    const dispatch = useDispatch();
-    const dataState = props.state || {};
-    const table = props.table;
+  // Select row
+  const rowSelection = {
+    selectedRowKeys: selectedState,
+    onChange: (selectedRowKeys) => {
+      setSelectedRowKeys(selectedRowKeys);
+      // Check hide or show edit and delete button
+      if (props.editButton) setEditButtton(selectedRowKeys.length === 1);
+      if (props.deleteButton) setDeleteButton(selectedRowKeys.length === 1);
+      if (props.chartButton) setChartButton(selectedRowKeys.length === 1);
+      props.updateSelectedData?.(selectedRowKeys);
+    }
+  };
 
-    // Get data
-    useEffect(() => {
-        const rawData = props.data;
-        if(rawData) {
-            setTableData(addKeyElement(rawData));
-        }
-    }, [props.data]);
+  // Delete modal
+  const deleteFunction = (id) => {
+    confirm({
+      title: "Xóa thành phần",
+      icon: <ExclamationCircleFilled />,
+      content: "Bạn có chắc muốn xóa thành phần này không",
+      okText: "Xóa",
+      okType: "danger",
+      cancelText: "Không",
+      async onOk() {
+        console.log(id);
+        props?.deleteFunction(id);
+      },
+      onCancel() {},
+    });
+  };
 
-    // Reload data when update success
-    useEffect(() => {
-        if (dataState.loadCreateDataStatus === loadStatus.Success) {
-            showNotiSuccess("Bạn đã tạo thành công");
-            dispatch(props.func.getData());
-        }
-    }, [dataState.loadCreateDataStatus]);
-
-    // Reload data when update success
-    useEffect(() => {
-        if (dataState.loadUpdateDataStatus === loadStatus.Success) {
-            showNotiSuccess("Bạn đã cập nhật thành công");
-            dispatch(props.func.getData());
-        }
-    }, [dataState.loadUpdateDataStatus]);
-
-    // Reload data when delete success
-    useEffect(() => {
-        if (dataState.loadDeleteDataStatus === loadStatus.Success) {
-            showNotiSuccess("Bạn đã xóa thành công");
-            dispatch(props.func.getData());
-        }
-    }, [dataState.loadDeleteDataStatus]);
-
-    // Select row
-    const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            const delBtn = document.getElementsByClassName("delete-btn")[0];
-            const editBtn = document.getElementsByClassName("edit-btn")[0];
-            const delBtnClassList = delBtn.classList;
-            const editBtnClassList = editBtn.classList;
-
-            // Check hide or show edit and delete button
-            if (selectedRows.length === 1) {
-                editBtnClassList.remove("hide");
-            } else editBtnClassList.add("hide");
-
-            if (selectedRows.length > 0) {
-                delBtnClassList.remove("hide");
-            } else delBtnClassList.toggle("hide");
-
-            // Handle on click edit button
-            editBtn.onclick = () => {
-                setShowModalEdit(true);
-                setDataEdit(findElementById(tableData, selectedRowKeys[0]));
-            };
-
-            // Handle on click delete button
-            delBtn.onclick = () => {
-                showDeleteConfirm(table, selectedRowKeys);
-            };
-        },
-        getCheckboxProps: (record) => ({
-            disabled: record.name === "Disabled User",
-            // Column configuration not to be checked
-            name: record.name,
-        }),
-    };
-    const [selectionType, setSelectionType] = useState("checkbox");
-
-    // Delete modal
-    const showDeleteConfirm = (table, id) => {
-        confirm({
-        title: "Xóa thành phần",
-        icon: <ExclamationCircleFilled />,
-        content: "Bạn có chắc muốn xóa thành phần này không",
-        okText: "Xóa",
-        okType: "danger",
-        cancelText: "Không",
-        async onOk() {
-            dispatch(props.func.deleteData({id}));
-        },
-        onCancel() {},
-        });
-    };
-
-    const handleChangeInput = (para, value) => {
-        let preState = { ...dataEdit};
-        preState[para] = value;
-        setDataEdit({ ...preState });
-    };
-
-    const handleSubmitChange = async () => {
-        const {key, ...dataUpdate} = dataEdit;
-        Object.keys(dataUpdate).forEach(key => {
-            if(checkDateIndex(table, key) && typeof(dataUpdate[key]) !== 'number') {
-                dataUpdate[key] = convertDateToTime(dataUpdate[key])
-            }
-        })
-        dispatch(props.func.updateData(dataUpdate));
-        setShowModalEdit(false);
-    };
-
-    const handleChangeInputCreate = (para, value) => {
-        let preState = { ...dataCreate};
-        preState[para] = value;
-        setDataCreate({ ...preState });
-    };
-
-    const handleSubmitCreate = async () => {
-        console.log(dataCreate);
-        // dispatch(createData(dataCreate));
-        setShowModalCreate(false);
-        setDataCreate({});
-    };
-
-    return (
-        <>
-            <h2>Bảng {props.name}</h2>
-            <div className="list-btn-actions">
-                <Button icon={<PlusOutlined />} onClick = {() => setShowModalCreate(true)}>Tạo</Button>
-                <Button icon={<EditOutlined />} className="edit-btn hide">Chỉnh sửa</Button>
-                <Button icon={<DeleteOutlined />} className="delete-btn hide">Xóa</Button>
-            </div>
-            <Table
-                rowSelection={{
-                type: selectionType,
-                ...rowSelection,
-                }}
-                bordered
-                columns={props.column}
-                dataSource={tableData}
-            />
-            {/* Modal update */}
-            <Modal
-                title="Chỉnh sửa thông tin"
-                open={showModalEdit}
-                okText="Lưu"
-                okType="primary"
-                onOk={handleSubmitChange}
-                cancelText="Hủy bỏ"
-                onCancel={() => {
-                    setDataEdit([])
-                    setShowModalEdit(false)
-                }}
-            >
-                <br />
-                {props.column.map((column) => ( 
-                    <Col span={22} key={column.title}>
-                        <Form.Item label={column.title}>
-                        {checkDateIndex(table, column.dataIndex) ? 
-                            <DatePicker 
-                                format={'DD/MM/YYYY'} 
-                                name={column.dataIndex}
-                                value={dayjs(dataEdit[column.dataIndex], 'DD/MM/YYYY')} 
-                                onChange={(date, dateString) => handleChangeInput(column.dataIndex, dateString)} 
-                            /> : <Input
-                                name={column.dataIndex}
-                                value={dataEdit[column.dataIndex]} 
-                                onChange={(e) => handleChangeInput(column.dataIndex, e.target.value)}
-                            />}
-                        </Form.Item>
-                    </Col>
-                ))}
-            </Modal>
-            {/* Modal create */}
-            <Modal
-                title="Tạo thành phần"
-                open={showModalCreate}
-                okText="Lưu"
-                okType="primary"
-                onOk={handleSubmitCreate}
-                cancelText="Hủy bỏ"
-                onCancel={() => {
-                    setShowModalCreate(false)
-                    setDataCreate({})
-                }}
-            >
-                <br />
-                {props.column.map((column) => (
-                    <Col span={22} key={column.title}>
-                        <Form.Item label={column.title}>
-                        {checkDateIndex(table, column.dataIndex) ? 
-                            <DatePicker 
-                                format={'DD/MM/YYYY'} 
-                                name={column.dataIndex}
-                                defaultValue={dataCreate[column.dataIndex]} 
-                                onChange={(date, dateString) => handleChangeInputCreate(column.dataIndex, convertDateToTime(dateString))}
-                            /> : <Input
-                                name={column.dataIndex}
-                                value={dataCreate[column.dataIndex]} 
-                                onChange={(e) => handleChangeInputCreate(column.dataIndex, e.target.value)}
-                            />
-                        }
-                        </Form.Item>
-                    </Col>
-                ))}
-            </Modal>
-        </>
-    );
+  return (
+    <>
+      <h2>{props.name}</h2>
+      <div className="list-btn-actions">
+        {props.addButton && (
+          <Button icon={<PlusOutlined />} onClick={() => props?.addFunction()}>
+            Tạo
+          </Button>
+        )}
+        {props.addDeviceButton ? (
+          <Button icon={<MobileOutlined />} onClick={() => navigate("/device")}>
+            Thêm thiết bị
+          </Button>
+        ) : (
+          ""
+        )}
+        {editButton && props.editButton && (
+          <Button
+            icon={<EditOutlined />}
+            className="edit-btn"
+            onClick={() => props?.editFunction(selectedState[0])}
+          > 
+            Chỉnh sửa
+          </Button>
+        )}
+        {deleteButton && props.deleteButton && (
+          <Button
+            icon={<DeleteOutlined />}
+            className="delete-btn"
+            onClick={() => deleteFunction(selectedState[0])}
+          >
+            Xóa
+          </Button>
+        )}
+        {props?.customButton}
+        {chartButton && props.chartButton && (
+          <Button
+            onClick={() => props?.openChart()}
+          >
+            Đồ thị
+          </Button>
+        )}
+      </div>
+      <Table
+        rowSelection={{
+          type: props.hasCheckBox,
+          ...rowSelection,
+        }}
+        loading = {props.loading}
+        bordered
+        columns={props.column.filter(item => !item.hidden)}
+        dataSource={tableData}
+      />
+    </>
+  );
 };
+
+// props list:
+// props.data
+// props.updateSelectedData
+// props.name
+// props.loading
+// props.addButton
+// props.addDeviceButton
+// props.hasCheckBox
+// props.column
+// props.editButton
+// props.deleteButton
+// props?.updateSelectedData
+// props?.deleteFunction
+// props?.addFunction
+// props?.editFunction
+// props?.customButton
 
 export default DataTable;

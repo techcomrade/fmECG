@@ -21,8 +21,8 @@ class UserController {
   }
 
   async getUserById(req, res, next) {
-    console.log(`[G]:::Get user by id: `, req.params.userId);
-    const foundUser = await UserService.getUserById(req.params.userId);
+    console.log(`[G]:::Get user by id: `, req.params.id);
+    const foundUser = await UserService.getUserById(req.params.id);
     if(foundUser) {
       return res.status(200).json({
         message: 'Get user by id successful!',

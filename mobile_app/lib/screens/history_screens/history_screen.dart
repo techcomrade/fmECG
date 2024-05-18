@@ -17,7 +17,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   void initState() {
     super.initState();
-    getAllRecords();
+    // getAllRecords();
   }
 
   void getAllRecords() async {

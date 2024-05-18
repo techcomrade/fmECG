@@ -1,14 +1,31 @@
+const { where } = require("sequelize");
 const UserDTO = require("./UserDTO");
 
 class UserModel {
   async getAllData() {
-    return await UserDTO.findAll();
+    return await UserDTO.findAll({
+      attributes: {
+        exclude: ['created_at', 'updated_at']
+      },
+      raw: true,   
+    });
   }
 
   async getUserById(id) {
     return await UserDTO.findAll({
       where: {
         id: id,
+      },
+      attributes: {
+        exclude: ['created_at', 'updated_at']
+      },
+    });
+  }
+  
+  async getUserByAccountId(id) {
+    return await UserDTO.findOne({
+      where: {
+        account_id: id,
       },
     });
   }
@@ -20,9 +37,12 @@ class UserModel {
         account_id: user.account_id,
         username: user.username,
         birth: user.birth,
+        gender: user.gender,
         phone_number: user.phone_number ?? "",
         image: user.image ?? "",
         role: user.role,
+        created_at: Date.now(),
+        updated_at: Date.now(),
       },
       t && {
         transaction: t,
@@ -47,9 +67,11 @@ class UserModel {
     return await UserDTO.update(
       {
         username: user.username,
+        gender: user.gender,
         birth: user.birth,
         phone_number: user.phone_number,
         image: user.image,
+        updated_at: Date.now()
       },
       {
         where: {
@@ -61,6 +83,7 @@ class UserModel {
       }
     );
   }
+  
   async updateRoleById(id, role) {
     return await UserDTO.update(
       {

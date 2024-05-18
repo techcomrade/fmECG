@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelize");
-const users = require('../../models/UserModel/UserDTO');
+const users = require('../UserModel/UserDTO');
 
 const Device = sequelize.define("devices", {
   id: {
@@ -10,7 +10,6 @@ const Device = sequelize.define("devices", {
   },
   user_id: {
     type: Sequelize.STRING,
-    allowNull: false,
     references: {
       model: users,
       key: "id",
@@ -41,6 +40,10 @@ const Device = sequelize.define("devices", {
   },
   updated_at: {
     type: Sequelize.BIGINT,
+  },
+  dummy_data: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
   },
 });
 

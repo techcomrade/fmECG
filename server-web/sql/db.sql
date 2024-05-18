@@ -9,7 +9,7 @@ USE `fmecg`;
 DROP TABLE IF EXISTS `tokens`;
 CREATE TABLE `tokens` (
     `id` varchar(255) NOT NULL,
-    `account_id` varchar(255) NOT NULL,
+    `account_id` varchar(255),
     `access_token` varchar(255) NOT NULL,
     `refresh_token` varchar(255) NOT NULL,
     `created_at` bigint,
@@ -19,23 +19,40 @@ CREATE TABLE `tokens` (
 DROP TABLE IF EXISTS `patient_doctor_assignment`;
 CREATE TABLE `patient_doctor_assignment` (
    `id` varchar(255) NOT NULL,
-   `patient_id` varchar(255) NOT NULL,
-   `doctor_id` varchar(255) NOT NULL,
+   `patient_id` varchar(255),
+   `doctor_id` varchar(255),
    `start_date` bigint NOT NULL,
    `created_at` bigint,
-   `updated_at` bigint
+   `updated_at` bigint,
+   `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `heart_rec`;
 CREATE TABLE `heart_rec` (
    `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255) NOT NULL
+   `rec_id` varchar(255),
+   `dummy_data` boolean default 0
+)ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `spo2_rec`;
+CREATE TABLE `spo2_rec` (
+   `id` varchar(255) NOT NULL,
+   `rec_id` varchar(255),
+   `dummy_data` boolean default 0
+)ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `sound_rec`;
+CREATE TABLE `sound_rec` (
+   `id` varchar(255) NOT NULL,
+   `rec_id` varchar(255),
+   `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `blood_pressure_rec`;
 CREATE TABLE `blood_pressure_rec` (
    `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255) NOT NULL
+   `rec_id` varchar(255),
+   `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `news`;
@@ -43,7 +60,7 @@ CREATE TABLE `news` (
    `id` varchar(255) NOT NULL,
    `title` varchar(255) NOT NULL,
    `content` text NOT NULL,
-   `category_id` varchar(255) NOT NULL,
+   `category_id` varchar(255),
    `author` varchar(255) NOT NULL,
    `url` varchar(255) NOT NULL,
    `image` varchar(255) NOT NULL,
@@ -70,11 +87,14 @@ CREATE TABLE `accounts` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
     `id` varchar(255) NOT NULL,
-    `account_id` varchar(255) NOT NULL,
+    `account_id` varchar(255),
     `username` varchar(255) NOT NULL,
+    `gender` int,
     `birth` bigint NOT NULL,
     `phone_number` varchar(255),
     `image` varchar(500),
+    `status` int NOT NULL,
+    `information` varchar(2000),
     `role` int NOT NULL,
     `created_at` bigint,
     `updated_at` bigint
@@ -83,27 +103,41 @@ CREATE TABLE `users` (
 DROP TABLE IF EXISTS `devices`;
 CREATE TABLE `devices`(
     `id` varchar(255) NOT NULL,
-    `user_id` varchar(255) NOT NULL,
+    `user_id` varchar(255),
     `device_name` varchar(255) NOT NULL,
     `information` varchar(255),
     `device_type` int NOT NULL,
     `start_date` bigint NOT NULL,
     `end_date` bigint NOT NULL,
     `created_at` bigint,
-    `updated_at` bigint
+    `updated_at` bigint,
+    `dummy_data` boolean default 0
+)ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `device_frequency`;
+CREATE TABLE `device_frequency`(
+    `id` varchar(255) NOT NULL,
+    `device_id` varchar(255),
+    `frequency_name` varchar(255) NOT NULL,
+    `information` varchar(255),
+    `value` double NOT NULL, 
+    `created_at` bigint,
+    `updated_at` bigint,
+    `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `records`;
 CREATE TABLE `records` (
    `id` varchar(255) NOT NULL,
-   `user_id` varchar(255) NOT NULL,
-   `device_id` varchar(255) NOT NULL,
+   `user_id` varchar(255),
+   `device_id` varchar(255),
    `device_type` int NOT NULL,
    `start_time` bigint NOT NULL,
    `end_time` bigint NOT NULL,
    `data_rec_url` varchar(45) NOT NULL,
    `created_at` bigint,
-   `updated_at` bigint
+   `updated_at` bigint,
+   `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8; 
 
 ALTER TABLE `accounts`
@@ -135,41 +169,42 @@ ALTER TABLE `news`
 
 ALTER TABLE `devices`
     ADD PRIMARY KEY (`id`);
-    
--- ALTER TABLE `devices` ADD UNIQUE INDEX `device_type_unique_index` (`device_type`);
+
+ALTER TABLE `device_frequency`
+    ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `users`
-    ADD FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`);
+    ADD CONSTRAINT fk_users_account FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`) ON DELETE CASCADE;
 
 ALTER TABLE `tokens`
-    ADD FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`);
+    ADD CONSTRAINT fk_tokens_account FOREIGN KEY (`account_id`) REFERENCES `accounts`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
 
 ALTER TABLE `records`
-    ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
+    ADD CONSTRAINT fk_records_user FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
 
 ALTER TABLE `records`
-    ADD FOREIGN KEY (`device_id`) REFERENCES `devices`(`id`);
-
--- ALTER TABLE `records`
---     ADD FOREIGN KEY (`device_type`) REFERENCES `devices`(`device_type`);
+    ADD CONSTRAINT fk_records_device FOREIGN KEY (`device_id`) REFERENCES `devices`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
 
 ALTER TABLE `heart_rec`
-    ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
+    ADD CONSTRAINT fk_heart_rec_rec FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
 
 ALTER TABLE `blood_pressure_rec`
-    ADD FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`);
+    ADD CONSTRAINT fk_blood_pressure_rec_rec FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
 
 ALTER TABLE `news`
-    ADD FOREIGN KEY (`category_id`) REFERENCES `news_categories`(`id`);
+    ADD CONSTRAINT fk_news_category FOREIGN KEY (`category_id`) REFERENCES `news_categories`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
 
 ALTER TABLE `patient_doctor_assignment`
-    ADD FOREIGN KEY (`patient_id`) REFERENCES `users`(`id`);
+    ADD CONSTRAINT fk_patient_doctor_assignment_patient FOREIGN KEY (`patient_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
 
 ALTER TABLE `patient_doctor_assignment`
-    ADD FOREIGN KEY (`doctor_id`) REFERENCES `users`(`id`);
+    ADD CONSTRAINT fk_patient_doctor_assignment_doctor FOREIGN KEY (`doctor_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
 
 ALTER TABLE `devices` 
-    ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
+    ADD CONSTRAINT fk_devices_user FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
+    
+ALTER TABLE `device_frequency`
+    ADD CONSTRAINT fk_frequency_device FOREIGN KEY (`device_id`) REFERENCES `devices`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
 
 INSERT INTO `accounts`(`id`, `email`, `password`) 
 VALUES('86d1470c-de72-457c-a8e1-a616e55f463f', 'duong123@gmail.com', '$2b$10$vrYT1waVBk3VNXdHB1dQbOdwtKIyUoQ04wMpfcSWTPnK5S0oAg4ci');
@@ -183,17 +218,17 @@ VALUES('83573421-9943-4a25-9fe1-00f0477aaba4', 'dung123@gmail.com', '$2b$10$TOMg
 INSERT INTO `accounts`(`id`, `email`, `password`) 
 VALUES('22183931-6fc3-4518-af34-e86c8605b08a', 'uuidd@gmail.com', '$2b$10$a7binaajgY8b3s82rppXHecKuSbcFi1ULGf0v4B/aIaMplhLbbNwC');
 
-INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
-VALUES('f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '86d1470c-de72-457c-a8e1-a616e55f463f', 'duong', '17052003', '0912234888', '01201020120abc', 1, '1711115945125', '1711115945125');
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
+VALUES('f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '86d1470c-de72-457c-a8e1-a616e55f463f', 'duong', 0, '17052003', '0912234888', '01201020120abc',0 ,'đo huyết áp và nhịp tim', 1, '1711115945125', '1711115945125');
 
-INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
-VALUES('4df9ace1-0229-4756-b850-51a83cb0bb6e', '1bd51bda-3179-4f27-bcfd-000e5c4a2aa7', 'qtv', '1232367', '09122348767', '0101010101abc', 0, '1711118359957', '1711118359957');
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
+VALUES('4df9ace1-0229-4756-b850-51a83cb0bb6e', '1bd51bda-3179-4f27-bcfd-000e5c4a2aa7', 'qtv', 1, '1232367', '09122348767', '0101010101abc',0,'đo huyết áp và nhịp tim', 0, '1711118359957', '1711118359957');
 
-INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
-VALUES('37ae5629-54ec-46e0-be65-9af6bd580b2b', '83573421-9943-4a25-9fe1-00f0477aaba4', 'abc', '1232366', '09122348669', '010101010100abc', 0, '1711121415247', '1711121415247');
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
+VALUES('37ae5629-54ec-46e0-be65-9af6bd580b2b', '83573421-9943-4a25-9fe1-00f0477aaba4', 'abc', 0, '1232366', '09122348669', '010101010100abc',0,'đo huyết áp và nhịp tim', 0, '1711121415247', '1711121415247');
 
-INSERT INTO `users`(`id`, `account_id`, `username`, `birth`, `phone_number`, `image`, `role`, `created_at`, `updated_at`) 
-VALUES('178d7109-7568-472c-9350-2db42aa152f6', '22183931-6fc3-4518-af34-e86c8605b08a', 'dhsh', '123236811', '091223486384', '01010101010110abc', 1, '1711206172234', '1711206172234');
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
+VALUES('178d7109-7568-472c-9350-2db42aa152f6', '22183931-6fc3-4518-af34-e86c8605b08a', 'dhsh', 1, '123236811', '091223486384', '01010101010110abc',0,'đo huyết áp và nhịp tim', 1, '1711206172234', '1711206172234');
 
 INSERT INTO `tokens`(`id`, `account_id`, `access_token`, `refresh_token`, `created_at`, `updated_at`)
 VALUES('090abf0e-f775-465c-b25a-8fa38fef8025', '86d1470c-de72-457c-a8e1-a616e55f463f', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyOGVlNTc5LTc3MWItNGQzNC1hNjQ3LWIwNDJlMGMxZGY2MSIsImlhdCI6MTcxMTAyNjUyMiwiZXhwIjoxNzExMDI5NTIyfQ.kH1yuJgfpq5NFzb80LrEf-gV8ksNjYtylSokQHzAIoA', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyOGVlNTc5LTc3MWItNGQzNC1hNjQ3LWIwNDJlMGMxZGY2MSIsImlhdCI6MTcxMTAyNjUyMiwiZXhwIjoxNzk3NDI2NTIyfQ.-AGRKU9-mDSLwLiVoF2CR5aZEQy49rTpfzbCAcEL-S4', '1711161793890', '1711161793890');
@@ -227,6 +262,21 @@ VALUES('4404f003-1192-4aae-86e0-69dc273f181c', '4df9ace1-0229-4756-b850-51a83cb0
 
 INSERT INTO `devices`(`id`, `user_id`, `device_name`, `information`, `device_type`, `start_date`, `end_date`, `created_at`, `updated_at`)
 VALUES('f224fd99-53fd-44c5-bcd4-5b6e3c960e78', '37ae5629-54ec-46e0-be65-9af6bd580b2b', 'ECG', 'do dien tim', 2, '1711324367820', '1711434712320', '1711324367820', '1711364367231');
+
+INSERT INTO `device_frequency` (`id`, `device_id`, `frequency_name`, `information`, `value`, `created_at`, `updated_at`) 
+VALUES ('f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '4404f003-1192-4aae-86e0-69dc273f181c', 'spo2(ms)', 'tín hiệu điện tim', 100, '1711115945125', '1711115945125');
+
+INSERT INTO `device_frequency` (`id`, `device_id`, `frequency_name`, `information`, `value`, `created_at`, `updated_at`) 
+VALUES ('b5dc2e2a-dcb1-4903-9054-02e242f5cd55', '4404f003-1192-4aae-86e0-69dc273f181c', 'so2(ms)', 'tín hiệu điện tim', 200, '1711115945125', '1711115945125');
+
+INSERT INTO `device_frequency` (`id`, `device_id`, `frequency_name`, `information`, `value`, `created_at`, `updated_at`) 
+VALUES ('f86068c7-08ed-4dfc-b96d-e0e1c0ae19df', '2a3cec92-682a-4d4e-be35-aff01cc5011a', 'o2(ms)', 'tín hiệu điện tim', 300, '1711115945125', '1711115945125');
+
+INSERT INTO `device_frequency` (`id`, `device_id`, `frequency_name`, `information`, `value`, `created_at`, `updated_at`) 
+VALUES ('f86068c7-08ed-4dfc-b96d-e0e1c0ae29df', 'f224fd99-53fd-44c5-bcd4-5b6e3c960e78', 's2(ms)', 'tín hiệu điện tim', 100, '1711115945125', '1711115945125');
+
+INSERT INTO `device_frequency` (`id`, `device_id`, `frequency_name`, `information`, `value`, `created_at`, `updated_at`) 
+VALUES ('f86068c7-08ed-4dfc-b96d-e0e1c0ae08df', 'f224fd99-53fd-44c5-bcd4-5b6e3c960e78', 'p2(ms)', 'tín hiệu điện tim', 100, '1711115945125', '1711115945125');
 
 INSERT INTO `records`(`id`, `user_id`, `device_id`, `device_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
 VALUES('c9e6669b-f58f-47c7-80b8-43a4163553ff', '4df9ace1-0229-4756-b850-51a83cb0bb6e', '2a3cec92-682a-4d4e-be35-aff01cc5011a', 1, '1711189128343', '1711239128586', 'https://www.verywellhealth.com/best-blood-pressure-monitors-4158050/quyentran', '1711189128343', '1711229128712');

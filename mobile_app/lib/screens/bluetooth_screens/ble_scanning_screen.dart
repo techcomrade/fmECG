@@ -363,7 +363,7 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
             Container(
               height: screenHeight * 0.1,
               alignment: Alignment.center,
-              child: _isScanning ? Column(children: const [
+              child: _isScanning ? const Column(children: [
                 Text("Đang quét để tìm kiếm thiết bị"),
                 CircularProgressIndicator(),
               ]) : 

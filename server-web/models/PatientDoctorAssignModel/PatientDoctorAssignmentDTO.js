@@ -34,5 +34,9 @@ const Assignment = sequelize.define("patient_doctor_asssignment", {
   updated_at: {
     type: Sequelize.BIGINT,
   },
+  dummy_data: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
+  },
 });
 module.exports = Assignment;

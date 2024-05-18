@@ -16,6 +16,7 @@ class AccountRepository {
       }
     );
   }
+
   async deleteById(id,t) {
     return await AccountDTO.destroy({
       where: {
@@ -26,19 +27,23 @@ class AccountRepository {
       transaction: t,
     });
   }
-  async updateById(account) {
+
+  async updateById(account,t) {
     return await AccountDTO.update(
       {
-        email: account.email,
         password: account.password,
       },
       {
         where: {
           id: account.id,
         },
+      },
+      t && {
+        transaction: t,
       }
     );
   }
+
   async getAccountByEmail(email) {
     return await AccountDTO.findOne({
       where: {
@@ -46,6 +51,15 @@ class AccountRepository {
       }
     });
   }
+
+  async getAccountById(id) {
+    return await AccountDTO.findOne({
+      where: {
+        id: id,
+      }
+    });
+  }
+
 }
 
 module.exports = new AccountRepository();

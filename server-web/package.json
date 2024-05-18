@@ -14,15 +14,18 @@
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
+    "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.9.2",
     "nodemon": "^3.1.0",
     "redis": "^4.6.13",
+    "util": "^0.12.5",
     "uuid": "^9.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
+    "start": "set NODE_ENV=dev && nodemon server.js",
+    "prod": "set NODE_ENV=prod && nodemon server.js",
     "migration": "node migration.js"
   },
   "author": "",

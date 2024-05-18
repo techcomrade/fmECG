@@ -5,57 +5,38 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const app = express();
+require('dotenv').config({ path: '.env.dev' });
 
+app.use(express.static(path.join(__dirname, './build')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: "application/json" }));
 app.use(bodyParser.raw());
-app.use(cors());
-app.use(cookieParser());
-app.use(express.static("views"));
+app.set("port", config.default_app_port);
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "./views"));
+app.set('views', __dirname + '/views');
+app.use(cookieParser());
+app.use(cors());
 
-const port = process.env.REACT_APP_PORT || 3000;
-const host = process.env.REACT_APP_HOST || '127.0.0.1';
-
-// catching error bin 
-app.use((err, req, next) => {
-  if (err.stack) {
-    console.log(
-      `node server error. \nTime: ${new Date()} \nPlease refer to the attached message: \nError code: ${
-        err.code
-      } \nError message: ${err.message} \nError stack: ${err.stack} \n`
-    );
-    err.stack = "";
-    err.message = "internal server error";
-    next(err);
-  } else {
-    next();
-  }
-});
-
-app.listen(port, () => {
-  console.log(
-    `hello Server bin is running at http://${host}:${port}`
-  );
-});
-
-app.get("/test", (req, res) => {
-  res.send("ok cool");
-});
+const devEnviroment = process.env.ENVIRONMENT;
 
 app.get("/", (req, res) => {
-  const haveCookie = req.cookies?.token;
+  const haveCookie = req.cookies?.access_token;
   if (haveCookie) {
-    res.redirect(config.redirect_url);
+    if (devEnviroment === "product"){
+      res.render("home");
+    }
+    else {
+      res.redirect(config.redirect_url)
+    }
   } else {
-    res.render("index", { url: `${process.env.REACT_APP_LOGIN}/login` });
+    res.render("index", { url: `${config.default_app_host}:${config.default_app_port}/login` });
   }
 });
 
 app.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
-  await fetch(`${config.default_api_url}/api/auth/login`, {
+  await fetch(`${config.default_api_url}/auth/login`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -70,10 +51,13 @@ app.post("/login", async (req, res, next) => {
       password: password,
     }),
   })
-    .then((result) => {
-      console.log(result);
+    .then(async (result) => {
       if (result.ok) {
-        res.cookie("token", "login");
+        const userInfo = await result.json();
+        res.cookie("user", userInfo.metadata.id);
+        res.cookie("access_token", userInfo.metadata.access_token, {maxAge: 60000 * userInfo.metadata.expired_time, httpOnly: false});
+        res.cookie("refresh_token", userInfo.metadata.refresh_token);
+        res.cookie("api",config.default_api_url);
         return res.status(200).json("login successfully");
       }
       return res.status(400).json("login failed");
@@ -83,8 +67,9 @@ app.post("/login", async (req, res, next) => {
       return res.status(400).json("login failed");
     });
 });
-
 app.get("/logout", (req, res) => {
-  res.cookie("token", "");
+  res.clearCookie("user");
+  res.clearCookie("access_token");
+  res.clearCookie("refresh_token");
   res.send("logout success");
 });

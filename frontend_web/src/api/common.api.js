@@ -1,34 +1,31 @@
-import { API_URL, JWT_TOKEN } from "../configs/config";
-import { setLocalStorage, clearLocalStorage, getLocalStorage} from "../utils/storageUtils";
+import { API_URL} from "../configs/config";
+// import { setLocalStorage, clearLocalStorage, getLocalStorage} from "../utils/storageUtils";
 import { axiosRequest, axiosMethod } from "../utils/axios";
 import { showNotiError, showNotiWarning } from "../components/Notification";
 
 export const httpPostData = (url, data) => {
-    const token = getLocalStorage(JWT_TOKEN);
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.POST, token, data)
+        axiosRequest(API_URL + url, axiosMethod.POST, data)
         .then((response) => {
             resolve(response.data)
         })
         .catch((error) => {
             console.log('error post data', error);
-            showNotiError(error.response.data)
-            // checkErrorReturn(error);
+            showNotiError(error?.response?.data?.message)
             reject(error)
         })
     })
 }
 
-export const httpGetData = (url, data) => {
-    const token = getLocalStorage(JWT_TOKEN);
+export const httpGetData = (url) => {
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.GET, token, data)
+        axiosRequest(API_URL + url, axiosMethod.GET)
         .then((response) => {
             resolve(response.data)
         })
         .catch((error) => {
             console.log('error get data', error)
-            if(error.response.status === 401 || error.response.status === 403){
+            if(error.response?.status === 401 || error.response?.status === 403){
                 showNotiWarning('Bạn đã hết phiên đăng nhập');
                 window.location.href = '/login';
                 reject(error)
@@ -41,9 +38,9 @@ export const httpGetData = (url, data) => {
 }
 
 export const httpUpdateData = (url, data) => {
-    const token = getLocalStorage(JWT_TOKEN);
+
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.PUT, token, data)
+        axiosRequest(API_URL + url, axiosMethod.PUT, data)
         .then((response) => {
             resolve(response.data)
         })
@@ -57,15 +54,15 @@ export const httpUpdateData = (url, data) => {
 }
 
 export const httpDeleteData = (url, data) => {
-    const token = getLocalStorage(JWT_TOKEN);
+
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.DELETE, token, data)
+        axiosRequest(API_URL + url, axiosMethod.DELETE, data)
         .then((response) => {
             resolve(response.data)
         })
         .catch((error) => {
             console.log('error delete data', error)
-            showNotiError(error.response.data)
+            showNotiError(error.response?.data)
             // checkErrorReturn(error);
             reject(error)
         })

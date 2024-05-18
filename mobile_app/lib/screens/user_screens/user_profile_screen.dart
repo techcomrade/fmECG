@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../constants/color_constant.dart';
 
+
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({Key? key}) : super(key: key);
 
@@ -14,8 +15,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _bioController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
-
-  // Get battery level.
 
   @override
   void initState() {
@@ -97,10 +96,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   height: 100,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      const InfoCard(title: 'Age', value: '30', unit: 'years'),
-                      const InfoCard(title: 'Weight', value: '90', unit: 'kg'),
-                      const InfoCard(title: 'Height', value: '190', unit: 'cm'),
+                    children: const <Widget>[
+                      InfoCard(title: 'Age', value: '30', unit: 'years'),
+                      InfoCard(title: 'Weight', value: '90', unit: 'kg'),
+                      InfoCard(title: 'Height', value: '190', unit: 'cm'),
                     ],
                   ),
                 ),
