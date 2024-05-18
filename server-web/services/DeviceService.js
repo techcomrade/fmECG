@@ -1,5 +1,6 @@
 const CommonService = require("./CommonService");
 const DeviceModel = require("../models/DeviceModel/DeviceRepository");
+const UserRepository = require("../models/UserModel/UserRepository")
 const { v4: uuidv4 } = require("uuid");
 const Joi = require("joi");
 
@@ -46,6 +47,12 @@ class DeviceService extends CommonService {
       dummy_data: Joi.boolean()
     });
     return schema.validate(device);
+  }
+  async getDeviceByUsername(username) {
+    const user = await UserRepository.getUserByName(username);
+    if(user)
+      return await DeviceModel.checkByUserId(user.dataValues.id);
+    return false;
   }
 }
 

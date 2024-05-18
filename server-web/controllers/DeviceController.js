@@ -180,6 +180,16 @@ class DeviceController {
       metadata: deviceByEndDateInterval,
     });
   }
+
+  async getDeviceByUsername(req, res, next) {
+    console.log(`[P]:::Get device by username: `, req.params.username);
+    const username = req.params.username;
+    const deviceByUsername = await DeviceService.getDeviceByUsername(username);
+    return res.status(200).json({
+      message: "Get device by username successful!",
+      metadata: deviceByUsername,
+    });
+  }
 }
 
 module.exports = new DeviceController();

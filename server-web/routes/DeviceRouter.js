@@ -26,5 +26,10 @@ router.get(
   DeviceMiddleware.checkEndDateInterval,
   DeviceController.getDeviceByEndDateInterval
 );
+router.get(
+  "/username/:username",
+  DeviceMiddleware.checkUsername,
+  DeviceController.getDeviceByUsername
+);
 
 module.exports = router;
