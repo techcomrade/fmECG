@@ -23,6 +23,7 @@ class DeviceController {
         });
       });
   }
+
   async add(req, res) {
     console.log(`[P]:::Add device data`, req.body);
     const device = req.body;
@@ -48,6 +49,7 @@ class DeviceController {
         });
       });
   }
+
   async delete(req, res) {
     console.log(`[P]:::Delete device data`, req.params.id);
     const device_id = req.params.id;
@@ -79,6 +81,7 @@ class DeviceController {
         message: "no device id selected",
       });
   }
+
   async update(req, res) {
     console.log(`[P]:Update device data`, req.body);
     const id = req.body.id;
@@ -106,6 +109,7 @@ class DeviceController {
         });
       });
   }
+
   async getDeviceById(req, res) {
     console.log(`[P]:Get device by id`, req.params.id);
     const id = req.params.id;
@@ -123,7 +127,6 @@ class DeviceController {
           metadata: checkExistDevice.dataValues,
         });
       }
-
       return res.status(200).json({
         message: "Get device by id",
         metadata: {
@@ -142,6 +145,40 @@ class DeviceController {
         message: "get device by id failed",
       });
     }
+  }
+
+  async getDeviceByStartDateInterval(req, res, next) {
+    console.log(
+      `[P]:::Get device by start date interval: `,
+      req.params.startDate,
+      req.params.endDate
+    );
+    const deviceByStartDateInterval =
+      await DeviceService.getDeviceByStartDateInterval(
+        req.params.startDate,
+        req.params.endDate
+      );
+    return res.status(200).json({
+      message: "Get device by start date interval successful!",
+      metadata: deviceByStartDateInterval,
+    });
+  }
+
+  async getDeviceByEndDateInterval(req, res, next) {
+    console.log(
+      `[P]:::Get device by end date interval: `,
+      req.params.startDate,
+      req.params.endDate
+    );
+    const deviceByEndDateInterval =
+      await DeviceService.getDeviceByEndDateInterval(
+        req.params.startDate,
+        req.params.endDate
+      );
+    return res.status(200).json({
+      message: "Get device by end date interval successful!",
+      metadata: deviceByEndDateInterval,
+    });
   }
 }
 

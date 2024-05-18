@@ -25,6 +25,12 @@ class DeviceService extends CommonService {
   async getDeviceByUserId(userId) {
     return await DeviceModel.checkByUserId(userId);
   }
+  async getDeviceByStartDateInterval(startDate, endDate) {
+    return await DeviceModel.getDeviceByStartDateInterval(startDate, endDate);
+  }
+  async getDeviceByEndDateInterval(startDate, endDate) {
+    return await DeviceModel.getDeviceByEndDateInterval(startDate, endDate);
+  }
   ValidateDevice(device, checkId) {
     const schema = Joi.object({
       id: (checkId) ? Joi.string().required() : Joi.string().allow(' '),

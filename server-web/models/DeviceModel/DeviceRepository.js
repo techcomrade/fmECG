@@ -1,3 +1,4 @@
+const { Sequelize } = require("sequelize");
 const { convertDateNormal, convertTimeToString } = require("../../utils/processTime");
 const DeviceDTO = require("./DeviceDTO");
 class DeviceModel {
@@ -10,6 +11,26 @@ class DeviceModel {
     return devices;
   }
   
+  async getDeviceByStartDateInterval(startDate, endDate) {
+    return await DeviceDTO.findAll({
+      where: {
+        start_date: {
+          [Sequelize.Op.between]: [startDate, endDate],
+        },
+      },
+    });
+  }
+
+  async getDeviceByEndDateInterval(startDate, endDate) {
+    return await DeviceDTO.findAll({
+      where: {
+        end_date: {
+          [Sequelize.Op.between]: [startDate, endDate],
+        },
+      },
+    });
+  }
+
   async add(device) {
     return await DeviceDTO.create({
       id: device.id,
