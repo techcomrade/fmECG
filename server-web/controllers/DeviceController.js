@@ -13,19 +13,20 @@ class DeviceController {
           message: "No devices found",
         });
       for (const device of devices) {
-        let checkExistDF = await DeviceFreqService.getByDeviceId(device.id);
-        let DFresult = [];
-        checkExistDF.forEach((df) => {
-          let DF = {
-            frequency_name: df.frequency_name,
-            information: df.information,
-            value: df.value,
+        let checkExistDeviceFreq = await DeviceFreqService.getByDeviceId(device.id);
+        let DeviceFrequencyData = [];
+        if(checkExistDeviceFreq){
+        checkExistDeviceFreq.forEach((elementDF) => {
+          let frequency = {
+            frequency_name: elementDF.frequency_name,
+            information: elementDF.information,
+            value: elementDF.value,
           };
-          DFresult.push(DF);
+          DeviceFrequencyData.push(frequency);
         });
-        device.dataValues.frequency = DFresult;
+        device.dataValues.frequency = DeviceFrequencyData;
       }
-      console.log(devices);
+      }
       return res.status(200).json({
         message: "get all devices",
         metadata: devices,
@@ -134,16 +135,18 @@ class DeviceController {
         });
       }
       let checkExistRecord = await RecordService.getRecordByDeviceId(id);
-      let checkExistDF = await DeviceFreqService.getByDeviceId(id);
-      let DFresult = [];
-      checkExistDF.forEach((df) => {
-        let DF = {
-          frequency_name: df.frequency_name,
-          information: df.information,
-          value: df.value,
+      let checkExistDeviceFreq = await DeviceFreqService.getByDeviceId(id);
+      let DeviceFrequencyData = [];
+      if(checkExistDeviceFreq){
+      checkExistDeviceFreq.forEach((elementDF) => {
+        let frequency = {
+          frequency_name: elementDF.frequency_name,
+          information: elementDF.information,
+          value: elementDF.value,
         };
-        DFresult.push(DF);
+        DeviceFrequencyData.push(frequency);
       });
+    }
 
       return res.status(200).json({
         message: "Get device by id",
@@ -156,10 +159,11 @@ class DeviceController {
           start_date: checkExistDevice.dataValues.start_date,
           end_date: checkExistDevice.dataValues.end_date,
           recordCount: checkExistRecord.length,
-          frequency: DFresult,
+          frequency: DeviceFrequencyData,
         },
       });
     } catch (err) {
+      console.log(err);
       return res.status(500).json({
         message: "get device by id failed",
       });
