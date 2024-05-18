@@ -9,7 +9,6 @@ const connection = {
   port: process.env.DB_PORT || 3306,
 };
 
-console.log(`dsgfnjkdf:${process.env.DB_HOST}`);
 
 const sequelize = new Sequelize(
   connection.database,
