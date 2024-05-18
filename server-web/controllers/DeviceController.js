@@ -183,11 +183,23 @@ class DeviceController {
 
   async getDeviceByUsername(req, res, next) {
     console.log(`[P]:::Get device by username: `, req.params.username);
-    const username = req.params.username;
-    const deviceByUsername = await DeviceService.getDeviceByUsername(username);
+    const deviceByUsername = await DeviceService.getDeviceByUsername(
+      req.params.username
+    );
     return res.status(200).json({
       message: "Get device by username successful!",
       metadata: deviceByUsername,
+    });
+  }
+
+  async getDeviceByDeviceName(req, res, next) {
+    console.log(`[P]:::Get device by device name: `, req.params.device_name);
+    const deviceByDeviceName = await DeviceService.getDeviceByDeviceName(
+      req.params.device_name
+    );
+    return res.status(200).json({
+      message: "Get device by device name successful!",
+      metadata: deviceByDeviceName,
     });
   }
 }

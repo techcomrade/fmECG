@@ -62,9 +62,21 @@ class DeviceMiddleware {
   }
 
   async checkUsername(req, res, next) {
-    const username = req.params.username;
-    const checkUsername = await DeviceService.getDeviceByUsername(username);
+    const checkUsername = await DeviceService.getDeviceByUsername(
+      req.params.username
+    );
     if (!checkUsername)
+      return res.status(404).json({
+        message: "Device not existed!",
+      });
+    next();
+  }
+
+  async checkDeviceName(req, res, next) {
+    const checkDeviceName = await DeviceService.getDeviceByDeviceName(
+      req.params.device_name
+    );
+    if (checkDeviceName.length === 0)
       return res.status(404).json({
         message: "Device not existed!",
       });

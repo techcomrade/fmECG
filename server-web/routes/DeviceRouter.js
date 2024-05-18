@@ -31,5 +31,10 @@ router.get(
   DeviceMiddleware.checkUsername,
   DeviceController.getDeviceByUsername
 );
+router.get(
+  "/device_name/:device_name",
+  DeviceMiddleware.checkDeviceName,
+  DeviceController.getDeviceByDeviceName
+);
 
 module.exports = router;
