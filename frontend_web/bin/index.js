@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const app = express();
-require('dotenv').config({ path: '.env.dev' });
+require('dotenv').config({ path: ['.env.prod', '.env.dev'] })
 
 app.use(express.static(path.join(__dirname, './build')));
 app.use(bodyParser.urlencoded({ extended: true }));

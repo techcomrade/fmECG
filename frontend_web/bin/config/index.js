@@ -1,6 +1,3 @@
-require('dotenv').config({ path: '.env.dev' });
-
-
 const config = {
     default_app_host: process.env.HOST,
     default_app_port: process.env.PORT,
