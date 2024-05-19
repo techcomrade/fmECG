@@ -42,7 +42,7 @@ jspm_packages
 
 
 # environment
-# .env.prod
+.env.prod
 
 
 build
