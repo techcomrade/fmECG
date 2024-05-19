@@ -187,7 +187,11 @@ class _BleReactiveScreenState extends State<BleReactiveScreen> {
             final state = snapshot.data;
             if (state == BleStatus.ready) {
               return const BleScanningAndConnectingScreen();
-            } else {
+            } 
+            // else if (state == BleStatus.unknown) {
+            //   return const CircularProgressIndicator();
+            // } 
+            else {
             return BluetoothOffScreen(state: state);
             }
           }),
