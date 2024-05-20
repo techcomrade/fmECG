@@ -89,7 +89,7 @@ class RecordController {
         req.params.endTime
       );
     return res.status(200).json({
-      message: "Get records by time interval successful!",
+      message: "Get records by start time interval successful!",
       metadata: recordByStartTimeInterval,
     });
   }
@@ -117,7 +117,7 @@ class RecordController {
         req.params.endTime
       );
     return res.status(200).json({
-      message: "Get records by time interval successful!",
+      message: "Get records by end time interval successful!",
       metadata: recordByEndTimeInterval,
     });
   }
@@ -140,8 +140,8 @@ class RecordController {
   }
 
   async deleteRecordById(req, res, next) {
-    console.log(`[P]:::Delete record by id: `, req.params.id);
-    const id = req.params.id;
+    console.log(`[P]:::Delete record by id: `, req.params.recordId);
+    const id = req.params.recordId;
     await RecordService.deleteRecordById(id)
       .then(() => {
         return res.status(200).json({

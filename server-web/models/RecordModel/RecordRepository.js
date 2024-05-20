@@ -32,7 +32,9 @@ class RecordRepository {
   async getRecordByStartTime(time) {
     return await RecordDTO.findAll({
       where: {
-        start_time: time,
+        start_time: {
+          [Sequelize.Op.between]: [parseInt(time) - 86400000, parseInt(time) + 86400000],
+        },
       },
     });
   }
@@ -50,7 +52,9 @@ class RecordRepository {
   async getRecordByEndTime(time) {
     return await RecordDTO.findAll({
       where: {
-        end_time: time,
+        end_time: {
+          [Sequelize.Op.between]: [parseInt(time) - 86400000, parseInt(time) + 86400000],
+        },
       },
     });
   }

@@ -34,7 +34,7 @@ class RecordMiddleware {
 
   async checkDeviceId(req, res, next) {
     const recordByDeviceId = await RecordService.getRecordByDeviceId(
-      req.params.userId
+      req.params.deviceId
     );
     if (recordByDeviceId.length === 0)
       return res.status(404).json({
