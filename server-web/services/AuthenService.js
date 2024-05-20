@@ -59,8 +59,11 @@ class AuthenService extends CommonService {
       account_id: account.id,
       username: account.username,
       birth: account.birth,
+      gender: account.gender,
       phone_number: account.phone_number,
       image: account.image,
+      status: account.status,
+      information: account.information,
       role: account.role,
     };
     await this.transaction(async (t) => {
