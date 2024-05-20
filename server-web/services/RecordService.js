@@ -7,7 +7,7 @@ const DeviceRepository = require("../models/DeviceModel/DeviceRepository");
 const FileService = require("./FileService");
 const util = require("util");
 const { v4: uuidv4 } = require("uuid");
-
+const path = require('path');
 const Joi = require("joi");
 const { dummyArray } = require("../utils/arrayUtils");
 
@@ -26,6 +26,7 @@ class RecordService extends CommonService {
         ...records[i].dataValues,
         username: userName[0].username,
         device_name: deviceName.device_name,
+        record_name: path.basename(records[i].dataValues.data_rec_url)
       };
     }
     return records;
@@ -33,8 +34,10 @@ class RecordService extends CommonService {
 
   async add(record) {
     record.id = uuidv4();
-    let path = "../server-web/public/upload/" + record.file.filename;
-    record.data_rec_url = path;
+    let pathTest = path.join(__dirname, '../public/upload')
+    let paths = `${pathTest}\\${record.file.filename}`;
+    console.log(paths);
+    record.data_rec_url = paths;
     return await RecordRepository.add(record);
   }
 
@@ -81,18 +84,7 @@ class RecordService extends CommonService {
   }
 
   async getRecordByStartTime(time) {
-    let result = [];
-    const data = await RecordRepository.getAllData();
-    const parseTime = parseInt(time);
-    for (let i = 0; i < data.length; i++) {
-      console.log(new Date(data[i].dataValues.start_time).getDate());
-      if (
-        data[i].dataValues.start_time >= parseTime - 86400000 &&
-        data[i].dataValues.start_time <= parseTime + 86400000
-      )
-        result.push(data[i].dataValues);
-    }
-    return result;
+    return await RecordRepository.getRecordByStartTime(time);
   }
 
   async getRecordByStartTimeInterval(startTime, endTime) {
@@ -142,6 +134,10 @@ class RecordService extends CommonService {
   }
   async deleteFile(path) {
     return await FileService.deleteFile(path);
+  }
+  async getFilePathById(id){
+    const recordData = await RecordRepository.getRecordById(id);
+    return recordData[0].dataValues.data_rec_url ?? "";
   }
 }
 

@@ -1,7 +1,6 @@
 const { response } = require("express");
 const RecordService = require("../services/RecordService");
-const fileUploader = require("../services/FileService");
-
+const fs = require('fs');
 class RecordController {
   async getAll(req, res, next) {
     console.log(`[P]:::Get all records: `);
@@ -90,7 +89,7 @@ class RecordController {
         req.params.endTime
       );
     return res.status(200).json({
-      message: "Get records by time interval successful!",
+      message: "Get records by start time interval successful!",
       metadata: recordByStartTimeInterval,
     });
   }
@@ -118,7 +117,7 @@ class RecordController {
         req.params.endTime
       );
     return res.status(200).json({
-      message: "Get records by time interval successful!",
+      message: "Get records by end time interval successful!",
       metadata: recordByEndTimeInterval,
     });
   }
@@ -141,8 +140,8 @@ class RecordController {
   }
 
   async deleteRecordById(req, res, next) {
-    console.log(`[P]:::Delete record by id: `, req.params.id);
-    const id = req.params.id;
+    console.log(`[P]:::Delete record by id: `, req.params.recordId);
+    const id = req.params.recordId;
     await RecordService.deleteRecordById(id)
       .then(() => {
         return res.status(200).json({
@@ -175,7 +174,6 @@ class RecordController {
       });
     }
     let path = record[0].dataValues.data_rec_url;
-    console.log(path);
     await RecordService.readFileRecord(path)
       .then((data) => {
         if (data) {
@@ -221,6 +219,30 @@ class RecordController {
           message: "File not found",
         });
       });
+  }
+  async downloadRecordFile(req,res){
+    console.log(`[P]:::Download file record: `, req.params.id);
+    const filepath = await RecordService.getFilePathById(req.params.id);
+    if (fs.existsSync(filepath)) {
+      res.download(filepath);
+    } else {
+      res.status(404).json({
+        message: "file not found"
+       });
+    }
+  }
+  async checkRecordFile(req,res){
+    console.log(`[P]:::Check file record: `, req.params.id);
+    const filepath = await RecordService.getFilePathById(req.params.id);
+    if (fs.existsSync(filepath)) {
+      res.status(200).json({
+        message: "record file ready to download"
+      })
+    } else {
+      res.status(404).json({
+        message: "file not found"
+       });
+    }
   }
 }
 

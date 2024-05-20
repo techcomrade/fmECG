@@ -18,7 +18,7 @@ import dayjs from "dayjs";
 import { getUserById } from "../../redux/reducer/userSlice";
 import { loadStatus } from "../../redux/reducer/recordSlice";
 import "./detail.scss";
-import { convertGenderToString } from "../../utils/dateUtils";
+import { convertGenderToString } from "../../constants";
 
 const { Option } = Select;
 export default function Detail() {
