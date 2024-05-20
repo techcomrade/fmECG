@@ -13,7 +13,7 @@ router.post(
 );
 router.get("/data/:length", RecordController.getDataRecord);
 router.get(
-  "/:recordId",
+  "/getbyid/:recordId",
   RecordMiddleware.checkId,
   RecordController.getRecordById
 );
@@ -57,8 +57,9 @@ router.get(
   RecordMiddleware.checkEndTimeInterval,
   RecordController.getRecordByEndTimeInterval
 );
-
-router.post("/uploadfile", RecordController.uploadFileRecord, (req, res) => {
+router.get("/download/:id", RecordController.downloadRecordFile)
+router.get("/check-file/:id",RecordController.checkRecordFile)
+router.post("/upload-file", RecordController.uploadFileRecord, (req, res) => {
   if (req.file) res.status(200).json({ file: req.file });
   else
     res.status(400).json({
