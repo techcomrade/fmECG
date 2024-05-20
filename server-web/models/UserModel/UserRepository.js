@@ -37,7 +37,7 @@ class UserModel {
         account_id: user.account_id,
         username: user.username,
         birth: user.birth,
-        gender: user.gender ?? "",
+        gender: user.gender,
         phone_number: user.phone_number ?? "",
         image: user.image ?? "",
         status: user.status,

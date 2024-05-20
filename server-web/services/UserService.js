@@ -32,7 +32,7 @@ class UserService extends CommonService {
       username: Joi.string().required(),
       birth: Joi.number().required(),
       phone_number: Joi.number().allow(""),
-      gender: Joi.number().allow(""),
+      gender: Joi.number().required(),
       image: Joi.string().allow(""),
       status: Joi.number().required(),
       information: Joi.string().allow(""),
