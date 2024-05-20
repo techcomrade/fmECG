@@ -7,6 +7,8 @@ require('dotenv').config({ path: ['.env.prod', '.env.dev'] })
 const routes = require('./routes/index');
 const port = process.env.APP_PORT || 3000;
 const host = process.env.APP_HOST || 'localhost';
+const path = require('path');
+const fs = require('fs');
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -25,3 +27,14 @@ app.listen(port, () => {
     console.log(`Server is running at http://${host}:${port}`);
 })
 
+app.get('/download', (req, res) => {
+    const filename = "tesst.txt";
+    const filepath = path.join(__dirname, 'public/upload', filename);
+    console.log(filepath);
+    // Check if file exists
+    if (fs.existsSync(filepath)) {
+      res.download(filepath, filename);
+    } else {
+      res.status(404).send('File not found');
+    }
+  });

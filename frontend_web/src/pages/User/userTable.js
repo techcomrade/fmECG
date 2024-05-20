@@ -9,7 +9,8 @@ import {
   deleteUser,
   resetDeleteDataStatus,
 } from "../../redux/reducer/userSlice";
-import { convertDateToTime, convertGenderToString, convertStringToGender, convertTimeToDate } from "../../utils/dateUtils";
+import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
+import {convertGenderToString, convertStringToGender} from "../../constants"
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
