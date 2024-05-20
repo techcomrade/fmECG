@@ -400,7 +400,7 @@ select {
               <div class="input-group">
                 <i class="bx bxs-gender"></i>
                 <label for="gender-label">Gender </label>
-                  <select id="sign-up-gender" required>
+                  <select id="sign-up-gender">
                     <option value="">Choose a gender</option>
                     <option value="0">Male</option>
                     <option value="1">Female</option>
@@ -409,7 +409,7 @@ select {
               <div class="input-group">
                 <i class="bx bxs-role"></i>
                 <label for="role-label">Role </label>
-                  <select id="sign-up-role" required>
+                  <select id="sign-up-role" onchange="roleChange()" required>
                     <option value="">Choose a role</option>
                     <option value="0">Patient</option>
                     <option value="1">Doctor</option>
@@ -434,11 +434,11 @@ select {
                 <i class="bx bxs-status"></i>
                 <label for="status-label">Status </label>
                   <select id="sign-up-status" required>
-                    <option value="">Choose a status</option>
-                    <option value="0">Retired</option>
-                    <option value="1">Working</option>
-                    <option value="2">Under treatment</option>
-                    <option value="3">Discharged</option>
+                    <option value="" id="stt">Choose a status (Please choose a role first)</option>
+                    <option value="0" id="stt-0">Retired</option>
+                    <option value="1" id="stt-1">Working</option>
+                    <option value="2" id="stt-2">Under treatment</option>
+                    <option value="3" id="stt-3">Discharged</option>
                   </select>
               </div>
               <div class="input-group">
@@ -568,6 +568,26 @@ select {
           showPassSignIn.classList.add("fa-eye");
         }
       })
+
+      document.querySelector("#stt-0").style.display = "none";
+      document.querySelector("#stt-1").style.display = "none";
+      document.querySelector("#stt-2").style.display = "none";
+      document.querySelector("#stt-3").style.display = "none";
+      function roleChange() {
+        const signUpRole = document.querySelector("#sign-up-role");
+        if(signUpRole.value == 1) {
+          document.querySelector("#stt-0").style.display = "block";
+          document.querySelector("#stt-1").style.display = "block";
+          document.querySelector("#stt-2").style.display = "none";
+          document.querySelector("#stt-3").style.display = "none";
+        }
+        if(signUpRole.value == 0) {
+          document.querySelector("#stt-2").style.display = "block";
+          document.querySelector("#stt-3").style.display = "block";
+          document.querySelector("#stt-0").style.display = "none";
+          document.querySelector("#stt-1").style.display = "none";
+        }
+      }
 
       let container = document.getElementById("container");
 
