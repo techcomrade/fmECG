@@ -81,18 +81,7 @@ class RecordService extends CommonService {
   }
 
   async getRecordByStartTime(time) {
-    let result = [];
-    const data = await RecordRepository.getAllData();
-    const parseTime = parseInt(time);
-    for (let i = 0; i < data.length; i++) {
-      console.log(new Date(data[i].dataValues.start_time).getDate());
-      if (
-        data[i].dataValues.start_time >= parseTime - 86400000 &&
-        data[i].dataValues.start_time <= parseTime + 86400000
-      )
-        result.push(data[i].dataValues);
-    }
-    return result;
+    return await RecordRepository.getRecordByStartTime(time);
   }
 
   async getRecordByStartTimeInterval(startTime, endTime) {
