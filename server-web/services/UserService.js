@@ -24,12 +24,18 @@ class UserService extends CommonService {
 
   validateUser(user) {
     const schema = Joi.object({
-      account_id: Joi.string().required(),
+      email: Joi.string()
+        .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
+        .required(),
+      password: Joi.string().required(),
+      account_id: Joi.string(),
       username: Joi.string().required(),
       birth: Joi.number().required(),
       phone_number: Joi.number().allow(""),
-      gender: Joi.number(),
+      gender: Joi.number().required(),
       image: Joi.string().allow(""),
+      status: Joi.number().required(),
+      information: Joi.string().allow(""),
       role: Joi.number().required(),
     });
     return schema.validate(user);
