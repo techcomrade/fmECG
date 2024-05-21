@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
+import 'package:bluetooth_ecg/components/live_chart.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
-import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_scanning_screen.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_screen.dart';
-import 'package:bluetooth_ecg/screens/bluetooth_screens/bluetooth_off_screen.dart';
 import 'package:bluetooth_ecg/screens/preview_calculation.dart';
+import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -71,7 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int current = 0;
     final size = MediaQuery.of(context).size;
     final height = size.height;
     final width = size.width;
@@ -210,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 20),
 
-            ImageCard(
+            !isShowChart ? ImageCard(
               imageAsset: 'assets/images/heart_rate_example.jpeg', 
               functionScanBluetooth: () {
                 Navigator.push(context,
@@ -219,12 +218,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 );
               }, 
-              temporaryNothing: () {
+              temporaryNothing: () async {
+                FilesManagement.createDirectoryFirstTimeWithDevice();
+                fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
                 setState(() {
                   isShowChart = true;
                 });
               }
-            ),
+            ) : LiveChartSample(fileToSave: fileToSave, callBackToPreview: () => setState(() => isShowChart = false)),
             const SizedBox(height: 20),
             Container(
               alignment: Alignment.topLeft,
@@ -555,10 +556,10 @@ class ImageCard extends StatelessWidget {
                 onPressed: functionScanBluetooth,
                 child: const Text("Scan bluetooth"),
               ),
-              // ElevatedButton(
-              //   onPressed: temporaryNothing,
-              //   child: const Text("Test live chart"),
-              // ),
+              ElevatedButton(
+                onPressed: temporaryNothing,
+                child: const Text("Test live chart"),
+              ),
             ],
           ),
         ],
