@@ -35,7 +35,7 @@ class RecordService extends CommonService {
   async add(record) {
     record.id = uuidv4();
     let pathTest = path.join(__dirname, '../public/upload')
-    let paths = `${pathTest}\\${record.file.filename}`;
+    let paths = `${pathTest}/${record.file.filename}`;
     console.log(paths);
     record.data_rec_url = paths;
     return await RecordRepository.add(record);
