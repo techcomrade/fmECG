@@ -44,11 +44,9 @@ class FileUploader {
         file.mimetype === "text/plain" ||
         file.mimetype === "audio/wav"
       ) {
-        console.log("valid");
-        cb(null, true);
+            cb(null, true);
       } else {
-        console.log("invalid");
-        req.uploadFileError = true;
+            req.uploadFileError = true;
         cb(null, false);
       }
     };

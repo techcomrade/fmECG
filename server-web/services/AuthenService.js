@@ -59,8 +59,11 @@ class AuthenService extends CommonService {
       account_id: account.id,
       username: account.username,
       birth: account.birth,
+      gender: account.gender,
       phone_number: account.phone_number,
       image: account.image,
+      status: account.status,
+      information: account.information,
       role: account.role,
     };
     await this.transaction(async (t) => {
@@ -68,12 +71,19 @@ class AuthenService extends CommonService {
       await UserRepository.add(user, t);
     });
   }
+
   async getAll() {
     await AccountRepository.getAllData();
   }
+
   async updatePassword (account){
     return await AccountRepository.updateById(account);
   }
+
+  async getAccountById(id) {
+    return await AccountRepository.getAccountById(id);
+  }
+
   validateAccount(account) {
     const schema = Joi.object({
       email: Joi.string()

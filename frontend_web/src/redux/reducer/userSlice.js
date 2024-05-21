@@ -73,8 +73,7 @@ export const getUserById = createAsyncThunk(
   "/user/id",
   async (params, { rejectWithValue }) => {
     try {
-      const user_id = getUserId();
-      console.log(user_id);
+      const user_id = getUserId()
       const response = await httpGetData(`/user/${user_id}`);
       return response;
     } catch (error) {
@@ -160,7 +159,6 @@ const userSlice = createSlice({
       .addCase(getUserById.fulfilled, (state, action) => {
         state.loadUserDataStatus = loadStatus.Success;
         state.userData = action.payload;
-        console.log(action.payload);
       })
       .addCase(getUserById.rejected, (state, action) => {
         state.loadUserDataStatus = loadStatus.Failed;

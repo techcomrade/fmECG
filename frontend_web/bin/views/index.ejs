@@ -4,9 +4,369 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login admin server</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   </head>
+  <style>
+    
+:root {
+  --primary-color: #4ea685;
+  --secondary-color: #57b894;
+  --black: #000000;
+  --white: #ffffff;
+  --gray: #efefef;
+  --gray-2: #757575;
+
+  --facebook-color: #4267b2;
+  --google-color: #db4437;
+  --twitter-color: #1da1f2;
+  --insta-color: #e1306c;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+    z-index: 0;
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+}
+
+.col {
+  width: 50%;
+}
+
+.align-items-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.align-center {
+  text-align: center;
+  margin-bottom: 0% !important;
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 27rem;
+}
+
+.form {
+  padding: 1rem;
+  background-color: var(--white);
+  border-radius: 1.5rem;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transform: scale(0);
+  transition: 0.5s ease-in-out;
+  transition-delay: 1s;
+}
+
+.sign-up-form {
+  max-height: 90vh;
+  overflow: auto;
+}
+
+select {
+    background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
+    background-position: calc(100% - 1.2rem) center !important;
+    -moz-appearance:none !important;
+    appearance: none !important;
+}
+
+.sign-up-form::-webkit-scrollbar {
+  display: none;
+}
+
+.fa-eye {
+  right: 4%;
+  margin-top: 2.5%;
+  font-size: 1.1em !important;
+}
+
+.fa-eye-slash {
+  right: 4%;
+  margin-top: 2.5%;
+  font-size: 1.1em !important;
+}
+
+.input-group {
+  position: relative;
+  width: 100%;
+  margin: 0.3rem 0;
+}
+
+.input-group i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  color: var(--gray-2);
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  background-color: var(--gray);
+  border-radius: 0.5rem;
+  border: 0.125rem solid var(--white);
+  outline: none;
+  margin-top: 0.5%;
+  margin-bottom: 1%;
+}
+
+.input-group select {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  background-color: var(--gray);
+  border-radius: 0.5rem;
+  border: 0.125rem solid var(--white);
+  outline: none;
+  margin-top: 0.5%;
+  margin-bottom: 1%;
+}
+
+.input-group input:focus {
+  border: 0.125rem solid var(--primary-color);
+}
+
+.form button {
+  cursor: pointer;
+  width: 100%;
+  padding: 0.7rem 0;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-size: 1.2rem;
+  outline: none;
+  margin-top: 2%;
+}
+
+.form p {
+  margin: 1rem 0;
+  font-size: 0.7rem;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.container.sign-in .form.sign-in,
+.container.sign-in .social-list.sign-in,
+.container.sign-in .social-list.sign-in > div,
+.container.sign-up .form.sign-up,
+.container.sign-up .social-list.sign-up,
+.container.sign-up .social-list.sign-up > div {
+  transform: scale(1);
+}
+
+.content-row {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 6;
+  width: 100%;
+}
+
+.text {
+  margin: 4rem;
+  color: var(--white);
+}
+
+.text h2 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 2rem 0;
+  transition: 1s ease-in-out;
+}
+
+.text p {
+  font-weight: 600;
+  transition: 1s ease-in-out;
+  transition-delay: 0.2s;
+}
+
+.img img {
+  width: 30vw;
+  transition: 1s ease-in-out;
+  transition-delay: 0.4s;
+}
+
+.text.sign-in h2,
+.text.sign-in p,
+.img.sign-in img {
+  transform: translateX(-250%);
+}
+
+.text.sign-up h2,
+.text.sign-up p,
+.img.sign-up img {
+  transform: translateX(250%);
+}
+
+.container.sign-in .text.sign-in h2,
+.container.sign-in .text.sign-in p,
+.container.sign-in .img.sign-in img,
+.container.sign-up .text.sign-up h2,
+.container.sign-up .text.sign-up p,
+.container.sign-up .img.sign-up img {
+  transform: translateX(0);
+}
+
+/* BACKGROUND */
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 300vw;
+  transform: translate(35%, 0);
+  background-image: linear-gradient(
+    -45deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+  transition: 1s ease-in-out;
+  z-index: 6;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-bottom-right-radius: max(50vw, 50vh);
+  border-top-left-radius: max(50vw, 50vh);
+}
+
+.container.sign-in::before {
+  transform: translate(0, 0);
+  right: 50%;
+}
+
+.container.sign-up::before {
+  transform: translate(100%, 0);
+  right: 50%;
+}
+
+/* RESPONSIVE */
+
+@media only screen and (max-width: 425px) {
+  .container::before,
+  .container.sign-in::before,
+  .container.sign-up::before {
+    height: 100vh;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 0;
+    z-index: 0;
+    transform: none;
+    right: 0;
+  }
+
+  /* .container.sign-in .col.sign-up {
+  transform: translateY(100%);
+} */
+
+  .container.sign-in .col.sign-in,
+  .container.sign-up .col.sign-up {
+    transform: translateY(0);
+  }
+
+  .content-row {
+    align-items: flex-start !important;
+  }
+
+  .content-row .col {
+    transform: translateY(0);
+    background-color: unset;
+  }
+
+  .col {
+    width: 100%;
+    position: absolute;
+    padding: 2rem;
+    background-color: var(--white);
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    transform: translateY(100%);
+    transition: 1s ease-in-out;
+  }
+
+  .row {
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  .form,
+  .social-list {
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .text {
+    margin: 0;
+  }
+
+  .text p {
+    display: none;
+  }
+
+  .text h2 {
+    margin: 0.5rem;
+    font-size: 2rem;
+  }
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    place-items: center;
+  }
+
+  .loading-spinner {
+    border: 16px solid #f3f3f3; /* Light grey border */
+    border-top: 16px solid var(--secondary-color); /* Blue border on top */
+    border-radius: 50%; /* Make it a circle */
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite; /* Rotate animation */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+  </style>
   <body>
     <div id="container" class="container">
       <!-- FORM SECTION -->
@@ -38,9 +398,18 @@
                 <i class="fa-solid fa-eye" id="show-confirm-password"></i>
               </div>
               <div class="input-group">
+                <i class="bx bxs-gender"></i>
+                <label for="gender-label">Gender </label>
+                  <select id="sign-up-gender">
+                    <option value="">Choose a gender</option>
+                    <option value="0">Male</option>
+                    <option value="1">Female</option>
+                  </select>
+              </div>  
+              <div class="input-group">
                 <i class="bx bxs-role"></i>
                 <label for="role-label">Role </label>
-                  <select id="sign-up-role" required>
+                  <select id="sign-up-role" onchange="roleChange()" required>
                     <option value="">Choose a role</option>
                     <option value="0">Patient</option>
                     <option value="1">Doctor</option>
@@ -60,6 +429,22 @@
                 <i class="bx bxs-img"></i>
                 <label for="img">Select an image </label>
                 <input type="file" id="sign-up-img" class="sign-up-input"/>
+              </div>
+              <div class="input-group">
+                <i class="bx bxs-status"></i>
+                <label for="status-label">Status </label>
+                  <select id="sign-up-status" required>
+                    <option value="" id="stt">Choose a status (Please choose a role first)</option>
+                    <option value="0" id="stt-0">Retired</option>
+                    <option value="1" id="stt-1">Working</option>
+                    <option value="2" id="stt-2">Under treatment</option>
+                    <option value="3" id="stt-3">Discharged</option>
+                  </select>
+              </div>
+              <div class="input-group">
+                <i class="bx bx-info"></i>
+                <label for="info-label">User information</label>
+                <input type="text" placeholder="User information" id="sign-up-info" class="sign-up-input" required />
               </div>
               <button onclick="signupFunction()" >Sign up</button>
               <p class="align-center">
@@ -184,6 +569,26 @@
         }
       })
 
+      document.querySelector("#stt-0").style.display = "none";
+      document.querySelector("#stt-1").style.display = "none";
+      document.querySelector("#stt-2").style.display = "none";
+      document.querySelector("#stt-3").style.display = "none";
+      function roleChange() {
+        const signUpRole = document.querySelector("#sign-up-role");
+        if(signUpRole.value == 1) {
+          document.querySelector("#stt-0").style.display = "block";
+          document.querySelector("#stt-1").style.display = "block";
+          document.querySelector("#stt-2").style.display = "none";
+          document.querySelector("#stt-3").style.display = "none";
+        }
+        if(signUpRole.value == 0) {
+          document.querySelector("#stt-2").style.display = "block";
+          document.querySelector("#stt-3").style.display = "block";
+          document.querySelector("#stt-0").style.display = "none";
+          document.querySelector("#stt-1").style.display = "none";
+        }
+      }
+
       let container = document.getElementById("container");
 
       const toggle = () => {
@@ -199,11 +604,11 @@
       const loginFunction = async () => {
         const username = document.querySelector("#input-user-name").value;
         const password = document.querySelector("#input-password").value;
-        console.log(username);
+        console.log(loginUrl);
         if (username && password) {
           document.getElementById('myModal').style.display = 'grid';
           try {
-            const loginResult = await fetch(loginUrl, {
+            const loginResult = await fetch("/login", {
               method: "POST",
               mode: "cors", 
               cache: "no-cache", 
@@ -251,7 +656,9 @@
 
         // const fReader = new FileReader();
         // fReader.readAsDataURL(inputImg);
-
+        const gender = document.querySelector("#sign-up-gender").value;
+        const status = document.querySelector("#sign-up-status").value;
+        const information = document.querySelector("#sign-up-info").value;
         if(confirmPassword && confirmPassword === password) {
           try {
             const signupResult = await fetch(signupUrl, {
@@ -269,9 +676,12 @@
                 email: email,
                 password: password,
                 role: role,
+                gender: gender,
                 birth: birth,
                 phone_number: phone_number,
                 image: image,
+                status: status,
+                information: information,
               }),
             });
             if (signupResult.ok) {

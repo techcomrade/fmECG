@@ -61,6 +61,8 @@ dependencies:
   telephony: ^0.2.0
   geolocator: ^9.0.1
   url_launcher: ^6.1.5
+  intl: ^0.18.0
+  http_parser: ^4.0.2
 
   # other lib
   flutter_localizations:
@@ -71,9 +73,9 @@ dependencies:
   flutter_bloc: ^8.1.4
   chaquopy: 0.0.20
 
-dependency_overrides:
-  # language
-  intl: ^0.18.0
+# dependency_overrides:
+#   # language
+#   intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
