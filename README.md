@@ -69,3 +69,32 @@ flutter run
 or `Run without Debugging on VSCode`.
 
 Login to App: thaikaka@gmail.com / 12345678
+
+
+### How to deploy server and web 
+
+1. deploy server 
+  - open terminal console, then run code `cd /var/www` to access deploy folder 
+  - run `git clone https://github.com/techcomrade/fmECG.git` to clone project 
+  - switch to `deploy` branch
+  - run `cd server-web` to access server-web folder
+  - now you need to copy env.prod file and paste in server-web folder
+  - run `npm install` to install package 
+  - check file env.prod again and make sure the values in there are correct
+  - after doing all the above work you can run project by `pm2 start server.sh`
+2. deploy web
+- open terminal console, then run code `cd /var/www` to access deploy folder 
+  - run `git clone https://github.com/techcomrade/fmECG.git` to clone project 
+  - switch to `deploy` branch
+  - run `cd frontend_web` to access frontend_web folder
+  - run `npm run build` to build frontend_web into statics file
+  - after build frontend_web finished, you need to copy build folder in frontend_web and paste in bin folder
+  - run `cd frontend_web/bin` to access bin folder 
+  - now you need to copy env.prod file and paste in bin folder
+  - run `npm install` to install package 
+  - check file env.prod again and make sure the values in there are correct
+  - after doing all the above work you can run project by `pm2 start frontend.sh` 
+
+3. check deploy status
+  - run `pm2 status` to check deploy status 
+  - if status is `running`, then you are done deploying
