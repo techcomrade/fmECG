@@ -72,3 +72,6 @@ app.get("/logout", (req, res) => {
   res.clearCookie("refresh_token");
   res.send("logout success");
 });
+app.listen(app.get('port'), app.get('host'), () => {
+  console.log(`Server is running at http://${app.get('host')}:${app.get('port')}`);
+});
