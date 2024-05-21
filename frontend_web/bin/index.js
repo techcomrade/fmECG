@@ -10,6 +10,7 @@ app.use(express.static(path.join(__dirname, './build')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: "application/json" }));
 app.use(bodyParser.raw());
+app.set("host",config.default_app_host);
 app.set("port", config.default_app_port);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
