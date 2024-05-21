@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_chart_test.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-Uuid _UART_UUID = Uuid.parse("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
-Uuid _UART_RX   = Uuid.parse("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
-Uuid _UART_TX   = Uuid.parse("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
+Uuid uartUUID = Uuid.parse("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
+Uuid uartRX   = Uuid.parse("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
+Uuid uartTX   = Uuid.parse("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
 
 class BleScanningAndConnectingScreen extends StatefulWidget {
   const BleScanningAndConnectingScreen({Key? key}) : super(key: key);
@@ -89,8 +90,8 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
         _deviceConnectionController.add(state);
         if (state.connectionState == DeviceConnectionState.connected) {
           characteristicToReceiveData = QualifiedCharacteristic(
-            serviceId: _UART_UUID, 
-            characteristicId: _UART_TX, 
+            serviceId: uartUUID, 
+            characteristicId: uartTX, 
             deviceId: deviceId
           );
           deviceConnected = devices.firstWhere((device) => device.id == deviceId);
@@ -130,13 +131,13 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: const Center(child: Text("fmECG thông báo")),
+          title: Center(child: Text("fmECG ${S.current.notification}")),
           content: state.connectionState == DeviceConnectionState.connected ? 
-            const Text("Bạn đã kết nối thành công!", textAlign: TextAlign.center) : const Text("Bạn đã kết nối chưa thành công!"),
+            Text("${S.current.connected}!", textAlign: TextAlign.center) : Text("${S.current.somethingWentWrong}!"),
           actions: [
             Center(
               child: ElevatedButton(
-                child: const Text('Tiến hành đo'),
+                child: Text(S.current.measure),
                 onPressed: () async {
                   Navigator.pop(context);
                   await _navigateToChart();
@@ -232,14 +233,14 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
                       ),
                       color: ColorConstant.quaternary
                     ),
-                    child: isDeviceConnected ? const Text(
-                      "Đã kết nối",
+                    child: isDeviceConnected ? Text(
+                      S.current.connected,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
-                    ): const Text(
-                      "Kết nối",
+                    ): Text(
+                      S.current.connect,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -249,27 +250,29 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
                 )
               ),
               if (isDeviceConnected)
-              InkWell(
-                onTap: () async {
-                  await _navigateToChart();
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(6), 
-                      bottomRight: Radius.circular(6)
+              Row(
+                children: [
+                  const SizedBox(width: 5),
+                  InkWell(
+                    onTap: () async {
+                      await _navigateToChart();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: Colors.green
+                      ),
+                      child: Text(
+                        S.current.measure,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      )
                     ),
-                    color: Colors.green
                   ),
-                  child: const Text(
-                    "Đo",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  )
-                ),
+                ],
               )
             ],
           ),
@@ -285,6 +288,7 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text('fmECG', 
               style: TextStyle(
@@ -294,13 +298,8 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
               )
             ),
             const SizedBox(height: 5),
-            Text('Hãy kết nối điện thoại của bạn',
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.grey[700]
-              )
-            ),
-            Text('với thiết bị thông qua Bluetooth',
+            Text(S.current.scanningDes,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.grey[700]
@@ -309,10 +308,10 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-              ElevatedButton(onPressed: _startScanning, child: const Text('Tìm kiếm')),
-              ElevatedButton(onPressed: _stopScanning, child: const Text('Dừng')),
+              ElevatedButton(onPressed: _startScanning, child: Text(S.current.find)),
+              ElevatedButton(onPressed: _stopScanning, child: Text(S.current.stop)),
               ElevatedButton(onPressed: deviceConnected != null ? () => _disconnectDevice(deviceConnected!.id) : null, 
-                child: const Text('Ngắt kết nối')
+                child: Text(S.current.disconnect)
               ),
             ]),
 
@@ -332,7 +331,7 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
                 alignment: Alignment.bottomCenter,
                 child: Column(
                   children: [
-                    Text('Các thiết bị khả dụng',
+                    Text(S.current.availableDevices,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -363,11 +362,12 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
             Container(
               height: screenHeight * 0.1,
               alignment: Alignment.center,
-              child: _isScanning ? Column(children: const [
-                Text("Đang quét để tìm kiếm thiết bị"),
-                CircularProgressIndicator(),
+              child: _isScanning ? Column(children: [
+                Text(S.current.scanningDevices),
+                const SizedBox(height: 4),
+                const CircularProgressIndicator(),
               ]) : 
-              Text("Bên trên là các thiết bị được tìm thấy",
+              Text(S.current.devicesFoundDes,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,

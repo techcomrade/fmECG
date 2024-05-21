@@ -17,6 +17,13 @@ import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
 
+
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+import com.chaquo.python.android.AndroidPlatform;
+
+import java.util.HashMap;
+import java.util.Set;
 public class MainActivity extends FlutterActivity {
     private static final String CHANNEL = "com.example.method_channel/java";
 
@@ -26,18 +33,24 @@ public class MainActivity extends FlutterActivity {
         new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL).
                 setMethodCallHandler(
                         (call, result) -> {
-                            if (call.method.equals("getBatteryLevel")) {
-                                int batteryLevel = getBatteryLevel();
+                            // if (call.method.equals("getBatteryLevel")) {
+                            //     int batteryLevel = getBatteryLevel();
 
-                                if (batteryLevel != -1) {
-                                    result.success(batteryLevel);
-                                } else {
-                                    result.error("UNAVAILABLE", "Battery level not available.", null);
-                                }
-                            } else {
-                                result.notImplemented();
-                            }
-                        });
+                //     if (batteryLevel != -1) {
+                //         result.success(batteryLevel);
+                //     } else {
+                //         result.error("UNAVAILABLE", "Battery level not available.", null);
+                //     }
+                // } else {
+                //     result.notImplemented();
+                // }
+                if (call.method.equals("helloWorldPython")) {
+                  byte[] dataBytes = call.argument("bytes");
+                    System.out.println("hello: " + dataBytes);
+                    // result.success(true);
+                    result.success(helloWorldPython(dataBytes));
+                }
+            });
     }
 
 
@@ -56,5 +69,37 @@ public class MainActivity extends FlutterActivity {
 
 
         return batteryLevel;
+    }
+
+    private HashMap<String, String> helloWorldPython(
+      byte[] bytesData
+    ) {
+        if (!Python.isStarted()) {
+            Python.start(new AndroidPlatform(this));
+        }
+
+        System.out.println("hello222: " + bytesData);
+
+        Python py = Python.getInstance();
+        // get file python (PyObject)
+        PyObject module = py.getModule("native");
+        PyObject data = module.callAttr("helloWorld", bytesData);
+
+        HashMap<String,String> map = new HashMap<>();
+        //System.out.println(data.asMap().get("sbp").toString());
+
+        Set<PyObject> pyKeySet = data.callAttr("keys").asSet();
+
+        for ( PyObject pyKey:pyKeySet) {
+            String key = pyKey.toString();
+            map.put(key, data.callAttr("get",key).toString());
+           
+        }
+        // map.put("sbp", data.asMap().get("sbp").toDouble());
+        // map.put("dbp", data.asMap().get("dbp").toDouble());
+        // map.put("heart_rate", data.asMap().get("heart_rate").toDouble());
+        // map.put("standard_deviation", data.asMap().get("standard_deviation").toDouble());
+        
+        return map;
     }
 }

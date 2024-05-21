@@ -1,45 +1,54 @@
-import { httpGetData } from "../../api/common.api";
-import { Button, Space } from "antd";
+import { createUser, deleteUser, getUser, resetLoadDataStatus, resetCreateDataStatus, resetUpdateDataStatus, resetDeleteDataStatus, updateUser } from "../../redux/reducer/userSlice";
 
 class UserData {
-    getColumnShow(callBack) {
+    getColumnShow() {
       const columns = [
         {
-          title: 'STT',
-          dataIndex: 'index',
-          key: 'id',
-        },
-        {
           title: 'Họ và tên',
-          dataIndex: 'name',
-          key: 'name',
-          // render: (text) => <a>{text}</a>
-        },
-        {
-          title: 'Giới tính',
-          dataIndex: 'gender',
-          key: 'gender',
+          dataIndex: 'username',
+          key: 'username',
+          isEdit: true
         },
         {
           title: 'Ngày sinh',
-          dataIndex: 'birthday',
-          key: 'birthday',
+          dataIndex: 'birth',
+          key: 'birth',
+          isEdit: true
         },
         {
-          title: 'Email',
-          dataIndex: 'email',
-          key: 'email',
+          title: 'Số điện thoại',
+          dataIndex: 'phone_number',
+          key: 'phone_number',
+          isEdit: true
+        },
+        {
+          title: 'Thiết bị',
+          dataIndex: 'devices',
+          key: 'devices',
+          isEdit: false
         },
       ];
 
         return columns;
     }
 
-    async getDataShow() {
-      const data = await httpGetData('/users');
-      return data;
+    getFunction() {
+      return {
+        createData: createUser,
+        getData: getUser,
+        updateData: updateUser,
+        deleteData: deleteUser,
+        resetLoadDataStatus: resetLoadDataStatus,
+        resetCreateDataStatus: resetCreateDataStatus,
+        resetDeleteDataStatus: resetDeleteDataStatus,
+        resetUpdateDataStatus: resetUpdateDataStatus
+      }
     }
-    
+
+    checkDateIndex(index) {
+      const dateIndex = ['birth']
+      return dateIndex.includes(index);
+  }
 }
   
   

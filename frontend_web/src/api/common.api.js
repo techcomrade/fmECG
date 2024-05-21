@@ -1,56 +1,68 @@
-import { API_URL, JWT_TOKEN } from "../configs/config";
-import { setLocalStorage, clearLocalStorage, getLocalStorage} from "../utils/storageUtils";
+import { API_URL} from "../configs/config";
+// import { setLocalStorage, clearLocalStorage, getLocalStorage} from "../utils/storageUtils";
 import { axiosRequest, axiosMethod } from "../utils/axios";
-import { showNotiWarning } from "../components/Notification";
-// import { checkErrorReturn } from "../../utils/commonUtils";
-// import { SpinLoading } from "../../components/Spin/SpinLoading";
-
-// export const showLoading = () => {
-//     <SpinLoading />
-// }
+import { showNotiError, showNotiWarning } from "../components/Notification";
 
 export const httpPostData = (url, data) => {
-    const token = getLocalStorage(JWT_TOKEN);
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.POST, token, data)
+        axiosRequest(API_URL + url, axiosMethod.POST, data)
         .then((response) => {
             resolve(response.data)
         })
         .catch((error) => {
             console.log('error post data', error);
-            // checkErrorReturn(error);
+            showNotiError(error?.response?.data?.message)
             reject(error)
         })
     })
 }
 
-export const httpGetData = (url, data) => {
-    const token = getLocalStorage(JWT_TOKEN);
+export const httpGetData = (url) => {
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.GET, token, data)
+        axiosRequest(API_URL + url, axiosMethod.GET)
         .then((response) => {
             resolve(response.data)
         })
         .catch((error) => {
             console.log('error get data', error)
-            if(error.response.status === 401 || error.response.status === 403){
+            if(error.response?.status === 401 || error.response?.status === 403){
                 showNotiWarning('Bạn đã hết phiên đăng nhập');
                 window.location.href = '/login';
                 reject(error)
+            }
+            else {
+                showNotiError(error.message);
             }
         })
     })
 }
 
 export const httpUpdateData = (url, data) => {
-    const token = getLocalStorage(JWT_TOKEN);
+
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.PUT, token, data)
+        axiosRequest(API_URL + url, axiosMethod.PUT, data)
         .then((response) => {
             resolve(response.data)
         })
         .catch((error) => {
             console.log('error get data', error)
+            showNotiError(error.response.data)
+            // checkErrorReturn(error);
+            reject(error)
+        })
+    })
+}
+
+export const httpDeleteData = (url, data) => {
+
+    return new Promise((resolve, reject) => {
+        axiosRequest(API_URL + url, axiosMethod.DELETE, data)
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            console.log('error delete data', error)
+            showNotiError(error.response?.data)
             // checkErrorReturn(error);
             reject(error)
         })
@@ -80,6 +92,7 @@ export const httpGetDataTable = async (table, filter = null) => {
           })
           .catch((error) => {
             console.log('error get data', error)
+            showNotiError(error.response.data)
             // checkErrorReturn(error);
             reject(error)
         });

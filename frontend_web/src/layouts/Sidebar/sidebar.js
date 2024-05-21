@@ -1,61 +1,75 @@
-import { UnorderedListOutlined, FileTextOutlined, UserOutlined, HomeOutlined, QuestionCircleOutlined, UsergroupAddOutlined} from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme} from 'antd';
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import MenuBar from '../../components/MenuBar/menubar';
+import { UserOutlined, HomeOutlined, UnorderedListOutlined} from '@ant-design/icons';
+import { Layout, theme, Menu} from 'antd';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const { Header, Content, Sider } = Layout;
+const { Sider } = Layout;
 
-const MenuList = () => [
-  {
-    key: "/",
-    title: "Trang chủ",
-    icon: <HomeOutlined />,
-    isHide: false,
-    url: "/",
-  },
-  {
-    key: "/manage_users",
-    title: "Quản lí người dùng",
-    icon: <QuestionCircleOutlined />,
-    isHide: false,
-    children: [
-      {
-        key: "users",
-        title: "Người dùng",
-        isHide: false,
-        url: "/users",
-      },
-      {
-        key: "/create-user",
-        title: "Tạo người dùng",
-        isHide: false,
-        url: "/create-user",
-      },
-    ],
-  },
-  {
-    key: "/my_account",
-    title: "Tài khoản",
-    icon: <UserOutlined />,
-    isHide: false,
-    url: "/account",
-  },
-];
+export const MenuList = () => {
+  const navigate = useNavigate()
+
+  return [
+    {
+      key: "/",
+      label: "Trang chủ",
+      icon: <HomeOutlined />,
+      onClick: () => {
+        navigate('/')
+      }
+    },
+    {
+      key: "/manage_users",
+      label: "Quản lí người dùng",
+      icon: <UnorderedListOutlined />,
+      onClick: () => {
+        navigate('/user')
+      }
+    },
+    {
+      key: "/manage_devices",
+      label: "Quản lí thiết bị",
+      icon: <UnorderedListOutlined />,
+      onClick: () => {
+        navigate('/device')
+      }
+    },
+    {
+      key: "/manage_records",
+      label: "Quản lí record",
+      icon: <UnorderedListOutlined />,
+      onClick: () => {
+        navigate('/record')
+      }
+    },
+    {
+      key: "/my_account",
+      label: "Tài khoản",
+      icon: <UserOutlined />,
+      onClick: () => {
+        navigate('/account')
+      }
+    },
+  ];
+} 
 
 const Sidebar = ({children}) => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  const navigate = useNavigate();
 
   return (
     <Sider
         width={200}
         style={{ background: colorBgContainer,}}
     >
-        <MenuBar menuList={MenuList()} mode="inline" />
+        <Menu
+          mode={"inline"}
+          selectedKeys={['1']}
+          defaultOpenKeys={[]}
+          items={MenuList()}
+        >
+        </Menu>
     </Sider>
   )
     

@@ -1,49 +1,28 @@
-const knex = require('../config/knex.js');
-const bcrypt = require("bcrypt");
+const knex = require("../config/knex.js");
+const sequelize = require("../config/sequelize");
+
 class CommonModel {
-    async queryDB(sql){
-        try {
-            let data = await knex.raw(sql);
-           // console.log(data);
-            if(data[0].length != 0) return data[0];
-            return false;
-        }
-        catch(err) {
-            console.error(err);
-            return false;
+  async executeQuery(sql) {
+    try {
+      let data = await knex.raw(sql);
+      if (data[0]) return data[0];
+      return false;
+    } catch (err) {
+      console.log(err);
+      return false;
     }
-    
-}
-    async insertDatatoDB(dataInsert, table){
-        try 
-        {
-            if(dataInsert && table) {
-                if(table == 'user')
-                {
-                    bcrypt.hash(dataInsert.password, 10, async (err, hash) => {
-                        if(err) throw err;
-                        dataInsert.password = hash;
-                        await knex(table).insert(dataInsert);
-                        return true;
-                    })
-                }
-                else await knex(table).insert(dataInsert);
-                return true;
-            }
-            else { return false; }
-        }
-        catch(err) { console.error(err); return false; }
-    }
-
-    async updateDatabyId(dataInsert, table, updateId) {
-        console.log(dataInsert);
-        try {
-            if(dataInsert && table && updateId) {
-                await knex(table).where({id: updateId}).update(dataInsert); return true;
-        }   else return false;
-        }
-        catch(err) { console.error(err); return false; }
-
-}
+  }
+  async transaction (callback){
+    const t = await sequelize.transaction();
+  try {
+    await callback(t); // Execute the provided callback within the transaction
+    await t.commit(); // Commit the transaction
+    console.log('Transaction successful.');
+  } catch (error) {
+    await t.rollback(); // Roll back the transaction on error
+    console.error('Error during transaction:', error.message);
+  }
+  }
 }
 module.exports = CommonModel;
+

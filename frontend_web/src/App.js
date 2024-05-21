@@ -1,25 +1,14 @@
-import { publicRoute } from "./routes/route";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
-import { Fragment } from "react";
+import NotAuth from "./pages/NotAuth/notauth";
+
 function App() {
   
+  const hasCookie = window.hasCookie;
+  console.log(hasCookie);
   return (
-    <Router>
       <div className="App">
-        <Routes>
-          {publicRoute.map((route, index)=>{
-            let Layout = route.layout === null ? Fragment : DefaultLayout;
-            const Page = route.component;
-            return <Route key={index} path={route.path} element={
-              <Layout>
-                <Page/>
-              </Layout>
-            }/>
-          })}
-        </Routes>
+        {!hasCookie.user_id ? <NotAuth />: <DefaultLayout />}
       </div>
-    </Router>
   );
 }
 

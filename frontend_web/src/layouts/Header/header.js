@@ -7,13 +7,20 @@ import {
   SearchOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { removeLocalStorage } from "../../utils/storageUtils";
+
 
 
 const Header = (item) => {
-  const handleLogOut = () => {
-    removeLocalStorage('username');
-    removeLocalStorage('token');
+
+  const handleLogOut = async () => {
+  const cookies = document.cookie.split(';');
+  cookies.forEach(cookie => {
+    const cookieParts = cookie.split('=');
+    const cookieName = cookieParts[0].trim();
+    document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  });
+  localStorage.clear();
+  window.location.href = '/';
   };
   
   const items = [
@@ -37,7 +44,7 @@ const Header = (item) => {
     },
     {
       label: (
-        <a href="" style={{ display: "flex" }} onClick={handleLogOut}>
+        <a style={{ display: "flex" }} onClick={handleLogOut}>
           Sign out
         </a>
       ),
@@ -64,7 +71,7 @@ const Header = (item) => {
             >
                 <a onClick={(e) => e.preventDefault()}>
                   <Space>
-                  <Button >{item.userName}</Button>
+                    <Button >{item.userName}</Button>
                   </Space>
                 </a>
             </Dropdown>
