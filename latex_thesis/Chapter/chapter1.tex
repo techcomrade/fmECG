@@ -9,7 +9,27 @@ Trong chương này, chúng em sẽ tiến hành thu thập yêu cầu cho dự 
 đã nêu ra trong Mục Đề xuất hệ thống ở Phần mở đầu.
 
 \subsection{Các kĩ thuật được sử dụng}
-
+Kĩ thuật phỏng vấn: Đây là 1 kĩ thuật quan trọng để thu thập dữ liệu về các yêu cầu của hệ thống cần thiết kế. Sau đây là bảng danh sách câu hỏi và câu trả lời mà chúng em đã tổng hợp được:
+\begin{table}[H]
+    \centering
+    \caption{Bảng câu hỏi phỏng vấn và câu trả lời}
+    \begin{tabularx}{0.9\textwidth}{
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X|
+    }
+    \hline
+    \bfseries Câu hỏi                              &   \bfseries Câu trả lời \\\hline
+    Đối tượng của hệ thống bao gồm những ai?       &   Bao gồm người dùng (bệnh nhân), bác sĩ, quản trị viên \\\hline
+    Hệ thống có thể triển khai trên nền tảng nào?  &   Hệ thống có thể triển khai trên cả máy tính và điện thoại \\\hline
+    Hệ thống được hiển thị bằng ngôn ngữ nào?      &   Hệ thống hỗ trợ cả tiếng Việt và tiếng Anh\\\hline
+    Hệ thống của bạn quản lí những gì?             &   Hệ thống quản lí thông tin cá nhân của các đối tượng sử dụng, quản lí các thiết bị, bản ghi \\\hline
+    Website của hệ thống có những chức năng gì?    &   Website có chức năng cung cấp giao diện quản lí cho 2 đối tượng là quản trị viên và bác sĩ (quản lí người dùng, các thiết bị, bản ghi), chức năng xem đồ thị để bác sĩ dễ dàng chẩn đoán bệnh và có thể trao đổi trực tiếp với bệnh nhân về tình hình sức khỏe cũng như các kết quả đo được từ thiết bị \\\hline
+    Hệ thống có giới hạn quyền truy cập với những đối tượng khác nhau không?   &  Có, hệ thống sẽ cho mỗi người dùng những quyền hạn riêng tương ứng với chức vụ của mình. Ví dụ như bác sĩ sẽ không thể truy cập api quản lí toàn bộ người dùng (đây là quyền của quản trị viên) \\\hline
+    Hệ thống có giới hạn lượt gọi api của 1 người dùng không?                  &  Có, người dùng không được gọi 1 api quá 5 lần trong 1 giây \\\hline
+    Yêu cầu về ngôn ngữ lập trình và cơ sở dữ liệu &   Hệ thống sử dụng ngôn ngữ javascript và quản trị CSDL bằng mySQL \\\hline
+    Là 1 người dùng, anh/chị nghĩ hệ thống cần có những yêu cầu gì?            &  Hệ thống cần hoạt động tốt, có giao diện đơn giản, dễ sử dụng. \\\hline
+    \end{tabularx}
+\end{table}
 
 \subsection{Yêu cầu hệ thống}
 \subsubsection{Yêu cầu về người dùng hệ thống}
