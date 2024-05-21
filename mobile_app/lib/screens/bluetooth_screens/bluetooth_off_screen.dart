@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
@@ -24,7 +25,7 @@ class BluetoothOffScreen extends StatelessWidget {
               color: Colors.white54,
             ),
             Text(
-              'Bluetooth hiện đang ở chế độ ${state != null ? state.toString().substring(10) : 'not available'}.',
+              S.current.bluetoothStatusDes(state != null ? state.toString().substring(10) : 'not available'),
               style: Theme.of(context)
                   .primaryTextTheme
                   .titleSmall
@@ -32,7 +33,7 @@ class BluetoothOffScreen extends StatelessWidget {
             ),
             // Text('Vui lòng bật Bluetooth để tiếp tục'),
             ElevatedButton(
-              child: const Text('Bật Bluetooth'),
+              child: Text('${S.current.turnOn} Bluetooth'),
               onPressed: Platform.isAndroid
                   ? () => FlutterBluePlus.turnOn()
                   : null,

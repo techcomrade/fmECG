@@ -1,9 +1,13 @@
 import 'dart:io';
 
 import 'package:bluetooth_ecg/components/circular_avatar.dart';
+import 'package:bluetooth_ecg/components/live_chart.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_screen.dart';
 import 'package:bluetooth_ecg/screens/preview_calculation.dart';
+import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -67,7 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int current = 0;
     final size = MediaQuery.of(context).size;
     final height = size.height;
     final width = size.width;
@@ -134,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Chào mừng tới fmEcg,\nThai Dong.",
+                      "${S.current.welcomeSentence}\nHanh Nguyen",
                       style: TextStyle(
                           color: ColorConstant.black900,
                           fontWeight: FontWeight.bold,
@@ -155,8 +158,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         centerImage:
                             Image.asset("assets/images/heart_rate.png"),
                         number: 82.0,
-                        text: "Nhịp tim",
-                        subText: "Mẹ",
+                        text: S.current.heartbeat,
+                        subText: "",
                         unit: "bpm",
                         // color1: Colors.grey,
                         // color2: Colors.grey,
@@ -166,49 +169,69 @@ class _HomeScreenState extends State<HomeScreen> {
                         centerImage:
                             Image.asset("assets/images/blood_pressure.png"),
                         number: 72.9,
-                        text: "Huyết áp",
-                        subText: "Mẹ",
+                        text: S.current.bloodPressure,
+                        subText: "",
                         unit: "mmHg",
                         // color1: Colors.grey,
                         // color2: Colors.grey,
                       ),
-                      NumberCard(
-                        leadingIcon: Icon(PhosphorIcons.fill.heartbeat,
-                            color: Colors.red.shade400),
-                        number: 82.6,
-                        centerImage:
-                            Image.asset("assets/images/heart_rate.png"),
-                        text: "Nhịp tim ",
-                        subText: "Thai nhi",
-                        unit: "bpm",
-                        // color1: ColorConstant.primary,
-                        // color1: Colors.grey,
-                        // color2: Colors.grey,
-                        //  color2: ColorConstant.primary,
-                      ),
-                      NumberCard(
-                        centerImage:
-                            Image.asset("assets/images/blood_pressure.png"),
-                        leadingIcon: Icon(PhosphorIcons.fill.stethoscope),
-                        number: 86.0,
-                        text: "Huyết áp",
-                        subText: "Thai nhi",
-                        unit: "mmHg",
-                        //color1: ColorConstant.primary,
-                        // color1: ColorConstant.teal,
-                        // color2: ColorConstant.teal,
-                      ),
+                      // NumberCard(
+                      //   leadingIcon: Icon(PhosphorIcons.fill.heartbeat,
+                      //       color: Colors.red.shade400),
+                      //   number: 82.6,
+                      //   centerImage:
+                      //       Image.asset("assets/images/heart_rate.png"),
+                      //   text: "Nhịp tim ",
+                      //   subText: "Thai nhi",
+                      //   unit: "bpm",
+                      //   // color1: ColorConstant.primary,
+                      //   // color1: Colors.grey,
+                      //   // color2: Colors.grey,
+                      //   //  color2: ColorConstant.primary,
+                      // ),
+                      // NumberCard(
+                      //   centerImage:
+                      //       Image.asset("assets/images/blood_pressure.png"),
+                      //   leadingIcon: Icon(PhosphorIcons.fill.stethoscope),
+                      //   number: 86.0,
+                      //   text: "Huyết áp",
+                      //   subText: "Thai nhi",
+                      //   unit: "mmHg",
+                      //   //color1: ColorConstant.primary,
+                      //   // color1: ColorConstant.teal,
+                      //   // color2: ColorConstant.teal,
+                      // ),
                     ],
                   )
                 ],
               ),
             ),
+
+            const SizedBox(height: 20),
+
+            !isShowChart ? ImageCard(
+              imageAsset: 'assets/images/heart_rate_example.jpeg', 
+              functionScanBluetooth: () {
+                Navigator.push(context,
+                  MaterialPageRoute(
+                    builder: (context) => const BleReactiveScreen(),
+                  )
+                );
+              }, 
+              temporaryNothing: () async {
+                FilesManagement.createDirectoryFirstTimeWithDevice();
+                fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
+                setState(() {
+                  isShowChart = true;
+                });
+              }
+            ) : LiveChartSample(fileToSave: fileToSave, callBackToPreview: () => setState(() => isShowChart = false)),
             const SizedBox(height: 20),
             Container(
               alignment: Alignment.topLeft,
               padding: const EdgeInsets.only(bottom: 10),
               child: Text(
-                "Số người thân",
+                S.current.familyMemberPhone,
                 style: TextStyle(
                   color: ColorConstant.quaternary,
                   fontWeight: FontWeight.bold,
@@ -223,11 +246,11 @@ class _HomeScreenState extends State<HomeScreen> {
               keyboardType: TextInputType.phone,
               enabled: _isEditing,
               focusNode: focusInputPhone,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)),
-                hintText: 'Nhập số điện thoại',
-                labelText: 'Số điện thoại',
+                hintText: "${S.current.enter} ${S.current.phoneNumber.toLowerCase()}",
+                labelText: S.current.phoneNumber,
               ),
               onChanged: (text) => setState(() {
                 phoneNumberWarning = _phoneController.text;
@@ -245,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                     focusInputPhone.requestFocus();
                   },
-                  child: const Text('Chỉnh sửa'),
+                  child: Text(S.current.edit),
                 ),
                 const SizedBox(width: 20), // Khoảng cách giữa các nút
                 ElevatedButton(
@@ -259,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             phoneNumberWarning = "";
                           });
                         },
-                  child: const Text('Lưu'),
+                  child: Text(S.current.save),
                 ),
               ],
             ),
@@ -431,19 +454,30 @@ class _NumberCardState extends State<NumberCard> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ListTile(
-              leading: widget.leadingIcon,
-              title: Text(
-                widget.text,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: _isClicked
-                      ? ColorConstant.black900
-                      : ColorConstant.description,
+            const SizedBox(height: 3),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: widget.leadingIcon),
+                const SizedBox(width: 10),
+                Expanded(
+                  flex: 6,
+                  child: Text(
+                    widget.text,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: _isClicked
+                          ? ColorConstant.black900
+                          : ColorConstant.description,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
             const SizedBox(height: 3.0),
             Text(
@@ -505,13 +539,16 @@ class ImageCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Image.asset(
-            imageAsset,
-            width: double.infinity,
-            height: 200.0,
-            fit: BoxFit.cover,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: Image.asset(
+              imageAsset,
+              width: double.infinity,
+              height: 200.0,
+              fit: BoxFit.cover,
+            ),
           ),
-          const SizedBox(height: 12.0),
+          // const SizedBox(height: 12.0),
           ButtonBar(
             alignment: MainAxisAlignment.center,
             children: [
