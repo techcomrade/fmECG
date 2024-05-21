@@ -77,7 +77,7 @@ Login to App: thaikaka@gmail.com / 12345678
   - open terminal console, then run code `cd /var/www` to access deploy folder 
   - run `git clone https://github.com/techcomrade/fmECG.git` to clone project 
   - switch to `deploy` branch
-  - run `cd server-web` to access server-web folder
+  - run `cd fmECG/server-web` to access server-web folder
   - now you need to copy env.prod file and paste in server-web folder
   - run `npm install` to install package 
   - check file env.prod again and make sure the values in there are correct
