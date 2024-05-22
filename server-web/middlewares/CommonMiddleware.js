@@ -18,19 +18,22 @@ class CommonMiddleware {
     const token = authHeader.split(" ")[1];
     const decodeToken = TokenService.decodeToken(token);
     if (!decodeToken)
-      return res.status(403).json({ message: "Failed to verify token" });
+      return res.status(500).json({ message: "Failed to verify token" });
     res.locals.role = decodeToken.role;
-    console.log("role",res.locals.role);
+    console.log("role", res.locals.role);
     next();
   }
 
   restrictRole(...roles) {
     return (req, res, next) => {
       const userRole = res.locals.role;
-      if (roles.includes(userRole)) next();
-      return res
-        .status(403)
-        .json({ message: "Access denied. Role restriction." });
+      console.log(roles);
+      if (!roles.includes(userRole)) {
+        return res
+          .status(500)
+          .json({ message: "Access denied. Role restriction." });
+      }
+      next();
     };
   }
 
@@ -61,5 +64,6 @@ class CommonMiddleware {
 }
 
 module.exports = {
-  roleGroup, commonMiddleware : new CommonMiddleware()
+  roleGroup,
+  commonMiddleware: new CommonMiddleware(),
 };
