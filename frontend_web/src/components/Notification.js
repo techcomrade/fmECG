@@ -19,7 +19,7 @@ export const showNotInfo = (descript) => {
 
 export const showNotiError = (descript) => {
   notification.error({
-      message: "Lỗi",
+      message: "Error",
       description: descript,
       placement: 'topRight'
     });

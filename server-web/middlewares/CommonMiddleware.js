@@ -1,6 +1,12 @@
 let requests;
 // const client = require("../config/redis");
 const TokenService = require("../services/TokenService");
+const roleGroup = {
+  admin: 0,
+  doctor: 1,
+  patient: 3,
+};
+
 class CommonMiddleware {
   validationToken(req, res, next) {
     if (!req.headers["authorization"]) {
@@ -10,9 +16,25 @@ class CommonMiddleware {
     }
     const authHeader = req.headers["authorization"];
     const token = authHeader.split(" ")[1];
-    return TokenService.decodeToken(token)
-      ? next()
-      : res.status(500).json({ message: "Failed to verify token" });
+    const decodeToken = TokenService.decodeToken(token);
+    if (!decodeToken)
+      return res.status(500).json({ message: "Failed to verify token" });
+    res.locals.role = decodeToken.role;
+    console.log("role", res.locals.role);
+    next();
+  }
+
+  restrictRole(...roles) {
+    return (req, res, next) => {
+      const userRole = res.locals.role;
+      console.log(roles);
+      if (!roles.includes(userRole)) {
+        return res
+          .status(500)
+          .json({ message: "Access denied. Role restriction." });
+      }
+      next();
+    };
   }
 
   async apiLimiter(req, res, next) {
@@ -40,4 +62,8 @@ class CommonMiddleware {
     }
   }
 }
-module.exports = new CommonMiddleware();
+
+module.exports = {
+  roleGroup,
+  commonMiddleware: new CommonMiddleware(),
+};
