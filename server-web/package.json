@@ -25,6 +25,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
+    "prod": "nodemon server.js",
     "migration": "node migration.js"
   },
   "author": "",

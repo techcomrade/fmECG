@@ -27,7 +27,7 @@ const ModalChart = ({isOpen, setIsOpen, selectedDevice}) => {
                 open = {isOpen}
                 cancelText="Quay lại"
                 onCancel={handleCancel}
-                width={800}
+                width={1000}
                 centered
             >
                 <LineChart data={data}/>

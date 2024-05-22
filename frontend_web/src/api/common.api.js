@@ -27,11 +27,13 @@ export const httpGetData = (url) => {
             console.log('error get data', error)
             if(error.response?.status === 401 || error.response?.status === 403){
                 showNotiWarning('Bạn đã hết phiên đăng nhập');
-                window.location.href = '/login';
+                window.location.href = '/';
                 reject(error)
             }
             else {
-                showNotiError(error.message);
+                
+                showNotiError(error.response?.data?.message);
+
             }
         })
     })

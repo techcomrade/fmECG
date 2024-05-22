@@ -22,5 +22,5 @@ export const getCookie = (name) => {
   };
 
   export const getUserId = () => {
-    return window.hasCookie.user_id;
+    return getLocalStorage('user');
   }

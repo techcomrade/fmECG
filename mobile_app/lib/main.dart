@@ -36,8 +36,8 @@ void main() async {
   );
   await FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  final SocketChannel socketChannel = SocketChannel();
-  await socketChannel.connect();
+  // final SocketChannel socketChannel = SocketChannel();
+  // await socketChannel.connect();
   if (Platform.isAndroid) {
     WidgetsFlutterBinding.ensureInitialized();
     [
@@ -82,6 +82,7 @@ class FmECGAppState extends State<FmECGApp> {
       child: Consumer<AuthProvider>(builder: (ctx, auth, _) {
         Utils.globalContext = ctx;
         return const MaterialApp(
+          locale: Locale('en'),
           debugShowCheckedModeBanner: false,
           // theme: (auth.theme == ThemeType.dark
           //         ? ThemeECG.darkTheme
@@ -131,6 +132,10 @@ class FmECGAppState extends State<FmECGApp> {
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            Locale('en'), // English
+            Locale('vi'),
           ],
         );
       }),

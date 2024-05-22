@@ -16,14 +16,16 @@ import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { getCookie, getLocalStorage } from "../../utils/storageUtils";
+import { httpGetData } from "../../api/common.api";
 const DeviceTable = () => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.device);
   const [selectedData, setSelectedData] = useState([]);
   const [dataTable, setData] = useState([]);
+  const [dropdownData, setDropData] = useState([]);
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
-  const user_id = getLocalStorage("user");
+
   const columns = [
     {
       title: "Tên thiết bị",
@@ -38,6 +40,15 @@ const DeviceTable = () => {
       key: "device_type",
       type: "text",
       isEdit: true,
+    },
+    {
+      title: "Tên người dùng",
+      dataIndex: "user_id",
+      key: "user_id",
+      type: "select",
+      dataSelect: dropdownData,
+      isEdit: true,
+      hidden: true
     },
     {
       title: "Thông tin thiết bị",
@@ -61,8 +72,14 @@ const DeviceTable = () => {
       isEdit: true,
     },
   ];
+
   useEffect(() => {
     dispatch(getDevice());
+    const getOptionData = async() => {
+      const userData = await httpGetData('/user');
+      setDropData( userData.metadata)
+    }
+    getOptionData();
   }, []);
 
   // Get data
@@ -118,6 +135,7 @@ const DeviceTable = () => {
     dispatch(createDevice(handleData(data)));
     dispatch(resetCreateDataStatus());
   };
+
   const handleData = (data) => {
     var deviceData = data;
     Object.keys(data).forEach((key) => {
@@ -125,9 +143,9 @@ const DeviceTable = () => {
         deviceData[key] = convertDateToTime(data[key]);
       }
     });
-    deviceData.user_id = user_id;
     return deviceData;
   };
+
   return (
     <>
       <DataTable

@@ -10,6 +10,8 @@ const BloodPressureRouter = require("./BloodPressureRouter");
 
 const StatisticRouter = require("./StatisticRouter");
 
+const DeviceFreqRouter = require("./DeviceFrequencyRouter");
+
 const router = express.Router();
 
 router.use("/heart_rec", HeartRecRouter);
@@ -25,5 +27,7 @@ router.use("/record", RecordRouter);
 router.use("/bp", BloodPressureRouter);
 
 router.use("/statistic", StatisticRouter);
+
+router.use("/df", DeviceFreqRouter);
 
 module.exports = router;

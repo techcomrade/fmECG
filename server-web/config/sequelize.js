@@ -1,5 +1,4 @@
 const Sequelize = require("sequelize");
-require("dotenv").config();
 
 const connection = {
   host: process.env.DB_HOST || "127.0.0.1",
@@ -9,6 +8,7 @@ const connection = {
   charset: "utf8",
   port: process.env.DB_PORT || 3306,
 };
+
 
 const sequelize = new Sequelize(
   connection.database,

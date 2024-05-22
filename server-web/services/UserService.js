@@ -3,7 +3,7 @@ const Joi = require("joi");
 const UserRepository = require("../models/UserModel/UserRepository");
 const DeviceRepository = require("../models/DeviceModel/DeviceRepository");
 const RecordRepository = require("../models/RecordModel/RecordRepository");
-const AuthenService = require("./AuthenService");
+const { v4: uuidv4 } = require("uuid");
 
 class UserService extends CommonService {
   async getAll() {
@@ -24,24 +24,31 @@ class UserService extends CommonService {
 
   validateUser(user) {
     const schema = Joi.object({
-      username: Joi.string().required(),
       email: Joi.string()
         .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
         .required(),
       password: Joi.string().required(),
+      account_id: Joi.string(),
+      username: Joi.string().required(),
       birth: Joi.number().required(),
       phone_number: Joi.number().allow(""),
+      gender: Joi.number().required(),
       image: Joi.string().allow(""),
+      status: Joi.number().required(),
+      information: Joi.string().allow(""),
       role: Joi.number().required(),
     });
     return schema.validate(user);
   }
+
   validateUpdateUser(user) {
     const schema = Joi.object({
+      id: Joi.string().required(),
       username: Joi.string().required(),
       birth: Joi.number().required(),
-      phone_number: Joi.number(),
-      image: Joi.string(),
+      phone_number: Joi.number().required(),
+      gender: Joi.number().required(),
+      image: Joi.string()
     });
     return schema.validate(user);
   }
@@ -51,10 +58,13 @@ class UserService extends CommonService {
       return false;
     }
     const data = await UserRepository.getUserById(userId);
+    if(!data[0]) {
+      return false;
+    }
     const deviceUser = await DeviceRepository.checkByUserId(userId);
     const recordUser = await RecordRepository.getRecordByUserId(userId);
     data[0].dataValues = {
-      ...data[0].dataValues,
+      ...data[0]?.dataValues,
       devices: deviceUser.length,
       records: recordUser.length,
     };
@@ -62,17 +72,18 @@ class UserService extends CommonService {
   }
 
   async createUser(data) {
+    data.id = uuidv4();
     return await UserRepository.add(data);
   }
 
   async updateUser(data) {
     const { password, ...newData } = data;
     return await this.transaction(async (t) => {
-      await AuthenService.updatePassword({
-        password: password,
-        id: data.account_id,
-      },t);
-      await UserRepository.updateById(newData,t);
+      // await AuthenService.updatePassword({
+      //   password: password,
+      //   id: data.account_id,
+      // },t);
+      await UserRepository.updateById(newData, t);
     });
   }
 
