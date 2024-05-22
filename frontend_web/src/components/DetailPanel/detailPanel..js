@@ -3,11 +3,12 @@ import { Drawer} from "antd";
 
 const DrawerComponent = (props, ref) => {
   const [isOpen, setIsOpen] = useState(props.isOpen);
-
+  const [id,setId] = useState("")
 
   useImperativeHandle(ref, () => ({
-    open: () => {
+    open: (id) => {
       setIsOpen(true);
+      setId(id)
     },
   }));
 
