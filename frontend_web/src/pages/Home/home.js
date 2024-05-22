@@ -5,7 +5,7 @@ import './home.scss';
 import { useSelector } from 'react-redux';
 
 const Home = () => {
-  const { deviceCount } = useSelector(state => state.homeData);
+  const { recordCount } = useSelector(state => state.homeData);
   return (
     <div className="home-page">
       <h2 className="page-title">Welcome to the website</h2>
@@ -16,8 +16,8 @@ const Home = () => {
               <div className="icon-container">
                 <UserOutlined className="icon" />
               </div>
-              <h3> { deviceCount } </h3>
-              <p>Users</p>
+              <h3> { recordCount } </h3>
+              <p>Recors</p>
             </Card>
           </Col>
           <Col span={8}>
@@ -25,7 +25,6 @@ const Home = () => {
               <div className="icon-container">
                 <MobileOutlined className="icon" />
               </div>
-              <h3>1,234</h3>
               <p>Devices</p>
             </Card>
           </Col>
@@ -34,8 +33,7 @@ const Home = () => {
               <div className="icon-container">
                 <DatabaseOutlined className="icon" />
               </div>
-              <h3>9,876</h3>
-              <p>Records</p>
+              <p>Users</p>
             </Card>
           </Col>
         </Row>
