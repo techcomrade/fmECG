@@ -115,7 +115,6 @@ const DeviceTable = () => {
   };
 
   const handleSubmitAddFunction = (data) => {
-    console.log("hello");
     dispatch(createDevice(handleData(data)));
     dispatch(resetCreateDataStatus());
   };

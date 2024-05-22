@@ -22,6 +22,7 @@ export const getDevice = createAsyncThunk(
     }
   }
 );
+console.log(getDevice);
 
 export const createDevice = createAsyncThunk(
   "/create-device",

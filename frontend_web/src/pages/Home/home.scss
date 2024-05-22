@@ -1,68 +1,57 @@
-.card-list {
-    justify-content: space-between;
-}
+.home-page {
+  padding: 2rem;
 
-.ant-card-body {
-    padding: 20px;
-}
+  .page-title {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
 
-.ant-card-meta {
-    align-items: center;
-}
-
-:where(.css-dev-only-do-not-override-1fviqcj).ant-card .ant-card-meta-avatar {
-    padding-inline-end: 0;
-}
-
-.ant-card-meta-avatar {
-    font-size: 20px;
-    margin-right: 20px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    padding-inline-end: 0;
-}
-
-.ant-card:first-child {
-    border: 1px solid #1677FF;
-
-    .ant-card-meta-avatar{
-        color: #1677FF;
-        border: 1px solid #1677FF;
+  .statistics-boxes {
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      background-color: #f2f2f2;
+      border-radius: 50%;
+      margin-bottom: 1rem;
     }
-}
 
-.ant-card:nth-child(2) {
-    border: 1px solid red;
-
-    .ant-card-meta-avatar {
-       color: red;
-       border: 1px solid red;
-   }
-} 
-
-.ant-card:nth-child(3) {
-    border: 1px solid #F2BD27;
-
-    .ant-card-meta-avatar {
-        color: #F2BD27;
-        border: 1px solid #F2BD27;
+    .icon {
+      font-size: 1.5rem;
+      color: #333;
     }
-    
-}
 
-.ant-card:last-child {
-    border: 1px solid #00B96B;
-
-    .ant-card-meta-avatar {
-        color: #00B96B;
-        border: 1px solid #00B96B;
+    .ant-card {
+      text-align: center;
     }
-}  
 
-.ant-card-meta-description {
-    font-size: 24px;
+    .ant-card h3 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .ant-card p {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 0;
+    }
+  }
+
+  .statistics-chart {
+    margin-top: 2rem;
+
+    .ant-card {
+      text-align: center;
+    }
+
+    .ant-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+  }
 }

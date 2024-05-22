@@ -25,6 +25,20 @@ export const getRecord = createAsyncThunk(
   }
 );
 
+export const getTotal = createAsyncThunk(
+  "/total",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpGetData("/statistic/record");
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
+
 export const createRecord = createAsyncThunk(
   "/create-record",
   async (params, { rejectWithValue }) => {
@@ -129,6 +143,17 @@ const recordSlice = createSlice({
         state.loadDeleteDataStatus = loadStatus.Success;
       })
       .addCase(deleteRecord.rejected, (state, action) => {
+        state.loadDeleteDataStatus = loadStatus.Failed;
+      })
+      .addCase(getTotal.pending, (state, action) => {
+        state.loadDeleteDataStatus = loadStatus.Loading;
+      })
+      .addCase(getTotal.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDeleteDataStatus = loadStatus.Success;
+      })
+      .addCase(getTotal.rejected, (state, action) => {
+        state.data = [];
         state.loadDeleteDataStatus = loadStatus.Failed;
       });
   },
