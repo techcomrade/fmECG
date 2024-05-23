@@ -13,13 +13,13 @@ app:
 
 # đảm bảo phải make app trước để vào terminal của container nhằm update package npm i, ...
 node:
-	docker exec -it node_fmecg sh
+	docker exec -it node-fmecg sh
 
 db:
-	docker exec -it database_fmecg sh
+	docker exec -it database-fmecg sh
 
 bin:
-	docker exec -it bin_fmecg sh
+	docker exec -it bin-fmecg sh
 
 
 
