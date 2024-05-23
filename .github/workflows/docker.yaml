@@ -16,6 +16,9 @@ jobs:
             image: thaidmfinnick/fmecg-bin-login
           - dockerfile: ./proxy/Dockerfile
             image: thaidmfinnick/fmecg-proxy
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout
