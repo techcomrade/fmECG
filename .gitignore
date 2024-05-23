@@ -148,3 +148,4 @@ latex_thesis/main.pdf
 *.snm
 
 /docker
+/server_chat
