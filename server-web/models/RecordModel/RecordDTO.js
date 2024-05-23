@@ -25,7 +25,7 @@ const Record = sequelize.define("records", {
       key: "id",
     },
   },
-  device_type: {
+  record_type: {
     type: Sequelize.INTEGER,
     allowNull: false,
   },

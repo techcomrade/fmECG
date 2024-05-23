@@ -4,12 +4,13 @@ import {
   httpPostData,
 } from "../../api/common.api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { API_URL } from "../../configs/config";
 export const loadStatus = {
-    None: 0,
-    Loading: 1,
-    Success: 2,
-    Failed: 3,
-  };
+  None: 0,
+  Loading: 1,
+  Success: 2,
+  Failed: 3,
+};
 
 export const getRecord = createAsyncThunk(
   "/record",
@@ -38,7 +39,19 @@ export const createRecord = createAsyncThunk(
     }
   }
 );
-
+export const checkRecordFile = createAsyncThunk(
+  "/check-record-file",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpGetData(`/record/check-file/${params}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
 export const updateRecord = createAsyncThunk(
   "/update-record",
   async (params, { rejectWithValue }) => {
@@ -66,7 +79,12 @@ export const deleteRecord = createAsyncThunk(
     }
   }
 );
-
+export const downloadRecordFile = (id) =>{
+  const downloadPath = `${API_URL}/record/download/${id}`;
+  if(downloadPath){
+    window.open(downloadPath);
+  }
+}
 const recordSlice = createSlice({
   name: "record",
   initialState: {
@@ -75,6 +93,7 @@ const recordSlice = createSlice({
     loadCreateDataStatus: loadStatus.None,
     loadUpdateDataStatus: loadStatus.None,
     loadDeleteDataStatus: loadStatus.None,
+    loadCheckRecordStatus: loadStatus.None,
   },
   reducers: {
     resetLoadDataStatus: (state, action) => {
@@ -89,6 +108,9 @@ const recordSlice = createSlice({
     },
     resetDeleteDataStatus: (state, action) => {
       state.loadDeleteDataStatus = loadStatus.None;
+    },
+    resetCheckRecordStatus: (state, action) => {
+      state.loadCheckRecordStatus = loadStatus.None;
     },
   },
   extraReducers: (builder) => {
@@ -130,6 +152,15 @@ const recordSlice = createSlice({
       })
       .addCase(deleteRecord.rejected, (state, action) => {
         state.loadDeleteDataStatus = loadStatus.Failed;
+      })
+      .addCase(checkRecordFile.pending, (state, action) => {
+        state.loadCheckRecordStatus = loadStatus.Loading;
+      })
+      .addCase(checkRecordFile.fulfilled, (state, action) => {
+        state.loadCheckRecordStatus = loadStatus.Success;
+      })
+      .addCase(checkRecordFile.rejected, (state, action) => {
+        state.loadCheckRecordStatus = loadStatus.Failed;
       });
   },
 });
@@ -140,5 +171,6 @@ export const {
   resetCreateDataStatus,
   resetUpdateDataStatus,
   resetDeleteDataStatus,
+  resetCheckRecordStatus,
 } = recordSlice.actions;
 export default recordReducer;

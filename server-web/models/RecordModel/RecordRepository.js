@@ -75,7 +75,7 @@ class RecordRepository {
         id: record.id,
         user_id: record.user_id,
         device_id: record.device_id,
-        device_type: record.device_type,
+        record_type: record.record_type,
         start_time: record.start_time,
         end_time: record.end_time,
         data_rec_url: record.data_rec_url,
@@ -91,7 +91,7 @@ class RecordRepository {
       {
         user_id: record.user_id,
         device_id: record.device_id,
-        device_type: record.device_type,
+        record_type: record.record_type,
         start_time: record.start_time,
         end_time: record.end_time,
         data_rec_url: record.data_rec_url,

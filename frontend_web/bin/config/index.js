@@ -1,5 +1,4 @@
-require('dotenv').config({ path: '.env.dev' });
-
+require('dotenv').config({ path: ['.env.prod', '.env.dev'] })
 
 const config = {
     default_app_host: process.env.HOST,

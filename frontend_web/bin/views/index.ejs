@@ -27,7 +27,6 @@
 * {
   font-family: "Poppins", sans-serif;
   margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -86,6 +85,13 @@ body {
   overflow: auto;
 }
 
+select {
+    background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
+    background-position: calc(100% - 1.2rem) center !important;
+    -moz-appearance:none !important;
+    appearance: none !important;
+}
+
 .sign-up-form::-webkit-scrollbar {
   display: none;
 }
@@ -136,6 +142,8 @@ body {
   border-radius: 0.5rem;
   border: 0.125rem solid var(--white);
   outline: none;
+  margin-top: 0.5%;
+  margin-bottom: 1%;
 }
 
 .input-group input:focus {
@@ -162,69 +170,6 @@ body {
 
 .flex-col {
   flex-direction: column;
-}
-
-.social-list {
-  margin: 2rem 0;
-  padding: 1rem;
-  border-radius: 1.5rem;
-  width: 100%;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  transform: scale(0);
-  transition: 0.5s ease-in-out;
-  transition-delay: 1.2s;
-}
-
-.social-list > div {
-  color: var(--white);
-  margin: 0 0.5rem;
-  padding: 0.7rem;
-  cursor: pointer;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transform: scale(0);
-  transition: 0.5s ease-in-out;
-}
-
-.social-list > div:nth-child(1) {
-  transition-delay: 1.4s;
-}
-
-.social-list > div:nth-child(2) {
-  transition-delay: 1.6s;
-}
-
-.social-list > div:nth-child(3) {
-  transition-delay: 1.8s;
-}
-
-.social-list > div:nth-child(4) {
-  transition-delay: 2s;
-}
-
-.social-list > div > i {
-  font-size: 1.5rem;
-  transition: 0.4s ease-in-out;
-}
-
-.social-list > div:hover i {
-  transform: scale(1.5);
-}
-
-.facebook-bg {
-  background-color: var(--facebook-color);
-}
-
-.google-bg {
-  background-color: var(--google-color);
-}
-
-.twitter-bg {
-  background-color: var(--twitter-color);
-}
-
-.insta-bg {
-  background-color: var(--insta-color);
 }
 
 .pointer {
@@ -453,11 +398,20 @@ body {
                 <i class="fa-solid fa-eye" id="show-confirm-password"></i>
               </div>
               <div class="input-group">
+                <i class="bx bxs-gender"></i>
+                <label for="gender-label">Gender </label>
+                  <select id="sign-up-gender">
+                    <option value="">Choose a gender</option>
+                    <option value="0">Male</option>
+                    <option value="1">Female</option>
+                  </select>
+              </div>  
+              <div class="input-group">
                 <i class="bx bxs-role"></i>
                 <label for="role-label">Role </label>
-                  <select id="sign-up-role" required>
+                  <select id="sign-up-role" onchange="roleChange()" required>
                     <option value="">Choose a role</option>
-                    <option value="0">Patient</option>
+                    <option value="0">Admin</option>
                     <option value="1">Doctor</option>
                   </select>
               </div>       
@@ -475,6 +429,11 @@ body {
                 <i class="bx bxs-img"></i>
                 <label for="img">Select an image </label>
                 <input type="file" id="sign-up-img" class="sign-up-input"/>
+              </div>
+              <div class="input-group">
+                <i class="bx bx-info"></i>
+                <label for="info-label">User information</label>
+                <input type="text" placeholder="User information" id="sign-up-info" class="sign-up-input" required />
               </div>
               <button onclick="signupFunction()" >Sign up</button>
               <p class="align-center">
@@ -666,7 +625,8 @@ body {
 
         // const fReader = new FileReader();
         // fReader.readAsDataURL(inputImg);
-
+        const gender = document.querySelector("#sign-up-gender").value;
+        const information = document.querySelector("#sign-up-info").value;
         if(confirmPassword && confirmPassword === password) {
           try {
             const signupResult = await fetch(signupUrl, {
@@ -684,9 +644,12 @@ body {
                 email: email,
                 password: password,
                 role: role,
+                gender: gender,
                 birth: birth,
                 phone_number: phone_number,
                 image: image,
+                status: 1,
+                information: information,
               }),
             });
             if (signupResult.ok) {

@@ -20,7 +20,7 @@ const Header = (item) => {
     document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   });
   localStorage.clear();
-  window.location.reload()
+  window.location.href = '/';
   };
   
   const items = [

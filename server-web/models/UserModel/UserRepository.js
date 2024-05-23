@@ -30,6 +30,14 @@ class UserModel {
     });
   }
 
+  async getUserByName(username) {
+    return await UserDTO.findOne({
+      where: {
+        username: username,
+      },
+    });
+  }
+
   async add(user, t) {
     return await UserDTO.create(
       {
@@ -40,6 +48,8 @@ class UserModel {
         gender: user.gender,
         phone_number: user.phone_number ?? "",
         image: user.image ?? "",
+        status: user.status,
+        information: user.information ?? "",
         role: user.role,
         created_at: Date.now(),
         updated_at: Date.now(),
