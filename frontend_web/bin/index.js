@@ -17,17 +17,12 @@ app.set('views', __dirname + '/views');
 app.use(cookieParser());
 app.use(cors());
 
-const devEnvironment = config.default_app_host === '127.0.0.1';
+// const devEnvironment = config.default_app_host === '127.0.0.1';
 
-app.get("/", (req, res) => {
+app.get("/login", (req, res) => {
   const haveCookie = req.cookies?.access_token;
   if (haveCookie) {
-    if (!devEnvironment){
-      res.render("home");
-    }
-    else {
       res.redirect(config.redirect_url)
-    }
   } else {
     res.render("index", { url: `${config.default_app_host}:${config.default_app_port}/login` });
   }
@@ -35,7 +30,7 @@ app.get("/", (req, res) => {
 
 app.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
-  await fetch(`${config.default_api_url}/auth/login`, {
+  await fetch(`${config.default_api_url}/api/auth/login`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -71,4 +66,10 @@ app.get("/logout", (req, res) => {
   res.clearCookie("access_token");
   res.clearCookie("refresh_token");
   res.send("logout success");
+});
+
+app.listen(app.get("port"), app.get("host"), () => {
+  console.log(
+    `hello Server is running at http://${config.default_app_host}:${config.default_app_port}`
+  );
 });
