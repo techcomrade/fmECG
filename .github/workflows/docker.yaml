@@ -10,16 +10,16 @@ jobs:
         include:
           - dockerfile: ./server-web/Dockerfile
             image: thaidmfinnick/fmecg-node-app
-            context: ./server-web
+            context: server-web
           - dockerfile: ./frontend_web/Dockerfile
             image: thaidmfinnick/fmecg-react-app
-            context: ./frontend_web
+            context: frontend_web
           - dockerfile: ./frontend_web/bin/Dockerfile
             image: thaidmfinnick/fmecg-bin-login
-            context: ./frontend_web/bin
+            context: frontend_web/bin
           - dockerfile: ./proxy/Dockerfile
             image: thaidmfinnick/fmecg-proxy
-            context: ./proxy
+            context: proxy
 
     permissions:
       contents: read
