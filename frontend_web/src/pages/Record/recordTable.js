@@ -15,7 +15,7 @@ import {
   resetCheckRecordStatus,
   downloadRecordFile
 } from "../../redux/reducer/recordSlice";
-import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
+import { convertDateToTime, convertTimeToDateTime } from "../../utils/dateUtils";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { getLocalStorage } from "../../utils/storageUtils";
@@ -206,8 +206,8 @@ const RecordTable = () => {
       const rawData = dataState.data.metadata;
       const data = rawData.map((element, index) => ({
         ...element,
-        start_time: convertTimeToDate(element.start_time),
-        end_time: convertTimeToDate(element.end_time),
+        start_time: convertTimeToDateTime(element.start_time),
+        end_time: convertTimeToDateTime(element.end_time),
       }));
       setData(data);
     }
