@@ -31,7 +31,7 @@ app.get("/login", (req, res) => {
 
 app.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
-  await fetch(`${config.default_api_url}/api/auth/login`, {
+  await fetch(`${config.default_api_url}/auth/login`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -56,7 +56,7 @@ app.post("/login", async (req, res, next) => {
         });
         res.cookie("refresh_token", userInfo.metadata.refresh_token);
         res.cookie("role", userInfo.metadata.role);
-        res.cookie("api", config.default_api_url);
+        res.cookie("api", `${config.redirect_url}/api`);
         return res.status(200).json("login successfully");
       }
       return res.status(400).json("login failed");
