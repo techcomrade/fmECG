@@ -1,6 +1,5 @@
 name: Automatic build and push images to Docker
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   docker:
