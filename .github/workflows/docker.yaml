@@ -2,7 +2,7 @@ name: Automatic build and push images to Docker
 on: workflow_dispatch
 
 jobs:
-  docker:
+  docker-build:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -20,6 +20,7 @@ jobs:
           - dockerfile: ./proxy/Dockerfile
             image: thaidmfinnick/fmecg-proxy
             context: ./proxy
+    name: Docker Build ${{ matrix.image }}
 
     permissions:
       contents: read
