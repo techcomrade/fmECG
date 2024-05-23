@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import DataTable from "../../components/Table/dataTable";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   createRecord,
   deleteRecord,
@@ -10,17 +10,21 @@ import {
   resetUpdateDataStatus,
   updateRecord,
   loadStatus,
-  resetLoadDataStatus
+  resetLoadDataStatus,
+  checkRecordFile,
+  resetCheckRecordStatus,
+  downloadRecordFile
 } from "../../redux/reducer/recordSlice";
 import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { getLocalStorage } from "../../utils/storageUtils";
 import ModalChart from "../../components/Modal/ModalChart";
-import { Button, Input, Space } from "antd";
-import { SearchOutlined } from '@ant-design/icons';
+import { Button, Input, Space, Modal } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import { httpGetData } from "../../api/common.api";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
+import { CloudDownloadOutlined } from "@ant-design/icons";
 
 const RecordTable = () => {
   const dispatch = useDispatch();
@@ -28,10 +32,10 @@ const RecordTable = () => {
   const [selectedData, setSelectedData] = useState([]);
   const [dataTable, setData] = useState([]);
   const [openChart, setOpenChart] = useState(false);
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
   const [dropdownData, setDropData] = useState([]);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const searchInput = useRef(null);
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
@@ -45,11 +49,17 @@ const RecordTable = () => {
 
   const handleReset = (clearFilters) => {
     clearFilters();
-    setSearchText('');
+    setSearchText("");
   };
 
   const getColumnSearchProps = (dataIndex, title) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
       <div
         style={{
           padding: 8,
@@ -60,11 +70,13 @@ const RecordTable = () => {
           ref={searchInput}
           placeholder={`Tìm kiếm ${title}`}
           value={selectedKeys[0]}
-          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{
             marginBottom: 8,
-            display: 'block',
+            display: "block",
           }}
         />
         <Space>
@@ -80,7 +92,7 @@ const RecordTable = () => {
             Search
           </Button>
           <Button
-            onClick={() =>  {
+            onClick={() => {
               clearFilters && handleReset(clearFilters);
               handleSearch(selectedKeys, confirm, dataIndex);
             }}
@@ -97,7 +109,7 @@ const RecordTable = () => {
     filterIcon: (filtered) => (
       <SearchOutlined
         style={{
-          color: filtered ? '#1677ff' : undefined,
+          color: filtered ? "#1677ff" : undefined,
         }}
       />
     ),
@@ -108,10 +120,7 @@ const RecordTable = () => {
         setTimeout(() => searchInput.current?.select(), 100);
       }
     },
-    render: (text) =>
-      searchedColumn === dataIndex ? text : (
-        text
-      ),
+    render: (text) => (searchedColumn === dataIndex ? text : text),
   });
 
   const columns = [
@@ -128,7 +137,7 @@ const RecordTable = () => {
       type: "select",
       dataSelect: dropdownData.user,
       isEdit: true,
-      hidden: true
+      hidden: true,
     },
     {
       title: "Tên thiết bị",
@@ -143,15 +152,22 @@ const RecordTable = () => {
       type: "select",
       dataSelect: dropdownData.device,
       isEdit: true,
-      hidden: true
+      hidden: true,
     },
     {
       title: "Loại bản ghi",
-      dataIndex: "device_type",
-      key: "information",
+      dataIndex: "record_type",
+      key: "record_type",
       type: "text",
       isEdit: true,
-      ...getColumnSearchProps('device_type', 'loại bản ghi'),
+      ...getColumnSearchProps("record_type", "loại bản ghi"),
+    },
+    {
+      title: "tên bản ghi",
+      dataIndex: "record_name",
+      key: "record_name",
+      type: "text",
+      isEdit: false,
     },
     {
       title: "Ngày bắt đầu",
@@ -159,8 +175,7 @@ const RecordTable = () => {
       key: "start_time",
       type: "date",
       isEdit: true,
-      ...getColumnSearchProps('start_time', 'ngày bắt đầu'),
-    
+      ...getColumnSearchProps("start_time", "ngày bắt đầu"),
     },
     {
       title: "Ngày kết thúc",
@@ -168,20 +183,20 @@ const RecordTable = () => {
       key: "end_time",
       type: "date",
       isEdit: true,
-      ...getColumnSearchProps('end_time', 'ngày kết thúc'),
+      ...getColumnSearchProps("end_time", "ngày kết thúc"),
     },
   ];
 
   useEffect(() => {
     dispatch(getRecord());
-    const getOptionData = async() => {
-      const userData = await httpGetData('/user');
-      const deviceData = await httpGetData('/device');
+    const getOptionData = async () => {
+      const userData = await httpGetData("/user");
+      const deviceData = await httpGetData("/device");
       setDropData({
         user: userData.metadata,
-        device: deviceData.metadata
-      })
-    }
+        device: deviceData.metadata,
+      });
+    };
     getOptionData();
   }, []);
 
@@ -239,7 +254,7 @@ const RecordTable = () => {
   const handleSubmitAddFunction = (data) => {
     dispatch(createRecord(handleData(data)));
   };
-  
+
   const handleData = (data) => {
     let deviceData = data;
     Object.keys(data).forEach((key) => {
@@ -250,9 +265,35 @@ const RecordTable = () => {
     deviceData = {
       ...deviceData,
       user_id: user_id,
-      data_rec_url: 'http'
-    }
+      data_rec_url: "http",
+    };
     return deviceData;
+  };
+  const renderDownloadButton = () => (
+    <>
+      {selectedData.length === 1 && (
+        <>
+          <Button
+            icon={<CloudDownloadOutlined />}
+            className="edit-btn"
+            onClick={() => {
+              dispatch(checkRecordFile(selectedData[0]))
+              setIsModalOpen(true)
+            }}
+          >
+            Download
+          </Button>
+        </>
+      )}
+    </>
+  );
+  const handleOk = () => {
+    downloadRecordFile(selectedData[0]);
+    setIsModalOpen(false)
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    dispatch(resetCheckRecordStatus())
   };
 
   return (
@@ -266,11 +307,12 @@ const RecordTable = () => {
         deleteFunction={handleDeleteFunction}
         name="Bảng quản lý record"
         data={dataTable}
-        column={columns.filter(item => !item.hidden)}
+        column={columns}
         updateSelectedData={setSelectedData}
         loading={dataState.loadDataStatus === loadStatus.Loading}
         chartButton
         openChart={() => setOpenChart(true)}
+        customButton={renderDownloadButton()}
       />
       <ModalControlData
         ref={modalUpdateRef}
@@ -282,11 +324,21 @@ const RecordTable = () => {
         title="Thêm record mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
       />
-      <ModalChart 
+      <ModalChart
         isOpen={openChart}
         setIsOpen={setOpenChart}
         selectedDevice={selectedData}
       />
+      <Modal
+        title="Download record status"
+        open={isModalOpen}
+        onOk={handleOk}
+        okText="Download"
+        confirmLoading = {dataState.loadCheckRecordStatus !== loadStatus.Success}
+        onCancel={handleCancel}
+      >
+       {dataState.loadCheckRecordStatus !== loadStatus.Success ? "Bản ghi đang được chuẩn bị để tải về... " : "Bản ghi đã sẵn sàng tải về"} 
+      </Modal>
     </>
   );
 };

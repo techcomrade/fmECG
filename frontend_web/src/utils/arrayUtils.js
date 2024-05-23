@@ -20,3 +20,5 @@ export const checkDateTypeKey = (key) => {
 }
 
 export const dummyArray = (length) => Array.from({length}, () => Math.floor(Math.random() * length));
+
+export const dummyIncreaseArray = (length) => Array.from(Array(length).keys());

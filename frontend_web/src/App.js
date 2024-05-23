@@ -4,6 +4,7 @@ import NotAuth from "./pages/NotAuth/notauth";
 function App() {
   
   const hasCookie = window.hasCookie;
+  console.log(hasCookie);
   return (
       <div className="App">
         {!hasCookie.user_id ? <NotAuth />: <DefaultLayout />}

@@ -109,6 +109,7 @@ CREATE TABLE `devices`(
     `device_type` int NOT NULL,
     `start_date` bigint NOT NULL,
     `end_date` bigint NOT NULL,
+    `status` int NOT NULL,
     `created_at` bigint,
     `updated_at` bigint,
     `dummy_data` boolean default 0
@@ -131,10 +132,10 @@ CREATE TABLE `records` (
    `id` varchar(255) NOT NULL,
    `user_id` varchar(255),
    `device_id` varchar(255),
-   `device_type` int NOT NULL,
+   `record_type` int NOT NULL,
    `start_time` bigint NOT NULL,
    `end_time` bigint NOT NULL,
-   `data_rec_url` varchar(45) NOT NULL,
+   `data_rec_url` varchar(255),
    `created_at` bigint,
    `updated_at` bigint,
    `dummy_data` boolean default 0
@@ -254,14 +255,14 @@ VALUES('65sd8373-78gc-b38s-77sg-2hj7hd890b2s', 'Dr Strange', 'Hello world', 'b5d
 INSERT INTO `news`(`id`,`title`, `content`, `category_id`, `author`, `url`, `image`, `created_at`, `updated_at`)
 VALUES('0dc699f3-15a1-42f6-8199-35b122d3e48f', 'Dr Fate', 'Hi world', '1272d710-00ab-4e40-b740-60eb6df36354', 'duong', 'https://www.youtube.com/watch?v=1zAHkRGJ0s8', '102120abde', '1711122410782', '1711122410782');
 
-INSERT INTO `devices`(`id`, `user_id`, `device_name`, `information`, `device_type`, `start_date`, `end_date`, `created_at`, `updated_at`)
-VALUES('2a3cec92-682a-4d4e-be35-aff01cc5011a', '4df9ace1-0229-4756-b850-51a83cb0bb6e', 'Microlife Watch BP Home', 'do ap suat mau', 1, '1711189128343', '1711239128586', '1711189128343', '1711189318343');
+INSERT INTO `devices`(`id`, `user_id`, `device_name`, `information`, `device_type`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`)
+VALUES('2a3cec92-682a-4d4e-be35-aff01cc5011a', '4df9ace1-0229-4756-b850-51a83cb0bb6e', 'Microlife Watch BP Home', 'do ap suat mau', 1, '1711189128343', '1711239128586', 1, '1711189128343', '1711189318343');
 
-INSERT INTO `devices`(`id`, `user_id`, `device_name`, `information`, `device_type`, `start_date`, `end_date`, `created_at`, `updated_at`)
-VALUES('4404f003-1192-4aae-86e0-69dc273f181c', '4df9ace1-0229-4756-b850-51a83cb0bb6e', 'ECG', 'do dien tim', 2, '1711239328586', '1711319128906', '1711239328586', '1711269112606');
+INSERT INTO `devices`(`id`, `user_id`, `device_name`, `information`, `device_type`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`)
+VALUES('4404f003-1192-4aae-86e0-69dc273f181c', '4df9ace1-0229-4756-b850-51a83cb0bb6e', 'ECG', 'do dien tim', 2, '1711239328586', '1711319128906', 0, '1711239328586', '1711269112606');
 
-INSERT INTO `devices`(`id`, `user_id`, `device_name`, `information`, `device_type`, `start_date`, `end_date`, `created_at`, `updated_at`)
-VALUES('f224fd99-53fd-44c5-bcd4-5b6e3c960e78', '37ae5629-54ec-46e0-be65-9af6bd580b2b', 'ECG', 'do dien tim', 2, '1711324367820', '1711434712320', '1711324367820', '1711364367231');
+INSERT INTO `devices`(`id`, `user_id`, `device_name`, `information`, `device_type`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`)
+VALUES('f224fd99-53fd-44c5-bcd4-5b6e3c960e78', '37ae5629-54ec-46e0-be65-9af6bd580b2b', 'ECG', 'do dien tim', 2, '1711324367820', '1711434712320', 1, '1711324367820', '1711364367231');
 
 INSERT INTO `device_frequency` (`id`, `device_id`, `frequency_name`, `information`, `value`, `created_at`, `updated_at`) 
 VALUES ('f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '4404f003-1192-4aae-86e0-69dc273f181c', 'spo2(ms)', 'tín hiệu điện tim', 100, '1711115945125', '1711115945125');
@@ -278,19 +279,19 @@ VALUES ('f86068c7-08ed-4dfc-b96d-e0e1c0ae29df', 'f224fd99-53fd-44c5-bcd4-5b6e3c9
 INSERT INTO `device_frequency` (`id`, `device_id`, `frequency_name`, `information`, `value`, `created_at`, `updated_at`) 
 VALUES ('f86068c7-08ed-4dfc-b96d-e0e1c0ae08df', 'f224fd99-53fd-44c5-bcd4-5b6e3c960e78', 'p2(ms)', 'tín hiệu điện tim', 100, '1711115945125', '1711115945125');
 
-INSERT INTO `records`(`id`, `user_id`, `device_id`, `device_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
+INSERT INTO `records`(`id`, `user_id`, `device_id`, `record_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
 VALUES('c9e6669b-f58f-47c7-80b8-43a4163553ff', '4df9ace1-0229-4756-b850-51a83cb0bb6e', '2a3cec92-682a-4d4e-be35-aff01cc5011a', 1, '1711189128343', '1711239128586', 'https://www.verywellhealth.com/best-blood-pressure-monitors-4158050/quyentran', '1711189128343', '1711229128712');
 
 INSERT INTO `blood_pressure_rec`(`id`, `rec_id`)
 VALUES('103ed2e8-24a7-46e2-acad-4a54de5eea02', 'c9e6669b-f58f-47c7-80b8-43a4163553ff');
 
-INSERT INTO `records`(`id`, `user_id`, `device_id`, `device_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
+INSERT INTO `records`(`id`, `user_id`, `device_id`, `record_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
 VALUES('c0f31b49-2449-45fa-8c93-55da998687f4', '4df9ace1-0229-4756-b850-51a83cb0bb6e', '4404f003-1192-4aae-86e0-69dc273f181c', 2, '1711239328586', '1711319128906', 'https://www.docosan.com/blog/tim-mach/dien-tim/quyentran', '1711239328586', '1711288127320');
 
 INSERT INTO `heart_rec`(`id`, `rec_id`)
 VALUES('4e9f6245-b8c7-47a9-b44d-469a8ee91f2c', 'c0f31b49-2449-45fa-8c93-55da998687f4');
 
-INSERT INTO `records`(`id`, `user_id`, `device_id`, `device_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
+INSERT INTO `records`(`id`, `user_id`, `device_id`, `record_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
 VALUES('c2c9f725-2a71-4c5a-b3d2-6a4d774a1a42', '37ae5629-54ec-46e0-be65-9af6bd580b2b', 'f224fd99-53fd-44c5-bcd4-5b6e3c960e78', 2, '1711324367820', '1711434712320', 'https://www.youtube.com/dung', '1711324367820', '1711374913710');
 
 INSERT INTO `heart_rec`(`id`, `rec_id`)

@@ -5,14 +5,14 @@ import { useState, useEffect } from 'react';
 import './DefaultLayout.css'
 import { getLocalStorage } from '../../utils/storageUtils';
 import { Routes } from "../route";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
 const { Header, Content, Sider } = Layout;
 
 const DefaultLayout = ({children}) => {
     const userName = getLocalStorage('username');
     return(
-        <BrowserRouter>
+        <HashRouter>
         <div>
             <Layout style={{ height: "100vh" }}>
                 <Header className="header-bar">
@@ -30,7 +30,7 @@ const DefaultLayout = ({children}) => {
                 </Layout>
             </Layout>
         </div>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 

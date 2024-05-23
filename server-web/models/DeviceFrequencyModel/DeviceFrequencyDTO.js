@@ -36,6 +36,10 @@ const DeviceFrequency = sequelize.define("device_frequency", {
     type: Sequelize.BOOLEAN,
     defaultValue: true,
   },
-});
+},{
+  timestamps: false,
+  freezeTableName: true,
+}
+);
 
 module.exports = DeviceFrequency;
