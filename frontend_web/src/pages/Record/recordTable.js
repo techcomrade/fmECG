@@ -248,15 +248,15 @@ const RecordTable = () => {
   };
 
   const handleSubmitEditUser = (data) => {
-    dispatch(updateRecord(handleData(data)));
+    return dispatch(updateRecord(handleData(data)));
   };
 
   const handleSubmitAddFunction = (data) => {
-    dispatch(createRecord(handleData(data)));
+    return dispatch(createRecord(handleData(data)));
   };
 
   const handleData = (data) => {
-    let deviceData = data;
+    let deviceData = { ...data};
     Object.keys(data).forEach((key) => {
       if (checkDateTypeKey(key)) {
         deviceData[key] = convertDateToTime(data[key]);

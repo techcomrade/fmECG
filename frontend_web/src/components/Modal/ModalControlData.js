@@ -14,9 +14,11 @@ const ModalComponent = (props, ref) => {
     setData({ ...preState });
   };
 
-  const handleSubmit = () => {
-      props?.submitFunction(data);
-      setIsOpen(false);
+  const handleSubmit = async () => {
+      const res = await props?.submitFunction(data);
+      if (!res?.error) {
+        setIsOpen(false);
+      }
   }
 
   useImperativeHandle(ref, () => ({

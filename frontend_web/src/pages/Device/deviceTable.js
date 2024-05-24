@@ -129,18 +129,15 @@ const DeviceTable = () => {
   };
 
   const handleSubmitEditUser = (data) => {
-    dispatch(updateDevice(handleData(data)));
-    dispatch(resetUpdateDataStatus());
+    return dispatch(updateDevice(handleData(data)));
   };
 
   const handleSubmitAddFunction = (data) => {
-    console.log("hello");
-    dispatch(createDevice(handleData(data)));
-    dispatch(resetCreateDataStatus());
+    return dispatch(createDevice(handleData(data)));
   };
 
   const handleData = (data) => {
-    var deviceData = data;
+    let deviceData = {...data};
     Object.keys(data).forEach((key) => {
       if (checkDateTypeKey(key)) {
         deviceData[key] = convertDateToTime(data[key]);

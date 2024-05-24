@@ -115,13 +115,13 @@ const UserTable = () => {
   };
 
   const handleSubmitEditUser = (data) => {
-    const {account_id, devices, role, ...userData} = data;
+    const {account_id, devices, role, ...userData} = {...data};
     Object.keys(data).forEach((key) => {
       if (checkDateTypeKey(key)) {
         userData[key] = convertDateToTime(data[key]);
       }
     });
-    dispatch(updateUser(userData));
+    return dispatch(updateUser(userData));
   };
 
   return (
