@@ -2,6 +2,7 @@ const DeviceService = require("../services/DeviceService");
 const UserService = require("../services/UserService");
 const RecordService = require("../services/RecordService");
 const DeviceFreqService = require("../services/DeviceFrequencyService");
+const StatisticService = require("../services/StatisticService");
 
 class DeviceController {
   async getAllData(req, res) {
@@ -227,6 +228,15 @@ class DeviceController {
     return res.status(200).json({
       message: "Get device by device name successful!",
       metadata: deviceByDeviceName,
+    });
+  }
+
+  async countDevice(req, res, next) {
+    console.log(`[P]:::Count device: `);
+    const countDevice = await StatisticService.getStatistics();
+    return res.status(200).json({
+      message: "Count device successful!",
+      metadata: countDevice.device_count,
     });
   }
 }

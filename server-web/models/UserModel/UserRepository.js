@@ -1,5 +1,6 @@
-const { where } = require("sequelize");
+const { where, Sequelize } = require("sequelize");
 const UserDTO = require("./UserDTO");
+const sequelize = require("../../config/sequelize");  
 
 class UserModel {
   async getAllData() {
@@ -105,6 +106,15 @@ class UserModel {
         },
       }
     );
+  }
+
+  async countUser(){
+    const totalUsers = await UserDTO.findAll({
+      attributes: [
+        [Sequelize.fn('COUNT', sequelize.col('id')), 'user_count']
+      ],
+    });
+    return totalUsers;
   }
 }
 

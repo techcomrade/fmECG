@@ -1,5 +1,6 @@
 const { response } = require("express");
 const RecordService = require("../services/RecordService");
+const StatisticService = require("../services/StatisticService");
 const fs = require('fs');
 class RecordController {
   async getAll(req, res, next) {
@@ -243,6 +244,15 @@ class RecordController {
         message: "file not found"
        });
     }
+  }
+
+  async countRecord(req, res, next) {
+    console.log(`[P]:::Count record: `);
+    const countRecord = await StatisticService.getStatistics();
+    return res.status(200).json({
+      message: "Count record successful!",
+      metadata: countRecord.record_count,
+    });
   }
 }
 

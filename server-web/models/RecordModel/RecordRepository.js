@@ -1,5 +1,6 @@
 const { Sequelize } = require("sequelize");
 const RecordDTO = require("./RecordDTO");
+const sequelize = require("../../config/sequelize");
 class RecordRepository {
   async getAllData() {
     return await RecordDTO.findAll();
@@ -119,6 +120,15 @@ class RecordRepository {
         transaction: t,
       }
     );
+  }
+
+  async countRecord(){
+    const totalRecord = await RecordDTO.findAll({
+      attributes: [
+        [Sequelize.fn('COUNT', sequelize.col('id')), 'record_count']
+      ],
+    });
+    return totalRecord;
   }
 }
 module.exports = new RecordRepository();

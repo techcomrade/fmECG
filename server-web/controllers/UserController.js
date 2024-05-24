@@ -1,4 +1,5 @@
-const UserService = require('../services/UserService')
+const UserService = require('../services/UserService');
+const StatisticService = require('../services/StatisticService');
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 
@@ -64,6 +65,15 @@ class UserController {
         message: 'Error when delete user!'
       });
     }
+  }
+
+  async countUser(req, res, next) {
+    console.log(`[P]:::Count user: `);
+    const countUser = await StatisticService.getStatistics();
+    return res.status(200).json({
+      message: "Count user successful!",
+      metadata: countUser.user_count,
+    });
   }
 }
 
