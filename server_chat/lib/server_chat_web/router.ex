@@ -32,6 +32,10 @@ defmodule ServerChatWeb.Router do
     end
   end
   
+  scope "/github", ServerChatWeb do
+    post "/handle_event", GithubController, :handle_event
+  end
+  
   scope "/", ServerChatWeb do
     pipe_through :browser
   end

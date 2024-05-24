@@ -49,6 +49,8 @@ defmodule ServerChat.MixProject do
         commit: "f64bf92",
         runtime: false
       },
+      {:quantum, "~> 3.0"},
+      {:tzdata, "~> 1.1"}
     ]
   end
 
