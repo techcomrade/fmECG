@@ -98,6 +98,7 @@ const DeviceTable = () => {
   useEffect(() => {
     if (dataState.loadUpdateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã sửa thiết bị thành công");
+      dispatch(resetUpdateDataStatus());
       dispatch(getDevice());
     }
   }, [dataState.loadUpdateDataStatus]);
@@ -105,20 +106,21 @@ const DeviceTable = () => {
   useEffect(() => {
     if (dataState.loadDeleteDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã xoá thiết bị thành công");
+      dispatch(resetDeleteDataStatus());
       dispatch(getDevice());
     }
   }, [dataState.loadDeleteDataStatus]);
 
   useEffect(() => {
     if (dataState.loadCreateDataStatus === loadStatus.Success) {
-      showNotiSuccess("Bạn đã xoá thiết bị thành công");
+      showNotiSuccess("Bạn đã tạo thiết bị thành công");
+      dispatch(resetCreateDataStatus());
       dispatch(getDevice());
     }
   }, [dataState.loadCreateDataStatus]);
 
   const handleDeleteFunction = (id) => {
     dispatch(deleteDevice({ id: id }));
-    dispatch(resetDeleteDataStatus());
   };
 
   const handleEditFunction = () => {

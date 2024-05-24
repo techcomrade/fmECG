@@ -217,24 +217,24 @@ const RecordTable = () => {
   useEffect(() => {
     if (dataState.loadUpdateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã sửa thiết bị thành công");
-      dispatch(getRecord());
       dispatch(resetUpdateDataStatus());
+      dispatch(getRecord());
     }
   }, [dataState.loadUpdateDataStatus]);
 
   useEffect(() => {
     if (dataState.loadDeleteDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã xoá thiết bị thành công");
-      dispatch(getRecord());
       dispatch(resetDeleteDataStatus());
+      dispatch(getRecord());
     }
   }, [dataState.loadDeleteDataStatus]);
 
   useEffect(() => {
     if (dataState.loadCreateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã thêm thiết bị thành công");
-      dispatch(getRecord());
       dispatch(resetCreateDataStatus());
+      dispatch(getRecord());
     }
   }, [dataState.loadCreateDataStatus]);
 
@@ -269,6 +269,7 @@ const RecordTable = () => {
     };
     return deviceData;
   };
+  
   const renderDownloadButton = () => (
     <>
       {selectedData.length === 1 && (

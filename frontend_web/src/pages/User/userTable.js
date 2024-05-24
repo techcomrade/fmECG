@@ -88,16 +88,16 @@ const UserTable = () => {
   useEffect(() => {
     if (dataState.loadUpdateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã sửa thông tin người dùng thành công");
-      dispatch(getUser());
       dispatch(resetUpdateDataStatus());
+      dispatch(getUser());
     }
   }, [dataState.loadUpdateDataStatus]);
 
   useEffect(() => {
     if (dataState.loadDeleteDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã xoá người dùng thành công ");
-      dispatch(getUser());
       dispatch(resetDeleteDataStatus());
+      dispatch(getUser());
     }
   }, [dataState.loadDeleteDataStatus]);
 
