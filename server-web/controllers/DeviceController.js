@@ -2,7 +2,6 @@ const DeviceService = require("../services/DeviceService");
 const UserService = require("../services/UserService");
 const RecordService = require("../services/RecordService");
 const DeviceFreqService = require("../services/DeviceFrequencyService");
-const StatisticService = require("../services/StatisticService");
 
 class DeviceController {
   async getAllData(req, res) {

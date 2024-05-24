@@ -1,6 +1,5 @@
 const { Sequelize } = require("sequelize");
 const RecordDTO = require("./RecordDTO");
-const sequelize = require("../../config/sequelize");
 class RecordRepository {
   async getAllData() {
     return await RecordDTO.findAll();

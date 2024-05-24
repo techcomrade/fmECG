@@ -4,7 +4,6 @@ const {
   convertTimeToString,
 } = require("../../utils/processTime");
 const DeviceDTO = require("./DeviceDTO");
-const sequelize = require("../../config/sequelize");
 class DeviceModel {
   async getAllData() {
     const devices = await DeviceDTO.findAll({

@@ -1,5 +1,4 @@
 const UserService = require('../services/UserService');
-const StatisticService = require('../services/StatisticService');
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 
