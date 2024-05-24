@@ -146,3 +146,8 @@ out/
 latex_thesis/main.pdf
 *.nav
 *.snm
+
+/docker
+/frontend_web
+/mobile_app
+/server-web
