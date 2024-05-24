@@ -411,7 +411,7 @@ select {
                 <label for="role-label">Role </label>
                   <select id="sign-up-role" onchange="roleChange()" required>
                     <option value="">Choose a role</option>
-                    <option value="0">Patient</option>
+                    <option value="0">Admin</option>
                     <option value="1">Doctor</option>
                   </select>
               </div>       
@@ -429,17 +429,6 @@ select {
                 <i class="bx bxs-img"></i>
                 <label for="img">Select an image </label>
                 <input type="file" id="sign-up-img" class="sign-up-input"/>
-              </div>
-              <div class="input-group">
-                <i class="bx bxs-status"></i>
-                <label for="status-label">Status </label>
-                  <select id="sign-up-status" required>
-                    <option value="" id="stt">Choose a status (Please choose a role first)</option>
-                    <option value="0" id="stt-0">Retired</option>
-                    <option value="1" id="stt-1">Working</option>
-                    <option value="2" id="stt-2">Under treatment</option>
-                    <option value="3" id="stt-3">Discharged</option>
-                  </select>
               </div>
               <div class="input-group">
                 <i class="bx bx-info"></i>
@@ -569,26 +558,6 @@ select {
         }
       })
 
-      document.querySelector("#stt-0").style.display = "none";
-      document.querySelector("#stt-1").style.display = "none";
-      document.querySelector("#stt-2").style.display = "none";
-      document.querySelector("#stt-3").style.display = "none";
-      function roleChange() {
-        const signUpRole = document.querySelector("#sign-up-role");
-        if(signUpRole.value == 1) {
-          document.querySelector("#stt-0").style.display = "block";
-          document.querySelector("#stt-1").style.display = "block";
-          document.querySelector("#stt-2").style.display = "none";
-          document.querySelector("#stt-3").style.display = "none";
-        }
-        if(signUpRole.value == 0) {
-          document.querySelector("#stt-2").style.display = "block";
-          document.querySelector("#stt-3").style.display = "block";
-          document.querySelector("#stt-0").style.display = "none";
-          document.querySelector("#stt-1").style.display = "none";
-        }
-      }
-
       let container = document.getElementById("container");
 
       const toggle = () => {
@@ -657,7 +626,6 @@ select {
         // const fReader = new FileReader();
         // fReader.readAsDataURL(inputImg);
         const gender = document.querySelector("#sign-up-gender").value;
-        const status = document.querySelector("#sign-up-status").value;
         const information = document.querySelector("#sign-up-info").value;
         if(confirmPassword && confirmPassword === password) {
           try {
@@ -680,7 +648,7 @@ select {
                 birth: birth,
                 phone_number: phone_number,
                 image: image,
-                status: status,
+                status: 1,
                 information: information,
               }),
             });

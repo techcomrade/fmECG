@@ -20,9 +20,15 @@ class AuthenService extends CommonService {
           accountData.dataValues.password
         );
         if (!result) return result;
-        const access_token = TokenService.renderToken(accountData.dataValues.id, expiredTime);
+        const accountInfo = await UserRepository.getUserByAccountId(accountData.dataValues?.id)
+        if (!accountInfo) return false;
+        const userInfo = {
+          id: accountData.dataValues.id,
+          role: accountInfo.dataValues.role
+        }
+        const access_token = TokenService.renderToken(userInfo, expiredTime);
         const refresh_token = TokenService.renderToken(
-          accountData.dataValues.id,
+          userInfo,
           120
         );
         var token = {
@@ -33,7 +39,6 @@ class AuthenService extends CommonService {
           created_at: Number(new Date()),
         };
         await TokenRepository.add(token);
-        const accountInfo = await UserRepository.getUserByAccountId(accountData.dataValues?.id)
         
         return {...accountInfo.dataValues,
         access_token: access_token,

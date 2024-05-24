@@ -63,27 +63,29 @@ class _LiveChartSampleState extends State<LiveChartSample> {
 
   _saveDataAndSendToServer() async {
     timer?.cancel();
-    _chartSeriesControllerPCG = null;
-    _chartSeriesControllerPPG = null;
+
     final DateTime stopTime = DateTime.now();            
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    final Map userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
+    // final SharedPreferences preferences = await SharedPreferences.getInstance();
+    // final Map userDataDecoded = json.decode((preferences.getString('userData') ?? ""));
 
-    if (userDataDecoded["roleId"] == -1 || userDataDecoded["token"] == "") {
-      return Utils.showDialogLoginRequirement(context);
-    }
+    // if (userDataDecoded["roleId"] == -1 || userDataDecoded["token"] == "") {
+    //   return Utils.showDialogLoginRequirement(context);
+    // }
 
-    final int userId = userDataDecoded["userId"] ?? 0;
-    const int deviceId = 2;
+    // final int userId = userDataDecoded["userId"] ?? 0;
+    final String deviceId = "2a3cec92-682a-4d4e-be35-aff01cc5011a";
+    final String userId = "4df9ace1-0229-4756-b850-51a83cb0bb6e";
     final String startTimeAsTimeStamp = widget.fileToSave.path.split("/").last.split('.').first;
     final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(int.parse(startTimeAsTimeStamp));
 
     final Map fileUploadInformation = {
-      "filePath": widget.fileToSave.path,
-      "userId": userId,
-      "deviceId": deviceId,
-      "startTime": startTime,
-      "stopTime": stopTime,
+      "file_path": widget.fileToSave.path,
+      "user_id": userId,
+      "device_id": deviceId,
+      "record_type": 3,
+      "start_time": startTime.millisecondsSinceEpoch,
+      "end_time": stopTime.millisecondsSinceEpoch,
+      "device_type": 3,
     };
 
     // send files to db
@@ -93,8 +95,8 @@ class _LiveChartSampleState extends State<LiveChartSample> {
       ECGRecordController.uploadFileToDB(fileUploadInformation);
     });
 
-    final bytesInFile = await widget.fileToSave.readAsBytes();
-    print('zzz:$bytesInFile');
+    // final bytesInFile = await widget.fileToSave.readAsBytes();
+    // print('zzz:$bytesInFile');
     // final data = await platform.invokeMethod('helloWorldPython', {'bytes': bytesInFile});
 
     setState(() {
@@ -224,22 +226,14 @@ class _LiveChartSampleState extends State<LiveChartSample> {
   void _updateDataSource(Timer timer) {
 
     List<int> fakeRows = List.generate(16, (_) => _getRandomInt(1, 244));
-    print("Dữ liệu mẫu giả: $fakeRows");
     List<double> dataChannelsToSave = ECGDataController.handleDataRowFromBluetooth(fakeRows);
-    print("Dữ liệu sau khi chia (test): $dataChannelsToSave");
     List dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(dataChannelsToSave);
-    print("Dữ liệu sau khi xử lý (test): $dataChannelsToShowOnChart");
-    // chartDataPPG.add(newDataPPG);
-    print("Dữ liệu sau khi xử lý (test): ${dataChannelsToShowOnChart[0]}");
-    // chartDataPCG.add(newDataPCG);
-    print("Dữ liệu sau khi xử lý (test): ${dataChannelsToShowOnChart[1]}");
-    // 0 is fake data
     samples.add([0,	0, 0, 0, 0, 0, ...dataChannelsToSave]);
 
     _ChartData newDataPPG = _ChartData(count % 100, (dataChannelsToShowOnChart[0]).round().toDouble()); // Sử dụng % để bắt đầu lại từ 0 sau mỗi 20 điểm
     _ChartData newDataPCG = _ChartData(count % 100, (dataChannelsToShowOnChart[1]).round().toDouble());
 
-    // Nếu đã có đủ 20 điểm dữ liệu, cập nhật điểm dữ liệu thay vì thêm mới
+    // Nếu đã có đủ 100 điểm dữ liệu, cập nhật điểm dữ liệu thay vì thêm mới
     if (chartDataPPG.length == 100) {
       chartDataPPG[count % 100] = newDataPPG; // Thay thế điểm dữ liệu cũ
       chartDataPCG[count % 100] = newDataPCG;

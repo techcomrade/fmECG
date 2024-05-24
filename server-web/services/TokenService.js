@@ -2,11 +2,12 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 class TokenService {
-  renderToken(account_id, expiredTime) {
+  renderToken(account, expiredTime) {
     // expiredTime was minutes
     return jwt.sign(
       {
-        account_id: account_id,
+        account_id: account.id,
+        role: account.role,
         exp: Math.floor(Date.now() / 1000) + expiredTime * 60,
       },
       process.env.JWT_SECRET

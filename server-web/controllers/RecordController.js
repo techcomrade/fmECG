@@ -1,6 +1,6 @@
 const { response } = require("express");
 const RecordService = require("../services/RecordService");
-const fs = require('fs');
+const fs = require("fs");
 class RecordController {
   async getAll(req, res, next) {
     console.log(`[P]:::Get all records: `);
@@ -165,6 +165,7 @@ class RecordController {
       });
     }
   }
+
   async readFileRecord(req, res) {
     console.log(`[P]:::Read file record: `, req.params.id);
     let record = await RecordService.getRecordById(req.params.id);
@@ -220,28 +221,28 @@ class RecordController {
         });
       });
   }
-  async downloadRecordFile(req,res){
+  async downloadRecordFile(req, res) {
     console.log(`[P]:::Download file record: `, req.params.id);
     const filepath = await RecordService.getFilePathById(req.params.id);
     if (fs.existsSync(filepath)) {
       res.download(filepath);
     } else {
       res.status(404).json({
-        message: "file not found"
-       });
+        message: "file not found",
+      });
     }
   }
-  async checkRecordFile(req,res){
+  async checkRecordFile(req, res) {
     console.log(`[P]:::Check file record: `, req.params.id);
     const filepath = await RecordService.getFilePathById(req.params.id);
     if (fs.existsSync(filepath)) {
       res.status(200).json({
-        message: "record file ready to download"
-      })
+        message: "record file ready to download",
+      });
     } else {
       res.status(404).json({
-        message: "file not found"
-       });
+        message: "file not found",
+      });
     }
   }
 }

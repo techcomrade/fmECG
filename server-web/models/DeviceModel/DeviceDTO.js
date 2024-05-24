@@ -35,6 +35,9 @@ const Device = sequelize.define("devices", {
     type: Sequelize.BIGINT,
     allowNull: false,
   },
+  status:{
+    type: Sequelize.INTEGER,
+  },
   created_at: {
     type: Sequelize.BIGINT,
   },

@@ -1,7 +1,5 @@
 const CommonService = require("./CommonService");
 const RecordRepository = require("../models/RecordModel/RecordRepository");
-const HeartRecRepository = require("../models/HeartRecModel/HeartRecRepository");
-const BloodPressureRepository = require("../models/BloodPressureModel/BloodPressureRepository");
 const UserRepository = require("../models/UserModel/UserRepository");
 const DeviceRepository = require("../models/DeviceModel/DeviceRepository");
 const FileService = require("./FileService");
