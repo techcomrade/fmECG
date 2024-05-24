@@ -1,7 +1,7 @@
 const UserService = require('../services/UserService')
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
-
+const FileService = require("../services/FileService");
 class UserController {
   async getAll (req,res,next) {
     console.log(`[P]:::Get all user: `);
@@ -38,6 +38,12 @@ class UserController {
 
   async updateUser(req, res, next) {
     console.log(`[P]:::Update user by id: `, req.body);
+    const buffer = req.file.buffer;
+    const filename = req.file.originalName;
+    const link = await FileService.uploadDrive(buffer, filename);
+    if(link) {
+      req.body.image = link;
+    }
     const result = await UserService.updateUser(req.body);
     if(result) {
       return res.status(200).json({

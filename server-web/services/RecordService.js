@@ -46,6 +46,7 @@ class RecordService extends CommonService {
       user_id: Joi.string().required(),
       device_id: Joi.string().required(),
       device_type: Joi.number().integer().min(0).max(100).required(),
+      record_type: Joi.string().required(),
       start_time: Joi.number().integer().required(),
       end_time: Joi.number()
         .integer()

@@ -1,7 +1,7 @@
+require('dotenv').config();
 const multer = require("multer");
 const maxSize = 2 * 1024 * 1024;
 const fs = require("fs");
-const credentials = require("../credentials.json");
 const { google } = require("googleapis");
 
 class FileUploader {
@@ -102,9 +102,21 @@ class FileUploader {
 
   async uploadDrive(buffer, fileName) {
     const SCOPES = ["https://www.googleapis.com/auth/drive"];
-
+    const private_key = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/gm, '\n');
+    
     const auth = new google.auth.GoogleAuth({
-      credentials,
+      credentials: {
+        type: process.env.GOOGLE_TYPE,
+        project_id: process.env.GOOGLE_PROJECT_ID,
+        private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
+        private_key: private_key,
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        auth_uri: process.env.GOOGLE_AUTH_URI,
+        token_uri: process.env.GOOGLE_TOKEN_URI,
+        auth_provider_x509_cert_url: process.env.GOOGLE_AUTH_PROVIDER_X509_CERT_URL,
+        client_x509_cert_url: process.env.GOOGLE_CLIENT_X509_CERT_URL,
+      },
       scopes: SCOPES,
     });
     const drive = google.drive({ version: "v3", auth });
