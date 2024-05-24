@@ -19,11 +19,11 @@ router.post(
 );
 
 router.post(
-  "/upload/:id",
-  UserMiddleware.checkUserId,
+  "/upload",
   uploadController.setUploadToDrive,
   FileUploadService.uploadFile.bind(FileUploadService),
-  UserController.updateUser
+  UserMiddleware.checkUserId,
+  UserController.uploadImage
 );
 router.get(
   "",
