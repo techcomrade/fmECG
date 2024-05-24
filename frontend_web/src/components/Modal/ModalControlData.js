@@ -1,24 +1,26 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { Modal, Col, Form, DatePicker, Input, Select } from "antd";
-import { getCurrentTimeToString } from "../../utils/dateUtils";
 import dayjs from 'dayjs';
+import { checkDateTypeKey } from "../../utils/arrayUtils";
+const { RangePicker } = DatePicker;
 
 const ModalComponent = (props, ref) => {
+  const [form] = Form.useForm();
+
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(props.isOpen);
   const [column, setColum] = useState([]);
 
-  const handleChangeInput = (para, value) => {
-    let preState = { ...data};
-    preState[para] = value;
-    setData({ ...preState });
-  };
+  const handleSubmit = async (values) => {
+    const payload = {
+      ...data,
+      ...handleData(values)
+    };
 
-  const handleSubmit = async () => {
-      const res = await props?.submitFunction(data);
-      if (!res?.error) {
-        setIsOpen(false);
-      }
+    const res = await props?.submitFunction(payload);
+    if (!res?.error) {
+      setIsOpen(false);
+    }
   }
 
   useImperativeHandle(ref, () => ({
@@ -26,8 +28,14 @@ const ModalComponent = (props, ref) => {
       setIsOpen(true);
       setData(data);
       setColum(colum.filter(item => item.isEdit));
+      form.setFieldsValue(data);
     },
   }));
+
+  /* eslint-disable no-template-curly-in-string */
+  const validateMessages = {
+    required: "Đây là trường bắt buộc",
+  };
 
   const mapOptions = (options) =>
   options
@@ -37,58 +45,93 @@ const ModalComponent = (props, ref) => {
       }))
     : [];
 
+  const handleData = (data) => {
+    let dataSubmit = {...data};
+    Object.keys(data).forEach((key) => {
+      if (checkDateTypeKey(key)) {
+        dataSubmit[key] = data[key].valueOf();      
+      }
+    });
+    return dataSubmit;
+  };
+
   return (
     <Modal
       title={props.title}
       open={isOpen}
       okText="Lưu"
       okType="primary"
-      onOk={handleSubmit}
+      onOk={() => form.submit()}
       cancelText="Hủy bỏ"
       onCancel={() => {
         setData([]);
         setIsOpen(false);
+        form.resetFields();
       }}
     >
       <br />
-      {column.map((column) => (
-        <Col span={22} key={column.title}>
-          <Form.Item label={column.title}>
-            {column.type === 'select' && (
-              <Select 
-                options={mapOptions(column.dataSelect || [])}
-                allowClear
-                onChange={(value) => handleChangeInput(column.dataIndex, value)}
-                value={data[column.dataIndex]}
-              >
-              </Select>
-            )}
-            {column.type === "text" && (
-              <Input
-                name={column.dataIndex}
-                value={data[column.dataIndex]}
-                onChange={(e) =>
-                  handleChangeInput(column.dataIndex, e.target.value)
-                }
-                disabled = {!column.isEdit}
-              />
-            )}
-            {column.type === "date" && (
-              <DatePicker
-                format={"DD/MM/YYYY"}
-                name={column.dataIndex}
-                value={data[column.dataIndex] ? dayjs(data[column.dataIndex], "DD/MM/YYYY") : null}
-                placeholder={"Select date"}
-                onChange={(date, dateString) =>
-                  {
-                    handleChangeInput(column.dataIndex, dateString)
-                  }
-                }
-              />
-            )}
-          </Form.Item>
-        </Col>
-      ))}
+      <Form
+        form={form}
+        validateMessages={validateMessages}
+        onFinish={handleSubmit}
+      >
+        {column.map((column) => (
+            <Form.Item 
+              label={column.title} 
+              name={column.dataIndex} 
+              key={column.title}
+              rules={[
+                { required: true },
+              ]}
+            >
+              {column.type === 'select' && (
+                <Select 
+                  options={mapOptions(column.dataSelect || [])}
+                  allowClear
+                  value={data[column.dataIndex]}
+                >
+                </Select>
+              )}
+
+              {column.type === "text" && (
+                <Input
+                  name={column.dataIndex}
+                  value={data[column.dataIndex]}
+                  disabled = {!column.isEdit}
+                />
+              )}
+
+              {column.type === "date" && (
+                <DatePicker
+                  format={"DD/MM/YYYY"}
+                  name={column.dataIndex}
+                  placeholder={"Select date"}
+                  disabledDate={(day) => {
+                    if (column.dataIndex === 'end_date') {
+                      const startDate = form.getFieldValue('start_date');
+                      return day && day < dayjs(startDate).endOf('day');
+                    }
+                  }}
+                />
+              )}
+              
+              {column.type === "time" && (
+                <DatePicker
+                  showTime
+                  format="HH:mm DD/MM/YYYY "
+                  name={column.dataIndex}
+                  placeholder={"Select date"}
+                  disabledDate={(day) => {
+                    if (column.dataIndex === 'end_time') {
+                      const startDate = form.getFieldValue('start_time');
+                      return day && day < dayjs(startDate).endOf('day');
+                    }
+                  }}
+                />
+              )}
+            </Form.Item>
+        ))}
+      </Form>
     </Modal>
   );
 };

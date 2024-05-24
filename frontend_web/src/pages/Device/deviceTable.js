@@ -11,12 +11,13 @@ import {
   resetUpdateDataStatus,
   updateDevice,
 } from "../../redux/reducer/deviceSlice";
-import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
+import { convertTimeToDate } from "../../utils/dateUtils";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
-import { getCookie, getLocalStorage } from "../../utils/storageUtils";
 import { httpGetData } from "../../api/common.api";
+import dayjs from "dayjs";
+
 const DeviceTable = () => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.device);
@@ -77,7 +78,7 @@ const DeviceTable = () => {
     dispatch(getDevice());
     const getOptionData = async() => {
       const userData = await httpGetData('/user');
-      setDropData( userData.metadata)
+      setDropData(userData.metadata);
     }
     getOptionData();
   }, []);
@@ -124,8 +125,9 @@ const DeviceTable = () => {
   };
 
   const handleEditFunction = () => {
-    const userData = findElementById(dataTable, selectedData[0]);
-    modalUpdateRef.current?.open(userData, columns);
+    const rowData = findElementById(dataTable, selectedData[0]);
+    const dataModal = handleData(rowData);
+    modalUpdateRef.current?.open(dataModal, columns);
   };
 
   const handleSubmitEditUser = (data) => {
@@ -140,7 +142,7 @@ const DeviceTable = () => {
     let deviceData = {...data};
     Object.keys(data).forEach((key) => {
       if (checkDateTypeKey(key)) {
-        deviceData[key] = convertDateToTime(data[key]);
+        deviceData[key] = dayjs(data[key], "DD/MM/YYYY");      
       }
     });
     return deviceData;
