@@ -37,6 +37,7 @@ class UserController {
   }
 
   async updateUser(req, res, next) {
+    req.body.id = req.body.id ?? req.params.id;
     console.log(`[P]:::Update user by id: `, req.body);
     const buffer = req.file.buffer;
     const filename = req.file.originalName;
