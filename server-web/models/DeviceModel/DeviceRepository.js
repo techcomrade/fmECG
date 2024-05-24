@@ -104,13 +104,8 @@ class DeviceModel {
     );
   }
 
-  async countDevice(){
-    const totalDevices = await DeviceDTO.findAll({
-      attributes: [
-        [Sequelize.fn('COUNT', sequelize.col('id')), 'device_count']
-      ],
-    });
-    return totalDevices;
+  async count(){
+    return await DeviceDTO.count();
   }
 }
 

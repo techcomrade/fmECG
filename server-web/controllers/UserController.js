@@ -66,15 +66,6 @@ class UserController {
       });
     }
   }
-
-  async countUser(req, res, next) {
-    console.log(`[P]:::Count user: `);
-    const countUser = await StatisticService.getStatistics();
-    return res.status(200).json({
-      message: "Count user successful!",
-      metadata: countUser.user_count,
-    });
-  }
 }
 
 module.exports = new UserController();

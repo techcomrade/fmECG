@@ -5,9 +5,9 @@ const RecordRepository = require("../models/RecordModel/RecordRepository");
 
 class StatisticService extends CommonService {
     async getStatistics(){
-        const device = await DeviceRepository.countDevice();
-        const user = await UserRepository.countUser();
-        const record = await RecordRepository.countRecord();
+        const device = await DeviceRepository.count();
+        const user = await UserRepository.count();
+        const record = await RecordRepository.count();
 
         return {
             device_count: device,

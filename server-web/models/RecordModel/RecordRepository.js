@@ -122,13 +122,8 @@ class RecordRepository {
     );
   }
 
-  async countRecord(){
-    const totalRecord = await RecordDTO.findAll({
-      attributes: [
-        [Sequelize.fn('COUNT', sequelize.col('id')), 'record_count']
-      ],
-    });
-    return totalRecord;
+  async count(){
+    return await RecordDTO.count();
   }
 }
 module.exports = new RecordRepository();

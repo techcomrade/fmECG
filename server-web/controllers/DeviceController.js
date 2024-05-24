@@ -230,15 +230,6 @@ class DeviceController {
       metadata: deviceByDeviceName,
     });
   }
-
-  async countDevice(req, res, next) {
-    console.log(`[P]:::Count device: `);
-    const countDevice = await StatisticService.getStatistics();
-    return res.status(200).json({
-      message: "Count device successful!",
-      metadata: countDevice.device_count,
-    });
-  }
 }
 
 module.exports = new DeviceController();

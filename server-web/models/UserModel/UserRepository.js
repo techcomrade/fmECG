@@ -108,13 +108,8 @@ class UserModel {
     );
   }
 
-  async countUser(){
-    const totalUsers = await UserDTO.findAll({
-      attributes: [
-        [Sequelize.fn('COUNT', sequelize.col('id')), 'user_count']
-      ],
-    });
-    return totalUsers;
+  async count(){
+    return await UserDTO.count();
   }
 }
 
