@@ -5,6 +5,7 @@ class AuthenMiddleware {
     const validation = UserService.validateUser(req.body).error;
     if (validation === undefined) {
       console.log("Validate successful!");
+      
       next();
     } else {
       return res.status(400).json({
@@ -16,7 +17,9 @@ class AuthenMiddleware {
     const validation = AuthenService.validateAccount(req.body);
     if (!validation?.error) next();
     else {
-      return res.status(400).json("validate account error");
+      return res.status(400).json({
+        message: "validate account falied",
+      });
     }
   }
 }

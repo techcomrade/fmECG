@@ -37,6 +37,7 @@ dependencies:
   provider: ^6.0.5
   dio: ^5.1.2
   http: any
+  web_socket_channel: ^2.4.0
 
   # storage
   shared_preferences: ^2.1.1
@@ -56,12 +57,12 @@ dependencies:
   flutter_switch: ^0.3.2
   syncfusion_flutter_charts: 21.2.4
   permission_handler: ^10.2.0
-  flutter_html: ^2.2.1
   flutter_native_splash: 2.2.0
   telephony: ^0.2.0
   geolocator: ^9.0.1
   url_launcher: ^6.1.5
-
+  intl: ^0.18.0
+  http_parser: ^4.0.2
 
   # other lib
   flutter_localizations:
@@ -72,9 +73,9 @@ dependencies:
   flutter_bloc: ^8.1.4
   chaquopy: 0.0.20
 
-dependency_overrides:
-  # language
-  intl: ^0.18.0
+# dependency_overrides:
+#   # language
+#   intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:

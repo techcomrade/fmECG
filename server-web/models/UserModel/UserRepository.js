@@ -30,6 +30,14 @@ class UserModel {
     });
   }
 
+  async getUserByName(username) {
+    return await UserDTO.findOne({
+      where: {
+        username: username,
+      },
+    });
+  }
+
   async add(user, t) {
     return await UserDTO.create(
       {
@@ -37,9 +45,14 @@ class UserModel {
         account_id: user.account_id,
         username: user.username,
         birth: user.birth,
+        gender: user.gender,
         phone_number: user.phone_number ?? "",
         image: user.image ?? "",
+        status: user.status,
+        information: user.information ?? "",
         role: user.role,
+        created_at: Date.now(),
+        updated_at: Date.now(),
       },
       t && {
         transaction: t,
@@ -64,9 +77,11 @@ class UserModel {
     return await UserDTO.update(
       {
         username: user.username,
+        gender: user.gender,
         birth: user.birth,
         phone_number: user.phone_number,
         image: user.image,
+        updated_at: Date.now()
       },
       {
         where: {
@@ -78,6 +93,7 @@ class UserModel {
       }
     );
   }
+  
   async updateRoleById(id, role) {
     return await UserDTO.update(
       {

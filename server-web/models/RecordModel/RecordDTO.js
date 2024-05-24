@@ -25,7 +25,7 @@ const Record = sequelize.define("records", {
       key: "id",
     },
   },
-  device_type: {
+  record_type: {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
@@ -43,6 +43,10 @@ const Record = sequelize.define("records", {
   },
   created_at: Sequelize.BIGINT,
   updated_at: Sequelize.BIGINT,
+  dummy_data: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
+  },
 });
 
 module.exports = Record;

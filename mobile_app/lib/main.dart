@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bluetooth_ecg/app.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
+import 'package:bluetooth_ecg/networks/socket_channel.dart';
 import 'package:bluetooth_ecg/providers/bluetooth_provider.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
@@ -35,7 +36,8 @@ void main() async {
   );
   await FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
+  // final SocketChannel socketChannel = SocketChannel();
+  // await socketChannel.connect();
   if (Platform.isAndroid) {
     WidgetsFlutterBinding.ensureInitialized();
     [
@@ -80,6 +82,7 @@ class FmECGAppState extends State<FmECGApp> {
       child: Consumer<AuthProvider>(builder: (ctx, auth, _) {
         Utils.globalContext = ctx;
         return const MaterialApp(
+          locale: Locale('en'),
           debugShowCheckedModeBanner: false,
           // theme: (auth.theme == ThemeType.dark
           //         ? ThemeECG.darkTheme
@@ -129,6 +132,10 @@ class FmECGAppState extends State<FmECGApp> {
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            Locale('en'), // English
+            Locale('vi'),
           ],
         );
       }),

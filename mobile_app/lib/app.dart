@@ -41,14 +41,15 @@ class _BlocNavigateState extends State<BlocNavigate> {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
         // print(state);
-        if (state is AuthenticationSuccess) {
-          return const MainScreen();
-        } else if (state is AuthenticationLoading) {
-          // or blocListener
-          return const CircularProgressIndicator();
-        } else {
-          return const Login2Screen();
-        }
+        // if (state is AuthenticationSuccess) {
+        //   return const MainScreen();
+        // } else if (state is AuthenticationLoading) {
+        //   // or blocListener
+        //   return const CircularProgressIndicator();
+        // } else {
+        //   return const Login2Screen();
+        // }
+        return const MainScreen();
       },
     );
   }

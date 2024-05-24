@@ -7,12 +7,11 @@ import {
   SearchOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { showNotiError } from "../../components/Notification";
-import { httpGetBinData } from "../../api/bin.api";
+
 
 
 const Header = (item) => {
-  const redirectAPI = process.env.REACT_APP_BIN;
+
   const handleLogOut = async () => {
   const cookies = document.cookie.split(';');
   cookies.forEach(cookie => {
@@ -20,8 +19,8 @@ const Header = (item) => {
     const cookieName = cookieParts[0].trim();
     document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   });
-     window.location.href = redirectAPI;
-
+  localStorage.clear();
+  window.location.href = '/';
   };
   
   const items = [

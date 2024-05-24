@@ -9,6 +9,7 @@ const { v4: uuidv4 } = require("uuid");
 
 class AuthenService extends CommonService {
   async login(account) {
+    const expiredTime = 120;
     try {
       const accountData = await AccountRepository.getAccountByEmail(
         account.email
@@ -19,9 +20,15 @@ class AuthenService extends CommonService {
           accountData.dataValues.password
         );
         if (!result) return result;
-        const access_token = TokenService.renderToken(accountData.dataValues.id, 60);
+        const accountInfo = await UserRepository.getUserByAccountId(accountData.dataValues?.id)
+        if (!accountInfo) return false;
+        const userInfo = {
+          id: accountData.dataValues.id,
+          role: accountInfo.dataValues.role
+        }
+        const access_token = TokenService.renderToken(userInfo, expiredTime);
         const refresh_token = TokenService.renderToken(
-          accountData.dataValues.id,
+          userInfo,
           120
         );
         var token = {
@@ -32,11 +39,11 @@ class AuthenService extends CommonService {
           created_at: Number(new Date()),
         };
         await TokenRepository.add(token);
-        const accountInfo = await UserRepository.getUserByAccountId(accountData.dataValues?.id)
         
         return {...accountInfo.dataValues,
         access_token: access_token,
-        refresh_token: refresh_token
+        refresh_token: refresh_token,
+        expired_time: expiredTime
         };
       }
       return false;
@@ -57,8 +64,11 @@ class AuthenService extends CommonService {
       account_id: account.id,
       username: account.username,
       birth: account.birth,
+      gender: account.gender,
       phone_number: account.phone_number,
       image: account.image,
+      status: account.status,
+      information: account.information,
       role: account.role,
     };
     await this.transaction(async (t) => {
@@ -66,9 +76,19 @@ class AuthenService extends CommonService {
       await UserRepository.add(user, t);
     });
   }
+
   async getAll() {
     await AccountRepository.getAllData();
   }
+
+  async updatePassword (account){
+    return await AccountRepository.updateById(account);
+  }
+
+  async getAccountById(id) {
+    return await AccountRepository.getAccountById(id);
+  }
+
   validateAccount(account) {
     const schema = Joi.object({
       email: Joi.string()

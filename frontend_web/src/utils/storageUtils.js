@@ -9,11 +9,6 @@ export let setLocalStorage = (key, value)=>{
 export let getLocalStorage = (key)=>{
     const data = localStorage.getItem(key);
     return data;
-    // try{
-    //     return JSON.parse(data);
-    // }catch(err){
-    //     return err;
-    // }
 }
 
 export let removeLocalStorage = (key) => localStorage.removeItem(key);
@@ -25,4 +20,7 @@ export const getCookie = (name) => {
     
     return cookie ? cookie.substring(name.length + 1) : null;
   };
-  
+
+  export const getUserId = () => {
+    return getLocalStorage('user');
+  }
