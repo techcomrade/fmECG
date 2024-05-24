@@ -1,11 +1,12 @@
-version: '3'
 
 services:
   node-app:
+    image: thaidmfinnick/fmecg-node-app
+    platform: linux/x86_64
     container_name: node-fmecg
-    build: 
-      dockerfile: Dockerfile
-      context: ./server-web
+    # build: 
+    #   dockerfile: Dockerfile
+    #   context: ./server-web
     volumes:
       - ./server-web/:/server/
       - /server/node_modules
@@ -16,10 +17,12 @@ services:
       - network-fmecg
   
   react-app:
+    image: thaidmfinnick/fmecg-react-app
+    platform: linux/x86_64
     container_name: react-fmecg
-    build: 
-      dockerfile: Dockerfile
-      context: ./frontend_web
+    # build: 
+    #   dockerfile: Dockerfile
+    #   context: ./frontend_web
     volumes:
       - ./frontend_web:/web/
       - /web/node_modules
@@ -29,10 +32,12 @@ services:
       - network-fmecg
 
   bin-login:
+    image: thaidmfinnick/fmecg-bin-login
+    platform: linux/x86_64
     container_name: bin-fmecg
-    build: 
-      dockerfile: Dockerfile
-      context: ./frontend_web/bin
+    # build: 
+    #   dockerfile: Dockerfile
+    #   context: ./frontend_web/bin
     env_file: ./frontend_web/bin/.env.docker
     volumes:
       - ./frontend_web/bin:/bin_login/
@@ -44,15 +49,17 @@ services:
       - network-fmecg
   
   proxy:
+    image: thaidmfinnick/fmecg-proxy
+    platform: linux/x86_64
     container_name: proxy-fmecg
+    # build:
+    #   dockerfile: Dockerfile
+    #   context: ./proxy
     links:
       - node-app
       - react-app
       - bin-login
     restart: unless-stopped
-    build:
-      dockerfile: Dockerfile
-      context: ./proxy
     ports:
       - 80:80
     volumes:
@@ -62,6 +69,7 @@ services:
 
   database:
     image: mysql:8.0
+    platform: linux/x86_64
     container_name: database-fmecg
     restart: unless-stopped
     ports:
@@ -73,25 +81,6 @@ services:
       - ./docker/data/mysql:/var/lib/mysql
     networks:
       - network-fmecg
-
-  # phpmyadmin:
-  #   container_name: phpadmin_fmecg
-  #   image: phpmyadmin:5.2.1-apache
-  #   restart: unless-stopped
-  #   ports:
-  #     - 8080:80
-  #   expose:
-  #     - 8080
-  #   environment:
-  #     PMA_HOST: database # host is a name of mysql service in docker compose
-  #     PMA_PORT: 3306
-  #     PMA_USER: root
-  #     PMA_PASSWORD: sparclab
-  #     MYSQL_ROOT_PASSWORD: sparclab
-  #   volumes:
-  #     - ./docker/data/phpadmin:/data/:cached
-  #   networks:
-  #     - network_fmecg
 
 networks:
   network-fmecg:
