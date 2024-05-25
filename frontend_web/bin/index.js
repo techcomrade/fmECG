@@ -68,7 +68,7 @@ app.post("/login", async (req, res, next) => {
         res.cookie("refresh_token", userInfo.metadata.refresh_token);
         res.cookie("role", userInfo.metadata.role);
         res.cookie("api", devEnvironment ? config.default_api_url : `${config.redirect_url}/api`);
-        res.cookie("redirect_api", devEnvironment ? `http://${config.default_app_host}:${config.default_app_port}/login` : `${config.redirect_url}`);
+        res.cookie("redirect_api", devEnvironment ? `http://${config.default_app_host}:${config.default_app_port}/login` : `${config.redirect_url}/login`);
         return res.status(200).json("login successfully");
       }
       return res.status(400).json("login failed");
