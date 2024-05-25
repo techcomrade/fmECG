@@ -4,6 +4,12 @@
 app:
 	docker compose -f docker-compose.yml up --build --detach
 
+dev:
+	docker compose -f docker-compose-dev.yml up --build --detach
+
+log:
+	docker compose logs -f --tail=10
+
 # giải thích docker command line
 # docker container rm -f fmecg_app: xoá container tên fmecg_app (nếu có)
 

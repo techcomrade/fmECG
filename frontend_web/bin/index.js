@@ -21,23 +21,14 @@ app.use(cors());
 app.get("/login", (req, res) => {
   const haveCookie = req.cookies?.access_token;
   if (haveCookie) {
-    res.redirect(config.redirect_url);
+      res.redirect(config.redirect_url)
   } else {
-    res.redirect('/login')
-  }
-});
-app.get('/login',(req,res)=>{
-  const haveCookie = req.cookies?.access_token;
-  if(haveCookie){
-    res.redirect('/');
-  }
-  else{
     res.render("index", {
       url: `${config.default_app_host}:${config.default_app_port}/login`,
     });
   }
+});
 
-})
 app.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
   await fetch(`${config.default_api_url}/auth/login`, {
