@@ -120,5 +120,9 @@ class RecordRepository {
       }
     );
   }
+
+  async count(){
+    return await RecordDTO.count();
+  }
 }
 module.exports = new RecordRepository();

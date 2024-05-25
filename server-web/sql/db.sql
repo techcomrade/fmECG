@@ -27,33 +27,6 @@ CREATE TABLE `patient_doctor_assignment` (
    `dummy_data` boolean default 0
 )ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `heart_rec`;
-CREATE TABLE `heart_rec` (
-   `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255),
-   `dummy_data` boolean default 0
-)ENGINE = InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `spo2_rec`;
-CREATE TABLE `spo2_rec` (
-   `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255),
-   `dummy_data` boolean default 0
-)ENGINE = InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `sound_rec`;
-CREATE TABLE `sound_rec` (
-   `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255),
-   `dummy_data` boolean default 0
-)ENGINE = InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `blood_pressure_rec`;
-CREATE TABLE `blood_pressure_rec` (
-   `id` varchar(255) NOT NULL,
-   `rec_id` varchar(255),
-   `dummy_data` boolean default 0
-)ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news` (
@@ -155,12 +128,6 @@ ALTER TABLE `patient_doctor_assignment`
     
 ALTER TABLE `records`
     ADD PRIMARY KEY (`id`);
-    
-ALTER TABLE `heart_rec`
-    ADD PRIMARY KEY (`id`);
-    
-ALTER TABLE `blood_pressure_rec`
-    ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `news_categories`
     ADD PRIMARY KEY (`id`);
@@ -185,12 +152,6 @@ ALTER TABLE `records`
 
 ALTER TABLE `records`
     ADD CONSTRAINT fk_records_device FOREIGN KEY (`device_id`) REFERENCES `devices`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
-
-ALTER TABLE `heart_rec`
-    ADD CONSTRAINT fk_heart_rec_rec FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
-
-ALTER TABLE `blood_pressure_rec`
-    ADD CONSTRAINT fk_blood_pressure_rec_rec FOREIGN KEY (`rec_id`) REFERENCES `records`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
 
 ALTER TABLE `news`
     ADD CONSTRAINT fk_news_category FOREIGN KEY (`category_id`) REFERENCES `news_categories`(`id`) ON DELETE CASCADE ON UPDATE SET NULL;
@@ -282,20 +243,11 @@ VALUES ('f86068c7-08ed-4dfc-b96d-e0e1c0ae08df', 'f224fd99-53fd-44c5-bcd4-5b6e3c9
 INSERT INTO `records`(`id`, `user_id`, `device_id`, `record_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
 VALUES('c9e6669b-f58f-47c7-80b8-43a4163553ff', '4df9ace1-0229-4756-b850-51a83cb0bb6e', '2a3cec92-682a-4d4e-be35-aff01cc5011a', 1, '1711189128343', '1711239128586', 'https://www.verywellhealth.com/best-blood-pressure-monitors-4158050/quyentran', '1711189128343', '1711229128712');
 
-INSERT INTO `blood_pressure_rec`(`id`, `rec_id`)
-VALUES('103ed2e8-24a7-46e2-acad-4a54de5eea02', 'c9e6669b-f58f-47c7-80b8-43a4163553ff');
-
 INSERT INTO `records`(`id`, `user_id`, `device_id`, `record_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
 VALUES('c0f31b49-2449-45fa-8c93-55da998687f4', '4df9ace1-0229-4756-b850-51a83cb0bb6e', '4404f003-1192-4aae-86e0-69dc273f181c', 2, '1711239328586', '1711319128906', 'https://www.docosan.com/blog/tim-mach/dien-tim/quyentran', '1711239328586', '1711288127320');
 
-INSERT INTO `heart_rec`(`id`, `rec_id`)
-VALUES('4e9f6245-b8c7-47a9-b44d-469a8ee91f2c', 'c0f31b49-2449-45fa-8c93-55da998687f4');
-
 INSERT INTO `records`(`id`, `user_id`, `device_id`, `record_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
 VALUES('c2c9f725-2a71-4c5a-b3d2-6a4d774a1a42', '37ae5629-54ec-46e0-be65-9af6bd580b2b', 'f224fd99-53fd-44c5-bcd4-5b6e3c960e78', 2, '1711324367820', '1711434712320', 'https://www.youtube.com/dung', '1711324367820', '1711374913710');
-
-INSERT INTO `heart_rec`(`id`, `rec_id`)
-VALUES('00ebbb28-539d-4cb4-a0e5-5d2e0b9fcb02', 'c2c9f725-2a71-4c5a-b3d2-6a4d774a1a42');
 
 INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `created_at`, `updated_at`)
 VALUES('aec18bd6-a2eb-4521-99fd-f00d867a849f', '4df9ace1-0229-4756-b850-51a83cb0bb6e', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711189128343', '1711173634732', '1711173634732');

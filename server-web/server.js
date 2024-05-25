@@ -6,7 +6,7 @@ const compression = require('compression');
 require('dotenv').config({ path: ['.env.prod', '.env.dev'] })
 const routes = require('./routes/index');
 const port = process.env.APP_PORT || 3000;
-const host = process.env.APP_HOST || 'localhost';
+const host = process.env.APP_HOST || '127.0.0.1';
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }))
