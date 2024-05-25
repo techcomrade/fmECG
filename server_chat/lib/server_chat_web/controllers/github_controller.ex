@@ -10,7 +10,7 @@ defmodule ServerChatWeb.GithubController do
     is_development = params["pull_request"]["base"]["ref"] == "development"
     pull_url = params["pull_request"]["url"]
     repo_url = params["repository"]["html_url"]
-    need_handle_pull = action == "closed" && merged
+    need_handle_pull = action == "closed" && merged && is_development
     
     if (need_handle_pull) do
       update_count_pull(repo_url, pull_url)
@@ -28,7 +28,7 @@ defmodule ServerChatWeb.GithubController do
     count = GenServer.call(GithubStore, :get_default_pull_count)
     if (count > 0) do
       url_distpatch = "https://api.github.com/repos/techcomrade/fmecg/actions/workflows/docker.yaml/dispatches"
-      body = %{"ref" => "deploy_docker"}
+      body = %{"ref" => "development"}
       github_token = Application.get_env(:server_chat, ServerChatWeb.Endpoint)[:github_token]
       authorization = {"Authorization", "Bearer #{github_token}"}
       headers = [{"X-GitHub-Api-Version", "2022-11-28"}, {"Accept", "application/vnd.github+json"}, authorization]
