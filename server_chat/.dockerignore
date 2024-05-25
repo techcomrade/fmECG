@@ -1,0 +1,12 @@
+Dockerfile
+.dockerignore
+/_build/
+/cover/
+/deps/
+/doc/
+/.fetch
+erl_crash.dump
+*.ez
+/tmp/
+server_chat-*.tar
+**/prod.exs
