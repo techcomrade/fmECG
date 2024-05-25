@@ -5,7 +5,7 @@ app:
 	docker compose rm -sf; docker compose -f docker-compose.yml up --build --detach --pull "always"; docker image prune
 
 dev:
-	docker compose -f docker-compose-dev.yml up --build --detach; docker image prune
+	docker compose rm -sf; docker compose -f docker-compose-dev.yml up --build --detach; docker image prune
 
 log:
 	docker compose logs -f --tail=10
