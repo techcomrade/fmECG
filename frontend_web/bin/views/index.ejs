@@ -593,7 +593,7 @@ select {
               }),
             });
             if (loginResult.ok) {
-              window.location.reload();
+              window.location.href = "/";
             } else {
               document.getElementById('myModal').style.display = 'none';
               window.alert("wrong username or password");

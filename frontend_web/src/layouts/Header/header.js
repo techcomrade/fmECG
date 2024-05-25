@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Input, Button, Dropdown, Space } from "antd";
+import { Input, Button, Dropdown, Space, Avatar } from "antd";
 import "./header.css";
 import {
   SettingOutlined,
@@ -7,12 +7,14 @@ import {
   SearchOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { getLocalStorage } from "../../utils/storageUtils";
 
 
 
 const Header = (item) => {
 
   const handleLogOut = async () => {
+    const redirect_url = getLocalStorage('redirect_api');
   const cookies = document.cookie.split(';');
   cookies.forEach(cookie => {
     const cookieParts = cookie.split('=');
@@ -20,7 +22,7 @@ const Header = (item) => {
     document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   });
   localStorage.clear();
-  window.location.href = '/';
+  window.location.href = `${redirect_url ?? "/"}`;
   };
   
   const items = [
@@ -69,11 +71,9 @@ const Header = (item) => {
                 }}
                 trigger={["click"]}
             >
-                <a onClick={(e) => e.preventDefault()}>
-                  <Space>
-                    <Button >{item.userName}</Button>
-                  </Space>
-                </a>
+                <div onClick={(e) => e.preventDefault()}>
+                   <Avatar size={"large"} icon={<UserOutlined />} className="user-avatar"/>
+                </div>
             </Dropdown>
             :<Button href="/login">Login</Button>
             }            
