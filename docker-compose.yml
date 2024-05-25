@@ -1,0 +1,102 @@
+version: '3'
+
+services:
+  node_app:
+    container_name: node_fmecg
+    build: 
+      dockerfile: Dockerfile
+      context: ./server-web
+    volumes:
+      - ./server-web/:/server/
+      - /server/node_modules
+    depends_on:
+      - database
+      - phpmyadmin
+    env_file: ./server-web/.env
+    networks:
+      - network_fmecg
+  
+  react_app:
+    container_name: react_fmecg
+    build: 
+      dockerfile: Dockerfile
+      context: ./frontend_web
+    volumes:
+      - ./frontend_web:/web/
+      - /web/node_modules
+    env_file: ./frontend_web/.env
+    networks:
+      - network_fmecg
+
+  bin_login:
+    container_name: bin_fmecg
+    build: 
+      dockerfile: Dockerfile
+      context: ./frontend_web/bin
+    env_file: ./frontend_web/bin/.env
+    volumes:
+      - ./frontend_web/bin:/bin_login/
+      - /bin_login/node_modules
+    ports:
+      - 3001:3001
+    expose:
+      - 3001
+    networks:
+      - network_fmecg
+  
+  proxy:
+    container_name: proxy_fmecg
+    links:
+      - node_app
+      - react_app
+      - bin_login
+    restart: unless-stopped
+    build:
+      dockerfile: Dockerfile
+      context: ./proxy
+    ports:
+      - 80:80
+    volumes:
+      - ./proxy/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - network_fmecg
+
+  database:
+    image: mysql:8.0
+    container_name: database_fmecg
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    environment:
+      MYSQL_DATABASE: fmecg
+      MYSQL_PASSWORD: fmecgsparc
+      MYSQL_ROOT_PASSWORD: sparclab
+    volumes:
+      - ./docker/data/mysql:/data
+    networks:
+      - network_fmecg
+
+  phpmyadmin:
+    container_name: phpadmin_fmecg
+    image: phpmyadmin:5.2.1-apache
+    restart: always
+    ports:
+      - 8080:80
+    expose:
+      - 8080
+    environment:
+      PMA_HOST: database # host is a name of mysql service in docker compose
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: sparclab
+      MYSQL_ROOT_PASSWORD: sparclab
+    volumes:
+      - ./docker/data/phpadmin:/data/:cached
+    networks:
+      - network_fmecg
+
+networks:
+  network_fmecg:
+    driver: bridge
