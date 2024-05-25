@@ -21,7 +21,7 @@ app.use(cors());
 app.get("/login", (req, res) => {
   const haveCookie = req.cookies?.access_token;
   if (haveCookie) {
-      res.redirect(config.redirect_url)
+    res.redirect(config.redirect_url)
   } else {
     res.render("index", {
       url: `${config.default_app_host}:${config.default_app_port}/login`,
