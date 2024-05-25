@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Input, Button, Dropdown, Space } from "antd";
+import { Input, Button, Dropdown, Space, Avatar } from "antd";
 import "./header.css";
 import {
   SettingOutlined,
@@ -71,11 +71,9 @@ const Header = (item) => {
                 }}
                 trigger={["click"]}
             >
-                <a onClick={(e) => e.preventDefault()}>
-                  <Space>
-                    <Button >{item.userName}</Button>
-                  </Space>
-                </a>
+                <div onClick={(e) => e.preventDefault()}>
+                   <Avatar size={"large"} icon={<UserOutlined />} className="user-avatar"/>
+                </div>
             </Dropdown>
             :<Button href="/login">Login</Button>
             }            
