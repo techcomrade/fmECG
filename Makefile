@@ -4,6 +4,12 @@
 app:
 	docker compose -f docker-compose.yml up --build --detach
 
+dev:
+	docker compose -f docker-compose-dev.yml up --build --detach
+
+log:
+	docker compose logs -f --tail=10
+
 # giải thích docker command line
 # docker container rm -f fmecg_app: xoá container tên fmecg_app (nếu có)
 
@@ -13,13 +19,13 @@ app:
 
 # đảm bảo phải make app trước để vào terminal của container nhằm update package npm i, ...
 node:
-	docker exec -it node_fmecg sh
+	docker exec -it node-fmecg sh
 
 db:
-	docker exec -it database_fmecg sh
+	docker exec -it database-fmecg sh
 
 bin:
-	docker exec -it bin_fmecg sh
+	docker exec -it bin-fmecg sh
 
 
 
