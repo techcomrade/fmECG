@@ -14,7 +14,7 @@ router.post(
 );
 router.post("/update", DeviceMiddleware.validateData, DeviceController.update);
 
-router.get("/get/:id", DeviceController.getDeviceById);
+router.get("/:id", DeviceController.getDeviceById);
 router.get(
   "/start/interval/:startDate/:endDate",
   DeviceMiddleware.checkStartDateInterval,
