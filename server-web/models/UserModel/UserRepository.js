@@ -120,10 +120,11 @@ class UserModel {
       }
     );
 
-  async count(){
-    return await UserDTO.count();
-
-  }
 }
 
+async count(){
+  return await UserDTO.count();
+
+}
+}
 module.exports = new UserModel();
