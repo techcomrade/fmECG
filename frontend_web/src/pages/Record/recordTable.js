@@ -25,6 +25,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { httpGetData } from "../../api/common.api";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { CloudDownloadOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
 
 const RecordTable = () => {
   const dispatch = useDispatch();
@@ -163,27 +164,27 @@ const RecordTable = () => {
       ...getColumnSearchProps("record_type", "loại bản ghi"),
     },
     {
-      title: "tên bản ghi",
+      title: "Tên bản ghi",
       dataIndex: "record_name",
       key: "record_name",
       type: "text",
       isEdit: false,
     },
     {
-      title: "Ngày bắt đầu",
+      title: "Thời gian bắt đầu",
       dataIndex: "start_time",
       key: "start_time",
-      type: "date",
+      type: "time",
       isEdit: true,
-      ...getColumnSearchProps("start_time", "ngày bắt đầu"),
+      ...getColumnSearchProps("start_time", "tg bắt đầu"),
     },
     {
-      title: "Ngày kết thúc",
+      title: "Thời gian kết thúc",
       dataIndex: "end_time",
       key: "end_time",
-      type: "date",
+      type: "time",
       isEdit: true,
-      ...getColumnSearchProps("end_time", "ngày kết thúc"),
+      ...getColumnSearchProps("end_time", "tg kết thúc"),
     },
   ];
 
@@ -217,24 +218,24 @@ const RecordTable = () => {
   useEffect(() => {
     if (dataState.loadUpdateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã sửa thiết bị thành công");
-      dispatch(getRecord());
       dispatch(resetUpdateDataStatus());
+      dispatch(getRecord());
     }
   }, [dataState.loadUpdateDataStatus]);
 
   useEffect(() => {
     if (dataState.loadDeleteDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã xoá thiết bị thành công");
-      dispatch(getRecord());
       dispatch(resetDeleteDataStatus());
+      dispatch(getRecord());
     }
   }, [dataState.loadDeleteDataStatus]);
 
   useEffect(() => {
     if (dataState.loadCreateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã thêm thiết bị thành công");
-      dispatch(getRecord());
       dispatch(resetCreateDataStatus());
+      dispatch(getRecord());
     }
   }, [dataState.loadCreateDataStatus]);
 
@@ -243,23 +244,24 @@ const RecordTable = () => {
   };
 
   const handleEditFunction = () => {
-    const userData = findElementById(dataTable, selectedData[0]);
-    modalUpdateRef.current?.open(userData, columns);
+    const rowData = findElementById(dataTable, selectedData[0]);
+    const dataModal = handleData(rowData);
+    modalUpdateRef.current?.open(dataModal, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    dispatch(updateRecord(handleData(data)));
+    return dispatch(updateRecord(handleData(data)));
   };
 
   const handleSubmitAddFunction = (data) => {
-    dispatch(createRecord(handleData(data)));
+    return dispatch(createRecord(handleData(data)));
   };
 
   const handleData = (data) => {
-    let deviceData = data;
+    let deviceData = { ...data};
     Object.keys(data).forEach((key) => {
       if (checkDateTypeKey(key)) {
-        deviceData[key] = convertDateToTime(data[key]);
+        deviceData[key] = dayjs(data[key], "HH:mm DD/MM/YYYY");      
       }
     });
     deviceData = {
@@ -269,6 +271,7 @@ const RecordTable = () => {
     };
     return deviceData;
   };
+  
   const renderDownloadButton = () => (
     <>
       {selectedData.length === 1 && (
@@ -287,13 +290,15 @@ const RecordTable = () => {
       )}
     </>
   );
+
   const handleOk = () => {
     downloadRecordFile(selectedData[0]);
-    setIsModalOpen(false)
+    setIsModalOpen(false);
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
-    dispatch(resetCheckRecordStatus())
+    dispatch(resetCheckRecordStatus());
   };
 
   return (
