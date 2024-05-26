@@ -17,6 +17,7 @@ import { showNotiSuccess } from "../../components/Notification";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { httpGetData } from "../../api/common.api";
 import dayjs from "dayjs";
+import { DrawerSide } from "../../components/Drawer/Drawer";
 
 const DeviceTable = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const DeviceTable = () => {
   const [dropdownData, setDropData] = useState([]);
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
+  const drawerRef = useRef(null);
 
   const columns = [
     {
@@ -74,6 +76,15 @@ const DeviceTable = () => {
     },
   ];
 
+  const labelsInfo = {
+    device_name: 'Tên thiết bị',
+    device_type: 'Loại thiết bị',
+    end_date: "Ngày kết thúc",
+    start_date: "Ngày bắt đầu",
+    recordCount: "Số bản ghi",
+    information: "Thông tin",
+  }; 
+
   useEffect(() => {
     dispatch(getDevice());
     const getOptionData = async() => {
@@ -87,11 +98,7 @@ const DeviceTable = () => {
   useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       const rawData = dataState.data.metadata;
-      const data = rawData.map((element, index) => ({
-        ...element,
-        start_date: convertTimeToDate(element.start_date),
-        end_date: convertTimeToDate(element.end_date),
-      }));
+      const data = rawData.map((element) => handleData(element, 'render'));
       setData(data);
     }
   }, [dataState.loadDataStatus]);
@@ -131,22 +138,39 @@ const DeviceTable = () => {
   };
 
   const handleSubmitEditUser = (data) => {
-    return dispatch(updateDevice(handleData(data)));
+    return dispatch(updateDevice(handleData(data, 'form')));
   };
 
   const handleSubmitAddFunction = (data) => {
-    return dispatch(createDevice(handleData(data)));
+    return dispatch(createDevice(handleData(data, 'form')));
   };
 
-  const handleData = (data) => {
+  const handleData = (data, type) => {
     let deviceData = {...data};
-    Object.keys(data).forEach((key) => {
-      if (checkDateTypeKey(key)) {
-        deviceData[key] = dayjs(data[key], "DD/MM/YYYY");      
-      }
-    });
+
+    if (type === 'form') {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          deviceData[key] = dayjs(data[key], "DD/MM/YYYY");      
+        }
+      });
+    };
+
+    if (type === 'render') {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          deviceData[key] = convertTimeToDate(data[key]);      
+        }
+      });
+    }
+
     return deviceData;
   };
+
+  const handleOpenDrawer = async (id) => {
+    const data = await httpGetData(`/device/${id}`);
+    drawerRef.current?.open(handleData(data.metadata, 'render'));
+  }
 
   return (
     <>
@@ -162,6 +186,7 @@ const DeviceTable = () => {
         column={columns}
         updateSelectedData={setSelectedData}
         loading={dataState.loadDataStatus === loadStatus.Loading}
+        handleOpenDrawer={handleOpenDrawer}
       />
       <ModalControlData
         ref={modalUpdateRef}
@@ -172,6 +197,11 @@ const DeviceTable = () => {
         ref={modalAddRef}
         title="Thêm thiết bị mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
+      />
+      <DrawerSide 
+        ref={drawerRef}
+        title="Thông tin thiết bị"      
+        labels={labelsInfo}
       />
     </>
   );

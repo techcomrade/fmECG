@@ -16,6 +16,8 @@ import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { GENDER } from "../../constants";
 import dayjs from "dayjs";
+import { DrawerSide } from "../../components/Drawer/Drawer";
+import { httpGetData } from "../../api/common.api";
 
 const UserTable = () => {
   const dispatch = useDispatch();
@@ -23,6 +25,8 @@ const UserTable = () => {
   const [dataTable, setDataTable] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
   const modalUpdateRef = useRef(null);
+  const drawerRef = useRef(null);
+
   const columns = [
     {
       title: "Họ và tên",
@@ -69,6 +73,17 @@ const UserTable = () => {
     },
   ];
 
+  const labelsInfo = {
+    username: 'Họ và tên',
+    gender: 'Giới tính',
+    birth: "Ngày sinh",
+    phone_number: "Số điện thoại",
+    status: "Trạng thái",
+    role: "Quyền hạn",
+    devices: "Số thiết bị",
+    records: "Số bản ghi"
+  }; 
+
   useEffect(() => {
     dispatch(getUser());
   }, []);
@@ -77,11 +92,7 @@ const UserTable = () => {
   useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       const rawData = dataState.data.metadata;
-      const data = rawData.map((element, index) => ({
-        ...element,
-        birth: convertTimeToDate(element.birth),
-        gender: convertGenderToString(element.gender)
-      }));
+      const data = rawData.map((element) => handleData(element, 'render'));
       setDataTable(data);
     }
   }, [dataState.loadDataStatus]);
@@ -108,7 +119,7 @@ const UserTable = () => {
 
   const handleEditFunction = () => {
     const userData = findElementById(dataTable, selectedData[0]);
-    const dataEdit = handleData(userData);
+    const dataEdit = handleData(userData, 'form');
     modalUpdateRef.current?.open(dataEdit, columns);
   };
 
@@ -117,17 +128,39 @@ const UserTable = () => {
     return dispatch(updateUser(payload));
   };
 
-  const handleData = (data) => {
-    const userData = {
-      ...data, 
-      gender: convertStringToGender(data.gender)
+  const handleData = (data, type) => {
+    const userData = {...data};
+
+    if (type === 'form') {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          userData[key] = dayjs(data[key], "DD/MM/YYYY");
+        }
+
+        if (key === 'gender') {
+          userData[key] = convertStringToGender(data.gender);
+        }
+      })
     };
-    Object.keys(data).forEach((key) => {
-      if (checkDateTypeKey(key)) {
-        userData[key] = dayjs(data[key], "DD/MM/YYYY");
-      }
-    });
+    
+    if (type === 'render') {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          userData[key] = convertTimeToDate(data[key]);
+        }
+
+        if (key === 'gender') {
+          userData[key] = convertGenderToString(data.gender);
+        }
+      })
+    };
+
     return userData;
+  }
+
+  const handleOpenDrawer = async (id) => {
+    const data = await httpGetData(`/user/${id}`);
+    drawerRef.current?.open(handleData(data.metadata[0], 'render'));
   }
 
   return (
@@ -144,11 +177,17 @@ const UserTable = () => {
         name="Bảng người dùng"
         data={dataTable}
         loading={dataState.loadDataStatus === loadStatus.Loading}
+        handleOpenDrawer={handleOpenDrawer}
       />
       <ModalControlData
         ref={modalUpdateRef}
         title="Sửa thông tin người dùng"
         submitFunction={(data) => handleSubmitEditUser(data)}
+      />
+      <DrawerSide 
+        ref={drawerRef}
+        title="Thông tin người dùng"
+        labels={labelsInfo}
       />
     </>
   );
