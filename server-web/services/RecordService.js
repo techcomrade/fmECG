@@ -1,7 +1,5 @@
 const CommonService = require("./CommonService");
 const RecordRepository = require("../models/RecordModel/RecordRepository");
-const HeartRecRepository = require("../models/HeartRecModel/HeartRecRepository");
-const BloodPressureRepository = require("../models/BloodPressureModel/BloodPressureRepository");
 const UserRepository = require("../models/UserModel/UserRepository");
 const DeviceRepository = require("../models/DeviceModel/DeviceRepository");
 const FileService = require("./FileService");
@@ -35,7 +33,7 @@ class RecordService extends CommonService {
   async add(record) {
     record.id = uuidv4();
     let pathTest = path.join(__dirname, '../public/upload')
-    let paths = `${pathTest}\\${record.file.filename}`;
+    let paths = `${pathTest}/${record.file.filename}`;
     console.log(paths);
     record.data_rec_url = paths;
     return await RecordRepository.add(record);

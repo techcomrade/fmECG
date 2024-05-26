@@ -102,6 +102,10 @@ class DeviceModel {
       }
     );
   }
+
+  async count(){
+    return await DeviceDTO.count();
+  }
 }
 
 module.exports = new DeviceModel();

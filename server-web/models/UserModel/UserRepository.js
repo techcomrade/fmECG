@@ -1,5 +1,5 @@
 const { where } = require("sequelize");
-const UserDTO = require("./UserDTO");
+const UserDTO = require("./UserDTO"); 
 
 class UserModel {
   async getAllData() {
@@ -107,6 +107,7 @@ class UserModel {
     );
   }
 
+
   async uploadImageById(id, image) {
     return await UserDTO.update(
       {
@@ -118,6 +119,10 @@ class UserModel {
         },
       }
     );
+
+  async count(){
+    return await UserDTO.count();
+
   }
 }
 
