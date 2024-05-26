@@ -28,7 +28,7 @@ const Header = (item) => {
   const items = [
     {
       label: (
-        <a href="" style={{ display: "flex", justifyContent: "start" }}>
+        <a href="#/account" style={{ display: "flex", justifyContent: "start" }}>
           Account
         </a>
       ),
