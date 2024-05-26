@@ -43,4 +43,6 @@ jspm_packages
 
 # environment
 .env.prod
+.env.docker
+/build
 

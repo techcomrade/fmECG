@@ -18,16 +18,10 @@ app.set("views", __dirname + "/views");
 app.use(cookieParser());
 app.use(cors());
 
-const devEnvironment = config.default_app_host === "127.0.0.1";
-
-app.get("/", (req, res) => {
+app.get("/login", (req, res) => {
   const haveCookie = req.cookies?.access_token;
   if (haveCookie) {
-    if (!devEnvironment) {
-      res.render("home");
-    } else {
-      res.redirect(config.redirect_url);
-    }
+    res.redirect(config.redirect_url)
   } else {
     res.render("index", {
       url: `${config.default_app_host}:${config.default_app_port}/login`,
@@ -55,6 +49,7 @@ app.post("/login", async (req, res, next) => {
     .then(async (result) => {
       if (result.ok) {
         const userInfo = await result.json();
+        const isDevEnv = config.default_api_url.match("127.0.0.1:3000") != null
         res.cookie("user", userInfo.metadata.id);
         res.cookie("access_token", userInfo.metadata.access_token, {
           maxAge: 60000 * userInfo.metadata.expired_time,
@@ -62,7 +57,8 @@ app.post("/login", async (req, res, next) => {
         });
         res.cookie("refresh_token", userInfo.metadata.refresh_token);
         res.cookie("role", userInfo.metadata.role);
-        res.cookie("api", config.default_api_url);
+        res.cookie("api", isDevEnv ? config.default_api_url : `${config.redirect_url}/api`);
+        res.cookie("redirect_api", isDevEnv ? `http://${config.default_app_host}:${config.default_app_port}/login` : `${config.redirect_url}/login`);
         return res.status(200).json("login successfully");
       }
       return res.status(400).json("login failed");

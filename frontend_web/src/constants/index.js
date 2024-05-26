@@ -29,3 +29,9 @@ export const convertStringToGender = gender =>{
       return 2;
   }
 }
+
+export const userRoleGroup = {
+  Admin: 0,
+  Doctor: 1,
+  Patient: 2,
+}

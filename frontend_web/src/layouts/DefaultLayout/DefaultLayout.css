@@ -13,6 +13,11 @@
 }
 
 .children-content::-webkit-scrollbar {
-    display: none;
-    
+    display: none;   
+}
+
+.ant-layout-header {
+    line-height: normal;
+    align-items: center;
+    display: flex;
 }

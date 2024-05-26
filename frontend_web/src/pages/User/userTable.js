@@ -9,12 +9,13 @@ import {
   deleteUser,
   resetDeleteDataStatus,
 } from "../../redux/reducer/userSlice";
-import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
+import { convertTimeToDate } from "../../utils/dateUtils";
 import {convertGenderToString, convertStringToGender} from "../../constants"
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { GENDER } from "../../constants";
+import dayjs from "dayjs";
 
 const UserTable = () => {
   const dispatch = useDispatch();
@@ -88,16 +89,16 @@ const UserTable = () => {
   useEffect(() => {
     if (dataState.loadUpdateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã sửa thông tin người dùng thành công");
-      dispatch(getUser());
       dispatch(resetUpdateDataStatus());
+      dispatch(getUser());
     }
   }, [dataState.loadUpdateDataStatus]);
 
   useEffect(() => {
     if (dataState.loadDeleteDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã xoá người dùng thành công ");
-      dispatch(getUser());
       dispatch(resetDeleteDataStatus());
+      dispatch(getUser());
     }
   }, [dataState.loadDeleteDataStatus]);
 
@@ -107,22 +108,27 @@ const UserTable = () => {
 
   const handleEditFunction = () => {
     const userData = findElementById(dataTable, selectedData[0]);
-    const dataEdit = {
-      ...userData,
-      gender: convertStringToGender(userData.gender)
-    }
+    const dataEdit = handleData(userData);
     modalUpdateRef.current?.open(dataEdit, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    const {account_id, devices, role, ...userData} = data;
+    const {account_id, devices, role, ...payload} = {...data}
+    return dispatch(updateUser(payload));
+  };
+
+  const handleData = (data) => {
+    const userData = {
+      ...data, 
+      gender: convertStringToGender(data.gender)
+    };
     Object.keys(data).forEach((key) => {
       if (checkDateTypeKey(key)) {
-        userData[key] = convertDateToTime(data[key]);
+        userData[key] = dayjs(data[key], "DD/MM/YYYY");
       }
     });
-    dispatch(updateUser(userData));
-  };
+    return userData;
+  }
 
   return (
     <>
