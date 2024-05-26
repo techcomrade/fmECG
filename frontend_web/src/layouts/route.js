@@ -6,6 +6,7 @@ import { Route, Routes as ReactRoutes } from "react-router-dom";
 import UserTable from "../pages/User/userTable";
 import DeviceTable from "../pages/Device/deviceTable";
 import RecordTable from "../pages/Record/recordTable";
+import PdaTable from "../pages/PatientDoctorAssignment/pdaTable";
 import { UserOutlined, HomeOutlined, UnorderedListOutlined} from '@ant-design/icons';
 
 export const routerMappingGroup = {
@@ -41,6 +42,7 @@ export const routerMappingGroup = {
     }
 }
 
+
 export const Routes = () => {
     return (
         <ReactRoutes>
@@ -49,6 +51,7 @@ export const Routes = () => {
             <Route path="/user" element={<UserTable/>} />
             <Route path="/device" element={<DeviceTable/>} />
             <Route path="/record" element={<RecordTable/>}/>
+            <Route path="/pda" element={<PdaTable/>}/>
             <Route path="*" element={<NotFound/>} />
         </ReactRoutes>
     )

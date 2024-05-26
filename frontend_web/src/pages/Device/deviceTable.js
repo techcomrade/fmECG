@@ -11,12 +11,13 @@ import {
   resetUpdateDataStatus,
   updateDevice,
 } from "../../redux/reducer/deviceSlice";
-import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
+import { convertTimeToDate } from "../../utils/dateUtils";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
-import { getCookie, getLocalStorage } from "../../utils/storageUtils";
 import { httpGetData } from "../../api/common.api";
+import dayjs from "dayjs";
+
 const DeviceTable = () => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.device);
@@ -77,7 +78,7 @@ const DeviceTable = () => {
     dispatch(getDevice());
     const getOptionData = async() => {
       const userData = await httpGetData('/user');
-      setDropData( userData.metadata)
+      setDropData(userData.metadata);
     }
     getOptionData();
   }, []);
@@ -98,6 +99,7 @@ const DeviceTable = () => {
   useEffect(() => {
     if (dataState.loadUpdateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã sửa thiết bị thành công");
+      dispatch(resetUpdateDataStatus());
       dispatch(getDevice());
     }
   }, [dataState.loadUpdateDataStatus]);
@@ -105,43 +107,42 @@ const DeviceTable = () => {
   useEffect(() => {
     if (dataState.loadDeleteDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã xoá thiết bị thành công");
+      dispatch(resetDeleteDataStatus());
       dispatch(getDevice());
     }
   }, [dataState.loadDeleteDataStatus]);
 
   useEffect(() => {
     if (dataState.loadCreateDataStatus === loadStatus.Success) {
-      showNotiSuccess("Bạn đã xoá thiết bị thành công");
+      showNotiSuccess("Bạn đã tạo thiết bị thành công");
+      dispatch(resetCreateDataStatus());
       dispatch(getDevice());
     }
   }, [dataState.loadCreateDataStatus]);
 
   const handleDeleteFunction = (id) => {
     dispatch(deleteDevice({ id: id }));
-    dispatch(resetDeleteDataStatus());
   };
 
   const handleEditFunction = () => {
-    const userData = findElementById(dataTable, selectedData[0]);
-    modalUpdateRef.current?.open(userData, columns);
+    const rowData = findElementById(dataTable, selectedData[0]);
+    const dataModal = handleData(rowData);
+    modalUpdateRef.current?.open(dataModal, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    dispatch(updateDevice(handleData(data)));
-    dispatch(resetUpdateDataStatus());
+    return dispatch(updateDevice(handleData(data)));
   };
 
   const handleSubmitAddFunction = (data) => {
-    console.log("hello");
-    dispatch(createDevice(handleData(data)));
-    dispatch(resetCreateDataStatus());
+    return dispatch(createDevice(handleData(data)));
   };
 
   const handleData = (data) => {
-    var deviceData = data;
+    let deviceData = {...data};
     Object.keys(data).forEach((key) => {
       if (checkDateTypeKey(key)) {
-        deviceData[key] = convertDateToTime(data[key]);
+        deviceData[key] = dayjs(data[key], "DD/MM/YYYY");      
       }
     });
     return deviceData;

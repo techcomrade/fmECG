@@ -4,6 +4,7 @@ const PatientDoctorAssignmentMiddleware = require("../middlewares/PatientDoctorA
 
 const router = express.Router();
 
+router.get("", PatientDoctorAssignmentController.getAllAssignment);
 router.get(
   "/patient/:doctor_id",
   PatientDoctorAssignmentMiddleware.checkByDoctorId,

@@ -4,8 +4,6 @@ import { getCookie, getLocalStorage } from "../../utils/storageUtils";
 
 const NotAuth = () => {
   const redirect_url =getCookie('redirect_api') ? decodeURIComponent(getCookie('redirect_api')) : "http://127.0.0.1:3001/login";
-  
-
   return (
     <Result
       status="403"
