@@ -13,22 +13,28 @@ defmodule ServerChatWeb.Router do
     plug :accepts, ["json"]
     plug ServerChatWeb.AuthPlug
   end
-
-  scope "/api", ServerChatWeb do
-    pipe_through :api
-    
-    scope "/conversations" do
-      get "/", ConversationsController, :get_conversation_by_id
-      post "/", ConversationsController, :post_conversations
+  
+  scope "/chat", ServerChatWeb do
+    scope "/api" do
+      pipe_through :api
       
-      scope "/:conversation_id" do
+      scope "/conversations" do
         get "/", ConversationsController, :get_conversation_by_id
+        post "/", ConversationsController, :post_conversations
         
-        scope "/messages" do
-          get "/", MessagesController, :get_all_messages
+        scope "/:conversation_id" do
+          get "/", ConversationsController, :get_conversation_by_id
           
+          scope "/messages" do
+            get "/", MessagesController, :get_all_messages
+            
+          end
         end
       end
+    end
+    
+    scope "/github", ServerChatWeb do
+      post "/handle_event", GithubController, :handle_event
     end
   end
   
