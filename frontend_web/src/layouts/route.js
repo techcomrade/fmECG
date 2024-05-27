@@ -1,7 +1,7 @@
 import Home from "../pages/Home/home";
 import DetailUser from "../pages/Account/Detail";
 import NotFound from "../pages/NotFound/notfound";
-import { Route, Routes as ReactRoutes } from "react-router-dom";
+import { Navigate, Route, Routes as ReactRoutes } from "react-router-dom";
 import UserTable from "../pages/User/userTable";
 import DeviceTable from "../pages/Device/deviceTable";
 import RecordTable from "../pages/Record/recordTable";
@@ -12,7 +12,6 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { getLocalStorage } from "../utils/storageUtils";
-
 
 export const routerMappingGroup = {
   Home: {
@@ -63,7 +62,8 @@ export const Routes = () => {
       <Route path="/device" element={<DeviceTable />} />
       <Route path="/record" element={<RecordTable />} />
       <Route path="/pda" element={<PdaTable />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<Navigate to="/" />} />
     </ReactRoutes>
   );
 };
+
