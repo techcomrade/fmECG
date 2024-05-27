@@ -11,7 +11,7 @@ export const store = configureStore({
       device: deviceReducer,
       record: recordReducer,
       statistic: statisticReducer,
-      pda: pdaReducer
+      pda: pdaReducer,
   }
 })
 
