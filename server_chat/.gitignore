@@ -27,4 +27,4 @@ server_chat-*.tar
 
 .deliver/releases/
 
-**/prod.exs
+.env.docker

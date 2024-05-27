@@ -19,7 +19,7 @@ defmodule ServerChat.MixProject do
   def application do
     [
       mod: {ServerChat.Application, []},
-      extra_applications: [:logger, :runtime_tools, :edeliver, :ecto, :httpoison, :sasl]
+      extra_applications: [:logger, :runtime_tools, :ecto, :httpoison, :sasl]
     ]
   end
 
@@ -42,13 +42,6 @@ defmodule ServerChat.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:jose, "~> 1.11"},
       {:httpoison, "~> 2.2.1"},
-      {:edeliver, ">= 1.9.2"},
-      {:distillery,
-        git: "https://github.com/thaidmfinnick/distillery.git",
-        override: true,
-        commit: "f64bf92",
-        runtime: false
-      },
       {:quantum, "~> 3.0"},
       {:tzdata, "~> 1.1"}
     ]
