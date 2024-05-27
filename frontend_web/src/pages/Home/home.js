@@ -2,9 +2,8 @@ import './home.scss';
 import { Card, Statistic, Row, Col } from 'antd';
 import { DatabaseOutlined, UserOutlined, MobileOutlined } from '@ant-design/icons';
 
-import { useEffect, useState, useRef } from 'react';
-import { getStatistic } from '../../redux/reducer/statisticSlice';
-import { httpGetData } from '../../api/common.api';
+import { useEffect, useState } from 'react';
+import { getStatistic, loadStatus } from '../../redux/reducer/statisticSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Home = () => {
@@ -14,14 +13,13 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(getStatistic(dataState));
-        const getOptionData = async() => {
-            const statisticData = await httpGetData("/statistic");
-            setDropData({
-                statistic: statisticData.metadata
-            }); 
-        }
-        getOptionData();
     }, []);
+
+    useEffect(() => {
+        if(dataState.loadDataStatus === loadStatus.Success){
+            setDropData(dataState.data);
+        }
+    }, [dataState.loadDataStatus]);   
 
   return (
     <>
@@ -39,7 +37,7 @@ const Home = () => {
           >
             <Statistic
               title={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>Total Records</span>}
-              value={dropdownData.statistic?.record_count}
+              value={dataState.data.metadata.record_count}
               valueStyle={{ color: '#000000', fontSize: '24px', fontWeight: 'bold' }}
               prefix={<DatabaseOutlined style={{ fontSize: '24px', marginRight: '8px' }} />}
             />
@@ -57,7 +55,7 @@ const Home = () => {
           >
             <Statistic
               title={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>Users</span>}
-              value={dropdownData.statistic?.user_count}
+              value={dataState.data.metadata.user_count}
               valueStyle={{ color: '#000000', fontSize: '24px', fontWeight: 'bold' }}
               prefix={<UserOutlined style={{ fontSize: '24px', marginRight: '8px' }} />}
             />
@@ -75,7 +73,7 @@ const Home = () => {
           >
             <Statistic
               title={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>Devices</span>}
-              value={dropdownData.statistic?.device_count}
+              value={dataState.data.metadata.record_count}
               valueStyle={{ color: '#000000', fontSize: '24px', fontWeight: 'bold' }}
               prefix={<MobileOutlined style={{ fontSize: '24px', marginRight: '8px' }} />}
             />
