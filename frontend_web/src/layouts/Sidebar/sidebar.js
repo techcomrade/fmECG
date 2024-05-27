@@ -42,6 +42,14 @@ export const MenuList = () => {
       }
     },
     {
+      key: "/manage_assignment",
+      label: "Quản lí assignment",
+      icon: <UnorderedListOutlined />,
+      onClick: () => {
+        navigate('/pda')
+      }
+    },
+    {
       key: "/my_account",
       label: "Tài khoản",
       icon: <UserOutlined />,

@@ -60,6 +60,7 @@
         localStorage.setItem("refresh_token", getCookie("refresh_token"));
         localStorage.setItem("api", decodeURIComponent(getCookie("api")));
         localStorage.setItem("role", getCookie("role"));
+        localStorage.setItem("redirect_api",decodeURIComponent(getCookie("redirect_api")))
         cookieData = {
           access_token: localStorage.getItem("access_token"),
           refresh_token: localStorage.getItem("refresh_token"),

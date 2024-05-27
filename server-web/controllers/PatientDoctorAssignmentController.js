@@ -1,6 +1,15 @@
 const PatientDoctorAssignmentService = require("../services/PatientDoctorAssignmentService");
 
 class PatientDoctorAssignmentController {
+  async getAllAssignment(req, res, nex) {
+    console.log(`[P]::: Get all assignment: `);
+    const assignments = await PatientDoctorAssignmentService.getAll();
+    return res.status(200).json({
+      message: "Get all data successful!",
+      metadata: assignments,
+    });
+  }
+
   async getPatientByDoctorId(req, res, nex) {
     console.log(`[P]::: Get patient by doctor id: `, req.params.doctor_id);
     try {
