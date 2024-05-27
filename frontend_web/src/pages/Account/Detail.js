@@ -18,7 +18,7 @@ import dayjs from "dayjs";
 import { getUserById } from "../../redux/reducer/userSlice";
 import { loadStatus } from "../../redux/reducer/recordSlice";
 import "./detail.scss";
-import { convertGenderToString } from "../../constants";
+import { convertGenderToString, convertRoleToString } from "../../constants";
 
 const { Option } = Select;
 export default function Detail() {
@@ -114,7 +114,7 @@ export default function Detail() {
             </Col>
             <Col span={10} offset={2}>
               <Form.Item label="Quyền truy cập">
-                <Input value={accountData.role} name="gender" disabled />
+                <Input value={convertRoleToString(accountData.role)} name="gender" disabled />
               </Form.Item>
             </Col>
           </Row>
