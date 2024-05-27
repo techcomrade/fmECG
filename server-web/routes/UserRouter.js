@@ -5,6 +5,10 @@ const {
   roleGroup,
 } = require("../middlewares/CommonMiddleware");
 const UserMiddleware = require("../middlewares/UserMiddleware");
+
+const uploadController = require("../controllers/uploadImageDriverController");
+const FileUploadService = require("../services/FileService");
+
 const router = express.Router();
 
 router.post("", UserMiddleware.validateCreateData, UserController.createUser);
@@ -12,6 +16,14 @@ router.post(
   "/update",
   UserMiddleware.validateUpdateData,
   UserController.updateUser
+);
+
+router.post(
+  "/upload",
+  uploadController.setUploadToDrive,
+  FileUploadService.uploadFile.bind(FileUploadService),
+  UserMiddleware.checkUserId,
+  UserController.uploadImage
 );
 router.get(
   "",
