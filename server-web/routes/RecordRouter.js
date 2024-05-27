@@ -2,12 +2,16 @@ const express = require("express");
 const RecordController = require("../controllers/RecordController");
 const RecordMiddleware = require("../middlewares/RecordMiddleware");
 const router = express.Router();
+
+
 const fileUploader = require("../services/FileService");
 const RecordService = require("../services/RecordService");
+const uploadController = require("../controllers/uploadController");
 
 router.get("", RecordController.getAll);
 router.post(
   "",
+  uploadController.setUploadToDisk,
   RecordController.uploadFileRecord,
   RecordController.createRecord
 );
@@ -69,4 +73,6 @@ router.post("/upload-file", RecordController.uploadFileRecord, (req, res) => {
 
 router.get("/read/:id",RecordController.readFileRecord);
 router.delete("/delete/:id", RecordController.deleteFileRecord);
+
+router.post('/getData', RecordController.getDataRecordFile);
 module.exports = router;
