@@ -84,7 +84,7 @@ services:
   
   chat-app:
     image: thaidmfinnick/fmecg-chat-app
-    # platform: linux/x86_64
+    platform: linux/x86_64
     container_name: chat-fmecg
     restart: unless-stopped
     depends_on:
