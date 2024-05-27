@@ -33,7 +33,7 @@ defmodule ServerChatWeb.Router do
       end
     end
     
-    scope "/github", ServerChatWeb do
+    scope "/github" do
       post "/handle_event", GithubController, :handle_event
     end
   end
