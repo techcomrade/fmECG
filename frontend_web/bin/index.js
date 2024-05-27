@@ -29,6 +29,15 @@ app.get("/login", (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  const haveCookie = req.cookies?.access_token;
+  if (haveCookie) {
+    res.redirect(config.redirect_url)
+  } else {
+    res.redirect('/login');
+  }
+});
+
 app.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
   await fetch(`${config.default_api_url}/auth/login`, {
