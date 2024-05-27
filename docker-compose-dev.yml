@@ -72,7 +72,32 @@ services:
       - ./docker/data/mysql:/var/lib/mysql
     networks:
       - network-fmecg
-
+  
+  chat-app:
+    container_name: chat-fmecg
+    build:
+      dockerfile: Dockerfile
+      context: ./server_chat
+    restart: unless-stopped
+    depends_on:
+      - database-chat
+    env_file: ./server_chat/.env.docker
+    networks:
+      - network-fmecg
+  
+  database-chat:
+    image: postgres:12.19
+    container_name: database-chat-fmecg
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    restart: unless-stopped
+    env_file: ./server_chat/.env.docker
+    volumes:
+      - ./docker/data/postgresql:/var/lib/postgresql/data
+    networks:
+      - network-fmecg
 networks:
   network-fmecg:
     driver: bridge

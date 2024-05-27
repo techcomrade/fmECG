@@ -38,10 +38,10 @@ if config_env() == :prod do
   config :server_chat, ServerChat.Repo,
     adapter: Ecto.Adapters.Postgres,
     username: System.get_env("POSTGRES_USER") || "admin",
-    password: System.get_env("POSTGRES_PASSWORD") || "",
-    database: System.get_env("DB_NAME") || "server_chat_fmecg",
-    hostname: System.get_env("DB_HOSTNAME") || "localhost",
-    pool_size: 20,
+    password: System.get_env("POSTGRES_PASSWORD") || "admin",
+    database: System.get_env("POSTGRES_DB") || "server_chat_fmecg",
+    hostname: System.get_env("POSTGRES_HOST") || "localhost",
+    pool_size: 10,
     port: "5432"
 
   # ## SSL Support
