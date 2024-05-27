@@ -10,11 +10,11 @@ import {
   resetDeleteDataStatus,
 } from "../../redux/reducer/userSlice";
 import { convertTimeToDate } from "../../utils/dateUtils";
-import {convertGenderToString, convertStringToGender} from "../../constants"
+import {convertGenderToString, convertStringToGender, convertRoleToString, convertStringToRole} from "../../constants"
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
-import { GENDER } from "../../constants";
+import { GENDER, ROLE } from "../../constants";
 import dayjs from "dayjs";
 
 const UserTable = () => {
@@ -54,6 +54,14 @@ const UserTable = () => {
       isEdit: true,
     },
     {
+      title: "Tác vụ",
+      dataIndex: "role",
+      key: "role",
+      type: "select",
+      dataSelect: ROLE,
+      isEdit: true,
+    },
+    {
       title: "Thiết bị",
       dataIndex: "devices",
       key: "devices",
@@ -80,7 +88,8 @@ const UserTable = () => {
       const data = rawData.map((element, index) => ({
         ...element,
         birth: convertTimeToDate(element.birth),
-        gender: convertGenderToString(element.gender)
+        gender: convertGenderToString(element.gender),
+        role: convertRoleToString(element.role)
       }));
       setDataTable(data);
     }
@@ -120,7 +129,8 @@ const UserTable = () => {
   const handleData = (data) => {
     const userData = {
       ...data, 
-      gender: convertStringToGender(data.gender)
+      gender: convertStringToGender(data.gender),
+      role: convertStringToRole(data.role)
     };
     Object.keys(data).forEach((key) => {
       if (checkDateTypeKey(key)) {
