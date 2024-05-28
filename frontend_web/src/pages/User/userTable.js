@@ -12,20 +12,19 @@ import {
   resetUserDataStatus,
 } from "../../redux/reducer/userSlice";
 import { convertTimeToDate } from "../../utils/dateUtils";
-import {convertGenderToString, convertStringToGender} from "../../constants"
+import { convertGenderToString, convertStringToGender } from "../../constants";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { GENDER } from "../../constants";
 import dayjs from "dayjs";
-import { DrawerSide } from "../../components/Drawer/Drawer";
+import { UserDetail } from "./userDetail";
 
 const UserTable = () => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.user);
   const [dataTable, setDataTable] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
-  const [idSelect, setIdSelect] = useState("");
 
   const modalUpdateRef = useRef(null);
   const drawerRef = useRef(null);
@@ -76,17 +75,35 @@ const UserTable = () => {
     },
   ];
 
-  const labelsInfo = {
-    username: 'Họ và tên',
-    gender: 'Giới tính',
-    birth: "Ngày sinh",
-    phone_number: "Số điện thoại",
-    status: "Trạng thái",
-    role: "Quyền hạn",
-    devices: "Số thiết bị",
-    records: "Số bản ghi"
-  }; 
+  const handleData = (data, type) => {
+    const userData = { ...data };
 
+    if (type === "form") {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          userData[key] = dayjs(data[key], "DD/MM/YYYY");
+        }
+
+        if (key === "gender") {
+          userData[key] = convertStringToGender(data.gender);
+        }
+      });
+    }
+
+    if (type === "render") {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          userData[key] = convertTimeToDate(data[key]);
+        }
+
+        if (key === "gender") {
+          userData[key] = convertGenderToString(data.gender);
+        }
+      });
+    }
+
+    return userData;
+  };
   useEffect(() => {
     dispatch(getUser());
   }, []);
@@ -95,7 +112,7 @@ const UserTable = () => {
   useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       const rawData = dataState.data.metadata;
-      const data = rawData.map((element) => handleData(element, 'render'));
+      const data = rawData.map((element) => handleData(element, "render"));
       setDataTable(data);
     }
   }, [dataState.loadDataStatus]);
@@ -116,66 +133,20 @@ const UserTable = () => {
     }
   }, [dataState.loadDeleteDataStatus]);
 
-  useEffect(() => {
-    dispatch(getUserById({id: idSelect}));
-  }, [idSelect]);
-
   const handleDeleteFunction = (id) => {
     dispatch(deleteUser({ id: id }));
   };
 
   const handleEditFunction = () => {
     const userData = findElementById(dataTable, selectedData[0]);
-    const dataEdit = handleData(userData, 'form');
+    const dataEdit = handleData(userData, "form");
     modalUpdateRef.current?.open(dataEdit, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    const {account_id, devices, role, ...payload} = {...data}
+    const { account_id, devices, role, ...payload } = { ...data };
     return dispatch(updateUser(payload));
   };
-
-  const handleData = (data, type) => {
-    const userData = {...data};
-
-    if (type === 'form') {
-      Object.keys(data).forEach((key) => {
-        if (checkDateTypeKey(key)) {
-          userData[key] = dayjs(data[key], "DD/MM/YYYY");
-        }
-
-        if (key === 'gender') {
-          userData[key] = convertStringToGender(data.gender);
-        }
-      })
-    };
-    
-    if (type === 'render') {
-      Object.keys(data).forEach((key) => {
-        if (checkDateTypeKey(key)) {
-          userData[key] = convertTimeToDate(data[key]);
-        }
-
-        if (key === 'gender') {
-          userData[key] = convertGenderToString(data.gender);
-        }
-      })
-    };
-
-    return userData;
-  }
-
-  const handleOpenDrawer = (id) => {
-    if(id !== idSelect) {
-      setIdSelect(id);
-      dispatch(resetUserDataStatus());
-    };
-
-    if (dataState.loadUserDataStatus === loadStatus.Success) { 
-      const userData = dataState.userData.metadata[0];
-      drawerRef.current?.open(handleData(userData, 'render'));
-    }
-  }
 
   return (
     <>
@@ -191,18 +162,14 @@ const UserTable = () => {
         name="Bảng người dùng"
         data={dataTable}
         loading={dataState.loadDataStatus === loadStatus.Loading}
-        handleOpenDrawer={handleOpenDrawer}
+        handleOpenDrawer={(id) => drawerRef.current?.open(id)}
       />
       <ModalControlData
         ref={modalUpdateRef}
         title="Sửa thông tin người dùng"
         submitFunction={(data) => handleSubmitEditUser(data)}
       />
-      <DrawerSide 
-        ref={drawerRef}
-        title="Thông tin người dùng"
-        labels={labelsInfo}
-      />
+      <UserDetail ref={drawerRef} />
     </>
   );
 };

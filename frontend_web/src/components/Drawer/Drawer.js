@@ -1,16 +1,14 @@
 import { Descriptions, Drawer } from 'antd';
-import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const DrawerComponent = (props, ref) => {
-  const [isOpen, setIsOpen] = useState(props?.isOpen);
+const DrawerComponent = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
 
-  useImperativeHandle(ref, () => ({
-    open: (data) => {
-      setData(data);
-      setIsOpen(true);
-    },
-  }));
+  useEffect(()=>{
+    setIsOpen(props?.isOpen);
+    setData(props?.data);
+  },[props])
 
   return (
     <>
@@ -20,9 +18,13 @@ const DrawerComponent = (props, ref) => {
             title={props?.title}
             placement="right"
             open={isOpen}
-            onClose={() => setIsOpen(false)}
+            onClose={() => {
+              props?.closed()
+              return setIsOpen(false)
+            }}
             width={600}
         >
+          {props?.customData}
             <Descriptions column={2}>
               {Object.keys(props.labels).map((key) => {
                   const label = props.labels[key];
@@ -37,4 +39,4 @@ const DrawerComponent = (props, ref) => {
   );
 };
 
-export const DrawerSide = forwardRef(DrawerComponent);
+export const DrawerSide = DrawerComponent;

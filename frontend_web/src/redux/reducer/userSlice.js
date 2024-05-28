@@ -72,7 +72,7 @@ export const getUserById = createAsyncThunk(
   "/user/id",
   async (params, { rejectWithValue }) => {
     try {
-      const user_id = params?.id;
+      const user_id = params;
       const response = await httpGetData(`/user/${user_id}`);
       return response;
     } catch (error) {
