@@ -40,7 +40,7 @@ const statisticSlice = createSlice({
         state.loadDataStatus = loadStatus.Loading;
       })
       .addCase(getStatistic.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.data = action.payload.metadata;
         state.loadDataStatus = loadStatus.Success;
       })
       .addCase(getStatistic.rejected, (state, action) => {
