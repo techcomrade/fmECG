@@ -17,7 +17,7 @@ import { showNotiSuccess } from "../../components/Notification";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { httpGetData } from "../../api/common.api";
 import dayjs from "dayjs";
-import { DrawerSide } from "../../components/Drawer/Drawer";
+import { DeviceDetail } from "./deviceDetail";
 
 const DeviceTable = () => {
   const dispatch = useDispatch();
@@ -75,15 +75,6 @@ const DeviceTable = () => {
       isEdit: true,
     },
   ];
-
-  const labelsInfo = {
-    device_name: 'Tên thiết bị',
-    device_type: 'Loại thiết bị',
-    end_date: "Ngày kết thúc",
-    start_date: "Ngày bắt đầu",
-    recordCount: "Số bản ghi",
-    information: "Thông tin",
-  }; 
 
   useEffect(() => {
     dispatch(getDevice());
@@ -167,11 +158,6 @@ const DeviceTable = () => {
     return deviceData;
   };
 
-  const handleOpenDrawer = async (id) => {
-    const data = await httpGetData(`/device/${id}`);
-    drawerRef.current?.open(handleData(data.metadata, 'render'));
-  }
-
   return (
     <>
       <DataTable
@@ -186,7 +172,7 @@ const DeviceTable = () => {
         column={columns}
         updateSelectedData={setSelectedData}
         loading={dataState.loadDataStatus === loadStatus.Loading}
-        handleOpenDrawer={handleOpenDrawer}
+        handleOpenDrawer={(id) => drawerRef.current?.open(id)}
       />
       <ModalControlData
         ref={modalUpdateRef}
@@ -198,11 +184,7 @@ const DeviceTable = () => {
         title="Thêm thiết bị mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
       />
-      <DrawerSide 
-        ref={drawerRef}
-        title="Thông tin thiết bị"      
-        labels={labelsInfo}
-      />
+      <DeviceDetail ref={drawerRef}/>
     </>
   );
 };

@@ -79,21 +79,40 @@ export const deleteRecord = createAsyncThunk(
     }
   }
 );
+
 export const downloadRecordFile = (id) =>{
   const downloadPath = `${API_URL}/record/download/${id}`;
   if(downloadPath){
     window.open(downloadPath);
   }
-}
+};
+
+export const getRecordById = createAsyncThunk(
+  "/record/id",
+  async (params, { rejectWithValue }) => {
+    try {
+      const device_id = params;
+      const response = await httpGetData(`/record/${device_id}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
+
 const recordSlice = createSlice({
   name: "record",
   initialState: {
     data: [],
+    recordData: {},
     loadDataStatus: loadStatus.None,
     loadCreateDataStatus: loadStatus.None,
     loadUpdateDataStatus: loadStatus.None,
     loadDeleteDataStatus: loadStatus.None,
     loadCheckRecordStatus: loadStatus.None,
+    loadRecordDataStatus: loadStatus.None,
   },
   reducers: {
     resetLoadDataStatus: (state, action) => {
@@ -111,6 +130,9 @@ const recordSlice = createSlice({
     },
     resetCheckRecordStatus: (state, action) => {
       state.loadCheckRecordStatus = loadStatus.None;
+    },
+    resetRecordDataStatus: (state, action) => {
+      state.loadDeviceDataStatus = loadStatus.None;
     },
   },
   extraReducers: (builder) => {
@@ -161,6 +183,17 @@ const recordSlice = createSlice({
       })
       .addCase(checkRecordFile.rejected, (state, action) => {
         state.loadCheckRecordStatus = loadStatus.Failed;
+      })
+      .addCase(getRecordById.pending, (state, action) => {
+        state.loadRecordDataStatus = loadStatus.Loading;
+      })
+      .addCase(getRecordById.fulfilled, (state, action) => {
+        state.loadRecordDataStatus = loadStatus.Success;
+        state.recordData = action.payload;
+      })
+      .addCase(getRecordById.rejected, (state, action) => {
+        state.loadRecordDataStatus = loadStatus.Failed;
+        state.recordData = {};
       });
   },
 });

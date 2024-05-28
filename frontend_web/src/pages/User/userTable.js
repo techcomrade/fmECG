@@ -104,6 +104,7 @@ const UserTable = () => {
 
     return userData;
   };
+  
   useEffect(() => {
     dispatch(getUser());
   }, []);

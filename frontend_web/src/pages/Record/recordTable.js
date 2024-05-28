@@ -27,6 +27,7 @@ import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { CloudDownloadOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { DrawerSide } from "../../components/Drawer/Drawer";
+import { RecordDetail } from "./recordDetail";
 
 const RecordTable = () => {
   const dispatch = useDispatch();
@@ -188,16 +189,7 @@ const RecordTable = () => {
       isEdit: true,
       ...getColumnSearchProps("end_time", "tg kết thúc"),
     },
-  ];
-
-  const labelsInfo = {
-    device_name: "Tên thiết bị",
-    username: "Tên người dùng",
-    record_type: "Loại bản ghi",
-    data_rec_url: "Đường dẫn data",
-    start_time: "Thời gian bắt đầu",
-    end_time: "Thời gian kết thúc"
-  }; 
+  ]; 
 
   useEffect(() => {
     dispatch(getRecord());
@@ -320,11 +312,6 @@ const RecordTable = () => {
     dispatch(resetCheckRecordStatus());
   };
 
-  const handleOpenDrawer = async (id) => {
-    const data = await httpGetData(`/record/${id}`);
-    drawerRef.current?.open(handleData(data.metadata[0], 'render'));
-  }
-
   return (
     <>
       <DataTable
@@ -342,7 +329,7 @@ const RecordTable = () => {
         chartButton
         openChart={() => setOpenChart(true)}
         customButton={renderDownloadButton()}
-        handleOpenDrawer={handleOpenDrawer}
+        handleOpenDrawer={(id) => drawerRef.current?.open(id)}
       />
 
       <ModalControlData
@@ -374,11 +361,7 @@ const RecordTable = () => {
        {dataState.loadCheckRecordStatus !== loadStatus.Success ? "Bản ghi đang được chuẩn bị để tải về... " : "Bản ghi đã sẵn sàng tải về"} 
       </Modal>
 
-      <DrawerSide 
-        ref={drawerRef}
-        title="Thông tin bản ghi"
-        labels={labelsInfo}
-      />
+      <RecordDetail ref={drawerRef}/>
     </>
   );
 };

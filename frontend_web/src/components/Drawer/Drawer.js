@@ -1,5 +1,6 @@
 import { Descriptions, Drawer } from 'antd';
 import { useEffect, useState } from 'react';
+import './Drawer.scss'
 
 const DrawerComponent = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +25,7 @@ const DrawerComponent = (props) => {
             }}
             width={600}
         >
-          {props?.customData}
+            {props?.customData}
             <Descriptions column={2}>
               {Object.keys(props.labels).map((key) => {
                   const label = props.labels[key];
@@ -34,6 +35,7 @@ const DrawerComponent = (props) => {
                 })
               }
             </Descriptions>
+            
       </Drawer>
     </>
   );

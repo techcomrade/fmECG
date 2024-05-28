@@ -65,14 +65,31 @@ export const deleteDevice = createAsyncThunk(
   }
 );
 
+export const getDeviceById = createAsyncThunk(
+  "/device/id",
+  async (params, { rejectWithValue }) => {
+    try {
+      const device_id = params;
+      const response = await httpGetData(`/device/${device_id}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
+
 const deviceSlice = createSlice({
     name: 'device',
     initialState: {
       data: [],
+      deviceData: {},
       loadDataStatus: loadStatus.None,
       loadCreateDataStatus: loadStatus.None,
       loadUpdateDataStatus: loadStatus.None,
       loadDeleteDataStatus: loadStatus.None,
+      loadDeviceDataStatus: loadStatus.None,
     },
     reducers: {
       resetLoadDataStatus: (state, action) => {
@@ -87,6 +104,9 @@ const deviceSlice = createSlice({
       },
       resetDeleteDataStatus: (state, action) => {
         state.loadDeleteDataStatus = loadStatus.None;
+      },
+      resetDeviceDataStatus: (state, action) => {
+        state.loadDeviceDataStatus = loadStatus.None;
       },
     },
     extraReducers: (builder) => {
@@ -129,9 +149,20 @@ const deviceSlice = createSlice({
         .addCase(deleteDevice.rejected, (state, action) => {
           state.loadDeleteDataStatus = loadStatus.Failed;
         })
+        .addCase(getDeviceById.pending, (state, action) => {
+          state.loadDeviceDataStatus = loadStatus.Loading;
+        })
+        .addCase(getDeviceById.fulfilled, (state, action) => {
+          state.loadDeviceDataStatus = loadStatus.Success;
+          state.deviceData = action.payload;
+        })
+        .addCase(getDeviceById.rejected, (state, action) => {
+          state.loadDeviceDataStatus = loadStatus.Failed;
+          state.deviceData = {};
+        });
     }
 });
 
 const { reducer: deviceReducer } = deviceSlice;
-export const {resetLoadDataStatus, resetCreateDataStatus, resetUpdateDataStatus, resetDeleteDataStatus} = deviceSlice.actions;
+export const {resetLoadDataStatus, resetCreateDataStatus, resetUpdateDataStatus, resetDeleteDataStatus, resetDeviceDataStatus} = deviceSlice.actions;
 export default deviceReducer;

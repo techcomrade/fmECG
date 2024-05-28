@@ -1,34 +1,28 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import {convertGenderToString, convertStringToGender} from "../../constants";
 import { checkDateTypeKey } from "../../utils/arrayUtils";
 import { convertTimeToDate } from "../../utils/dateUtils";
 import { DrawerSide } from '../../components/Drawer/Drawer';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserById, loadStatus } from '../../redux/reducer/userSlice';
-import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Divider } from 'antd';
+import { getDeviceById, loadStatus } from '../../redux/reducer/deviceSlice';
+import { Divider } from 'antd';
 
-const UserDetailComponent = (props, ref) => {
+const DeviceDetailComponent = (props, ref) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [idSelect, setIdSelect] = useState("");
 
-  const { userData, loadUserDataStatus } = useSelector((state) => state.user);
+  const { deviceData, loadDeviceDataStatus } = useSelector((state) => state.device);
 
   const handleData = (data) => {
-    const userData = {...data};
+    const deviceData = {...data};
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
-          userData[key] = convertTimeToDate(data[key]);
-        }
-
-        if (key === 'gender') {
-          userData[key] = convertGenderToString(data.gender);
+          deviceData[key] = convertTimeToDate(data[key]);
         }
       })
 
-    return userData;
+    return deviceData;
   };
 
   useImperativeHandle(ref, () => ({
@@ -36,32 +30,28 @@ const UserDetailComponent = (props, ref) => {
       setIsOpen(true);
       if (id !== idSelect) {
         setIdSelect(id);
-        dispatch(getUserById(id));
+        dispatch(getDeviceById(id));
       }
     },
   }));
 
   useEffect(()=>{
-    if(loadUserDataStatus === loadStatus.Success){
-      const rawData = userData.metadata.map((element) => handleData(element));
-      setData(rawData[0]);
+    if(loadDeviceDataStatus === loadStatus.Success){
+      const rawData = deviceData.metadata;
+      setData(handleData(rawData));
     }
-  }, [loadUserDataStatus]);
+  }, [loadDeviceDataStatus]);
  
   const labelsInfo = {
-    username: 'Họ và tên',
-    gender: 'Giới tính',
-    birth: "Ngày sinh",
-    phone_number: "Số điện thoại",
-    status: "Trạng thái",
-    role: "Quyền hạn",
-    devices: "Số thiết bị",
-    records: "Số bản ghi"
+    device_name: 'Tên thiết bị',
+    device_type: 'Loại thiết bị',
+    end_date: "Ngày kết thúc",
+    start_date: "Ngày bắt đầu",
+    recordCount: "Số bản ghi",
   }; 
 
   const customData = (
     <>
-      <Avatar size={60} icon={<UserOutlined />}/>
       <p className='site-description-item-profile-p'>Thông tin cụ thể</p>
       <p className='site-description-item-profile-wrapper'>{data?.information}</p>
       <Divider />
@@ -73,7 +63,7 @@ const UserDetailComponent = (props, ref) => {
        <DrawerSide
         closed = {()=> setIsOpen(false)}
         isOpen = {isOpen}
-        title = "Thông tin người dùng"
+        title = "Thông tin thiết bị"
         data = {data}
         labels = {labelsInfo}
         customData={customData}
@@ -82,4 +72,4 @@ const UserDetailComponent = (props, ref) => {
   );
 };
 
-export const UserDetail = forwardRef(UserDetailComponent);
+export const DeviceDetail = forwardRef(DeviceDetailComponent);
