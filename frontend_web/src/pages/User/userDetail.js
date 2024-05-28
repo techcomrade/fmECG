@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import {convertGenderToString, convertStringToGender} from "../../constants";
+import {convertGenderToString, convertRoleToString, convertStringToGender} from "../../constants";
 import { checkDateTypeKey } from "../../utils/arrayUtils";
 import { convertTimeToDate } from "../../utils/dateUtils";
 import { DrawerSide } from '../../components/Drawer/Drawer';
@@ -17,16 +17,17 @@ const UserDetailComponent = (props, ref) => {
   const { userData, loadUserDataStatus } = useSelector((state) => state.user);
 
   const handleData = (data) => {
-    const userData = {...data};
-      Object.keys(data).forEach((key) => {
-        if (checkDateTypeKey(key)) {
-          userData[key] = convertTimeToDate(data[key]);
-        }
+    const userData = {
+      ...data,
+      gender: convertGenderToString(data.gender),
+      role: convertRoleToString(data.role)
+    };
 
-        if (key === 'gender') {
-          userData[key] = convertGenderToString(data.gender);
-        }
-      })
+    Object.keys(data).forEach((key) => {
+      if (checkDateTypeKey(key)) {
+        userData[key] = convertTimeToDate(data[key]);
+      }
+    })
 
     return userData;
   };
@@ -54,7 +55,7 @@ const UserDetailComponent = (props, ref) => {
     birth: "Ngày sinh",
     phone_number: "Số điện thoại",
     status: "Trạng thái",
-    role: "Quyền hạn",
+    role: "Tác vụ",
     devices: "Số thiết bị",
     records: "Số bản ghi"
   }; 
