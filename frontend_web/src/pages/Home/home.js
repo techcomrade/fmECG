@@ -37,7 +37,7 @@ const Home = () => {
           >
             <Statistic
               title={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>Total Records</span>}
-              value={dataState.data.metadata.record_count}
+              value={dropdownData.record_count}
               valueStyle={{ color: '#000000', fontSize: '24px', fontWeight: 'bold' }}
               prefix={<DatabaseOutlined style={{ fontSize: '24px', marginRight: '8px' }} />}
             />
@@ -55,7 +55,7 @@ const Home = () => {
           >
             <Statistic
               title={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>Users</span>}
-              value={dataState.data.metadata.user_count}
+              value={dropdownData.user_count}
               valueStyle={{ color: '#000000', fontSize: '24px', fontWeight: 'bold' }}
               prefix={<UserOutlined style={{ fontSize: '24px', marginRight: '8px' }} />}
             />
@@ -73,7 +73,7 @@ const Home = () => {
           >
             <Statistic
               title={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>Devices</span>}
-              value={dataState.data.metadata.record_count}
+              value={dropdownData.record_count}
               valueStyle={{ color: '#000000', fontSize: '24px', fontWeight: 'bold' }}
               prefix={<MobileOutlined style={{ fontSize: '24px', marginRight: '8px' }} />}
             />

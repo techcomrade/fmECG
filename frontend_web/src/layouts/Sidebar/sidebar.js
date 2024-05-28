@@ -1,63 +1,20 @@
-import { UserOutlined, HomeOutlined, UnorderedListOutlined} from '@ant-design/icons';
 import { Layout, theme, Menu} from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getRoutesByRole } from '../route';
+import { context } from '../../utils/context';
 
 const { Sider } = Layout;
 
 export const MenuList = () => {
   const navigate = useNavigate()
+  const menulist = getRoutesByRole(context.role);
 
-  return [
-    {
-      key: "/",
-      label: "Trang chủ",
-      icon: <HomeOutlined />,
-      onClick: () => {
-        navigate('/')
-      }
-    },
-    {
-      key: "/manage_users",
-      label: "Quản lí người dùng",
-      icon: <UnorderedListOutlined />,
-      onClick: () => {
-        navigate('/user')
-      }
-    },
-    {
-      key: "/manage_devices",
-      label: "Quản lí thiết bị",
-      icon: <UnorderedListOutlined />,
-      onClick: () => {
-        navigate('/device')
-      }
-    },
-    {
-      key: "/manage_records",
-      label: "Quản lí record",
-      icon: <UnorderedListOutlined />,
-      onClick: () => {
-        navigate('/record')
-      }
-    },
-    {
-      key: "/manage_assignment",
-      label: "Quản lí assignment",
-      icon: <UnorderedListOutlined />,
-      onClick: () => {
-        navigate('/pda')
-      }
-    },
-    {
-      key: "/my_account",
-      label: "Tài khoản",
-      icon: <UserOutlined />,
-      onClick: () => {
-        navigate('/account')
-      }
-    },
-  ];
+  return menulist ? menulist.map(item => ({
+    ...item,
+    onClick: () => navigate(item.key)
+  })) : []
+
 } 
 
 const Sidebar = ({children}) => {
