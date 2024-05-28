@@ -17,27 +17,26 @@ import { showNotiError } from "../../components/Notification";
 import dayjs from "dayjs";
 import { getUserById } from "../../redux/reducer/userSlice";
 import { loadStatus } from "../../redux/reducer/recordSlice";
-import "./detail.scss";
 import { convertGenderToString, convertRoleToString } from "../../constants";
 
 const { Option } = Select;
-export default function Detail() {
+export default function DocTorInformation() {
   const dispatch = useDispatch();
 
   const [accountData, setData] = useState({});
-  const dataState = useSelector((state) => state.user);
-  const [password, setPassword] = useState("");
-  useEffect(() => {
-    dispatch(getUserById());
-  }, []);
-  useEffect(() => {
-    if (dataState.loadUserDataStatus === loadStatus.Success) {
-      const rawData = dataState.userData?.metadata[0];
-      setData(rawData);
-    }
-  }, [dataState.loadUserDataStatus]);
-  const handleSubmitButton = () => {};
-  const handleChangeInput = () => {};
+
+    
+//   useEffect(() => {
+//     dispatch(getUserById());
+//   }, []);
+//   useEffect(() => {
+//     if (dataState.loadUserDataStatus === loadStatus.Success) {
+//       const rawData = dataState.userData?.metadata[0];
+//       setData(rawData);
+//     }
+//   }, [dataState.loadUserDataStatus]);
+//   const handleSubmitButton = () => {};
+//   const handleChangeInput = () => {};
   return (
     <div className="account-info">
       <Col span={22} offset={1}>
@@ -120,57 +119,16 @@ export default function Detail() {
           </Row>
           <Row>
             <Col span={10}>
-              <Form.Item
-                label="Mật khẩu"
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your password!",
-                  },
-                ]}
-                hasFeedback
-              >
-                <Input.Password defaultValue={"12345678"} />
-              </Form.Item>
-            </Col>
-            <Col span={10} offset={2}>
-              <Form.Item
-                name="confirm"
-                label="Confirm Password"
-                dependencies={["password"]}
-                hasFeedback
-                rules={[
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue("password") === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(
-                        new Error(
-                          "The new password that you entered do not match!"
-                        )
-                      );
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={10}>
               <Form.Item>
                 <Button
                   type="primary"
                   className="account-submit-button"
-                  onClick={handleSubmitButton}
+                
                 >
-                  Lưu
+                  Chat trực tiếp với bác sĩ 
                 </Button>
 
-                <Button>Hủy bỏ</Button>
+                
               </Form.Item>
             </Col>
           </Row>

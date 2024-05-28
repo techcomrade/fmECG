@@ -16,6 +16,8 @@ defmodule ServerChat.Application do
       {Phoenix.PubSub, name: ServerChat.PubSub},
       # Start the Endpoint (http/https)
       ServerChatWeb.Endpoint,
+      ServerChat.Scheduler,
+      ServerChat.GithubStore,
       ServerChat.Fcm.FcmStore
       # Start a worker by calling: ServerChat.Worker.start_link(arg)
       # {ServerChat.Worker, arg}

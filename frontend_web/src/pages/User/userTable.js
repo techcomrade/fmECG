@@ -8,15 +8,13 @@ import {
   updateUser,
   deleteUser,
   resetDeleteDataStatus,
-  getUserById,
-  resetUserDataStatus,
 } from "../../redux/reducer/userSlice";
 import { convertTimeToDate } from "../../utils/dateUtils";
-import { convertGenderToString, convertStringToGender } from "../../constants";
+import { convertGenderToString, convertRoleToString, convertStringToGender, convertStringToRole } from "../../constants";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
-import { GENDER } from "../../constants";
+import { GENDER, ROLE } from "../../constants";
 import dayjs from "dayjs";
 import { UserDetail } from "./userDetail";
 
@@ -60,6 +58,14 @@ const UserTable = () => {
       isEdit: true,
     },
     {
+      title: "Tác vụ",
+      dataIndex: "role",
+      key: "role",
+      type: "select",
+      dataSelect: ROLE,
+      isEdit: true,
+    },
+    {
       title: "Thiết bị",
       dataIndex: "devices",
       key: "devices",
@@ -76,28 +82,32 @@ const UserTable = () => {
   ];
 
   const handleData = (data, type) => {
-    const userData = { ...data };
+    let userData = {};
 
     if (type === "form") {
+      userData = {
+        ...data,
+        gender: convertStringToGender(data.gender),
+        role: convertStringToRole(data.role)
+      }
+
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
           userData[key] = dayjs(data[key], "DD/MM/YYYY");
-        }
-
-        if (key === "gender") {
-          userData[key] = convertStringToGender(data.gender);
-        }
+        }       
       });
     }
 
     if (type === "render") {
+      userData = {
+        ...data,
+        gender: convertGenderToString(data.gender),
+        role: convertRoleToString(data.role)
+      }
+
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
           userData[key] = convertTimeToDate(data[key]);
-        }
-
-        if (key === "gender") {
-          userData[key] = convertGenderToString(data.gender);
         }
       });
     }

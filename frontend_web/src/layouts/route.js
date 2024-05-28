@@ -1,7 +1,7 @@
 import Home from "../pages/Home/home";
 import DetailUser from "../pages/Account/Detail";
 import NotFound from "../pages/NotFound/notfound";
-import { Route, Routes as ReactRoutes } from "react-router-dom";
+import { Navigate, Route, Routes as ReactRoutes } from "react-router-dom";
 import UserTable from "../pages/User/userTable";
 import DeviceTable from "../pages/Device/deviceTable";
 import RecordTable from "../pages/Record/recordTable";
@@ -11,10 +11,12 @@ import {
   HomeOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
-import { getLocalStorage } from "../utils/storageUtils";
+import DocTorInformation from "../pages/DoctorInformation/doctorInfomation";
+import DeviceInformation from "../pages/DeviceInformation/deviceInformation";
+import { userRole } from "../constants";
+import { context } from "../utils/context";
 
-
-export const routerMappingGroup = {
+export const AdminRouterMappingGroup = {
   Home: {
     key: "/",
     label: "Trang chủ",
@@ -39,7 +41,6 @@ export const routerMappingGroup = {
     component: <RecordTable />,
     icon: <UnorderedListOutlined />,
   },
-
   AssignmentPatientDoctor: {
     key: "/pda",
     label: "Quản lý assignment",
@@ -53,17 +54,91 @@ export const routerMappingGroup = {
     icon: <UserOutlined />,
   },
 };
-export const userRole = getLocalStorage("role") ?? "";
+
+export const doctorRouterMappingGroup = {
+  Home: {
+    key: "/",
+    label: "Trang chủ",
+    component: <Home />,
+    icon: <HomeOutlined />,
+  },
+  User: {
+    key: "/user",
+    label: "Quản lý người dùng",
+    component: <UserTable />,
+    icon: <UnorderedListOutlined />,
+  },
+  Device: {
+    key: "/device",
+    label: "Quản lý thiết bị",
+    component: <DeviceTable />,
+    icon: <UnorderedListOutlined />,
+  },
+  Record: {
+    key: "/record",
+    label: "Quản lý bản ghi",
+    component: <RecordTable />,
+    icon: <UnorderedListOutlined />,
+  },
+  Account: {
+    key: "/account",
+    label: "Tài khoản",
+    component: <DetailUser />,
+    icon: <UserOutlined />,
+  },
+};
+
+export const patientRouterMappingGroup = {
+  Home: {
+    key: "/",
+    label: "Trang chủ",
+    component: <Home />,
+    icon: <HomeOutlined />,
+  },
+  DoctorInformation: {
+    key: "/doctor",
+    label: "Thông tin bác sĩ",
+    component: <DocTorInformation />,
+    icon: <UserOutlined />,
+  },
+  DeviceInformation: {
+    key: "/deviceinfor",
+    label: "Thông tin thiết bị",
+    component: <DeviceInformation />,
+    icon: <UserOutlined />,
+  },
+  Account: {
+    key: "/account",
+    label: "Tài khoản",
+    component: <DetailUser />,
+    icon: <UserOutlined />,
+  },
+};
+
+
+export const getRoutesByRole = (role) => {
+  switch (role) {
+    case userRole.admin:
+      return Object.values(AdminRouterMappingGroup);
+    case userRole.doctor:
+      return Object.values(doctorRouterMappingGroup);
+    case userRole.patient:
+      return Object.values(patientRouterMappingGroup);
+    default:
+      return {};
+  }
+};
+
+
+const routerMapping = getRoutesByRole(context.role);
+
 export const Routes = () => {
   return (
     <ReactRoutes>
-      <Route path="/" element={routerMappingGroup.Home.component} />
-      <Route path="/account" element={<DetailUser />} />
-      <Route path="/user" element={<UserTable />} />
-      <Route path="/device" element={<DeviceTable />} />
-      <Route path="/record" element={<RecordTable />} />
-      <Route path="/pda" element={<PdaTable />} />
-      <Route path="*" element={<NotFound />} />
+      {routerMapping?.map((item,index)=> (
+        <Route path={item?.key} element={item.component} key={index}/>
+      ))}
+      <Route path="*" element={<Navigate to="/" />} />
     </ReactRoutes>
   );
 };
