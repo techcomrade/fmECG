@@ -8,6 +8,8 @@ import {
   updateUser,
   deleteUser,
   resetDeleteDataStatus,
+  getUserById,
+  resetUserDataStatus,
 } from "../../redux/reducer/userSlice";
 import { convertTimeToDate } from "../../utils/dateUtils";
 import {convertGenderToString, convertStringToGender} from "../../constants"
@@ -17,13 +19,14 @@ import { showNotiSuccess } from "../../components/Notification";
 import { GENDER } from "../../constants";
 import dayjs from "dayjs";
 import { DrawerSide } from "../../components/Drawer/Drawer";
-import { httpGetData } from "../../api/common.api";
 
 const UserTable = () => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.user);
   const [dataTable, setDataTable] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
+  const [idSelect, setIdSelect] = useState("");
+
   const modalUpdateRef = useRef(null);
   const drawerRef = useRef(null);
 
@@ -107,11 +110,15 @@ const UserTable = () => {
 
   useEffect(() => {
     if (dataState.loadDeleteDataStatus === loadStatus.Success) {
-      showNotiSuccess("Bạn đã xoá người dùng thành công ");
+      showNotiSuccess("Bạn đã xoá người dùng thành công");
       dispatch(resetDeleteDataStatus());
       dispatch(getUser());
     }
   }, [dataState.loadDeleteDataStatus]);
+
+  useEffect(() => {
+    dispatch(getUserById({id: idSelect}));
+  }, [idSelect]);
 
   const handleDeleteFunction = (id) => {
     dispatch(deleteUser({ id: id }));
@@ -158,9 +165,16 @@ const UserTable = () => {
     return userData;
   }
 
-  const handleOpenDrawer = async (id) => {
-    const data = await httpGetData(`/user/${id}`);
-    drawerRef.current?.open(handleData(data.metadata[0], 'render'));
+  const handleOpenDrawer = (id) => {
+    if(id !== idSelect) {
+      setIdSelect(id);
+      dispatch(resetUserDataStatus());
+    };
+
+    if (dataState.loadUserDataStatus === loadStatus.Success) { 
+      const userData = dataState.userData.metadata[0];
+      drawerRef.current?.open(handleData(userData, 'render'));
+    }
   }
 
   return (

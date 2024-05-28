@@ -4,7 +4,6 @@ import {
   httpPostData,
 } from "../../api/common.api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getUserId } from "../../utils/storageUtils";
 
 export const loadStatus = {
   None: 0,
@@ -73,7 +72,7 @@ export const getUserById = createAsyncThunk(
   "/user/id",
   async (params, { rejectWithValue }) => {
     try {
-      const user_id = getUserId()
+      const user_id = params?.id;
       const response = await httpGetData(`/user/${user_id}`);
       return response;
     } catch (error) {
