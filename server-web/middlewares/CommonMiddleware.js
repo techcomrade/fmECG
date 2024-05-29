@@ -18,9 +18,8 @@ class CommonMiddleware {
     const token = authHeader.split(" ")[1];
     const decodeToken = TokenService.decodeToken(token);
     if (!decodeToken)
-      return res.status(500).json({ message: "Failed to verify token" });
+    {  return res.status(500).json({ message: "Failed to verify token" });}
     res.locals.role = decodeToken.role;
-    console.log("role", res.locals.role);
     next();
   }
 
