@@ -1,7 +1,7 @@
-import 'package:bluetooth_ecg/constants/chat_user.dart';
-import 'package:bluetooth_ecg/constants/color_constant.dart';
-import 'package:bluetooth_ecg/screens/chat_screens/chat_detail_screen.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -11,172 +11,120 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  WebSocketChannel? channel;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController messageController = TextEditingController();
+  List<Map<String, dynamic>> messages = [];
+  String? username;
+  bool isConnected = false;
+
+  @override
+  void dispose() {
+    channel?.sink.close();
+    super.dispose();
+  }
+
+  void connect() {
+    if (nameController.text.isNotEmpty) {
+      setState(() {
+        username = nameController.text;
+        isConnected = true;
+      });
+
+      channel = WebSocketChannel.connect(Uri.parse('ws://10.0.2.2:8080/ws'));
+      channel!.sink.add(json.encode({'sender': username, 'type': 'JOIN'}));
+
+      channel!.stream.listen((data) {
+        Map<String, dynamic> message = json.decode(data);
+        setState(() {
+          messages.add(message);
+        });
+      }, onError: onError);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Username cannot be empty')),
+      );
+    }
+  }
+
+  void sendMessage() {
+    if (messageController.text.isNotEmpty && channel != null) {
+      var chatMessage = {
+        'sender': username,
+        'content': messageController.text,
+        'type': 'CHAT'
+      };
+      channel!.sink.add(json.encode(chatMessage));
+      setState(() {
+        messages.add(chatMessage);
+      });
+      messageController.clear();
+    }
+  }
+
+  void onError(error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Could not connect to WebSocket server. Please try again later!')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: ColorConstant.surface,
-      appBar: AppBar(
-        flexibleSpace: GestureDetector(
-          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        ),
-        backgroundColor: ColorConstant.surface,
-        toolbarHeight: size.height * 0.1,
-        title: const Text(
-          "Tin nhắn",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        actions: const [
-          IconButton(
-              onPressed: null,
-              icon: Icon(
-                Icons.send,
-                color: Colors.blue,
-              ))
-        ],
-      ),
-      body: GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: SizedBox(
-          height: size.height,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Tìm bác sĩ...",
-                    hintStyle:
-                        const TextStyle(color: ColorConstant.onSurfaceVariant),
-                    prefixIcon: const Icon(
-                      Icons.search,
-                      color: ColorConstant.onSurfaceVariant,
-                      size: 20,
-                    ),
-                    filled: true,
-                    fillColor: ColorConstant.surfaceVariant,
-                    contentPadding: const EdgeInsets.all(8),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.grey.shade100)),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: ChatUsers.chatUsers.length,
-                    //shrinkWrap: true,
+      appBar: AppBar(title: Text('Flutter WebSocket Chat')),
+      body: isConnected ? chatPage() : usernamePage(),
+    );
+  }
 
-                    padding: const EdgeInsets.only(top: 16),
-                    itemBuilder: (context, index) {
-                      return ConversationList(
-                          index: index,
-                          name: ChatUsers.chatUsers[index].name,
-                          messageText: ChatUsers.chatUsers[index].message,
-                          imageUrl: ChatUsers.chatUsers[index].imageUrl,
-                          time: ChatUsers.chatUsers[index].time,
-                          isMessageRead: (index != 0) ? true : false);
-                    }),
-              ),
-            ],
-          ),
+  Widget usernamePage() {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(labelText: 'Enter Username'),
+            ),
+            ElevatedButton(onPressed: connect, child: Text('Start Chatting'))
+          ],
         ),
       ),
     );
   }
-}
 
-class ConversationList extends StatefulWidget {
-  final String name;
-  final String messageText;
-  final String imageUrl;
-  final String time;
-  final bool isMessageRead;
-  final int index;
-  const ConversationList({
-    super.key,
-    required this.name,
-    required this.messageText,
-    required this.imageUrl,
-    required this.time,
-    required this.isMessageRead,
-    required this.index,
-  });
-  @override
-  State<ConversationList> createState() => _ConversationListState();
-}
-
-class _ConversationListState extends State<ConversationList> {
-  late bool isRead = widget.isMessageRead;
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-        setState(() {
-          isRead = true;
-        });
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    ChatDetailScreen(indexSelect: widget.index)));
-      },
-      child: Container(
-        padding:
-            const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(widget.imageUrl),
-                    maxRadius: 30,
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  Expanded(
-                    child: Container(
-                      color: Colors.transparent,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            widget.name,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Text(
-                            widget.messageText,
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: !isRead
-                                    ? Colors.black
-                                    : Colors.grey.shade600,
-                                fontWeight: !isRead
-                                    ? FontWeight.bold
-                                    : FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+  Widget chatPage() {
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            itemCount: messages.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/doctor.png'),
+                ),
+                title: Text(messages[index]['sender']),
+                subtitle: Text(messages[index]['content']),
+              );
+            },
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: TextField(
+            controller: messageController,
+            decoration: InputDecoration(
+              labelText: 'Send a message',
+              suffixIcon: IconButton(
+                icon: Icon(Icons.send),
+                onPressed: sendMessage,
               ),
             ),
-            Text(
-              widget.time,
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: !isRead ? FontWeight.bold : FontWeight.normal),
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
