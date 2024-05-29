@@ -19,6 +19,7 @@ import { getUserById } from "../../redux/reducer/userSlice";
 import { loadStatus } from "../../redux/reducer/recordSlice";
 import "./detail.scss";
 import { convertGenderToString, convertRoleToString } from "../../constants";
+import { context } from "../../utils/context";
 
 const { Option } = Select;
 export default function Detail() {
@@ -28,7 +29,7 @@ export default function Detail() {
   const dataState = useSelector((state) => state.user);
   const [password, setPassword] = useState("");
   useEffect(() => {
-    dispatch(getUserById());
+    dispatch(getUserById(context.user_id));
   }, []);
   useEffect(() => {
     if (dataState.loadUserDataStatus === loadStatus.Success) {
@@ -36,8 +37,6 @@ export default function Detail() {
       setData(rawData);
     }
   }, [dataState.loadUserDataStatus]);
-  const handleSubmitButton = () => {};
-  const handleChangeInput = () => {};
   return (
     <div className="account-info">
       <Col span={22} offset={1}>

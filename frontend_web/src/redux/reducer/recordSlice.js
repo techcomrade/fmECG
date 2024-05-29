@@ -80,9 +80,9 @@ export const deleteRecord = createAsyncThunk(
   }
 );
 
-export const downloadRecordFile = (id) =>{
+export const downloadRecordFile = (id) => {
   const downloadPath = `${API_URL}/record/download/${id}`;
-  if(downloadPath){
+  if (downloadPath) {
     window.open(downloadPath);
   }
 };
@@ -92,7 +92,7 @@ export const getRecordById = createAsyncThunk(
   async (params, { rejectWithValue }) => {
     try {
       const device_id = params;
-      const response = await httpGetData(`/record/${device_id}`);
+      const response = await httpGetData(`/record/id/${device_id}`);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -101,7 +101,20 @@ export const getRecordById = createAsyncThunk(
     }
   }
 );
-
+export const getRecordByDoctorId = createAsyncThunk(
+  "/record/doctorid",
+  async (params, { rejectWithValue }) => {
+    try {
+      const device_id = params;
+      const response = await httpGetData(`/record/doctor/${device_id}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
 const recordSlice = createSlice({
   name: "record",
   initialState: {
@@ -131,9 +144,9 @@ const recordSlice = createSlice({
     resetCheckRecordStatus: (state, action) => {
       state.loadCheckRecordStatus = loadStatus.None;
     },
-    resetRecordDataStatus: (state, action) => {
-      state.loadDeviceDataStatus = loadStatus.None;
-    },
+    // resetRecordDataStatus: (state, action) => {
+    //   state.loadDeviceDataStatus = loadStatus.None;
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -145,6 +158,18 @@ const recordSlice = createSlice({
         state.loadDataStatus = loadStatus.Success;
       })
       .addCase(getRecord.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = loadStatus.Failed;
+      })
+      .addCase(getRecordByDoctorId.pending, (state, action) => {
+        state.loadDataStatus = loadStatus.Loading;
+      })
+      .addCase(getRecordByDoctorId.fulfilled, (state, action) => {
+        state.data = action.payload;
+        console.log(action.payload);
+        state.loadDataStatus = loadStatus.Success;
+      })
+      .addCase(getRecordByDoctorId.rejected, (state, action) => {
         state.data = [];
         state.loadDataStatus = loadStatus.Failed;
       })

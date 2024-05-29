@@ -82,7 +82,7 @@ class DeviceModel {
       },
     });
   }
-  
+
   async updateById(device, id) {
     device.updated_at = Date.now();
     return await DeviceDTO.update(
@@ -103,8 +103,16 @@ class DeviceModel {
     );
   }
 
-  async count(){
+  async count() {
     return await DeviceDTO.count();
+  }
+
+  async getByDoctorId(id) {
+    return await DeviceDTO.findAll({
+      where: {
+        doctor_id: id,
+      },
+    });
   }
 }
 

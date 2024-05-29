@@ -11,9 +11,10 @@ const FileUploadService = require("../services/FileService");
 
 const router = express.Router();
 
-router.post("", UserMiddleware.validateCreateData, UserController.createUser);
+router.post("", commonMiddleware.validationToken, UserMiddleware.validateCreateData, UserController.createUser);
 router.post(
   "/update",
+  commonMiddleware.validationToken,
   UserMiddleware.validateUpdateData,
   UserController.updateUser
 );
@@ -28,10 +29,10 @@ router.post(
 router.get(
   "",
   commonMiddleware.validationToken,
-  commonMiddleware.restrictRole(roleGroup.admin),
+  // commonMiddleware.restrictRole(roleGroup.admin),
   UserController.getAll
 );
-router.get("/:id", UserMiddleware.checkUserId, UserController.getUserById);
+router.get("/id/:id", UserController.getUserById);
 router.delete("", UserMiddleware.checkUserId, UserController.deleteUser);
 
 module.exports = router;

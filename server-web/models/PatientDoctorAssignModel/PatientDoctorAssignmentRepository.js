@@ -25,6 +25,7 @@ class PatientDoctorAssignmentModel {
       }
     );
   }
+  
   async deleteById(id, t) {
     return await PatientDoctorAssignmentDTO.destroy(
       {
