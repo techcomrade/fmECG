@@ -16,11 +16,11 @@ export const ROLE = [
   },
   {
     value: 1,
-    label: "Doctor",
+    label: "Bác sĩ",
   },
   {
     value: 2,
-    label: "Patient",
+    label: "Bệnh nhân",
   },
 ];
 
@@ -56,9 +56,9 @@ export const convertRoleToString = (role) => {
     case 0:
       return "Admin";
     case 1:
-      return "Doctor";
+      return "Bác sĩ";
     default:
-      return "Patient";
+      return "Bệnh nhân";
   }
 };
 
@@ -66,9 +66,9 @@ export const convertStringToRole = (gender) => {
   switch (gender) {
     case "Admin":
       return userRole.admin;
-    case "Doctor":
+    case "Bác sĩ":
       return userRole.doctor;
-    case "Patient":
+    case "Bệnh nhân":
       return userRole.patient;
     default:
       return 4;

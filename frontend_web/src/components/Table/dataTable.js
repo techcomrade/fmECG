@@ -111,6 +111,11 @@ const DataTable = (props) => {
         bordered
         columns={props.column.filter(item => !item.hidden)}
         dataSource={tableData}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: () => props?.handleOpenDrawer?.(record?.id), // click row
+          };
+        }}      
       />
     </>
   );

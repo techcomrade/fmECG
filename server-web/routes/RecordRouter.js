@@ -13,7 +13,7 @@ router.post(
 );
 router.get("/data/:length", RecordController.getDataRecord);
 router.get(
-  "/getbyid/:recordId",
+  "/:recordId",
   RecordMiddleware.checkId,
   RecordController.getRecordById
 );

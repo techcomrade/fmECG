@@ -26,6 +26,8 @@ import { httpGetData } from "../../api/common.api";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { CloudDownloadOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
+import { DrawerSide } from "../../components/Drawer/Drawer";
+import { RecordDetail } from "./recordDetail";
 
 const RecordTable = () => {
   const dispatch = useDispatch();
@@ -41,6 +43,7 @@ const RecordTable = () => {
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
   const user_id = getLocalStorage("user");
+  const drawerRef = useRef(null);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -186,7 +189,7 @@ const RecordTable = () => {
       isEdit: true,
       ...getColumnSearchProps("end_time", "tg kết thúc"),
     },
-  ];
+  ]; 
 
   useEffect(() => {
     dispatch(getRecord());
@@ -205,11 +208,7 @@ const RecordTable = () => {
   useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       const rawData = dataState.data.metadata;
-      const data = rawData.map((element, index) => ({
-        ...element,
-        start_time: convertTimeToDateTime(element.start_time),
-        end_time: convertTimeToDateTime(element.end_time),
-      }));
+      const data = rawData.map((element) => handleData(element, 'render'));
       setData(data);
     }
     dispatch(resetLoadDataStatus());
@@ -250,25 +249,37 @@ const RecordTable = () => {
   };
 
   const handleSubmitEditUser = (data) => {
-    return dispatch(updateRecord(handleData(data)));
+    return dispatch(updateRecord(handleData(data, 'form')));
   };
 
   const handleSubmitAddFunction = (data) => {
-    return dispatch(createRecord(handleData(data)));
+    return dispatch(createRecord(handleData(data, 'form')));
   };
 
-  const handleData = (data) => {
+  const handleData = (data, type) => {
     let deviceData = { ...data};
-    Object.keys(data).forEach((key) => {
-      if (checkDateTypeKey(key)) {
-        deviceData[key] = dayjs(data[key], "HH:mm DD/MM/YYYY");      
-      }
-    });
-    deviceData = {
-      ...deviceData,
-      user_id: user_id,
-      data_rec_url: "http",
+
+    if (type === 'form') {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          deviceData[key] = dayjs(data[key], "HH:mm DD/MM/YYYY");      
+        }
+      });
+
+      deviceData = {
+        ...deviceData,
+        user_id: user_id,
+        data_rec_url: "http",
+      };
     };
+
+    if (type === 'render') {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          deviceData[key] = convertTimeToDateTime(data[key]);      
+        }
+      });
+    }
     return deviceData;
   };
   
@@ -318,22 +329,27 @@ const RecordTable = () => {
         chartButton
         openChart={() => setOpenChart(true)}
         customButton={renderDownloadButton()}
+        handleOpenDrawer={(id) => drawerRef.current?.open(id)}
       />
+
       <ModalControlData
         ref={modalUpdateRef}
         title="Sửa thông tin record"
         submitFunction={(data) => handleSubmitEditUser(data)}
       />
+
       <ModalControlData
         ref={modalAddRef}
         title="Thêm record mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
       />
+
       <ModalChart
         isOpen={openChart}
         setIsOpen={setOpenChart}
         selectedDevice={selectedData}
       />
+
       <Modal
         title="Download record status"
         open={isModalOpen}
@@ -344,6 +360,8 @@ const RecordTable = () => {
       >
        {dataState.loadCheckRecordStatus !== loadStatus.Success ? "Bản ghi đang được chuẩn bị để tải về... " : "Bản ghi đã sẵn sàng tải về"} 
       </Modal>
+
+      <RecordDetail ref={drawerRef}/>
     </>
   );
 };
