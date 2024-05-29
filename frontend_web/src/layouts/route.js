@@ -25,19 +25,19 @@ export const AdminRouterMappingGroup = {
   },
   User: {
     key: "/user",
-    label: "Quản lý người dùng",
+    label: "Thông tin người dùng",
     component: <UserTable />,
     icon: <UnorderedListOutlined />,
   },
   Device: {
     key: "/device",
-    label: "Quản lý thiết bị",
+    label: "Thông tin thiết bị",
     component: <DeviceTable />,
     icon: <UnorderedListOutlined />,
   },
   Record: {
     key: "/record",
-    label: "Quản lý bản ghi",
+    label: "Thông tin bản ghi",
     component: <RecordTable />,
     icon: <UnorderedListOutlined />,
   },
@@ -64,7 +64,7 @@ export const doctorRouterMappingGroup = {
   },
   User: {
     key: "/user",
-    label: "Quản lý người dùng",
+    label: "Quản lý bệnh nhân",
     component: <UserTable />,
     icon: <UnorderedListOutlined />,
   },
@@ -98,13 +98,13 @@ export const patientRouterMappingGroup = {
   DoctorInformation: {
     key: "/doctor",
     label: "Thông tin bác sĩ",
-    component: <DocTorInformation />,
+    component: <UserTable />,
     icon: <UserOutlined />,
   },
   DeviceInformation: {
-    key: "/deviceinfor",
+    key: "/device",
     label: "Thông tin thiết bị",
-    component: <DeviceInformation />,
+    component: <DeviceTable />,
     icon: <UserOutlined />,
   },
   Account: {

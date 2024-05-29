@@ -159,7 +159,7 @@ export default function Detail() {
               </Form.Item>
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <Col span={10}>
               <Form.Item>
                 <Button
@@ -173,7 +173,7 @@ export default function Detail() {
                 <Button>Hủy bỏ</Button>
               </Form.Item>
             </Col>
-          </Row>
+          </Row> */}
         </Form>
       </Col>
     </div>
