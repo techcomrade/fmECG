@@ -15,6 +15,7 @@ class PatientDoctorAssignmentService extends CommonService {
       patient_id: Joi.string(),
       doctor_id: Joi.string(),
       start_date: Joi.number().required(),
+      end_date: Joi.number(),
     });
     return schema.validate(assigment);
   }
