@@ -293,6 +293,15 @@ class RecordController {
       metadata: arrayValue,
     })
   }
+  async getRecordByDoctorId(req,res){
+    console.log(`[P]:::Get record by doctor id: `, req.params.id);
+    const recordByUser = await RecordService.getRecordByDoctorId(req.params.id);
+    console.log(recordByUser);
+    return res.status(200).json({
+      message: "Get records by doctor id successful!",
+      metadata: recordByUser,
+    });
+  }
 }
 
 module.exports = new RecordController();

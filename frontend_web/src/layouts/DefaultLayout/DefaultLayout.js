@@ -7,7 +7,7 @@ import { getLocalStorage } from '../../utils/storageUtils';
 import { Routes } from "../route";
 import { HashRouter } from "react-router-dom";
 
-const { Header, Content, Sider } = Layout;
+const { Header, Content} = Layout;
 
 const DefaultLayout = ({children}) => {
     const userName = getLocalStorage('username');

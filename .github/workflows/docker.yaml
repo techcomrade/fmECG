@@ -1,4 +1,4 @@
-name: Automatic build and push images to Docker
+name: Automatic deploy server
 on: workflow_dispatch
 
 jobs:
@@ -20,6 +20,9 @@ jobs:
           - dockerfile: ./proxy/Dockerfile
             image: thaidmfinnick/fmecg-proxy
             context: ./proxy
+          - dockerfile: ./server_chat/Dockerfile
+            image: thaidmfinnick/fmecg-chat-app
+            context: ./server_chat
     name: Docker Build ${{ matrix.image }}
 
     permissions:
@@ -54,7 +57,7 @@ jobs:
     needs: docker-build
     runs-on: ubuntu-latest
     steps:
-    - name: executing remote ssh commands
+    - name: Execute ssh commands
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.SERVER_HOST }}

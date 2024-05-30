@@ -26,3 +26,5 @@ erl_crash.dump
 server_chat-*.tar
 
 .deliver/releases/
+
+.env.docker

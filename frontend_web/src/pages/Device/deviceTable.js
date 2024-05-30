@@ -5,6 +5,8 @@ import {
   createDevice,
   deleteDevice,
   getDevice,
+  getDeviceByDoctorId,
+  getDevicesById,
   loadStatus,
   resetCreateDataStatus,
   resetDeleteDataStatus,
@@ -17,6 +19,9 @@ import { showNotiSuccess } from "../../components/Notification";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { httpGetData } from "../../api/common.api";
 import dayjs from "dayjs";
+import { DeviceDetail } from "./deviceDetail";
+import { context } from "../../utils/context";
+import { userRole } from "../../constants";
 
 const DeviceTable = () => {
   const dispatch = useDispatch();
@@ -26,6 +31,7 @@ const DeviceTable = () => {
   const [dropdownData, setDropData] = useState([]);
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
+  const drawerRef = useRef(null);
 
   const columns = [
     {
@@ -49,7 +55,7 @@ const DeviceTable = () => {
       type: "select",
       dataSelect: dropdownData,
       isEdit: true,
-      hidden: true
+      hidden: true,
     },
     {
       title: "Thông tin thiết bị",
@@ -75,11 +81,17 @@ const DeviceTable = () => {
   ];
 
   useEffect(() => {
-    dispatch(getDevice());
-    const getOptionData = async() => {
-      const userData = await httpGetData('/user');
-      setDropData(userData.metadata);
+    if (context.role === userRole.doctor) {
+      dispatch(getDeviceByDoctorId(context.user_id));
+    } else if (context.role === userRole.patient) {
+      dispatch(getDevicesById(context.user_id))
+    } else {
+      dispatch(getDevice());
     }
+    const getOptionData = async () => {
+      const userData = await httpGetData("/user");
+      setDropData(userData.metadata);
+    };
     getOptionData();
   }, []);
 
@@ -87,11 +99,7 @@ const DeviceTable = () => {
   useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       const rawData = dataState.data.metadata;
-      const data = rawData.map((element, index) => ({
-        ...element,
-        start_date: convertTimeToDate(element.start_date),
-        end_date: convertTimeToDate(element.end_date),
-      }));
+      const data = rawData.map((element) => handleData(element, "render"));
       setData(data);
     }
   }, [dataState.loadDataStatus]);
@@ -131,20 +139,32 @@ const DeviceTable = () => {
   };
 
   const handleSubmitEditUser = (data) => {
-    return dispatch(updateDevice(handleData(data)));
+    return dispatch(updateDevice(handleData(data, "form")));
   };
 
   const handleSubmitAddFunction = (data) => {
-    return dispatch(createDevice(handleData(data)));
+    return dispatch(createDevice(handleData(data, "form")));
   };
 
-  const handleData = (data) => {
-    let deviceData = {...data};
-    Object.keys(data).forEach((key) => {
-      if (checkDateTypeKey(key)) {
-        deviceData[key] = dayjs(data[key], "DD/MM/YYYY");      
-      }
-    });
+  const handleData = (data, type) => {
+    let deviceData = { ...data };
+
+    if (type === "form") {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          deviceData[key] = dayjs(data[key], "DD/MM/YYYY");
+        }
+      });
+    }
+
+    if (type === "render") {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          deviceData[key] = convertTimeToDate(data[key]);
+        }
+      });
+    }
+
     return deviceData;
   };
 
@@ -162,6 +182,7 @@ const DeviceTable = () => {
         column={columns}
         updateSelectedData={setSelectedData}
         loading={dataState.loadDataStatus === loadStatus.Loading}
+        handleOpenDrawer={(id) => drawerRef.current?.open(id)}
       />
       <ModalControlData
         ref={modalUpdateRef}
@@ -173,6 +194,7 @@ const DeviceTable = () => {
         title="Thêm thiết bị mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
       />
+      <DeviceDetail ref={drawerRef} />
     </>
   );
 };
