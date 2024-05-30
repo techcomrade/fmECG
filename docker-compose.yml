@@ -81,6 +81,32 @@ services:
       - ./docker/data/mysql:/var/lib/mysql
     networks:
       - network-fmecg
+  
+  chat-app:
+    image: thaidmfinnick/fmecg-chat-app
+    platform: linux/x86_64
+    container_name: chat-fmecg
+    restart: unless-stopped
+    depends_on:
+      - database-chat
+    env_file: ./server_chat/.env.docker
+    networks:
+      - network-fmecg
+  
+  database-chat:
+    image: postgres:12.19
+    platform: linux/x86_64
+    container_name: database-chat-fmecg
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    restart: unless-stopped
+    env_file: ./server_chat/.env.docker
+    volumes:
+      - ./docker/data/postgresql:/var/lib/postgresql/data
+    networks:
+      - network-fmecg
 
 networks:
   network-fmecg:

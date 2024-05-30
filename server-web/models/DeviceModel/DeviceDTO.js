@@ -15,6 +15,13 @@ const Device = sequelize.define("devices", {
       key: "id",
     },
   },
+  doctor_id: {
+    type: Sequelize.STRING,
+    references: {
+      model: users,
+      key: "id",
+    },
+  },
   device_name: {
     type: Sequelize.STRING,
     allowNull: false,

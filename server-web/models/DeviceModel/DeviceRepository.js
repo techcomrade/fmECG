@@ -1,4 +1,4 @@
-const { Sequelize } = require("sequelize");
+const { Sequelize, where } = require("sequelize");
 const {
   convertDateNormal,
   convertTimeToString,
@@ -82,7 +82,7 @@ class DeviceModel {
       },
     });
   }
-  
+
   async updateById(device, id) {
     device.updated_at = Date.now();
     return await DeviceDTO.update(
@@ -103,8 +103,24 @@ class DeviceModel {
     );
   }
 
-  async count(){
+  async count() {
     return await DeviceDTO.count();
+  }
+
+  async getByDoctorId(id) {
+    return await DeviceDTO.findAll({
+      where: {
+        doctor_id: id,
+      },
+    });
+  }
+
+  async getDevicesByUserId(id){
+    return await DeviceDTO.findAll({
+      where:{
+        user_id:id
+      }
+    })
   }
 }
 

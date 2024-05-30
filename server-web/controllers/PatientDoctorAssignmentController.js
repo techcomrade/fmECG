@@ -42,5 +42,21 @@ class PatientDoctorAssignmentController {
       });
     }
   }
+  async getDoctorByPatientId(req,res) {
+    console.log(`[P]::: Get doctor by patient id: `, req.params.patient_id);
+    try {
+      const patient = await PatientDoctorAssignmentService.getDoctorByPatientId(
+        req.params.patient_id
+      );
+      return res.status(200).json({
+        message: "Get doctor by patient id successful!",
+        metadata: patient,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        message: "Error when get doctor by patient id!",
+      });
+    }
+  }
 }
 module.exports = new PatientDoctorAssignmentController();
