@@ -47,7 +47,6 @@ const RecordTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const searchInput = useRef(null);
   const modalUpdateRef = useRef(null);
-  const modalAddRef = useRef(null);
   const user_id = getLocalStorage("user");
   const drawerRef = useRef(null);
 
@@ -201,7 +200,7 @@ const RecordTable = () => {
     if (context.role === userRole.doctor) {
       dispatch(getRecordByDoctorId(context.user_id));
     } else if (context.role === userRole.patient) {
-      dispatch(getRecordByUser(context.user_id))
+      dispatch(getRecordByUser(context.user_id));
     } else {
       dispatch(getRecord());
     }
@@ -256,7 +255,7 @@ const RecordTable = () => {
 
   const handleEditFunction = () => {
     const rowData = findElementById(dataTable, selectedData[0]);
-    const dataModal = handleData(rowData);
+    const dataModal = handleData(rowData, "form");
     modalUpdateRef.current?.open(dataModal, columns);
   };
 
@@ -297,20 +296,19 @@ const RecordTable = () => {
 
   const renderDownloadButton = () => (
     <>
-      {selectedData.length === 1 && (
-        <>
-          <Button
-            icon={<CloudDownloadOutlined />}
-            className="edit-btn"
-            onClick={() => {
-              dispatch(checkRecordFile(selectedData[0]));
-              setIsModalOpen(true);
-            }}
-          >
-            Download
-          </Button>
-        </>
-      )}
+      <>
+        <Button
+          icon={<CloudDownloadOutlined />}
+          disabled={selectedData.length !== 1}
+          className="edit-btn"
+          onClick={() => {
+            dispatch(checkRecordFile(selectedData[0]));
+            setIsModalOpen(true);
+          }}
+        >
+          Download
+        </Button>
+      </>
     </>
   );
 
@@ -323,14 +321,21 @@ const RecordTable = () => {
     setIsModalOpen(false);
     dispatch(resetCheckRecordStatus());
   };
-
+  const renderMessageDownload = (loadStatus) => {
+    switch (loadStatus) {
+      case loadStatus.Success:
+        return "Bản ghi đã sẵn sàng tải về";
+      case loadStatus.Loading:
+        return "Đang chuẩn bị file  tải xuống";
+      default:
+        return "Không tìm thấy bản ghi";
+    }
+  };
   return (
     <>
       <DataTable
         editButton
         editFunction={handleEditFunction}
-        addButton
-        addFunction={() => modalAddRef.current?.open({}, columns)}
         deleteButton
         deleteFunction={handleDeleteFunction}
         name="Bảng quản lý record"
@@ -350,12 +355,6 @@ const RecordTable = () => {
         submitFunction={(data) => handleSubmitEditUser(data)}
       />
 
-      <ModalControlData
-        ref={modalAddRef}
-        title="Thêm record mới"
-        submitFunction={(data) => handleSubmitAddFunction(data)}
-      />
-
       <ModalChart
         isOpen={openChart}
         setIsOpen={setOpenChart}
@@ -367,12 +366,10 @@ const RecordTable = () => {
         open={isModalOpen}
         onOk={handleOk}
         okText="Download"
-        confirmLoading={dataState.loadCheckRecordStatus !== loadStatus.Success}
+        confirmLoading={dataState.loadCheckRecordStatus === loadStatus.Loading}
         onCancel={handleCancel}
       >
-        {dataState.loadCheckRecordStatus !== loadStatus.Success
-          ? "Bản ghi đang được chuẩn bị để tải về... "
-          : "Bản ghi đã sẵn sàng tải về"}
+        {renderMessageDownload(dataState.loadCheckRecordStatus)}
       </Modal>
 
       <RecordDetail ref={drawerRef} />

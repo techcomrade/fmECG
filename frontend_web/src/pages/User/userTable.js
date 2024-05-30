@@ -11,10 +11,13 @@ import {
   getPatient,
   getDoctor,
 } from "../../redux/reducer/userSlice";
+import { Tag } from 'antd';
 import { convertTimeToDate } from "../../utils/dateUtils";
 import {
+  UserStatus,
   convertGenderToString,
   convertRoleToString,
+  convertStatusToString,
   convertStringToGender,
   convertStringToRole,
   userRole,
@@ -75,19 +78,21 @@ const UserTable = () => {
       isEdit: true,
     },
     {
-      title: "Thiết bị",
-      dataIndex: "devices",
-      key: "devices",
-      type: "text",
-      isEdit: false,
-    },
-    {
-      title: "Số lượng bản ghi",
-      dataIndex: "records",
-      key: "records",
-      type: "text",
-      isEdit: false,
-    },
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "status",
+      type: "select",
+      dataSelect: UserStatus,
+      isEdit: true,
+      render: (status)=>{
+        let color = status === 0 ? 'geekblue' : 'volcano'
+       return ( <Tag color={color} key={status}>
+       {convertStatusToString(status)}
+     </Tag>)
+      }
+    }
+   
+    
   ];
 
   const handleData = (data, type) => {
@@ -120,6 +125,7 @@ const UserTable = () => {
         }
       });
     }
+    
 
     return userData;
   };
@@ -170,7 +176,9 @@ const UserTable = () => {
   };
 
   const handleSubmitEditUser = (data) => {
-    const { account_id, devices, role, ...payload } = { ...data };
+    // console.log(data);
+    const { account_id, devices, role, records, status, ...payload } = { ...data };
+    console.log(payload);
     return dispatch(updateUser(payload));
   };
 

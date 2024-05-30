@@ -4,6 +4,7 @@ const RecordMiddleware = require("../middlewares/RecordMiddleware");
 const router = express.Router();
 const fileUploader = require("../services/FileService");
 const RecordService = require("../services/RecordService");
+const uploadController = require('../controllers/uploadController');
 const {
   commonMiddleware,
   roleGroup,

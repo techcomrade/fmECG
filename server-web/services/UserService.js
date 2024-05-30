@@ -48,7 +48,9 @@ class UserService extends CommonService {
       birth: Joi.number().required(),
       phone_number: Joi.number().required(),
       gender: Joi.number().required(),
-      image: Joi.string()
+      image: Joi.string(),
+      status: Joi.number(),
+      information: Joi.string()
     });
     return schema.validate(user);
   }

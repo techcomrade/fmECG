@@ -38,10 +38,6 @@ const Device = sequelize.define("devices", {
     type: Sequelize.BIGINT,
     allowNull: false,
   },
-  end_date: {
-    type: Sequelize.BIGINT,
-    allowNull: false,
-  },
   status:{
     type: Sequelize.INTEGER,
   },
