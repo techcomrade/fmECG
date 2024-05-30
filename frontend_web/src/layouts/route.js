@@ -43,7 +43,7 @@ export const AdminRouterMappingGroup = {
   },
   AssignmentPatientDoctor: {
     key: "/pda",
-    label: "Quản lý assignment",
+    label: "Thông tin assignment",
     component: <PdaTable />,
     icon: <UnorderedListOutlined />,
   },
