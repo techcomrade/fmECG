@@ -1,11 +1,16 @@
 const FileService = require("../services/FileService");
 
-class uploadImageDriveController {
+class uploadController {
     async setUploadToDrive(req, res, next) {
         await FileService.setStorageToMemory();
         next();
     }
-    async upload(req, res) {
+    async setUploadToDisk(req, res, next) {
+        await FileService.setStorageToDisk();
+        next();
+    }
+
+    async uploadImage(req, res) {
         const buffer = req.file.buffer;
         const fileName = req.file.originalName;
         await FileService.uploadDrive(buffer, fileName)
@@ -27,6 +32,7 @@ class uploadImageDriveController {
             });
         })
     }
+
 }
 
-module.exports = new uploadImageDriveController();
+module.exports = new uploadController();

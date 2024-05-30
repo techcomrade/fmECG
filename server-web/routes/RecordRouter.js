@@ -2,15 +2,17 @@ const express = require("express");
 const RecordController = require("../controllers/RecordController");
 const RecordMiddleware = require("../middlewares/RecordMiddleware");
 const router = express.Router();
+const fileUploader = require("../services/FileService");
+const RecordService = require("../services/RecordService");
 const {
   commonMiddleware,
   roleGroup,
 } = require("../middlewares/CommonMiddleware");
-
 router.get("", commonMiddleware.validationToken, RecordController.getAll);
 router.post(
   "",
   commonMiddleware.validationToken,
+  uploadController.setUploadToDisk,
   RecordController.uploadFileRecord,
   RecordController.createRecord
 );
@@ -80,6 +82,6 @@ router.post("/upload-file", commonMiddleware.validationToken, RecordController.u
     });
 });
 
-router.get("/read/:id", commonMiddleware.validationToken, RecordController.readFileRecord);
-router.delete("/delete/:id", commonMiddleware.validationToken, RecordController.deleteFileRecord);
+router.get("/read/:id",RecordController.readFileRecord);
+router.delete("/delete/:id", RecordController.deleteFileRecord);
 module.exports = router;

@@ -6,7 +6,7 @@ const {
 } = require("../middlewares/CommonMiddleware");
 const UserMiddleware = require("../middlewares/UserMiddleware");
 
-const uploadController = require("../controllers/uploadImageDriverController");
+const uploadController = require("../controllers/uploadController");
 const FileUploadService = require("../services/FileService");
 
 const router = express.Router();
