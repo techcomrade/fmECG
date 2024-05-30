@@ -1,7 +1,23 @@
 const PatientDoctorAssignmentService = require("../services/PatientDoctorAssignmentService");
 
 class PatientDoctorAssignmentController {
-  async getAllAssignment(req, res, nex) {
+  async createAssigment(req, res, next) {
+    const assigment = req.body;
+    console.log(`[P]:::Create patient doctor assigment`, assigment);
+    try {
+      await PatientDoctorAssignmentService.createAssignment(assigment);
+      return res.status(200).json({
+        message: "Create assignment successful!",
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        message: "Create assignment failed!",
+      });
+    }
+  }
+
+  async getAllAssignment(req, res, next) {
     console.log(`[P]::: Get all assignment: `);
     const assignments = await PatientDoctorAssignmentService.getAll();
     return res.status(200).json({
@@ -10,7 +26,7 @@ class PatientDoctorAssignmentController {
     });
   }
 
-  async getPatientByDoctorId(req, res, nex) {
+  async getPatientByDoctorId(req, res, next) {
     console.log(`[P]::: Get patient by doctor id: `, req.params.doctor_id);
     try {
       const patient = await PatientDoctorAssignmentService.getPatientByDoctorId(

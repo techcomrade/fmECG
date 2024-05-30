@@ -4,10 +4,18 @@ const PatientDoctorAssignmentMiddleware = require("../middlewares/PatientDoctorA
 
 const router = express.Router();
 
+router.post(
+  "/create",
+  PatientDoctorAssignmentMiddleware.validateAssignment,
+  PatientDoctorAssignmentMiddleware.checkDoctorById,
+  PatientDoctorAssignmentMiddleware.checkPatientById,
+  PatientDoctorAssignmentMiddleware.checkAssignmentByPatientId,
+  PatientDoctorAssignmentController.createAssigment
+);
 router.get("", PatientDoctorAssignmentController.getAllAssignment);
 router.get(
   "/patient/:doctor_id",
-  PatientDoctorAssignmentMiddleware.checkByDoctorId,
+  PatientDoctorAssignmentMiddleware.checkAssignmentByDoctorId,
   PatientDoctorAssignmentController.getPatientByDoctorId
 );
 
