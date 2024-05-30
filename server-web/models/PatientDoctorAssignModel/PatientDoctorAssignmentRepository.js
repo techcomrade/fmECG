@@ -4,14 +4,33 @@ const sequelize = require("../../config/sequelize");
 const { QueryTypes } = require("sequelize");
 
 class PatientDoctorAssignmentModel {
+  async createAssigment(assignment) {
+    return await PatientDoctorAssignmentDTO.create({
+      id: assignment.id,
+      patient_id: assignment.patient_id,
+      doctor_id: assignment.doctor_id,
+      start_date: assignment.start_date,
+      created_at: Date.now(),
+      updated_at: Date.now(),
+    });
+  }
+
   async getAllData() {
     return await PatientDoctorAssignmentDTO.findAll();
   }
 
-  async checkByDoctorId(doctor_id) {
+  async checkAssignmentByDoctorId(doctor_id) {
     return await PatientDoctorAssignmentDTO.findAll({
       where: {
         doctor_id: doctor_id,
+      },
+    });
+  }
+
+  async checkAssignmentByPatientId(patient_id) {
+    return await PatientDoctorAssignmentDTO.findAll({
+      where: {
+        patient_id: patient_id,
       },
     });
   }

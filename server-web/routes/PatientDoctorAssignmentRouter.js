@@ -8,11 +8,19 @@ const {
 
 const router = express.Router();
 
-router.get("", commonMiddleware.validationToken, PatientDoctorAssignmentController.getAllAssignment);
+router.post(
+  "/create",
+  PatientDoctorAssignmentMiddleware.validateAssignment,
+  PatientDoctorAssignmentMiddleware.checkDoctorById,
+  PatientDoctorAssignmentMiddleware.checkPatientById,
+  PatientDoctorAssignmentMiddleware.checkAssignmentByPatientId,
+  PatientDoctorAssignmentController.createAssigment
+);
+router.get("", PatientDoctorAssignmentController.getAllAssignment);
 router.get(
   "/patient/:doctor_id",
   commonMiddleware.validationToken,
-  PatientDoctorAssignmentMiddleware.checkByDoctorId,
+  PatientDoctorAssignmentMiddleware.checkAssignmentByDoctorId,
   PatientDoctorAssignmentController.getPatientByDoctorId
 );
 

@@ -19,7 +19,7 @@ CREATE TABLE `tokens` (
 DROP TABLE IF EXISTS `patient_doctor_assignment`;
 CREATE TABLE `patient_doctor_assignment` (
    `id` varchar(255) NOT NULL,
-   `patient_id` varchar(255),
+   `patient_id` varchar(255) UNIQUE,
    `doctor_id` varchar(255),
    `start_date` bigint NOT NULL,
    `end_date` bigint,
