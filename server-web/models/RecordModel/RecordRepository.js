@@ -23,11 +23,13 @@ class RecordRepository {
   }
 
   async getRecordByUserId(id) {
-    return await RecordDTO.findAll({
-      where: {
-        user_id: id,
-      },
-    });
+    return await sequelize.query(
+      "SELECT re.*, de.device_name, u.username FROM fmecg.records as re LEFT JOIN fmecg.devices as de ON re.user_id = de.user_id LEFT JOIN fmecg.users AS u ON u.id = re.user_id  WHERE re.user_id = :user",
+      {
+        replacements: { user: id },
+        type: QueryTypes.SELECT,
+      }
+    );
   }
 
   async getRecordByStartTime(time) {

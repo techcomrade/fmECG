@@ -38,7 +38,19 @@ export const getPatient = createAsyncThunk(
     }
   }
 );
-
+export const getDoctor = createAsyncThunk(
+  "/doctor",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpGetData(`/pda/doctor/${params}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
 export const createUser = createAsyncThunk(
   "/create-user",
   async (params, { rejectWithValue }) => {
@@ -146,6 +158,17 @@ const userSlice = createSlice({
         state.loadDataStatus = loadStatus.Success;
       })
       .addCase(getPatient.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = loadStatus.Failed;
+      })
+      .addCase(getDoctor.pending, (state, action) => {
+        state.loadDataStatus = loadStatus.Loading;
+      })
+      .addCase(getDoctor.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = loadStatus.Success;
+      })
+      .addCase(getDoctor.rejected, (state, action) => {
         state.data = [];
         state.loadDataStatus = loadStatus.Failed;
       })

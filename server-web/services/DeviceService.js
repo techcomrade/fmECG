@@ -69,6 +69,9 @@ class DeviceService extends CommonService {
   async getDeviceByDoctorId (id) {
     return await DeviceModel.getByDoctorId(id);
   }
+  async getDevicesByUserId(id){
+    return await DeviceModel.getDevicesByUserId(id);
+  }
 }
 
 module.exports = new DeviceService();

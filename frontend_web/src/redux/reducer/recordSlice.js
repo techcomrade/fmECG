@@ -79,7 +79,19 @@ export const deleteRecord = createAsyncThunk(
     }
   }
 );
-
+export const getRecordByUser = createAsyncThunk(
+  "/get-record-by-user",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpGetData(`/record/user/${params}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
 export const downloadRecordFile = (id) => {
   const downloadPath = `${API_URL}/record/download/${id}`;
   if (downloadPath) {
@@ -158,6 +170,17 @@ const recordSlice = createSlice({
         state.loadDataStatus = loadStatus.Success;
       })
       .addCase(getRecord.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = loadStatus.Failed;
+      })
+      .addCase(getRecordByUser.pending, (state, action) => {
+        state.loadDataStatus = loadStatus.Loading;
+      })
+      .addCase(getRecordByUser.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = loadStatus.Success;
+      })
+      .addCase(getRecordByUser.rejected, (state, action) => {
         state.data = [];
         state.loadDataStatus = loadStatus.Failed;
       })

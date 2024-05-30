@@ -241,6 +241,16 @@ class DeviceController {
       metadata: devicesByDoctorId,
     });
   }
+  async getDevicesById(req, res, next) {
+    console.log(`[P]:::Get devices by user id: `, req.params.id);
+    const devicesById = await DeviceService.getDevicesByUserId(
+      req.params.id
+    );
+    return res.status(200).json({
+      message: "Get devices by user id successful!",
+      metadata: devicesById,
+    });
+  }
 }
 
 module.exports = new DeviceController();

@@ -6,6 +6,7 @@ import {
   deleteDevice,
   getDevice,
   getDeviceByDoctorId,
+  getDevicesById,
   loadStatus,
   resetCreateDataStatus,
   resetDeleteDataStatus,
@@ -83,6 +84,7 @@ const DeviceTable = () => {
     if (context.role === userRole.doctor) {
       dispatch(getDeviceByDoctorId(context.user_id));
     } else if (context.role === userRole.patient) {
+      dispatch(getDevicesById(context.user_id))
     } else {
       dispatch(getDevice());
     }

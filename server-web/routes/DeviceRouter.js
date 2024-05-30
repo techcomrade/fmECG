@@ -18,6 +18,8 @@ router.post(
 );
 router.post("/update", commonMiddleware.validationToken, DeviceMiddleware.validateData, DeviceController.update);
 router.get("/doctor/:id", commonMiddleware.validationToken, DeviceController.getDeviceByDoctorId);
+router.get("/user/:id", commonMiddleware.validationToken, DeviceController.getDevicesById);
+
 router.get("/id/:id", commonMiddleware.validationToken, DeviceController.getDeviceById);
 router.get(
   "/start/interval/:startDate/:endDate",
