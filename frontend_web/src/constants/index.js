@@ -29,7 +29,16 @@ export const userRole = {
   doctor: '1',
   patient: '2'
 }
-
+export const UserStatus = [
+  {
+    value: 0,
+    label: "Đang hoạt động"
+  },
+  {
+    value: 1,
+    label: "Đã nghỉ"
+  }
+]
 export const convertGenderToString = (gender) => {
   switch (gender) {
     case 0:
@@ -75,3 +84,13 @@ export const convertStringToRole = (gender) => {
   }
 };
 
+export const convertStatusToString =  (status) => {
+  switch (status){
+    case 0:
+      return "Đang hoạt đông";
+    case 1:
+      return "Đã nghỉ";
+    default:
+      return "Không xác định";
+  }
+}

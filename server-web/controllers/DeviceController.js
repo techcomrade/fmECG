@@ -163,7 +163,6 @@ class DeviceController {
           information: checkExistDevice.dataValues.information,
           device_type: checkExistDevice.dataValues.device_type,
           start_date: checkExistDevice.dataValues.start_date,
-          end_date: checkExistDevice.dataValues.end_date,
           recordCount: checkExistRecord.length,
           frequency: DeviceFrequencyData,
         },

@@ -55,7 +55,6 @@ const DeviceTable = () => {
       type: "select",
       dataSelect: dropdownData,
       isEdit: true,
-      hidden: true,
     },
     {
       title: "Thông tin thiết bị",
@@ -70,14 +69,7 @@ const DeviceTable = () => {
       key: "start_date",
       type: "date",
       isEdit: true,
-    },
-    {
-      title: "Ngày kết thúc",
-      dataIndex: "end_date",
-      key: "end_date",
-      type: "date",
-      isEdit: true,
-    },
+    }
   ];
 
   useEffect(() => {
@@ -134,11 +126,12 @@ const DeviceTable = () => {
 
   const handleEditFunction = () => {
     const rowData = findElementById(dataTable, selectedData[0]);
-    const dataModal = handleData(rowData);
+    const dataModal = handleData(rowData,"form")
     modalUpdateRef.current?.open(dataModal, columns);
   };
 
   const handleSubmitEditUser = (data) => {
+    console.log("handle edit:",data);
     return dispatch(updateDevice(handleData(data, "form")));
   };
 
