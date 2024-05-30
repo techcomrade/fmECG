@@ -97,7 +97,20 @@ export const getDeviceByDoctorId = createAsyncThunk(
     }
   }
 );
-
+export const getDevicesById = createAsyncThunk(
+  "/devices/id",
+  async (params, { rejectWithValue }) => {
+    try {
+      const id = params;
+      const response = await httpGetData(`/device/user/${id}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
 const deviceSlice = createSlice({
   name: "device",
   initialState: {
@@ -148,6 +161,17 @@ const deviceSlice = createSlice({
         state.loadDataStatus = loadStatus.Success;
       })
       .addCase(getDeviceByDoctorId.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = loadStatus.Failed;
+      })
+      .addCase(getDevicesById.pending, (state, action) => {
+        state.loadDataStatus = loadStatus.Loading;
+      })
+      .addCase(getDevicesById.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = loadStatus.Success;
+      })
+      .addCase(getDevicesById.rejected, (state, action) => {
         state.data = [];
         state.loadDataStatus = loadStatus.Failed;
       })

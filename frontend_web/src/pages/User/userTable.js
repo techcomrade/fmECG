@@ -9,6 +9,7 @@ import {
   deleteUser,
   resetDeleteDataStatus,
   getPatient,
+  getDoctor,
 } from "../../redux/reducer/userSlice";
 import { convertTimeToDate } from "../../utils/dateUtils";
 import {
@@ -127,6 +128,7 @@ const UserTable = () => {
     if (context.role === userRole.doctor) {
       dispatch(getPatient(context.user_id));
     } else if (context.role === userRole.patient) {
+      dispatch(getDoctor(context.user_id))
     } else {
       dispatch(getUser());
     }

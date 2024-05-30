@@ -15,6 +15,7 @@ import {
   resetCheckRecordStatus,
   downloadRecordFile,
   getRecordByDoctorId,
+  getRecordByUser,
 } from "../../redux/reducer/recordSlice";
 import {
   convertDateToTime,
@@ -200,6 +201,7 @@ const RecordTable = () => {
     if (context.role === userRole.doctor) {
       dispatch(getRecordByDoctorId(context.user_id));
     } else if (context.role === userRole.patient) {
+      dispatch(getRecordByUser(context.user_id))
     } else {
       dispatch(getRecord());
     }

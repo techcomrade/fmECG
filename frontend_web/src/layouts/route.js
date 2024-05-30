@@ -107,6 +107,12 @@ export const patientRouterMappingGroup = {
     component: <DeviceTable />,
     icon: <UserOutlined />,
   },
+  RecordInformation:{
+    key: "/record",
+    label: "Dữ liệu sức khoẻ",
+    component: <RecordTable />,
+    icon: <UserOutlined />
+  },
   Account: {
     key: "/account",
     label: "Tài khoản",

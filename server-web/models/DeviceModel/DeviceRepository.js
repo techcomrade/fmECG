@@ -1,4 +1,4 @@
-const { Sequelize } = require("sequelize");
+const { Sequelize, where } = require("sequelize");
 const {
   convertDateNormal,
   convertTimeToString,
@@ -113,6 +113,14 @@ class DeviceModel {
         doctor_id: id,
       },
     });
+  }
+
+  async getDevicesByUserId(id){
+    return await DeviceDTO.findAll({
+      where:{
+        user_id:id
+      }
+    })
   }
 }
 

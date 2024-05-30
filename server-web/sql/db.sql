@@ -185,6 +185,24 @@ VALUES('83573421-9943-4a25-9fe1-00f0477aaba4', 'dung123@gmail.com', '$2b$10$TOMg
 INSERT INTO `accounts`(`id`, `email`, `password`) 
 VALUES('22183931-6fc3-4518-af34-e86c8605b08a', 'uuidd@gmail.com', '$2b$10$a7binaajgY8b3s82rppXHecKuSbcFi1ULGf0v4B/aIaMplhLbbNwC');
 
+INSERT INTO `accounts`(`id`, `email`, `password`) 
+VALUES('83573421-9943-4a25-9fe1-00f0477aaba9', 'dung@gmail.com', '$2b$10$TOMgOvO7oDnVqPlFpi9hwu2qHhxtSb1ia2chhb1zVYxfgb9F089TG');
+
+INSERT INTO `accounts`(`id`, `email`, `password`) 
+VALUES('83573421-9943-4a25-9fe1-00f0477aaba8', 'dung1@gmail.com', '$2b$10$TOMgOvO7oDnVqPlFpi9hwu2qHhxtSb1ia2chhb1zVYxfgb9F089TG');
+
+INSERT INTO `accounts`(`id`, `email`, `password`) 
+VALUES('83573421-9943-4a25-9fe1-00f0477aaba6', 'dung2@gmail.com', '$2b$10$TOMgOvO7oDnVqPlFpi9hwu2qHhxtSb1ia2chhb1zVYxfgb9F089TG');
+
+INSERT INTO `accounts`(`id`, `email`, `password`) 
+VALUES('83573421-9943-4a25-9fe1-00f0477aaba5', 'dung3@gmail.com', '$2b$10$TOMgOvO7oDnVqPlFpi9hwu2qHhxtSb1ia2chhb1zVYxfgb9F089TG');
+
+INSERT INTO `accounts`(`id`, `email`, `password`) 
+VALUES('83573421-9943-4a25-9fe1-00f0477aaba2', 'dung4@gmail.com', '$2b$10$TOMgOvO7oDnVqPlFpi9hwu2qHhxtSb1ia2chhb1zVYxfgb9F089TG');
+
+INSERT INTO `accounts`(`id`, `email`, `password`) 
+VALUES('83573421-9943-4a25-9fe1-00f0477aaba1', 'dung5@gmail.com', '$2b$10$TOMgOvO7oDnVqPlFpi9hwu2qHhxtSb1ia2chhb1zVYxfgb9F089TG');
+
 INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
 VALUES('f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '86d1470c-de72-457c-a8e1-a616e55f463f', 'duong', 0, '17052003', '0912234888', '01201020120abc',0 ,'đo huyết áp và nhịp tim', 1, '1711115945125', '1711115945125');
 
@@ -192,10 +210,28 @@ INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_num
 VALUES('4df9ace1-0229-4756-b850-51a83cb0bb6e', '1bd51bda-3179-4f27-bcfd-000e5c4a2aa7', 'qtv', 1, '1232367', '09122348767', '0101010101abc',0,'đo huyết áp và nhịp tim', 0, '1711118359957', '1711118359957');
 
 INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
-VALUES('37ae5629-54ec-46e0-be65-9af6bd580b2b', '83573421-9943-4a25-9fe1-00f0477aaba4', 'abc', 0, '1232366', '09122348669', '010101010100abc',0,'đo huyết áp và nhịp tim', 2, '1711121415247', '1711121415247');
+VALUES('37ae5629-54ec-46e0-be65-9af6bd500b3b', '83573421-9943-4a25-9fe1-00f0477aaba4', 'he', 0, '1232366', '09122348669', '010101010100abc',0,'đo huyết áp vàdfdf nhịp tim', 2, '1711121415247', '1711121415247');
 
 INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
 VALUES('178d7109-7568-472c-9350-2db42aa152f6', '22183931-6fc3-4518-af34-e86c8605b08a', 'dhsh', 1, '123236811', '091223486384', '01010101010110abc',0,'đo huyết áp và nhịp tim', 1, '1711206172234', '1711206172234');
+
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
+VALUES('37ae5629-54ec-46e0-be65-9af6bd580b2b', '83573421-9943-4a25-9fe1-00f0477aaba9', 'abc', 0, '1232366', '09122348669', '010101010100abc',0,'đo huyết áp và nhịp tim', 2, '1711121415247', '1711121415247');
+
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
+VALUES('37ae5629-54ec-46e0-be65-9af6bd580b3b', '83573421-9943-4a25-9fe1-00f0477aaba8', 'dâo', 1, '1232366', '09122348669', '010101010100abc',0,'đo huyết áp và nhịp tim', 2, '1711121415247', '1711121415247');
+
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
+VALUES('37ae5629-54ec-46e0-be65-9af6bd580b4b', '83573421-9943-4a25-9fe1-00f0477aaba2', 'huong', 1, '1232366', '09122348669', '010101010100abc',0,'đo huyết áp và nhịp tim', 2, '1711121415247', '1711121415247');
+
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
+VALUES('37ae5629-54ec-46e0-be65-9af6bd510b2b', '83573421-9943-4a25-9fe1-00f0477aaba6', 'tien', 0, '1232366', '09122348669', '010101010100abc',0,'đo huyết áp và nhịp tim', 2, '1711121415247', '1711121415247');
+
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
+VALUES('37ae5629-54ec-46e0-be65-9af6bd680b2b', '83573421-9943-4a25-9fe1-00f0477aaba5', 'nam', 0, '1232366', '09122348669', '010101010100abc',0,'đo huyết áp và nhịp tim', 2, '1711121415247', '1711121415247');
+
+INSERT INTO `users`(`id`, `account_id`, `username`,`gender`, `birth`, `phone_number`, `image`,`status`,`information`, `role`, `created_at`, `updated_at`) 
+VALUES('37ae5629-54ec-46e0-be45-9af6bd580b2b', '83573421-9943-4a25-9fe1-00f0477aaba1', 'hoang', 0, '1232366', '09122348669', '010101010100abc',0,'đo huyết áp và nhịp tim', 2, '1711121415247', '1711121415247');
 
 INSERT INTO `tokens`(`id`, `account_id`, `access_token`, `refresh_token`, `created_at`, `updated_at`)
 VALUES('090abf0e-f775-465c-b25a-8fa38fef8025', '86d1470c-de72-457c-a8e1-a616e55f463f', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyOGVlNTc5LTc3MWItNGQzNC1hNjQ3LWIwNDJlMGMxZGY2MSIsImlhdCI6MTcxMTAyNjUyMiwiZXhwIjoxNzExMDI5NTIyfQ.kH1yuJgfpq5NFzb80LrEf-gV8ksNjYtylSokQHzAIoA', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyOGVlNTc5LTc3MWItNGQzNC1hNjQ3LWIwNDJlMGMxZGY2MSIsImlhdCI6MTcxMTAyNjUyMiwiZXhwIjoxNzk3NDI2NTIyfQ.-AGRKU9-mDSLwLiVoF2CR5aZEQy49rTpfzbCAcEL-S4', '1711161793890', '1711161793890');
@@ -258,4 +294,28 @@ INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_
 VALUES('aec18bd6-a2eb-4521-99fd-f00d867a849f', '37ae5629-54ec-46e0-be65-9af6bd580b2b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711189128343', '1711189128943', '1711173634732', '1711173634732');
 
 INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `end_date`, `created_at`, `updated_at`)
-VALUES('d5e62f91-8314-43a7-931a-8d05607116bb', '37ae5629-54ec-46e0-be65-9af6bd580b2b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');
+VALUES('d5e62f91-8314-43a7-931a-8d05607116bb', '37ae5629-54ec-46e0-be65-9af6bd500b3b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');
+
+
+INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `end_date`, `created_at`, `updated_at`)
+VALUES('37ae5629-54ec-46e0-be65-9af6bd580b2b', '37ae5629-54ec-46e0-be65-9af6bd580b4b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');
+
+
+INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `end_date`, `created_at`, `updated_at`)
+VALUES('37ae5629-54ec-46e0-be65-9af6bd580b4b', '37ae5629-54ec-46e0-be65-9af6bd580b4b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');
+
+
+INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `end_date`, `created_at`, `updated_at`)
+VALUES('37ae5629-54ec-46e0-be65-9af6bd280b4b', '37ae5629-54ec-46e0-be65-9af6bd580b2b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');
+
+
+INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `end_date`, `created_at`, `updated_at`)
+VALUES('37ae5629-54ec-46e0-be65-9af6bd510b2b', '37ae5629-54ec-46e0-be65-9af6bd510b2b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');
+
+
+INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `end_date`, `created_at`, `updated_at`)
+VALUES('37ae5629-54ec-46e0-be65-9af6bd680b2b', '37ae5629-54ec-46e0-be65-9af6bd680b2b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');
+
+
+INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `end_date`, `created_at`, `updated_at`)
+VALUES('37ae5629-54ec-46e0-be45-9af6bd580b2b', '37ae5629-54ec-46e0-be45-9af6bd580b2b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');

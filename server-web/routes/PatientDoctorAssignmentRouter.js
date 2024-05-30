@@ -16,4 +16,10 @@ router.get(
   PatientDoctorAssignmentController.getPatientByDoctorId
 );
 
+router.get(
+  "/doctor/:patient_id",
+  commonMiddleware.validationToken,
+  PatientDoctorAssignmentController.getDoctorByPatientId
+);
+
 module.exports = router;

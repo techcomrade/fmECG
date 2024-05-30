@@ -31,6 +31,11 @@ class PatientDoctorAssignmentService extends CommonService {
       doctor_id
     );
   }
+  async getDoctorByPatientId(patient_id) {
+    return await PatientDoctorAssignmentRepository.getDoctorByPatientId(
+      patient_id
+    );
+  }
 }
 
 module.exports = new PatientDoctorAssignmentService();
