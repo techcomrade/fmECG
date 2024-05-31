@@ -3,7 +3,7 @@ import { Button, Result } from "antd";
 import { getCookie } from "../../utils/storageUtils";
 
 const NotAuth = () => {
-  const redirect_url =getCookie('redirect_api') ? decodeURIComponent(getCookie('redirect_api')) : false;
+  const redirect_url = getCookie('redirect_api') ? decodeURIComponent(getCookie('redirect_api')) : undefined;
   return (
     <Result
       status="403"

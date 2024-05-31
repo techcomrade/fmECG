@@ -297,15 +297,11 @@ VALUES('d5e62f91-8314-43a7-931a-8d05607116bb', '37ae5629-54ec-46e0-be65-9af6bd50
 
 
 INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `end_date`, `created_at`, `updated_at`)
-VALUES('37ae5629-54ec-46e0-be65-9af6bd580b2b', '37ae5629-54ec-46e0-be65-9af6bd580b4b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');
+VALUES('37ae5629-54ec-46e0-be65-9af6bd580b2b', '37ae5629-54ec-46e0-be65-9af6bd580b3b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');
 
 
 INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `end_date`, `created_at`, `updated_at`)
-VALUES('37ae5629-54ec-46e0-be65-9af6bd580b4b', '37ae5629-54ec-46e0-be65-9af6bd580b4b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');
-
-
-INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `end_date`, `created_at`, `updated_at`)
-VALUES('37ae5629-54ec-46e0-be65-9af6bd280b4b', '37ae5629-54ec-46e0-be65-9af6bd580b2b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');
+VALUES('37ae5629-54ec-46e0-be65-9af6bd180b3b', '37ae5629-54ec-46e0-be65-9af6bd580b4b', 'f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '1711204367820', '1711189129343', '1711198367820', '1711200678260');
 
 
 INSERT INTO `patient_doctor_assignment`(`id`, `patient_id`, `doctor_id`, `start_date`, `end_date`, `created_at`, `updated_at`)

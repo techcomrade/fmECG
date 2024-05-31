@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(cors());
 
 app.get("/login", (req, res) => {
-  const haveCookie = req.cookies?.access_token;
+  const haveCookie = req.cookies?.access_token && req.cookies?.role;
   if (haveCookie) {
     res.redirect(config.redirect_url)
   } else {
@@ -30,7 +30,7 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  const haveCookie = req.cookies?.access_token;
+  const haveCookie = req.cookies?.access_token && req.cookies?.role;
   if (haveCookie) {
     res.redirect(config.redirect_url)
   } else {
