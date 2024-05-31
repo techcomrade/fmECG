@@ -31,9 +31,7 @@ export const httpGetData = (url) => {
                 reject(error)
             }
             else {
-                
                 showNotiError(error.response?.data?.message);
-
             }
         })
     })
@@ -48,7 +46,7 @@ export const httpUpdateData = (url, data) => {
         })
         .catch((error) => {
             console.log('error get data', error)
-            showNotiError(error.response.data)
+            showNotiError(error.response?.data?.message);
             // checkErrorReturn(error);
             reject(error)
         })
@@ -64,7 +62,7 @@ export const httpDeleteData = (url, data) => {
         })
         .catch((error) => {
             console.log('error delete data', error)
-            showNotiError(error.response?.data)
+            showNotiError(error.response?.data?.message);
             // checkErrorReturn(error);
             reject(error)
         })
