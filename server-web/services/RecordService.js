@@ -5,34 +5,18 @@ const DeviceRepository = require("../models/DeviceModel/DeviceRepository");
 const FileService = require("./FileService");
 const util = require("util");
 const { v4: uuidv4 } = require("uuid");
-const path = require('path');
+const path = require("path");
 const Joi = require("joi");
 const { dummyArray } = require("../utils/arrayUtils");
 
 class RecordService extends CommonService {
   async getAll() {
-    const records = await RecordRepository.getAllData();
-    const total = records.length;
-    for (let i = 0; i < total; i++) {
-      const userName = await UserRepository.getUserById(
-        records[i].dataValues.user_id
-      );
-      const deviceName = await DeviceRepository.checkById(
-        records[i].dataValues.device_id
-      );
-      records[i].dataValues = {
-        ...records[i].dataValues,
-        username: userName[0].username,
-        device_name: deviceName.device_name,
-        record_name: path.basename(records[i].dataValues.data_rec_url)
-      };
-    }
-    return records;
+    return await RecordRepository.getAllData();
   }
 
   async add(record) {
     record.id = uuidv4();
-    let pathTest = path.join(__dirname, '../public/upload')
+    let pathTest = path.join(__dirname, "../public/upload");
     let paths = `${pathTest}/${record.file.filename}`;
     console.log(paths);
     record.data_rec_url = paths;
@@ -134,9 +118,12 @@ class RecordService extends CommonService {
   async deleteFile(path) {
     return await FileService.deleteFile(path);
   }
-  async getFilePathById(id){
+  async getFilePathById(id) {
     const recordData = await RecordRepository.getRecordById(id);
     return recordData[0].dataValues.data_rec_url ?? "";
+  }
+  async getRecordByDoctorId(id) {
+    return await RecordRepository.getRecordByDoctorId(id);
   }
 }
 

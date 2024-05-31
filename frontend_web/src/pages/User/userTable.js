@@ -8,15 +8,27 @@ import {
   updateUser,
   deleteUser,
   resetDeleteDataStatus,
+  getPatient,
+  getDoctor,
 } from "../../redux/reducer/userSlice";
+import { Tag } from 'antd';
 import { convertTimeToDate } from "../../utils/dateUtils";
-import { convertGenderToString, convertRoleToString, convertStringToGender, convertStringToRole } from "../../constants";
+import {
+  UserStatus,
+  convertGenderToString,
+  convertRoleToString,
+  convertStatusToString,
+  convertStringToGender,
+  convertStringToRole,
+  userRole,
+} from "../../constants";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { GENDER, ROLE } from "../../constants";
 import dayjs from "dayjs";
 import { UserDetail } from "./userDetail";
+import { context } from "../../utils/context";
 
 const UserTable = () => {
   const dispatch = useDispatch();
@@ -66,19 +78,21 @@ const UserTable = () => {
       isEdit: true,
     },
     {
-      title: "Thiết bị",
-      dataIndex: "devices",
-      key: "devices",
-      type: "text",
-      isEdit: false,
-    },
-    {
-      title: "Số lượng bản ghi",
-      dataIndex: "records",
-      key: "records",
-      type: "text",
-      isEdit: false,
-    },
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "status",
+      type: "select",
+      dataSelect: UserStatus,
+      isEdit: true,
+      render: (status)=>{
+        let color = status === 0 ? 'geekblue' : 'volcano'
+       return ( <Tag color={color} key={status}>
+       {convertStatusToString(status)}
+     </Tag>)
+      }
+    }
+   
+    
   ];
 
   const handleData = (data, type) => {
@@ -88,13 +102,13 @@ const UserTable = () => {
       userData = {
         ...data,
         gender: convertStringToGender(data.gender),
-        role: convertStringToRole(data.role)
-      }
+        role: convertStringToRole(data.role),
+      };
 
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
           userData[key] = dayjs(data[key], "DD/MM/YYYY");
-        }       
+        }
       });
     }
 
@@ -102,8 +116,8 @@ const UserTable = () => {
       userData = {
         ...data,
         gender: convertGenderToString(data.gender),
-        role: convertRoleToString(data.role)
-      }
+        role: convertRoleToString(data.role),
+      };
 
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
@@ -111,12 +125,19 @@ const UserTable = () => {
         }
       });
     }
+    
 
     return userData;
   };
-  
+
   useEffect(() => {
-    dispatch(getUser());
+    if (context.role === userRole.doctor) {
+      dispatch(getPatient(context.user_id));
+    } else if (context.role === userRole.patient) {
+      dispatch(getDoctor(context.user_id))
+    } else {
+      dispatch(getUser());
+    }
   }, []);
 
   // Get data
@@ -155,10 +176,21 @@ const UserTable = () => {
   };
 
   const handleSubmitEditUser = (data) => {
-    const { account_id, devices, role, ...payload } = { ...data };
+    // console.log(data);
+    const { account_id, devices, role, records, status, ...payload } = { ...data };
+    console.log(payload);
     return dispatch(updateUser(payload));
   };
 
+  const getTitleTable = () => {
+    if (context.role === userRole.doctor) {
+      return "Quản lý bệnh nhân";
+    } else if (context.role === userRole.patient) {
+      return "Bác sĩ điều trị";
+    } else {
+      return "Quản lý người dùng";
+    }
+  };
   return (
     <>
       <DataTable
@@ -170,7 +202,7 @@ const UserTable = () => {
         hasCheckBox
         updateSelectedData={setSelectedData}
         column={columns}
-        name="Bảng người dùng"
+        name={getTitleTable()}
         data={dataTable}
         loading={dataState.loadDataStatus === loadStatus.Loading}
         handleOpenDrawer={(id) => drawerRef.current?.open(id)}

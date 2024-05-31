@@ -25,7 +25,32 @@ export const getUser = createAsyncThunk(
     }
   }
 );
-
+export const getPatient = createAsyncThunk(
+  "/patient",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpGetData(`/pda/patient/${params}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
+export const getDoctor = createAsyncThunk(
+  "/doctor",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpGetData(`/pda/doctor/${params}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
 export const createUser = createAsyncThunk(
   "/create-user",
   async (params, { rejectWithValue }) => {
@@ -73,7 +98,7 @@ export const getUserById = createAsyncThunk(
   async (params, { rejectWithValue }) => {
     try {
       const user_id = params;
-      const response = await httpGetData(`/user/${user_id}`);
+      const response = await httpGetData(`/user/id/${user_id}`);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -122,6 +147,28 @@ const userSlice = createSlice({
         state.loadDataStatus = loadStatus.Success;
       })
       .addCase(getUser.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = loadStatus.Failed;
+      })
+      .addCase(getPatient.pending, (state, action) => {
+        state.loadDataStatus = loadStatus.Loading;
+      })
+      .addCase(getPatient.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = loadStatus.Success;
+      })
+      .addCase(getPatient.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = loadStatus.Failed;
+      })
+      .addCase(getDoctor.pending, (state, action) => {
+        state.loadDataStatus = loadStatus.Loading;
+      })
+      .addCase(getDoctor.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = loadStatus.Success;
+      })
+      .addCase(getDoctor.rejected, (state, action) => {
         state.data = [];
         state.loadDataStatus = loadStatus.Failed;
       })

@@ -5,6 +5,8 @@ import {
   createDevice,
   deleteDevice,
   getDevice,
+  getDeviceByDoctorId,
+  getDevicesById,
   loadStatus,
   resetCreateDataStatus,
   resetDeleteDataStatus,
@@ -18,6 +20,8 @@ import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { httpGetData } from "../../api/common.api";
 import dayjs from "dayjs";
 import { DeviceDetail } from "./deviceDetail";
+import { context } from "../../utils/context";
+import { userRole } from "../../constants";
 
 const DeviceTable = () => {
   const dispatch = useDispatch();
@@ -51,7 +55,6 @@ const DeviceTable = () => {
       type: "select",
       dataSelect: dropdownData,
       isEdit: true,
-      hidden: true
     },
     {
       title: "Thông tin thiết bị",
@@ -66,22 +69,21 @@ const DeviceTable = () => {
       key: "start_date",
       type: "date",
       isEdit: true,
-    },
-    {
-      title: "Ngày kết thúc",
-      dataIndex: "end_date",
-      key: "end_date",
-      type: "date",
-      isEdit: true,
-    },
+    }
   ];
 
   useEffect(() => {
-    dispatch(getDevice());
-    const getOptionData = async() => {
-      const userData = await httpGetData('/user');
-      setDropData(userData.metadata);
+    if (context.role === userRole.doctor) {
+      dispatch(getDeviceByDoctorId(context.user_id));
+    } else if (context.role === userRole.patient) {
+      dispatch(getDevicesById(context.user_id))
+    } else {
+      dispatch(getDevice());
     }
+    const getOptionData = async () => {
+      const userData = await httpGetData("/user");
+      setDropData(userData.metadata);
+    };
     getOptionData();
   }, []);
 
@@ -89,7 +91,7 @@ const DeviceTable = () => {
   useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       const rawData = dataState.data.metadata;
-      const data = rawData.map((element) => handleData(element, 'render'));
+      const data = rawData.map((element) => handleData(element, "render"));
       setData(data);
     }
   }, [dataState.loadDataStatus]);
@@ -137,20 +139,20 @@ const DeviceTable = () => {
   };
 
   const handleData = (data, type) => {
-    let deviceData = {...data};
+    let deviceData = { ...data };
 
-    if (type === 'form') {
+    if (type === "form") {
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
-          deviceData[key] = dayjs(data[key], "DD/MM/YYYY");      
+          deviceData[key] = dayjs(data[key], "DD/MM/YYYY");
         }
       });
-    };
+    }
 
-    if (type === 'render') {
+    if (type === "render") {
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
-          deviceData[key] = convertTimeToDate(data[key]);      
+          deviceData[key] = convertTimeToDate(data[key]);
         }
       });
     }
@@ -184,7 +186,7 @@ const DeviceTable = () => {
         title="Thêm thiết bị mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
       />
-      <DeviceDetail ref={drawerRef}/>
+      <DeviceDetail ref={drawerRef} />
     </>
   );
 };

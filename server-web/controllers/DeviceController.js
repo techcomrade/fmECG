@@ -13,19 +13,21 @@ class DeviceController {
           message: "No devices found",
         });
       for (const device of devices) {
-        let checkExistDeviceFreq = await DeviceFreqService.getByDeviceId(device.id);
+        let checkExistDeviceFreq = await DeviceFreqService.getByDeviceId(
+          device.id
+        );
         let DeviceFrequencyData = [];
-        if(checkExistDeviceFreq){
-        checkExistDeviceFreq.forEach((elementDF) => {
-          let frequency = {
-            frequency_name: elementDF.frequency_name,
-            information: elementDF.information,
-            value: elementDF.value,
-          };
-          DeviceFrequencyData.push(frequency);
-        });
-        device.dataValues.frequency = DeviceFrequencyData;
-      }
+        if (checkExistDeviceFreq) {
+          checkExistDeviceFreq.forEach((elementDF) => {
+            let frequency = {
+              frequency_name: elementDF.frequency_name,
+              information: elementDF.information,
+              value: elementDF.value,
+            };
+            DeviceFrequencyData.push(frequency);
+          });
+          device.dataValues.frequency = DeviceFrequencyData;
+        }
       }
       return res.status(200).json({
         message: "get all devices",
@@ -141,16 +143,16 @@ class DeviceController {
       let checkExistRecord = await RecordService.getRecordByDeviceId(id);
       let checkExistDeviceFreq = await DeviceFreqService.getByDeviceId(id);
       let DeviceFrequencyData = [];
-      if(checkExistDeviceFreq){
-      checkExistDeviceFreq.forEach((elementDF) => {
-        let frequency = {
-          frequency_name: elementDF.frequency_name,
-          information: elementDF.information,
-          value: elementDF.value,
-        };
-        DeviceFrequencyData.push(frequency);
-      });
-    }
+      if (checkExistDeviceFreq) {
+        checkExistDeviceFreq.forEach((elementDF) => {
+          let frequency = {
+            frequency_name: elementDF.frequency_name,
+            information: elementDF.information,
+            value: elementDF.value,
+          };
+          DeviceFrequencyData.push(frequency);
+        });
+      }
 
       return res.status(200).json({
         message: "Get device by id",
@@ -161,7 +163,6 @@ class DeviceController {
           information: checkExistDevice.dataValues.information,
           device_type: checkExistDevice.dataValues.device_type,
           start_date: checkExistDevice.dataValues.start_date,
-          end_date: checkExistDevice.dataValues.end_date,
           recordCount: checkExistRecord.length,
           frequency: DeviceFrequencyData,
         },
@@ -227,6 +228,26 @@ class DeviceController {
     return res.status(200).json({
       message: "Get device by device name successful!",
       metadata: deviceByDeviceName,
+    });
+  }
+  async getDeviceByDoctorId(req, res, next) {
+    console.log(`[P]:::Get device by doctor id: `, req.params.id);
+    const devicesByDoctorId = await DeviceService.getDeviceByDoctorId(
+      req.params.id
+    );
+    return res.status(200).json({
+      message: "Get device by doctor successful!",
+      metadata: devicesByDoctorId,
+    });
+  }
+  async getDevicesById(req, res, next) {
+    console.log(`[P]:::Get devices by user id: `, req.params.id);
+    const devicesById = await DeviceService.getDevicesByUserId(
+      req.params.id
+    );
+    return res.status(200).json({
+      message: "Get devices by user id successful!",
+      metadata: devicesById,
     });
   }
 }

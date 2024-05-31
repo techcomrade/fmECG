@@ -26,7 +26,7 @@ const DrawerComponent = (props) => {
             width={600}
         >
             {props?.customData}
-            <Descriptions column={2}>
+            <Descriptions column={1}>
               {Object.keys(props.labels).map((key) => {
                   const label = props.labels[key];
                   if(label) {

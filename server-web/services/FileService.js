@@ -62,6 +62,7 @@ class FileUploader {
     }
     this.upload.single("file")(req, res, (err) => {
       if (err) {
+        console.log(err);
         return res.status(400).json({ message: "upload file error" });
       } else if (req.uploadFileError) {
         return res.status(500).json({
