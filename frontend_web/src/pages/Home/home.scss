@@ -26,34 +26,6 @@
     padding-inline-end: 0;
 }
 
-.ant-card:first-child {
-    border: 1px solid #1677FF;
-
-    .ant-card-meta-avatar{
-        color: #1677FF;
-        border: 1px solid #1677FF;
-    }
-}
-
-.ant-card:nth-child(2) {
-    border: 1px solid red;
-
-    .ant-card-meta-avatar {
-       color: red;
-       border: 1px solid red;
-   }
-} 
-
-.ant-card:nth-child(3) {
-    border: 1px solid #F2BD27;
-
-    .ant-card-meta-avatar {
-        color: #F2BD27;
-        border: 1px solid #F2BD27;
-    }
-    
-}
-
 .ant-card:last-child {
     border: 1px solid #00B96B;
 

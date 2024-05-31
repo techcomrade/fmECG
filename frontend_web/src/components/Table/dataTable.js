@@ -62,6 +62,7 @@ const DataTable = (props) => {
   return (
     <>
       <h2>{props.name}</h2>
+      {props?.customData}
       <div className="list-btn-actions">
         {props.addButton && (
           <Button icon={<PlusOutlined />} onClick={() => props?.addFunction()}>
