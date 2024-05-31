@@ -11,23 +11,7 @@ const { dummyArray } = require("../utils/arrayUtils");
 
 class RecordService extends CommonService {
   async getAll() {
-    const records = await RecordRepository.getAllData();
-    const total = records.length;
-    for (let i = 0; i < total; i++) {
-      const userName = await UserRepository.getUserById(
-        records[i].dataValues.user_id
-      );
-      const deviceName = await DeviceRepository.checkById(
-        records[i].dataValues.device_id
-      );
-      records[i].dataValues = {
-        ...records[i].dataValues,
-        username: userName[0].username,
-        device_name: deviceName.device_name,
-        record_name: path.basename(records[i].dataValues.data_rec_url),
-      };
-    }
-    return records;
+    return await RecordRepository.getAllData();
   }
 
   async add(record) {

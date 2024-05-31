@@ -3,7 +3,12 @@ const RecordDTO = require("./RecordDTO");
 const sequelize = require("../../config/sequelize");
 class RecordRepository {
   async getAllData() {
-    return await RecordDTO.findAll();
+    return await sequelize.query(
+      "SELECT re.*, de.device_name, u.username FROM fmecg.records as re LEFT JOIN fmecg.devices as de ON re.device_id = de.id LEFT JOIN fmecg.users AS u ON re.user_id = u.id",
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
   }
 
   async getRecordById(id) {
