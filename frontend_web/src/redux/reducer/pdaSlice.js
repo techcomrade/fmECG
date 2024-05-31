@@ -13,6 +13,20 @@ export const loadStatus = {
   Failed: 3,
 };
 
+export const createPda = createAsyncThunk(
+  "/create-pda",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpPostData("/pda/create", params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
+
 export const getAssignment = createAsyncThunk(
   "/pda",
   async (params, { rejectWithValue }) => {
@@ -48,9 +62,13 @@ const pdaSlice = createSlice({
     data: [],
     patientData: [],
     loadDataStatus: loadStatus.None,
+    loadCreateDataStatus: loadStatus.None,
     loadPatientDataStatus: loadStatus.None,
   },
   reducers: {
+    resetCreateDataStatus: (state, action) => {
+      state.loadCreateDataStatus = loadStatus.None;
+    },
     resetLoadDataStatus: (state, action) => {
       state.data = [];
       state.loadDataStatus = loadStatus.None;
@@ -62,6 +80,15 @@ const pdaSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(createPda.pending, (state, action) => {
+        state.loadCreateDataStatus = loadStatus.Loading;
+      })
+      .addCase(createPda.fulfilled, (state, action) => {
+        state.loadCreateDataStatus = loadStatus.Success;
+      })
+      .addCase(createPda.rejected, (state, action) => {
+        state.loadCreateDataStatus = loadStatus.Failed;
+      })
       .addCase(getAssignment.pending, (state, action) => {
         state.loadDataStatus = loadStatus.Loading;
       })
@@ -88,6 +115,9 @@ const pdaSlice = createSlice({
 });
 
 const { reducer: pdaReducer } = pdaSlice;
-export const { resetLoadDataStatus, resetLoadPatientStatus5 } =
-  pdaSlice.actions;
+export const {
+  resetCreateDataStatus,
+  resetLoadDataStatus,
+  resetLoadPatientStatus5,
+} = pdaSlice.actions;
 export default pdaReducer;

@@ -10,6 +10,7 @@ class PatientDoctorAssignmentModel {
       patient_id: assignment.patient_id,
       doctor_id: assignment.doctor_id,
       start_date: assignment.start_date,
+      end_date: assignment.end_date,
       created_at: Date.now(),
       updated_at: Date.now(),
     });
