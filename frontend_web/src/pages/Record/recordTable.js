@@ -17,21 +17,18 @@ import {
   getRecordByDoctorId,
   getRecordByUser,
 } from "../../redux/reducer/recordSlice";
-import {
-  convertDateToTime,
-  convertTimeToDateTime,
-} from "../../utils/dateUtils";
+import { convertTimeToDateTime } from "../../utils/dateUtils";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { getLocalStorage } from "../../utils/storageUtils";
 import ModalChart from "../../components/Modal/ModalChart";
-import { Button, Input, Space, Modal } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Button, Modal } from "antd";
 import { httpGetData } from "../../api/common.api";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { CloudDownloadOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { RecordDetail } from "./recordDetail";
+import FilterRecord from "./filterRecord";
 import { context } from "../../utils/context";
 import { userRole } from "../../constants";
 
@@ -41,96 +38,12 @@ const RecordTable = () => {
   const [selectedData, setSelectedData] = useState([]);
   const [dataTable, setData] = useState([]);
   const [openChart, setOpenChart] = useState(false);
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
+  const [filterSearch, setFilterSearch] = useState("");
   const [dropdownData, setDropData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const searchInput = useRef(null);
   const modalUpdateRef = useRef(null);
   const user_id = getLocalStorage("user");
   const drawerRef = useRef(null);
-
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-
-  const handleReset = (clearFilters) => {
-    clearFilters();
-    setSearchText("");
-  };
-
-  const getColumnSearchProps = (dataIndex, title) => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
-      <div
-        style={{
-          padding: 8,
-        }}
-        onKeyDown={(e) => e.stopPropagation()}
-      >
-        <Input
-          ref={searchInput}
-          placeholder={`Tìm kiếm ${title}`}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{
-            marginBottom: 8,
-            display: "block",
-          }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => {
-              clearFilters && handleReset(clearFilters);
-              handleSearch(selectedKeys, confirm, dataIndex);
-            }}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Reset
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined
-        style={{
-          color: filtered ? "#1677ff" : undefined,
-        }}
-      />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) => (searchedColumn === dataIndex ? text : text),
-  });
 
   const columns = [
     {
@@ -169,7 +82,6 @@ const RecordTable = () => {
       key: "record_type",
       type: "text",
       isEdit: true,
-      ...getColumnSearchProps("record_type", "loại bản ghi"),
     },
     {
       title: "Tên bản ghi",
@@ -184,7 +96,6 @@ const RecordTable = () => {
       key: "start_time",
       type: "time",
       isEdit: true,
-      ...getColumnSearchProps("start_time", "tg bắt đầu"),
     },
     {
       title: "Thời gian kết thúc",
@@ -192,7 +103,6 @@ const RecordTable = () => {
       key: "end_time",
       type: "time",
       isEdit: true,
-      ...getColumnSearchProps("end_time", "tg kết thúc"),
     },
   ];
 
@@ -255,16 +165,16 @@ const RecordTable = () => {
 
   const handleEditFunction = () => {
     const rowData = findElementById(dataTable, selectedData[0]);
-    const dataModal = handleData(rowData, "form");
+    const dataModal = handleData(rowData, 'form');
     modalUpdateRef.current?.open(dataModal, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    return dispatch(updateRecord(handleData(data, "form")));
+    return dispatch(updateRecord(data));
   };
 
   const handleSubmitAddFunction = (data) => {
-    return dispatch(createRecord(handleData(data, "form")));
+    return dispatch(createRecord(data));
   };
 
   const handleData = (data, type) => {
@@ -347,6 +257,7 @@ const RecordTable = () => {
         openChart={() => setOpenChart(true)}
         customButton={renderDownloadButton()}
         handleOpenDrawer={(id) => drawerRef.current?.open(id)}
+        customData={<FilterRecord />}
       />
 
       <ModalControlData

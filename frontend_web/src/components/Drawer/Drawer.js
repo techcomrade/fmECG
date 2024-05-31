@@ -30,7 +30,7 @@ const DrawerComponent = (props) => {
               {Object.keys(props.labels).map((key) => {
                   const label = props.labels[key];
                   if(label) {
-                    return <Descriptions.Item label={label}>{data[key]}</Descriptions.Item>
+                    return <Descriptions.Item label={label} key={label}>{data[key]}</Descriptions.Item>
                   }
                 })
               }
