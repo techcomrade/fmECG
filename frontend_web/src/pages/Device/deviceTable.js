@@ -124,16 +124,16 @@ const DeviceTable = () => {
 
   const handleEditFunction = () => {
     const rowData = findElementById(dataTable, selectedData[0]);
-    const dataModal = handleData(rowData);
+    const dataModal = handleData(rowData, 'form');
     modalUpdateRef.current?.open(dataModal, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    return dispatch(updateDevice(handleData(data, 'form')));
+    return dispatch(updateDevice(data));
   };
 
   const handleSubmitAddFunction = (data) => {
-    return dispatch(createDevice(handleData(data, 'form')));
+    return dispatch(createDevice(data));
   };
 
   const handleData = (data, type) => {
