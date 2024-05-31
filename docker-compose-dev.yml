@@ -1,0 +1,103 @@
+
+services:
+  node-app:
+    container_name: node-fmecg
+    build: 
+      dockerfile: Dockerfile
+      context: ./server-web
+    volumes:
+      - ./server-web/:/server/
+      - /server/node_modules
+    depends_on:
+      - database
+    env_file: ./server-web/.env.docker
+    networks:
+      - network-fmecg
+  
+  react-app:
+    container_name: react-fmecg
+    build: 
+      dockerfile: Dockerfile
+      context: ./frontend_web
+    volumes:
+      - ./frontend_web:/web/
+      - /web/node_modules
+    depends_on:
+      - database
+    networks:
+      - network-fmecg
+
+  bin-login:
+    container_name: bin-fmecg
+    build: 
+      dockerfile: Dockerfile
+      context: ./frontend_web/bin
+    env_file: ./frontend_web/bin/.env.docker
+    volumes:
+      - ./frontend_web/bin:/bin_login/
+      - /bin_login/node_modules
+    depends_on:
+      - database
+      - node-app
+    networks:
+      - network-fmecg
+  
+  proxy:
+    container_name: proxy-fmecg
+    build:
+      dockerfile: Dockerfile
+      context: ./proxy
+    links:
+      - node-app
+      - react-app
+      - bin-login
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - ./proxy/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - network-fmecg
+
+  database:
+    image: mysql:8.0
+    container_name: database-fmecg
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    env_file: ./server-web/.env.docker
+    volumes:
+      - ./docker/data/mysql:/var/lib/mysql
+    networks:
+      - network-fmecg
+  
+  chat-app:
+    container_name: chat-fmecg
+    build:
+      dockerfile: Dockerfile
+      context: ./server_chat
+    restart: unless-stopped
+    depends_on:
+      - database-chat
+    env_file: ./server_chat/.env.docker
+    networks:
+      - network-fmecg
+  
+  database-chat:
+    image: postgres:12.19
+    container_name: database-chat-fmecg
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    restart: unless-stopped
+    env_file: ./server_chat/.env.docker
+    volumes:
+      - ./docker/data/postgresql:/var/lib/postgresql/data
+    networks:
+      - network-fmecg
+networks:
+  network-fmecg:
+    driver: bridge

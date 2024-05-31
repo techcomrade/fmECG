@@ -66,3 +66,11 @@
 .ant-card-meta-description {
     font-size: 24px;
 }
+
+.card-hover {
+    transition: box-shadow 0.3s ease-in-out;
+}
+  
+.card-hover:hover {
+    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.2);
+}

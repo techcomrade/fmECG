@@ -30,6 +30,9 @@ const Assignment = sequelize.define(
       type: Sequelize.BIGINT,
       allowNull: false,
     },
+    end_date: {
+      type: Sequelize.BIGINT,
+    },
     created_at: {
       type: Sequelize.BIGINT,
     },

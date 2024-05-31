@@ -1,6 +1,6 @@
 const { response } = require("express");
 const RecordService = require("../services/RecordService");
-const fs = require('fs');
+const fs = require("fs");
 class RecordController {
   async getAll(req, res, next) {
     console.log(`[P]:::Get all records: `);
@@ -165,6 +165,7 @@ class RecordController {
       });
     }
   }
+
   async readFileRecord(req, res) {
     console.log(`[P]:::Read file record: `, req.params.id);
     let record = await RecordService.getRecordById(req.params.id);
@@ -220,29 +221,86 @@ class RecordController {
         });
       });
   }
-  async downloadRecordFile(req,res){
+  async downloadRecordFile(req, res) {
     console.log(`[P]:::Download file record: `, req.params.id);
     const filepath = await RecordService.getFilePathById(req.params.id);
     if (fs.existsSync(filepath)) {
-      res.download(filepath);
+      return res.download(filepath);
     } else {
-      res.status(404).json({
-        message: "file not found"
-       });
+      return res.status(404).json({
+        message: "file not found",
+      });
     }
   }
-  async checkRecordFile(req,res){
+  async checkRecordFile(req, res) {
     console.log(`[P]:::Check file record: `, req.params.id);
     const filepath = await RecordService.getFilePathById(req.params.id);
     if (fs.existsSync(filepath)) {
-      res.status(200).json({
-        message: "record file ready to download"
-      })
+      return res.status(200).json({
+        message: "record file ready to download",
+      });
     } else {
-      res.status(404).json({
-        message: "file not found"
-       });
+      return res.status(404).json({
+        message: "file not found",
+      });
     }
+  }
+  async getDataRecordFile(req, res) {
+    console.log(`[P]:::Get data from record file: `, req.body.id);
+    const filepath = await RecordService.getFilePathById(req.body.id);
+    if (!fs.existsSync(filepath)) {
+      return res.status(404).json({
+        message: "record file not found",
+      });
+    }
+    const data = await RecordService.readFileRecord(filepath);
+    if(!data) {
+      return res.status(404).json({
+        message: "no data available"
+      })
+    }
+    let dataArray = data.split("\n");
+    dataArray = dataArray.map(line => line.split(", "));
+  
+    dataArray = dataArray.map(line => {
+      return line.map(element => {
+       return {
+          value: element,
+          warning: 0,
+        }
+       
+      })
+    })
+    let arrayValue = {
+      field1: [],
+      field2: [],
+      field3: [],
+      field4: [],
+      field5: [],
+      field6: [],
+      field7: [],
+      field8: [],
+      field9: []
+    }
+    for(let i = 0; i < 9; i++) {
+      let field = `field${i + 1}`;
+      dataArray.forEach(element => {
+        arrayValue[field].push(element[i]);
+      })
+    }
+    return res.status(200).json({
+      message: "Get data successfully",
+      metadata: arrayValue,
+    })
+  }
+  async getRecordByDoctorId(req,res){
+    console.log(`[P]:::Get record by doctor id: `, req.params.id);
+    const recordByUser = await RecordService.getRecordByDoctorId(req.params.id);
+    console.log(recordByUser);
+    return res.status(200).json({
+      message: "Get records by doctor id successful!",
+      metadata: recordByUser,
+    });
   }
 }
 

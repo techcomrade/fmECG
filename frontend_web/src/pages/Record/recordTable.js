@@ -13,9 +13,14 @@ import {
   resetLoadDataStatus,
   checkRecordFile,
   resetCheckRecordStatus,
-  downloadRecordFile
+  downloadRecordFile,
+  getRecordByDoctorId,
+  getRecordByUser,
 } from "../../redux/reducer/recordSlice";
-import { convertDateToTime, convertTimeToDateTime } from "../../utils/dateUtils";
+import {
+  convertDateToTime,
+  convertTimeToDateTime,
+} from "../../utils/dateUtils";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { getLocalStorage } from "../../utils/storageUtils";
@@ -25,6 +30,10 @@ import { SearchOutlined } from "@ant-design/icons";
 import { httpGetData } from "../../api/common.api";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { CloudDownloadOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
+import { RecordDetail } from "./recordDetail";
+import { context } from "../../utils/context";
+import { userRole } from "../../constants";
 
 const RecordTable = () => {
   const dispatch = useDispatch();
@@ -38,8 +47,8 @@ const RecordTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const searchInput = useRef(null);
   const modalUpdateRef = useRef(null);
-  const modalAddRef = useRef(null);
   const user_id = getLocalStorage("user");
+  const drawerRef = useRef(null);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -163,32 +172,38 @@ const RecordTable = () => {
       ...getColumnSearchProps("record_type", "loại bản ghi"),
     },
     {
-      title: "tên bản ghi",
+      title: "Tên bản ghi",
       dataIndex: "record_name",
       key: "record_name",
       type: "text",
       isEdit: false,
     },
     {
-      title: "Ngày bắt đầu",
+      title: "Thời gian bắt đầu",
       dataIndex: "start_time",
       key: "start_time",
-      type: "date",
+      type: "time",
       isEdit: true,
-      ...getColumnSearchProps("start_time", "ngày bắt đầu"),
+      ...getColumnSearchProps("start_time", "tg bắt đầu"),
     },
     {
-      title: "Ngày kết thúc",
+      title: "Thời gian kết thúc",
       dataIndex: "end_time",
       key: "end_time",
-      type: "date",
+      type: "time",
       isEdit: true,
-      ...getColumnSearchProps("end_time", "ngày kết thúc"),
+      ...getColumnSearchProps("end_time", "tg kết thúc"),
     },
   ];
 
   useEffect(() => {
-    dispatch(getRecord());
+    if (context.role === userRole.doctor) {
+      dispatch(getRecordByDoctorId(context.user_id));
+    } else if (context.role === userRole.patient) {
+      dispatch(getRecordByUser(context.user_id));
+    } else {
+      dispatch(getRecord());
+    }
     const getOptionData = async () => {
       const userData = await httpGetData("/user");
       const deviceData = await httpGetData("/device");
@@ -204,11 +219,7 @@ const RecordTable = () => {
   useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       const rawData = dataState.data.metadata;
-      const data = rawData.map((element, index) => ({
-        ...element,
-        start_time: convertTimeToDateTime(element.start_time),
-        end_time: convertTimeToDateTime(element.end_time),
-      }));
+      const data = rawData.map((element) => handleData(element, "render"));
       setData(data);
     }
     dispatch(resetLoadDataStatus());
@@ -217,24 +228,24 @@ const RecordTable = () => {
   useEffect(() => {
     if (dataState.loadUpdateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã sửa thiết bị thành công");
-      dispatch(getRecord());
       dispatch(resetUpdateDataStatus());
+      dispatch(getRecord());
     }
   }, [dataState.loadUpdateDataStatus]);
 
   useEffect(() => {
     if (dataState.loadDeleteDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã xoá thiết bị thành công");
-      dispatch(getRecord());
       dispatch(resetDeleteDataStatus());
+      dispatch(getRecord());
     }
   }, [dataState.loadDeleteDataStatus]);
 
   useEffect(() => {
     if (dataState.loadCreateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã thêm thiết bị thành công");
-      dispatch(getRecord());
       dispatch(resetCreateDataStatus());
+      dispatch(getRecord());
     }
   }, [dataState.loadCreateDataStatus]);
 
@@ -243,66 +254,88 @@ const RecordTable = () => {
   };
 
   const handleEditFunction = () => {
-    const userData = findElementById(dataTable, selectedData[0]);
-    modalUpdateRef.current?.open(userData, columns);
+    const rowData = findElementById(dataTable, selectedData[0]);
+    const dataModal = handleData(rowData, "form");
+    modalUpdateRef.current?.open(dataModal, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    dispatch(updateRecord(handleData(data)));
+    return dispatch(updateRecord(handleData(data, "form")));
   };
 
   const handleSubmitAddFunction = (data) => {
-    dispatch(createRecord(handleData(data)));
+    return dispatch(createRecord(handleData(data, "form")));
   };
 
-  const handleData = (data) => {
-    let deviceData = data;
-    Object.keys(data).forEach((key) => {
-      if (checkDateTypeKey(key)) {
-        deviceData[key] = convertDateToTime(data[key]);
-      }
-    });
-    deviceData = {
-      ...deviceData,
-      user_id: user_id,
-      data_rec_url: "http",
-    };
+  const handleData = (data, type) => {
+    let deviceData = { ...data };
+
+    if (type === "form") {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          deviceData[key] = dayjs(data[key], "HH:mm DD/MM/YYYY");
+        }
+      });
+
+      deviceData = {
+        ...deviceData,
+        user_id: user_id,
+        data_rec_url: "http",
+      };
+    }
+
+    if (type === "render") {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          deviceData[key] = convertTimeToDateTime(data[key]);
+        }
+      });
+    }
     return deviceData;
   };
+
   const renderDownloadButton = () => (
     <>
-      {selectedData.length === 1 && (
-        <>
-          <Button
-            icon={<CloudDownloadOutlined />}
-            className="edit-btn"
-            onClick={() => {
-              dispatch(checkRecordFile(selectedData[0]))
-              setIsModalOpen(true)
-            }}
-          >
-            Download
-          </Button>
-        </>
-      )}
+      <>
+        <Button
+          icon={<CloudDownloadOutlined />}
+          disabled={selectedData.length !== 1}
+          className="edit-btn"
+          onClick={() => {
+            dispatch(checkRecordFile(selectedData[0]));
+            setIsModalOpen(true);
+          }}
+        >
+          Download
+        </Button>
+      </>
     </>
   );
+
   const handleOk = () => {
     downloadRecordFile(selectedData[0]);
-    setIsModalOpen(false)
-  };
-  const handleCancel = () => {
     setIsModalOpen(false);
-    dispatch(resetCheckRecordStatus())
   };
 
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    dispatch(resetCheckRecordStatus());
+  };
+  const renderMessageDownload = (loadStatus) => {
+    switch (loadStatus) {
+      case loadStatus.Success:
+        return "Bản ghi đã sẵn sàng tải về";
+      case loadStatus.Loading:
+        return "Đang chuẩn bị file  tải xuống";
+      default:
+        return "Không tìm thấy bản ghi";
+    }
+  };
   return (
     <>
       <DataTable
         editButton
         editFunction={handleEditFunction}
-        addButton
-        addFunction={() => modalAddRef.current?.open({}, columns)}
         deleteButton
         deleteFunction={handleDeleteFunction}
         name="Bảng quản lý record"
@@ -313,32 +346,33 @@ const RecordTable = () => {
         chartButton
         openChart={() => setOpenChart(true)}
         customButton={renderDownloadButton()}
+        handleOpenDrawer={(id) => drawerRef.current?.open(id)}
       />
+
       <ModalControlData
         ref={modalUpdateRef}
         title="Sửa thông tin record"
         submitFunction={(data) => handleSubmitEditUser(data)}
       />
-      <ModalControlData
-        ref={modalAddRef}
-        title="Thêm record mới"
-        submitFunction={(data) => handleSubmitAddFunction(data)}
-      />
+
       <ModalChart
         isOpen={openChart}
         setIsOpen={setOpenChart}
         selectedDevice={selectedData}
       />
+
       <Modal
         title="Download record status"
         open={isModalOpen}
         onOk={handleOk}
         okText="Download"
-        confirmLoading = {dataState.loadCheckRecordStatus !== loadStatus.Success}
+        confirmLoading={dataState.loadCheckRecordStatus === loadStatus.Loading}
         onCancel={handleCancel}
       >
-       {dataState.loadCheckRecordStatus !== loadStatus.Success ? "Bản ghi đang được chuẩn bị để tải về... " : "Bản ghi đã sẵn sàng tải về"} 
+        {renderMessageDownload(dataState.loadCheckRecordStatus)}
       </Modal>
+
+      <RecordDetail ref={drawerRef} />
     </>
   );
 };

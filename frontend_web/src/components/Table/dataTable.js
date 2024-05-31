@@ -75,18 +75,20 @@ const DataTable = (props) => {
         ) : (
           ""
         )}
-        {editButton && props.editButton && (
+        { props.editButton && (
           <Button
             icon={<EditOutlined />}
+            disabled = {!editButton}
             className="edit-btn"
             onClick={() => props?.editFunction(selectedState[0])}
           > 
             Chỉnh sửa
           </Button>
         )}
-        {deleteButton && props.deleteButton && (
+        {props.deleteButton && (
           <Button
             icon={<DeleteOutlined />}
+            disabled = {!deleteButton}
             className="delete-btn"
             onClick={() => deleteFunction(selectedState[0])}
           >
@@ -94,8 +96,9 @@ const DataTable = (props) => {
           </Button>
         )}
         {props?.customButton}
-        {chartButton && props.chartButton && (
+        { props.chartButton && (
           <Button
+            disabled ={!chartButton}
             onClick={() => props?.openChart()}
           >
             Đồ thị
@@ -111,6 +114,11 @@ const DataTable = (props) => {
         bordered
         columns={props.column.filter(item => !item.hidden)}
         dataSource={tableData}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: () => props?.handleOpenDrawer?.(record?.id), // click row
+          };
+        }}      
       />
     </>
   );

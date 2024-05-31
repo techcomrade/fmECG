@@ -7,13 +7,13 @@ import { getLocalStorage } from '../../utils/storageUtils';
 import { Routes } from "../route";
 import { HashRouter } from "react-router-dom";
 
-const { Header, Content, Sider } = Layout;
+const { Header, Content} = Layout;
 
 const DefaultLayout = ({children}) => {
     const userName = getLocalStorage('username');
     return(
         <HashRouter>
-        <div>
+        
             <Layout style={{ height: "100vh" }}>
                 <Header className="header-bar">
                     <HeaderUser userName = {userName} token/>
@@ -29,7 +29,6 @@ const DefaultLayout = ({children}) => {
                     </Layout>
                 </Layout>
             </Layout>
-        </div>
         </HashRouter>
     )
 }

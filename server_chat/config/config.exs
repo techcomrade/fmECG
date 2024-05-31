@@ -25,6 +25,19 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
+  
+config :server_chat, ServerChat.Scheduler,
+  timezone: "Asia/Bangkok",
+  jobs: [
+    [
+      name: :scheduled_build_docker_images,
+      schedule: "27 0 * * *", # Runs every midnight
+      task: {ServerChatWeb.GithubController, :dispatch_workflow_gha, []},
+      run_strategy: Quantum.RunStrategy.Local
+    ],
+  ]
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

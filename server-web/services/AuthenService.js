@@ -9,7 +9,7 @@ const { v4: uuidv4 } = require("uuid");
 
 class AuthenService extends CommonService {
   async login(account) {
-    const expiredTime = 120;
+    const expiredTime = 120 * 1800;
     try {
       const accountData = await AccountRepository.getAccountByEmail(
         account.email

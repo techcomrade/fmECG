@@ -20,7 +20,9 @@ config :server_chat, ServerChatWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   # http: [ip: {172, 20, 10, 4}, port: 4000],
-  http: [ip: {192, 168, 1, 3}, port: 4000],
+  
+  # github_token only add when use in dev
+  http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,

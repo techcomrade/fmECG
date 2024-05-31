@@ -1,0 +1,68 @@
+name: Automatic deploy server
+on: workflow_dispatch
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - dockerfile: ./server-web/Dockerfile
+            image: thaidmfinnick/fmecg-node-app
+            context: ./server-web
+          - dockerfile: ./frontend_web/Dockerfile
+            image: thaidmfinnick/fmecg-react-app
+            context: ./frontend_web
+          - dockerfile: ./frontend_web/bin/Dockerfile
+            image: thaidmfinnick/fmecg-bin-login
+            context: ./frontend_web/bin
+          - dockerfile: ./proxy/Dockerfile
+            image: thaidmfinnick/fmecg-proxy
+            context: ./proxy
+          - dockerfile: ./server_chat/Dockerfile
+            image: thaidmfinnick/fmecg-chat-app
+            context: ./server_chat
+    name: Docker Build ${{ matrix.image }}
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout Github repo
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ matrix.image }}:latest
+  
+  run-docker-images:
+    needs: docker-build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Execute ssh commands
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        script: |
+          cd /home/finnick/fmECG_docker
+          make app
