@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84bc93b4-9d85-479e-9623-e650cc6d63a2" name="Changes" comment="[server-chat]: update server-chat fix websocket" />
+    <list default="true" id="84bc93b4-9d85-479e-9623-e650cc6d63a2" name="Changes" comment="[server-chat]: update server-chat fix websocket">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +16,7 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/server-chat" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -36,9 +38,9 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "feature-server/create__server__chat",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/hoangvv/SpringProjects/fmECG",
+    "last_opened_file_path": "C:/Users/hoangvv/SpringProjects/fmECG/server-chat",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -66,6 +68,9 @@
       <option name="presentableId" value="Default" />
       <updated>1717007277272</updated>
       <workItem from="1717148611323" duration="473000" />
+      <workItem from="1717149096786" duration="138000" />
+      <workItem from="1717149242813" duration="25000" />
+      <workItem from="1717149449784" duration="26000" />
     </task>
     <task id="LOCAL-00001" summary="update server chat">
       <option name="closed" value="true" />
@@ -115,7 +120,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717148764202</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="[server-chat]: update server-chat fix websocket">
+      <option name="closed" value="true" />
+      <created>1717149139646</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1717149139646</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

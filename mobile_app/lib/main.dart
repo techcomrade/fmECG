@@ -19,8 +19,7 @@ import 'providers/auth_provider.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
+  // Nếu bạn sử dụng các dịch vụ Firebase khác trong nền, hãy gọi `initializeApp` trước khi sử dụng các dịch vụ khác của Firebase.
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -36,8 +35,7 @@ void main() async {
   );
   await FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  // final SocketChannel socketChannel = SocketChannel();
-  // await socketChannel.connect();
+
   if (Platform.isAndroid) {
     WidgetsFlutterBinding.ensureInitialized();
     [
@@ -67,7 +65,44 @@ class FmECGAppState extends State<FmECGApp> {
   @override
   void initState() {
     super.initState();
+    final socketChannel = Provider.of<SocketChannel>(context, listen: false);
+    socketChannel.connect();
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => NewsProvider()),
+        ChangeNotifierProvider(create: (_) => BluetoothProvider()),
+        ChangeNotifierProvider(create: (_) => ECGProvider()),
+        ChangeNotifierProvider(create: (_) => SocketChannel()),
+      ],
+      child: Consumer<AuthProvider>(builder: (ctx, auth, _) {
+        Utils.globalContext = ctx;
+        return MaterialApp(
+          locale: const Locale('en'),
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          home: const App(),
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'), // English
+            Locale('vi'), // Vietnamese
+          ],
+        );
+      }),
+    );
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -81,61 +116,21 @@ class FmECGAppState extends State<FmECGApp> {
       ],
       child: Consumer<AuthProvider>(builder: (ctx, auth, _) {
         Utils.globalContext = ctx;
-        return const MaterialApp(
-          locale: Locale('en'),
+        return MaterialApp(
+          locale: const Locale('en'),
           debugShowCheckedModeBanner: false,
-          // theme: (auth.theme == ThemeType.dark
-          //         ? ThemeECG.darkTheme
-          //         : ThemeECG.lightTheme)
-          //     .copyWith(
-          //         pageTransitionsTheme: const PageTransitionsTheme(
-          //   builders: <TargetPlatform, PageTransitionsBuilder>{
-          //     TargetPlatform.android: ZoomPageTransitionsBuilder(),
-          //   },
-          // )),
-          // darkTheme: ThemeECG.darkTheme,
-          //home: const MainScreen(),
-          home: App(),
-          //const Login1Screen(),
-          // auth.isAuth
-          //     ? const MainScreen()
-          //     :
-          // FutureBuilder(
-          //     future: auth.isAuth,
-          //     builder: (context, snapshot) {
-          //       if (snapshot.connectionState == ConnectionState.waiting) {
-          //         return const CircularProgressIndicator();
-          //       }
-
-          // return FutureBuilder(
-          //     future: auth.checkAutoLogin(),
-          //     builder: (ctx, authResultSnapshot) {
-          //       if (authResultSnapshot.connectionState ==
-          //           ConnectionState.waiting) {
-          //         return const CircularProgressIndicator();
-          //       } else if (authResultSnapshot.hasError) {
-          //         return Text('Error: ${authResultSnapshot.error}');
-          //       } else {
-          //         return const Login1Screen();
-          //       }
-          //     });
-          //   else if (snapshot.hasError) {
-          //     return Text('Error: ${snapshot.error}');
-          //   } else if (snapshot.hasData && snapshot.data == true) {
-          //     return const MainScreen();
-          //   } else {
-          //     return const Login1Screen();
-          //   }
-          // }),
-          localizationsDelegates: [
+          theme: ThemeData.light(), // Hoặc tùy chỉnh theme theo nhu cầu của bạn
+          darkTheme: ThemeData.dark(),
+          home: const App(),
+          localizationsDelegates: const [
             S.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: [
+          supportedLocales: const [
             Locale('en'), // English
-            Locale('vi'),
+            Locale('vi'), // Vietnamese
           ],
         );
       }),
