@@ -21,7 +21,8 @@ import { httpGetData } from "../../api/common.api";
 import dayjs from "dayjs";
 import { DeviceDetail } from "./deviceDetail";
 import { context } from "../../utils/context";
-import { userRole } from "../../constants";
+import { DeviceStatus, convertDeviceStatusColor, convertDeviceStatusToString, userRole } from "../../constants";
+import { Tag } from "antd";
 
 const DeviceTable = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,22 @@ const DeviceTable = () => {
       type: "select",
       dataSelect: dropdownData,
       isEdit: true,
+    },
+    {
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "status",
+      type: "select",
+      dataSelect: DeviceStatus,
+      isEdit: true,
+      render: (status)=>{
+        let color = convertDeviceStatusColor(status);
+        return ( 
+          <Tag color={color} key={status}>
+            {convertDeviceStatusToString(status)}
+          </Tag>
+        )
+      }
     },
     {
       title: "Thông tin thiết bị",
@@ -131,7 +148,8 @@ const DeviceTable = () => {
   };
 
   const handleSubmitEditUser = (data) => {
-    return dispatch(updateDevice(data));
+    const {doctor_id, frequency, ...payload} = {...data};   
+    return dispatch(updateDevice(payload));
   };
 
   const handleSubmitAddFunction = (data) => {

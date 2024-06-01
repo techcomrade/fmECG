@@ -1,20 +1,13 @@
+import dayjs from "dayjs";
+
 export const convertTimeToDate = (time) => {
   return new Date(time).toLocaleDateString("en-GB");
 };
+
 export const convertTimeToDateTime = (time) => {
-  const date = new Date(time);
-  return (
-    ("0" + date.getUTCHours()).slice(-2) +
-    ":" +
-    ("0" + date.getUTCMinutes()).slice(-2) +
-    " " +
-    ("0" + date.getUTCDate()).slice(-2) +
-    "/" +
-    ("0" + date.getUTCMonth()).slice(-2) +
-    "/" +
-    date.getUTCFullYear()
-  );
+  return dayjs(time).format('HH:mm DD/MM/YYYY');
 };
+
 export const convertDateToTime = (date) => {
   const [day, month, year] = date.split("/");
   return new Date(year, month - 1, day, 0).getTime();
