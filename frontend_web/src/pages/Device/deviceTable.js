@@ -51,8 +51,8 @@ const DeviceTable = () => {
     },
     {
       title: "Tên người dùng",
-      dataIndex: "user_id",
-      key: "user_id",
+      dataIndex: "username",
+      key: "username",
       type: "select",
       dataSelect: dropdownData,
       isEdit: true,

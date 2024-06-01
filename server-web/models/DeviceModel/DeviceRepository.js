@@ -1,4 +1,5 @@
-const { Sequelize, where } = require("sequelize");
+const { Sequelize, QueryTypes } = require("sequelize");
+const sequelize = require("../../config/sequelize");
 const {
   convertDateNormal,
   convertTimeToString,
@@ -6,12 +7,12 @@ const {
 const DeviceDTO = require("./DeviceDTO");
 class DeviceModel {
   async getAllData() {
-    const devices = await DeviceDTO.findAll({
-      attributes: {
-        exclude: ["created_at", "updated_at"],
-      },
-    });
-    return devices;
+    return await sequelize.query(
+      "SELECT de.*, u.username, def.frequency_name, def.information, def.value FROM fmecg.devices AS de LEFT JOIN fmecg.users AS u ON de.user_id = u.id LEFT JOIN fmecg.device_frequency AS def ON de.id = def.device_id",
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
   }
 
   async getDeviceByStartDateInterval(startDate, endDate) {
