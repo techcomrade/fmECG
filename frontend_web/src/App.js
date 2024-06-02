@@ -6,7 +6,7 @@ function App() {
   console.log(hasCookie);
   return (
       <div className="App">
-        {hasCookie.user_id === "null" ? <NotAuth />: <DefaultLayout />}
+        {!hasCookie.user_id || hasCookie.user_id === "null" ? <NotAuth />: <DefaultLayout />}
       </div>
   );
 }
