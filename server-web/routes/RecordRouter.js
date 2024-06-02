@@ -85,4 +85,6 @@ router.post("/upload-file", commonMiddleware.validationToken, RecordController.u
 
 router.get("/read/:id",RecordController.readFileRecord);
 router.delete("/delete/:id", RecordController.deleteFileRecord);
+
+router.post("/getData", RecordController.getDataRecordFile);
 module.exports = router;
