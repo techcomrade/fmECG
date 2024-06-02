@@ -48,6 +48,7 @@ class DeviceService extends CommonService {
       device_name: Joi.string().required(),
       information: Joi.string(),
       device_type: Joi.number().integer().min(0).max(100).required(),
+      status: Joi.number(),
       start_date: Joi.number().required(),
       dummy_data: Joi.boolean(),
     });

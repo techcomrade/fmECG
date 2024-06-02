@@ -17,12 +17,6 @@ import { userRole } from "../constants";
 import { context } from "../utils/context";
 
 export const AdminRouterMappingGroup = {
-  Home: {
-    key: "/",
-    label: "Trang chủ",
-    component: <Home />,
-    icon: <HomeOutlined />,
-  },
   User: {
     key: "/user",
     label: "Thông tin người dùng",
@@ -46,22 +40,10 @@ export const AdminRouterMappingGroup = {
     label: "Thông tin assignment",
     component: <PdaTable />,
     icon: <UnorderedListOutlined />,
-  },
-  Account: {
-    key: "/account",
-    label: "Tài khoản",
-    component: <DetailUser />,
-    icon: <UserOutlined />,
-  },
+  }
 };
 
 export const doctorRouterMappingGroup = {
-  Home: {
-    key: "/",
-    label: "Trang chủ",
-    component: <Home />,
-    icon: <HomeOutlined />,
-  },
   User: {
     key: "/user",
     label: "Quản lý bệnh nhân",
@@ -79,22 +61,11 @@ export const doctorRouterMappingGroup = {
     label: "Quản lý bản ghi",
     component: <RecordTable />,
     icon: <UnorderedListOutlined />,
-  },
-  Account: {
-    key: "/account",
-    label: "Tài khoản",
-    component: <DetailUser />,
-    icon: <UserOutlined />,
-  },
+  }
 };
 
 export const patientRouterMappingGroup = {
-  Home: {
-    key: "/",
-    label: "Trang chủ",
-    component: <Home />,
-    icon: <HomeOutlined />,
-  },
+
   DoctorInformation: {
     key: "/doctor",
     label: "Thông tin bác sĩ",
@@ -107,20 +78,13 @@ export const patientRouterMappingGroup = {
     component: <DeviceTable />,
     icon: <UserOutlined />,
   },
-  RecordInformation:{
+  RecordInformation: {
     key: "/record",
     label: "Dữ liệu sức khoẻ",
     component: <RecordTable />,
-    icon: <UserOutlined />
-  },
-  Account: {
-    key: "/account",
-    label: "Tài khoản",
-    component: <DetailUser />,
     icon: <UserOutlined />,
-  },
+  }
 };
-
 
 export const getRoutesByRole = (role) => {
   switch (role) {
@@ -135,15 +99,16 @@ export const getRoutesByRole = (role) => {
   }
 };
 
-
 const routerMapping = getRoutesByRole(context.role);
 
 export const Routes = () => {
   return (
     <ReactRoutes>
-      {routerMapping?.map((item,index)=> (
-        <Route path={item?.key} element={item.component} key={index}/>
+      {routerMapping?.map((item, index) => (
+        <Route path={item?.key} element={item.component} key={index} />
       ))}
+      <Route path="/" element={<Home />} />
+      <Route path="/account" element={<DetailUser />} />
       <Route path="*" element={<Navigate to="/" />} />
     </ReactRoutes>
   );
