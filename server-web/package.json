@@ -26,12 +26,22 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "prod": "nodemon server.js",
-    "migration": "node migration.js"
+    "migration": "node migration.js",
+    "migrate": "npx sequelize-cli db:migrate --name",
+    "migrate.all": "npx sequelize-cli db:migrate",
+    "migration.create": "npx sequelize-cli migration:generate --name",
+    "migration.rollback": "npx sequelize-cli db:migrate:undo",
+    "migration.rollback.all": "npx sequelize-cli db:migrate:undo:all",
+    "seed": "npx sequelize-cli db:seed --seed",
+    "seed.all": "npx sequelize-cli db:seed:all",
+    "seed.create": "npx sequelize-cli seed:generate --name",
+    "seed.rollback": "npx sequelize-cli db:seed:undo --seed",
+    "seed.rollback.all": "npx sequelize-cli db:seed:undo:all"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "sequelize": "^6.37.1"
+    "sequelize": "^6.37.1",
+    "sequelize-cli": "^6.6.2"
   }
 }
