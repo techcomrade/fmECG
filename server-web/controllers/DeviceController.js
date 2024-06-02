@@ -146,6 +146,7 @@ class DeviceController {
           information: checkExistDevice.dataValues.information,
           device_type: checkExistDevice.dataValues.device_type,
           start_date: checkExistDevice.dataValues.start_date,
+          status: checkExistDevice.dataValues.status,
           recordCount: checkExistRecord.length,
           frequency: DeviceFrequencyData,
         },
