@@ -25,7 +25,7 @@ class _ChatScreenState extends State<ChatScreen> {
         toolbarHeight: size.height * 0.1,
         title: Row(
           children: [
-            Image.asset('assets/logo.png', height: 40), // Meta-like logo
+            Image.asset('assets/images/doctor.png', height: 40), // Meta-like logo
             const SizedBox(width: 8),
             const Text("Tin nhắn", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
           ],
