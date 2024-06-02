@@ -127,6 +127,20 @@ export const getRecordByDoctorId = createAsyncThunk(
     }
   }
 );
+export const getDataRecordById = createAsyncThunk(
+  "/record/getData", 
+  async (params, {rejectWithValue }) => {
+    try {
+      const record_id = params;
+      const response = await httpGetData(`/record/getData/${record_id}`);
+      return response;
+    }  catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
 const recordSlice = createSlice({
   name: "record",
   initialState: {

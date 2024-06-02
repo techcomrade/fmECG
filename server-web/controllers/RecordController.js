@@ -246,8 +246,8 @@ class RecordController {
     }
   }
   async getDataRecordFile(req, res) {
-    console.log(`[P]:::Get data from record file: `, req.body.id);
-    const filepath = await RecordService.getFilePathById(req.body.id);
+    console.log(`[P]:::Get data from record file: `, req.params.id);
+    const filepath = await RecordService.getFilePathById(req.params.id);
     if (!fs.existsSync(filepath)) {
       return res.status(404).json({
         message: "record file not found",
