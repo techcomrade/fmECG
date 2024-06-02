@@ -125,6 +125,37 @@ class RecordService extends CommonService {
   async getRecordByDoctorId(id) {
     return await RecordRepository.getRecordByDoctorId(id);
   }
+  async getDataRecord(filepath) {
+    try {
+      const data = await this.readFileRecord(filepath);
+      if(!data) return;
+      let dataArray = data.split("\n");
+      dataArray = dataArray.map(line => line.split(", "));
+    
+      dataArray = dataArray.map(line => {
+        return line.map(element => {
+         return {
+            value: element,
+            warning: 0,
+          }
+          
+        })
+      })
+      let arrayValue = {};
+      for(let i = 0; i < 9; i++) {
+        let field = `field${i + 1}`;
+        arrayValue[field] = [];
+        dataArray.forEach(element => {
+          arrayValue[field].push(element[i]);
+        })
+      }
+      return arrayValue;
+    }
+    catch(e) {
+      console.log(e);
+      return;
+    }
+  }
 }
 
 module.exports = new RecordService();

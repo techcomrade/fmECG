@@ -246,52 +246,23 @@ class RecordController {
     }
   }
   async getDataRecordFile(req, res) {
-    console.log(`[P]:::Get data from record file: `, req.body.id);
-    const filepath = await RecordService.getFilePathById(req.body.id);
+    console.log(`[P]:::Get data from record file: `, req.params.id);
+    const filepath = await RecordService.getFilePathById(req.params.id);
     if (!fs.existsSync(filepath)) {
       return res.status(404).json({
         message: "record file not found",
       });
     }
-    const data = await RecordService.readFileRecord(filepath);
-    if(!data) {
-      return res.status(404).json({
-        message: "no data available"
+    let arrayValue = await RecordService.getDataRecord(filepath);
+    if(arrayValue) {
+      return res.status(200).json({
+        message: "Get data successfully",
+        metadata: arrayValue,
       })
     }
-    let dataArray = data.split("\n");
-    dataArray = dataArray.map(line => line.split(", "));
-  
-    dataArray = dataArray.map(line => {
-      return line.map(element => {
-       return {
-          value: element,
-          warning: 0,
-        }
-       
+      return res.status(400).json({
+        message: "Record file not found"
       })
-    })
-    let arrayValue = {
-      field1: [],
-      field2: [],
-      field3: [],
-      field4: [],
-      field5: [],
-      field6: [],
-      field7: [],
-      field8: [],
-      field9: []
-    }
-    for(let i = 0; i < 9; i++) {
-      let field = `field${i + 1}`;
-      dataArray.forEach(element => {
-        arrayValue[field].push(element[i]);
-      })
-    }
-    return res.status(200).json({
-      message: "Get data successfully",
-      metadata: arrayValue,
-    })
   }
   async getRecordByDoctorId(req,res){
     console.log(`[P]:::Get record by doctor id: `, req.params.id);
