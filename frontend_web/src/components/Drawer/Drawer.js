@@ -1,4 +1,4 @@
-import { Descriptions, Drawer } from 'antd';
+import { Descriptions, Drawer, Table } from 'antd';
 import { useEffect, useState } from 'react';
 import './Drawer.scss'
 
@@ -9,7 +9,7 @@ const DrawerComponent = (props) => {
   useEffect(()=>{
     setIsOpen(props?.isOpen);
     setData(props?.data);
-  },[props])
+  }, [props]);
 
   return (
     <>
@@ -29,8 +29,18 @@ const DrawerComponent = (props) => {
             <Descriptions column={1}>
               {Object.keys(props.labels).map((key) => {
                   const label = props.labels[key];
-                  if(label) {
-                    return <Descriptions.Item label={label} key={label}>{data[key]}</Descriptions.Item>
+                  const customKey = Object.keys(props?.customDetail);                  
+                  if (label) {
+                    if (customKey.includes(key)) {
+                      return (
+                        <Descriptions.Item label={label} key={label}>
+                          {props.customDetail?.[key]}
+                        </Descriptions.Item>
+                      )
+                    }
+                    else {
+                      return <Descriptions.Item label={label} key={label}>{data[key]}</Descriptions.Item>
+                    }
                   }
                 })
               }
