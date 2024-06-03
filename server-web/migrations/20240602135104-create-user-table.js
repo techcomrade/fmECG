@@ -42,13 +42,6 @@ module.exports = {
         },
         created_at: Sequelize.BIGINT,
         updated_at: Sequelize.BIGINT,
-      },
-      {
-        associate: function (models) {
-          User.hasMany(models.Assignment, {
-            onDelete: "cascade",
-          });
-        },
       }
     );
   },

@@ -12,8 +12,8 @@ module.exports = {
       device_id: {
         type: Sequelize.STRING,
         references: {
-          model: "devices",
-          key: "id",
+          model: 'devices',
+          key: 'id',
         },
       },
       frequency_name: {
@@ -37,9 +37,6 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
-    }, {
-      timestamps: false,
-      freezeTableName: true,
     });
   },
 

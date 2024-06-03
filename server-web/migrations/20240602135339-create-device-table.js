@@ -11,16 +11,16 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.STRING,
-        references: {
-          model: "users",
-          key: "id",
+        references:{
+          model: 'users',
+          key: 'id',
         },
       },
       doctor_id: {
         type: Sequelize.STRING,
         references: {
-          model: "users",
-          key: "id",
+          model: 'users',
+          key: 'id',
         },
       },
       device_name: {

@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      conntent: {
+      content: {
         type: Sequelize.STRING,
         allowNull: false,
         description: Sequelize.TEXT,
@@ -22,8 +22,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         references: {
-          model: "news_categories",
-          key: "id",
+          model: 'news_categories',
+          key: 'id',
         },
       },
       author: {
@@ -38,8 +38,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      created_at: Sequelize.BIGINT,
-      updated_at: Sequelize.BIGINT,
+      created_at: {
+        type: Sequelize.BIGINT
+      },
+      updated_at: {
+        type: Sequelize.BIGINT
+      },
     });
   },
 

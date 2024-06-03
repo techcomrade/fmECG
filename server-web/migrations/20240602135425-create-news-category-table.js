@@ -18,8 +18,12 @@ module.exports = {
         allowNull: false,
         description: Sequelize.TEXT,
       },
-      created_at: Sequelize.STRING,
-      updated_at: Sequelize.STRING,
+      created_at: {
+        type: Sequelize.BIGINT
+      },
+      updated_at: {
+        type: Sequelize.BIGINT
+      },
     });
   },
 

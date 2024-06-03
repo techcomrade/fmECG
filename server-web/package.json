@@ -30,7 +30,7 @@
     "migrate": "npx sequelize-cli db:migrate --name",
     "migrate.all": "npx sequelize-cli db:migrate",
     "migration.create": "npx sequelize-cli migration:generate --name",
-    "migration.rollback": "npx sequelize-cli db:migrate:undo",
+    "migration.rollback": "npx sequelize-cli db:migrate:undo --seed",
     "migration.rollback.all": "npx sequelize-cli db:migrate:undo:all",
     "seed": "npx sequelize-cli db:seed --seed",
     "seed.all": "npx sequelize-cli db:seed:all",

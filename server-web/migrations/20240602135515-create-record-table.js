@@ -13,16 +13,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         references: {
-          model: "users",
-          key: "id",
+          model: 'users',
+          key: 'id',
         },
       },
       device_id: {
         type: Sequelize.STRING,
         allowNull: false,
         references: {
-          model: "devices",
-          key: "id",
+          model: 'devices',
+          key: 'id',
         },
       },
       record_type: {
@@ -38,11 +38,15 @@ module.exports = {
         allowNull: false,
       },
       data_rec_url: {
-        type: Sequelize.STRING(45),
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      created_at: Sequelize.BIGINT,
-      updated_at: Sequelize.BIGINT,
+      created_at: {
+        type: Sequelize.BIGINT
+      },
+      updated_at: {
+        type: Sequelize.BIGINT
+      },
       dummy_data: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,

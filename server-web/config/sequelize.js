@@ -23,9 +23,10 @@ const sequelize = new Sequelize(
       min: 0,
       idle: 10000,
     },
-    define:{
-      timestamps: false,
-    }
+    define: {
+      freezeTableName: true,
+      timestamps: false
+    },
   }
 );
 

@@ -15,17 +15,19 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false,
           references: {
-            model: "users",
-            key: "id",
+            model: 'users',
+            key: 'id',
           },
+          onDelete: 'CASCADE'
         },
         doctor_id: {
           type: Sequelize.STRING,
           allowNull: false,
           references: {
-            model: "users",
-            key: "id",
+            model: 'users',
+            key: 'id',
           },
+          onDelete: 'CASCADE'
         },
         start_date: {
           type: Sequelize.BIGINT,
@@ -44,8 +46,7 @@ module.exports = {
           type: Sequelize.BOOLEAN,
           defaultValue: true,
         },
-      },
-      { freezeTableName: true }
+      }
     );
   },
 
