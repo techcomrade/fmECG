@@ -23,6 +23,12 @@ export const CheckKeyNeedDisplayTag = (key) => {
     return tyepKeyGroups.includes(key)
 }
 
-export const dummyArray = (length) => Array.from({length}, () => Math.floor(Math.random() * length));
+export const dummyArray = (length) => Array.from({length}, () => {
+    const value = Math.floor(Math.random() * length);
+    return {
+        value,
+        warning: value > 800 ? 1 : 0
+    }
+});
 
 export const dummyIncreaseArray = (length) => Array.from(Array(length).keys());
