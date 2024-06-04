@@ -3,7 +3,6 @@ import NotAuth from "./pages/NotAuth/notauth";
 
 function App() {
   const hasCookie = window.hasCookie;
-  console.log(hasCookie);
   return (
       <div className="App">
         {!hasCookie.user_id || hasCookie.user_id === "null" ? <NotAuth />: <DefaultLayout />}
