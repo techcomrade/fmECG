@@ -19,4 +19,14 @@
        line-height: 1.5715;
        margin-top: 0;
    }
+
+    .ant-descriptions-item-container:has(.ant-table-wrapper) {
+        flex-direction: column;
+
+        .ant-table-content {
+            table {
+                border: 1px solid #e5e5e5;
+            }
+        }
+    }
 }
