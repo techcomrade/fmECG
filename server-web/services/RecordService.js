@@ -142,7 +142,7 @@ class RecordService extends CommonService {
         })
       })
       let arrayValue = {};
-      let fieldNames = ['PPG', 'PCG', 'heart rate'];
+      let fieldNames = ['PPG', 'PCG', 'heartRate'];
       for(let i = 6; i < 9; i++) {
         let field = fieldNames[i - 5];
         arrayValue[field] = [];
