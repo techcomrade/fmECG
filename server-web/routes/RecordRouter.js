@@ -12,7 +12,7 @@ const {
 router.get("", commonMiddleware.validationToken, RecordController.getAll);
 router.post(
   "",
-  commonMiddleware.validationToken,
+  // commonMiddleware.validationToken,
   uploadController.setUploadToDisk,
   RecordController.uploadFileRecord,
   RecordController.createRecord
