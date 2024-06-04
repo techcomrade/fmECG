@@ -7,6 +7,9 @@ services:
     depends_on:
       - database
     env_file: ./server-web/.env.docker
+    volumes:
+      - ./server-web/:/server/
+      - /server/node_modules
     networks:
       - network-fmecg
   
