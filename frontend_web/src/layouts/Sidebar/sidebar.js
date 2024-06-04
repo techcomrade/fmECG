@@ -61,7 +61,7 @@ const Sidebar = ({ children }) => {
       <div className="brand">
         <img src={logo} alt="" />
       </div>
-      <Menu mode={"inline"} selectedKeys={["1"]}>
+      <Menu mode={"inline"} selectedKeys={["1"]} className="menu-sidebar">
         <ComponentWithLink path="/">
           {(isActive) => (
             <Menu.Item
