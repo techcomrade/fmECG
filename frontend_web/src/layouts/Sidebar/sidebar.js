@@ -26,10 +26,12 @@ const Sidebar = ({ children }) => {
       <div className="brand">
         <img src={logo} alt="" />
       </div>
+
       <Menu
         mode={"inline"}
         selectedKeys={selectedKey}
         defaultSelectedKeys={["/"]}
+        className="menu-sidebar"
       >
         <Menu.Item className="menu-item" key="/" onClick={() => navigate("/")}>
           <span className="menu-item-box-icon">

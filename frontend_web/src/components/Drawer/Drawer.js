@@ -29,9 +29,9 @@ const DrawerComponent = (props) => {
             <Descriptions column={1}>
               {Object.keys(props.labels).map((key) => {
                   const label = props.labels[key];
-                  const customKey = Object.keys(props?.customDetail);                  
+                  const customKey = props.customDetail ? Object.keys(props?.customDetail) : undefined;                  
                   if (label) {
-                    if (customKey.includes(key)) {
+                    if (customKey?.includes(key)) {
                       return (
                         <Descriptions.Item label={label} key={label}>
                           {props.customDetail?.[key]}
