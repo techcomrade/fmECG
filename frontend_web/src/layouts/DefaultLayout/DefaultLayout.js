@@ -15,7 +15,7 @@ const DefaultLayout = ({ children }) => {
       <Layout style={{ height: "100vh" }}>
         <Sidebar />
         <Layout>
-          <Header className="header-bar">
+          <Header style={{backgroundColor: "#f5f5f5"}}>
             <HeaderUser userName={userName} token />
           </Header>
           <Layout>

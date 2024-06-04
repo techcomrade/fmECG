@@ -1,28 +1,22 @@
-.brand img{
-    height: 100px;
+.brand img {
+  height: 100px;
 }
-.brand{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .menu-sidebar {
-    .ant-menu-item {
-        padding-inline: 0;
-    }
+  .ant-menu-item {
+    padding-inline: 0;
+  }
 }
 
-.menu-item-header{
-    font-weight: 700;
+.menu-item-header {
+  font-weight: 700;
 }
 
-.menu-item{
-    .menu-item-box{
-
-        padding: 20px;
-        .menu-item-box-icon{
-            margin-right: 8px;
-        }
-    }
+.menu-item-box-icon {
+  margin-right: 6px;
 }

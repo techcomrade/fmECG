@@ -1,35 +1,45 @@
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0;
-    width: 100%;
+.setting-drwer {
+  left: 30px;
+  right: auto;
 }
 
-.header-logo {
-    font-weight: 800;
-    color: white;
+.ant-page-header-heading {
+  margin-top: 0;
+}
+.ant-page-header-heading .ant-page-header-heading-title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  margin-top: 4px;
 }
 
-.input-search {
-    width: 30vw;
-    border-color: transparent;
-    box-shadow: 0 0 0 2px #fff;
-    border: none;
-}
-
-.header img {
-    width: 23px;
-    margin-right: 25px;
-    margin-top: 11px;
-    cursor: pointer;
-    color: white;
+.header-control {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .user-avatar {
-    background-color: rgb(199, 199, 199);
+  width: 25px;
+  height: 25px;
+  background-color: rgb(199, 199, 199);
+  margin-left: 15px;
+  margin-right: 5px;
 }
+.header-container {
+  width: 100%;
+}
+.header-icon-box {
+  font-size: 20px;
 
+  margin: 0 5px;
+}
+.header-breadcrumb{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
 .user-button-header svg {
     cursor: pointer;
 }

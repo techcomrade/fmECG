@@ -5,12 +5,12 @@ import { getRoutesByRole } from "../route";
 import { context } from "../../utils/context";
 import logo from "../../assets/logo.png";
 import { useLocation } from "react-router-dom";
-import { UserOutlined, HomeOutlined } from "@ant-design/icons";
+import { UserOutlined, HomeOutlined, SettingOutlined } from "@ant-design/icons";
 import "./sidebar.scss";
 
 const { Sider } = Layout;
 
-const Sidebar = ({ children }) => {
+const Sidebar = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -21,6 +21,7 @@ const Sidebar = ({ children }) => {
   useEffect(() => {
     setSelectedKey(pathname);
   }, [pathname]);
+  
   return (
     <Sider width={200} style={{ background: colorBgContainer }} >
       <div className="brand">
@@ -63,9 +64,19 @@ const Sidebar = ({ children }) => {
           onClick={() => navigate("/account")}
         >
           <span className="menu-item-box-icon">
-            <HomeOutlined />
+            <UserOutlined />
           </span>
           <span>Thông tin tài khoản</span>
+        </Menu.Item>
+        <Menu.Item
+          className="menu-item"
+          key="/setting"
+          onClick={() => navigate("/")}
+        >
+          <span className="menu-item-box-icon">
+          <SettingOutlined />
+          </span>
+          <span>Cài đặt</span>
         </Menu.Item>
       </Menu>
     </Sider>
