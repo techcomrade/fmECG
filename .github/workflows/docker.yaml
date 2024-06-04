@@ -65,4 +65,5 @@ jobs:
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
           cd /home/finnick/fmECG_docker
+          git pull origin development
           make app
