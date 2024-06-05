@@ -5,8 +5,7 @@ defmodule ServerChat.Fcm.FcmToken do
   alias ServerChat. { Utils.ApiHandler }
 
   def load_credentials() do
-    path_credentials = if Mix.env() == :prod, do: "/tmp/edeliver/workcake/builds/priv/fmecg_firebase_service.json",
-      else: "priv/certs/fmecg_firebase_service.json"
+    path_credentials = "priv/certs/fmecg_firebase_service.json"
     credentials = path_credentials
     |> File.read!()
     |> Jason.decode!()

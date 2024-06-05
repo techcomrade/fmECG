@@ -37,10 +37,11 @@ services:
     image: thaidmfinnick/fmecg-proxy
     platform: linux/x86_64
     container_name: proxy-fmecg
-    links:
+    depends_on:
       - node-app
       - react-app
       - bin-login
+      - chat-app
     restart: unless-stopped
     ports:
       - 80:80

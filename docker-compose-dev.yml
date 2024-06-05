@@ -5,6 +5,7 @@ services:
     build: 
       dockerfile: Dockerfile
       context: ./server-web
+    profiles: ["backend"]
     volumes:
       - ./server-web/:/server/
       - /server/node_modules
@@ -19,6 +20,7 @@ services:
     build: 
       dockerfile: Dockerfile
       context: ./frontend_web
+    profiles: ["frontend"]
     volumes:
       - ./frontend_web:/web/
       - /web/node_modules
@@ -29,16 +31,16 @@ services:
 
   bin-login:
     container_name: bin-fmecg
-    build: 
+    build:
       dockerfile: Dockerfile
       context: ./frontend_web/bin
+    profiles: ["frontend"]
     env_file: ./frontend_web/bin/.env.docker
     volumes:
       - ./frontend_web/bin:/bin_login/
       - /bin_login/node_modules
     depends_on:
       - database
-      - node-app
     networks:
       - network-fmecg
   
@@ -47,11 +49,13 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./proxy
-    links:
-      - node-app
-      - react-app
-      - bin-login
+    profiles: ["backend"]
     restart: unless-stopped
+    depends_on:
+      - node-app
+      # - react-app
+      - chat-app
+      # - bin-login
     ports:
       - 80:80
     volumes:
@@ -63,6 +67,7 @@ services:
     image: mysql:8.0
     container_name: database-fmecg
     restart: unless-stopped
+    profiles: ["backend"]
     ports:
       - 3306:3306
     expose:
@@ -76,18 +81,23 @@ services:
   chat-app:
     container_name: chat-fmecg
     build:
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
       context: ./server_chat
+    profiles: ["backend"]
+    # command: iex -S mix phx.server
     restart: unless-stopped
     depends_on:
       - database-chat
     env_file: ./server_chat/.env.docker
+    volumes:
+      - ./server_chat/:/app/
     networks:
       - network-fmecg
   
   database-chat:
     image: postgres:12.19
     container_name: database-chat-fmecg
+    profiles: ["backend"]
     ports:
       - 5432:5432
     expose:
