@@ -37,6 +37,7 @@ Hệ thống được thiết kế để phục vụ các đối tượng sau:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
     \item Người dùng: Người sử dụng hệ thống để thực hiện theo dõi dữ liệu điện tim thông qua Bluetooth. Bệnh nhân có quyền truy cập vào kết quả ECG của mình, có thể được một bác sĩ phụ trách và theo dõi các thông tin liên quan đến điện tim và sức khoẻ
+    \item Bác sĩ: Người sử dụng hệ thống để thực hiện quản lý, theo dõi các bệnh nhân mình được phân công. Bác sĩ có quyền truy cập vào kết quả ECG của bệnh nhân, có thể trao đổi, tư vấn với bệnh nhân về các thông tin liên quan
     \item Quản trị viên: Người sử dụng hệ thống để quản lý các tài khoản người dùng, thiết bị, phân công bệnh nhân cho bác sĩ và quản lý mối quan hệ giữa bác sĩ và bệnh nhân, quản lý các bản dữ liệu đo
 \end{itemize}
 \end{adjustwidth}
@@ -63,18 +64,6 @@ Các chức năng chính của hệ thống bao gồm:
     \item Nhận thông báo và có thể trao đổi trực tiếp với bác sĩ về tình hình sức khoẻ và các kết quả đo được từ thiết bị
 \end{itemize}
 \end{adjustwidth}
-\textbf{Đối với quản trị viên:}
-\begin{adjustwidth}{1.5em}{}
-\begin{itemize}
-    \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, số điện thoại và mật khẩu
-    \item Cập nhật thông tin cá nhân
-    \item Quản lý danh sách người dùng trong hệ thống, bao gồm bệnh nhân và bác sĩ
-    \item Quản lý danh sách thiết bị
-    \item Quản lý các bản ghi dữ liệu của các thiết bị trong hệ thống
-    \item Quản lý các tin tức được đăng trên ứng dụng của người dùng
-\end{itemize}
-\end{adjustwidth}
-
 \textbf{Đối với bác sĩ:}
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
@@ -83,6 +72,17 @@ Các chức năng chính của hệ thống bao gồm:
     \item Quản lý danh sách bệnh nhân, có thể thêm, xóa bệnh nhân
     \item Xem kết quả ECG của các bệnh nhân trong danh sách bệnh nhân của mình, bao gồm biểu đồ và các thông số liên quan
     \item Quản lý danh sách các bản ghi record của các bệnh nhân trong list quản lý của mình
+    \item Nhận thông báo và có thể trao đổi trực tiếp với bệnh nhân về tình hình sức khoẻ và các kết quả đo được từ thiết bị
+\end{itemize}
+\end{adjustwidth}
+\textbf{Đối với quản trị viên:}
+\begin{adjustwidth}{1.5em}{}
+\begin{itemize}
+    \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, số điện thoại và mật khẩu
+    \item Cập nhật thông tin cá nhân
+    \item Quản lý danh sách người dùng trong hệ thống, bao gồm bệnh nhân và bác sĩ
+    \item Quản lý danh sách thiết bị, bản ghi của các dữ liệu
+    \item Quản lý các tin tức được đăng trên ứng dụng của người dùng
 \end{itemize}
 \end{adjustwidth}
 
@@ -108,7 +108,7 @@ Trong chương này, chúng em đã thực hiện thu thập yêu cầu về
   các mục tiêu và yêu cầu đã được đề xuất.
 
 Chúng em đã xác định rõ ràng các khía cạnh quan trọng của hệ thống,
- tập trung vào việc thiết kế một hệ thống quản lý ECG hiệu quả,
+ tập trung vào việc thiết kế một hệ thống quản lý dữ liệu y tế hiệu quả,
   trực quan và có khả năng theo dõi sức khỏe tim mạch một cách
    chính xác. 
 
