@@ -28,3 +28,6 @@ server_chat-*.tar
 .deliver/releases/
 
 .env.docker
+
+/docker
+/priv/certs
