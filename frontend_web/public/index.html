@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="ECG admin website"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
@@ -24,7 +24,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>ECG Admin Web</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -58,11 +58,14 @@
         localStorage.setItem("user", getCookie("user"));
         localStorage.setItem("access_token", getCookie("access_token"));
         localStorage.setItem("refresh_token", getCookie("refresh_token"));
-        localStorage.setItem("api",decodeURIComponent(getCookie("api")));
+        localStorage.setItem("api", decodeURIComponent(getCookie("api")));
+        localStorage.setItem("role", getCookie("role"));
+        localStorage.setItem("redirect_api",decodeURIComponent(getCookie("redirect_api")))
         cookieData = {
           access_token: localStorage.getItem("access_token"),
           refresh_token: localStorage.getItem("refresh_token"),
           user_id: localStorage.getItem("user"),
+          role: localStorage.getItem("role"),
           api: localStorage.getItem("api"),
         };
       } else {
@@ -70,7 +73,7 @@
           access_token: "",
           refresh_token: "",
           user_id: "",
-          api: ""
+          api: "",
         };
         localStorage.clear();
       }

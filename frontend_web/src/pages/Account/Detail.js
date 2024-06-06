@@ -18,7 +18,8 @@ import dayjs from "dayjs";
 import { getUserById } from "../../redux/reducer/userSlice";
 import { loadStatus } from "../../redux/reducer/recordSlice";
 import "./detail.scss";
-import { convertGenderToString } from "../../constants";
+import { convertGenderToString, convertRoleToString } from "../../constants";
+import { context } from "../../utils/context";
 
 const { Option } = Select;
 export default function Detail() {
@@ -28,7 +29,7 @@ export default function Detail() {
   const dataState = useSelector((state) => state.user);
   const [password, setPassword] = useState("");
   useEffect(() => {
-    dispatch(getUserById());
+    dispatch(getUserById(context.user_id));
   }, []);
   useEffect(() => {
     if (dataState.loadUserDataStatus === loadStatus.Success) {
@@ -36,8 +37,6 @@ export default function Detail() {
       setData(rawData);
     }
   }, [dataState.loadUserDataStatus]);
-  const handleSubmitButton = () => {};
-  const handleChangeInput = () => {};
   return (
     <div className="account-info">
       <Col span={22} offset={1}>
@@ -114,7 +113,7 @@ export default function Detail() {
             </Col>
             <Col span={10} offset={2}>
               <Form.Item label="Quyền truy cập">
-                <Input value={accountData.role} name="gender" disabled />
+                <Input value={convertRoleToString(accountData.role)} name="gender" disabled />
               </Form.Item>
             </Col>
           </Row>
@@ -159,7 +158,7 @@ export default function Detail() {
               </Form.Item>
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <Col span={10}>
               <Form.Item>
                 <Button
@@ -173,7 +172,7 @@ export default function Detail() {
                 <Button>Hủy bỏ</Button>
               </Form.Item>
             </Col>
-          </Row>
+          </Row> */}
         </Form>
       </Col>
     </div>

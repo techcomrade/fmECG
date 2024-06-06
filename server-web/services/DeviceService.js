@@ -41,17 +41,15 @@ class DeviceService extends CommonService {
   }
 
   ValidateDevice(device, checkId) {
+    console.log(device);
     const schema = Joi.object({
       id: checkId ? Joi.string().required() : Joi.string().allow(" "),
       user_id: Joi.string().required(),
       device_name: Joi.string().required(),
       information: Joi.string(),
       device_type: Joi.number().integer().min(0).max(100).required(),
-      start_date: Joi.number().integer().required(),
-      end_date: Joi.number()
-        .integer()
-        .greater(Joi.ref("start_date"))
-        .required(),
+      status: Joi.number(),
+      start_date: Joi.number().required(),
       dummy_data: Joi.boolean(),
     });
     return schema.validate(device);
@@ -65,6 +63,12 @@ class DeviceService extends CommonService {
   
   async getDeviceByDeviceName(device_name) {
     return DeviceModel.checkByDeviceName(device_name);
+  }
+  async getDeviceByDoctorId (id) {
+    return await DeviceModel.getByDoctorId(id);
+  }
+  async getDevicesByUserId(id){
+    return await DeviceModel.getDevicesByUserId(id);
   }
 }
 

@@ -1,13 +1,23 @@
 const path = require('path');
 const fs = require('fs');
 const mysql = require('mysql');
+require('dotenv').config({ path: ['.env.prod', '.env.dev'] });
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST || '127.0.0.1',
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    password: process.env.DB_PASSWORD || "",
     charset: 'utf8'
 })
+
+// const pool = mysql.createPool({
+//   connectionLimit: 10,
+//   host: process.env.DB_HOST,
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   database: process.env.DB_NAME,
+//   debug: false
+// });
 
 connection.connect( async () => {
     try {
@@ -18,6 +28,11 @@ connection.connect( async () => {
         console.log(err);
     }
 })
+
+// pool.getConnection(async (err, connection) => {
+//   if (err) throw err;
+//   await executeMigrations(connection);
+// })
 
 
 const executeMigrations = async () => {

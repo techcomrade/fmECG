@@ -11,6 +11,7 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "googleapis": "^137.1.0",
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
@@ -25,12 +26,24 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "prod": "nodemon server.js",
-    "migration": "node migration.js"
+    "migration": "node migration.js",
+    "migrate": "npx sequelize-cli db:migrate --name",
+    "migrate.all": "npx sequelize-cli db:migrate",
+    "migration.create": "npx sequelize-cli migration:generate --name",
+    "migration.rollback": "npx sequelize-cli db:migrate:undo",
+    "migration.rollback.name": "npx sequelize-cli db:migrate:undo --name",
+    "migration.rollback.all": "npx sequelize-cli db:migrate:undo:all",
+    "seed": "npx sequelize-cli db:seed --seed",
+    "seed.all": "npx sequelize-cli db:seed:all",
+    "seed.create": "npx sequelize-cli seed:generate --name",
+    "seed.rollback": "npx sequelize-cli db:seed:undo",
+    "seed.rollback.name": "npx sequelize-cli db:seed:undo --seed",
+    "seed.rollback.all": "npx sequelize-cli db:seed:undo:all"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "sequelize": "^6.37.1"
+    "sequelize": "^6.37.1",
+    "sequelize-cli": "^6.6.2"
   }
 }

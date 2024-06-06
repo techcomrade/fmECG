@@ -5,6 +5,7 @@ class AuthenMiddleware {
     const validation = UserService.validateUser(req.body).error;
     if (validation === undefined) {
       console.log("Validate successful!");
+      
       next();
     } else {
       return res.status(400).json({

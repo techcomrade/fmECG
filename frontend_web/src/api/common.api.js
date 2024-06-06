@@ -27,11 +27,11 @@ export const httpGetData = (url) => {
             console.log('error get data', error)
             if(error.response?.status === 401 || error.response?.status === 403){
                 showNotiWarning('Bạn đã hết phiên đăng nhập');
-                window.location.href = '/login';
+                window.location.href = '/';
                 reject(error)
             }
             else {
-                showNotiError(error.message);
+                showNotiError(error.response?.data?.message);
             }
         })
     })
@@ -46,7 +46,7 @@ export const httpUpdateData = (url, data) => {
         })
         .catch((error) => {
             console.log('error get data', error)
-            showNotiError(error.response.data)
+            showNotiError(error.response?.data?.message);
             // checkErrorReturn(error);
             reject(error)
         })
@@ -62,7 +62,7 @@ export const httpDeleteData = (url, data) => {
         })
         .catch((error) => {
             console.log('error delete data', error)
-            showNotiError(error.response?.data)
+            showNotiError(error.response?.data?.message);
             // checkErrorReturn(error);
             reject(error)
         })

@@ -48,7 +48,9 @@ class UserService extends CommonService {
       birth: Joi.number().required(),
       phone_number: Joi.number().required(),
       gender: Joi.number().required(),
-      image: Joi.string()
+      image: Joi.string(),
+      status: Joi.number(),
+      information: Joi.string()
     });
     return schema.validate(user);
   }
@@ -89,6 +91,10 @@ class UserService extends CommonService {
 
   async deleteUserById(userId) {
     return await UserRepository.deleteById(userId);
+  }
+
+  async uploadImageById(image, id) {
+    return await UserRepository.uploadImageById(id, image);
   }
 }
 

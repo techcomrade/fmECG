@@ -1,0 +1,94 @@
+
+services:
+  node-app:
+    image: thaidmfinnick/fmecg-node-app
+    platform: linux/x86_64
+    container_name: node-fmecg
+    depends_on:
+      - database
+    env_file: ./server-web/.env.docker
+    volumes:
+      - ./server-web/:/server/
+      - /server/node_modules
+    networks:
+      - network-fmecg
+  
+  react-app:
+    image: thaidmfinnick/fmecg-react-app
+    platform: linux/x86_64
+    container_name: react-fmecg
+    depends_on:
+      - database
+    networks:
+      - network-fmecg
+
+  bin-login:
+    image: thaidmfinnick/fmecg-bin-login
+    platform: linux/x86_64
+    container_name: bin-fmecg
+    env_file: ./frontend_web/bin/.env.docker
+    depends_on:
+      - database
+      - node-app
+    networks:
+      - network-fmecg
+  
+  proxy:
+    image: thaidmfinnick/fmecg-proxy
+    platform: linux/x86_64
+    container_name: proxy-fmecg
+    depends_on:
+      - node-app
+      - react-app
+      - bin-login
+      - chat-app
+    restart: unless-stopped
+    ports:
+      - 80:80
+    networks:
+      - network-fmecg
+
+  database:
+    image: mysql:8.0
+    platform: linux/x86_64
+    container_name: database-fmecg
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    env_file: ./server-web/.env.docker
+    volumes:
+      - ./docker/data/mysql:/var/lib/mysql
+    networks:
+      - network-fmecg
+  
+  chat-app:
+    image: thaidmfinnick/fmecg-chat-app
+    platform: linux/x86_64
+    container_name: chat-fmecg
+    restart: unless-stopped
+    depends_on:
+      - database-chat
+    env_file: ./server_chat/.env.docker
+    networks:
+      - network-fmecg
+  
+  database-chat:
+    image: postgres:12.19
+    platform: linux/x86_64
+    container_name: database-chat-fmecg
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    restart: unless-stopped
+    env_file: ./server_chat/.env.docker
+    volumes:
+      - ./docker/data/postgresql:/var/lib/postgresql/data
+    networks:
+      - network-fmecg
+
+networks:
+  network-fmecg:
+    driver: bridge
