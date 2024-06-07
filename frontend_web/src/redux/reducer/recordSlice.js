@@ -127,12 +127,12 @@ export const getRecordByDoctorId = createAsyncThunk(
     }
   }
 );
+
 export const getDataRecordById = createAsyncThunk(
   "/record/getData", 
   async (params, {rejectWithValue }) => {
     try {
-      const record_id = params;
-      const response = await httpGetData(`/record/getData/${record_id}`);
+      const response = await httpGetData(`/record/getData/${params}`);
       return response;
     }  catch (error) {
       return rejectWithValue(
@@ -141,17 +141,20 @@ export const getDataRecordById = createAsyncThunk(
     }
   }
 );
+
 const recordSlice = createSlice({
   name: "record",
   initialState: {
     data: [],
     recordData: {},
+    recordChartData: {},
     loadDataStatus: loadStatus.None,
     loadCreateDataStatus: loadStatus.None,
     loadUpdateDataStatus: loadStatus.None,
     loadDeleteDataStatus: loadStatus.None,
     loadCheckRecordStatus: loadStatus.None,
     loadRecordDataStatus: loadStatus.None,
+    loadChartRecordDataStatus: loadStatus.None,
   },
   reducers: {
     resetLoadDataStatus: (state, action) => {
@@ -170,9 +173,12 @@ const recordSlice = createSlice({
     resetCheckRecordStatus: (state, action) => {
       state.loadCheckRecordStatus = loadStatus.None;
     },
-    // resetRecordDataStatus: (state, action) => {
-    //   state.loadDeviceDataStatus = loadStatus.None;
-    // },
+    resetRecordDataStatus: (state, action) => {
+      state.loadRecordDataStatus = loadStatus.None;
+    },
+    resetChartRecordDataStatus: (state, action) => {
+      state.loadChartRecordDataStatus = loadStatus.None;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -256,7 +262,18 @@ const recordSlice = createSlice({
       .addCase(getRecordById.rejected, (state, action) => {
         state.loadRecordDataStatus = loadStatus.Failed;
         state.recordData = {};
-      });
+      })
+      .addCase(getDataRecordById.pending, (state, action) => {
+        state.loadChartRecordDataStatus = loadStatus.Loading;
+      })
+      .addCase(getDataRecordById.fulfilled, (state, action) => {
+        state.loadChartRecordDataStatus = loadStatus.Success;
+        state.recordChartData = action.payload;
+      })
+      .addCase(getDataRecordById.rejected, (state, action) => {
+        state.loadChartRecordDataStatus = loadStatus.Failed;
+        state.recordChartData = {};
+      })
   },
 });
 
@@ -267,5 +284,7 @@ export const {
   resetUpdateDataStatus,
   resetDeleteDataStatus,
   resetCheckRecordStatus,
+  resetRecordDataStatus,
+  resetChartRecordDataStatus
 } = recordSlice.actions;
 export default recordReducer;
