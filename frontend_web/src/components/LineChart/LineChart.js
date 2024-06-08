@@ -60,8 +60,7 @@ const LineChart = ({ rawData }) => {
             setDataSets([]);
             setYScale({});
         }
-    }, [rawData])
-
+    }, [rawData]);
 
     const dataChart = {
         labels: dummyIncreaseArray(74),
@@ -72,7 +71,7 @@ const LineChart = ({ rawData }) => {
         plugins: {
             title: {
                 display: true,
-                text: 'ChartJS',
+                text: 'Đồ thị chỉ số sức khỏe',
                 font: {
                     size: 14
                 }
@@ -100,7 +99,7 @@ const LineChart = ({ rawData }) => {
             x: {
                 title: {
                     display: true,
-                    text: "Trục X"
+                    text: "Thời gian"
                 },
                 max: 150
             },
