@@ -132,37 +132,28 @@ Tại phần này, chúng em sẽ tiến hành xác định và mô tả các th
     \textbf{Thực thể} & \textbf{Thuộc tính} \\
     \hline
     Người dùng & 
-    ID người dùng, Mật khẩu, Email, Tên, Ngày sinh, Số điện thoại, Quyền \\
+    ID người dùng, ID tài khoản, Tên người dùng, Email, Mật khẩu, Ngày sinh, Giới tính, Số điện thoại, Quyền, Thông tin người dùng \\
     \hline
-    Bản ghi ECG & 
-    ID bản ghi ECG, ID người dùng, ID thiết bị, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo, Loại cảm biến \\
-    \hline
-    Danh mục tin tức & 
-    ID danh mục tin tức, Tên danh mục tin tức, Mô tả danh mục tin tức \\
-    \hline
-    Tin tức & 
-    ID tin tức, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn, Đường dẫn hình ảnh \\
-    \hline
-    Phân công bệnh nhân - bác sĩ & 
-    ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu \\
-    \hline
-    Mã thông báo đặt lại mật khẩu & 
-    ID mã thông báo, ID người dùng, Mã thông báo, Thời gian hết hạn \\
-    \hline
-    Phiên đăng nhập & 
-    ID phiên đăng nhập, ID người dùng, Mã phiên đăng nhập, Thời gian hết hạn \\
+    Token đăng nhập &
+    ID token, ID tài khoản, Token truy cập, Token làm mới \\
     \hline
     Thiết bị & 
-    ID thiết bị, Tên thiết bị \\
+    ID thiết bị, ID người dùng thiết bị, ID bác sĩ theo dõi, Tên thiết bị, Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng\\
     \hline
-    Thông tin hội thoại & 
-    ID hội thoại, Danh sách ID người dùng trong hội thoại, thông tin tin nhắn gần nhất \\
+    Các tần số đo được của thiết bị &
+    ID tần số, ID thiết bị, Tên loại tần số, Thông tin, Giá trị đo được \\
+    \hline
+    Bản ghi ECG & 
+    ID bản ghi ECG, ID người dùng, ID thiết bị, Loại bản ghi, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo \\
+    \hline
+    Thông tin hội thoại &
+    ID hội thoại, ID người dùng tham gia \\
     \hline
     Tin nhắn & 
-    ID tin nhắn, Nội dung tin nhắn, ID người gửi tin nhắn, thời gian gửi tin nhắn \\
+    ID tin nhắn, ID hội thoại, ID người gửi, ID người nhận, Nội dung tin nhắn, Thời gian gửi \\
     \hline
-    Firebase token người dùng & 
-    ID token, Firebase token, ID người dùng \\
+    Phân công bệnh nhân - bác sĩ & 
+    ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu, Ngày kết thúc \\
     \hline
   \end{tabularx}
 
