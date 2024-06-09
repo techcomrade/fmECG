@@ -5,6 +5,7 @@ import "./DefaultLayout.css";
 import { getLocalStorage } from "../../utils/storageUtils";
 import { Routes } from "../route";
 import { HashRouter } from "react-router-dom";
+import BubbleChat from "../../components/BubbleChat/BubbleChat";
 
 const { Header, Content } = Layout;
 
@@ -26,6 +27,7 @@ const DefaultLayout = ({ children }) => {
                 </div>
               </Col>
             </Content>
+            <BubbleChat />
           </Layout>
         </Layout>
       </Layout>
