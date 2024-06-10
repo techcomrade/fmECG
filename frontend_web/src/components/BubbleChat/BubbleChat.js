@@ -76,8 +76,8 @@ const BubbleChat = () => {
                     <div className="chatbox__support">
                         <div className="chatbox__header">
                             <div className="chatbox__content--header">
-                                <h4 className="chatbox__heading--header">Chat support</h4>
-                                <p className="chatbox__description--header">Hi. My name is Sam. How can I help you?</p>
+                                <h4 className="chatbox__heading--header">ECG AI</h4>
+                                {/* <p className="chatbox__description--header">Hi. My name is Sam. How can I help you?</p> */}
                             </div>
                             <div className='chatbox__header--close' onClick={() => toogleChat()}>
                                 <CloseOutlined />
@@ -104,7 +104,7 @@ const BubbleChat = () => {
                         </div>
                     </div>
                     <div className="chatbox__button">
-                        <button onClick={() => toogleChat()}><MessageOutlined /></button>
+                        <button onClick={() => toogleChat()} className="chat-icon" style={{backgroundColor: "#a4caff", color: "#fff"}}><MessageOutlined /></button>
                     </div>
                 </div>
             </div>

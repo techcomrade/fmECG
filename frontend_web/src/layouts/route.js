@@ -8,32 +8,34 @@ import RecordTable from "../pages/Record/recordTable";
 import PdaTable from "../pages/PatientDoctorAssignment/pdaTable";
 import {
   UserOutlined,
-  HomeOutlined,
   UnorderedListOutlined,
+  WechatWorkOutlined,
+  UsergroupAddOutlined,
+  DesktopOutlined,
+  LineChartOutlined
 } from "@ant-design/icons";
-import DocTorInformation from "../pages/DoctorInformation/doctorInfomation";
-import DeviceInformation from "../pages/DeviceInformation/deviceInformation";
 import { userRole } from "../constants";
 import { context } from "../utils/context";
+import Chat from "../pages/Chat/chat";
 
 export const AdminRouterMappingGroup = {
   User: {
     key: "/user",
     label: "Thông tin người dùng",
     component: <UserTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <UsergroupAddOutlined />,
   },
   Device: {
     key: "/device",
     label: "Thông tin thiết bị",
     component: <DeviceTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <DesktopOutlined />,
   },
   Record: {
     key: "/record",
     label: "Thông tin bản ghi",
     component: <RecordTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <LineChartOutlined />,
   },
   AssignmentPatientDoctor: {
     key: "/pda",
@@ -48,19 +50,25 @@ export const doctorRouterMappingGroup = {
     key: "/user",
     label: "Quản lý bệnh nhân",
     component: <UserTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <UsergroupAddOutlined />,
   },
   Device: {
     key: "/device",
     label: "Quản lý thiết bị",
     component: <DeviceTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <DesktopOutlined />,
   },
   Record: {
     key: "/record",
     label: "Quản lý bản ghi",
     component: <RecordTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <LineChartOutlined />,
+  },
+  Chat:{
+    key:"/chat",
+    label: "Chat với bác sĩ",
+    component: <Chat />,
+    icon: <WechatWorkOutlined />
   }
 };
 
@@ -76,13 +84,13 @@ export const patientRouterMappingGroup = {
     key: "/device",
     label: "Thông tin thiết bị",
     component: <DeviceTable />,
-    icon: <UserOutlined />,
+    icon: <DesktopOutlined />,
   },
   RecordInformation: {
     key: "/record",
     label: "Dữ liệu sức khoẻ",
     component: <RecordTable />,
-    icon: <UserOutlined />,
+    icon: <LineChartOutlined />,
   }
 };
 

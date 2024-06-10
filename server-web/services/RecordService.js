@@ -144,7 +144,7 @@ class RecordService extends CommonService {
       let arrayValue = {};
       let fieldNames = ['PPG', 'PCG', 'heartRate'];
       for(let i = 6; i < 9; i++) {
-        let field = fieldNames[i - 5];
+        let field = fieldNames[i - 6];
         arrayValue[field] = [];
         dataArray.forEach(element => {
           arrayValue[field].push(element[i]);

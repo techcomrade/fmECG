@@ -34,7 +34,7 @@ router.get(
 router.get(
   "/user/:userId",
   commonMiddleware.validationToken,
-  RecordMiddleware.checkUserId,
+  // RecordMiddleware.checkUserId,
   RecordController.getRecordByUserId
 );
 router.get(
@@ -73,7 +73,7 @@ router.get(
   RecordMiddleware.checkEndTimeInterval,
   RecordController.getRecordByEndTimeInterval
 );
-router.get("/download/:id", commonMiddleware.validationToken, RecordController.downloadRecordFile);
+router.get("/download/:id", RecordController.downloadRecordFile);
 router.get("/check-file/:id", commonMiddleware.validationToken, RecordController.checkRecordFile);
 router.post("/upload-file", commonMiddleware.validationToken, RecordController.uploadFileRecord, (req, res) => {
   if (req.file) res.status(200).json({ file: req.file });
