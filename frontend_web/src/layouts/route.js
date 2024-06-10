@@ -16,7 +16,7 @@ import {
 } from "@ant-design/icons";
 import { userRole } from "../constants";
 import { context } from "../utils/context";
-import Chat from "../pages/Chat/chat";
+// import Chat from "../pages/Chat/chat";
 
 export const AdminRouterMappingGroup = {
   User: {
@@ -64,12 +64,12 @@ export const doctorRouterMappingGroup = {
     component: <RecordTable />,
     icon: <LineChartOutlined />,
   },
-  Chat:{
-    key:"/chat",
-    label: "Chat với bác sĩ",
-    component: <Chat />,
-    icon: <WechatWorkOutlined />
-  }
+  // Chat:{
+  //   key:"/chat",
+  //   label: "Chat với bác sĩ",
+  //   component: <Chat />,
+  //   icon: <WechatWorkOutlined />
+  // }
 };
 
 export const patientRouterMappingGroup = {
