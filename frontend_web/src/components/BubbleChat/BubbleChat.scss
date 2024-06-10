@@ -21,7 +21,7 @@ $primary: #1677ff;
     height: 350px;
     z-index: -123456;
     opacity: 0;
-    transition: all .5s ease-in-out;
+    transition: all .2s ease-in-out;
 }
 
 /* CONTENT ISOPEN */
@@ -48,7 +48,7 @@ $primary: #1677ff;
 
 .send__button {
     padding: 6px;
-    background: transparent;
+    // background: transparent;
     border: none;
     outline: none;
     cursor: pointer;
@@ -103,11 +103,11 @@ $primary: #1677ff;
 
 /* HEADER */
 .chatbox__header {
-    background: $primaryGradient;
+    // background: $primaryGradient;
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 15px 25px;
+    padding: 5px 25px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     box-shadow: $primaryBoxShadow;
@@ -119,7 +119,7 @@ $primary: #1677ff;
 
 .chatbox__heading--header {
     font-size: 1.2rem;
-    color: white;
+    color: $primary;
     margin: 0.5rem 0;
 }
 
@@ -133,7 +133,7 @@ $primary: #1677ff;
     position: absolute;
     right: 20px;
     top: 20px;
-    color: white;
+    color: #999;
     cursor: pointer;
     font-size: 16px;
 }
@@ -175,8 +175,8 @@ $primary: #1677ff;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 20px;
-    background: $secondaryGradient;
+    padding: 10px 20px;
+    background: '#fff';
     box-shadow: $secondaryBoxShadow;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -192,7 +192,6 @@ $primary: #1677ff;
         align-items: center;
         justify-content: center;
         margin: 0 6px;
-
         svg {
             font-size: 20px;
         }

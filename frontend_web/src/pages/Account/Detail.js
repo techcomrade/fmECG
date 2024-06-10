@@ -8,12 +8,10 @@ import {
   Upload,
   Form,
   Input,
-  Button,
   Select,
   DatePicker,
 } from "antd";
 import avatarDemo from "../../assets/icons/avatar.svg";
-import { showNotiError } from "../../components/Notification";
 import dayjs from "dayjs";
 import { getUserById } from "../../redux/reducer/userSlice";
 import { loadStatus } from "../../redux/reducer/recordSlice";
@@ -27,7 +25,6 @@ export default function Detail() {
 
   const [accountData, setData] = useState({});
   const dataState = useSelector((state) => state.user);
-  const [password, setPassword] = useState("");
   useEffect(() => {
     dispatch(getUserById(context.user_id));
   }, []);
@@ -113,7 +110,7 @@ export default function Detail() {
             </Col>
             <Col span={10} offset={2}>
               <Form.Item label="Quyền truy cập">
-                <Input value={convertRoleToString(accountData.role)} name="gender" disabled />
+                <Input value={convertRoleToString(accountData.role)} name="gender" />
               </Form.Item>
             </Col>
           </Row>

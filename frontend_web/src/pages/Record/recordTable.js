@@ -110,6 +110,7 @@ const RecordTable = () => {
     if (context.role === userRole.doctor) {
       dispatch(getRecordByDoctorId(context.user_id));
     } else if (context.role === userRole.patient) {
+      console.log("ha,lsdio");
       dispatch(getRecordByUser(context.user_id));
     } else {
       dispatch(getRecord());
@@ -173,9 +174,6 @@ const RecordTable = () => {
     return dispatch(updateRecord(data));
   };
 
-  const handleSubmitAddFunction = (data) => {
-    return dispatch(createRecord(data));
-  };
 
   const handleData = (data, type) => {
     let deviceData = { ...data };
@@ -199,6 +197,7 @@ const RecordTable = () => {
         if (checkDateTypeKey(key)) {
           deviceData[key] = convertTimeToDateTime(data[key]);
         }
+        
       });
     }
     return deviceData;
@@ -231,8 +230,9 @@ const RecordTable = () => {
     setIsModalOpen(false);
     dispatch(resetCheckRecordStatus());
   };
-  const renderMessageDownload = (loadStatus) => {
-    switch (loadStatus) {
+  const renderMessageDownload = useCallback(() => {
+   
+    switch (dataState.loadCheckRecordStatus) {
       case loadStatus.Success:
         return "Bản ghi đã sẵn sàng tải về";
       case loadStatus.Loading:
@@ -240,7 +240,7 @@ const RecordTable = () => {
       default:
         return "Không tìm thấy bản ghi";
     }
-  };
+  },[dataState.loadCheckRecordStatus]);
   return (
     <>
       <DataTable
@@ -280,7 +280,7 @@ const RecordTable = () => {
         confirmLoading={dataState.loadCheckRecordStatus === loadStatus.Loading}
         onCancel={handleCancel}
       >
-        {renderMessageDownload(dataState.loadCheckRecordStatus)}
+        {renderMessageDownload()}
       </Modal>
 
       <RecordDetail ref={drawerRef} />
