@@ -5,9 +5,16 @@ class RecordController {
   async getAll(req, res, next) {
     console.log(`[P]:::Get all records: `);
     const records = await RecordService.getAll();
+    const length = records.length;
+    for (let i =0; i < length; i++) {
+      records[i] = {
+        ...records[i],
+        record_name: records[i].data_rec_url.split("/").pop()
+      }
+    }
     return res.status(200).json({
       message: "Get all records successful!",
-      metadata: records,
+      metadata: records
     });
   }
 
