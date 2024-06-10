@@ -26,10 +26,9 @@ bin:
 chatbash:
 	docker exec -it chat-fmecg sh
 
-dbchat:
+chatdb:
 	docker exec -it database-chat-fmecg sh
 
-# docker compose rm -sf; docker compose --profile server -f docker-compose-dev.yml run --build --rm -p 4000:4000 --name chat-fmecg chat-app iex -S mix phx.server
 chatdev:
 	docker compose rm -sf; \
 	docker compose --profile backend -f docker-compose-dev.yml up --build --detach; \
