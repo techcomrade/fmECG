@@ -19,8 +19,8 @@ defmodule ServerChatWeb.Router do
       pipe_through :api
       
       scope "/conversations" do
-        get "/", ConversationsController, :get_conversation_by_id
-        post "/", ConversationsController, :post_conversations
+        get "/", ConversationsController, :test
+        post "/", ConversationsController, :create_conversation
         
         scope "/:conversation_id" do
           get "/", ConversationsController, :get_conversation_by_id

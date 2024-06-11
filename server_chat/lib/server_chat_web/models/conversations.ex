@@ -5,7 +5,7 @@ defmodule ServerChat.Conversations do
   
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "conversations" do
-    field :user_ids,      {:array, :integer}, default: []
+    field :user_ids,      {:array, Ecto.UUID}, default: []
 
     has_many :messages, Messages, foreign_key: :id
     timestamps()
