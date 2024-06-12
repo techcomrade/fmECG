@@ -1,5 +1,6 @@
 const { response } = require("express");
 const RecordService = require("../services/RecordService");
+const DeviceFrequencyService = require("../services/DeviceFrequencyService");
 const fs = require("fs");
 class RecordController {
   async getAll(req, res, next) {
@@ -254,13 +255,21 @@ class RecordController {
   }
   async getDataRecordFile(req, res) {
     console.log(`[P]:::Get data from record file: `, req.params.id);
+    const record = await RecordService.getRecordById(req.params.id);
+    if(!record[0]?.dataValues) {
+      return res.status(404).json({
+        message: 'Record not found',
+      })
+    }
+   
     const filepath = await RecordService.getFilePathById(req.params.id);
     if (!fs.existsSync(filepath)) {
       return res.status(404).json({
         message: "record file not found",
       });
     }
-    let arrayValue = await RecordService.getDataRecord(filepath);
+    const deviceId = record[0].dataValues.device_id;
+    let arrayValue = await RecordService.getDataRecord(filepath, deviceId);
     if(arrayValue) {
       return res.status(200).json({
         message: "Get data successfully",
