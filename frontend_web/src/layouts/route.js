@@ -1,6 +1,5 @@
 import Home from "../pages/Home/home";
 import DetailUser from "../pages/Account/Detail";
-import NotFound from "../pages/NotFound/notfound";
 import { Navigate, Route, Routes as ReactRoutes } from "react-router-dom";
 import UserTable from "../pages/User/userTable";
 import DeviceTable from "../pages/Device/deviceTable";
@@ -12,11 +11,14 @@ import {
   WechatWorkOutlined,
   UsergroupAddOutlined,
   DesktopOutlined,
-  LineChartOutlined
+  LineChartOutlined,
+  UserAddOutlined,
+  UserSwitchOutlined
 } from "@ant-design/icons";
 import { userRole } from "../constants";
 import { context } from "../utils/context";
-// import Chat from "../pages/Chat/chat";
+import Chat from "../pages/Chat/chat";
+import Register from "../pages/Register/register";
 
 export const AdminRouterMappingGroup = {
   User: {
@@ -39,9 +41,15 @@ export const AdminRouterMappingGroup = {
   },
   AssignmentPatientDoctor: {
     key: "/pda",
-    label: "Thông tin assignment",
+    label: "Thông tin bác sĩ bệnh nhân",
     component: <PdaTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <UserSwitchOutlined />,
+  },
+  Register: {
+    key: "/registers",
+    label: "Người dùng đăng ký mới",
+    component: <Register />,
+    icon: <UserAddOutlined />,
   }
 };
 
@@ -64,12 +72,12 @@ export const doctorRouterMappingGroup = {
     component: <RecordTable />,
     icon: <LineChartOutlined />,
   },
-  // Chat:{
-  //   key:"/chat",
-  //   label: "Chat với bác sĩ",
-  //   component: <Chat />,
-  //   icon: <WechatWorkOutlined />
-  // }
+  Chat:{
+    key:"/chat",
+    label: "Chat với bệnh nhân",
+    component: <Chat />,
+    icon: <WechatWorkOutlined />
+  }
 };
 
 export const patientRouterMappingGroup = {
@@ -91,6 +99,13 @@ export const patientRouterMappingGroup = {
     label: "Dữ liệu sức khoẻ",
     component: <RecordTable />,
     icon: <LineChartOutlined />,
+  }
+  ,
+  Chat:{
+    key:"/chat",
+    label: "Chat với bác sĩ",
+    component: <Chat />,
+    icon: <WechatWorkOutlined />
   }
 };
 

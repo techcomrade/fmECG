@@ -30,7 +30,7 @@ import dayjs from "dayjs";
 import { UserDetail } from "./userDetail";
 import { context } from "../../utils/context";
 
-const UserTable = () => {
+const UserTable = (props) => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.user);
   const [dataTable, setDataTable] = useState([]);
@@ -91,8 +91,6 @@ const UserTable = () => {
      </Tag>)
       }
     }
-   
-    
   ];
 
   const handleData = (data, type) => {
@@ -176,19 +174,17 @@ const UserTable = () => {
   };
 
   const handleSubmitEditUser = (data) => {
-    // console.log(data);
     const { account_id, devices, role, records, status, ...payload } = { ...data };
-    console.log(payload);
     return dispatch(updateUser(payload));
   };
 
   const getTitleTable = () => {
     if (context.role === userRole.doctor) {
-      return "Quản lý bệnh nhân";
+      return "Thông tin bệnh nhân";
     } else if (context.role === userRole.patient) {
       return "Bác sĩ điều trị";
     } else {
-      return "Quản lý người dùng";
+      return "Thông tin người dùng";
     }
   };
   return (
@@ -209,7 +205,7 @@ const UserTable = () => {
       />
       <ModalControlData
         ref={modalUpdateRef}
-        title="Sửa thông tin người dùng"
+        title= {getTitleTable()}
         submitFunction={(data) => handleSubmitEditUser(data)}
       />
       <UserDetail ref={drawerRef} />

@@ -10,9 +10,8 @@ const router = express.Router();
 
 router.post(
   "/create",
+  commonMiddleware.validationToken,
   PatientDoctorAssignmentMiddleware.validateAssignment,
-  PatientDoctorAssignmentMiddleware.checkDoctorById,
-  PatientDoctorAssignmentMiddleware.checkPatientById,
   PatientDoctorAssignmentMiddleware.checkAssignmentByPatientId,
   PatientDoctorAssignmentController.createAssigment
 );

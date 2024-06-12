@@ -50,7 +50,6 @@
         refresh_token: "",
         user_id: "",
       };
-      console.log(window.location.host);
 
       const access_token = getCookie("access_token");
       if (access_token) {
@@ -70,7 +69,10 @@
           role: localStorage.getItem("role"),
           api: localStorage.getItem("api"),
         };
+        console.log("hi");
+
       } else {
+        console.log("hi");
         cookieData = {
           access_token: "",
           refresh_token: "",
@@ -79,6 +81,8 @@
         };
         var url = window.location.host;
         localStorage.clear();
+        window.location.href = "http://127.0.0.1:3001/login";
+
         if (url !== "127.0.0.1:3002") {
           window.location.href = "/login";
         } else {
