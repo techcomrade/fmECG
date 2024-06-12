@@ -128,7 +128,6 @@ class RecordService extends CommonService {
     try {
       const device_freq = await DeviceFrequencyService.getByDeviceId(deviceId);
       let device_freq_value = device_freq[0]?.dataValues.value ?? 100;
-      console.log(device_freq_value);
       const data = await this.readFileRecord(filepath);
       if(!data) return;
       let dataArray = data.split("\n");
