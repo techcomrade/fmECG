@@ -129,35 +129,33 @@ class RecordService extends CommonService {
       const device_freq = await DeviceFrequencyService.getByDeviceId(deviceId);
       let device_freq_value = device_freq[0]?.dataValues.value ?? 100;
       const data = await this.readFileRecord(filepath);
-      if(!data) return;
+      if (!data) return;
       let dataArray = data.split("\n");
-      dataArray = dataArray.map(line => line.split(", "));
-    
-      dataArray = dataArray.map(line => {
-        return line.map(element => {
-         return {
+      dataArray = dataArray.map((line) => line.split(", "));
+
+      dataArray = dataArray.map((line) => {
+        return line.map((element) => {
+          return {
             value: element,
             warning: 0,
-          }
-          
-        })
-      })
+          };
+        });
+      });
       let arrayValue = {
-        PPG: { frequency: null, data: []},
-        PCG: { frequency: null, data: []},
-        heartRate: { frequency: null, data: []},
+        PPG: { frequency: null, data: [] },
+        PCG: { frequency: null, data: [] },
+        heartRate: { frequency: null, data: [] },
       };
-      let fieldNames = ['PPG', 'PCG', 'heartRate'];
-      for(let i = 6; i < 9; i++) {
+      let fieldNames = ["PPG", "PCG", "heartRate"];
+      for (let i = 6; i < 9; i++) {
         let field = fieldNames[i - 6];
         arrayValue[field].frequency = device_freq_value;
-        dataArray.forEach(element => {
+        dataArray.forEach((element) => {
           arrayValue[field].data.push(element[i]);
-        })
+        });
       }
       return arrayValue;
-    }
-    catch(e) {
+    } catch (e) {
       console.log(e);
       return;
     }
