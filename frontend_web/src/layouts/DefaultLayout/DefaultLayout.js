@@ -10,14 +10,13 @@ import BubbleChat from "../../components/BubbleChat/BubbleChat";
 const { Header, Content } = Layout;
 
 const DefaultLayout = ({ children }) => {
-  const userName = getLocalStorage("username");
   return (
     <HashRouter>
       <Layout style={{ height: "100vh" }}>
         <Sidebar />
         <Layout>
           <Header style={{backgroundColor: "#f5f5f5"}}>
-            <HeaderUser userName={userName} token />
+            <HeaderUser />
           </Header>
           <Layout>
             <Content className="main-content">

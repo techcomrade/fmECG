@@ -94,8 +94,6 @@ class RecordService extends CommonService {
 
   async deleteRecordById(id) {
     return await this.transaction(async (t) => {
-      await HeartRecRepository.deleteByRecordId(id, t);
-      await BloodPressureRepository.deleteByRecordId(id, t);
       await RecordRepository.deleteById(id, t);
     });
   }

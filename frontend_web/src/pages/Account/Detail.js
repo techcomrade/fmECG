@@ -19,7 +19,6 @@ import "./detail.scss";
 import { convertGenderToString, convertRoleToString } from "../../constants";
 import { context } from "../../utils/context";
 
-const { Option } = Select;
 export default function Detail() {
   const dispatch = useDispatch();
 

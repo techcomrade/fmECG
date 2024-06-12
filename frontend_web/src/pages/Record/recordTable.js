@@ -248,7 +248,7 @@ const RecordTable = () => {
         editFunction={handleEditFunction}
         deleteButton
         deleteFunction={handleDeleteFunction}
-        name="Bảng quản lý record"
+        name="Dữ liệu y tế"
         data={dataTable}
         column={columns}
         updateSelectedData={setSelectedData}
@@ -262,7 +262,7 @@ const RecordTable = () => {
 
       <ModalControlData
         ref={modalUpdateRef}
-        title="Sửa thông tin record"
+        title="Sửa thông tin bản ghi"
         submitFunction={(data) => handleSubmitEditUser(data)}
       />
 
@@ -273,10 +273,10 @@ const RecordTable = () => {
       />
 
       <Modal
-        title="Download record status"
+        title="Trạng thái bản ghi"
         open={isModalOpen}
         onOk={handleOk}
-        okText="Download"
+        okText="Tải"
         confirmLoading={dataState.loadCheckRecordStatus === loadStatus.Loading}
         onCancel={handleCancel}
       >
