@@ -1,5 +1,5 @@
 const { where } = require("sequelize");
-const UserDTO = require("./UserDTO"); 
+const UserDTO = require("./UserDTO");
 
 class UserModel {
   async getAllData() {
@@ -37,7 +37,13 @@ class UserModel {
       },
     });
   }
-
+  async getUsersByRole(role) {
+    return await UserDTO.findAll({
+      where: {
+        role: role,
+      },
+    });
+  }
   async add(user, t) {
     return await UserDTO.create(
       {
@@ -107,7 +113,6 @@ class UserModel {
     );
   }
 
-
   async uploadImageById(id, image) {
     return await UserDTO.update(
       {
@@ -119,12 +124,10 @@ class UserModel {
         },
       }
     );
+  }
 
-}
-
-async count(){
-  return await UserDTO.count();
-
-}
+  async count() {
+    return await UserDTO.count();
+  }
 }
 module.exports = new UserModel();

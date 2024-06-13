@@ -11,7 +11,7 @@ class UserService extends CommonService {
     const dataUpdate = await Promise.all(
       data.map(async (user) => {
         const deviceUser = await DeviceRepository.checkByUserId(user.id);
-        const recordUser = await RecordRepository.getRecordByUserId(user.id)
+        const recordUser = await RecordRepository.getRecordByUserId(user.id);
         return {
           ...user,
           devices: deviceUser.length,
@@ -50,7 +50,7 @@ class UserService extends CommonService {
       gender: Joi.number().required(),
       image: Joi.string(),
       status: Joi.number(),
-      information: Joi.string()
+      information: Joi.string(),
     });
     return schema.validate(user);
   }
@@ -60,7 +60,7 @@ class UserService extends CommonService {
       return false;
     }
     const data = await UserRepository.getUserById(userId);
-    if(!data[0]) {
+    if (!data[0]) {
       return false;
     }
     const deviceUser = await DeviceRepository.checkByUserId(userId);
@@ -95,6 +95,10 @@ class UserService extends CommonService {
 
   async uploadImageById(image, id) {
     return await UserRepository.uploadImageById(id, image);
+  }
+  
+  async getUsersByRole(role) {
+    return await UserRepository.getUsersByRole(role);
   }
 }
 

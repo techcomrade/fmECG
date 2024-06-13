@@ -40,6 +40,9 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
+        note: {
+          type: Sequelize.STRING,
+        },
         created_at: Sequelize.BIGINT,
         updated_at: Sequelize.BIGINT,
       }

@@ -25,6 +25,19 @@ export const getUser = createAsyncThunk(
     }
   }
 );
+export const getUsersByRole = createAsyncThunk(
+  "/role",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpGetData(`/user/role/${params}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
 export const getPatient = createAsyncThunk(
   "/patient",
   async (params, { rejectWithValue }) => {
@@ -113,11 +126,13 @@ const userSlice = createSlice({
   initialState: {
     data: [],
     userData: {},
+    usersDataByRole: [],
     loadDataStatus: loadStatus.None,
     loadCreateDataStatus: loadStatus.None,
     loadUpdateDataStatus: loadStatus.None,
     loadDeleteDataStatus: loadStatus.None,
     loadUserDataStatus: loadStatus.None,
+    loadGetUsersByRole: loadStatus.None,
   },
   reducers: {
     resetLoadDataStatus: (state, action) => {
@@ -135,6 +150,9 @@ const userSlice = createSlice({
     },
     resetUserDataStatus: (state, action) => {
       state.loadUserDataStatus = loadStatus.None;
+    },
+    resetUserDataByRoleStatus: (state, action) => {
+      state.loadGetUsersByRole = loadStatus.None;
     },
   },
   extraReducers: (builder) => {
@@ -209,6 +227,17 @@ const userSlice = createSlice({
       .addCase(getUserById.rejected, (state, action) => {
         state.loadUserDataStatus = loadStatus.Failed;
         state.userData = {};
+      })
+      .addCase(getUsersByRole.pending, (state, action) => {
+        state.loadGetUsersByRole = loadStatus.Loading;
+      })
+      .addCase(getUsersByRole.fulfilled, (state, action) => {
+        state.loadGetUsersByRole = loadStatus.Success;
+        state.usersDataByRole = action.payload;
+      })
+      .addCase(getUsersByRole.rejected, (state, action) => {
+        state.loadGetUsersByRole = loadStatus.Failed;
+        state.usersDataByRole = [];
       });
   },
 });
@@ -220,5 +249,6 @@ export const {
   resetUpdateDataStatus,
   resetDeleteDataStatus,
   resetUserDataStatus,
+  loadGetUsersByRole,
 } = userSlice.actions;
 export default userReducer;

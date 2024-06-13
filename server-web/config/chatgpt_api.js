@@ -1,11 +1,7 @@
-import { Configuration, OpenAIApi } from 'openai';
-import dotenv from 'dotenv';
-dotenv.config();
-
-const configuration = new Configuration({
-  apiKey: '',
+const {OpenAI} = require('openai');
+const openAICert = require('../certs/openai_credentials.json')
+const openai = new OpenAI({
+    apiKey: openAICert["chat-gpt-token"]
 });
 
-const openai = new OpenAIApi(configuration);
-
-export default openai;
+module.exports = openai;
