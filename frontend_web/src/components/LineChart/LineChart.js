@@ -29,10 +29,10 @@ const LineChart = ({ rawData }) => {
     useEffect(() => {
         if (rawData) {
             const label = Object.keys(rawData).map((key, index) => {
-                const pointColorChart = pointColor(rawData?.[key], colorChart[index]);
+                const pointColorChart = pointColor(rawData?.[key]?.data, colorChart[index]);
                 return {
                     label: key,
-                    data: handleDataValue(rawData?.[key]),
+                    data: handleDataValue(rawData?.[key]?.data),
                     borderColor: colorChart[index],
                     pointBorderColor: pointColorChart,
                     backgroundColor: pointColorChart,
