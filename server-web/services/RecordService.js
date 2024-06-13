@@ -2,6 +2,7 @@ const CommonService = require("./CommonService");
 const RecordRepository = require("../models/RecordModel/RecordRepository");
 const UserRepository = require("../models/UserModel/UserRepository");
 const DeviceRepository = require("../models/DeviceModel/DeviceRepository");
+const DeviceFrequencyService = require("../services/DeviceFrequencyService");
 const FileService = require("./FileService");
 const util = require("util");
 const { v4: uuidv4 } = require("uuid");
@@ -123,34 +124,38 @@ class RecordService extends CommonService {
   async getRecordByDoctorId(id) {
     return await RecordRepository.getRecordByDoctorId(id);
   }
-  async getDataRecord(filepath) {
+  async getDataRecord(filepath, deviceId) {
     try {
+      const device_freq = await DeviceFrequencyService.getByDeviceId(deviceId);
+      let device_freq_value = device_freq[0]?.dataValues.value ?? 100;
       const data = await this.readFileRecord(filepath);
-      if(!data) return;
+      if (!data) return;
       let dataArray = data.split("\n");
-      dataArray = dataArray.map(line => line.split(", "));
-    
-      dataArray = dataArray.map(line => {
-        return line.map(element => {
-         return {
+      dataArray = dataArray.map((line) => line.split(", "));
+
+      dataArray = dataArray.map((line) => {
+        return line.map((element) => {
+          return {
             value: element,
             warning: 0,
-          }
-          
-        })
-      })
-      let arrayValue = {};
-      let fieldNames = ['PPG', 'PCG', 'heartRate'];
-      for(let i = 6; i < 9; i++) {
+          };
+        });
+      });
+      let arrayValue = {
+        PPG: { frequency: null, data: [] },
+        PCG: { frequency: null, data: [] },
+        heartRate: { frequency: null, data: [] },
+      };
+      let fieldNames = ["PPG", "PCG", "heartRate"];
+      for (let i = 6; i < 9; i++) {
         let field = fieldNames[i - 6];
-        arrayValue[field] = [];
-        dataArray.forEach(element => {
-          arrayValue[field].push(element[i]);
-        })
+        arrayValue[field].frequency = device_freq_value;
+        dataArray.forEach((element) => {
+          arrayValue[field].data.push(element[i]);
+        });
       }
       return arrayValue;
-    }
-    catch(e) {
+    } catch (e) {
       console.log(e);
       return;
     }
