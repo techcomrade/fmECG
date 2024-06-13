@@ -9,13 +9,13 @@ defmodule ServerChat.ConversationMembers do
     field :role,                :integer
     field :seen,                :boolean
 
-    belongs_to :conversations, Conversations, type: Ecto.UUID
+    belongs_to :conversations, Conversations, type: Ecto.UUID, foreign_key: :conversation_id
     timestamps()
   end
 
   def changeset(conversation_members, attrs) do
     conversation_members
-    |> cast(attrs, [:user_id, :status_notification, :role, :seen])
-    |> validate_required([:user_id])
+    |> cast(attrs, [:user_id, :status_notification, :role, :seen, :conversation_id])
+    |> validate_required([:user_id, :conversation_id])
   end
 end

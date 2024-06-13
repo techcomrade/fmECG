@@ -9,9 +9,9 @@ defmodule ServerChat.Conversations do
     field :avatar_url,    :string
     field :type,          :integer
 
-    has_many :messages, Messages, foreign_key: :id
-    has_many :conversation_attachments, ConversationAttachments, foreign_key: :id
-    has_many :conversation_members, ConversationMembers, foreign_key: :id
+    has_many :messages, Messages, foreign_key: :conversation_id
+    has_many :conversation_attachments, ConversationAttachments, foreign_key: :conversation_id
+    has_many :conversation_members, ConversationMembers, foreign_key: :conversation_id
     timestamps()
   end
 

@@ -27,7 +27,7 @@ defmodule ServerChatWeb.Router do
           
           scope "/messages" do
             get "/", MessagesController, :get_all_messages
-            
+            post "/", MessagesController, :create_message
           end
         end
       end
