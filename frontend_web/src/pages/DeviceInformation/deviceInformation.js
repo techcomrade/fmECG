@@ -26,17 +26,7 @@ export default function DeviceInformation() {
   const [accountData, setData] = useState({});
 
     
-//   useEffect(() => {
-//     dispatch(getUserById());
-//   }, []);
-//   useEffect(() => {
-//     if (dataState.loadUserDataStatus === loadStatus.Success) {
-//       const rawData = dataState.userData?.metadata[0];
-//       setData(rawData);
-//     }
-//   }, [dataState.loadUserDataStatus]);
-//   const handleSubmitButton = () => {};
-//   const handleChangeInput = () => {};
+
   return (
     <div className="account-info">
       <Col span={22} offset={1}>

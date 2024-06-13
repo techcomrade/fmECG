@@ -32,7 +32,8 @@ router.get(
   // commonMiddleware.restrictRole(roleGroup.admin),
   UserController.getAll
 );
-router.get("/id/:id", UserController.getUserById);
+router.get("/role/:role",commonMiddleware.validationToken,UserController.getUserByRole);
+router.get("/id/:id",commonMiddleware.validationToken, UserController.getUserById);
 router.delete("", UserMiddleware.checkUserId, UserController.deleteUser);
 
 module.exports = router;

@@ -19,7 +19,9 @@ const PdaTable = () => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.pda);
   const [dataTable, setData] = useState([]);
-  const [dropdownData, setDropData] = useState([]);
+  const [dropdownDoctorData, setDropDoctorData] = useState([]);
+  const [dropdownPatientData, setDropPatientData] = useState([]);
+
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
 
@@ -28,14 +30,16 @@ const PdaTable = () => {
       title: "Tên bệnh nhân",
       dataIndex: "patient_name",
       key: "patient_name",
-      type: "text",
+      type: "select",
+      dataSelect: dropdownPatientData,
       isEdit: true,
     },
     {
       title: "Tên bác sĩ",
       dataIndex: "doctor_name",
       key: "doctor_name",
-      type: "text",
+      type: "select",
+      dataSelect: dropdownDoctorData,
       isEdit: true,
     },
     {
@@ -57,8 +61,10 @@ const PdaTable = () => {
   useEffect(() => {
     dispatch(getAssignment());
     const getOptionData = async () => {
-      const pdaData = await httpGetData("/pda");
-      setDropData(pdaData.metadata);
+      const doctorData = await httpGetData("/user/role/1");
+      setDropDoctorData(doctorData.metadata);
+      const patientData = await httpGetData("/user/role/2");
+      setDropPatientData(patientData.metadata);
     };
     getOptionData();
   }, []);

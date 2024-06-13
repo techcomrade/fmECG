@@ -6,6 +6,7 @@ const RecordRouter = require("./RecordRouter");
 const DeviceFreqRouter = require("./DeviceFrequencyRouter");
 const PatientDoctorAssignmentRouter = require("./PatientDoctorAssignmentRouter");
 const StatisticRouter = require("./StatisticRouter");
+const ChatGprRouter = require("./ChatGptRouter");
 
 const router = express.Router();
 
@@ -22,5 +23,7 @@ router.use("/df", DeviceFreqRouter);
 router.use("/pda", PatientDoctorAssignmentRouter);
 
 router.use("/statistic", StatisticRouter);
+
+router.use('/chat', ChatGprRouter);
 
 module.exports = router;

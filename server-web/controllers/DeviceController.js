@@ -12,6 +12,7 @@ class DeviceController {
         return res.status(400).json({
           message: "No devices found",
         });
+        console.log(devices);
       return res.status(200).json({
         message: "get all devices",
         metadata: devices,

@@ -1,4 +1,3 @@
-
 const UserService = require("../services/UserService");
 
 const { v4: uuidv4 } = require("uuid");
@@ -36,10 +35,24 @@ class UserController {
       });
     }
   }
+  async getUserByRole(req, res, next) {
+    console.log(`[G]:::Get user by role: `, req.params.role);
+    const foundUser = await UserService.getUsersByRole(req.params.role);
+    if (foundUser) {
+      return res.status(200).json({
+        message: "Get user by role successful!",
+        metadata: foundUser,
+      });
+    } else {
+      return res.status(404).json({
+        message: "User not existed!",
+      });
+    }
+  }
 
   async updateUser(req, res, next) {
     console.log(`[P]:::Update user by id: `, req.body);
-    const  result = await UserService.updateUser(req.body);
+    const result = await UserService.updateUser(req.body);
     if (result) {
       return res.status(200).json({
         message: "Update user successful!",
@@ -70,10 +83,10 @@ class UserController {
     const buffer = req.file.buffer;
     const fileName = req.file.originalName;
     const link = await FileService.uploadDrive(buffer, fileName);
-    if(!link) {
+    if (!link) {
       return res.status(400).json({
-        message: "Upload image failed"
-      })
+        message: "Upload image failed",
+      });
     }
     const result = await UserService.uploadImageById(link, req.body.id);
     if (result) {
