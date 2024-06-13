@@ -15,6 +15,11 @@ router.post(
   PatientDoctorAssignmentMiddleware.checkAssignmentByPatientId,
   PatientDoctorAssignmentController.createAssigment
 );
+router.post(
+  "/update",
+  commonMiddleware.validationToken,
+  PatientDoctorAssignmentController.updateAssignment
+);
 router.get("", PatientDoctorAssignmentController.getAllAssignment);
 router.get(
   "/patient/:doctor_id",
@@ -27,6 +32,11 @@ router.get(
   "/doctor/:patient_id",
   commonMiddleware.validationToken,
   PatientDoctorAssignmentController.getDoctorByPatientId
+);
+router.delete(
+  "/delete/:id",
+  commonMiddleware.validationToken,
+  PatientDoctorAssignmentController.deleteAssignmentById
 );
 
 module.exports = router;

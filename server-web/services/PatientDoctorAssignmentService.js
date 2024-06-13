@@ -9,7 +9,9 @@ class PatientDoctorAssignmentService extends CommonService {
     assignment.id = uuidv4();
     return PatientDoctorAssignmentRepository.createAssigment(assignment);
   }
-
+  async updateAssignment(assignment){
+    return PatientDoctorAssignmentRepository.updateById(assignment);
+  }
   validateAssignment(assigment) {
     const schema = Joi.object({
       patient_id: Joi.string(),
@@ -60,6 +62,9 @@ class PatientDoctorAssignmentService extends CommonService {
     return await PatientDoctorAssignmentRepository.getDoctorByPatientId(
       patient_id
     );
+  }
+  async deleteAssignmentById(id){
+    return await PatientDoctorAssignmentRepository.deleteById(id);
   }
 }
 

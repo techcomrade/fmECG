@@ -14,7 +14,6 @@ export const sendMessage = createAsyncThunk(
   async (params, { rejectWithValue }) => {
     try {
       const response = await httpPostData('/chat', {message: params});
-      console.log(response);
       return response;
     } catch (error) {
       return rejectWithValue(

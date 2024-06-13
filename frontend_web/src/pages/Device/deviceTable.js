@@ -153,7 +153,7 @@ const DeviceTable = () => {
   }, [dataState.loadCreateDataStatus]);
 
   const handleDeleteFunction = (id) => {
-    dispatch(deleteDevice({ id: id }));
+    dispatch(deleteDevice( id ));
   };
 
   const handleEditFunction = () => {

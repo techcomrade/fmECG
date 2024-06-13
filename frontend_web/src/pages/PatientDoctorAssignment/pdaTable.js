@@ -3,10 +3,13 @@ import DataTable from "../../components/Table/dataTable";
 import { useEffect, useRef, useState } from "react";
 import {
   createPda,
+  deleteAssignment,
   getAssignment,
-  getPatientByDoctorId,
   loadStatus,
   resetCreateDataStatus,
+  resetLoadDeleteStatus,
+  resetLoadUpdateStatus,
+  updateAssignment,
 } from "../../redux/reducer/pdaSlice";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { convertTimeToDate } from "../../utils/dateUtils";
@@ -19,6 +22,8 @@ const PdaTable = () => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.pda);
   const [dataTable, setData] = useState([]);
+  const [selectedData, setSelectedData] = useState([]);
+
   const [dropdownDoctorData, setDropDoctorData] = useState([]);
   const [dropdownPatientData, setDropPatientData] = useState([]);
 
@@ -85,11 +90,50 @@ const PdaTable = () => {
       dispatch(getAssignment());
     }
   }, [dataState.loadCreateDataStatus]);
+  useEffect(()=> {
+    if(dataState.loadUpdateDataStatus === loadStatus.Success){
+      showNotiSuccess("Bạn đã sửa thông tin thành công");
+      dispatch(resetLoadUpdateStatus());
+      dispatch(getAssignment())
+    }
+  },[dataState.loadUpdateDataStatus])
+
+  useEffect(()=>{
+    if(dataState.loadDeleteDataStatus === loadStatus.Success){
+      showNotiSuccess("Bạn đã xoá thông tin thành công");
+      dispatch(resetLoadDeleteStatus());
+      dispatch(getAssignment())
+    }
+  },[dataState.loadDeleteDataStatus])
 
   const handleSubmitAddFunction = (data) => {
-    return dispatch(createPda(handleData(data, "form")));
+    var data_handle = {
+      patient_id: data.patient_name,
+      doctor_id: data.doctor_name,
+      start_date: data.start_date,
+      end_date: data.end_date
+    }
+    return dispatch(createPda(data_handle));
   };
+  const handleSubmitEditFunction = (data) => {
+    const newData = {
+      id: data.id,
+      patient_id: data.patient_name,
+      doctor_id: data.doctor_name,
+      start_date: data.start_date,
+      end_date: data.end_date
+    }
+    return dispatch(updateAssignment(newData));
 
+  }
+  const handleEditFunction = (data) => {
+    const rowData = findElementById(dataTable,selectedData[0]);
+    const dataModal = handleData(rowData, "form");
+    modalUpdateRef.current?.open(dataModal,columns);
+  }
+  const handleDeleteFunction = (id) => {
+    return dispatch(deleteAssignment(id))
+  }
   const handleData = (data, type) => {
     let pdaData = { ...data };
 
@@ -117,6 +161,11 @@ const PdaTable = () => {
       <DataTable
         addButton
         addFunction={() => modalAddRef.current?.open({}, columns)}
+        editButton
+        editFunction = {handleEditFunction}
+        deleteButton
+        deleteFunction = {handleDeleteFunction}
+        updateSelectedData={setSelectedData}
         name="Bảng quản lý assignment"
         data={dataTable}
         column={columns}
@@ -126,6 +175,11 @@ const PdaTable = () => {
         ref={modalAddRef}
         title="Thêm thiết bị mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
+      />
+      <ModalControlData 
+      ref={modalUpdateRef}
+      title="Sửa thông tin bác sĩ điều trị bệnh nhân"
+      submitFunction = {(data) => handleSubmitEditFunction(data)}
       />
     </>
   );

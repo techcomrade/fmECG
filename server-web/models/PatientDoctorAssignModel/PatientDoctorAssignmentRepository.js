@@ -46,7 +46,7 @@ class PatientDoctorAssignmentModel {
     );
   }
 
-  async getDoctorByPatientId(patient_id){
+  async getDoctorByPatientId(patient_id) {
     return await sequelize.query(
       "SELECT user.* FROM fmecg.users as user JOIN fmecg.patient_doctor_assignment pda ON user.id = pda.doctor_id WHERE pda.patient_id = :patient",
       {
@@ -54,7 +54,6 @@ class PatientDoctorAssignmentModel {
         type: QueryTypes.SELECT,
       }
     );
-
   }
 
   async deleteById(id, t) {
@@ -69,14 +68,21 @@ class PatientDoctorAssignmentModel {
       }
     );
   }
-  async updateById(assignment){
-    return await PatientDoctorAssignmentDTO.update({
-      patient_id: assignment.patient_id,
-      doctor_id: assignment.doctor_id,
-      start_date: assignment.start_date,
-      end_date: assignment.end_date,
-      updated_at: Date.now(),
-    })
+  async updateById(assignment) {
+    return await PatientDoctorAssignmentDTO.update(
+      {
+        // patient_id: assignment.patient_id,
+        doctor_id: assignment.doctor_id,
+        start_date: assignment.start_date,
+        end_date: assignment.end_date,
+        updated_at: Date.now(),
+      },
+      {
+        where: {
+          id: assignment.id,
+        },
+      }
+    );
   }
 }
 
