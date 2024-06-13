@@ -7,10 +7,9 @@ const Message = ({data}) => {
     useEffect(() => {
       ref.current?.scrollIntoView({ behavior: "smooth" });
     }, [data]);
-
     return (
         <div className={className} ref={ref}>
-            {data.message}
+            <div dangerouslySetInnerHTML={{ __html: ` ${data.message.replace(/\n/g, '<br>')}` }}/>
             {data.img && <img src={data.img} alt=""/>}
         </div>
     )
