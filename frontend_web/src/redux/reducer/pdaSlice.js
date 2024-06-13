@@ -55,7 +55,32 @@ export const getPatientByDoctorId = createAsyncThunk(
     }
   }
 );
-
+export const deleteAssignment = createAsyncThunk(
+  "/delete-assignment",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpDeleteData(`/pda/delete/${params}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
+export const updateAssignment = createAsyncThunk(
+  "/update-assignment",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpPostData(`/pda/update`, params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
 const pdaSlice = createSlice({
   name: "pda",
   initialState: {
@@ -64,6 +89,8 @@ const pdaSlice = createSlice({
     loadDataStatus: loadStatus.None,
     loadCreateDataStatus: loadStatus.None,
     loadPatientDataStatus: loadStatus.None,
+    loadUpdateDataStatus: loadStatus.None,
+    loadDeleteDataStatus: loadStatus.None,
   },
   reducers: {
     resetCreateDataStatus: (state, action) => {
@@ -74,9 +101,15 @@ const pdaSlice = createSlice({
       state.loadDataStatus = loadStatus.None;
     },
     resetLoadPatientStatus: (state, action) => {
-      state.data = [];
+      state.patientData = [];
       state.loadPatientDataStatus = loadStatus.None;
     },
+    resetLoadUpdateStatus: (state,action) => {
+      state.loadUpdateDataStatus = loadStatus.None;
+    },
+    resetLoadDeleteStatus: (state,action) => {
+      state.loadDeleteDataStatus = loadStatus.None;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -110,6 +143,24 @@ const pdaSlice = createSlice({
       .addCase(getPatientByDoctorId.rejected, (state, action) => {
         state.patientData = [];
         state.loadPatientDataStatus = loadStatus.Failed;
+      })
+      .addCase(updateAssignment.pending, (state, action) => {
+        state.loadUpdateDataStatus = loadStatus.Loading;
+      })
+      .addCase(updateAssignment.fulfilled, (state, action) => {
+        state.loadUpdateDataStatus = loadStatus.Success;
+      })
+      .addCase(updateAssignment.rejected, (state, action) => {
+        state.loadUpdateDataStatus = loadStatus.Failed;
+      })
+      .addCase(deleteAssignment.pending, (state, action) => {
+        state.loadDeleteDataStatus = loadStatus.Loading;
+      })
+      .addCase(deleteAssignment.fulfilled, (state, action) => {
+        state.loadDeleteDataStatus = loadStatus.Success;
+      })
+      .addCase(deleteAssignment.rejected, (state, action) => {
+        state.loadDeleteDataStatus = loadStatus.Failed;
       });
   },
 });
@@ -118,6 +169,8 @@ const { reducer: pdaReducer } = pdaSlice;
 export const {
   resetCreateDataStatus,
   resetLoadDataStatus,
-  resetLoadPatientStatus5,
+  resetLoadPatientStatus,
+  resetLoadUpdateStatus,
+  resetLoadDeleteStatus
 } = pdaSlice.actions;
 export default pdaReducer;
