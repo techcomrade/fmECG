@@ -1,5 +1,6 @@
 import 'package:bluetooth_ecg/constants/chat_user.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:bluetooth_ecg/networks/socket_channel.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_detail_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,16 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final SocketChannel socketChannel = SocketChannel();
+  @override
+  void initState() {
+    super.initState();
+    socketChannel.on("new_message_conversation", (data, ref, joinRef) { 
+      print('dataaaa:$data');
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
