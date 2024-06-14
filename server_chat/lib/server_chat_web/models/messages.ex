@@ -3,7 +3,7 @@ defmodule ServerChat.Messages do
   import Ecto.Changeset
   alias ServerChat .{ Conversations, ConversationAttachments }
   
-  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @primary_key {:id, :string, autogenerate: false}
   schema "messages" do
     field :sender_id,       :string
     field :attachments,     {:array, :map}, default: []
@@ -12,7 +12,7 @@ defmodule ServerChat.Messages do
     field :pin_time,        :naive_datetime
     field :reactions,       {:array, :map}, default: []
 
-    belongs_to :conversations, Conversations, type: Ecto.UUID, foreign_key: :conversation_id
+    belongs_to :conversations, Conversations, type: :string, foreign_key: :conversation_id
     has_many :conversation_attachments, ConversationAttachments, foreign_key: :message_id
     timestamps()
   end

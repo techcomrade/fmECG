@@ -10,8 +10,8 @@ defmodule ServerChat.ConversationAttachments do
     field :size,                :integer
     field :thumbnail_url,       :string
 
-    belongs_to :conversations, Conversations, type: Ecto.UUID, foreign_key: :conversation_id
-    belongs_to :messages, Messages, type: Ecto.UUID, foreign_key: :message_id
+    belongs_to :conversations, Conversations, type: :string, foreign_key: :conversation_id
+    belongs_to :messages, Messages, type: :string, foreign_key: :message_id
     timestamps()
   end
 

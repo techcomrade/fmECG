@@ -6,4 +6,13 @@ defmodule ServerChat.Utils.Helper do
     |> JOSE.JWT.verify(token)
     # nếu token được validate -> matching : {true, payload, jws}
   end
+	
+	def hash_conversation_id(ids) do
+    string = ids
+    |> Enum.uniq()
+    |> Enum.sort()
+    |> Enum.join("_")
+    :crypto.hash(:sha256, string)
+    |> Base.url_encode64()
+  end
 end

@@ -9,7 +9,7 @@ defmodule ServerChat.ConversationMembers do
     field :role,                :integer
     field :seen,                :boolean
 
-    belongs_to :conversations, Conversations, type: Ecto.UUID, foreign_key: :conversation_id
+    belongs_to :conversations, Conversations, type: :string, foreign_key: :conversation_id
     timestamps()
   end
 

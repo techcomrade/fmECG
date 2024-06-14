@@ -3,7 +3,7 @@ defmodule ServerChat.Conversations do
   import Ecto.Changeset
   alias ServerChat .{ Messages, ConversationAttachments, ConversationMembers }
   
-  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @primary_key {:id, :string, autogenerate: false}
   schema "conversations" do
     field :name,          :string
     field :avatar_url,    :string
