@@ -1,29 +1,25 @@
 defmodule ServerChat.Messages do
   use Ecto.Schema
   import Ecto.Changeset
-  alias ServerChat .{ Conversations }
+  alias ServerChat .{ Conversations, ConversationAttachments }
   
-  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @primary_key {:id, :string, autogenerate: false}
   schema "messages" do
-    field :sender_id,             :string
-    field :message_content,       :string
-    field :attachments,           :map
+    field :sender_id,       :string
+    field :attachments,     {:array, :map}, default: []
+    field :system_message,  :boolean
+    field :pin,             :boolean
+    field :pin_time,        :naive_datetime
+    field :reactions,       {:array, :map}, default: []
 
-    belongs_to :conversation, Conversations, type: Ecto.UUID
+    belongs_to :conversations, Conversations, type: :string, foreign_key: :conversation_id
+    has_many :conversation_attachments, ConversationAttachments, foreign_key: :message_id
     timestamps()
   end
 
-  @spec changeset(
-          {map(), map()}
-          | %{
-              :__struct__ => atom() | %{:__changeset__ => map(), optional(any()) => any()},
-              optional(atom()) => any()
-            },
-          :invalid | %{optional(:__struct__) => none(), optional(atom() | binary()) => any()}
-        ) :: Ecto.Changeset.t()
   def changeset(messages, attrs) do
     messages
-    |> cast(attrs, [:sender_id, :conversation_id])
-    |> validate_required([:sender_id, :conversation_id])
+    |> cast(attrs, [:sender_id, :attachments, :system_message, :pin, :pin_time, :reactions])
+    |> validate_required([:sender_id, :attachments, :reactions])
   end
 end

@@ -13,7 +13,7 @@ log:
 	docker compose logs -f --tail=10
 
 node:
-	docker exec -it node-fmecg sh
+	docker exec -it node-fmecg bash
 
 db:
 	docker exec -it database-fmecg sh
@@ -24,7 +24,7 @@ bin:
 # migrate: sau khi vào bash => gõ /app/bin/migrate
 # migrate: sau khi vào bash => gõ /app/bin/server_chat remote
 chatbash:
-	docker exec -it chat-fmecg sh
+	docker exec -it chat-fmecg bash
 
 chatdb:
 	docker exec -it database-chat-fmecg sh
