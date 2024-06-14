@@ -15,4 +15,12 @@ defmodule ServerChat.Utils.Helper do
     :crypto.hash(:sha256, string)
     |> Base.url_encode64()
   end
+	
+	def response_json_message(success, message) do
+		%{success: success, message: message}
+	end
+	
+	def response_json_message(success, message, error_code) do
+		%{success: success, message: message, error_code: error_code}
+	end
 end

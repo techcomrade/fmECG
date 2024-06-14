@@ -1,6 +1,5 @@
 defmodule ServerChatWeb.ConversationsController do
   use ServerChatWeb, :controller
-	import Ecto.Query
   
   alias ServerChat. { Repo, Conversations, ConversationMembers, Utils.Helper }
   
@@ -9,7 +8,7 @@ defmodule ServerChatWeb.ConversationsController do
   end
   
   def create_conversation(conn, params) do
-    creator_id = conn.assigns.user.user_id |> IO.inspect(label: "gsnkjdfgd")
+    creator_id = conn.assigns.user.user_id
     type_conversation = params["type"] # 0: 2 person, 1: group, 2: chatbot
     name = params["name"]
 		other_id = params["user_id"]
