@@ -1,6 +1,7 @@
 const CommonService = require("./CommonService");
 const AccountRepository = require("../models/AccountModel/AccountRepository");
 const UserRepository = require("../models/UserModel/UserRepository");
+const RegisterRepository = require("../models/RegisterModel/RegisterRepository");
 const TokenRepository = require("../models/TokenModel/TokenRepository");
 const TokenService = require('./TokenService');
 const bcrypt = require("bcrypt");
@@ -78,7 +79,11 @@ class AuthenService extends CommonService {
   }
 
   async getAll() {
-    await AccountRepository.getAllData();
+    return await AccountRepository.getAllData();
+  }
+
+  async getAllRegistration() {
+    return await RegisterRepository.getAllData();
   }
 
   async updatePassword (account){
