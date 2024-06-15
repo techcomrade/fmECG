@@ -2,6 +2,7 @@ const CommonService = require("./CommonService");
 const AccountRepository = require("../models/AccountModel/AccountRepository");
 const UserRepository = require("../models/UserModel/UserRepository");
 const TokenRepository = require("../models/TokenModel/TokenRepository");
+const RegisterService = require("../services/RegisterService");
 const TokenService = require('./TokenService');
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
@@ -56,9 +57,11 @@ class AuthenService extends CommonService {
     const emails = await AccountRepository.getAccountByEmail(email);
     return emails === null;
   }
-  async register(account) {
+  async register(account, checkRegister) {
+    const registerId = account.id;
     account.id = uuidv4();
-    account.password = await bcrypt.hash(account.password, 10);
+    account.password = checkRegister ? account.password : await bcrypt.hash(account.password, 10);
+    console.log(account);
     const user = {
       id: uuidv4(),
       account_id: account.id,
@@ -67,13 +70,14 @@ class AuthenService extends CommonService {
       gender: account.gender,
       phone_number: account.phone_number,
       image: account.image,
-      status: account.status,
+      status: checkRegister ? 0 : account.status,
       information: account.information,
       role: account.role,
     };
     await this.transaction(async (t) => {
       await AccountRepository.add(account, t);
       await UserRepository.add(user, t);
+      if(checkRegister) await RegisterService.deleteById(registerId);
     });
   }
 
