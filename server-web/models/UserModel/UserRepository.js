@@ -5,9 +5,9 @@ class UserModel {
   async getAllData() {
     return await UserDTO.findAll({
       attributes: {
-        exclude: ['created_at', 'updated_at']
+        exclude: ["created_at", "updated_at"],
       },
-      raw: true,   
+      raw: true,
     });
   }
 
@@ -17,11 +17,11 @@ class UserModel {
         id: id,
       },
       attributes: {
-        exclude: ['created_at', 'updated_at']
+        exclude: ["created_at", "updated_at"],
       },
     });
   }
-  
+
   async getUserByAccountId(id) {
     return await UserDTO.findOne({
       where: {
@@ -37,7 +37,13 @@ class UserModel {
       },
     });
   }
-
+  async getUsersByRole(role) {
+    return await UserDTO.findAll({
+      where: {
+        role: role,
+      },
+    });
+  }
   async add(user, t) {
     return await UserDTO.create(
       {
@@ -81,7 +87,7 @@ class UserModel {
         birth: user.birth,
         phone_number: user.phone_number,
         image: user.image,
-        updated_at: Date.now()
+        updated_at: Date.now(),
       },
       {
         where: {
@@ -93,7 +99,7 @@ class UserModel {
       }
     );
   }
-  
+
   async updateRoleById(id, role) {
     return await UserDTO.update(
       {
@@ -106,6 +112,22 @@ class UserModel {
       }
     );
   }
-}
 
+  async uploadImageById(id, image) {
+    return await UserDTO.update(
+      {
+        image: image,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+  }
+
+  async count() {
+    return await UserDTO.count();
+  }
+}
 module.exports = new UserModel();

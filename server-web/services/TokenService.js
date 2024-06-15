@@ -8,7 +8,7 @@ class TokenService {
       {
         account_id: account.id,
         role: account.role,
-        exp: Math.floor(Date.now() / 1000) + expiredTime * 60,
+        exp: Math.floor(Date.now() / 1000) + expiredTime * 3600,
       },
       process.env.JWT_SECRET
     );

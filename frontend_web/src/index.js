@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from '../src/redux/store';
-// import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-// import AuthProvider from './layouts/AuthProvider';
+
 import "./index.css"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

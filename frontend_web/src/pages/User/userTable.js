@@ -8,20 +8,37 @@ import {
   updateUser,
   deleteUser,
   resetDeleteDataStatus,
+  getPatient,
+  getDoctor,
 } from "../../redux/reducer/userSlice";
-import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
-import {convertGenderToString, convertStringToGender} from "../../constants"
+import { Tag } from 'antd';
+import { convertTimeToDate } from "../../utils/dateUtils";
+import {
+  UserStatus,
+  convertGenderToString,
+  convertRoleToString,
+  convertStatusToString,
+  convertStringToGender,
+  convertStringToRole,
+  userRole,
+} from "../../constants";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
-import { GENDER } from "../../constants";
+import { GENDER, ROLE } from "../../constants";
+import dayjs from "dayjs";
+import { UserDetail } from "./userDetail";
+import { context } from "../../utils/context";
 
-const UserTable = () => {
+const UserTable = (props) => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.user);
   const [dataTable, setDataTable] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
+
   const modalUpdateRef = useRef(null);
+  const drawerRef = useRef(null);
+
   const columns = [
     {
       title: "Họ và tên",
@@ -53,34 +70,79 @@ const UserTable = () => {
       isEdit: true,
     },
     {
-      title: "Thiết bị",
-      dataIndex: "devices",
-      key: "devices",
-      type: "text",
-      isEdit: false,
+      title: "Tác vụ",
+      dataIndex: "role",
+      key: "role",
+      type: "select",
+      dataSelect: ROLE,
+      isEdit: true,
     },
     {
-      title: "Số lượng bản ghi",
-      dataIndex: "records",
-      key: "records",
-      type: "text",
-      isEdit: false,
-    },
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "status",
+      type: "select",
+      dataSelect: UserStatus,
+      isEdit: true,
+      render: (status)=>{
+        let color = status === 0 ? 'geekblue' : 'volcano'
+       return ( <Tag color={color} key={status}>
+       {convertStatusToString(status)}
+     </Tag>)
+      }
+    }
   ];
 
+  const handleData = (data, type) => {
+    let userData = {};
+
+    if (type === "form") {
+      userData = {
+        ...data,
+        gender: convertStringToGender(data.gender),
+        role: convertStringToRole(data.role),
+      };
+
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          userData[key] = dayjs(data[key], "DD/MM/YYYY");
+        }
+      });
+    }
+
+    if (type === "render") {
+      userData = {
+        ...data,
+        gender: convertGenderToString(data.gender),
+        role: convertRoleToString(data.role),
+      };
+
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          userData[key] = convertTimeToDate(data[key]);
+        }
+      });
+    }
+    
+
+    return userData;
+  };
+
   useEffect(() => {
-    dispatch(getUser());
+    if (context.role === userRole.doctor) {
+      dispatch(getPatient(context.user_id));
+    } else if (context.role === userRole.patient) {
+      dispatch(getDoctor(context.user_id))
+    } else {
+      dispatch(getUser());
+    }
   }, []);
 
   // Get data
   useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       const rawData = dataState.data.metadata;
-      const data = rawData.map((element, index) => ({
-        ...element,
-        birth: convertTimeToDate(element.birth),
-        gender: convertGenderToString(element.gender)
-      }));
+      const data = rawData.map((element) => handleData(element, "render"));
       setDataTable(data);
     }
   }, [dataState.loadDataStatus]);
@@ -88,16 +150,16 @@ const UserTable = () => {
   useEffect(() => {
     if (dataState.loadUpdateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã sửa thông tin người dùng thành công");
-      dispatch(getUser());
       dispatch(resetUpdateDataStatus());
+      dispatch(getUser());
     }
   }, [dataState.loadUpdateDataStatus]);
 
   useEffect(() => {
     if (dataState.loadDeleteDataStatus === loadStatus.Success) {
-      showNotiSuccess("Bạn đã xoá người dùng thành công ");
-      dispatch(getUser());
+      showNotiSuccess("Bạn đã xoá người dùng thành công");
       dispatch(resetDeleteDataStatus());
+      dispatch(getUser());
     }
   }, [dataState.loadDeleteDataStatus]);
 
@@ -107,23 +169,24 @@ const UserTable = () => {
 
   const handleEditFunction = () => {
     const userData = findElementById(dataTable, selectedData[0]);
-    const dataEdit = {
-      ...userData,
-      gender: convertStringToGender(userData.gender)
-    }
+    const dataEdit = handleData(userData, "form");
     modalUpdateRef.current?.open(dataEdit, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    const {account_id, devices, role, ...userData} = data;
-    Object.keys(data).forEach((key) => {
-      if (checkDateTypeKey(key)) {
-        userData[key] = convertDateToTime(data[key]);
-      }
-    });
-    dispatch(updateUser(userData));
+    const { account_id, devices, role, records, status, ...payload } = { ...data };
+    return dispatch(updateUser(payload));
   };
 
+  const getTitleTable = () => {
+    if (context.role === userRole.doctor) {
+      return "Thông tin bệnh nhân";
+    } else if (context.role === userRole.patient) {
+      return "Bác sĩ điều trị";
+    } else {
+      return "Thông tin người dùng";
+    }
+  };
   return (
     <>
       <DataTable
@@ -135,15 +198,17 @@ const UserTable = () => {
         hasCheckBox
         updateSelectedData={setSelectedData}
         column={columns}
-        name="Bảng người dùng"
+        name={getTitleTable()}
         data={dataTable}
         loading={dataState.loadDataStatus === loadStatus.Loading}
+        handleOpenDrawer={(id) => drawerRef.current?.open(id)}
       />
       <ModalControlData
         ref={modalUpdateRef}
-        title="Sửa thông tin người dùng"
+        title= {getTitleTable()}
         submitFunction={(data) => handleSubmitEditUser(data)}
       />
+      <UserDetail ref={drawerRef} />
     </>
   );
 };

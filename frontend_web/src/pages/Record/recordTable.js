@@ -13,18 +13,24 @@ import {
   resetLoadDataStatus,
   checkRecordFile,
   resetCheckRecordStatus,
-  downloadRecordFile
+  downloadRecordFile,
+  getRecordByDoctorId,
+  getRecordByUser,
 } from "../../redux/reducer/recordSlice";
-import { convertDateToTime, convertTimeToDate } from "../../utils/dateUtils";
+import { convertTimeToDateTime } from "../../utils/dateUtils";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { getLocalStorage } from "../../utils/storageUtils";
 import ModalChart from "../../components/Modal/ModalChart";
-import { Button, Input, Space, Modal } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Button, Modal } from "antd";
 import { httpGetData } from "../../api/common.api";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { CloudDownloadOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
+import { RecordDetail } from "./recordDetail";
+import FilterRecord from "./filterRecord";
+import { context } from "../../utils/context";
+import { userRole } from "../../constants";
 
 const RecordTable = () => {
   const dispatch = useDispatch();
@@ -32,96 +38,12 @@ const RecordTable = () => {
   const [selectedData, setSelectedData] = useState([]);
   const [dataTable, setData] = useState([]);
   const [openChart, setOpenChart] = useState(false);
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
+  const [filterSearch, setFilterSearch] = useState("");
   const [dropdownData, setDropData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const searchInput = useRef(null);
   const modalUpdateRef = useRef(null);
-  const modalAddRef = useRef(null);
   const user_id = getLocalStorage("user");
-
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-
-  const handleReset = (clearFilters) => {
-    clearFilters();
-    setSearchText("");
-  };
-
-  const getColumnSearchProps = (dataIndex, title) => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
-      <div
-        style={{
-          padding: 8,
-        }}
-        onKeyDown={(e) => e.stopPropagation()}
-      >
-        <Input
-          ref={searchInput}
-          placeholder={`Tìm kiếm ${title}`}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{
-            marginBottom: 8,
-            display: "block",
-          }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => {
-              clearFilters && handleReset(clearFilters);
-              handleSearch(selectedKeys, confirm, dataIndex);
-            }}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Reset
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined
-        style={{
-          color: filtered ? "#1677ff" : undefined,
-        }}
-      />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) => (searchedColumn === dataIndex ? text : text),
-  });
+  const drawerRef = useRef(null);
 
   const columns = [
     {
@@ -160,35 +82,39 @@ const RecordTable = () => {
       key: "record_type",
       type: "text",
       isEdit: true,
-      ...getColumnSearchProps("record_type", "loại bản ghi"),
     },
     {
-      title: "tên bản ghi",
+      title: "Tên bản ghi",
       dataIndex: "record_name",
       key: "record_name",
       type: "text",
       isEdit: false,
     },
     {
-      title: "Ngày bắt đầu",
+      title: "Thời gian bắt đầu",
       dataIndex: "start_time",
       key: "start_time",
-      type: "date",
+      type: "time",
       isEdit: true,
-      ...getColumnSearchProps("start_time", "ngày bắt đầu"),
     },
     {
-      title: "Ngày kết thúc",
+      title: "Thời gian kết thúc",
       dataIndex: "end_time",
       key: "end_time",
-      type: "date",
+      type: "time",
       isEdit: true,
-      ...getColumnSearchProps("end_time", "ngày kết thúc"),
     },
   ];
 
   useEffect(() => {
-    dispatch(getRecord());
+    if (context.role === userRole.doctor) {
+      dispatch(getRecordByDoctorId(context.user_id));
+    } else if (context.role === userRole.patient) {
+      console.log("ha,lsdio");
+      dispatch(getRecordByUser(context.user_id));
+    } else {
+      dispatch(getRecord());
+    }
     const getOptionData = async () => {
       const userData = await httpGetData("/user");
       const deviceData = await httpGetData("/device");
@@ -204,11 +130,7 @@ const RecordTable = () => {
   useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       const rawData = dataState.data.metadata;
-      const data = rawData.map((element, index) => ({
-        ...element,
-        start_time: convertTimeToDate(element.start_time),
-        end_time: convertTimeToDate(element.end_time),
-      }));
+      const data = rawData.map((element) => handleData(element, "render"));
       setData(data);
     }
     dispatch(resetLoadDataStatus());
@@ -217,24 +139,24 @@ const RecordTable = () => {
   useEffect(() => {
     if (dataState.loadUpdateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã sửa thiết bị thành công");
-      dispatch(getRecord());
       dispatch(resetUpdateDataStatus());
+      dispatch(getRecord());
     }
   }, [dataState.loadUpdateDataStatus]);
 
   useEffect(() => {
     if (dataState.loadDeleteDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã xoá thiết bị thành công");
-      dispatch(getRecord());
       dispatch(resetDeleteDataStatus());
+      dispatch(getRecord());
     }
   }, [dataState.loadDeleteDataStatus]);
 
   useEffect(() => {
     if (dataState.loadCreateDataStatus === loadStatus.Success) {
       showNotiSuccess("Bạn đã thêm thiết bị thành công");
-      dispatch(getRecord());
       dispatch(resetCreateDataStatus());
+      dispatch(getRecord());
     }
   }, [dataState.loadCreateDataStatus]);
 
@@ -243,69 +165,90 @@ const RecordTable = () => {
   };
 
   const handleEditFunction = () => {
-    const userData = findElementById(dataTable, selectedData[0]);
-    modalUpdateRef.current?.open(userData, columns);
+    const rowData = findElementById(dataTable, selectedData[0]);
+    const dataModal = handleData(rowData, 'form');
+    modalUpdateRef.current?.open(dataModal, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    dispatch(updateRecord(handleData(data)));
+    return dispatch(updateRecord(data));
   };
 
-  const handleSubmitAddFunction = (data) => {
-    dispatch(createRecord(handleData(data)));
-  };
 
-  const handleData = (data) => {
-    let deviceData = data;
-    Object.keys(data).forEach((key) => {
-      if (checkDateTypeKey(key)) {
-        deviceData[key] = convertDateToTime(data[key]);
-      }
-    });
-    deviceData = {
-      ...deviceData,
-      user_id: user_id,
-      data_rec_url: "http",
-    };
+  const handleData = (data, type) => {
+    let deviceData = { ...data };
+
+    if (type === "form") {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          deviceData[key] = dayjs(data[key], "HH:mm DD/MM/YYYY");
+        }
+      });
+
+      deviceData = {
+        ...deviceData,
+        user_id: user_id,
+        data_rec_url: "http",
+      };
+    }
+
+    if (type === "render") {
+      Object.keys(data).forEach((key) => {
+        if (checkDateTypeKey(key)) {
+          deviceData[key] = convertTimeToDateTime(data[key]);
+        }
+        
+      });
+    }
     return deviceData;
   };
+
   const renderDownloadButton = () => (
     <>
-      {selectedData.length === 1 && (
-        <>
-          <Button
-            icon={<CloudDownloadOutlined />}
-            className="edit-btn"
-            onClick={() => {
-              dispatch(checkRecordFile(selectedData[0]))
-              setIsModalOpen(true)
-            }}
-          >
-            Download
-          </Button>
-        </>
-      )}
+      <>
+        <Button
+          icon={<CloudDownloadOutlined />}
+          disabled={selectedData.length !== 1}
+          className="edit-btn"
+          onClick={() => {
+            dispatch(checkRecordFile(selectedData[0]));
+            setIsModalOpen(true);
+          }}
+        >
+          Download
+        </Button>
+      </>
     </>
   );
+
   const handleOk = () => {
     downloadRecordFile(selectedData[0]);
-    setIsModalOpen(false)
-  };
-  const handleCancel = () => {
     setIsModalOpen(false);
-    dispatch(resetCheckRecordStatus())
   };
 
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    dispatch(resetCheckRecordStatus());
+  };
+  const renderMessageDownload = useCallback(() => {
+   
+    switch (dataState.loadCheckRecordStatus) {
+      case loadStatus.Success:
+        return "Bản ghi đã sẵn sàng tải về";
+      case loadStatus.Loading:
+        return "Đang chuẩn bị file  tải xuống";
+      default:
+        return "Không tìm thấy bản ghi";
+    }
+  },[dataState.loadCheckRecordStatus]);
   return (
     <>
       <DataTable
         editButton
         editFunction={handleEditFunction}
-        addButton
-        addFunction={() => modalAddRef.current?.open({}, columns)}
         deleteButton
         deleteFunction={handleDeleteFunction}
-        name="Bảng quản lý record"
+        name="Dữ liệu y tế"
         data={dataTable}
         column={columns}
         updateSelectedData={setSelectedData}
@@ -313,32 +256,34 @@ const RecordTable = () => {
         chartButton
         openChart={() => setOpenChart(true)}
         customButton={renderDownloadButton()}
+        handleOpenDrawer={(id) => drawerRef.current?.open(id)}
+        customData={<FilterRecord />}
       />
+
       <ModalControlData
         ref={modalUpdateRef}
-        title="Sửa thông tin record"
+        title="Sửa thông tin bản ghi"
         submitFunction={(data) => handleSubmitEditUser(data)}
       />
-      <ModalControlData
-        ref={modalAddRef}
-        title="Thêm record mới"
-        submitFunction={(data) => handleSubmitAddFunction(data)}
-      />
+
       <ModalChart
         isOpen={openChart}
         setIsOpen={setOpenChart}
         selectedDevice={selectedData}
       />
+
       <Modal
-        title="Download record status"
+        title="Trạng thái bản ghi"
         open={isModalOpen}
         onOk={handleOk}
-        okText="Download"
-        confirmLoading = {dataState.loadCheckRecordStatus !== loadStatus.Success}
+        okText="Tải"
+        confirmLoading={dataState.loadCheckRecordStatus === loadStatus.Loading}
         onCancel={handleCancel}
       >
-       {dataState.loadCheckRecordStatus !== loadStatus.Success ? "Bản ghi đang được chuẩn bị để tải về... " : "Bản ghi đã sẵn sàng tải về"} 
+        {renderMessageDownload()}
       </Modal>
+
+      <RecordDetail ref={drawerRef} />
     </>
   );
 };

@@ -15,6 +15,13 @@ const Device = sequelize.define("devices", {
       key: "id",
     },
   },
+  doctor_id: {
+    type: Sequelize.STRING,
+    references: {
+      model: users,
+      key: "id",
+    },
+  },
   device_name: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -28,10 +35,6 @@ const Device = sequelize.define("devices", {
     allowNull: false,
   },
   start_date: {
-    type: Sequelize.BIGINT,
-    allowNull: false,
-  },
-  end_date: {
     type: Sequelize.BIGINT,
     allowNull: false,
   },

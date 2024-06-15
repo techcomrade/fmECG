@@ -2,10 +2,11 @@ import Config
 
 # Configure your database
 config :server_chat, ServerChat.Repo,
-  username: "admin",
-  password: "",
-  hostname: "localhost",
-  database: "server_chat_fmecg",
+  adapter: Ecto.Adapters.Postgres,
+  username: System.get_env("POSTGRES_USER") || "admin",
+  password: System.get_env("POSTGRES_PASSWORD") || "admin",
+  database: System.get_env("POSTGRES_DB") || "server_chat_fmecg",
+  hostname: System.get_env("POSTGRES_HOST") || "localhost",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -20,11 +21,15 @@ config :server_chat, ServerChatWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   # http: [ip: {172, 20, 10, 4}, port: 4000],
-  http: [ip: {192, 168, 1, 3}, port: 4000],
+  
+  # github_token only add when use in dev
+  http: [port: 4000],
+  url: [host: System.get_env("PHX_HOST") || "127.0.0.1"],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "1234",
+  secret_key_base: System.get_env("SECRET_KEY_BASE") || "1234",
+  github_token: System.get_env("GITHUB_TOKEN"),
   watchers: []
 
 # ## SSL Support

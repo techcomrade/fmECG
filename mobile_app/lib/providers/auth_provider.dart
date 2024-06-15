@@ -159,11 +159,11 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> registerUser(String email, String password) async {
     // call API with email and password
-    String url = APIConstant.apiUrlProduction + 'register';
+    String url = apiConstant.apiUrl + 'register';
     final bodyEncoded = jsonEncode({"email": email, "password": password});
     try {
       final response = await http.post(Uri.parse(url),
-          headers: APIConstant.headers, body: bodyEncoded);
+          headers: apiConstant.headers, body: bodyEncoded);
       final responseData = jsonDecode(response.body);
       if (responseData["status"] == "success") {
         // do something with data
@@ -176,11 +176,11 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> logoutUser() async {
     // call API with email and password
-    String url = APIConstant.apiUrlProduction + 'logout';
+    String url = apiConstant.apiUrl + 'logout';
     try {
       final response = await http.get(
         Uri.parse(url),
-        headers: {...APIConstant.headers, 'Cookie': 'token=$_token'},
+        headers: {...apiConstant.headers, 'Cookie': 'token=$_token'},
       );
       final responseData = jsonDecode(response.body);
 

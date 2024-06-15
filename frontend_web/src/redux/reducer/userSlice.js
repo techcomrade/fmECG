@@ -4,7 +4,6 @@ import {
   httpPostData,
 } from "../../api/common.api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getUserId } from "../../utils/storageUtils";
 
 export const loadStatus = {
   None: 0,
@@ -26,7 +25,45 @@ export const getUser = createAsyncThunk(
     }
   }
 );
-
+export const getUsersByRole = createAsyncThunk(
+  "/role",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpGetData(`/user/role/${params}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
+export const getPatient = createAsyncThunk(
+  "/patient",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpGetData(`/pda/patient/${params}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
+export const getDoctor = createAsyncThunk(
+  "/doctor",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpGetData(`/pda/doctor/${params}`);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
 export const createUser = createAsyncThunk(
   "/create-user",
   async (params, { rejectWithValue }) => {
@@ -73,8 +110,8 @@ export const getUserById = createAsyncThunk(
   "/user/id",
   async (params, { rejectWithValue }) => {
     try {
-      const user_id = getUserId()
-      const response = await httpGetData(`/user/${user_id}`);
+      const user_id = params;
+      const response = await httpGetData(`/user/id/${user_id}`);
       return response;
     } catch (error) {
       return rejectWithValue(
@@ -89,11 +126,13 @@ const userSlice = createSlice({
   initialState: {
     data: [],
     userData: {},
+    usersDataByRole: [],
     loadDataStatus: loadStatus.None,
     loadCreateDataStatus: loadStatus.None,
     loadUpdateDataStatus: loadStatus.None,
     loadDeleteDataStatus: loadStatus.None,
     loadUserDataStatus: loadStatus.None,
+    loadGetUsersByRole: loadStatus.None,
   },
   reducers: {
     resetLoadDataStatus: (state, action) => {
@@ -112,6 +151,9 @@ const userSlice = createSlice({
     resetUserDataStatus: (state, action) => {
       state.loadUserDataStatus = loadStatus.None;
     },
+    resetUserDataByRoleStatus: (state, action) => {
+      state.loadGetUsersByRole = loadStatus.None;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -123,6 +165,28 @@ const userSlice = createSlice({
         state.loadDataStatus = loadStatus.Success;
       })
       .addCase(getUser.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = loadStatus.Failed;
+      })
+      .addCase(getPatient.pending, (state, action) => {
+        state.loadDataStatus = loadStatus.Loading;
+      })
+      .addCase(getPatient.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = loadStatus.Success;
+      })
+      .addCase(getPatient.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = loadStatus.Failed;
+      })
+      .addCase(getDoctor.pending, (state, action) => {
+        state.loadDataStatus = loadStatus.Loading;
+      })
+      .addCase(getDoctor.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = loadStatus.Success;
+      })
+      .addCase(getDoctor.rejected, (state, action) => {
         state.data = [];
         state.loadDataStatus = loadStatus.Failed;
       })
@@ -163,6 +227,17 @@ const userSlice = createSlice({
       .addCase(getUserById.rejected, (state, action) => {
         state.loadUserDataStatus = loadStatus.Failed;
         state.userData = {};
+      })
+      .addCase(getUsersByRole.pending, (state, action) => {
+        state.loadGetUsersByRole = loadStatus.Loading;
+      })
+      .addCase(getUsersByRole.fulfilled, (state, action) => {
+        state.loadGetUsersByRole = loadStatus.Success;
+        state.usersDataByRole = action.payload;
+      })
+      .addCase(getUsersByRole.rejected, (state, action) => {
+        state.loadGetUsersByRole = loadStatus.Failed;
+        state.usersDataByRole = [];
       });
   },
 });
@@ -174,5 +249,6 @@ export const {
   resetUpdateDataStatus,
   resetDeleteDataStatus,
   resetUserDataStatus,
+  loadGetUsersByRole,
 } = userSlice.actions;
 export default userReducer;

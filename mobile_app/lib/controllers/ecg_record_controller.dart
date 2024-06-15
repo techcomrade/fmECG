@@ -11,7 +11,7 @@ ECGProvider ecgProvider = Utils.globalContext!.read<ECGProvider>();
 
 class ECGRecordController {
   static Future<void> uploadFileToDB(Map fileUploadInformation) async {
-    final url = APIConstant.apiUrlProduction + 'api/record';
+    final url = apiConstant.apiUrl + 'api/record';
 
     final String filePath = fileUploadInformation["file_path"];
     final MultipartFile fileData = await MultipartFile.fromFile(
@@ -34,7 +34,7 @@ class ECGRecordController {
 
   static Future<void> getAllECGRecords(int userId) async {
     try {
-      final String url = APIConstant.apiUrlProduction + 'ecg-records/patient/$userId';
+      final String url = apiConstant.apiUrl + 'ecg-records/patient/$userId';
       final Response response = await Dio().get(url);
 
       final responseData = response.data;
@@ -49,7 +49,7 @@ class ECGRecordController {
 
   static Future<void> getDataECGRecordById(int recordId) async {
     try {
-      final String url = APIConstant.apiUrlProduction + 'ecg-records/record-data/$recordId';
+      final String url = apiConstant.apiUrl + 'ecg-records/record-data/$recordId';
 
       final Response response = await Dio().get(url);
       final responseData = response.data;

@@ -1,8 +1,14 @@
-const { Sequelize } = require("sequelize");
+const { Sequelize, QueryTypes } = require("sequelize");
 const RecordDTO = require("./RecordDTO");
+const sequelize = require("../../config/sequelize");
 class RecordRepository {
   async getAllData() {
-    return await RecordDTO.findAll();
+    return await sequelize.query(
+      "SELECT re.*, de.device_name, u.username FROM fmecg.records as re LEFT JOIN fmecg.devices as de ON re.device_id = de.id LEFT JOIN fmecg.users AS u ON re.user_id = u.id",
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
   }
 
   async getRecordById(id) {
@@ -22,18 +28,23 @@ class RecordRepository {
   }
 
   async getRecordByUserId(id) {
-    return await RecordDTO.findAll({
-      where: {
-        user_id: id,
-      },
-    });
+    return await sequelize.query(
+      "SELECT re.*, de.device_name, u.username FROM fmecg.records as re LEFT JOIN fmecg.devices as de ON re.user_id = de.user_id LEFT JOIN fmecg.users AS u ON u.id = re.user_id  WHERE re.user_id = :user",
+      {
+        replacements: { user: id },
+        type: QueryTypes.SELECT,
+      }
+    );
   }
 
   async getRecordByStartTime(time) {
     return await RecordDTO.findAll({
       where: {
         start_time: {
-          [Sequelize.Op.between]: [parseInt(time) - 86400000, parseInt(time) + 86400000],
+          [Sequelize.Op.between]: [
+            parseInt(time) - 86400000,
+            parseInt(time) + 86400000,
+          ],
         },
       },
     });
@@ -53,7 +64,10 @@ class RecordRepository {
     return await RecordDTO.findAll({
       where: {
         end_time: {
-          [Sequelize.Op.between]: [parseInt(time) - 86400000, parseInt(time) + 86400000],
+          [Sequelize.Op.between]: [
+            parseInt(time) - 86400000,
+            parseInt(time) + 86400000,
+          ],
         },
       },
     });
@@ -68,7 +82,7 @@ class RecordRepository {
       },
     });
   }
-  
+
   async add(record, t) {
     return await RecordDTO.create(
       {
@@ -117,6 +131,20 @@ class RecordRepository {
       },
       t && {
         transaction: t,
+      }
+    );
+  }
+
+  async count() {
+    return await RecordDTO.count();
+  }
+
+  async getRecordByDoctorId(doctor_id) {
+    return await sequelize.query(
+      "SELECT re.*, de.device_name, u.username FROM fmecg.records as re LEFT JOIN fmecg.patient_doctor_assignment pda ON re.user_id = pda.patient_id LEFT JOIN fmecg.devices as de ON re.user_id = de.user_id LEFT JOIN fmecg.users AS u ON u.id = re.user_id  WHERE pda.doctor_id = :doctor",
+      {
+        replacements: { doctor: doctor_id },
+        type: QueryTypes.SELECT,
       }
     );
   }

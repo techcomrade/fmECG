@@ -1,41 +1,24 @@
 const CommonService = require("./CommonService");
 const RecordRepository = require("../models/RecordModel/RecordRepository");
-const HeartRecRepository = require("../models/HeartRecModel/HeartRecRepository");
-const BloodPressureRepository = require("../models/BloodPressureModel/BloodPressureRepository");
 const UserRepository = require("../models/UserModel/UserRepository");
 const DeviceRepository = require("../models/DeviceModel/DeviceRepository");
+const DeviceFrequencyService = require("../services/DeviceFrequencyService");
 const FileService = require("./FileService");
 const util = require("util");
 const { v4: uuidv4 } = require("uuid");
-const path = require('path');
+const path = require("path");
 const Joi = require("joi");
 const { dummyArray } = require("../utils/arrayUtils");
 
 class RecordService extends CommonService {
   async getAll() {
-    const records = await RecordRepository.getAllData();
-    const total = records.length;
-    for (let i = 0; i < total; i++) {
-      const userName = await UserRepository.getUserById(
-        records[i].dataValues.user_id
-      );
-      const deviceName = await DeviceRepository.checkById(
-        records[i].dataValues.device_id
-      );
-      records[i].dataValues = {
-        ...records[i].dataValues,
-        username: userName[0].username,
-        device_name: deviceName.device_name,
-        record_name: path.basename(records[i].dataValues.data_rec_url)
-      };
-    }
-    return records;
+    return await RecordRepository.getAllData();
   }
 
   async add(record) {
     record.id = uuidv4();
-    let pathTest = path.join(__dirname, '../public/upload')
-    let paths = `${pathTest}\\${record.file.filename}`;
+    let pathTest = path.join(__dirname, "../public/upload");
+    let paths = `${pathTest}/${record.file.filename}`;
     console.log(paths);
     record.data_rec_url = paths;
     return await RecordRepository.add(record);
@@ -46,6 +29,7 @@ class RecordService extends CommonService {
       user_id: Joi.string().required(),
       device_id: Joi.string().required(),
       device_type: Joi.number().integer().min(0).max(100).required(),
+      record_type: Joi.string().required(),
       start_time: Joi.number().integer().required(),
       end_time: Joi.number()
         .integer()
@@ -111,8 +95,6 @@ class RecordService extends CommonService {
 
   async deleteRecordById(id) {
     return await this.transaction(async (t) => {
-      await HeartRecRepository.deleteByRecordId(id, t);
-      await BloodPressureRepository.deleteByRecordId(id, t);
       await RecordRepository.deleteById(id, t);
     });
   }
@@ -135,9 +117,48 @@ class RecordService extends CommonService {
   async deleteFile(path) {
     return await FileService.deleteFile(path);
   }
-  async getFilePathById(id){
+  async getFilePathById(id) {
     const recordData = await RecordRepository.getRecordById(id);
     return recordData[0].dataValues.data_rec_url ?? "";
+  }
+  async getRecordByDoctorId(id) {
+    return await RecordRepository.getRecordByDoctorId(id);
+  }
+  async getDataRecord(filepath, deviceId) {
+    try {
+      const device_freq = await DeviceFrequencyService.getByDeviceId(deviceId);
+      let device_freq_value = device_freq[0]?.dataValues.value ?? 100;
+      const data = await this.readFileRecord(filepath);
+      if (!data) return;
+      let dataArray = data.split("\n");
+      dataArray = dataArray.map((line) => line.split(", "));
+
+      dataArray = dataArray.map((line) => {
+        return line.map((element) => {
+          return {
+            value: element,
+            warning: 0,
+          };
+        });
+      });
+      let arrayValue = {
+        PPG: { frequency: null, data: [] },
+        PCG: { frequency: null, data: [] },
+        heartRate: { frequency: null, data: [] },
+      };
+      let fieldNames = ["PPG", "PCG", "heartRate"];
+      for (let i = 6; i < 9; i++) {
+        let field = fieldNames[i - 6];
+        arrayValue[field].frequency = device_freq_value;
+        dataArray.forEach((element) => {
+          arrayValue[field].data.push(element[i]);
+        });
+      }
+      return arrayValue;
+    } catch (e) {
+      console.log(e);
+      return;
+    }
   }
 }
 

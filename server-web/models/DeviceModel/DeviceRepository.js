@@ -1,4 +1,5 @@
-const { Sequelize } = require("sequelize");
+const { Sequelize, QueryTypes } = require("sequelize");
+const sequelize = require("../../config/sequelize");
 const {
   convertDateNormal,
   convertTimeToString,
@@ -6,28 +7,18 @@ const {
 const DeviceDTO = require("./DeviceDTO");
 class DeviceModel {
   async getAllData() {
-    const devices = await DeviceDTO.findAll({
-      attributes: {
-        exclude: ["created_at", "updated_at"],
-      },
-    });
-    return devices;
+    return await sequelize.query(
+      "SELECT de.*, u.username, def.frequency_name, def.information, def.value FROM fmecg.devices AS de LEFT JOIN fmecg.users AS u ON de.user_id = u.id LEFT JOIN fmecg.device_frequency AS def ON de.id = def.device_id",
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
   }
 
   async getDeviceByStartDateInterval(startDate, endDate) {
     return await DeviceDTO.findAll({
       where: {
         start_date: {
-          [Sequelize.Op.between]: [startDate, endDate],
-        },
-      },
-    });
-  }
-
-  async getDeviceByEndDateInterval(startDate, endDate) {
-    return await DeviceDTO.findAll({
-      where: {
-        end_date: {
           [Sequelize.Op.between]: [startDate, endDate],
         },
       },
@@ -41,8 +32,8 @@ class DeviceModel {
       device_name: device.device_name,
       information: device.information ?? "",
       device_type: device.device_type,
-      start_date: device.start_date,
-      end_date: device.end_date,
+      start_date: device.start_date
+
     });
   }
 
@@ -82,7 +73,7 @@ class DeviceModel {
       },
     });
   }
-  
+
   async updateById(device, id) {
     device.updated_at = Date.now();
     return await DeviceDTO.update(
@@ -92,7 +83,6 @@ class DeviceModel {
         information: device.information,
         device_type: device.device_type,
         start_date: device.start_date,
-        end_date: device.end_date,
         updated_at: device.updated_at,
       },
       {
@@ -101,6 +91,26 @@ class DeviceModel {
         },
       }
     );
+  }
+
+  async count() {
+    return await DeviceDTO.count();
+  }
+
+  async getByDoctorId(id) {
+    return await DeviceDTO.findAll({
+      where: {
+        doctor_id: id,
+      },
+    });
+  }
+
+  async getDevicesByUserId(id){
+    return await DeviceDTO.findAll({
+      where:{
+        user_id:id
+      }
+    })
   }
 }
 
