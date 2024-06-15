@@ -5,6 +5,7 @@ import UserTable from "../pages/User/userTable";
 import DeviceTable from "../pages/Device/deviceTable";
 import RecordTable from "../pages/Record/recordTable";
 import PdaTable from "../pages/PatientDoctorAssignment/pdaTable";
+import RegisterTable from "../pages/Register/registerTable"
 import {
   UserOutlined,
   UnorderedListOutlined,
@@ -18,7 +19,6 @@ import {
 import { userRole } from "../constants";
 import { context } from "../utils/context";
 import Chat from "../pages/Chat/chat";
-import Register from "../pages/Register/register";
 
 export const AdminRouterMappingGroup = {
   User: {
@@ -48,7 +48,7 @@ export const AdminRouterMappingGroup = {
   Register: {
     key: "/registers",
     label: "Người dùng đăng ký mới",
-    component: <Register />,
+    component: <RegisterTable />,
     icon: <UserAddOutlined />,
   }
 };

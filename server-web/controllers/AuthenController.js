@@ -47,6 +47,19 @@ class AuthenController {
         return res.status(400).json("Get accounts failed");
       });
   }
+
+  async getAllRegistration(req, res) {
+    await AuthenService.getAllRegistration()
+      .then((data) => {
+        return res.status(200).json({
+          metadata: data
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).json("Get check accounts failed");
+      });
+  }
 }
 
 module.exports = new AuthenController();
