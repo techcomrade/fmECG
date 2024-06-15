@@ -8,7 +8,7 @@ const DeviceDTO = require("./DeviceDTO");
 class DeviceModel {
   async getAllData() {
     return await sequelize.query(
-      "SELECT de.*, u.username, def.frequency_name, def.information, def.value FROM fmecg.devices AS de LEFT JOIN fmecg.users AS u ON de.user_id = u.id LEFT JOIN fmecg.device_frequency AS def ON de.id = def.device_id",
+      "SELECT de.*, u.username FROM fmecg.devices AS de LEFT JOIN fmecg.users AS u ON de.user_id = u.id",
       {
         type: QueryTypes.SELECT,
       }
