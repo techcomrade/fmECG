@@ -14,14 +14,17 @@ $primary: #1677ff;
 
 /* CONTENT IS CLOSE */
 .chatbox__support {
-    display: flex;
     flex-direction: column;
-    background: #eee;
-    width: 300px;
-    height: 350px;
+    background: #f9f9f9;
+    height: 500px;
+    width: 350px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    position: relative;
     z-index: -123456;
     opacity: 0;
     transition: all .2s ease-in-out;
+    display: none;
 }
 
 /* CONTENT ISOPEN */
@@ -29,7 +32,7 @@ $primary: #1677ff;
     transform: translateY(-10px);
     z-index: 123456;
     opacity: 1;
-
+    display: flex;
 }
 
 /* BUTTON */
@@ -70,19 +73,6 @@ $primary: #1677ff;
     flex-direction: column;
 }
 
-.messages__item {
-    max-width: 60.6%;
-    width: fit-content;
-}
-
-.messages__item--operator {
-    margin-left: auto;
-}
-
-.messages__item--visitor {
-    margin-right: auto;
-}
-
 /* FOOTER */
 .chatbox__footer {
     position: sticky;
@@ -91,14 +81,6 @@ $primary: #1677ff;
     #file {
         display: none;
     }
-}
-
-.chatbox__support {
-    background: #f9f9f9;
-    height: 500px;
-    width: 350px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
 }
 
 /* HEADER */
@@ -131,8 +113,8 @@ $primary: #1677ff;
 
 .chatbox__header--close {
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 15px;
+    top: 14px;
     color: #999;
     cursor: pointer;
     font-size: 16px;
@@ -141,32 +123,36 @@ $primary: #1677ff;
 /* Messages */
 .chatbox__messages {
     padding: 0 10px 0 20px;
-}
 
-.messages__item {
-    margin-top: 10px;
-    background: #E0E0E0;
-    padding: 8px 12px;
-    max-width: 70%;
+    .message {
+        margin-top: 10px;
+        background: #E0E0E0;
+        padding: 8px 12px;
+        max-width: 70%;
+        width: fit-content;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        margin-right: auto;
 
-    img {
-        max-width: 100%;
+        img {
+            max-width: 100%;
+        }
+
+        p {
+            margin: 0;
+        }
     }
-}
-
-.messages__item--visitor,
-.messages__item--typing {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-
-.messages__item--operator {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-    background: $primary;
-    color: white;
+    
+    .owner {
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        background: $primary;
+        color: white;
+        margin-left: auto;
+        margin-right: 0;
+    }
 }
 
 /* FOOTER */
@@ -176,7 +162,7 @@ $primary: #1677ff;
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-    background: '#fff';
+    background: #fff;
     box-shadow: $secondaryBoxShadow;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
