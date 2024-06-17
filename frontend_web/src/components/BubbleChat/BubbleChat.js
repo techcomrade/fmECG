@@ -11,12 +11,12 @@ import { Button } from "antd";
 import Message from "../Message/Message";
 
 const BubbleChat = () => {
-    const dispatch = useDispatch();
-    const dataState = useSelector((state) => state.aiChat);
+  const dispatch = useDispatch();
+  const dataState = useSelector((state) => state.aiChat);
   const [messages, setMessages] = useState([
     {
       id: 1,
-      actor: "user",
+      actor: "operator",
       message: "Hi, konichiwa",
     }
   ]);
@@ -40,7 +40,7 @@ const BubbleChat = () => {
 //       ]);
 //     }
 //   }, [props.message]);
-useEffect(() => {
+  useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       setMessages(prev => [...prev,{
         id: prev.length + 1,
@@ -49,6 +49,7 @@ useEffect(() => {
       }])
     }
   }, [dataState]);
+  
   const toogleChat = () => {
     const chatBox = document.querySelector(".chatbox__support").classList;
     chatBox.toggle("chatbox--active");
@@ -109,9 +110,9 @@ useEffect(() => {
               </div>
             </div>
             <div className="chatbox__messages">
-            {messages.map((item, index) => (
-          <Message data={item} key={item.id} />
-        ))}
+              {messages.map((item, index) => (
+                <Message data={item} key={item.id} />
+              ))}
             </div>
             <div className="chatbox__footer">
               <input
