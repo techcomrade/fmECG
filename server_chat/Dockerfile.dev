@@ -9,3 +9,4 @@ COPY . .
 RUN mix local.hex --force
 RUN mix archive.install --force hex phx_new ${PHOENIX_VERSION}
 RUN mix local.rebar --force
+RUN mix deps.get
