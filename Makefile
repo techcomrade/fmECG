@@ -31,7 +31,7 @@ chatdb:
 
 chatdev:
 	docker compose rm -sf; \
-	docker compose --profile backend -f docker-compose-dev.yml up --build --detach; \
+	docker compose --profile backend frontend -f docker-compose-dev.yml up --build --detach; \
 	docker exec -it chat-fmecg iex -S mix phx.server
 
 
