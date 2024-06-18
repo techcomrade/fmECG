@@ -27,7 +27,6 @@ defmodule ServerChatWeb.MessagesController do
             }
           )
           |> Repo.all
-          IO.inspect(messages, label: "what was that")
 
           %{success: true, message: "Get all messages successfully", data: messages}
       end
