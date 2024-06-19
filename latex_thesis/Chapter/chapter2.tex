@@ -31,83 +31,912 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \label{use_case_general} %đặt tên cho ảnh
   \end{figure}
 
+\subsubsection{Use case chức năng đăng ký tài khoản}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=9cm,height=2.5cm]{Images/use_case/use_case_register.png}
+    \caption[Sơ đồ use case chức năng đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng đăng ký tài khoản}
+    \label{use_case_register} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng đăng ký tài khoản}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Đăng ký tài khoản} \\
+      \hline
+      Tác nhân & Bệnh nhân, Bác sĩ, Quản trị viên \\
+      \hline
+      Mô tả & Cho phép người dùng đăng ký tài khoản để truy cập vào các tài nguyên của hệ thống 
+       \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_register}, Hình \ref{sequence_register} 
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+  Dưới đây là sơ đồ mô tả hoạt động cho chức năng đăng ký tài khoản
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=13cm]{Images/activity/activity_register.png}
+    \caption[Sơ đồ hoạt động chức năng đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng đăng ký tài khoản}
+    \label{activity_register} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng đăng nhập/đăng xuất }
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=9cm,height=2.5cm]{Images/use_case/use_case_login.png}
+    \caption[Sơ đồ use case chức năng đăng nhập/đăng xuất]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng đăng nhập/đăng xuất}
+    \label{use_case_login_logout} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng đăng nhập/đăng xuất}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Đăng nhập/Đăng xuất} \\
+      \hline
+      Tác nhân & Bệnh nhân, Bác sĩ, Quản trị viên \\
+      \hline
+      Mô tả & Cho phép người dùng sử dụng tài khoản để truy cập vào các tài nguyên của hệ thống và có thể đăng xuất hệ thống
+       \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_login}, Hình \ref{activity_logout},  
+        Hình \ref{sequence_login}, Hình \ref{sequence_logout}
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+  Dưới đây là sơ đồ hoạt động dành cho chức năng đăng nhập và đăng xuất
+  
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=13cm]{Images/activity/activity_login.png}
+    \caption[Sơ đồ hoạt động chức năng đăng nhập]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng đăng nhập}
+    \label{activity_login} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=11.5cm,height=9.5cm]{Images/activity/activity_logout.png}
+    \caption[Sơ đồ hoạt động chức năng đăng nhập]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng đăng nhập}
+    \label{activity_logout} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng quên mật khẩu}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=9cm,height=2.5cm]{Images/use_case/use_case_forgot_password.png}
+    \caption[Sơ đồ use case chức năng quên mật khẩu]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quên mật khẩu}
+    \label{use_case_forget_password} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng quên mật khẩu}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Quên mật khẩu} \\
+      \hline
+      Tác nhân & Bệnh nhân, Bác sĩ, Quản trị viên \\
+      \hline
+      Mô tả & Cho phép người dùng lấy lại mật khẩu tài khoản thông qua email
+       \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và truy cập vào email đăng ký \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_forgot_password}, Hình \ref{sequence_forgot_pass} 
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+  Dưới đây là sơ đồ hoạt động mô tả chức năng quên mật khẩu
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13cm,height=18.5cm]{Images/activity/activity_forgot_pass.png}
+    \caption[Sơ đồ hoạt động chức năng quên mật khẩu]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng quên mật khẩu}
+    \label{activity_forgot_password} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng quản lý tài khoản cá nhân}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=14.8cm,height=9cm]{Images/use_case/use_case_manage_info.png}
+    \caption[Sơ đồ use case chức năng quản lý tài khoản cá nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý tài khoản cá nhân}
+    \label{use_case_manage_info} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý tài khoản cá nhân}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Quản lý tài khoản cá nhân} \\
+      \hline
+      Tác nhân & Bệnh nhân, Bác sĩ, Quản trị viên \\
+      \hline
+      Mô tả & Cho phép người dùng xem, thay đổi thông tin cá nhân như số điện thoại, email, tên hiển thị
+       \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_manage_info}, Hình \ref{sequence_account} 
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+  Dưới đây là sơ đồ hoạt động mô tả chức năng quản lý tài khoản cá nhân
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=14cm]{Images/activity/activity_manage_info.png}
+    \caption[Sơ đồ hoạt động chức năng quản lý tài khoản cá nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng quản lý tài khoản cá nhân}
+    \label{activity_manage_info} %đặt tên cho ảnh
+  \end{figure}
+
 \subsubsection{Use case chức năng xem lịch sử các lần đo}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=12cm,height=4.8cm]{Images/use_case/use_case_view_history_record.png}
+    \includegraphics[width=15.2cm,height=9cm]{Images/use_case/use_case_view_history_record.png}
     \caption[Sơ đồ use case chức năng xem lịch sử các lần đo]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ use case chức năng xem lịch sử các lần đo}
     \label{use_case_view_history_record} %đặt tên cho ảnh
   \end{figure}
 
   \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng xem lịch sử các lần đo}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý dữ liệu đo}
     \centering
     \begin{tabularx}{0.9\textwidth}{|c|X|}
       \hline
       \textbf{Tên chức năng} & \textbf{Xem lịch sử các lần đo} \\
       \hline
-      Tác nhân & Bệnh nhân, Bác sĩ \\
+      Tác nhân & Bệnh nhân, Bác sĩ, Quản trị viên \\
       \hline
-      Mô tả & Cho phép bệnh nhân xem lịch sử các lần đo điện tim và bác sĩ xem được lịch sử các lần đo của bệnh nhân
-      mà mình quản lý \\
+      Mô tả & Cho phép bệnh nhân xem lịch sử các lần đo điện tim, bác sĩ xem được lịch sử các lần đo, đồ thị của bệnh nhân
+      mà mình quản lý.\\
       \hline
       Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{view_record_timeline}, Hình \ref{getEcgRecordsByUserId}, Hình \ref{getEcgRecordsByDoctor} 
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_record_history}, Hình \ref{sequence_manage_record}, Hình \ref{getEcgRecordsByDoctor} 
         \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
   \end{table}
+  Dưới đây là sơ đồ hoạt động mô tả chức năng xem lịch sử các lần đo
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=15cm]{Images/activity/activity_record_history.png}
+    \caption[Sơ đồ hoạt động chức năng xem lịch sử các lần đo]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng xem lịch sử các lần đo}
+    \label{activity_record_history} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng quản lí dịch vụ nhắn tin}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=14.7cm,height=8cm]{Images/use_case/use_case_send_receive_message.png}
+    \caption[Sơ đồ use case chức năng quản lí dịch vụ nhắn tin]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lí dịch vụ nhắn tin}
+    \label{use_case_chat} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lí dịch vụ nhắn tin}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Quản lí dịch vụ nhắn tin} \\
+      \hline
+      Tác nhân & Bệnh nhân, Bác sĩ \\
+      \hline
+      Mô tả & Cho phép bệnh nhân chat với bác sĩ phụ trách và bác sĩ có thể chat với bệnh nhân mà mình phụ trách \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_chat}, Hình \ref{sequence_chat} 
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+  Dưới đây là sơ đồ hoạt động mô tả chức năng quản lý dịch vụ nhắn tin
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=11.5cm,height=11cm]{Images/activity/activity_chat.png}
+    \caption[Sơ đồ hoạt động chức năng quản lý dịch vụ nhắn tin]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng quản lý dịch vụ nhắn tin}
+    \label{activity_chat} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng tư vấn từ trợ lý ảo}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=12.5cm,height=5.8cm]{Images/use_case/use_case_chatbot.png}
+    \caption[Sơ đồ use case chức năng tư vấn từ trợ lý ảo]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng tư vấn từ trợ lý ảo}
+    \label{use_case_chat_with_bot} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng tư vấn từ trợ lý ảo}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Tư vấn từ trợ lý ảo} \\
+      \hline
+      Tác nhân & Bệnh nhân \\
+      \hline
+      Mô tả & Cho phép bệnh nhân chat với chat bot trợ lý ảo \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_chat_ai}, Hình \ref{sequence_chat_ai} 
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}  
+  Dưới đây là sơ đồ hoạt động mô tả chức năng tư vấn từ trợ lý ảo
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=11.5cm,height=8.5cm]{Images/activity/activity_chat_ai.png}
+    \caption[Sơ đồ hoạt động chức năng tư vấn từ trợ lý ảo]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng tư vấn từ trợ lý ảo}
+    \label{activity_chat_ai} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng quản lý bệnh nhân}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=14.2cm,height=8.5cm]{Images/use_case/use_case_manage_patients.png}
+    \caption[Sơ đồ use case chức năng quản lý bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý bệnh nhân}
+    \label{use_case_patient_management} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý bệnh nhân}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Quản lý bệnh nhân} \\
+      \hline
+      Tác nhân & Bác sĩ \\
+      \hline
+      Mô tả & Cho phép bác sĩ thực hiện hành động thêm, xóa bệnh nhân trong danh sách bệnh nhân của mình \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_patient_management}, Hình \ref{sequence_manage_patient},
+        Hình \ref{sequence_manage_edit_patient}, Hình \ref{sequence_manage_delete_patient}
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+  Dưới đây là sơ đồ hoạt động mô tả chức năng quản lý bệnh nhân
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=16cm]{Images/activity/activity_manage_patient.png}
+    \caption[Sơ đồ hoạt động chức năng quản lý bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng quản lý bệnh nhân}
+    \label{activity_patient_management} %đặt tên cho ảnh
+  \end{figure}
+
+\subsubsection{Use case chức năng quản lý thiết bị}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=14.2cm,height=9cm]{Images/use_case/use_case_manage_device.png}
+    \caption[Sơ đồ use case chức năng quản lý thiết bị]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý thiết bị}
+    \label{use_case_device_management} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý thiết bị}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Quản lý thiết bị} \\
+      \hline
+      Tác nhân & Quản trị viên \\
+      \hline
+      Mô tả & Cho phép quản trị thực hiện hành động thêm, sửa, xóa các thiết bị, có thể xem đồ thị bản ghi thiết bị cũng như
+      xuất ra định dạng file \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_device_management}, Hình \ref{sequence_manage_device}, 
+        Hình \ref{sequence_manage_add_device},  Hình \ref{sequence_manage_edit_device}, Hình \ref{sequence_manage_delete_device}
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+  Dưới đây là sơ đồ hoạt động mô tả chức năng quản lý thiết bị
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=16cm]{Images/activity/activity_manage_device.png}
+    \caption[Sơ đồ hoạt động chức năng quản lý thiết bị]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng quản lý thiết bị}
+    \label{activity_device_management} %đặt tên cho ảnh
+  \end{figure}
+
+
+\subsubsection{Use case chức năng quản lý tài khoản người dùng}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm,height=10.5cm]{Images/use_case/use_case_manage_users.png}
+    \caption[Sơ đồ use case chức năng tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng tài khoản người dùng}
+    \label{use_case_user_management} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý thiết bị}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Quản lý tài khoản người dùng} \\
+      \hline
+      Tác nhân & Quản trị viên \\
+      \hline
+      Mô tả & Cho phép quản trị thực hiện hành động thêm, sửa, xóa đối với tài khoản người dùng \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_user_management}, Hình \ref{sequence_manage_user}, 
+        Hình \ref{sequence_manage_add_user}, Hình \ref{sequence_manage_edit_user}, Hình \ref{sequence_manage_delete_user} 
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+  Dưới đây là sơ đồ hoạt động mô tả chức năng quản lý tài khoản người dùng
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=16cm]{Images/activity/activity_manage_user.png}
+    \caption[Sơ đồ hoạt động chức năng quản lý tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng quản lý tài khoản người dùng}
+    \label{activity_user_management} %đặt tên cho ảnh
+  \end{figure}
+
 % \newpage
 \subsection{Thẻ CRC (Class - Responsibility - Collaboration Card)}
+
+\subsubsection{Thẻ CRC lớp Người dùng}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Người dùng}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|X|}
+      \hline
+      \textbf{Class name:} Người dùng & \textbf{ID:} 1 & \textbf{Type:} Concrete, Domain \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \textbf{Description:} Đối tượng mô tả thông tin người dùng & \textbf{Associated use case:} 2 \\
+      \hline
+      \textbf{Responsibility:} & \textbf{Collaboration:} \\
+      Thông tin nhân viên 
+      & 
+      Thiết bị
+      
+      Bản ghi
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Attributes} & \\
+      id(String) 
+      
+      account\_id(String)
+
+      username(String)
+
+      birth(BigInt)
+
+      phone\_number(String)
+      & 
+      image(String) 
+      
+      role(Int) 
+      
+      created\_at(BigInt)
+
+      updated\_at(BigInt)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Relationships} \\
+      Generalize:  
+
+      Aggregation:  
+      
+      Association: Thiết bị 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \subsubsection{Thẻ CRC lớp Thiết bị}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thiết bị}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|X|}
+      \hline
+      \textbf{Class name:} Thiết bị & \textbf{ID:} 2 & \textbf{Type:} Concrete, Domain \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \textbf{Description:} Đối tượng mô tả thông tin thiết bị & \textbf{Associated use case:} 2 \\
+      \hline
+      \textbf{Responsibility:} & \textbf{Collaboration:} \\
+      Thông tin thiết bị 
+      & 
+      Người dùng 
+
+      Bản ghi
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Attributes} & \\
+      id(String) 
+      
+      user\_id(String)
+
+      device\_name(String)
+
+      infomation(String)
+
+      device\_type(Integer)
+      & 
+      start\_date(BigInt) 
+      
+      end\_date(BigInt) 
+      
+      created\_at(BigInt)
+
+      updated\_at(BigInt)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Relationships} \\
+      Generalize:  
+
+      Aggregation:  
+      
+      Association: Người dùng 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+\subsubsection{Thẻ CRC lớp Bản ghi}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Bản ghi}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|X|}
+      \hline
+      \textbf{Class name:} Bản ghi & \textbf{ID:} 3 & \textbf{Type:} Concrete, Domain \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \textbf{Description:} Đối tượng mô tả thông tin bản ghi & \textbf{Associated use case:} 2 \\
+      \hline
+      \textbf{Responsibility:} & \textbf{Collaboration:} \\
+      Thông tin bản ghi 
+      & 
+      Người dùng
+      
+      Thiết bị
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Attributes} & \\
+      id(String) 
+      
+      user\_id(String)
+
+      device\_id(String)
+
+      start\_time(BigInt)
+      & 
+      end\_time(BigInt) 
+      
+      data\_rec\_url(String) 
+      
+      created\_at(BigInt)
+
+      updated\_at(BigInt)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Relationships} \\
+      Generalize:  
+
+      Aggregation:  
+      
+      Association: Người dùng 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \subsubsection{Thẻ CRC lớp Tài khoản}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tài khoản}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|X|}
+      \hline
+      \textbf{Class name:} Tài khoản & \textbf{ID:} 4 & \textbf{Type:} Concrete, Domain \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \textbf{Description:} Đối tượng mô tả thông tin tài khoản & \textbf{Associated use case:} 1 \\
+      \hline
+      \textbf{Responsibility:} & \textbf{Collaboration:} \\
+      Thông tin tài khoản 
+      & 
+      Người dùng
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \hline
+      \textbf{Attributes} \\
+      id(String) 
+      
+      email(String)
+
+      password(String)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Relationships} \\
+      Generalize:  
+
+      Aggregation:  
+      
+      Association: Người dùng 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+\subsubsection{Thẻ CRC lớp Quản lý bác sĩ - bệnh nhân}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Quản lý bác sĩ - bệnh nhân}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|X|}
+      \hline
+      \textbf{Class name:} Quản lý bác sĩ - bệnh nhân & \textbf{ID:} 5 & \textbf{Type:} Concrete, Domain \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \textbf{Description:} Đối tượng mô tả thông tin quản lý giữa bác sĩ và bệnh nhân & \textbf{Associated use case:} 1 \\
+      \hline
+      \textbf{Responsibility:} & \textbf{Collaboration:} \\
+      Thông tin quan hệ giữa bác sĩ và bệnh nhân
+      Từ thông tin quản lý có thể biết thông tin bác sĩ và bệnh nhân 
+      & 
+      Người dùng
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Attributes} & \\
+      id(String) 
+      
+      patient\_id(String)
+
+      doctor\_id(String)
+      & 
+      start\_date(BigInt) 
+            
+      created\_at(BigInt)
+
+      updated\_at(BigInt)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Relationships} \\
+      Generalize:  
+
+      Aggregation:  
+      
+      Association: Người dùng 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
 
 % \newpage
 \subsection{Sơ đồ lớp}
 
 % \newpage
 \subsection{Sơ đồ tuần tự}
-Để phân tích cụ thể hơn từng luồng trong hệ thống qua use case, chúng em xin phép được trình bày các sơ đồ tuần
-tự. 
-\subsubsection{Sơ đồ tuần tự chức năng đăng ký}
-  \begin{figure}[H]
-        \centering
-        \includegraphics[width=12.9cm,height=9.4cm]{Images/mobile_app/register.png}
-        \caption[Sơ đồ tuần tự chức năng đăng ký trên App]{\bfseries \fontsize{12pt}{0pt}
-        \selectfont Sơ đồ tuần tự chức năng đăng ký trên App}
-        \label{register} %đặt tên cho ảnh
-  \end{figure}
-  Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng ký vào hệ thống. Người dùng gửi yêu cầu đăng ký, yêu cầu sẽ
-  được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Control
-  sẽ xử lý cụ thể như thế nào được chúng em thể hiện trong Hình \ref{backend_register} trong chương sau.
-\subsubsection{Sơ đồ tuần tự chức năng đăng nhập/đăng xuất}
+Để phân tích cụ thể hơn về từng luồng trong hệ thống thông qua use case và activity, chúng em xin phép
+trình bày về các sơ đồ tuần tự.
 
-    \begin{figure}[H]
-         \centering
-         \includegraphics[width=16cm,height=12cm]{Images/mobile_app/login.png}
-         \caption[Sơ đồ tuần tự chức năng đăng nhập trên App]{\bfseries \fontsize{12pt}{0pt}
-         \selectfont Sơ đồ tuần tự chức năng đăng nhập trên App}
-         \label{login} %đặt tên cho ảnh
-    \end{figure}
-
-  Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng nhập vào hệ thống. Người dùng gửi yêu cầu đăng nhập, yêu cầu sẽ
-  được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Việc Control
-  sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hiện trong Hình \ref{backend_login} trong chương sau.
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=12cm,height=6cm]{Images/mobile_app/logout.png}
-    \caption[Sơ đồ tuần tự chức năng đăng xuất trên App]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ tuần tự chức năng đăng xuất trên App}
-    \label{logout} %đặt tên cho ảnh
+\subsubsection{Sơ đồ tuần tự chức năng đăng ký tài khoản}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14.5cm,height=11cm]{Images/sequence/sequence_register.png}
+  \caption[Sơ đồ tuần tự chức năng đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng đăng ký tài khoản}
+  \label{sequence_register} %đặt tên cho ảnh
 \end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng ký tài khoản trên hệ thống. Người dùng sẽ gửi yêu cầu đăng ký, yêu cầu sẽ được xử lý
+bởi Control, nếu có lỗi phát sinh sẽ hiển thị lên màn hình và yêu cầu người dùng nhập lại. Nếu việc đăng ký thành công, Control sẽ gửi thông báo 
+thành công và chuyển sang trang đăng nhập.  
 
-Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng xuất khỏi hệ thống. Người dùng gửi yêu cầu đăng xuất, yêu cầu sẽ
-được xử lý bởi Control, nếu có lỗi phát sinh sẽ trả ra lỗi cho người dùng và yêu cầu người dùng nhập lại. Việc Control
-sẽ xử lý cụ thể yêu cầu người dùng được chúng em thể hiện trong Hình \ref{backend_logout} trong chương sau.
+\subsubsection{Sơ đồ tuần tự chức năng đăng nhập/đăng xuất}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14.5cm,height=9.5cm]{Images/sequence/sequence_login.png}
+  \caption[Sơ đồ tuần tự chức năng đăng nhập]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng đăng nhập}
+  \label{sequence_login} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng nhập trên hệ thống. Người dùng sẽ gửi yêu cầu đăng nhập, yêu cầu sẽ được xử lý
+bởi Control, nếu có lỗi phát sinh sẽ hiển thị lên màn hình và yêu cầu người dùng nhập lại. Nếu việc đăng ký thành công, Control sẽ gửi thông báo 
+thành công và chuyển sang trang chủ. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=8.5cm]{Images/sequence/sequence_logout.png}
+  \caption[Sơ đồ tuần tự chức năng đăng xuất]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng đăng xuất}
+  \label{sequence_logout} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng xuất khỏi hệ thống. Người dùng sẽ gửi yêu cầu đăng xuất, yêu cầu sẽ được xử lý
+bởi Control. Nếu việc đăng xuất thành công, Control sẽ gửi thông báo 
+thành công và chuyển sang trang đăng nhập. 
+
+\subsubsection{Sơ đồ tuần tự chức năng quên mật khẩu}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=15.5cm]{Images/sequence/sequence_forgot_password.png}
+  \caption[Sơ đồ tuần tự chức năng quên mật khẩu]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng quên mật khẩu}
+  \label{sequence_forgot_pass} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng thay đổi mật khẩu trên hệ thống. Người dùng sẽ gửi nhập email đã đăng ký tài khoản, gửi yêu cầu
+lấy lại mật khẩu. Yêu cầu sẽ được xử lý bởi Control, nếu có lỗi phát sinh sẽ hiển thị lên màn hình và yêu cầu người dùng nhập lại. Control sẽ gửi một mã xác thực
+đến email, người dùng sẽ nhập mã xác thực và thay đổi mật khẩu mới. Nếu việc đăng ký thành công,
+Control sẽ gửi thông báo thành công và chuyển sang đăng nhập.
+
+\subsubsection{Sơ đồ tuần tự chức năng quản lý tài khoản cá nhân}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=10.5cm]{Images/sequence/sequence_manage_info.png}
+  \caption[Sơ đồ tuần tự chức năng quản lý tài khoản cá nhân]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng quản lý tài khoản cá nhân}
+  \label{sequence_account} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem và thay đổi thông tin tài khoản trên hệ thống. Người dùng thay đổi thông tin và gửi yêu cầu, 
+yêu cầu sẽ được xử lý bởi Control, nếu có lỗi phát sinh sẽ hiển thị lên màn hình và yêu cầu người dùng nhập lại. Nếu việc thay đổi thành công, Control sẽ gửi thông báo 
+thành công.  
+
+\subsubsection{Sơ đồ tuần tự chức năng quản lý dữ liệu đo}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=10cm]{Images/sequence/sequence_manage_record.png}
+  \caption[Sơ đồ tuần tự chức năng quản lý quản lý dữ liệu đo]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng quản lý quản lý dữ liệu đo}
+  \label{sequence_manage_record} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem dữ liệu đo từ thiết bị trên hệ thống. Người dùng chọn mở giao diện quản lý dữ liệu đo, 
+API sẽ được xử lý bởi Control, hiện danh sách các bản ghi dữ liệu đo cho người dùng, người dùng có thể chọn một bản ghi dữ liệu và xem đồ thị biểu diễn
+của nó. 
+
+\subsubsection{Sơ đồ tuần tự chức năng quản lý dịch vụ nhắn tin}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=10cm]{Images/sequence/sequence_chat.png}
+  \caption[Sơ đồ tuần tự chức năng quản lý dịch vụ nhắn tin]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng quản lý dịch vụ nhắn tin}
+  \label{sequence_chat} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem và gửi tin nhắn giữa bệnh nhân và bác sĩ trên hệ thống. Người dùng chọn mở giao diện nhắn tin, 
+chọn người mà mình muốn xem/gửi tin nhắn. Khi đó API sẽ được xử lý bởi Control, hiện lịch sử đoạn hội thoại. nếu người dùng gửi tin nhắn, yêu cầu sẽ được 
+xử lý bởi Control gửi tin nhắn đến đối phương và lưu vào cơ sở dữ liệu.
+
+\subsubsection{Sơ đồ tuần tự chức năng tư vấn từ trợ lý ảo}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=9.5cm]{Images/sequence/sequence_chat_ai.png}
+  \caption[Sơ đồ tuần tự chức năng tư vấn từ trợ lý ảo]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng tư vấn từ trợ lý ảo}
+  \label{sequence_chat_ai} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem và gửi tin nhắn với trợ lý ảo trên hệ thống. Người dùng chọn mở giao diện nhắn tin với trợ lý ảo, 
+khi người dùng gửi tin nhắn đến trợ lý ảo, API sẽ được xử lý bởi Control gửi đến trợ lý ảo và phản hồi lại câu trả lời từ trợ lý ảo.
+
+
+\subsubsection{Sơ đồ tuần tự chức năng quản lý bệnh nhân}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=11cm]{Images/sequence/sequence_manage_patient.png}
+  \caption[Sơ đồ tuần tự chức năng quản lý bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng quản lý bệnh nhân}
+  \label{sequence_manage_patient} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình bác sĩ xem, sửa, xóa với danh sách bệnh nhân trên hệ thống. Bác sĩ chọn mở giao diện quản lý bệnh nhân, 
+API sẽ được xử lý bởi Control, hiện danh sách bệnh nhân, bác sĩ có thể chọn một bệnh nhân và xem thông tin của họ. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=13cm]{Images/sequence/sequence_manage_edit_patient.png}
+  \caption[Sơ đồ tuần tự chức năng sửa thông tin bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng sửa thông tin bệnh nhân}
+  \label{sequence_manage_edit_patient} %đặt tên cho ảnh
+\end{figure}
+Nếu bác sĩ muốn chỉnh sửa thông tin bệnh nhân, bác sĩ nhập các thông tin cần sửa và gửi yêu cầu thay đổi, yêu cầu sẽ được xử lý bởi Control, 
+nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi thành công Control sẽ gửi thông báo thành công. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=12cm]{Images/sequence/sequence_manage_delete_patient.png}
+  \caption[Sơ đồ tuần tự chức năng xóa bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng xóa bệnh nhân}
+  \label{sequence_manage_delete_patient} %đặt tên cho ảnh
+\end{figure}
+Nếu bác sĩ yêu cầu xóa bệnh nhân, Control sẽ xử lý xóa bệnh nhân ở cơ sở dữ liệu và trả về thông báo cho bác sĩ.  
+
+
+\subsubsection{Sơ đồ tuần tự chức năng quản lý thiết bị}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=11cm]{Images/sequence/sequence_manage_device.png}
+  \caption[Sơ đồ tuần tự chức năng quản lý thiết bị]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng quản lý thiết bị}
+  \label{sequence_manage_device} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình quản trị viên xem, tạo, sửa, xóa với danh sách thiết bị trên hệ thống. Quản trị viên chọn mở giao diện quản lý thiết bị, 
+API sẽ được xử lý bởi Control, hiện danh sách thiết bị, quản trị viên có thể chọn một thiết bị và xem thông tin của họ. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=11cm]{Images/sequence/sequence_manage_add_device.png}
+  \caption[Sơ đồ tuần tự chức năng thêm thiết bị]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng thêm thiết bị}
+  \label{sequence_manage_add_device} %đặt tên cho ảnh
+\end{figure}
+Nếu quản trị viên muốn tạo một thiết bị mới, quản trị viên nhập các thông tin và gửi yêu cầu tạo, yêu cầu sẽ được xử lý bởi Control, nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu tạo thành công Control 
+sẽ gửi thông báo thành công. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=13cm]{Images/sequence/sequence_manage_edit_device.png}
+  \caption[Sơ đồ tuần tự chức năng sửa thông tin thiết bị]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng sửa thông tin thiết bị}
+  \label{sequence_manage_edit_device} %đặt tên cho ảnh
+\end{figure}
+Nếu quản trị viên muốn chỉnh sửa thông tin thiết bị, quản trị viên nhập các thông tin cần sửa và gửi yêu cầu thay đổi, yêu cầu sẽ được xử lý
+bởi Control, nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi thành công Control sẽ gửi thông báo thành công. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=12cm]{Images/sequence/sequence_manage_delete_device.png}
+  \caption[Sơ đồ tuần tự chức năng xóa thiết bị]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng xóa thiết bị}
+  \label{sequence_manage_delete_device} %đặt tên cho ảnh
+\end{figure}
+Nếu quản trị viên yêu cầu xóa thiết bị, Control sẽ xử lý xóa thiết bị ở cơ sở dữ liệu và trả về thông báo cho quản trị viên.
+
+\subsubsection{Sơ đồ tuần tự chức năng quản lý tài khoản người dùng}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=11cm]{Images/sequence/sequence_manage_user.png}
+  \caption[Sơ đồ tuần tự chức năng quản lý người dùng]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng quản lý người dùng}
+  \label{sequence_manage_user} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình quản trị viên xem, tạo, sửa, xóa với danh sách tài khoản người dùng trên hệ thống. Quản trị viên chọn mở giao diện
+quản lý tài khoản người dùng, API sẽ được xử lý bởi Control, hiện danh sách thiết bị, quản trị viên có thể chọn một người dùng và xem thông tin của họ. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=11cm]{Images/sequence/sequence_manage_add_user.png}
+  \caption[Sơ đồ tuần tự chức năng thêm người dùng]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng thêm người dùng}
+  \label{sequence_manage_add_user} %đặt tên cho ảnh
+\end{figure}
+Nếu quản trị viên muốn thêm một người dùng mới, quản trị viên nhập các thông tin và gửi yêu cầu tạo, yêu cầu sẽ được xử lý bởi Control, nếu có lỗi phát sinh sẽ hiển thị lên màn hình,
+nếu tạo thành công Control sẽ gửi thông báo thành công. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=13cm]{Images/sequence/sequence_manage_edit_user.png}
+  \caption[Sơ đồ tuần tự chức năng sửa thông tin người dùng]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng sửa thông tin người dùng}
+  \label{sequence_manage_edit_user} %đặt tên cho ảnh
+\end{figure}
+Nếu quản trị viên muốn chỉnh sửa thông tin người dùng, quản trị viên nhập các thông tin cần sửa và gửi yêu cầu thay đổi, yêu cầu sẽ được xử lý bởi Control, nếu có lỗi phát sinh sẽ hiển thị lên màn hình,
+nếu thay đổi thành công Control sẽ gửi thông báo thành công. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=12cm]{Images/sequence/sequence_manage_delete_user.png}
+  \caption[Sơ đồ tuần tự chức năng xóa người dùng]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng xóa người dùng}
+  \label{sequence_manage_delete_user} %đặt tên cho ảnh
+\end{figure}
+Nếu quản trị viên yêu cầu xóa tài khoản người dùng, Control sẽ xử lý xóa tài khoản ở cơ sở dữ liệu và trả về thông báo cho quản trị viên.
+
 
 \subsection{Phân tích dữ liệu}
 
@@ -181,7 +1010,8 @@ Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em x
   \label{ttlk} %đặt tên cho ảnh
 \end{figure}
 
-\subsection{Chuyển mô hình thực thể liên kết sang mô hình quan hệ}
+\subsection{Mô hình quan hệ}
+Dựa trên phần mô tả các thực thể, chúng em sẽ chuyển mô hình thực thể liên kết sang mô hình quan hệ như sau:
 
 \begin{itemize}
   \item Người dùng (\textbf{ID người dùng}, ID tài khoản, Tên người dùng, Email, Mật khẩu, Ngày sinh, Giới tính, Số điện thoại, Quyền, Thông tin người dùng)
