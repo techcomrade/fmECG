@@ -13,7 +13,7 @@ router.get("", commonMiddleware.validationToken, RecordController.getAll);
 router.post(
   "",
   // commonMiddleware.validationToken,
-  uploadController.setUploadToDisk,
+  UploadController.setUploadToDisk,
   RecordController.uploadFileRecord,
   RecordController.createRecord
 );
