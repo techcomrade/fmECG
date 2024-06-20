@@ -6,7 +6,7 @@ const {
 } = require("../middlewares/CommonMiddleware");
 const UserMiddleware = require("../middlewares/UserMiddleware");
 
-const uploadController = require("../controllers/uploadController");
+const UploadController = require("../controllers/UploadController");
 const FileUploadService = require("../services/FileService");
 
 const router = express.Router();
@@ -21,7 +21,7 @@ router.post(
 
 router.post(
   "/upload",
-  uploadController.setUploadToDrive,
+  UploadController.setUploadToDrive,
   FileUploadService.uploadFile.bind(FileUploadService),
   UserMiddleware.checkUserId,
   UserController.uploadImage

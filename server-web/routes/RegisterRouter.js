@@ -2,7 +2,7 @@ const express = require("express");
 const RegisterMiddleware = require("../middlewares/RegisterMiddleware");
 const RegisterController = require("../controllers/RegisterController");
 const FileUploadService = require("../services/FileService");
-const uploadController = require("../controllers/UploadController");
+const UploadController = require("../controllers/UploadController");
 
 const router = express.Router();
 

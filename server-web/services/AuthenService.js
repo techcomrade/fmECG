@@ -25,7 +25,7 @@ class AuthenService extends CommonService {
         const accountInfo = await UserRepository.getUserByAccountId(accountData.dataValues?.id)
         if (!accountInfo) return false;
         const userInfo = {
-          id: accountData.dataValues.id,
+          id: accountInfo.dataValues.id,
           role: accountInfo.dataValues.role
         }
         const access_token = TokenService.renderToken(userInfo, expiredTime);
