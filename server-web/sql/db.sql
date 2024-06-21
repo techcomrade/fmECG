@@ -93,7 +93,7 @@ DROP TABLE IF EXISTS `device_frequency`;
 CREATE TABLE `device_frequency`(
     `id` varchar(255) NOT NULL,
     `device_id` varchar(255),
-    `frequency_name` varchar(255) NOT NULL,
+    `detail_name` varchar(255) NOT NULL,
     `information` varchar(255),
     `value` double NOT NULL, 
     `created_at` bigint,
@@ -265,19 +265,19 @@ VALUES('4404f003-1192-4aae-86e0-69dc273f181c', '4df9ace1-0229-4756-b850-51a83cb0
 INSERT INTO `devices`(`id`, `user_id`,`doctor_id`, `device_name`, `information`, `device_type`, `start_date`, `status`, `created_at`, `updated_at`)
 VALUES('f224fd99-53fd-44c5-bcd4-5b6e3c960e78', '37ae5629-54ec-46e0-be65-9af6bd580b2b','f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', 'ECG', 'do dien tim', 2, '1711324367820', 1, '1711324367820', '1711364367231');
 
-INSERT INTO `device_frequency` (`id`, `device_id`, `frequency_name`, `information`, `value`, `created_at`, `updated_at`) 
+INSERT INTO `device_frequency` (`id`, `device_id`, `detail_name`, `information`, `value`, `created_at`, `updated_at`) 
 VALUES ('f86068c7-08ed-4dfc-b96d-e0e1c0ae09df', '4404f003-1192-4aae-86e0-69dc273f181c', 'spo2(ms)', 'tín hiệu điện tim', 100, '1711115945125', '1711115945125');
 
-INSERT INTO `device_frequency` (`id`, `device_id`, `frequency_name`, `information`, `value`, `created_at`, `updated_at`) 
+INSERT INTO `device_frequency` (`id`, `device_id`, `detail_name`, `information`, `value`, `created_at`, `updated_at`) 
 VALUES ('b5dc2e2a-dcb1-4903-9054-02e242f5cd55', '4404f003-1192-4aae-86e0-69dc273f181c', 'so2(ms)', 'tín hiệu điện tim', 200, '1711115945125', '1711115945125');
 
-INSERT INTO `device_frequency` (`id`, `device_id`, `frequency_name`, `information`, `value`, `created_at`, `updated_at`) 
+INSERT INTO `device_frequency` (`id`, `device_id`, `detail_name`, `information`, `value`, `created_at`, `updated_at`) 
 VALUES ('f86068c7-08ed-4dfc-b96d-e0e1c0ae19df', '2a3cec92-682a-4d4e-be35-aff01cc5011a', 'o2(ms)', 'tín hiệu điện tim', 300, '1711115945125', '1711115945125');
 
-INSERT INTO `device_frequency` (`id`, `device_id`, `frequency_name`, `information`, `value`, `created_at`, `updated_at`) 
+INSERT INTO `device_frequency` (`id`, `device_id`, `detail_name`, `information`, `value`, `created_at`, `updated_at`) 
 VALUES ('f86068c7-08ed-4dfc-b96d-e0e1c0ae29df', 'f224fd99-53fd-44c5-bcd4-5b6e3c960e78', 's2(ms)', 'tín hiệu điện tim', 100, '1711115945125', '1711115945125');
 
-INSERT INTO `device_frequency` (`id`, `device_id`, `frequency_name`, `information`, `value`, `created_at`, `updated_at`) 
+INSERT INTO `device_frequency` (`id`, `device_id`, `detail_name`, `information`, `value`, `created_at`, `updated_at`) 
 VALUES ('f86068c7-08ed-4dfc-b96d-e0e1c0ae08df', 'f224fd99-53fd-44c5-bcd4-5b6e3c960e78', 'p2(ms)', 'tín hiệu điện tim', 100, '1711115945125', '1711115945125');
 
 INSERT INTO `records`(`id`, `user_id`, `device_id`, `record_type`, `start_time`, `end_time`, `data_rec_url`, `created_at`, `updated_at`)
