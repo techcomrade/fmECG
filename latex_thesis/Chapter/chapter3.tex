@@ -104,56 +104,10 @@ Tiếp theo để phân tích cụ thể hơn từng luồng trong hệ thống 
 tự. 
 \newpage
 
-
 \subsection{Thiết kế cơ sở dữ liệu}
 \label{design_database}
 
-
-\subsubsection{Chuyển mô hình thực thể liên kết sang mô hình quan hệ}
-
-\begin{itemize}
-  \item Người dùng (\textbf{ID người dùng}, Mật khẩu, Email, Tên, Ngày sinh, Số điện thoại, Quyền)
-  \item Bản ghi ECG (\textbf{ID bản ghi ECG}, ID người dùng, ID thiết bị, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo, Loại cảm biến)
-  \item Danh mục tin tức (\textbf{ID danh mục tin tức}, Tên danh mục tin tức, Mô tả danh mục tin tức)
-  \item Tin tức (\textbf{ID tin tức}, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn, Đường dẫn hình ảnh)
-  \item Phân công bệnh nhân - bác sĩ (\textbf{ID phân công}, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu)
-  \item Mã thông báo đặt lại mật khẩu (\textbf{ID mã thông báo}, ID người dùng, Mã thông báo, Thời gian hết hạn)
-  \item Phiên đăng nhập (\textbf{ID phiên đăng nhập}, ID người dùng, Mã phiên đăng nhập, Thời gian hết hạn)
-  \item Thông tin hội thoại (\textbf{ID hội thoại}, Danh sách ID người dùng trong hội thoại, thông tin tin nhắn gần nhất)
-  \item Thông tin tin nhắn (\textbf{ID tin nhắn}, Nội dung tin nhắn, ID người gửi tin nhắn, thời gian gửi tin nhắn, ID hội thoại)
-  \item Firebase token người dùng (\textbf{ID token}, Firebase token, ID người dùng)
-\end{itemize}
-
-
-\subsubsection{Chuẩn hoá 3NF}
-Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì không có thuộc tính lặp lại và các thuộc tính không phụ thuộc vào một tập hợp con của khóa chính.
-
-\paragraph{Chuẩn hoá bảng Người dùng}
-\mbox{}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Người dùng}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID người dùng, Mật khẩu, Email, Tên, Ngày sinh, Số điện thoại,
-    Quyền \\ % Thêm \textbf{} cho abc
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi người dùng có một ID riêng, có duy nhất mật khẩu, email, tên, ngày sinh, số điện thoại,
-    quyền & \parbox[t]{\linewidth}{$\text{ID người dùng} \rightarrow$ mật khẩu, email, tên, ngày sinh, số điện thoại, quyền} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID người dùng}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Người dùng đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-
 \subsubsection{Từ điển dữ liệu}
-
-
 
 \begin{table}[H]
   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng user}
@@ -436,107 +390,35 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
  quản lý như hình \ref{dashboard}, còn nếu sai thông tin thì sẽ có popup thông báo sai email hoặc mật khẩu hiện lên
  
 
-\subsection{Sơ đồ lớp cho ứng dụng di động, website và server}
-
-\subsubsection{Server và Website quản trị hệ thống}
-
-
-\begin{enumerate}[a)]
-\item Danh sách các class diagram
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=13cm]{Images/server/class/class_controller.png}
-  \caption[Sơ đồ lớp của package Controllers]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Controllers}
-  \label{class_controller} %đặt tên cho ảnh
-\end{figure}
-
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=16cm]{Images/server/class/class_model.png}
-  \caption[Sơ đồ lớp của package Models]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Models}
-  \label{class_model} %đặt tên cho ảnh
-\end{figure}
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=14cm,height=6cm]{Images/server/class/class_route.png}
-  \caption[Sơ đồ lớp của package Routes]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package Routes}
-  \label{class_route} %đặt tên cho ảnh
-\end{figure}
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=14cm]{Images/server/class/class_admin.png}
-  \caption[Sơ đồ lớp của package View và Admin]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ lớp của package View và Admin}
-  \label{class_admin} %đặt tên cho ảnh
-\end{figure}
-
-
-\begin{itemize}
-
-  \item Package "Controllers":
-
-  Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng.
-  \item Package "Models":
-  
-  Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu.
-  \item Package "Routes":
-  
-  Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng.
-  \item Package "Views":
-  
-  Chứa các view components đại diện cho giao diện người dùng.
-  \item Package "Admin":
-  
-  Chứa các thành phần liên quan đến trang Admin dashboard.
-  \item Package "Resources" (Trong "Admin"):
-  
-  Chứa các lớp Resource (nguồn tài nguyên) đại diện cho các tài nguyên của trang Admin dashboard, bao gồm: AdminResource, DoctorResource, PatientResource, ECGRecordResource, NewsResource, NewsCategoryResource và PatientDoctorAssignmentResource.
-  \item Package "Components" (Trong "Admin"):
-  
-  Chứa các lớp Components đại diện cho các thành phần giao diện của trang Admin dashboard, bao gồm: ComponentLoader, DashboardViewComponent, NewsViewComponent, ECGRecordViewComponent và PatientDoctorAssignmentViewComponent.
-\end{itemize}
-
-
-
-\item Mối quan hệ
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=12cm]{Images/server/class/class_relation.png}
-  \caption[Mối quan hệ giữa các class ở phía server]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía server}
-  \label{class_relation} %đặt tên cho ảnh
-\end{figure}
-Hình \ref{class_relation} mô tả mối quan hệ giữa các class ở phía server để cung cấp API 
-Các class ở package Controllers sử dụng  đối tượng của các class ở package Models. 
-Và tương tự các class ở package Routes cũng sử dụng  đối tượng của các class ở package Controllers.
- 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=15cm]{Images/server/class/class_admin_relation.png}
-  \caption[Mối quan hệ giữa các class ở phía website quản trị]{\bfseries \fontsize{12pt}{0pt}\selectfont Mối quan hệ giữa các class ở phía website quản trị}
-  \label{class_admin_relation} %đặt tên cho ảnh
-\end{figure}
-Hình \ref{class_admin_relation} mô tả mối quan hệ giữa các class ở phía website quản trị. 
-Các class ở package Resources sử dụng  đối tượng của các class ở package Models. 
-Class ở package Components sử dụng  đối tượng của các class ở package Views. 
-Rồi class AdminController ở package Controllers sử dụng  đối tượng của các class ở package Resources và Components. 
-Và class AdminRoute ở package Routes sử dụng  đối tượng của class AdminController
-\end{enumerate}
-
-
-
 \subsection{Thiết kế các chức năng cho website và server}
 
 \subsubsection{Thiết kế API}
 
 
 \begin{enumerate}[a)]
+  \item API liên quan đến việc xác thực người dùng
+
+
+\begin{table}[H]
+  \centering
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến việc xác thực người dùng}
+  \begin{tabularx}{0.9\textwidth}{
+  | >{\raggedright\arraybackslash}X
+  | >{\raggedright\arraybackslash}m{2cm}
+  | >{\raggedright\arraybackslash}X|
+  }
+  \hline
+  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+  api/register   &   POST  & Đăng ký tài khoản \\ \hline
+  api/login   &    POST    & Đăng nhập vào hệ thống \\ \hline
+  api/logout  &   GET     & Đăng xuất khỏi hệ thống \\ \hline
+  api/reset-password  &     POST   &  Gửi reset token đến email của người dùng để reset mật khẩu \\  \hline
+  api/reset-password/reset &   POST     & Giúp reset lại mật khẩu mới với verify token được nhận từ api: api/reset-password  \\ \hline
+
+  \end{tabularx}
+  \label{table_api_auth}
+\end{table}
+
   \item API liên quan đến thông tin người dùng
   
 
@@ -559,31 +441,7 @@ Và class AdminRoute ở package Routes sử dụng  đối tượng của class
     \label{table_api_user}
 \end{table}
 
-\item API liên quan đến việc xác thực người dùng
-
-
-\begin{table}[H]
-  \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến việc xác thực người dùng}
-  \begin{tabularx}{0.9\textwidth}{
-  | >{\raggedright\arraybackslash}X
-  | >{\raggedright\arraybackslash}m{2cm}
-  | >{\raggedright\arraybackslash}X|
-  }
-  \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
- api/register   &   POST  & Đăng ký tài khoản \\ \hline
- api/login   &    POST    & Đăng nhập vào hệ thống \\ \hline
- api/logout  &   GET     & Đăng xuất khỏi hệ thống \\ \hline
- api/reset-password  &     POST   &  Gửi reset token đến email của người dùng để reset mật khẩu \\  \hline
- api/reset-password/reset &   POST     & Giúp reset lại mật khẩu mới với verify token được nhận từ api: api/reset-password  \\ \hline
-
-  \end{tabularx}
-  \label{table_api_auth}
-\end{table}
-
-
-\item API liên quan đến tin tức
+\item API liên quan đến chat
 
 
 \begin{table}[H]
@@ -603,7 +461,7 @@ Và class AdminRoute ở package Routes sử dụng  đối tượng của class
  api/ news/category/\{:categoryId\} &   GET     & Lấy toàn bộ thông tin của tin tức theo id của loại tin \\ \hline
 
   \end{tabularx}
-  \label{table_api_news}
+  \label{table_api_chats}
 \end{table}
 
 \item API liên quan đến bản ghi ECG
@@ -626,6 +484,28 @@ Và class AdminRoute ở package Routes sử dụng  đối tượng của class
 
   \end{tabularx}
   \label{table_api_ecg}
+\end{table}
+
+\item API liên quan đến quản lý thiết bị
+
+
+\begin{table}[H]
+  \centering
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến bản ghi ECG}
+  \begin{tabularx}{0.9\textwidth}{
+  | >{\raggedright\arraybackslash}X
+  | >{\raggedright\arraybackslash}m{2cm}
+  | >{\raggedright\arraybackslash}X|
+  }
+  \hline
+  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+ api/ecg-records/upload   &   POST  & Tải dữ liệu của phiên đo ECG lên server \\ \hline
+ api/ecg-records/patient/\{:patientId\}   &    GET    & Lấy danh sách thông tin các phiên đo ECG của bệnh nhân \\ \hline
+ api/ecg-records/doctor/\{:doctorId\} &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sỹ \\ \hline
+ api/ecg-records/record-data/\{:recordId\}  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
+
+  \end{tabularx}
+  \label{table_api_device}
 \end{table}
 
 
@@ -659,6 +539,23 @@ Và class AdminRoute ở package Routes sử dụng  đối tượng của class
 
 \subsubsection{Sơ đồ tuần tự}
 
+% ------------------------Auth----------------------
+
+
+\paragraph{API liên quan đến việc xác thực người dùng}
+\mbox{}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=12cm]{Images/server/sequence/server/login.png}
+  \caption[Sơ đồ tuần tự cho API đăng nhập vào hệ thống]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API đăng nhập vào hệ thống }
+  \label{backend_login} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{backend_login}  mô tả quá trình xác thực người dùng đăng nhập vào ứng dụng. Người dùng gửi yêu cầu đăng nhập, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. AuthController kiểm tra thông tin người dùng, tạo token nếu đúng thông tin đăng nhập và trả về response cho người dùng.
+
+% ----------------------------------------------
+
 
 % ------------------------User----------------------
 
@@ -682,12 +579,10 @@ Hình \ref{getUserById} mô tả quá trình lấy thông tin người dùng d�
 
 % ----------------------------------------------
 
+% ------------------------Chat----------------------
 
 
-% ------------------------Auth----------------------
-
-
-\paragraph{API liên quan đến việc xác thực người dùng}
+\paragraph{API liên quan đến việc chat}
 \mbox{}
 
 \begin{figure}[H]
@@ -717,7 +612,21 @@ Hình \ref{getEcgRecordsByDoctor} mô tả quá trình lấy dữ liệu ECG (El
 
 % -----------------------------------------------------
 
+% -------------------------Device----------------------------
+\paragraph{API liên quan đến thiết bị}
+\mbox{}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getEcgRecordsByDoctor.png}
+  \caption[Sơ đồ tuần tự cho API lấy thông tin phiên đo ECG của các bệnh nhân được quản lý bởi một bác sĩ ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy thông tin phiên đo ECG của các bệnh nhân được quản lý bởi một bác sĩ }
+  \label{getEcgRecordsByDoctor} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{getEcgRecordsByDoctor} mô tả quá trình lấy dữ liệu ECG (Electrocardiogram) của tất cả bệnh nhân được quản lý bởi một bác sĩ trong ứng dụng. Người dùng (bác sĩ) gửi yêu cầu lấy dữ liệu ECG của tất cả bệnh nhân mà họ quản lý, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi ECGRecordController. ECGRecordController tiếp tục truy vấn ECGRecordModel để lấy dữ liệu ECG dựa trên doctorId (ID của bác sĩ) được truyền vào từ yêu cầu. Sau đó, danh sách dữ liệu ECG của các bệnh nhân được trả về từ ECGRecordModel và được gửi trở lại ECGRecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách dữ liệu ECG cho bác sĩ. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (bác sĩ).
+
+
+% -----------------------------------------------------
 
 % -----------------------PatientDoctor------------------------------
 
