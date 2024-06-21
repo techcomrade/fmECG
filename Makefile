@@ -13,7 +13,7 @@ log:
 	docker compose logs -f --tail=10
 
 node:
-	docker exec -it node-fmecg bash
+	docker exec -it node-fmecg sh
 
 db:
 	docker exec -it database-fmecg sh
