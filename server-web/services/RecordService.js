@@ -2,7 +2,7 @@ const CommonService = require("./CommonService");
 const RecordRepository = require("../models/RecordModel/RecordRepository");
 const UserRepository = require("../models/UserModel/UserRepository");
 const DeviceRepository = require("../models/DeviceModel/DeviceRepository");
-const DeviceFrequencyService = require("../services/DeviceFrequencyService");
+const DeviceDetailsService = require("../services/DeviceDetailsService");
 const FileService = require("./FileService");
 const util = require("util");
 const { v4: uuidv4 } = require("uuid");
@@ -126,7 +126,7 @@ class RecordService extends CommonService {
   }
   async getDataRecord(filepath, deviceId) {
     try {
-      const device_freq = await DeviceFrequencyService.getByDeviceId(deviceId);
+      const device_freq = await DeviceDetailsService.getByDeviceId(deviceId);
       let device_freq_value = device_freq[0]?.dataValues.value ?? 100;
       const data = await this.readFileRecord(filepath);
       if (!data) return;
