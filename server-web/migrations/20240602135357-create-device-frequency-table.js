@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       value: {
-        type: Sequelize.DOUBLE,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       detail_type: {
