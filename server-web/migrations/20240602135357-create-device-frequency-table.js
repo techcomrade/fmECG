@@ -16,7 +16,7 @@ module.exports = {
           key: 'id',
         },
       },
-      details_name: {
+      detail_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
