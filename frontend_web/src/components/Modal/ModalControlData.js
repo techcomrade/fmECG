@@ -16,7 +16,6 @@ const ModalComponent = (props, ref) => {
       ...data,
       ...handleData(values)
     };
-
     const res = await props?.submitFunction(payload);
     if (!res?.error) {
       setIsOpen(false);

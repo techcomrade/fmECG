@@ -63,14 +63,14 @@ const DeviceDetailComponent = (props, ref) => {
       key: 'information',
     },
     {
-      title: 'Giá trị',
+      title: 'Tần số lấy mẫu (Hz)',
       dataIndex: 'value',
       key: 'value',
     },
     {
-      title: 'Đơn vị',
-      dataIndex: 'frequency_name',
-      key: 'frequency_name',
+      title: 'Loại cảm biến',
+      dataIndex: 'detail_name',
+      key: 'detail_name',
     },
   ]
 

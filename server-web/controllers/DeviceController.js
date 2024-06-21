@@ -1,7 +1,7 @@
 const DeviceService = require("../services/DeviceService");
 const UserService = require("../services/UserService");
 const RecordService = require("../services/RecordService");
-const DeviceFreqService = require("../services/DeviceFrequencyService");
+const DeviceDetailsService = require("../services/DeviceDetailsService");
 
 class DeviceController {
   async getAllData(req, res) {
@@ -124,16 +124,16 @@ class DeviceController {
         });
       }
       let checkExistRecord = await RecordService.getRecordByDeviceId(id);
-      let checkExistDeviceFreq = await DeviceFreqService.getByDeviceId(id);
-      let DeviceFrequencyData = [];
+      let checkExistDeviceFreq = await DeviceDetailsService.getByDeviceId(id);
+      let DeviceDetailsData = [];
       if (checkExistDeviceFreq) {
         checkExistDeviceFreq.forEach((elementDF) => {
           let frequency = {
-            frequency_name: elementDF.frequency_name,
+            detail_name: elementDF.detail_name,
             information: elementDF.information,
             value: elementDF.value,
           };
-          DeviceFrequencyData.push(frequency);
+          DeviceDetailsData.push(frequency);
         });
       }
 
@@ -148,7 +148,7 @@ class DeviceController {
           start_date: checkExistDevice.dataValues.start_date,
           status: checkExistDevice.dataValues.status,
           recordCount: checkExistRecord.length,
-          frequency: DeviceFrequencyData,
+          frequency: DeviceDetailsData,
         },
       });
     } catch (err) {

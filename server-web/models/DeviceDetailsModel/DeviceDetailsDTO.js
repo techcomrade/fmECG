@@ -2,8 +2,8 @@ const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelize");
 const devices = require("../DeviceModel/DeviceDTO");
 
-const DeviceFrequency = sequelize.define(
-  "device_frequency",
+const DeviceDetails = sequelize.define(
+  "device_details",
   {
     id: {
       type: Sequelize.STRING,
@@ -17,7 +17,7 @@ const DeviceFrequency = sequelize.define(
         key: "id",
       },
     },
-    frequency_name: {
+    detail_name: {
       type: Sequelize.STRING,
       allowNull: false,
     },
@@ -25,7 +25,7 @@ const DeviceFrequency = sequelize.define(
       type: Sequelize.STRING,
     },
     value: {
-      type: Sequelize.DOUBLE,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     created_at: {
@@ -45,4 +45,4 @@ const DeviceFrequency = sequelize.define(
   }
 );
 
-module.exports = DeviceFrequency;
+module.exports = DeviceDetails;

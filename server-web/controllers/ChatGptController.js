@@ -18,7 +18,7 @@ class ChatGptController {
     console.log(`[G]:::Get history message `);
     return res.status(200).json({
         message: "",
-        metadata: await ChatGptService.history
+        metadata: await ChatGptService.history()
     })
     }
 }

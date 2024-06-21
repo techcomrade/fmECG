@@ -1,8 +1,8 @@
-const DeviceFrequencyDTO = require("./DeviceFrequencyDTO");
+const DeviceDetailsDTO = require("./DeviceDetailsDTO");
 
-class DeviceFrequencyModel {
+class DeviceDetailsModel {
   async getAllData() {
-    const devices = await DeviceFrequencyDTO.findAll({
+    const devices = await DeviceDetailsDTO.findAll({
       attributes: {
         exclude: ["created_at", "updated_at"],
       },
@@ -10,7 +10,7 @@ class DeviceFrequencyModel {
     return devices;
   }
   async deleteById(id, t) {
-    return await DeviceFrequencyDTO.destroy(
+    return await DeviceDetailsDTO.destroy(
       {
         where: {
           id: id,
@@ -22,33 +22,33 @@ class DeviceFrequencyModel {
     );
   }
   async checkById(id) {
-    return await DeviceFrequencyDTO.findOne({
+    return await DeviceDetailsDTO.findOne({
       where: {
         id: id,
       },
     });
   }
   async checkByUserId(user_id) {
-    return await DeviceFrequencyDTO.findAll({
+    return await DeviceDetailsDTO.findAll({
       where: {
         user_id: user_id,
       },
     });
   }
 
-  async add(deviceFrequency) {
-    return await DeviceFrequencyDTO.create({
-      id: deviceFrequency.id,
-      device_id: deviceFrequency.device_id,
-      frequency_name: deviceFrequency.frequency_name,
-      information: deviceFrequency.information ?? "",
-      value: deviceFrequency.value,
-      created_at: deviceFrequency.created_at
+  async add(DeviceDetails) {
+    return await DeviceDetailsDTO.create({
+      id: DeviceDetails.id,
+      device_id: DeviceDetails.device_id,
+      detail_name: DeviceDetails.detail_name,
+      information: DeviceDetails.information ?? "",
+      value: DeviceDetails.value,
+      created_at: DeviceDetails.created_at
     });
   }
   
   async checkByDeviceId(deviceId) {
-    return await DeviceFrequencyDTO.findAll({
+    return await DeviceDetailsDTO.findAll({
       where: {
         device_id: deviceId,
       }
@@ -56,9 +56,9 @@ class DeviceFrequencyModel {
   }
   
   async updateById(deviceFreq, id) {
-    return await DeviceFrequencyDTO.update({
+    return await DeviceDetailsDTO.update({
       device_id: deviceFreq.device_id,
-      frequency_name: deviceFreq.frequency_name,
+      detail_name: deviceFreq.detail_name,
       information: deviceFreq.information,
       value: deviceFreq.value,
       updated_at: deviceFreq.updated_at,
@@ -70,4 +70,4 @@ class DeviceFrequencyModel {
   }
 }
 
-module.exports = new DeviceFrequencyModel();
+module.exports = new DeviceDetailsModel();

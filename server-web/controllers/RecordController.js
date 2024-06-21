@@ -1,6 +1,6 @@
 const { response } = require("express");
 const RecordService = require("../services/RecordService");
-const DeviceFrequencyService = require("../services/DeviceFrequencyService");
+const DeviceDetailsService = require("../services/DeviceDetailsService");
 const fs = require("fs");
 class RecordController {
   async getAll(req, res, next) {
