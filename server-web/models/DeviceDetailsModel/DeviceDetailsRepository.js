@@ -1,4 +1,6 @@
 const DeviceDetailsDTO = require("./DeviceDetailsDTO");
+const { Sequelize, QueryTypes } = require("sequelize");
+const sequelize = require("../../config/sequelize");
 
 class DeviceDetailsModel {
   async getAllData() {
@@ -43,30 +45,63 @@ class DeviceDetailsModel {
       detail_name: DeviceDetails.detail_name,
       information: DeviceDetails.information ?? "",
       value: DeviceDetails.value,
-      created_at: DeviceDetails.created_at
+      created_at: DeviceDetails.created_at,
     });
   }
-  
-  async checkByDeviceId(deviceId) {
+
+  async getByDeviceId(deviceId) {
     return await DeviceDetailsDTO.findAll({
       where: {
         device_id: deviceId,
-      }
-    })
+      },
+    });
   }
-  
-  async updateById(deviceFreq, id) {
-    return await DeviceDetailsDTO.update({
-      device_id: deviceFreq.device_id,
-      detail_name: deviceFreq.detail_name,
-      information: deviceFreq.information,
-      value: deviceFreq.value,
-      updated_at: deviceFreq.updated_at,
-    },{
-      where: {
-        id: id,
+
+  async getByDeviceIdAndFreq(device_id) {
+    return await sequelize.query(
+      "SELECT detail.detail_name, detail.information, detail.value FROM fmecg.devices as de LEFT JOIN fmecg.device_details as detail ON de.id = detail.device_id WHERE detail.detail_type = 1 AND de.id = :id",
+      {
+        replacements: { id: device_id },
+        type: QueryTypes.SELECT,
       }
-    })
+    );
+  }
+
+  async getByDeviceIdAndConnection(device_id) {
+    return await sequelize.query(
+      "SELECT detail.detail_name, detail.information, detail.value FROM fmecg.devices as de LEFT JOIN fmecg.device_details as detail ON de.id = detail.device_id WHERE detail.detail_type = 2 AND de.id = :id",
+      {
+        replacements: { id: device_id },
+        type: QueryTypes.SELECT,
+      }
+    );
+  }
+
+  async getByDeviceIdAndStorage(device_id) {
+    return await sequelize.query(
+      "SELECT detail.detail_name, detail.information, detail.value FROM fmecg.devices as de LEFT JOIN fmecg.device_details as detail ON de.id = detail.device_id WHERE detail.detail_type = 3 AND de.id = :id",
+      {
+        replacements: { id: device_id },
+        type: QueryTypes.SELECT,
+      }
+    );
+  }
+
+  async updateById(deviceFreq, id) {
+    return await DeviceDetailsDTO.update(
+      {
+        device_id: deviceFreq.device_id,
+        detail_name: deviceFreq.detail_name,
+        information: deviceFreq.information,
+        value: deviceFreq.value,
+        updated_at: deviceFreq.updated_at,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
   }
 }
 

@@ -117,38 +117,31 @@ class DeviceController {
     console.log(`[P]:Get device by id`, req.params.id);
     const id = req.params.id;
     try {
-      let checkExistDevice = await DeviceService.getDeviceById(id);
-      if (!checkExistDevice?.dataValues) {
+      const getDeviceById = await DeviceService.getDeviceById(id);
+      if (!getDeviceById?.dataValues) {
         return res.status(400).json({
           message: "no device found",
         });
       }
-      let checkExistRecord = await RecordService.getRecordByDeviceId(id);
-      let checkExistDeviceFreq = await DeviceDetailsService.getByDeviceId(id);
-      let DeviceDetailsData = [];
-      if (checkExistDeviceFreq) {
-        checkExistDeviceFreq.forEach((elementDF) => {
-          let frequency = {
-            detail_name: elementDF.detail_name,
-            information: elementDF.information,
-            value: elementDF.value,
-          };
-          DeviceDetailsData.push(frequency);
-        });
-      }
-
+      const checkExistRecord = await RecordService.getRecordByDeviceId(id);
+      const getFreq = await DeviceDetailsService.getByDeviceIdAndFreq(id);
+      const getConnection =
+        await DeviceDetailsService.getByDeviceIdAndConnection(id);
+      const getStorage = await DeviceDetailsService.getByDeviceIdAndStorage(id);
       return res.status(200).json({
         message: "Get device by id",
         metadata: {
-          id: checkExistDevice.dataValues.id,
-          user_id: checkExistDevice.dataValues.user_id,
-          device_name: checkExistDevice.dataValues.device_name,
-          information: checkExistDevice.dataValues.information,
-          device_type: checkExistDevice.dataValues.device_type,
-          start_date: checkExistDevice.dataValues.start_date,
-          status: checkExistDevice.dataValues.status,
+          id: getDeviceById.dataValues.id,
+          user_id: getDeviceById.dataValues.user_id,
+          device_name: getDeviceById.dataValues.device_name,
+          information: getDeviceById.dataValues.information,
+          device_type: getDeviceById.dataValues.device_type,
+          start_date: getDeviceById.dataValues.start_date,
+          status: getDeviceById.dataValues.status,
+          frequency: getFreq,
+          connection: getConnection,
+          storage: getStorage,
           recordCount: checkExistRecord.length,
-          frequency: DeviceDetailsData,
         },
       });
     } catch (err) {
@@ -226,9 +219,7 @@ class DeviceController {
   }
   async getDevicesById(req, res, next) {
     console.log(`[P]:::Get devices by user id: `, req.params.id);
-    const devicesById = await DeviceService.getDevicesByUserId(
-      req.params.id
-    );
+    const devicesById = await DeviceService.getDevicesByUserId(req.params.id);
     return res.status(200).json({
       message: "Get devices by user id successful!",
       metadata: devicesById,
