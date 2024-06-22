@@ -676,7 +676,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
   \end{table}
 
-\subsubsection{Thẻ CRC lớp Quản lý bác sĩ - bệnh nhân}
+\subsubsection{Thẻ CRC lớp Phân công bác sĩ - bệnh nhân}
   \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Quản lý bác sĩ - bệnh nhân}
     \centering
@@ -685,7 +685,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|X|}
       \hline
-      \textbf{Class name:} Quản lý bác sĩ - bệnh nhân & \textbf{ID:} 5 & \textbf{Type:} Concrete, Domain \\
+      \textbf{Class name:} Phân công bác sĩ - bệnh nhân & \textbf{ID:} 5 & \textbf{Type:} Concrete, Domain \\
       \hline
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
@@ -726,6 +726,404 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       Aggregation:  
       
       Association: Người dùng 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+\subsubsection{Thẻ CRC lớp Token đăng nhập}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Token tài khoản}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|X|}
+      \hline
+      \textbf{Class name:} Token đăng nhập & \textbf{ID:} 6 & \textbf{Type:} Concrete, Domain \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \textbf{Description:} Đối tượng mô tả thông tin token tài khoản & \textbf{Associated use case:} 1 \\
+      \hline
+      \textbf{Responsibility:} & \textbf{Collaboration:} \\
+      Thông tin token tài khoản
+
+      Từ thông tin quản lý có thể biết thông tin tài khoản
+      & 
+      Tài khoản
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Attributes} & \\
+      id(String) 
+      
+      account\_id(String)
+
+      access\_token(String)
+      & 
+      refresh\_token(BigInt) 
+            
+      created\_at(BigInt)
+
+      updated\_at(BigInt)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Relationships} \\
+      Generalize:  
+
+      Aggregation:  
+      
+      Association: Tài khoản 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \subsubsection{Thẻ CRC lớp Tin tức}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tin tức}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|X|}
+      \hline
+      \textbf{Class name:} Tin tức & \textbf{ID:} 6 & \textbf{Type:} Concrete, Domain \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \textbf{Description:} Đối tượng mô tả thông tin Tin tức & \textbf{Associated use case:} 2 \\
+      \hline
+      \textbf{Responsibility:} & \textbf{Collaboration:} \\
+      Thông tin tin tức
+      & 
+      Người dùng
+
+      Danh mục tin tức
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Attributes} & \\
+      id(String) 
+      
+      title(String)
+
+      content(String)
+
+      category\_id(String)
+
+      author(String) 
+      & 
+      url(String) 
+
+      image(String) 
+            
+      created\_at(BigInt)
+
+      updated\_at(BigInt)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Relationships} \\
+      Generalize:  
+
+      Aggregation:  
+      
+      Association: Tài khoản 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \subsubsection{Thẻ CRC lớp Danh mục tin tức}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Danh mục tin tức}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|X|}
+      \hline
+      \textbf{Class name:} Danh mục tin tức & \textbf{ID:} 6 & \textbf{Type:} Concrete, Domain \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \textbf{Description:} Đối tượng mô tả thông tin Danh mục tin tức & \textbf{Associated use case:} 1 \\
+      \hline
+      \textbf{Responsibility:} & \textbf{Collaboration:} \\
+      Thông tin danh mục tin tức
+      & 
+      Tin tức
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \hline
+      \textbf{Attributes} \\
+      id(String) 
+      
+      category\_name(String)
+
+      category\_description(String)
+
+      created\_at(BigInt)
+
+      updated\_at(BigInt)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Relationships} \\
+      Generalize:  
+
+      Aggregation:  
+      
+      Association: Tài khoản 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \subsubsection{Thẻ CRC lớp Thành viên tham gia hội thoại}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thành viên tham gia hội thoại}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|X|}
+      \hline
+      \textbf{Class name:} Thành viên tham gia hội thoại & \textbf{ID:} 6 & \textbf{Type:} Concrete, Domain \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \textbf{Description:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Associated use case:} 2 \\
+      \hline
+      \textbf{Responsibility:} & \textbf{Collaboration:} \\
+      Thông tin Thành viên tham gia hội thoại
+      & 
+      Người dùng
+
+      Thông tin hội thoại 
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Attributes} & \\
+      id(String) 
+      
+      conversation\_id(String)
+
+      user\_id(String)
+      &
+      status\_notify(Integer)
+
+      role(Integer)
+
+      seen(Boolean)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Relationships} \\
+      Generalize:  
+
+      Aggregation:  
+      
+      Association: Tài khoản 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \subsubsection{Thẻ CRC lớp Thông tin hội thoại}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thông tin hội thoại}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|X|}
+      \hline
+      \textbf{Class name:} Thông tin hội thoại & \textbf{ID:} 6 & \textbf{Type:} Concrete, Domain \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \textbf{Description:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Associated use case:} 2 \\
+      \hline
+      \textbf{Responsibility:} & \textbf{Collaboration:} \\
+      Thông tin cuộc hội thoại
+      & 
+      Thành viên tham gia hội thoại 
+
+      Tin nhắn
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \hline
+      \textbf{Attributes} \\
+      conversation\_id(String) 
+      
+      name(String)
+
+      type(Integer)
+
+      avatar\_url(String)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Relationships} \\
+      Generalize:  
+
+      Aggregation:  
+      
+      Association: Tài khoản 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \subsubsection{Thẻ CRC lớp Tin nhắn}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tin nhắn}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|X|}
+      \hline
+      \textbf{Class name:} Tin nhắn & \textbf{ID:} 6 & \textbf{Type:} Concrete, Domain \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \textbf{Description:} Đối tượng mô tả thông tin Tin nhắn & \textbf{Associated use case:} 2 \\
+      \hline
+      \textbf{Responsibility:} & \textbf{Collaboration:} \\
+      Thông tin Tin nhắn
+      & 
+      Người dùng
+
+      Thông tin hội thoại 
+
+      Tệp đính kèm
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Attributes} & \\
+      message\_id(String) 
+      
+      conversation\_id(String)
+
+      sender\_id(String)
+
+      attachments(List)
+      &
+      system\_message(Boolean)
+
+      pin(Boolean)
+
+      pin\_time(Timestamps)
+
+      reactions(List)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Relationships} \\
+      Generalize:  
+
+      Aggregation:  
+      
+      Association: Tài khoản 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \subsubsection{Thẻ CRC lớp Tệp đính kèm}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tệp đính kèm}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|X|}
+      \hline
+      \textbf{Class name:} Tệp đính kèm & \textbf{ID:} 6 & \textbf{Type:} Concrete, Domain \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \textbf{Description:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Associated use case:} 2 \\
+      \hline
+      \textbf{Responsibility:} & \textbf{Collaboration:} \\
+      Thông tin Tệp đính kèm
+      & 
+      Tin nhắn
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Attributes} & \\
+      id(String) 
+      
+      message\_id(String)
+
+      conversation\_id(String)
+
+      content\_url(String)
+      &
+      file\_name(String)
+
+      size(Integer)
+
+      thumbnail\_url(String)
+
+      type(Integer)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Relationships} \\
+      Generalize:  
+
+      Aggregation:  
+      
+      Association: Tài khoản 
       \\
       \hline
     \end{tabularx}
