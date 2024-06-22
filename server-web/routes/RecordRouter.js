@@ -75,7 +75,7 @@ router.get(
 );
 router.get("/download/:id", RecordController.downloadRecordFile);
 router.get("/check-file/:id", commonMiddleware.validationToken, RecordController.checkRecordFile);
-router.post("/upload-file", commonMiddleware.validationToken, RecordController.uploadFileRecord, (req, res) => {
+router.post("/upload-file", commonMiddleware.validationToken, UploadController.setUploadToDisk, RecordController.uploadFileRecord, (req, res) => {
   if (req.file) res.status(200).json({ file: req.file });
   else
     res.status(400).json({
