@@ -131,7 +131,7 @@ class RecordService extends CommonService {
       const data = await this.readFileRecord(filepath);
       if (!data) return;
       let dataArray = data.split("\n");
-      dataArray = dataArray.map((line) => line.split(", "));
+      dataArray = dataArray.map((line) => line.split(","));
 
       dataArray = dataArray.map((line) => {
         return line.map((element) => {
