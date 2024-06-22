@@ -6,7 +6,9 @@ const UploadController = require("../controllers/UploadController");
 
 const router = express.Router();
 
-router.get("/", RegisterController.getAllData);
+router.get("", RegisterController.getAllData);
+
+router.post("", RegisterMiddleware.validateRegister, RegisterController.createRegister);
 
 router.post("/update", RegisterController.updateRegister);
 
