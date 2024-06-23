@@ -1,4 +1,5 @@
 const AuthenService = require("../services/AuthenService");
+const RegisterService = require("../services/RegisterService");
 
 class AuthenController {
   async login(req, res) {
@@ -17,20 +18,20 @@ class AuthenController {
   async register(req, res) {
     const account = req.body;
     if (account.email && account.password) {
-      const checkExistEmail = await AuthenService.checkEmail(account.email);
+      const checkExistEmail = await RegisterService.checkEmail(account.email);
       if (!checkExistEmail) {
         return res.status(400).json({
           message: "Email exist, please try again",
         });
       } else {
         try {
-          await AuthenService.register(account);
+          await RegisterService.createRegister(account);
           return res.status(200).json({
-            message: "Register successfully",
+            message: "Create register successfully",
           });
         } catch (err) {
           return res.status(500).json({
-            message: "Register error",
+            message: "Create register error",
           });
         }
       }
@@ -45,19 +46,6 @@ class AuthenController {
       .catch((err) => {
         console.log(err);
         return res.status(400).json("Get accounts failed");
-      });
-  }
-
-  async getAllRegistration(req, res) {
-    await AuthenService.getAllRegistration()
-      .then((data) => {
-        return res.status(200).json({
-          metadata: data
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        return res.status(400).json("Get check accounts failed");
       });
   }
 }

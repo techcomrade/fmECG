@@ -86,10 +86,6 @@ class AuthenService extends CommonService {
     return await AccountRepository.getAllData();
   }
 
-  async getAllRegistration() {
-    return await RegisterRepository.getAllData();
-  }
-
   async updatePassword (account){
     return await AccountRepository.updateById(account);
   }
