@@ -1131,7 +1131,38 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
 
 % \newpage
 \subsection{Sơ đồ lớp}
+  Hệ thống được thiết kế theo mô hình MVC, với ba khối chính là Models, Views và Controllers:
+  \begin{itemize}
+    \item Package "Models": Chứa các lớp đại diện cho các đối tượng của cơ sở dữ liệu, định nghĩa các thuộc tính và phương thức để làm việc với dữ liệu
+    \item Package "Controllers": Chứa các controllers xử lý logic và điều khiển các yêu cầu từ người dùng
+    \item Package "Views": Chứa các view components đại diện cho người dùng
+    \item Package "Routes": Chứa các lớp route, xác định các endpoint và xử lý các yêu cầu HTTP từ người dùng bằng cách gọi tới các controllers tương ứng
+  \end{itemize}
+  \begin{figure}[H]
+    \centering
+    \includegraphics*[width = 16cm, height = 11cm ]{Images/UML/UML.drawio.png}
+    \caption[Sơ đồ lớp của hệ thống]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ lớp của hệ thống}
+    \label{UML}
+  \end{figure}
 
+  Hình \ref*{UML} thể hiện các lớp trong hệ thống:
+  \begin{itemize}
+    \item Account: Lớp thể hiện cho cấu trúc của một account khi đăng ký sử dụng hệ thống, cung cấp các hàm và các biến để thực hiện chức năng đăng ký người dùng
+    \item Register: Lớp thể hiện cho cấu trúc của người dùng khi mới đăng ký, cung cấp các hàm, phương thức thao tác dữ liệu người dùng khi mới đăng ký
+    \item User: Lớp thể hiện cho cấu trúc của người dùng sau khi đã đăng ký, cung cấp các hàm, phương thức liên quan đến dữ liệu người dùng sau đăng ký
+    \item Token: Lớp thể hiện cho cấu trúc của một token, cung cấp biến, hàm để thao tác với người dùng khi thực hiện đăng ký, đăng nhập
+    \item PatientDoctorAssignment: Lớp thể hiện cho cấu trúc của một bảng phân công giữa bệnh nhân và bác sĩ, cung cấp các hàm, phương thức để lấy dữ liệu phân công bệnh nhân/bác sĩ
+    \item Record: Lớp thể hiện cho cấu trúc của một bản ghi record, cung cấp các hàm, phương thức để thực hiện liên quan đến các bản ghi dữ liệu sức khỏe của bệnh nhân
+    \item Device: Lớp thể hiện cho cấu trúc của một thiết bị, cung cấp các biến, hàm, phương thức để thực hiện liên quan đến thông tin các thiết bị sử dụng trong các ghi record
+    \item DeviceDetail: Lớp thể hiện cho cấu trúc của chi tiết liên quan đến lớp thiết bị, cung cấp các hàm, phương thức để thực hiện thao tác với dữ liệu các thiết bị và các bản ghi record
+    \item News: Lớp thể hiện cho cấu trúc của một tin tức, cung cấp các hàm, phương thức để lấy dữ liệu tin tức
+    \item NewsCategories: Lớp thể hiện cho cấu trúc của một danh mục tin tức, cung cấp các hàm, phương thức để lấy dữ liệu từ danh mục tin tức
+    \item Conversation: Lớp thể hiện cho cấu trúc của một cuộc hội thoại, cung cấp các biến, hàm, phương thức để lấy dữ liệu liên quan đến cuộc hội thoại
+    \item ConversationMember: Lớp thể hiện cho cấu trúc của danh sách những người tham gia một cuộc hội thoại, cung cấp các hàm, phương thức để xử lý dữ liệu liên quan đến người dùng
+    \item ConversationAttachment: Lớp thể hiện cho cấu trúc của danh sách những tệp được đính kém trong danh sách hội thoại, cung cấp các hàm, phương thức để xử lý các chức năng liên quan đến hội thoại
+    \item Message: Lớp thể hiện cho cấu trúc của một message được sử dụng trong hội thoại, cung cấp các hàm, phương thức để xử lý dữ liệu trong cuộc hội thoại
+  \end{itemize}
 % \newpage
 \subsection{Sơ đồ tuần tự}
 Để phân tích cụ thể hơn về từng luồng trong hệ thống thông qua use case và activity, chúng em xin phép
