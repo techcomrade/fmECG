@@ -21,6 +21,15 @@ class RegisterModel {
       },
     });
   }
+
+  async getRegisterByEmail(email) {
+    return await RegisterDTO.findOne({
+      where: {
+        email: email,
+      },
+    });
+  }
+
   async add(user) {
     return await RegisterDTO.create({
       id: user.id,
@@ -40,13 +49,11 @@ class RegisterModel {
   }
 
   async deleteById(id) {
-    return await RegisterDTO.destroy(
-      {
-        where: {
-          id: id,
-        },
-      }
-    );
+    return await RegisterDTO.destroy({
+      where: {
+        id: id,
+      },
+    });
   }
 
   async updateById(user) {
