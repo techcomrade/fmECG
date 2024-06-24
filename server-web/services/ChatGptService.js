@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const openai = require('../config/chatgpt_api')
-var chatHistory = "";
+var chatHistory = "You: Hệ thống quản lý dữ liệu thiết bị điện tim, hệ thống bao gồm app, server và web, tên: ECG Admin, bạn là ai trợ giúp tư vấn người dùng, tôi tên là Tuấn";
 class ChatGptService {
     async chat (message,user_id){
         chatHistory += `\nYou: ${message}`;
