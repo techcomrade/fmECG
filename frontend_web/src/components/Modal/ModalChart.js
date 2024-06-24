@@ -42,7 +42,6 @@ const ModalChart = ({ isOpen, setIsOpen, selectedDevice }) => {
         onCancel={handleCancel}
         width={1000}
         centered
-        loading={dataState.loadChartRecordDataStatus === loadStatus.Loading}
         footer={null}
       >
         {isLoading ? <Loading /> : <LineChart rawData={data} />}

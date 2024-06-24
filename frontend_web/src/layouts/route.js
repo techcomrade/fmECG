@@ -41,13 +41,13 @@ export const AdminRouterMappingGroup = {
   },
   AssignmentPatientDoctor: {
     key: "/pda",
-    label: "Thông tin bác sĩ bệnh nhân",
+    label: "Phân công bác sĩ",
     component: <PdaTable />,
     icon: <UserSwitchOutlined />,
   },
   Register: {
     key: "/registers",
-    label: "Người dùng đăng ký mới",
+    label: "Xét duyệt tài khoản",
     component: <RegisterTable />,
     icon: <UserAddOutlined />,
   }

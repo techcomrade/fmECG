@@ -1,5 +1,5 @@
 import { Line } from 'react-chartjs-2';
-import { CategoryScale, Chart, LinearScale, PointElement, LineElement, Title, Tooltip } from "chart.js";
+import { CategoryScale, Chart, LinearScale, PointElement, LineElement, Title, Tooltip, elements } from "chart.js";
 import { dummyArray, dummyIncreaseArray } from '../../utils/arrayUtils';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import { Button } from "antd";
@@ -19,11 +19,11 @@ const LineChart = ({ rawData }) => {
     };
 
     const pointColor = (data, baseColor) => {
-        return data.map(item => item.warning ===  1 ? 'red' : baseColor);
+        return data.map(item => item?.warning ===  1 ? 'red' : baseColor);
     }
 
     const handleDataValue = (data) => {
-        return data.map(item => item.value);
+        return data.map(item => item?.value);
     }
 
     useEffect(() => {
@@ -41,7 +41,6 @@ const LineChart = ({ rawData }) => {
                 }
             });
             setDataSets(label);
-        
             let scale = {};
             Object.keys(rawData).forEach((key) => 
                 scale[key] = {
@@ -63,7 +62,7 @@ const LineChart = ({ rawData }) => {
     }, [rawData]);
 
     const dataChart = {
-        labels: dummyIncreaseArray(74),
+        labels: dummyIncreaseArray(4415),
         datasets: datasets
     }
 
@@ -101,9 +100,14 @@ const LineChart = ({ rawData }) => {
                     display: true,
                     text: "Thời gian"
                 },
-                max: 150
+                max: 1000
             },
             ...yScale
+        },
+        elements: {
+            point:{
+                radius: 0
+            }
         }
     }
 
