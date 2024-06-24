@@ -7,20 +7,16 @@ function EChart() {
 
   const items = [
     {
-      Title: "3,6K",
+      Title: "12",
       user: "Users",
     },
     {
-      Title: "2m",
+      Title: "1m",
       user: "Clicks",
     },
     {
-      Title: "$772",
-      user: "Sales",
-    },
-    {
-      Title: "82",
-      user: "Items",
+      Title: "3",
+      user: "Devices",
     },
   ];
 

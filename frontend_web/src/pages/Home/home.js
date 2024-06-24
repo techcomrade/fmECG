@@ -86,23 +86,23 @@ const Home = () => {
   ];
   const count = [
     {
-      today: "Today’s Users",
-      title: "3,200",
+      today: "Người dùng",
+      title: "12",
       persent: "+20%",
       icon: profile,
       bnb: "bnb2",
     },
     {
-      today: "New Clients",
-      title: "+1,200",
-      persent: "-20%",
+      today: "Thiết bị",
+      title: "3",
+      persent: "",
       icon: heart,
       bnb: "redtext",
     },
     {
-      today: "New Orders",
-      title: "$13,200",
-      persent: "10%",
+      today: "Bản ghi",
+      title: "5",
+      persent: "+10%",
       icon: cart,
       bnb: "bnb2",
     },
