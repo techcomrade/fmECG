@@ -30,7 +30,6 @@ class _BlocNavigateState extends State<BlocNavigate> {
   @override
   void initState() {
     context.read<AuthenticationBloc>()
-      ..add(LoadingUser())
       ..add(CheckAutoLogin());
     super.initState();
   }
@@ -39,16 +38,14 @@ class _BlocNavigateState extends State<BlocNavigate> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
-        // print(state);
-        // if (state is AuthenticationSuccess) {
-        //   return const MainScreen();
-        // } else if (state is AuthenticationLoading) {
-        //   // or blocListener
-        //   return const CircularProgressIndicator();
-        // } else {
-        //   return const Login2Screen();
-        // }
-        return const MainScreen();
+        print(state);
+        if (state is AuthenticationSuccess) {
+          return const MainScreen();
+        } else if (state is AuthenticationLoading) {
+          return const CircularProgressIndicator();
+        } else {
+          return const Login2Screen();
+        }
       },
     );
   }

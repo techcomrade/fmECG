@@ -1,24 +1,31 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreprerencesRepo {
-  static void saveInfor(String token) async {
+  static const keyData = 'user_data';
+
+  static Future<String> getDataUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', token);
-//print("shared" + prefs.getString("token")!);
+    return prefs.getString(keyData) ?? "";
   }
 
-  static Future<String> getInfo() async {
+  static Future<bool> checkAutoLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token') ?? "";
+    
+    final String? data = prefs.getString(keyData);
+    final bool hasLoggedIn = data != "" && data != null;
+    return hasLoggedIn;
   }
 
-  static Future<bool> autoLogin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token') != null;
+  static void setDataUser(Map dataLogin) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final String userData = json.encode(dataLogin);
+    preferences.setString(keyData, userData);
   }
 
-  static void deleteInfor(String id) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('token');
+  static void removeDataUser() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove(keyData);
   }
 }

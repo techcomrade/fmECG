@@ -109,6 +109,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 _buildListTile(title: 'My Doctors', icon: Icons.local_hospital, iconColor: Colors.red, onTap: () {}),
                 _buildListTile(title: 'EHR Files', icon: Icons.folder, iconColor: Colors.green, onTap: () {}),
                 _buildListTile(title: 'Wallet', icon: Icons.account_balance_wallet, iconColor: Colors.purple, onTap: () {}),
+                _buildListTile(title: 'Log out', icon: Icons.logout, iconColor: Colors.redAccent, onTap: () {}),
               ],
             ),
           ),

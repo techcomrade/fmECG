@@ -40,11 +40,9 @@ void main() async {
   apiConstant.getMode();
   // try {
   //   final String url = "${apiConstant.apiUrl}/record";
-  //   print('aaa:${url}');
   //   final Map<String, String> headers = {...apiConstant.headers, 
   //     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiODM1NzM0MjEtOTk0My00YTI1LTlmZTEtMDBmMDQ3N2FhYmE0Iiwicm9sZSI6MiwiZXhwIjoyNDk1OTYxNzc5LCJpYXQiOjE3MTgzNjE3Nzl9.JIhIavutTEQBEJp_H03TN2TudCQBhfKfUP5lbBjQFvg'
   //   };
-
   //   final res = await http.get(Uri.parse(url), headers: headers);
   //   print('aaaa:${jsonDecode(res.body)}');
   // } catch (e) {
@@ -95,7 +93,7 @@ class FmECGAppState extends State<FmECGApp> {
         ChangeNotifierProvider(create: (_) => ECGProvider()),
       ],
       child: Consumer<AuthProvider>(builder: (ctx, auth, _) {
-        Utils.globalContext = ctx;
+        Utils.setGlobalContext(ctx);
         return const MaterialApp(
           locale: Locale('en'),
           debugShowCheckedModeBanner: false,
@@ -109,39 +107,7 @@ class FmECGAppState extends State<FmECGApp> {
           //   },
           // )),
           // darkTheme: ThemeECG.darkTheme,
-          //home: const MainScreen(),
           home: App(),
-          //const Login1Screen(),
-          // auth.isAuth
-          //     ? const MainScreen()
-          //     :
-          // FutureBuilder(
-          //     future: auth.isAuth,
-          //     builder: (context, snapshot) {
-          //       if (snapshot.connectionState == ConnectionState.waiting) {
-          //         return const CircularProgressIndicator();
-          //       }
-
-          // return FutureBuilder(
-          //     future: auth.checkAutoLogin(),
-          //     builder: (ctx, authResultSnapshot) {
-          //       if (authResultSnapshot.connectionState ==
-          //           ConnectionState.waiting) {
-          //         return const CircularProgressIndicator();
-          //       } else if (authResultSnapshot.hasError) {
-          //         return Text('Error: ${authResultSnapshot.error}');
-          //       } else {
-          //         return const Login1Screen();
-          //       }
-          //     });
-          //   else if (snapshot.hasError) {
-          //     return Text('Error: ${snapshot.error}');
-          //   } else if (snapshot.hasData && snapshot.data == true) {
-          //     return const MainScreen();
-          //   } else {
-          //     return const Login1Screen();
-          //   }
-          // }),
           localizationsDelegates: [
             S.delegate,
             GlobalMaterialLocalizations.delegate,
