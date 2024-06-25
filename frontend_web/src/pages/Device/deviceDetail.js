@@ -51,6 +51,8 @@ const DeviceDetailComponent = (props, ref) => {
     device_name: 'Tên thiết bị',
     device_type: 'Loại thiết bị',
     frequency: "Tần số",
+    storage: "Lưu trữ dữ liệu",
+    connection: "Kiểu kết nối",
     recordCount: "Số bản ghi",
     status: "Trạng thái",
     start_date: "Ngày bắt đầu",
@@ -74,6 +76,40 @@ const DeviceDetailComponent = (props, ref) => {
     },
   ]
 
+  const storageColumns = [
+    {
+      title: 'Thông tin',
+      dataIndex: 'information',
+      key: 'information',
+    },
+    {
+      title: 'Dung lượng',
+      dataIndex: 'value',
+      key: 'value',
+    },
+    {
+      title: 'Loại lưu trữ',
+      dataIndex: 'detail_name',
+      key: 'detail_name',
+    },
+  ]
+  const connectionColumns = [
+    {
+      title: 'Thông tin',
+      dataIndex: 'information',
+      key: 'information',
+    },
+    {
+      title: 'Tần số kết nối',
+      dataIndex: 'value',
+      key: 'value',
+    },
+    {
+      title: 'Kết nối',
+      dataIndex: 'detail_name',
+      key: 'detail_name',
+    },
+  ]
   const customDetail = {
     frequency: (
       <Table 
@@ -81,7 +117,17 @@ const DeviceDetailComponent = (props, ref) => {
         dataSource={data.frequency} 
         pagination={false}
       />
-    )
+    ),
+    storage: (<Table 
+      columns={storageColumns} 
+      dataSource={data.storage}
+      pagination={false}
+    />),
+    connection: (<Table 
+      columns={connectionColumns} 
+      dataSource={data.connection} 
+      pagination={false}
+    />)
   }
 
   const customData = (

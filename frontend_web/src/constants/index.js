@@ -172,3 +172,14 @@ export const convertDeviceTypeColor = (status) => {
       return "red";
   }
 };
+
+export const convertRegisterStatusToString = ( status) => {
+  switch (status) {
+    case 0:
+      return "Đang chờ duyệt";
+    case 1:
+      return "Đã duyệt";
+    default:
+      return "Từ chối";
+  }
+}

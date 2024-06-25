@@ -107,11 +107,11 @@
     .navbar {
       display: flex;
       align-items: center;
-      background-color: #4598f1;
+      // background-color: #4598f1;
       height: 50px;
       padding: 10px;
       justify-content: space-between;
-      color: white;
+      color: #4693ff;
 
       .logo {
         font-weight: bold;
@@ -327,3 +327,4 @@
     }
   }
 }
+
