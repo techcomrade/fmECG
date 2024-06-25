@@ -19,7 +19,7 @@ const Chat = () => {
    <div className="chat-container">
       <div className="sidebar">
          <div className="navbar">
-            <span className="logo">Chat</span>
+            <span className="logo">Danh sách bệnh nhân</span>
          </div>
          <div className="chats">
             <div
