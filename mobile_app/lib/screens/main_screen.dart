@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screens/bluetooth_classic_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
 import 'package:bluetooth_ecg/screens/user_screens/user_profile_screen.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -15,7 +18,9 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  static const platform = MethodChannel("com.example.method_channel/java");
+  final Connectivity _connectivity = Connectivity();
+  List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
+  late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
@@ -26,57 +31,44 @@ class _MainScreenState extends State<MainScreen> {
     const UserProfileScreen()
   ];
 
-  String _textSBP = '';
-  String _textDBP = '';
-  String _textHeartRate = '';
-  String _textDeviation = '';
-  Future<void> _getText() async {
-    String text;
-    try {
-      final result = await platform.invokeMethod("transfer_data_to_python");
-      setState(() {
-        _textSBP = result != null ? result!["sbp"].toString() : "";
-        _textDBP = result != null ? result!["dbp"].toString() : "";
-        _textHeartRate = result != null ? result!["heart_rate"].toString() : "";
-        _textDeviation =
-            result != null ? result!["standard_deviation"].toString() : "";
-      });
-    } on PlatformException catch (e) {
-      text = "Failed to get text: '${e.message}'.";
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    // requestPermissionFirebase();
-    // Timer.run(() async {
-    //   // de o phan dang nhap => luu token ngay sau khi dang nhap tren firebase
-    //   final String firebaseToken =
-    //       await FmECGFirebaseMessage().getDeviceToken();
-    //   // await FmECGFirebaseMessage().saveTokenToFirestore(firebaseToken, 3010);
-    // });
+    initConnectivity();
+
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
 
-  // void requestPermissionFirebase() async {
-  //   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  //   NotificationSettings settings = await messaging.requestPermission(
-  //       alert: true,
-  //       announcement: false,
-  //       badge: true,
-  //       sound: true,
-  //       criticalAlert: false,
-  //       provisional: false);
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
 
-  //   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-  //     print('permis');h
-  //   } else if (settings.authorizationStatus ==
-  //       AuthorizationStatus.provisional) {
-  //     print('provisional ');
-  //   } else {
-  //     print('declined');
-  //   }
-  // }
+  Future<void> initConnectivity() async {
+    late List<ConnectivityResult> result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      debugPrint("something went wrong with internet: $e");
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(List<ConnectivityResult> result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
+    print('Connectivity changed: $_connectionStatus');
+  }
 
   @override
   Widget build(BuildContext context) {

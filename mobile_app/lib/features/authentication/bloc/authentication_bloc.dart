@@ -18,7 +18,8 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         emit(AuthenticationFail());
         return;
       }
-      SharedPreprerencesRepo.setDataUser(response);
+      final Map dataUser = response["metadata"];
+      SharedPreprerencesRepo.setDataUser(dataUser);
       emit(AuthenticationSuccess());
     } catch (e) {
       emit(AuthenticationFail());
@@ -29,7 +30,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   void _onCheckAutoLogin(CheckAutoLogin event, Emitter emit) async {
     try {
       final bool hasLoggedIn = await SharedPreprerencesRepo.checkAutoLogin();
-      print('logged:$hasLoggedIn');
       if (hasLoggedIn) {
         print("heheheh:${ await SharedPreprerencesRepo.getDataUser()}");
 
@@ -38,7 +38,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         emit(AuthenticationInitial());
       }
     } catch (e) {
-      // network error, v.v
       emit(AuthenticationFail());
     }
   }

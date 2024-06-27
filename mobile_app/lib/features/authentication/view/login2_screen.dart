@@ -46,7 +46,6 @@ class _Login2ScreenState extends State<Login2Screen> {
   }
 
   Widget _formLoginUser() {
-    print('showLoginError: $showLoginError');
     return Form(
         key: _formKey,
         child: Column(
