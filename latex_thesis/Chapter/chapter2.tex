@@ -155,7 +155,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
   Dưới đây là sơ đồ hoạt động mô tả chức năng quên mật khẩu
   \begin{figure}[H]
     \centering
-    \includegraphics[width=13cm,height=18.5cm]{Images/activity/activity_forgot_pass.png}
+    \includegraphics[width=13.5cm,height=20cm]{Images/activity/activity_forgot_pass.png}
     \caption[Sơ đồ hoạt động chức năng quên mật khẩu]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ hoạt động chức năng quên mật khẩu}
     \label{activity_forgot_password} %đặt tên cho ảnh
@@ -249,13 +249,20 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_record_history}, Hình \ref{sequence_manage_record}, Hình \ref{getEcgRecordsByDoctor} 
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_record_history}, Hình \ref{sequence_manage_record} 
         \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
   \end{table}
-
+  Dưới đây là sơ đồ hoạt động mô tả chức năng xem lịch sử các lần đo
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=15cm]{Images/activity/activity_record_history.png}
+    \caption[Sơ đồ hoạt động chức năng xem lịch sử các lần đo]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng xem lịch sử các lần đo}
+    \label{activity_record_history} %đặt tên cho ảnh
+  \end{figure}
   \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng tải bản ghi dữ liệu đo}
     \centering
@@ -272,21 +279,21 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_record_history}, Hình \ref{sequence_manage_record}, Hình \ref{getEcgRecordsByDoctor} 
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_download_record}, Hình \ref{sequence_manage_record} 
         \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
   \end{table}
-
-  Dưới đây là sơ đồ hoạt động mô tả chức năng xem lịch sử các lần đo
+  Dưới đây là sơ đồ hoạt động mô tả chức năng tải bản ghi dữ liệu đo
   \begin{figure}[H]
     \centering
-    \includegraphics[width=13.5cm,height=15cm]{Images/activity/activity_record_history.png}
-    \caption[Sơ đồ hoạt động chức năng xem lịch sử các lần đo]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ hoạt động chức năng xem lịch sử các lần đo}
-    \label{activity_record_history} %đặt tên cho ảnh
+    \includegraphics[width=13.5cm,height=10cm]{Images/activity/activity_download_record.png}
+    \caption[Sơ đồ hoạt động chức năng tải bản ghi dữ liệu đo]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng tải bản ghi dữ liệu đo}
+    \label{activity_download_record} %đặt tên cho ảnh
   \end{figure}
+
 
 \subsubsection{Use case chức năng quản lí dịch vụ nhắn tin}
   \begin{figure}[H]
@@ -381,12 +388,43 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_patient_management}, Hình \ref{sequence_manage_patient}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_patient}, Hình \ref{sequence_manage_patient}
         \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
   \end{table}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng thêm bệnh nhân}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Thêm bệnh nhân} \\
+      \hline
+      Tác nhân & Bác sĩ \\
+      \hline
+      Mô tả & Cho phép bác sĩ thực hiện hành động thêm bệnh nhân của mình \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_patient}, Hình \ref{sequence_manage_patient}
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  Dưới đây là sơ đồ hoạt động mô tả chức năng xem/thêm bệnh nhân
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=14cm]{Images/activity/activity_add_patient.png}
+    \caption[Sơ đồ hoạt động chức năng xem/thêm bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng xem/thêm bệnh nhân}
+    \label{activity_add_patient} %đặt tên cho ảnh
+  \end{figure}
 
   \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng sửa thông tin bệnh nhân}
@@ -403,7 +441,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_patient_management}, Hình \ref{sequence_manage_edit_patient}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_patient}, Hình \ref{sequence_manage_edit_patient}
         \\
       % \end{tabular} \\
       \hline
@@ -425,20 +463,20 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_patient_management}, Hình \ref{sequence_manage_delete_patient}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_patient}, Hình \ref{sequence_manage_delete_patient}
         \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
   \end{table}
 
-  Dưới đây là sơ đồ hoạt động mô tả chức năng quản lý bệnh nhân
+  Dưới đây là sơ đồ hoạt động mô tả chức năng sửa/xóa bệnh nhân
   \begin{figure}[H]
     \centering
-    \includegraphics[width=13.5cm,height=16cm]{Images/activity/activity_manage_patient.png}
-    \caption[Sơ đồ hoạt động chức năng quản lý bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ hoạt động chức năng quản lý bệnh nhân}
-    \label{activity_patient_management} %đặt tên cho ảnh
+    \includegraphics[width=13.5cm,height=17cm]{Images/activity/activity_edit_patient.png}
+    \caption[Sơ đồ hoạt động chức năng sửa/xóa bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng sửa/xóa bệnh nhân}
+    \label{activity_edit_patient}
   \end{figure}
 
 \subsubsection{Use case chức năng quản lý thiết bị}
@@ -465,7 +503,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_device_management}, Hình \ref{sequence_manage_device} 
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_device}, Hình \ref{sequence_manage_device} 
         \\
       % \end{tabular} \\
       \hline
@@ -487,12 +525,21 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_device_management}, Hình \ref{sequence_manage_add_device}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_device}, Hình \ref{sequence_manage_add_device}
         \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
   \end{table}
+
+  Dưới đây là sơ đồ hoạt động mô tả chức năng xem/thêm thiết bị
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=13cm]{Images/activity/activity_add_device.png}
+    \caption[Sơ đồ hoạt động chức năng xem/thêm thiết bị]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng xem/thêm thiết bị}
+    \label{activity_add_device} %đặt tên cho ảnh
+  \end{figure}
 
   \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng sửa thông tin thiết bị}
@@ -509,7 +556,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_device_management}, Hình \ref{sequence_manage_edit_device}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_device}, Hình \ref{sequence_manage_edit_device}
         \\
       % \end{tabular} \\
       \hline
@@ -531,27 +578,27 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_device_management}, Hình \ref{sequence_manage_delete_device}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_device}, Hình \ref{sequence_manage_delete_device}
         \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
   \end{table}
 
-  Dưới đây là sơ đồ hoạt động mô tả chức năng quản lý thiết bị
+  Dưới đây là sơ đồ hoạt động mô tả chức năng sửa/xóa thiết bị
   \begin{figure}[H]
     \centering
-    \includegraphics[width=13.5cm,height=16cm]{Images/activity/activity_manage_device.png}
-    \caption[Sơ đồ hoạt động chức năng quản lý thiết bị]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ hoạt động chức năng quản lý thiết bị}
-    \label{activity_device_management} %đặt tên cho ảnh
+    \includegraphics[width=13.5cm,height=17cm]{Images/activity/activity_edit_device.png}
+    \caption[Sơ đồ hoạt động chức năng sửa/xóa thiết bị]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng sửa/xóa thiết bị}
+    \label{activity_edit_device} %đặt tên cho ảnh
   \end{figure}
 
 
 \subsubsection{Use case chức năng quản lý tài khoản người dùng}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=12cm,height=12.5cm]{Images/use_case/use_case_manage_users.png}
+    \includegraphics[width=12cm,height=13cm]{Images/use_case/use_case_manage_users.png}
     \caption[Sơ đồ use case chức năng tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ use case chức năng tài khoản người dùng}
     \label{use_case_user_management} %đặt tên cho ảnh
@@ -572,7 +619,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_user_management}, Hình \ref{sequence_manage_user}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_user}, Hình \ref{sequence_manage_user}
         \\
       % \end{tabular} \\
       \hline
@@ -594,12 +641,21 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_user_management}, Hình \ref{sequence_manage_add_user}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_user}, Hình \ref{sequence_manage_add_user}
         \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
   \end{table}
+
+  Dưới đây là sơ đồ hoạt động mô tả chức năng xem/thêm người dùng
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=13cm]{Images/activity/activity_add_user.png}
+    \caption[Sơ đồ hoạt động chức năng xem/thêm người dùng]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng xem/thêm người dùng}
+    \label{activity_add_user} %đặt tên cho ảnh
+  \end{figure}
 
   \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng sửa thông tin người dùng}
@@ -616,7 +672,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_user_management}, Hình \ref{sequence_manage_edit_user}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_user}, Hình \ref{sequence_manage_edit_user}
         \\
       % \end{tabular} \\
       \hline
@@ -638,12 +694,21 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_user_management}, Hình \ref{sequence_manage_delete_user} 
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_user}, Hình \ref{sequence_manage_delete_user} 
         \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
   \end{table}
+
+  Dưới đây là sơ đồ hoạt động mô tả chức năng sửa/xóa người dùng
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=17cm]{Images/activity/activity_edit_user.png}
+    \caption[Sơ đồ hoạt động chức năng sửa/xóa người dùng]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng sửa/xóa người dùng}
+    \label{activity_edit_user} %đặt tên cho ảnh
+  \end{figure}
 
   \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng quản lý đăng ký tài khoản người dùng}
@@ -666,14 +731,6 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
     \end{tabularx}
   \end{table}
-  Dưới đây là sơ đồ hoạt động mô tả chức năng quản lý tài khoản người dùng
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=13.5cm,height=16cm]{Images/activity/activity_manage_user.png}
-    \caption[Sơ đồ hoạt động chức năng quản lý tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ hoạt động chức năng quản lý tài khoản người dùng}
-    \label{activity_user_management} %đặt tên cho ảnh
-  \end{figure}
 
   \begin{figure}[H]
     \centering
@@ -699,10 +756,12 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \textbf{Description:} Đối tượng mô tả thông tin người dùng & \textbf{Associated use case:} 3 \\
+      \textbf{Description:} Đối tượng mô tả thông tin người dùng & \textbf{Associated use case:} 4 \\
       \hline
       \textbf{Responsibility:} & \textbf{Collaboration:} \\
-      Thông tin người dùng 
+      Mô tả thông tin người dùng
+
+      Quản lý danh sách người dùng 
       & 
       Thiết bị
       
@@ -763,10 +822,12 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \textbf{Description:} Đối tượng mô tả thông tin thiết bị & \textbf{Associated use case:} 2 \\
+      \textbf{Description:} Đối tượng mô tả thông tin thiết bị & \textbf{Associated use case:} 4 \\
       \hline
       \textbf{Responsibility:} & \textbf{Collaboration:} \\
-      Thông tin thiết bị 
+      Mô tả thông tin thiết bị
+      
+      Quản lý danh sách thiết bị
       & 
       Người dùng 
 
@@ -825,10 +886,14 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \textbf{Description:} Đối tượng mô tả thông tin bản ghi & \textbf{Associated use case:} 2 \\
+      \textbf{Description:} Đối tượng mô tả thông tin bản ghi & \textbf{Associated use case:} 4 \\
       \hline
       \textbf{Responsibility:} & \textbf{Collaboration:} \\
-      Thông tin bản ghi 
+      Mô tả thông tin bản ghi 
+
+      Quản lý danh sách bản ghi
+
+      Đọc, tải bản ghi
       & 
       Người dùng
       
@@ -885,10 +950,16 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \textbf{Description:} Đối tượng mô tả thông tin tài khoản & \textbf{Associated use case:} 2 \\
+      \textbf{Description:} Đối tượng mô tả thông tin tài khoản & \textbf{Associated use case:} 3 \\
       \hline
       \textbf{Responsibility:} & \textbf{Collaboration:} \\
-      Thông tin tài khoản 
+      Mô tả thông tin tài khoản
+      
+      Đăng nhập/Đăng xuất hệ thống
+
+      Đăng ký tài khoản
+
+      Quên mật khẩu
       & 
       Người dùng
 
@@ -938,8 +1009,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \textbf{Description:} Đối tượng mô tả thông tin quản lý giữa bác sĩ và bệnh nhân & \textbf{Associated use case:} 1 \\
       \hline
       \textbf{Responsibility:} & \textbf{Collaboration:} \\
-      Thông tin quan hệ giữa bác sĩ và bệnh nhân
-      Từ thông tin quản lý có thể biết thông tin bác sĩ và bệnh nhân 
+      Mô tả thông tin quan lý giữa bác sĩ và bệnh nhân
       & 
       Người dùng
       \\
@@ -990,10 +1060,14 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \textbf{Description:} Đối tượng mô tả thông tin token tài khoản & \textbf{Associated use case:} 1 \\
+      \textbf{Description:} Đối tượng mô tả thông tin token tài khoản & \textbf{Associated use case:} 2 \\
       \hline
       \textbf{Responsibility:} & \textbf{Collaboration:} \\
-      Thông tin token tài khoản
+      Mô tả thông tin token tài khoản
+
+      Tạo access token và refresh token
+
+      Xác thực token
       & 
       Tài khoản
       \\
@@ -1047,7 +1121,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \textbf{Description:} Đối tượng mô tả thông tin Tin tức & \textbf{Associated use case:} 2 \\
       \hline
       \textbf{Responsibility:} & \textbf{Collaboration:} \\
-      Thông tin tin tức
+      Mô tả thông tin tin tức
+
+      Quản lý danh sách tin tức
       & 
       Người dùng
 
@@ -1109,7 +1185,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \textbf{Description:} Đối tượng mô tả thông tin Danh mục tin tức & \textbf{Associated use case:} 1 \\
       \hline
       \textbf{Responsibility:} & \textbf{Collaboration:} \\
-      Thông tin danh mục tin tức
+      Mô tả thông tin danh mục tin tức
+
+      Quản lý danh sách danh mục tin tức
       & 
       Tin tức
       \\
@@ -1158,7 +1236,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \textbf{Description:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Associated use case:} 2 \\
+      \textbf{Description:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Associated use case:} 1 \\
       \hline
       \textbf{Responsibility:} & \textbf{Collaboration:} \\
       Thông tin Thành viên tham gia hội thoại
@@ -1217,7 +1295,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \textbf{Description:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Associated use case:} 2 \\
       \hline
       \textbf{Responsibility:} & \textbf{Collaboration:} \\
-      Thông tin cuộc hội thoại
+      Mô tả thông tin cuộc hội thoại
       & 
       Thành viên tham gia hội thoại 
 
@@ -1269,7 +1347,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \textbf{Description:} Đối tượng mô tả thông tin Tin nhắn & \textbf{Associated use case:} 2 \\
       \hline
       \textbf{Responsibility:} & \textbf{Collaboration:} \\
-      Thông tin Tin nhắn
+      Mô tả thông tin Tin nhắn
+
+      Gửi tin nhắn
       & 
       Thành viên tham gia hội thoại
 
@@ -1331,7 +1411,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \textbf{Description:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Associated use case:} 2 \\
       \hline
       \textbf{Responsibility:} & \textbf{Collaboration:} \\
-      Thông tin Tệp đính kèm
+      Mô tả thông tin Tệp đính kèm
       & 
       Tin nhắn
       \\
@@ -1653,8 +1733,8 @@ Tại phần này, chúng em sẽ tiến hành xác định và mô tả các th
     Thiết bị & 
     ID thiết bị, ID người dùng thiết bị, ID bác sĩ theo dõi, Tên thiết bị, Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng\\
     \hline
-    Các tần số đo được của thiết bị &
-    ID tần số, ID thiết bị, Tên loại tần số, Thông tin, Giá trị đo được \\
+    Thông số thiết bị &
+    ID thông số, ID thiết bị, Tên thông số, Giá trị thông số, Thông tin cụ thể, Loại thông số \\
     \hline
     Bản ghi dữ liệu & 
     ID bản ghi dữ liệu, ID người dùng, ID thiết bị, Loại bản ghi, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo \\
@@ -1688,7 +1768,7 @@ Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em x
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=10cm]{Images/system/fmECG_connection_entity.png}
+  \includegraphics[width=15cm,height=9.5cm]{Images/system/fmECG_connection_entity.png}
   \caption[Mô hình thực thể liên kết]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Mô hình thực thể liên kết}
   \label{ttlk} %đặt tên cho ảnh
