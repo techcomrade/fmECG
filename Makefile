@@ -6,8 +6,8 @@ app:
 
 # chạy tất cả các services development
 dev:
-	docker compose rm -sf; \
-	docker compose --profile "*" -f docker-compose-dev.yml up --build --detach; \
+	docker compose rm -sf && \
+	docker compose --profile "*" -f docker-compose-dev.yml up --build --detach && \
 	docker image prune -f
 
 log:
@@ -33,7 +33,7 @@ chatdb:
 
 # chỉ run các services backend bao gồm db, node, chat (đồng thời run interactive shell của chat)
 chatdev:
-	docker compose rm -sf; \
+	docker compose rm -sf && \
 	docker compose -f docker-compose-back-end.yml up --build --detach && \
 	docker exec -it chat-fmecg iex -S mix phx.server
 
