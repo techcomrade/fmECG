@@ -2,20 +2,26 @@ const actionWebType = [
   { path: "/user", text: "người dùng" },
   { path: "/device", text: "thiết bị" },
   { path: "/record", text: "bản ghi" },
-  { path: "/pda", text: "phân quyền" },
+  { path: "/pda", text: "phân công bác sĩ" },
   { path: "/register", text: "đăng ký" },
   { path: "/chat", text: "chat" },
 ];
 
-const filterUserAnswer = (answer) => {
-  return answer;
+const filterUserAnswer = (str) => {
+  // Loại bỏ các dấu đặc biệt
+  var cleanedStr = str.replace(/[!@#$%^&*(),.?":{}|<>]/g, "");
+  // Chuyển thành chữ thường
+  cleanedStr = cleanedStr.toLowerCase();
+  return cleanedStr;
 };
 
 const filterActionWeb = (answer) => {
+  console.log(answer);
   const text = "mở";
   if (answer?.includes(text)) {
     for (const item of actionWebType) {
       if (answer?.includes(item.text)) {
+        console.log("test done");
         return item;
       }
     }
@@ -30,5 +36,5 @@ const clearCache = (message) => {
 module.exports = {
   filterUserAnswer,
   filterActionWeb,
-  clearCache
+  clearCache,
 };
