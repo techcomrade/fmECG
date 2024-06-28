@@ -13,15 +13,15 @@ function LineChart() {
         <div>
           <Title level={5}>Active Users</Title>
           <Paragraph className="lastweek">
-            than last week <span className="bnb2">+30%</span>
+            than last week <span className="bnb2">+20%</span>
           </Paragraph>
         </div>
-        <div className="sales">
+        {/* <div className="sales">
           <ul>
             <li>{<MinusOutlined />} Traffic</li>
             <li>{<MinusOutlined />} Sales</li>
           </ul>
-        </div>
+        </div> */}
       </div>
 
       <ReactApexChart

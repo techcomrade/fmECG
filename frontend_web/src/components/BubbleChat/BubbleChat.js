@@ -17,7 +17,7 @@ const BubbleChat = () => {
     {
       id: 1,
       actor: "operator",
-      message: "Hi, konichiwa",
+      message: "Hi, tôi là ECG AI, tôi có thể tư vấn cho bạn về hệ thống và thông tin sức khoẻ của bạn",
     }
   ]);
   const [text, setText] = useState("");

@@ -12,7 +12,7 @@ export const getCheckRegister = createAsyncThunk(
   "/check-register",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpGetData("/auth/check");
+      const response = await httpGetData("/register");
       return response;
     } catch (error) {
       console.log(error);
