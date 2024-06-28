@@ -12,7 +12,7 @@ class ChatGptService {
       return "Đã xoá bộ nhớ đệm thành công";
     }
     try {
-      chatHistory.push({
+      chatHistory?.push({
         role: "user",
         content: message
       })
@@ -20,8 +20,6 @@ class ChatGptService {
         messages: chatHistory,
         model: "gpt-3.5-turbo",
       });
-    chatHistory += `\nAssistant:${response.choices[0].message.content}`
-
     return response.choices[0].message.content;
     } catch (error) {
       console.error("Error:", error);
