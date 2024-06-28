@@ -42,7 +42,6 @@ const statisticSlice = createSlice({
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
         state.data = action.payload.metadata;
-        console.log(action.payload.metadata);
         state.loadDataStatus = loadStatus.Success;
       })
       .addCase(sendMessage.rejected, (state, action) => {

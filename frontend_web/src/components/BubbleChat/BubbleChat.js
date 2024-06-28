@@ -9,8 +9,10 @@ import {
 } from "@ant-design/icons";
 import { Button } from "antd";
 import Message from "../Message/Message";
+import { useNavigate } from "react-router-dom";
 
 const BubbleChat = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.aiChat);
   const [messages, setMessages] = useState([
@@ -40,12 +42,19 @@ const BubbleChat = () => {
 //       ]);
 //     }
 //   }, [props.message]);
+const processMessageActionWeb = (messages) => {
+  if (messages.path){
+    navigate(messages.path)
+    return `Tôi đang mở ${messages.text}`
+  }
+  return messages
+}
   useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       setMessages(prev => [...prev,{
         id: prev.length + 1,
         actor: 'visitor',
-        message: dataState.data
+        message: processMessageActionWeb(dataState.data)
       }])
     }
   }, [dataState]);
