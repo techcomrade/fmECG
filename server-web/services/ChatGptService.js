@@ -1,29 +1,29 @@
 const Joi = require("joi");
 const openai = require("../config/chatgpt_api");
+const { filterUserAnswer, filterActionWeb} = require("../utils/stringUtils");
 var chatHistory = [{role: "system", content: "Bạn là trợ lý ảo của hệ thống quản lý dữ liệu, thiết bị y tế ECG AI, bạn có nhiệm vụ tư vấn cho người dùng về hệ thống và hướng dẫn người dùng sử dụng hệ thống"}];
 class ChatGptService {
+
   async chat(message, user_id) {
-    // try {
-    //   const response = await openai.beta.threads.messages.create(
-    //     "thread_ejSsQsWeA2X5r9w1SvtoXkyr",
-    //     { role: "user", content: message }
-    //   );
-    //   console.log(response.content);
-    //   return response.text.value;
-    // } catch (error) {
-    //   console.error("Error:", error);
-    //   return undefined;
-    // }
-    // const threadMessages = await openai.beta.threads.messages.list(
-    //   "thread_ejSsQsWeA2X5r9w1SvtoXkyr"
-    // );
-    // var listMessage = threadMessages.data.map(item => item.content)
-    // var content = listMessage.map(item => item.text)
-    // console.log(content);
+    const filterMessage = filterActionWeb(message);
+    if (filterMessage) return filterMessage;
+    try {
+      chatHistory.push({
+        role: "user",
+        content: message
+      })
+      const response = await openai.chat.completions.create({
+        messages: chatHistory,
+        model: "gpt-3.5-turbo",
+      });
+    chatHistory += `\nAssistant:${response.choices[0].message.content}`
 
-    // const response = await openai.beta.threads.del("thread_ejSsQsWeA2X5r9w1SvtoXkyr");
-
-  // console.log(response);
+    return response.choices[0].message.content;
+    } catch (error) {
+      console.error("Error:", error);
+      return undefined;
+    }
+    
   }
   async history(user_id) {
     return chatHistory;
@@ -54,14 +54,14 @@ async creatAssistant (){
 }
 
 
-async chat(){
+// async chat(){
   // const emptyThread = await openai.beta.threads.create();
 
   // console.log(emptyThread);
 
   
-  console.log(threadMessages);
-}
+  
+// }
 
 // async chat () {
   // let run = await openai.beta.threads.runs.createAndPoll(
