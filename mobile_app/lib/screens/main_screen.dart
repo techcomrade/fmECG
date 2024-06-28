@@ -1,6 +1,7 @@
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screens/history_screen.dart';
+import 'package:bluetooth_ecg/screens/history_screens/pick_files_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
 import 'package:bluetooth_ecg/screens/user_screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const HistoryScreen(),
+    const PickFiles(),
     const ChatScreen(),
     const UserProfileScreen()
   ];
@@ -32,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
   Future<void> _getText() async {
     String text;
     try {
-      final result = await platform.invokeMethod('helloWorldPython');
+      final result = await platform.invokeMethod("transfer_data_to_python");
       setState(() {
         _textSBP = result != null ? result!["sbp"].toString() : "";
         _textDBP = result != null ? result!["dbp"].toString() : "";
