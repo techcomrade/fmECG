@@ -12,7 +12,6 @@ const filterUserAnswer = (answer) => {
 };
 
 const filterActionWeb = (answer) => {
-
   const text = "mở";
   if (answer?.includes(text)) {
     for (const item of actionWebType) {
@@ -25,7 +24,11 @@ const filterActionWeb = (answer) => {
   return undefined;
 };
 
+const clearCache = (message) => {
+  return message?.includes("clear bộ nhớ") ? true : false;
+};
 module.exports = {
   filterUserAnswer,
   filterActionWeb,
+  clearCache
 };

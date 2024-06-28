@@ -45,7 +45,7 @@ const BubbleChat = () => {
 const processMessageActionWeb = (messages) => {
   if (messages.path){
     navigate(messages.path)
-    return `Đang Mở ${messages.text}`
+    return `Tôi đang mở ${messages.text}`
   }
   return messages
 }

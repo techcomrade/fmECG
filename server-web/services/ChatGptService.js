@@ -1,12 +1,16 @@
 const Joi = require("joi");
 const openai = require("../config/chatgpt_api");
-const { filterUserAnswer, filterActionWeb} = require("../utils/stringUtils");
+const { filterUserAnswer, filterActionWeb, clearCache} = require("../utils/stringUtils");
 var chatHistory = [{role: "system", content: "Bạn là trợ lý ảo của hệ thống quản lý dữ liệu, thiết bị y tế ECG AI, bạn có nhiệm vụ tư vấn cho người dùng về hệ thống và hướng dẫn người dùng sử dụng hệ thống"}];
 class ChatGptService {
 
   async chat(message, user_id) {
     const filterMessage = filterActionWeb(message);
     if (filterMessage) return filterMessage;
+    if (clearCache(message)) {
+      chatHistory = [{role: "system", content: "Bạn là trợ lý ảo của hệ thống quản lý dữ liệu, thiết bị y tế ECG AI, bạn có nhiệm vụ tư vấn cho người dùng về hệ thống và hướng dẫn người dùng sử dụng hệ thống"}];
+      return "Đã xoá bộ nhớ đệm thành công";
+    }
     try {
       chatHistory.push({
         role: "user",
@@ -23,7 +27,6 @@ class ChatGptService {
       console.error("Error:", error);
       return undefined;
     }
-    
   }
   async history(user_id) {
     return chatHistory;
