@@ -394,34 +394,35 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
 
 \subsubsection{Thiết kế API}
 
-
 \begin{enumerate}[a)]
   \item API liên quan đến việc xác thực người dùng
-
-
-\begin{table}[H]
-  \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến việc xác thực người dùng}
-  \begin{tabularx}{0.9\textwidth}{
-  | >{\raggedright\arraybackslash}X
-  | >{\raggedright\arraybackslash}m{2cm}
-  | >{\raggedright\arraybackslash}X|
-  }
-  \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-  api/register   &   POST  & Đăng ký tài khoản \\ \hline
-  api/login   &    POST    & Đăng nhập vào hệ thống \\ \hline
-  api/logout  &   GET     & Đăng xuất khỏi hệ thống \\ \hline
-  api/reset-password  &     POST   &  Gửi reset token đến email của người dùng để reset mật khẩu \\  \hline
-  api/reset-password/reset &   POST     & Giúp reset lại mật khẩu mới với verify token được nhận từ api: api/reset-password  \\ \hline
-
-  \end{tabularx}
-  \label{table_api_auth}
-\end{table}
-
-  \item API liên quan đến thông tin người dùng
   
-
+  
+  \begin{table}[H]
+    \centering
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến việc xác thực người dùng}
+    \begin{tabularx}{0.9\textwidth}{
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}m{2cm}
+    | >{\raggedright\arraybackslash}X|
+    }
+    \hline
+    \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+    api/auth/register     &   POST    & Đăng ký tài khoản và thông tin người dùng (lưu dữ liệu vào bảng tạm registers) \\ \hline
+    api/auth/login        &   POST    & Đăng nhập vào tài khoản \\ \hline
+    api/register/update   &   POST    & Cập nhật tài khoản và thông tin người dùng trong bảng registers \\ \hline
+    api/register/accepted &   POST    & Chấp nhận đăng ký (lưu dữ liệu này vào bảng account và user, xóa dữ liệu ở bảng registers)\\ \hline
+    api/register/rejected &   POST    & Từ chối đăng ký \\ \hline
+    api/auth/login   &  POST   & Đăng nhập vào hệ thống \\ \hline
+    api/auth         &  GET    & Lấy tất cả thông tin về tài khoản của người dùng (ID tài khoản, email, password) \\ \hline
+    api/register     &  GET    & Lấy tất cả thông tin về người dùng trong bảng registers \\ \hline
+    \end{tabularx}
+    \label{table_api_auth}
+  \end{table}
+  
+  \item API liên quan đến thông tin người dùng
+    
+  
   \begin{table}[H]
     \centering
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến thông tin người dùng}
@@ -432,14 +433,13 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
     }
     \hline
     \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-   api/users/profile   &   GET  &  Lấy thông tin của người dùng với đầu vào là JWT token khi người dùng đăng nhập thành công vào hệ thống \\  \hline
-   api/users/profile   &    PUT    &  Cập nhật thông tin người dùng \\  \hline
-   api/users/change-password   &   PUT     & Thay đổi mật khẩu của người dùng  \\ \hline
-   api/users/\{:userId\}  &   GET     & Lấy thông tin của người dùng cụ thể theo user id \\ \hline
-
-    \end{tabularx}
-    \label{table_api_user}
-\end{table}
+    api/user  &   POST &  Đăng ký thông tin người dùng \\ \hline
+    api/user/update  &  POST   &  Cập nhật thông tin người dùng \\ \hline
+    api/user/upload  &  POST   &  Tải ảnh lên theo id người dùng \\ \hline
+    api/user  &   GET  &  Lấy thông tin tất cả người dùng \\ \hline
+    api/user/id/\{:id\}  &   GET     & Lấy thông tin người dùng cụ thể theo id người dùng \\ \hline
+    api/user/role/\{:role\}  &   GET     & Lấy thông tin người dùng cụ thể theo quyền \\ \hline
+    api/user/delete  &  DELETE &  Xóa thông tin người dùng theo id người dùng \\ \hline
 
 \item API liên quan đến chat
 
