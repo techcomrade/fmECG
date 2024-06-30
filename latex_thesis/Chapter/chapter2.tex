@@ -155,7 +155,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
   Dưới đây là sơ đồ hoạt động mô tả chức năng quên mật khẩu
   \begin{figure}[H]
     \centering
-    \includegraphics[width=13.5cm,height=20cm]{Images/activity/activity_forgot_pass.png}
+    \includegraphics[width=13.5cm,height=21cm]{Images/activity/activity_forgot_pass.png}
     \caption[Sơ đồ hoạt động chức năng quên mật khẩu]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ hoạt động chức năng quên mật khẩu}
     \label{activity_forgot_password} %đặt tên cho ảnh
@@ -264,6 +264,36 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \label{activity_record_history} %đặt tên cho ảnh
   \end{figure}
   \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng Sửa thông tin bản ghi dữ liệu đo}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Sửa thông tin bản ghi dữ liệu đo} \\
+      \hline
+      Tác nhân & Bác sĩ, Quản trị viên \\
+      \hline
+      Mô tả & Cho phép bác sĩ sửa  thông tin bản ghi dữ liệu đo của bệnh nhân
+      mà mình quản lý, quản trị viên có thể sửa thông tin bản ghi dữ liệu bất kì.\\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_record}, Hình \ref{sequence_edit_record} 
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+  Dưới đây là sơ đồ hoạt động mô tả chức năng tải bản ghi dữ liệu đo
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=14cm]{Images/activity/activity_edit_record.png}
+    \caption[Sơ đồ hoạt động chức năng sửa thông tin bản ghi dữ liệu đo]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng sửa thông tin bản ghi dữ liệu đo}
+    \label{activity_edit_record} %đặt tên cho ảnh
+  \end{figure}
+  \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng tải bản ghi dữ liệu đo}
     \centering
     \begin{tabularx}{0.9\textwidth}{|c|X|}
@@ -334,6 +364,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \label{activity_chat} %đặt tên cho ảnh
   \end{figure}
 
+\subsubsection{Use case chức năng tư vấn từ trợ lý ảo}
   \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng gửi tin nhắn cho trợ lý ảo}
     \centering
@@ -364,12 +395,12 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \label{activity_chat_ai} %đặt tên cho ảnh
   \end{figure}
 
-\subsubsection{Use case chức năng quản lý bệnh nhân}
+\subsubsection{Use case chức năng xem danh sách bệnh nhân}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=12cm,height=8.5cm]{Images/use_case/use_case_manage_patients.png}
-    \caption[Sơ đồ use case chức năng quản lý bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ use case chức năng quản lý bệnh nhân}
+    \includegraphics[width=11cm,height=4.5cm]{Images/use_case/use_case_manage_patients.png}
+    \caption[Sơ đồ use case chức năng xem danh sách bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng xem danh sách bệnh nhân}
     \label{use_case_patient_management} %đặt tên cho ảnh
   \end{figure}
 
@@ -388,95 +419,20 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_patient}, Hình \ref{sequence_manage_patient}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_list_patient}, Hình \ref{sequence_manage_patient}
         \\
       % \end{tabular} \\
       \hline
     \end{tabularx}
   \end{table}
 
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng thêm bệnh nhân}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{|c|X|}
-      \hline
-      \textbf{Tên chức năng} & \textbf{Thêm bệnh nhân} \\
-      \hline
-      Tác nhân & Bác sĩ \\
-      \hline
-      Mô tả & Cho phép bác sĩ thực hiện hành động thêm bệnh nhân của mình \\
-      \hline
-      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
-      \hline
-      Dòng sự kiện chính & 
-      % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_patient}, Hình \ref{sequence_manage_patient}
-        \\
-      % \end{tabular} \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
-  Dưới đây là sơ đồ hoạt động mô tả chức năng xem/thêm bệnh nhân
+  Dưới đây là sơ đồ hoạt động mô tả chức năng xem danh sách bệnh nhân
   \begin{figure}[H]
     \centering
-    \includegraphics[width=13.5cm,height=14cm]{Images/activity/activity_add_patient.png}
-    \caption[Sơ đồ hoạt động chức năng xem/thêm bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ hoạt động chức năng xem/thêm bệnh nhân}
-    \label{activity_add_patient} %đặt tên cho ảnh
-  \end{figure}
-
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng sửa thông tin bệnh nhân}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{|c|X|}
-      \hline
-      \textbf{Tên chức năng} & \textbf{Sửa thông tin bệnh nhân} \\
-      \hline
-      Tác nhân & Bác sĩ \\
-      \hline
-      Mô tả & Cho phép bác sĩ thực hiện hành động sửa thông tin bệnh nhân trong danh sách bệnh nhân của mình \\
-      \hline
-      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
-      \hline
-      Dòng sự kiện chính & 
-      % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_patient}, Hình \ref{sequence_manage_edit_patient}
-        \\
-      % \end{tabular} \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng xóa bệnh nhân}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{|c|X|}
-      \hline
-      \textbf{Tên chức năng} & \textbf{Xóa bệnh nhân} \\
-      \hline
-      Tác nhân & Bác sĩ \\
-      \hline
-      Mô tả & Cho phép bác sĩ thực hiện hành động xóa bệnh nhân trong danh sách bệnh nhân của mình \\
-      \hline
-      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
-      \hline
-      Dòng sự kiện chính & 
-      % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_patient}, Hình \ref{sequence_manage_delete_patient}
-        \\
-      % \end{tabular} \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
-  Dưới đây là sơ đồ hoạt động mô tả chức năng sửa/xóa bệnh nhân
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=13.5cm,height=17cm]{Images/activity/activity_edit_patient.png}
-    \caption[Sơ đồ hoạt động chức năng sửa/xóa bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ hoạt động chức năng sửa/xóa bệnh nhân}
-    \label{activity_edit_patient}
+    \includegraphics[width=13.5cm,height=9cm]{Images/activity/activity_manage_patient.png}
+    \caption[Sơ đồ hoạt động chức năng xem danh sách bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng xem danh sách bệnh nhân}
+    \label{activity_list_patient} %đặt tên cho ảnh
   \end{figure}
 
 \subsubsection{Use case chức năng quản lý thiết bị}
@@ -594,7 +550,121 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \label{activity_edit_device} %đặt tên cho ảnh
   \end{figure}
 
+\subsubsection{Use case chức năng quản lý phân công bác sĩ - bệnh nhân}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm,height=11.5cm]{Images/use_case/use_case_manage_pda.png}
+    \caption[Sơ đồ use case chức năng quản lý phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý phân công bác sĩ - bệnh nhân}
+    \label{use_case_pda_management} %đặt tên cho ảnh
+  \end{figure}
 
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng xem danh sách phân công bác sĩ - bệnh nhân}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Xem danh sách phân công bác sĩ - bệnh nhân} \\
+      \hline
+      Tác nhân & Quản trị viên \\
+      \hline
+      Mô tả & Cho phép quản trị thực hiện hành động xem danh sách phân công bác sĩ - bệnh nhân \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_pda}, Hình \ref{sequence_manage_pda}
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng thêm phân công bác sĩ - bệnh nhân}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Thêm phân công bác sĩ - bệnh nhân} \\
+      \hline
+      Tác nhân & Quản trị viên \\
+      \hline
+      Mô tả & Cho phép quản trị thực hiện hành động thêm phân công bác sĩ - bệnh nhân \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_pda}, Hình \ref{sequence_manage_pda}
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  Dưới đây là sơ đồ hoạt động mô tả chức năng xem/thêm phân công bác sĩ - bệnh nhân
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=13cm]{Images/activity/activity_add_pda.png}
+    \caption[Sơ đồ hoạt động chức năng xem/thêm người dùng]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng xem/thêm người dùng}
+    \label{activity_add_pda} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng sửa thông tin phân công bác sĩ - bệnh nhân}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Sửa thông tin phân công bác sĩ - bệnh nhân} \\
+      \hline
+      Tác nhân & Quản trị viên \\
+      \hline
+      Mô tả & Cho phép quản trị thực hiện hành động sửa thông tin phân công bác sĩ - bệnh nhân \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_pda}, Hình \ref{sequence_manage_edit_pda}
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng xóa phân công bác sĩ - bệnh nhân}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Xóa phân công bác sĩ - bệnh nhân} \\
+      \hline
+      Tác nhân & Quản trị viên \\
+      \hline
+      Mô tả & Cho phép quản trị thực hiện hành động xóa phân công bác sĩ - bệnh nhân \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_pda}, Hình \ref{sequence_manage_delete_user} 
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  Dưới đây là sơ đồ hoạt động mô tả chức năng sửa/xóa phân công bác sĩ - bệnh nhân
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=17cm]{Images/activity/activity_edit_pda.png}
+    \caption[Sơ đồ hoạt động chức năng sửa/xóa phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng sửa/xóa phân công bác sĩ - bệnh nhân}
+    \label{activity_edit_pda} %đặt tên cho ảnh
+  \end{figure}
+  
 \subsubsection{Use case chức năng quản lý tài khoản người dùng}
   \begin{figure}[H]
     \centering
@@ -739,6 +809,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \selectfont Sơ đồ hoạt động chức năng quản lý đăng ký tài khoản người dùng}
     \label{activity_register_management} %đặt tên cho ảnh
   \end{figure}
+
 
 % \newpage
 \subsection{Thẻ CRC (Class - Responsibility - Collaboration Card)}
@@ -1548,7 +1619,7 @@ thành công.
 \subsubsection{Sơ đồ tuần tự chức năng quản lý dữ liệu đo}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=14cm,height=10cm]{Images/sequence/sequence_manage_record.png}
+  \includegraphics[width=14cm,height=11cm]{Images/sequence/sequence_manage_record.png}
   \caption[Sơ đồ tuần tự chức năng xem dữ liệu đo]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng xem dữ liệu đo}
   \label{sequence_manage_record} %đặt tên cho ảnh
@@ -1559,7 +1630,17 @@ của nó.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=14cm,height=10cm]{Images/sequence/sequence_download_records.png}
+  \includegraphics[width=14cm,height=13cm]{Images/sequence/sequence_edit_record.png}
+  \caption[Sơ đồ tuần tự chức năng sửa thông tin dữ liệu đo]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng sửa thông tin dữ liệu đo}
+  \label{sequence_edit_record} %đặt tên cho ảnh
+\end{figure}
+Nếu bác sĩ, quản trị viên muốn sửa thông tin dữ liệu đo, bác sĩ và quản trị viên gửi yêu cầu thay đổi, yêu cầu sẽ được xử lý bởi Control, 
+nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi thành công Control sẽ gửi thông báo thành công. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=11cm]{Images/sequence/sequence_download_records.png}
   \caption[Sơ đồ tuần tự chức năng tải dữ liệu đo]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng tải dữ liệu đo}
   \label{sequence_download_record} %đặt tên cho ảnh
@@ -1581,7 +1662,7 @@ xử lý bởi Control gửi tin nhắn đến đối phương và lưu vào cơ
 \subsubsection{Sơ đồ tuần tự chức năng tư vấn từ trợ lý ảo}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=14cm,height=9.5cm]{Images/sequence/sequence_chat_ai.png}
+  \includegraphics[width=14cm,height=9cm]{Images/sequence/sequence_chat_ai.png}
   \caption[Sơ đồ tuần tự chức năng tư vấn từ trợ lý ảo]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng tư vấn từ trợ lý ảo}
   \label{sequence_chat_ai} %đặt tên cho ảnh
@@ -1590,34 +1671,16 @@ Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem v
 khi người dùng gửi tin nhắn đến trợ lý ảo, API sẽ được xử lý bởi Control gửi đến trợ lý ảo và phản hồi lại câu trả lời từ trợ lý ảo.
 
 
-\subsubsection{Sơ đồ tuần tự chức năng quản lý bệnh nhân}
+\subsubsection{Sơ đồ tuần tự chức năng xem danh sách bệnh nhân}
 \begin{figure}[H]
   \centering
   \includegraphics[width=14cm,height=11cm]{Images/sequence/sequence_manage_patient.png}
-  \caption[Sơ đồ tuần tự chức năng quản lý bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự chức năng quản lý bệnh nhân}
+  \caption[Sơ đồ tuần tự chức năng xem danh sách bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng xem danh sách bệnh nhân}
   \label{sequence_manage_patient} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình bác sĩ xem, sửa, xóa với danh sách bệnh nhân trên hệ thống. Bác sĩ chọn mở giao diện quản lý bệnh nhân, 
+Sơ đồ tuần tự trên mô tả chi tiết quá trình bác sĩ xem danh sách bệnh nhân trên hệ thống. Bác sĩ chọn mở giao diện quản lý bệnh nhân, 
 API sẽ được xử lý bởi Control, hiện danh sách bệnh nhân, bác sĩ có thể chọn một bệnh nhân và xem thông tin của họ. 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=14cm,height=13cm]{Images/sequence/sequence_manage_edit_patient.png}
-  \caption[Sơ đồ tuần tự chức năng sửa thông tin bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự chức năng sửa thông tin bệnh nhân}
-  \label{sequence_manage_edit_patient} %đặt tên cho ảnh
-\end{figure}
-Nếu bác sĩ muốn chỉnh sửa thông tin bệnh nhân, bác sĩ nhập các thông tin cần sửa và gửi yêu cầu thay đổi, yêu cầu sẽ được xử lý bởi Control, 
-nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi thành công Control sẽ gửi thông báo thành công. 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=14cm,height=12cm]{Images/sequence/sequence_manage_delete_patient.png}
-  \caption[Sơ đồ tuần tự chức năng xóa bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự chức năng xóa bệnh nhân}
-  \label{sequence_manage_delete_patient} %đặt tên cho ảnh
-\end{figure}
-Nếu bác sĩ yêu cầu xóa bệnh nhân, Control sẽ xử lý xóa bệnh nhân ở cơ sở dữ liệu và trả về thông báo cho bác sĩ.  
-
 
 \subsubsection{Sơ đồ tuần tự chức năng quản lý thiết bị}
 \begin{figure}[H]
@@ -1655,6 +1718,34 @@ bởi Control, nếu có lỗi phát sinh sẽ hiển thị lên màn hình, n�
   \label{sequence_manage_delete_device} %đặt tên cho ảnh
 \end{figure}
 Nếu quản trị viên yêu cầu xóa thiết bị, Control sẽ xử lý xóa thiết bị ở cơ sở dữ liệu và trả về thông báo cho quản trị viên.
+
+\subsubsection{Sơ đồ tuần tự chức năng quản lý phân công bác sĩ - bệnh nhân}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=11cm]{Images/sequence/sequence_manage_add_pda.png}
+  \caption[Sơ đồ tuần tự chức năng thêm phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng thêm phân công bác sĩ - bệnh nhân}
+  \label{sequence_manage_pda} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình quản trị viên xem, tạo, sửa, xóa với danh sách phân công bác sĩ - bệnh nhân trên hệ thống. Quản trị viên chọn mở giao diện
+quản lý phân công bác sĩ - bệnh nhân, API sẽ được xử lý bởi Control, hiện danh sách phân công bác sĩ - bệnh nhân. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=13cm]{Images/sequence/sequence_manage_edit_pda.png}
+  \caption[Sơ đồ tuần tự chức năng sửa thông tin phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng sửa thông tin phân công bác sĩ - bệnh nhân}
+  \label{sequence_manage_edit_pda} %đặt tên cho ảnh
+\end{figure}
+Nếu quản trị viên muốn chỉnh sửa thông tin phân công bác sĩ - bệnh nhân, quản trị viên nhập các thông tin cần sửa và gửi yêu cầu thay đổi, 
+yêu cầu sẽ được xử lý bởi Control, nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi thành công Control sẽ gửi thông báo thành công. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=14cm,height=12cm]{Images/sequence/sequence_manage_delete_pda.png}
+  \caption[Sơ đồ tuần tự chức năng xóa phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng xóa phân công bác sĩ - bệnh nhân}
+  \label{sequence_manage_delete_pda} %đặt tên cho ảnh
+\end{figure}
+Nếu quản trị viên yêu cầu xóa phân công bác sĩ - bệnh nhân, Control sẽ xử lý xóa phân công ở cơ sở dữ liệu và trả về thông báo cho quản trị viên.
 
 \subsubsection{Sơ đồ tuần tự chức năng quản lý tài khoản người dùng}
 \begin{figure}[H]
