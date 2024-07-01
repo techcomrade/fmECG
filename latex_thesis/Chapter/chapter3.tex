@@ -57,12 +57,12 @@ dựa vào những đối tượng đã được xác định trong hệ thống
 \newpage
 \subsection{Sơ đồ khối phần mềm}
 
-\subsubsection{Website cho bệnh nhân}
+\subsubsection{Website dành cho bệnh nhân}
 \mbox{}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=15cm]{Images/system/fmECG_architecture-Patient.drawio.png}
+  \includegraphics[width=12cm,height=14cm]{Images/system/fmECG_architecture-Patient.drawio.png}
   \caption[Sơ đồ khối cho App bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bệnh nhân}
   \label{fmECG_architecture-Patient} %đặt tên cho ảnh
 \end{figure}
@@ -72,15 +72,16 @@ các yêu cầu của người dùng sẽ được xử lý thông qua Services 
 giải thích Services trong hình:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item Record Service: Khối có nhiệm vụ xử lý yêu cầu cho các trạng thái đo: thực hiện đo, kết thúc đo, lưu kết quả đo
-  \item User Management Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến người dùng như đăng nhập, đăng ký, thông tin người dùng
+  \item Record Service: Khối có nhiệm vụ xử lý yêu cầu cho chức năng đo và quản lý bản ghi: thực hiện đo, kết thúc đo, lưu kết quả đo, xử lý kết quả đo và cung cấp dữ liệu để vẽ đồ thị điện tim
+  \item User Management Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến người dùng như đăng nhập, đăng ký, xem thông tin người dùng
+  \item Device Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến thiết bị như thêm sửa xoá, thay đổi thông tin, cung cấp thiết bị cho người dùng
   \item Chat Service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ và trợ lý ảo
   \item Storage Service: Khối có nhiệm vụ lưu thông tin vào bộ nhớ
 \end{itemize}
 \end{adjustwidth}
 
-Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Device để phục vụ cho việc đo điện tim.
-\subsubsection{Ứng dụng di động cho bác sĩ}
+
+\subsubsection{Website dành cho bác sĩ}
 
 \begin{figure}[H]
   \centering
@@ -89,9 +90,7 @@ Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Devi
   \label{fmECG_architecture-Doctors} %đặt tên cho ảnh
 \end{figure}
 
-Về cơ bản, ứng dụng di động cho bác sĩ có những khối tương tự với bệnh nhân, trừ việc bác sĩ sẽ không có hai khối Device
-và Bluetooth để phục vụ việc đo như bệnh nhân.
-
+Về cơ bản, website cho bác sĩ có những khối tương tự với bệnh nhân, trừ việc bác sĩ sẽ có thêm quyền quản lý thiết bị (Device Service)
 
 \subsubsection{Website cho quản trị viên}
 
@@ -102,8 +101,8 @@ và Bluetooth để phục vụ việc đo như bệnh nhân.
   \label{fmECG_architecture-Admin} %đặt tên cho ảnh
 \end{figure}
 
-Quản trị viên sẽ quản lý 2 Services chính đó là quản lý người dùng (User Management Service) và quản lý phân công
-bác sĩ - bệnh nhân (Patient Assignment Service), logic và thứ tự các khối tương đồng với ứng dụng dành cho bác sĩ.
+Quản trị viên sẽ quản lý 6 Services chính đó là quản lý người dùng (User Management Service), quản lý phân công
+bác sĩ - bệnh nhân (Patient Assignment Service), quản lý bản ghi (Record Service), Chat Service, Thêm dữ liệu mới để huấn luyện trợ lý ảo (AI service).
 
 Tiếp theo để phân tích cụ thể hơn từng luồng trong hệ thống qua use case, chúng em xin phép được trình bày các sơ đồ tuần
 tự. 
