@@ -16,7 +16,7 @@ hình vẽ:
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=9cm,height=10cm]{Images/system/fmECG_architecture-System_Architecture.png}
+  \includegraphics[width=12cm,height=12cm]{Images/system/fmECG_architecture-System_Architecture.png}
   \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
   \label{fmECG_architecture-System} %đặt tên cho ảnh
 \end{figure}
@@ -26,34 +26,38 @@ Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item Device: Thiết bị phần cứng đo điện tim, để kết nối với App bệnh nhân thông qua Bluetooth 
-  \item Application: Bao gồm ứng dụng của bệnh nhân, ứng dụng của bác sĩ và Website của Admin, Website của bác sĩ, Website của bệnh nhân
+  \item Application: Bao gồm mobile app của bệnh nhân, bác sĩ và Website của Admin, Website của bác sĩ, Website của bệnh nhân
   \item Server: Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu, Cloud lưu trữ, kết nối với model GPT-4 trên OpenAI thông qua api
 \end{itemize}
 \end{adjustwidth}
 
-Trong hệ thống thì Devices là phần mà chúng em sẽ không trực tiếp thực hiện trong đồ án này, Application và Server sẽ là
-phần mà đồ án chúng em thực hiện. Trong khối Application chúng em sẽ chỉ xây dựng giao diện website và server quản lý.
- Ở trong sơ đồ kiến trúc hệ thống riêng có bệnh nhân sẽ có tương tác trực tiếp với Devices,
+Trong hệ thống thì Devices và Mobile App là phần mà chúng em sẽ không trực tiếp thực hiện trong đồ án này, Website và Server sẽ là
+phần mà đồ án chúng em thực hiện. Ở trong sơ đồ kiến trúc hệ thống riêng có bệnh nhân sẽ có tương tác trực tiếp với Devices,
 còn lại khối Application sẽ tương tác với Server thông qua API với giao thức HTTP. Khi nhận được yêu cầu từ Application,
-Server sẽ thực hiện xử lý dữ liệu, mọi yêu cầu đến đều được xử lý bởi Services, tuỳ vào yêu cầu đến Services tương ứng sẽ đảm nhiệm 
+Server sẽ thực hiện xử lý dữ liệu, mọi yêu cầu đến đều được xử lý bởi các Services, tuỳ vào yêu cầu đến Services tương ứng sẽ đảm nhiệm 
 việc lấy/lưu dữ liệu trong cơ sở dữ liệu sau đó trả ra kết quả cho người dùng.
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item User Services: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin tài khoản
-  \item ECG Services: Xử lý các tác vụ liên quan tới dữ liệu điện tim
-  \item Storage Services: Xử lý các tác vụ lưu trữ dữ liệu của hệ thống với AWS
+  \item User Services: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin cá nhân
+  \item Storage Services: Xử lý các tác vụ liên quan tới lưu trữ dữ liệu của hệ thống
+  \item AI Services: Xử lý các tác vụ liên quan tới trợ lý ảo, bao gồm: huấn luyện, kết nối với model gpt-4 thông qua api và xử lý kết quả 
+  và trả về tin nhắn và các hành động của ai can thiệp trực tiếp vào hệ thống 
   \item Message Services: Xử lý các yêu cầu liên quan tới hội thoại, tin nhắn.
-  \item AI Services: Xử lý các tác vụ liên quan tới AI và kết nối với model gpt-4 trên OpenAi thông qua API
+  \item Device Services: Xử lý các tác vụ liên quan tới thiết bị như thêm, sửa, xoá thiết bị, cập nhật thông tin.
+  \item Record Services: Xử lý các tác vụ liên quan tới bản ghi như là thêm sửa xoá, xử lý dữ liệu file đo, vẽ đồ thị
+  \item Authen Services: Xử lý các tác vụ liên quan tới bảo mật như: mã hoá và cung cấp token, kiểm tra token, phân quyền truy cập api, mã hoá các dữ liệu nhạy cảm trước khi lưu trữ.
+  \item Static Services: Xử lý các tác vụ liên quan tới thống kê như: thống kê người dùng, thiết bị, bản ghi, tin nhắn theo tuần theo tháng.
 \end{itemize}
 \end{adjustwidth}
-Ngoài ra, hệ thống sẽ phải có kết nối bluetooth low energy giữa thiết bị đo và ứng dụng di động để có thể truyền/nhận dữ liệu.
+Ngoài ra hệ thống sẽ có thêm chức năng tự động triển khai trên môi trường internet để việc phát triển và kiểm thử dễ dàng 
+làm tăng chất lượng và độ hoàn thiện của hệ thống
 Trên đây là tổng quan về kiến trúc hệ thống, phần tiếp dưới đây chúng em xin phép trình bày kỹ hơn về từng khối nhỏ hơn
 dựa vào những đối tượng đã được xác định trong hệ thống.
 
 \newpage
 \subsection{Sơ đồ khối phần mềm}
 
-\subsubsection{Ứng dụng di động cho bệnh nhân}
+\subsubsection{Website cho bệnh nhân}
 \mbox{}
 
 \begin{figure}[H]
@@ -68,10 +72,9 @@ các yêu cầu của người dùng sẽ được xử lý thông qua Services 
 giải thích Services trong hình:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item ECG Service: Khối có nhiệm vụ xử lý yêu cầu cho các trạng thái đo: thực hiện đo, kết thúc đo, lưu kết quả đo
-  \item ECG Signal Processing Service: Khối có nhiệm vụ xử lý tín hiệu đo để phân tích sâu, hiển thị lên màn hình
-  \item User Management Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến người dùng như đăng nhập, đăng ký
-  \item Chat Service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin
+  \item Record Service: Khối có nhiệm vụ xử lý yêu cầu cho các trạng thái đo: thực hiện đo, kết thúc đo, lưu kết quả đo
+  \item User Management Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến người dùng như đăng nhập, đăng ký, thông tin người dùng
+  \item Chat Service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ và trợ lý ảo
   \item Storage Service: Khối có nhiệm vụ lưu thông tin vào bộ nhớ
 \end{itemize}
 \end{adjustwidth}
