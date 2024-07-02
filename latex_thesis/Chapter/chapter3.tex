@@ -609,7 +609,7 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
  api/record/doctor/\{:doctorId\} &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sỹ \\ \hline
  api/record/id/\{:recordId\}  &     GET   & Lấy thông tin một phiên đo của bệnh nhân \\ \hline
  api/record/getData/\{:recordId\}  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
- api/record/download/\{:recordId\}  &     GET   & Tải dữ liệu một phiên đo của bệnh nhân \\ \hline
+ api/ record/download/\{:recordId\}  &     GET   & Tải dữ liệu một phiên đo của bệnh nhân \\ \hline
  api/record/update  &     POST   & Cập nhật thông tin một phiên đo của bệnh nhân \\ \hline
  api/record/delete/\{:recordId\}  &     DELETE   & Xóa thông tin một phiên đo của bệnh nhân \\ \hline
 
@@ -747,7 +747,7 @@ yêu cầu này được xử lý bởi RecordController. RecordController tiế
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getRecordsByUser.png}
+  \includegraphics[width=16cm,height=10.5cm]{Images/sequence_api/getRecordsByUser.png}
   \caption[Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của một bệnh nhân ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của một bệnh nhân }
   \label{getRecordsByUser} %đặt tên cho ảnh
@@ -760,7 +760,7 @@ Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và đ
 
  \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getRecordsByDoctor.png}
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/getRecordsByDoctor.png}
   \caption[Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ}
   \label{getRecordsByDoctor} %đặt tên cho ảnh
@@ -785,7 +785,7 @@ Sau đó, thông tin dữ liệu ECG được trả về từ RecordModel và đ
 
  \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getRecordDataById.png}
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/getRecordDataById.png}
   \caption[Sơ đồ tuần tự cho API lấy dữ liệu một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy dữ liệu một phiên đo ECG }
   \label{getRecordDataById} %đặt tên cho ảnh
@@ -799,7 +799,7 @@ Sau đó, dữ liệu ECG được trả về từ RecordModel và được gử
 
  \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/downloadRecordDataById.png}
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/downloadRecordDataById.png}
   \caption[Sơ đồ tuần tự cho API tải tệp dữ liệu một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API tải tệp dữ liệu một phiên đo ECG }
   \label{downloadRecordDataById} %đặt tên cho ảnh
@@ -812,7 +812,7 @@ Sau đó, tệp bản ghi ECG được trả về từ Server và được gửi
 
  \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/editRecordById.png}
+  \includegraphics[width=16cm,height=14cm]{Images/sequence_api/editRecordById.png}
   \caption[Sơ đồ tuần tự cho API cập nhật thông tin một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API cập nhật thông tin một phiên đo ECG }
   \label{editRecordById} %đặt tên cho ảnh
@@ -825,7 +825,7 @@ phiên đo ECG dựa trên thông tin được truyền vào từ yêu cầu. Sa
 
  \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/deleteRecordById.png}
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/deleteRecordById.png}
   \caption[Sơ đồ tuần tự cho API xóa thông tin một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API xóa thông tin một phiên đo ECG }
   \label{deleteRecordById} %đặt tên cho ảnh
@@ -856,7 +856,7 @@ trả về tới người dùng (quản trị viên).
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getDeviceById.png}
+  \includegraphics[width=16cm,height=10cm]{Images/sequence_api/getDeviceById.png}
   \caption[Sơ đồ tuần tự cho API lấy thông tin thiết bị dựa trên ID]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy thông tin thiết bị dựa trên ID }
   \label{getDeviceById} %đặt tên cho ảnh
@@ -868,7 +868,7 @@ Sau khi xử lý, response cuối cùng được trả về tới người dùng
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/addDevice.png}
+  \includegraphics[width=16cm,height=13cm]{Images/sequence_api/addDevice.png}
   \caption[Sơ đồ tuần tự cho API thêm thiết bị]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API thêm thiết bị }
   \label{addDevice} %đặt tên cho ảnh
@@ -881,7 +881,7 @@ Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về respons
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/editDevice.png}
+  \includegraphics[width=16cm,height=14cm]{Images/sequence_api/editDevice.png}
   \caption[Sơ đồ tuần tự cho API cập nhật thông tin thiết bị ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API cập nhật thông tin thiết bị }
   \label{editDevice} %đặt tên cho ảnh
@@ -894,7 +894,7 @@ yêu cầu này được xử lý bởi DeviceController. DeviceController gửi
 
  \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/deleteDeviceById.png}
+  \includegraphics[width=16cm,height=12cm]{Images/sequence_api/deleteDeviceById.png}
   \caption[Sơ đồ tuần tự cho API xóa thiết bị]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API xóa thiết bị }
   \label{deleteDeviceById} %đặt tên cho ảnh
@@ -927,7 +927,7 @@ trả về tới người dùng (quản trị viên).
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/addAssignment.png}
+  \includegraphics[width=16cm,height=13cm]{Images/sequence_api/addAssignment.png}
   \caption[Sơ đồ tuần tự cho API thêm phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API thêm phân công bệnh nhân - bác sĩ }
   \label{addPDA} %đặt tên cho ảnh
@@ -941,7 +941,7 @@ Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về respons
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/editAssignment.png}
+  \includegraphics[width=16cm,height=13cm]{Images/sequence_api/editAssignment.png}
   \caption[Sơ đồ tuần tự cho API cập nhật thông tin phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API cập nhật thông tin phân công bệnh nhân - bác sĩ }
   \label{editPDA} %đặt tên cho ảnh
@@ -955,7 +955,7 @@ Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về respons
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/deleteAssignment.png}
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/deleteAssignment.png}
   \caption[Sơ đồ tuần tự cho API xóa phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API xóa phân công bệnh nhân - bác sĩ }
   \label{deletePDA} %đặt tên cho ảnh
