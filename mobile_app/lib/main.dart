@@ -34,11 +34,11 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await FirebaseMessaging.instance.getInitialMessage();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  // await FirebaseMessaging.instance.getInitialMessage();
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   apiConstant.getMode();
   // try {
@@ -53,8 +53,8 @@ void main() async {
   // } catch (e) {
   //   print('sdgndjfkg:$e');
   // }
-  final SocketChannel socketChannel = SocketChannel();
-  await socketChannel.connect();
+  // final SocketChannel socketChannel = SocketChannel();
+  // await socketChannel.connect();
 
   if (Platform.isAndroid) {
     WidgetsFlutterBinding.ensureInitialized();

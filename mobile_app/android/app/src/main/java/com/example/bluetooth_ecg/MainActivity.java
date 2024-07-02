@@ -24,6 +24,8 @@ import com.chaquo.python.android.AndroidPlatform;
 
 import java.util.HashMap;
 import java.util.Set;
+import java.util.List;
+
 public class MainActivity extends FlutterActivity {
     private static final String CHANNEL = "com.example.method_channel/java";
 
@@ -31,54 +33,58 @@ public class MainActivity extends FlutterActivity {
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
         super.configureFlutterEngine(flutterEngine);
         new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL).
-                setMethodCallHandler(
-                        (call, result) -> {
-                            // if (call.method.equals("getBatteryLevel")) {
-                            //     int batteryLevel = getBatteryLevel();
-
-                //     if (batteryLevel != -1) {
-                //         result.success(batteryLevel);
-                //     } else {
-                //         result.error("UNAVAILABLE", "Battery level not available.", null);
-                //     }
-                // } else {
-                //     result.notImplemented();
-                // }
-                if (call.method.equals("helloWorldPython")) {
-                  byte[] dataBytes = call.argument("bytes");
-                    System.out.println("hello: " + dataBytes);
-                    // result.success(true);
-                    result.success(helloWorldPython(dataBytes));
+            setMethodCallHandler((call, result) -> {
+                if (call.method.equals("transfer_data_to_python")) {
+                    byte[] bytesData = call.argument("bytes");
+                    System.out.println("hello: " + bytesData);
+                    result.success(transferDataToPython(bytesData));
                 }
-            });
+
+                if (call.method.equals("transfer_context_to_python")) {
+                    String pythonPath = call.argument("python_path");
+                    String pcgPath = call.argument("pcg_path");
+                    String ppgPath = call.argument("ppg_path");
+                    HashMap<String, int[]> dataCalculated = transferContextToPython(pythonPath, pcgPath, ppgPath);
+                    result.success(dataCalculated);
+                }
+           });
     }
 
 
-
-    private int getBatteryLevel() {
-        int batteryLevel = -1;
-        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-            BatteryManager batteryManager = (BatteryManager) getSystemService(BATTERY_SERVICE);
-            batteryLevel = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
-        }else {
-            Intent intent = new ContextWrapper(getApplicationContext()).
-                    registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-            batteryLevel = (intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) * 100) /
-                    intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-        }
-
-
-        return batteryLevel;
-    }
-
-    private HashMap<String, String> helloWorldPython(
-      byte[] bytesData
+    private HashMap<String, int[]> transferContextToPython(
+        String pythonPath,
+        String pcgPath,
+        String ppgPath
     ) {
         if (!Python.isStarted()) {
             Python.start(new AndroidPlatform(this));
         }
 
-        System.out.println("hello222: " + bytesData);
+        Python py = Python.getInstance();
+        PyObject module = py.getModule("bridge");
+        PyObject data = module.callAttr("create_bridge", pythonPath, pcgPath, ppgPath);
+
+        // hoạt động với file backup ở máy chứ không phải file được chọn từ file picker
+        // PyObject module = py.getModule("backup_script_bluetooth_classic");
+        // PyObject data = module.callAttr("calculate", pcgPath, ppgPath);
+
+        Set<PyObject> pyKeySet = data.callAttr("keys").asSet();
+        System.out.println("hehehe" + data);
+        HashMap<String, int[]> map = new HashMap<>();
+
+        for (PyObject pyKey:pyKeySet) {
+            String key = pyKey.toString();
+            map.put(key, data.callAttr("get",key).toJava(int[].class));
+        }
+        return map;
+    }
+
+    private HashMap<String, String> transferDataToPython(
+      byte[] bytesData
+    ) {
+        if (!Python.isStarted()) {
+            Python.start(new AndroidPlatform(this));
+        }
 
         Python py = Python.getInstance();
         // get file python (PyObject)
@@ -93,13 +99,11 @@ public class MainActivity extends FlutterActivity {
         for ( PyObject pyKey:pyKeySet) {
             String key = pyKey.toString();
             map.put(key, data.callAttr("get",key).toString());
-           
         }
         // map.put("sbp", data.asMap().get("sbp").toDouble());
         // map.put("dbp", data.asMap().get("dbp").toDouble());
         // map.put("heart_rate", data.asMap().get("heart_rate").toDouble());
         // map.put("standard_deviation", data.asMap().get("standard_deviation").toDouble());
-        
         return map;
     }
 }
