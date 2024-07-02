@@ -16,7 +16,7 @@ hình vẽ:
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=9cm,height=10cm]{Images/system/fmECG_architecture-System_Architecture.png}
+  \includegraphics[width=12cm,height=12cm]{Images/system/fmECG_architecture-System_Architecture.png}
   \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
   \label{fmECG_architecture-System} %đặt tên cho ảnh
 \end{figure}
@@ -26,39 +26,43 @@ Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item Device: Thiết bị phần cứng đo điện tim, để kết nối với App bệnh nhân thông qua Bluetooth 
-  \item Application: Bao gồm ứng dụng của bệnh nhân, ứng dụng của bác sĩ và Website của Admin, Website của bác sĩ, Website của bệnh nhân
+  \item Application: Bao gồm mobile app của bệnh nhân, bác sĩ và Website của Admin, Website của bác sĩ, Website của bệnh nhân
   \item Server: Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu, Cloud lưu trữ, kết nối với model GPT-4 trên OpenAI thông qua api
 \end{itemize}
 \end{adjustwidth}
 
-Trong hệ thống thì Devices là phần mà chúng em sẽ không trực tiếp thực hiện trong đồ án này, Application và Server sẽ là
-phần mà đồ án chúng em thực hiện. Trong khối Application chúng em sẽ chỉ xây dựng giao diện website và server quản lý.
- Ở trong sơ đồ kiến trúc hệ thống riêng có bệnh nhân sẽ có tương tác trực tiếp với Devices,
+Trong hệ thống thì Devices và Mobile App là phần mà chúng em sẽ không trực tiếp thực hiện trong đồ án này, Website và Server sẽ là
+phần mà đồ án chúng em thực hiện. Ở trong sơ đồ kiến trúc hệ thống riêng có bệnh nhân sẽ có tương tác trực tiếp với Devices,
 còn lại khối Application sẽ tương tác với Server thông qua API với giao thức HTTP. Khi nhận được yêu cầu từ Application,
-Server sẽ thực hiện xử lý dữ liệu, mọi yêu cầu đến đều được xử lý bởi Services, tuỳ vào yêu cầu đến Services tương ứng sẽ đảm nhiệm 
+Server sẽ thực hiện xử lý dữ liệu, mọi yêu cầu đến đều được xử lý bởi các Services, tuỳ vào yêu cầu đến Services tương ứng sẽ đảm nhiệm 
 việc lấy/lưu dữ liệu trong cơ sở dữ liệu sau đó trả ra kết quả cho người dùng.
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item User Services: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin tài khoản
-  \item ECG Services: Xử lý các tác vụ liên quan tới dữ liệu điện tim
-  \item Storage Services: Xử lý các tác vụ lưu trữ dữ liệu của hệ thống với AWS
+  \item User Services: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin cá nhân
+  \item Storage Services: Xử lý các tác vụ liên quan tới lưu trữ dữ liệu của hệ thống
+  \item AI Services: Xử lý các tác vụ liên quan tới trợ lý ảo, bao gồm: huấn luyện, kết nối với model gpt-4 thông qua api và xử lý kết quả 
+  và trả về tin nhắn và các hành động của ai can thiệp trực tiếp vào hệ thống 
   \item Message Services: Xử lý các yêu cầu liên quan tới hội thoại, tin nhắn.
-  \item AI Services: Xử lý các tác vụ liên quan tới AI và kết nối với model gpt-4 trên OpenAi thông qua API
+  \item Device Services: Xử lý các tác vụ liên quan tới thiết bị như thêm, sửa, xoá thiết bị, cập nhật thông tin.
+  \item Record Services: Xử lý các tác vụ liên quan tới bản ghi như là thêm sửa xoá, xử lý dữ liệu file đo, vẽ đồ thị
+  \item Authen Services: Xử lý các tác vụ liên quan tới bảo mật như: mã hoá và cung cấp token, kiểm tra token, phân quyền truy cập api, mã hoá các dữ liệu nhạy cảm trước khi lưu trữ.
+  \item Static Services: Xử lý các tác vụ liên quan tới thống kê như: thống kê người dùng, thiết bị, bản ghi, tin nhắn theo tuần theo tháng.
 \end{itemize}
 \end{adjustwidth}
-Ngoài ra, hệ thống sẽ phải có kết nối bluetooth low energy giữa thiết bị đo và ứng dụng di động để có thể truyền/nhận dữ liệu.
+Ngoài ra hệ thống sẽ có thêm chức năng tự động triển khai trên môi trường internet để việc phát triển và kiểm thử dễ dàng 
+làm tăng chất lượng và độ hoàn thiện của hệ thống
 Trên đây là tổng quan về kiến trúc hệ thống, phần tiếp dưới đây chúng em xin phép trình bày kỹ hơn về từng khối nhỏ hơn
 dựa vào những đối tượng đã được xác định trong hệ thống.
 
 \newpage
 \subsection{Sơ đồ khối phần mềm}
 
-\subsubsection{Ứng dụng di động cho bệnh nhân}
+\subsubsection{Website dành cho bệnh nhân}
 \mbox{}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=15cm]{Images/system/fmECG_architecture-Patient.drawio.png}
+  \includegraphics[width=12cm,height=14cm]{Images/system/fmECG_architecture-Patient.drawio.png}
   \caption[Sơ đồ khối cho App bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bệnh nhân}
   \label{fmECG_architecture-Patient} %đặt tên cho ảnh
 \end{figure}
@@ -68,16 +72,16 @@ các yêu cầu của người dùng sẽ được xử lý thông qua Services 
 giải thích Services trong hình:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item ECG Service: Khối có nhiệm vụ xử lý yêu cầu cho các trạng thái đo: thực hiện đo, kết thúc đo, lưu kết quả đo
-  \item ECG Signal Processing Service: Khối có nhiệm vụ xử lý tín hiệu đo để phân tích sâu, hiển thị lên màn hình
-  \item User Management Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến người dùng như đăng nhập, đăng ký
-  \item Chat Service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin
+  \item Record Service: Khối có nhiệm vụ xử lý yêu cầu cho chức năng đo và quản lý bản ghi: thực hiện đo, kết thúc đo, lưu kết quả đo, xử lý kết quả đo và cung cấp dữ liệu để vẽ đồ thị điện tim
+  \item User Management Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến người dùng như đăng nhập, đăng ký, xem thông tin người dùng
+  \item Device Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến thiết bị như thêm sửa xoá, thay đổi thông tin, cung cấp thiết bị cho người dùng
+  \item Chat Service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ và trợ lý ảo
   \item Storage Service: Khối có nhiệm vụ lưu thông tin vào bộ nhớ
 \end{itemize}
 \end{adjustwidth}
 
-Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Device để phục vụ cho việc đo điện tim.
-\subsubsection{Ứng dụng di động cho bác sĩ}
+
+\subsubsection{Website dành cho bác sĩ}
 
 \begin{figure}[H]
   \centering
@@ -86,9 +90,7 @@ Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Devi
   \label{fmECG_architecture-Doctors} %đặt tên cho ảnh
 \end{figure}
 
-Về cơ bản, ứng dụng di động cho bác sĩ có những khối tương tự với bệnh nhân, trừ việc bác sĩ sẽ không có hai khối Device
-và Bluetooth để phục vụ việc đo như bệnh nhân.
-
+Về cơ bản, website cho bác sĩ có những khối tương tự với bệnh nhân, trừ việc bác sĩ sẽ có thêm quyền quản lý thiết bị (Device Service)
 
 \subsubsection{Website cho quản trị viên}
 
@@ -99,8 +101,8 @@ và Bluetooth để phục vụ việc đo như bệnh nhân.
   \label{fmECG_architecture-Admin} %đặt tên cho ảnh
 \end{figure}
 
-Quản trị viên sẽ quản lý 2 Services chính đó là quản lý người dùng (User Management Service) và quản lý phân công
-bác sĩ - bệnh nhân (Patient Assignment Service), logic và thứ tự các khối tương đồng với ứng dụng dành cho bác sĩ.
+Quản trị viên sẽ quản lý 6 Services chính đó là quản lý người dùng (User Management Service), quản lý phân công
+bác sĩ - bệnh nhân (Patient Assignment Service), quản lý bản ghi (Record Service), Chat Service, Thêm dữ liệu mới để huấn luyện trợ lý ảo (AI service).
 
 Tiếp theo để phân tích cụ thể hơn từng luồng trong hệ thống qua use case, chúng em xin phép được trình bày các sơ đồ tuần
 tự. 
@@ -118,7 +120,7 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    user\_id & INTEGER & Khóa chính của bảng, đại diện cho ID người dùng. \\
+    user\_id & STRING & Khóa chính của bảng, đại diện cho ID người dùng. \\
     \hline
     password & STRING & Mật khẩu của người dùng. \\
     \hline
@@ -126,11 +128,18 @@ tự.
     \hline
     name & STRING & Tên của người dùng. \\
     \hline
-    doB & DATE & Ngày sinh của người dùng. \\
+    gender & INT & Giới tính của người dùng. \\
+    \hline
+    birth & DATE & Ngày sinh của người dùng. \\
     \hline
     phone\_number & STRING & Số điện thoại của người dùng. \\
     \hline
-    role & INTEGER & Quyền của người dùng (0-patient, 1-doctor, 2-admin). \\
+    image & STRING & Ảnh đại diện của người dùng. \\
+    \hline
+    status & INTEGER & Trạng thái sử dụng của người dùng (0 - còn đang sử dụng, 1 - không còn đang sử dụng). \\
+    \hline
+    information & STRING & Thông tin thêm về người dùng. \\
+    role & INTEGER & Quyền của người dùng (0 - patient, 1 - doctor, 2 - admin). \\
     \hline
     created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
     \hline
@@ -140,24 +149,74 @@ tự.
   \end{tabularx}
 \end{table}
 
+
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng ecg\_record}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng account}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    record\_id & INTEGER & Khóa chính của bảng, đại diện cho ID bản ghi ECG. \\
+    account\_id & STRING & Khóa chính của bảng, đại diện cho ID tài khoản. \\
     \hline
-    user\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
+    email & STRING & Địa chỉ email đăng kí của người dùng. \\
     \hline
-    device\_id & STRING & ID thiết bị. \\
+    password & STRING & Mật khẩu của người dùng. \\
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng register}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    register\_id & STRING & Khóa chính của bảng, đại diện cho ID tài khoản. \\
+    \hline
+    email & STRING & Địa chỉ email đăng kí của người dùng. \\
+    \hline
+    password & STRING & Mật khẩu của người dùng. \\
+    \hline
+    username & STRING & Tên của người dùng. \\
+    \hline
+    gender & INT & Giới tính của người dùng. \\
+    \hline
+    birth & DATE & Ngày sinh của người dùng. \\
+    \hline
+    phone\_number & STRING & Số điện thoại của người dùng. \\
+    \hline
+    image & STRING & Ảnh đại diện của người dùng. \\
+    \hline
+    status & INTEGER & Trạng thái chờ của người dùng (0 - đang chờ xử lý, 1 - được admin chấp nhận, 2 - bị admin từ chối). \\
+    \hline
+    information & STRING & Thông tin thêm về người dùng. \\
+    \hline
+    role & INTEGER & Quyền của người dùng (0-patient, 1-doctor, 2-admin).\\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng record}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    record\_id & STRING & Khóa chính của bảng, đại diện cho ID bản ghi record. \\
+    \hline
+    user\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
+    \hline
+    device\_id & STRING & Khóa ngoại tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}, đại diện cho ID thiết bị. \\
+    \hline
+    record\_type & INTEGER & Loại của record (0 - PPG, 1 - PCG, 2 - HeartRate, 3 - ECG). \\
     \hline
     data\_directory & STRING & Đường dẫn lưu trữ dữ liệu. \\
     \hline
-    start\_time & DATE & Thời gian bắt đầu ghi lại ECG. \\
+    start\_time & DATE & Thời gian bắt đầu ghi lại record. \\
     \hline
-    stop\_time & DATE & Thời gian kết thúc ghi lại ECG. \\
+    stop\_time & DATE & Thời gian kết thúc ghi lại record. \\
     \hline
     sensor\_type & STRING & Loại cảm biến. \\
     \hline
@@ -175,7 +234,7 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    category\_id & INTEGER & Khóa chính của bảng, đại diện cho ID danh mục tin tức. \\
+    category\_id & STRING & Khóa chính của bảng, đại diện cho ID danh mục tin tức. \\
     \hline
     category\_name & STRING & Tên danh mục tin tức. \\
     \hline
@@ -195,7 +254,7 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    news\_id & INTEGER & Khóa chính của bảng, đại diện cho ID tin tức. \\
+    news\_id & STRING & Khóa chính của bảng, đại diện cho ID tin tức. \\
     \hline
     title & STRING & Tiêu đề tin tức. \\
     \hline
@@ -223,9 +282,9 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    assign\_id & INTEGER & Khóa chính của bảng, đại diện cho ID phân công bệnh nhân - bác sĩ. \\
+    assign\_id & STRING & Khóa chính của bảng, đại diện cho ID phân công bệnh nhân - bác sĩ. \\
     \hline
-    patient\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user} (với quyền là bệnh nhân). \\
+    patient\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user} (với quyền là bệnh nhân). \\
     \hline
     doctor\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user} (với quyền là bác sĩ). \\
     \hline
@@ -239,19 +298,19 @@ tự.
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng reset\_token}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng token}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & INTEGER & Khóa chính của bảng, đại diện cho ID mã thông báo đặt lại. \\
+    id & STRING & Khóa chính của bảng, đại diện cho ID mã thông báo đặt lại. \\
     \hline
-    user\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
+    account\_id & STRING & Khóa ngoại tham chiếu đến \texttt{account\_id} trong bảng \texttt{account}. \\
     \hline
-    token & STRING & Mã thông báo đặt lại. \\
+    access\_token & STRING & Mã đại diện cho người dùng thao tác với hệ thống. \\
     \hline
-    expiration & DATE & Thời gian hết hạn của mã thông báo đặt lại. \\
+    refresh\_token & STRING & Mã đại diện cho người dùng thao tác với hệ thống sau khi \texttt{access\_token} hết hạn. \\
     \hline
     created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
     \hline
@@ -261,27 +320,7 @@ tự.
 \end{table}
 
 
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng session}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    session\_id & INTEGER & Khóa chính của bảng, đại diện cho ID phiên đăng nhập. \\
-    \hline
-    user\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
-    \hline
-    token & STRING & Mã phiên đăng nhập. \\
-    \hline
-    expiration & DATE & Thời gian hết hạn của phiên đăng nhập. \\
-    \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
-    \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
-    \hline
-  \end{tabularx}
-\end{table}
+
 
 \begin{table}[H]
   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng device}
@@ -290,9 +329,48 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    device\_id & INTEGER & Khóa chính của bảng, đại diện cho ID thiết bị. \\
+    device\_id & STRING & Khóa chính của bảng, đại diện cho ID thiết bị. \\
+    \hline
+    user\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{users}, đại diện cho ID bệnh nhân. \\
+    \hline
+    doctor\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{users}, đại diện cho ID bác sĩ. \\
     \hline
     device\_name & STRING & Tên thiết bị. \\
+    \hline
+    information & STRING & Thông tin thêm về thiết bị. \\
+    \hline
+    device\_type & INTEGER & Loại thiết bị (1 - thiết bị đo điện tim, 2 - thiết bị đo nhịp tim, âm thanh tim). \\
+    \hline
+    start\_date & DATE & Thời điểm bắt đàu sử dụng thiết bị. \\
+    \hline
+    status & INTEGER & Trạng thái của thiết bị (0 - đang được sử dụng, 1 - đang không được sử dụng). \\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng device\_detail}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    device\_detail\_id & STRING & Khóa chính của bảng, đại diện cho ID thông tin một device. \\
+    \hline
+    device\_id & STRING & Khóa ngoại tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}. \\
+    \hline
+    detail\_name & STRING & Tên trường liên quan thiết bị dựa vào \texttt{detail\_type}. \\
+    \hline
+    infomation & STRING & Thông tin về trường \texttt{detail\_name} của thiết bị. \\
+    \hline
+    value & STRING & Giá trị về loại thông tin của thiết bị dựa vào \texttt{detail\_type} (1 - tần số, 2 - dữ liệu kết nối, 3 - dung lượng lưu trữ). \\
+    \hline
+    detail\_type & INTEGER & Loại thông tin về thiết bị (1 - tín hiệu đo, 2 - loại kết nối, 3 - kiểu lưu trữ). \\
     \hline
     created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
     \hline
@@ -308,11 +386,13 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    conversation\_id & STRING & Khóa chính của bảng, đại diện cho ID hội thoại \\
+    conversation\_id & STRING & Khóa chính của bảng, đại diện cho ID hội thoại. \\
     \hline
-    members\_id & MAP<String, Boolean> & Danh sách ID của người dùng trong hội thoại \\
+    name & STRING & Tên cuộc hội thoại. \\
     \hline
-    recent\_message & MAP<String, dynamic> & Thông tin tin nhắn gần nhất \\
+    type & INTEGER & Loại của cuộc hội thoại (0 - hội thoại 2 người, 1 - hội thoại nhóm, 2 - chatbot). \\
+    \hline
+    avatar & STRING & Đoạn mã chứa url ảnh đại diện của cuộc hội thoại  \\
     \hline
     created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
     \hline
@@ -328,13 +408,21 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    message\_id & STRING & Khóa chính của bảng, đại diện cho ID tin nhắn \\
+    message\_id & STRING & Khóa chính của bảng, đại diện cho ID tin nhắn. \\
     \hline
-    conversation\_id & STRING & ID hội thoại chứa tin nhắn \\
+    conversation\_id & STRING & Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}, đại diện cho ID hội thoại chứa tin nhắn. \\
     \hline
-    message\_content & STRING & Nội dung tin nhắn \\
+    sender\_id & STRING & Khóa ngoại tham chiếu đến \texttt{id} trong bảng \texttt{conversation\_member}, đại diện cho ID người gửi tin nhắn. \\
     \hline
-    sender\_id & INTEGER & ID Người gửi tin nhắn\\
+    attachments & LIST <Map> & Danh sách tệp tin đính kèm khi gửi tin nhắn.\\
+    \hline
+    system\_message & BOOLEAN & Tin nhắn trả về từ hệ thống.\\
+    \hline
+    pin & BOOLEAN & Đánh dấu tin nhắn có được ghim không.\\
+    \hline
+    pin\_time & DATE & Thời gian ghim tin nhắn.\\
+    \hline
+    reactions & LIST <Map> & Danh sách các phản ứng lại với tin nhắn này.\\
     \hline
     created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
     \hline
@@ -344,21 +432,58 @@ tự.
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng user\_firebase\_token}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng conversation\_member}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    token\_id & String & Khóa chính của bảng, đại diện cho ID firebase token \\
+    id & STRING & Khóa chính của bảng, đại diện cho ID của thành viên đoạn hội thoại. \\
     \hline
-    firebase\_token & STRING & Token của thiết bị đăng nhập vào hệ thống do Firebase sinh ra \\
+    conversation\_id & STRING & Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}, đại diện cho ID hội thoại chứa tin nhắn. \\
     \hline
-    user\_id & INTEGER & ID của người dùng sử dụng token \\
+    user\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}, đại diện cho ID người gửi tin nhắn. \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    status\_notify & INTEGER & Trạng thái thông báo tin nhắn (0 - có thông báo tin nhắn, 1 - không nhận thông báo tin nhắn).\\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    seen & BOOLEAN & Tin nhắn đã được xem chưa.\\
+    \hline
+    role & INTEGER & Vai trò của người dùng trong hội thoại (tương ứng trong bảng \texttt{user}).\\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng conversation\_attachment}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    id & STRING & Khóa chính của bảng, đại diện cho ID tệp đính kèm tin nhắn. \\
+    \hline
+    conversation\_id & STRING & Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}, đại diện cho ID hội thoại chứa tin nhắn. \\
+    \hline
+    message\_id & STRING & Khóa ngoại tham chiếu đến \texttt{message\_id} trong bảng \texttt{message}, đại diện cho ID tin nhắn. \\
+    \hline
+    content\_url & STRING & Đoạn mã chứa nội dung của tệp tin.\\
+    \hline
+    file\_name & STRING & Tên của tệp tin.\\
+    \hline
+    size & INTEGER & Dung lượng của tệp tin.\\
+    \hline
+    thumbnail\_url & STRING & Đoạn mã chứa hình ảnh tĩnh của tệp tin.\\
+    \hline
+    type & INTEGER & Loại của tệp tin (0 - image, 1 - video, 2 - file). \\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database \\
     \hline
   \end{tabularx}
 \end{table}
@@ -479,10 +604,14 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
   }
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
- api/ecg-records/upload   &   POST  & Tải dữ liệu của phiên đo ECG lên server \\ \hline
- api/ecg-records/patient/\{:patientId\}   &    GET    & Lấy danh sách thông tin các phiên đo ECG của bệnh nhân \\ \hline
- api/ecg-records/doctor/\{:doctorId\} &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sỹ \\ \hline
- api/ecg-records/record-data/\{:recordId\}  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
+ api/record   &   GET  & Lấy danh sách thông tin các phiên đo ECG \\ \hline
+ api/record/user/\{:userId\}   &    GET    & Lấy danh sách thông tin các phiên đo ECG của bệnh nhân \\ \hline
+ api/record/doctor/\{:doctorId\} &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sỹ \\ \hline
+ api/record/id/\{:recordId\}  &     GET   & Lấy thông tin một phiên đo của bệnh nhân \\ \hline
+ api/record/getData/\{:recordId\}  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
+ api/ record/download/\{:recordId\}  &     GET   & Tải dữ liệu một phiên đo của bệnh nhân \\ \hline
+ api/record/update  &     POST   & Cập nhật thông tin một phiên đo của bệnh nhân \\ \hline
+ api/record/delete/\{:recordId\}  &     DELETE   & Xóa thông tin một phiên đo của bệnh nhân \\ \hline
 
   \end{tabularx}
   \label{table_api_ecg}
@@ -493,7 +622,7 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
 
 \begin{table}[H]
   \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến bản ghi ECG}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến quản lý thiết bị}
   \begin{tabularx}{0.9\textwidth}{
   | >{\raggedright\arraybackslash}X
   | >{\raggedright\arraybackslash}m{2cm}
@@ -501,10 +630,12 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
   }
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
- api/ecg-records/upload   &   POST  & Tải dữ liệu của phiên đo ECG lên server \\ \hline
- api/ecg-records/patient/\{:patientId\}   &    GET    & Lấy danh sách thông tin các phiên đo ECG của bệnh nhân \\ \hline
- api/ecg-records/doctor/\{:doctorId\} &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sỹ \\ \hline
- api/ecg-records/record-data/\{:recordId\}  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
+ api/device   &   GET  & Lấy danh sách thông tin tất cả thiết bị \\ \hline
+ api/devide/\{:deviceId\}   &    GET    & Lấy thông tin của một thiết bị \\ \hline
+ api/device/add &   POST     & Thêm thông tin thiết bị mới \\ \hline
+ api/device/update  &     POST   & Cập nhật thông tin một thiết bị \\ \hline
+ api/device/delete/\{:deviceId\}  &     DELETE   & Xóa thông tin một thiết bị \\ \hline
+
 
   \end{tabularx}
   \label{table_api_device}
@@ -512,8 +643,6 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
 
 
 \item API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ
-
-
 
 \begin{table}[H]
   \centering
@@ -525,11 +654,14 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
   }
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-   api/doctor/\{:doctorId\}/patients   &   GET  & Lấy danh sách thông tin bệnh nhân được phân công cho bác sĩ \\ \hline
-  api/patient/\{:patientId\}/doctor  &    GET    & Lấy thông tin bác sỹ được phân công cho bệnh nhân \\ \hline
+  api/pda   &   GET  & Lấy danh sách tất cả thông tin phân công bác sĩ - bệnh nhân \\ \hline
+  api/pda/create  &    POST    & Tạo một phân công bác sĩ - bệnh nhân mới \\ \hline
+  api/pda/update  &    POST    & Cập nhật thông tin một phân công bác sĩ - bệnh nhân mới \\ \hline
+  api/pda/delete/\{:deviceId\}  &    DELETE    & Xóa một phân công bác sĩ - bệnh nhân mới \\ \hline
+
 
   \end{tabularx}
-  \label{table_api_pat_doc}
+  \label{table_api_pda}
 \end{table}
 
 
@@ -604,12 +736,104 @@ Hình \ref{backend_login}  mô tả quá trình xác thực người dùng đăn
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getEcgRecordsByDoctor.png}
-  \caption[Sơ đồ tuần tự cho API lấy thông tin phiên đo ECG của các bệnh nhân được quản lý bởi một bác sĩ ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự cho API lấy thông tin phiên đo ECG của các bệnh nhân được quản lý bởi một bác sĩ }
-  \label{getEcgRecordsByDoctor} %đặt tên cho ảnh
+  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getAllRecord.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách tất cả phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả phiên đo ECG }
+  \label{getAllEcgRecords} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{getEcgRecordsByDoctor} mô tả quá trình lấy dữ liệu ECG (Electrocardiogram) của tất cả bệnh nhân được quản lý bởi một bác sĩ trong ứng dụng. Người dùng (bác sĩ) gửi yêu cầu lấy dữ liệu ECG của tất cả bệnh nhân mà họ quản lý, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi ECGRecordController. ECGRecordController tiếp tục truy vấn ECGRecordModel để lấy dữ liệu ECG dựa trên doctorId (ID của bác sĩ) được truyền vào từ yêu cầu. Sau đó, danh sách dữ liệu ECG của các bệnh nhân được trả về từ ECGRecordModel và được gửi trở lại ECGRecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách dữ liệu ECG cho bác sĩ. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (bác sĩ).
+Hình \ref{getAllEcgRecords} mô tả quá trình lấy danh sách tất cả phiên đo ECG (Electrocardiogram) của tất cả bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách phiên đo ECG của tất cả bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG. Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute
+ để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=10.5cm]{Images/sequence_api/getRecordsByUser.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của một bệnh nhân ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của một bệnh nhân }
+  \label{getRecordsByUser} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{getRecordsByUser} mô tả quá trình lấy danh sách các phiên đo ECG (Electrocardiogram) của một bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách các phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân có tồn tại trong hệ thống dựa theo userId (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, hệ thống sẽ
+trả về response lỗi tương ứng. Nếu bệnh nhân có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên userId (ID của bệnh nhân) được truyền vào từ yêu cầu. 
+Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG của bệnh nhân cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/getRecordsByDoctor.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ}
+  \label{getRecordsByDoctor} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{getRecordsByDoctor} mô tả quá trình lấy danh sách các phiên đo ECG (Electrocardiogram) của bệnh nhân được quản lý bởi một bác sỹ trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách các phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ, 
+thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bác sỹ có tồn tại trong hệ thống dựa theo doctorId (ID của bác sỹ) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bác sỹ hay không phải là bác sỹ, hệ thống sẽ
+trả về response lỗi tương ứng. Nếu bác sỹ có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên doctorId (ID của bác sỹ) được truyền vào từ yêu cầu. 
+Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG của bệnh nhân cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getRecordById.png}
+  \caption[Sơ đồ tuần tự cho API lấy thông tin một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy thông tin một phiên đo ECG }
+  \label{getRecordById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{getRecordById} mô tả quá trình lấy thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy thông tin một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy thông tin dữ liệu ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. 
+Sau đó, thông tin dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/getRecordDataById.png}
+  \caption[Sơ đồ tuần tự cho API lấy dữ liệu một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy dữ liệu một phiên đo ECG }
+  \label{getRecordDataById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{getRecordDataById} mô tả quá trình lấy dữ liệu một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy dữ liệu một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin, đường dẫn bản ghi có tồn tại trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo hay đường dẫn bản ghi, hệ thống sẽ
+trả về response lỗi tương ứng. Nếu bản ghi có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy dữ liệu ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. 
+Sau đó, dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/downloadRecordDataById.png}
+  \caption[Sơ đồ tuần tự cho API tải tệp dữ liệu một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API tải tệp dữ liệu một phiên đo ECG }
+  \label{downloadRecordDataById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{downloadRecordDataById} mô tả quá trình tải tệp dữ liệu một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu tải dữ liệu một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin, đường dẫn bản ghi có tồn tại trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo hay đường dẫn bản ghi, hệ thống sẽ
+trả về response lỗi tương ứng. Nếu bản ghi có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến Server để lấy tệp dữ liệu ECG dựa trên đường dẫn tệp bản ghi được truyền vào từ yêu cầu. 
+Sau đó, tệp bản ghi ECG được trả về từ Server và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa tệp bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=14cm]{Images/sequence_api/editRecordById.png}
+  \caption[Sơ đồ tuần tự cho API cập nhật thông tin một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API cập nhật thông tin một phiên đo ECG }
+  \label{editRecordById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{editRecordById} mô tả quá trình cập nhật thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu cập nhật thông tin một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService, DeviceService, UserService để kiểm tra thông tin bản ghi, thiết bị và bệnh nhân trong hệ thống dựa theo id (ID của phiên đo), user\_id (ID của bệnh nhân), device\_id (ID của thiết bị)
+ được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo, bệnh nhân hay thiết bị, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để cập nhật thông tin
+phiên đo ECG dựa trên thông tin được truyền vào từ yêu cầu. Sau đó, kết quả cập nhật được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/deleteRecordById.png}
+  \caption[Sơ đồ tuần tự cho API xóa thông tin một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API xóa thông tin một phiên đo ECG }
+  \label{deleteRecordById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{deleteRecordById} mô tả quá trình xóa thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin bản ghi trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo, hệ thống sẽ trả về response lỗi tương ứng. 
+Nếu thông tin phiên đo có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để xóa thông tin phiên đo ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. Sau đó, kết quả cập nhật được trả về từ RecordModel 
+và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra  trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
 
 
 % -----------------------------------------------------
@@ -620,13 +844,66 @@ Hình \ref{getEcgRecordsByDoctor} mô tả quá trình lấy dữ liệu ECG (El
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getEcgRecordsByDoctor.png}
-  \caption[Sơ đồ tuần tự cho API lấy thông tin phiên đo ECG của các bệnh nhân được quản lý bởi một bác sĩ ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự cho API lấy thông tin phiên đo ECG của các bệnh nhân được quản lý bởi một bác sĩ }
-  \label{getEcgRecordsByDoctor} %đặt tên cho ảnh
+  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getAllDevices.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách tất cả thiết bị ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả thiết bị }
+  \label{getAllDevices} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{getEcgRecordsByDoctor} mô tả quá trình lấy dữ liệu ECG (Electrocardiogram) của tất cả bệnh nhân được quản lý bởi một bác sĩ trong ứng dụng. Người dùng (bác sĩ) gửi yêu cầu lấy dữ liệu ECG của tất cả bệnh nhân mà họ quản lý, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi ECGRecordController. ECGRecordController tiếp tục truy vấn ECGRecordModel để lấy dữ liệu ECG dựa trên doctorId (ID của bác sĩ) được truyền vào từ yêu cầu. Sau đó, danh sách dữ liệu ECG của các bệnh nhân được trả về từ ECGRecordModel và được gửi trở lại ECGRecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách dữ liệu ECG cho bác sĩ. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (bác sĩ).
+Hình \ref{getAllDevices} mô tả quá trình lấy danh sách tất cả thiết bị trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách thiết bị, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi DeviceController. DeviceController tiếp tục gửi truy vấn đến DeviceService, DeviceService gửi truy vấn đến DeviceModel để lấy danh sách thiết bị. Sau đó, danh sách thiết bị được trả về từ DeviceModel và được gửi trở lại DeviceRoute
+ để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách thiết bị cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được 
+trả về tới người dùng (quản trị viên).
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=10cm]{Images/sequence_api/getDeviceById.png}
+  \caption[Sơ đồ tuần tự cho API lấy thông tin thiết bị dựa trên ID]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy thông tin thiết bị dựa trên ID }
+  \label{getDeviceById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{getDeviceById} mô tả quá trình lấy thông tin thiết bị dựa trên ID trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy thông tin thiết bị theo ID, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi DeviceController. DeviceController tiếp tục gửi truy vấn đến DeviceService, DeviceService gửi truy vấn đến DeviceModel để lấy thông tin thiết bị dựa theo deviceId (ID của thiết bị). 
+Sau đó, thông tin thiết bị được trả về từ DeviceModel và được gửi trở lại DeviceRoute để trả về response cho người dùng. Nếu thiết bị tồn tại, hệ thống trả về response chứa thông tin thiết bị cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. 
+Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=13cm]{Images/sequence_api/addDevice.png}
+  \caption[Sơ đồ tuần tự cho API thêm thiết bị]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API thêm thiết bị }
+  \label{addDevice} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{addDevice} mô tả quá trình thêm thiết bị vào hệ thống. Người dùng (quản trị viên) gửi yêu cầu tạo thông tin thiết bị, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến UserService để kiểm tra thông tin người dùng trong hệ thống dựa theo user\_id (ID của bệnh nhân) được truyền vào từ yêu cầu. 
+Nếu hệ thống không tồn tại bệnh nhân, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, DeviceController tiếp tục gửi truy vấn đến DeviceService, DeviceService gửi truy vấn đến DeviceModel để thêm thông tin thiết bị 
+dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ DeviceModel và được gửi trở lại DeviceRoute để trả về response cho người dùng. Nếu kết quả tạo thành công, hệ thống trả về response chứa thông tin thiết bị cho quản trị viên. 
+Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=14cm]{Images/sequence_api/editDevice.png}
+  \caption[Sơ đồ tuần tự cho API cập nhật thông tin thiết bị ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API cập nhật thông tin thiết bị }
+  \label{editDevice} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{editDevice} mô tả quá trình cập nhật thông tin một thiết bị trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu cập nhật thông tin một thiết bị, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến DeviceService, UserService để kiểm tra thông tin thiết bị và bệnh nhân trong hệ thống dựa theo id (ID của thiết bị),
+ user\_id (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại thông tin, hệ thống sẽ trả về response lỗi tương ứng. Ngược lại, DeviceController tiếp tục gửi truy vấn đến DeviceService, 
+ DeviceService gửi truy vấn đến DeviceModel để cập nhật thông tin thiết bị dựa trên thông tin được truyền vào từ yêu cầu. Sau đó, kết quả cập nhật được trả về từ DeviceModel và được gửi trở lại DeviceRoute để 
+ trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=12cm]{Images/sequence_api/deleteDeviceById.png}
+  \caption[Sơ đồ tuần tự cho API xóa thiết bị]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API xóa thiết bị }
+  \label{deleteDeviceById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{deleteDeviceById} mô tả quá trình xóa thiết bị trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin thiết bị, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến DeviceService để kiểm tra thông tin thiết bị trong hệ thống dựa theo deviceId (ID của thiết bị) được truyền vào từ yêu cầu. 
+Nếu hệ thống không tồn tại thiết bị, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, DeviceController tiếp tục gửi truy vấn đến DeviceService, DeviceService gửi truy vấn đến DeviceModel để xóa thông tin thiết bị 
+dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ DeviceModel và được gửi trở lại DeviceRoute để trả về response cho người dùng. Nếu kết quả xóa thành công, hệ thống trả về response chứa kết quả cho quản trị viên. 
+Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
 
 % -----------------------------------------------------
 
@@ -638,13 +915,55 @@ Hình \ref{getEcgRecordsByDoctor} mô tả quá trình lấy dữ liệu ECG (El
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=10cm]{Images/server/sequence/server/getDoctorByPatient.png}
-  \caption[Sơ đồ tuần tự cho API lấy thông tin bác sĩ được phân công cho một bệnh nhân ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự cho API lấy thông tin bác sĩ được phân công cho một bệnh nhân }
-  \label{getDoctorByPatient} %đặt tên cho ảnh
+  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getAllPDA.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách tất cả phân công bác sĩ - bệnh nhân ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả phân công bác sĩ - bệnh nhân }
+  \label{getAllPDA} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{getDoctorByPatient} mô tả quá trình lấy thông tin bác sĩ được phân công cho một bệnh nhân cụ thể. Người dùng (User) gửi yêu cầu lấy thông tin bác sĩ của một bệnh nhân cụ thể, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi PatientDoctorAssignmentController. PatientDoctorAssignmentController tìm kiếm thông tin liên kết giữa bệnh nhân và bác sĩ trong PatientDoctorAssignmentModel bằng cách tìm bản ghi với patient\_id trùng khớp với bệnh nhân được chỉ định. Nếu không tìm thấy thông tin liên kết, hệ thống trả về response lỗi tương ứng. Nếu tìm thấy thông tin liên kết, PatientDoctorAssignmentController sẽ tiếp tục tìm kiếm thông tin của bác sĩ trong UserModel bằng cách sử dụng doctor\_id lấy từ bản ghi liên kết. Sau khi tìm thấy thông tin của bác sĩ, hệ thống trả về response thành công chứa thông tin về bác sĩ đó. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng.
+Hình \ref{getAllPDA} mô tả quá trình lấy danh sách tất cả phân công bác sĩ - bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách phân công bác sĩ - bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi PDAController. PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để lấy danh sách phân công. Sau đó, danh sách phân công được trả về từ PDAModel và được gửi trở lại PDARoute
+ để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách phân công cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được 
+trả về tới người dùng (quản trị viên).
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=13cm]{Images/sequence_api/addAssignment.png}
+  \caption[Sơ đồ tuần tự cho API thêm phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API thêm phân công bệnh nhân - bác sĩ }
+  \label{addPDA} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{addPDA} mô tả quá trình thêm phân công bệnh nhân - bác sĩ vào hệ thống. Người dùng (quản trị viên) gửi yêu cầu tạo phân công bệnh nhân - bác sĩ, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân, bác sĩ trong hệ thống dựa theo patient\_id (ID của bệnh nhân), doctor\_id (ID bác sĩ);PDAService để kiểm
+tra bệnh nhân đã có phân công bác sĩ dựa theo patient\_id được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, bác sĩ hay bệnh nhân đã có bác sĩ phân công, hệ thống sẽ trả về response lỗi tương ứng. 
+Ngược lại, PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để thêm thông tin phân công dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ PDAModel và được gửi trở lại 
+PDARoute để trả về response cho người dùng. Nếu kết quả tạo thành công, hệ thống trả về response chứa kết quả thêm phân công cho quản trị viên. 
+Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=13cm]{Images/sequence_api/editAssignment.png}
+  \caption[Sơ đồ tuần tự cho API cập nhật thông tin phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API cập nhật thông tin phân công bệnh nhân - bác sĩ }
+  \label{editPDA} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{editPDA} mô tả quá trình cập nhật thông tin phân công bệnh nhân - bác sĩ vào hệ thống. Người dùng (quản trị viên) gửi yêu cầu sửa thông tin phân công bệnh nhân - bác sĩ, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân, bác sĩ trong hệ thống dựa theo patient\_id (ID của bệnh nhân), doctor\_id (ID bác sĩ);PDAService để kiểm
+tra bệnh nhân đã có phân công bác sĩ dựa theo patient\_id được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, bác sĩ hay bệnh nhân chưa có bác sĩ phân công, hệ thống sẽ trả về response lỗi tương ứng. 
+Ngược lại, PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để sửa thông tin phân công dựa theo thông tin truyền vào. Sau đó, kết quả cập nhật được trả về từ PDAModel và được gửi trở lại 
+PDARoute để trả về response cho người dùng. Nếu kết quả tạo thành công, hệ thống trả về response chứa kết quả thêm phân công cho quản trị viên. 
+Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/deleteAssignment.png}
+  \caption[Sơ đồ tuần tự cho API xóa phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API xóa phân công bệnh nhân - bác sĩ }
+  \label{deletePDA} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{deletePDA} mô tả quá trình xóa phân công bệnh nhân - bác sĩ trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin phân công, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến PDAService để kiểm tra thông tin phân công trong hệ thống dựa theo pdaId (ID của phân công) được truyền vào từ yêu cầu. 
+Nếu hệ thống không tồn tại phân công, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để xóa thông tin phân công 
+dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ PDAModel và được gửi trở lại PDARoute để trả về response cho người dùng. Nếu kết quả xóa thành công, hệ thống trả về response chứa kết quả cho quản trị viên. 
 % -----------------------------------------------------
 
 \paragraph{Website quản trị}
