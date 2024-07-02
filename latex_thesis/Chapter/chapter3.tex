@@ -118,7 +118,7 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    user\_id & INTEGER & Khóa chính của bảng, đại diện cho ID người dùng. \\
+    user\_id & STRING & Khóa chính của bảng, đại diện cho ID người dùng. \\
     \hline
     password & STRING & Mật khẩu của người dùng. \\
     \hline
@@ -126,11 +126,18 @@ tự.
     \hline
     name & STRING & Tên của người dùng. \\
     \hline
-    doB & DATE & Ngày sinh của người dùng. \\
+    gender & INT & Giới tính của người dùng. \\
+    \hline
+    birth & DATE & Ngày sinh của người dùng. \\
     \hline
     phone\_number & STRING & Số điện thoại của người dùng. \\
     \hline
-    role & INTEGER & Quyền của người dùng (0-patient, 1-doctor, 2-admin). \\
+    image & STRING & Ảnh đại diện của người dùng. \\
+    \hline
+    status & INTEGER & Trạng thái sử dụng của người dùng (0 - còn đang sử dụng, 1 - không còn đang sử dụng). \\
+    \hline
+    information & STRING & Thông tin thêm về người dùng. \\
+    role & INTEGER & Quyền của người dùng (0 - patient, 1 - doctor, 2 - admin). \\
     \hline
     created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
     \hline
@@ -140,24 +147,74 @@ tự.
   \end{tabularx}
 \end{table}
 
+
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng ecg\_record}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng account}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    record\_id & INTEGER & Khóa chính của bảng, đại diện cho ID bản ghi ECG. \\
+    account\_id & STRING & Khóa chính của bảng, đại diện cho ID tài khoản. \\
     \hline
-    user\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
+    email & STRING & Địa chỉ email đăng kí của người dùng. \\
     \hline
-    device\_id & STRING & ID thiết bị. \\
+    password & STRING & Mật khẩu của người dùng. \\
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng register}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    register\_id & STRING & Khóa chính của bảng, đại diện cho ID tài khoản. \\
+    \hline
+    email & STRING & Địa chỉ email đăng kí của người dùng. \\
+    \hline
+    password & STRING & Mật khẩu của người dùng. \\
+    \hline
+    username & STRING & Tên của người dùng. \\
+    \hline
+    gender & INT & Giới tính của người dùng. \\
+    \hline
+    birth & DATE & Ngày sinh của người dùng. \\
+    \hline
+    phone\_number & STRING & Số điện thoại của người dùng. \\
+    \hline
+    image & STRING & Ảnh đại diện của người dùng. \\
+    \hline
+    status & INTEGER & Trạng thái chờ của người dùng (0 - đang chờ xử lý, 1 - được admin chấp nhận, 2 - bị admin từ chối). \\
+    \hline
+    information & STRING & Thông tin thêm về người dùng. \\
+    \hline
+    role & INTEGER & Quyền của người dùng (0-patient, 1-doctor, 2-admin).\\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng record}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    record\_id & STRING & Khóa chính của bảng, đại diện cho ID bản ghi record. \\
+    \hline
+    user\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
+    \hline
+    device\_id & STRING & Khóa ngoại tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}, đại diện cho ID thiết bị. \\
+    \hline
+    record\_type & INTEGER & Loại của record (0 - PPG, 1 - PCG, 2 - HeartRate, 3 - ECG). \\
     \hline
     data\_directory & STRING & Đường dẫn lưu trữ dữ liệu. \\
     \hline
-    start\_time & DATE & Thời gian bắt đầu ghi lại ECG. \\
+    start\_time & DATE & Thời gian bắt đầu ghi lại record. \\
     \hline
-    stop\_time & DATE & Thời gian kết thúc ghi lại ECG. \\
+    stop\_time & DATE & Thời gian kết thúc ghi lại record. \\
     \hline
     sensor\_type & STRING & Loại cảm biến. \\
     \hline
@@ -175,7 +232,7 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    category\_id & INTEGER & Khóa chính của bảng, đại diện cho ID danh mục tin tức. \\
+    category\_id & STRING & Khóa chính của bảng, đại diện cho ID danh mục tin tức. \\
     \hline
     category\_name & STRING & Tên danh mục tin tức. \\
     \hline
@@ -195,7 +252,7 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    news\_id & INTEGER & Khóa chính của bảng, đại diện cho ID tin tức. \\
+    news\_id & STRING & Khóa chính của bảng, đại diện cho ID tin tức. \\
     \hline
     title & STRING & Tiêu đề tin tức. \\
     \hline
@@ -223,9 +280,9 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    assign\_id & INTEGER & Khóa chính của bảng, đại diện cho ID phân công bệnh nhân - bác sĩ. \\
+    assign\_id & STRING & Khóa chính của bảng, đại diện cho ID phân công bệnh nhân - bác sĩ. \\
     \hline
-    patient\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user} (với quyền là bệnh nhân). \\
+    patient\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user} (với quyền là bệnh nhân). \\
     \hline
     doctor\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user} (với quyền là bác sĩ). \\
     \hline
@@ -239,19 +296,19 @@ tự.
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng reset\_token}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng token}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & INTEGER & Khóa chính của bảng, đại diện cho ID mã thông báo đặt lại. \\
+    id & STRING & Khóa chính của bảng, đại diện cho ID mã thông báo đặt lại. \\
     \hline
-    user\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
+    account\_id & STRING & Khóa ngoại tham chiếu đến \texttt{account\_id} trong bảng \texttt{account}. \\
     \hline
-    token & STRING & Mã thông báo đặt lại. \\
+    access\_token & STRING & Mã đại diện cho người dùng thao tác với hệ thống. \\
     \hline
-    expiration & DATE & Thời gian hết hạn của mã thông báo đặt lại. \\
+    refresh\_token & STRING & Mã đại diện cho người dùng thao tác với hệ thống sau khi \texttt{access\_token} hết hạn. \\
     \hline
     created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
     \hline
@@ -261,27 +318,7 @@ tự.
 \end{table}
 
 
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng session}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    session\_id & INTEGER & Khóa chính của bảng, đại diện cho ID phiên đăng nhập. \\
-    \hline
-    user\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
-    \hline
-    token & STRING & Mã phiên đăng nhập. \\
-    \hline
-    expiration & DATE & Thời gian hết hạn của phiên đăng nhập. \\
-    \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
-    \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
-    \hline
-  \end{tabularx}
-\end{table}
+
 
 \begin{table}[H]
   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng device}
@@ -290,9 +327,48 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    device\_id & INTEGER & Khóa chính của bảng, đại diện cho ID thiết bị. \\
+    device\_id & STRING & Khóa chính của bảng, đại diện cho ID thiết bị. \\
+    \hline
+    user\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{users}, đại diện cho ID bệnh nhân. \\
+    \hline
+    doctor\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{users}, đại diện cho ID bác sĩ. \\
     \hline
     device\_name & STRING & Tên thiết bị. \\
+    \hline
+    information & STRING & Thông tin thêm về thiết bị. \\
+    \hline
+    device\_type & INTEGER & Loại thiết bị (1 - thiết bị đo điện tim, 2 - thiết bị đo nhịp tim, âm thanh tim). \\
+    \hline
+    start\_date & DATE & Thời điểm bắt đàu sử dụng thiết bị. \\
+    \hline
+    status & INTEGER & Trạng thái của thiết bị (0 - đang được sử dụng, 1 - đang không được sử dụng). \\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng device\_detail}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    device\_detail\_id & STRING & Khóa chính của bảng, đại diện cho ID thông tin một device. \\
+    \hline
+    device\_id & STRING & Khóa ngoại tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}. \\
+    \hline
+    detail\_name & STRING & Tên trường liên quan thiết bị dựa vào \texttt{detail\_type}. \\
+    \hline
+    infomation & STRING & Thông tin về trường \texttt{detail\_name} của thiết bị. \\
+    \hline
+    value & STRING & Giá trị về loại thông tin của thiết bị dựa vào \texttt{detail\_type} (1 - tần số, 2 - dữ liệu kết nối, 3 - dung lượng lưu trữ). \\
+    \hline
+    detail\_type & INTEGER & Loại thông tin về thiết bị (1 - tín hiệu đo, 2 - loại kết nối, 3 - kiểu lưu trữ). \\
     \hline
     created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
     \hline
@@ -308,11 +384,13 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    conversation\_id & STRING & Khóa chính của bảng, đại diện cho ID hội thoại \\
+    conversation\_id & STRING & Khóa chính của bảng, đại diện cho ID hội thoại. \\
     \hline
-    members\_id & MAP<String, Boolean> & Danh sách ID của người dùng trong hội thoại \\
+    name & STRING & Tên cuộc hội thoại. \\
     \hline
-    recent\_message & MAP<String, dynamic> & Thông tin tin nhắn gần nhất \\
+    type & INTEGER & Loại của cuộc hội thoại (0 - hội thoại 2 người, 1 - hội thoại nhóm, 2 - chatbot). \\
+    \hline
+    avatar & STRING & Đoạn mã chứa url ảnh đại diện của cuộc hội thoại  \\
     \hline
     created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
     \hline
@@ -328,13 +406,21 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    message\_id & STRING & Khóa chính của bảng, đại diện cho ID tin nhắn \\
+    message\_id & STRING & Khóa chính của bảng, đại diện cho ID tin nhắn. \\
     \hline
-    conversation\_id & STRING & ID hội thoại chứa tin nhắn \\
+    conversation\_id & STRING & Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}, đại diện cho ID hội thoại chứa tin nhắn. \\
     \hline
-    message\_content & STRING & Nội dung tin nhắn \\
+    sender\_id & STRING & Khóa ngoại tham chiếu đến \texttt{id} trong bảng \texttt{conversation\_member}, đại diện cho ID người gửi tin nhắn. \\
     \hline
-    sender\_id & INTEGER & ID Người gửi tin nhắn\\
+    attachments & LIST <Map> & Danh sách tệp tin đính kèm khi gửi tin nhắn.\\
+    \hline
+    system\_message & BOOLEAN & Tin nhắn trả về từ hệ thống.\\
+    \hline
+    pin & BOOLEAN & Đánh dấu tin nhắn có được ghim không.\\
+    \hline
+    pin\_time & DATE & Thời gian ghim tin nhắn.\\
+    \hline
+    reactions & LIST <Map> & Danh sách các phản ứng lại với tin nhắn này.\\
     \hline
     created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
     \hline
@@ -344,21 +430,58 @@ tự.
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng user\_firebase\_token}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng conversation\_member}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    token\_id & String & Khóa chính của bảng, đại diện cho ID firebase token \\
+    id & STRING & Khóa chính của bảng, đại diện cho ID của thành viên đoạn hội thoại. \\
     \hline
-    firebase\_token & STRING & Token của thiết bị đăng nhập vào hệ thống do Firebase sinh ra \\
+    conversation\_id & STRING & Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}, đại diện cho ID hội thoại chứa tin nhắn. \\
     \hline
-    user\_id & INTEGER & ID của người dùng sử dụng token \\
+    user\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}, đại diện cho ID người gửi tin nhắn. \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    status\_notify & INTEGER & Trạng thái thông báo tin nhắn (0 - có thông báo tin nhắn, 1 - không nhận thông báo tin nhắn).\\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    seen & BOOLEAN & Tin nhắn đã được xem chưa.\\
+    \hline
+    role & INTEGER & Vai trò của người dùng trong hội thoại (tương ứng trong bảng \texttt{user}).\\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng conversation\_attachment}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    id & STRING & Khóa chính của bảng, đại diện cho ID tệp đính kèm tin nhắn. \\
+    \hline
+    conversation\_id & STRING & Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}, đại diện cho ID hội thoại chứa tin nhắn. \\
+    \hline
+    message\_id & STRING & Khóa ngoại tham chiếu đến \texttt{message\_id} trong bảng \texttt{message}, đại diện cho ID tin nhắn. \\
+    \hline
+    content\_url & STRING & Đoạn mã chứa nội dung của tệp tin.\\
+    \hline
+    file\_name & STRING & Tên của tệp tin.\\
+    \hline
+    size & INTEGER & Dung lượng của tệp tin.\\
+    \hline
+    thumbnail\_url & STRING & Đoạn mã chứa hình ảnh tĩnh của tệp tin.\\
+    \hline
+    type & INTEGER & Loại của tệp tin (0 - image, 1 - video, 2 - file). \\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database \\
     \hline
   \end{tabularx}
 \end{table}
