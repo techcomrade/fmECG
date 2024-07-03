@@ -2,7 +2,7 @@ const eChart = {
   series: [
     {
       name: "Sales",
-      data: [450, 200, 100, 220, 500, 100, 400, 230, 500],
+      data: [0,1, 1, 2, 1, 3],
       color: "#fff",
     },
   ],
@@ -45,9 +45,6 @@ const eChart = {
         "May",
         "Jun",
         "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
       ],
       labels: {
         show: true,

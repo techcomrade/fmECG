@@ -33,13 +33,12 @@ function EChart() {
         />
       </div>
       <div className="chart-vistior">
-        <Title level={5}>Active Users</Title>
-        <Paragraph className="lastweek">
+        <Title level={5}>Số lượng người dùng đang hoạt động</Title>
+        {/* <Paragraph className="lastweek">
           than last week <span className="bnb2">+30%</span>
-        </Paragraph>
+        </Paragraph> */}
         <Paragraph className="lastweek">
-          We have created multiple options for you to put together and customise
-          into pixel perfect pages.
+          Tổng hợp số lượng người dùng bao gồm bệnh nhân và bác sĩ và thời gian bắt đầu sủ dụng hệ thống
         </Paragraph>
         <Row gutter>
           {items.map((v, index) => (

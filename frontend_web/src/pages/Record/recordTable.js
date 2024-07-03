@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import DataTable from "../../components/Table/dataTable";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  createRecord,
   deleteRecord,
   getRecord,
   resetCreateDataStatus,

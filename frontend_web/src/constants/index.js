@@ -152,7 +152,7 @@ export const convertDeviceTypeToString = (status) => {
     case 1:
       return "Đo điện tim";
     case 2:
-      return "Đo chất lượng không khí";
+      return "Đo chỉ số tim mạch";
     case 3:
       return "Đo âm thanh";
     default:
