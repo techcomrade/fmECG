@@ -14,11 +14,13 @@ import {
   DesktopOutlined,
   LineChartOutlined,
   UserAddOutlined,
-  UserSwitchOutlined
+  UserSwitchOutlined,
+  OpenAIOutlined
 } from "@ant-design/icons";
 import { userRole } from "../constants";
 import { context } from "../utils/context";
 import Chat from "../pages/Chat/chat";
+import AITraining from "../pages/AITranningChat/chat";
 
 export const AdminRouterMappingGroup = {
   User: {
@@ -50,6 +52,12 @@ export const AdminRouterMappingGroup = {
     label: "Xét duyệt tài khoản",
     component: <RegisterTable />,
     icon: <UserAddOutlined />,
+  },
+  Chat: {
+    key: "/training",
+    label: "Training AI",
+    component:<AITraining />,
+    icon: <OpenAIOutlined />,
   }
 };
 

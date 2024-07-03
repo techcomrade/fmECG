@@ -17,11 +17,14 @@ import {
   convertStringToRole,
   userRole,
 } from "../../constants";
+import { Button } from "antd";
+
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { GENDER, ROLE } from "../../constants";
 import dayjs from "dayjs";
+import { UserAddOutlined, DeleteOutlined, UserDeleteOutlined } from "@ant-design/icons";
 
 const RegisterTable = (props) => {
   const dispatch = useDispatch();
@@ -86,9 +89,9 @@ const RegisterTable = (props) => {
       isEdit: true,
       render: (status) => {
         let color = "";
-        if(status === 2 ) color =  "volcano";
-        if(status === 1) color = "#95ea78";
-        if( status === 0 ) color = "geekblue";
+        if (status === 2) color = "volcano";
+        if (status === 1) color = "#95ea78";
+        if (status === 0) color = "geekblue";
         return (
           <Tag color={color} key={status}>
             {convertRegisterStatusToString(status)}
@@ -147,11 +150,48 @@ const RegisterTable = (props) => {
   useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       const rawData = dataState.data.metadata;
-      console.log(rawData)
+      console.log(rawData);
       const data = rawData.map((element) => handleData(element, "render"));
       setDataTable(data);
     }
   }, [dataState.loadDataStatus]);
+  const renderButton = () => (
+    <>
+      <Button
+        icon={<UserAddOutlined />}
+        disabled={selectedData.length !== 1}
+        className="edit-btn"
+        // onClick={() => {
+        //   dispatch(checkRecordFile(selectedData[0]));
+        //   setIsModalOpen(true);
+        // }}
+      >
+        Chấp nhận
+      </Button>
+      <Button
+        icon={<UserDeleteOutlined />}
+        disabled={selectedData.length !== 1}
+        className="edit-btn"
+        // onClick={() => {
+        //   dispatch(checkRecordFile(selectedData[0]));
+        //   setIsModalOpen(true);
+        // }}
+      >
+        Từ chối
+      </Button>
+      <Button
+        icon={<DeleteOutlined />}
+        disabled={selectedData.length !== 1}
+        className="edit-btn"
+        // onClick={() => {
+        //   dispatch(checkRecordFile(selectedData[0]));
+        //   setIsModalOpen(true);
+        // }}
+      >
+        Xoá 
+      </Button>
+    </>
+  );
 
   return (
     <>
@@ -160,6 +200,9 @@ const RegisterTable = (props) => {
         name={"Thông tin người dùng đăng kí"}
         data={dataTable}
         loading={dataState.loadDataStatus === loadStatus.Loading}
+        customButton={renderButton()}
+        updateSelectedData={setSelectedData}
+
         //   handleOpenDrawer={(id) => drawerRef.current?.open(id)}
       />
       {/* <ModalControlData
@@ -173,5 +216,3 @@ const RegisterTable = (props) => {
 };
 
 export default RegisterTable;
-
-

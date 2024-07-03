@@ -194,7 +194,6 @@ const UserTable = (props) => {
         editFunction={handleEditFunction}
         deleteButton
         deleteFunction={handleDeleteFunction}
-        addDeviceButton
         hasCheckBox
         updateSelectedData={setSelectedData}
         column={columns}

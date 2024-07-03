@@ -11,10 +11,10 @@ function LineChart() {
     <>
       <div className="linechart">
         <div>
-          <Title level={5}>Active Users</Title>
-          <Paragraph className="lastweek">
+          <Title level={5}>Số lượng bản ghi mới</Title>
+          {/* <Paragraph className="lastweek">
             than last week <span className="bnb2">+20%</span>
-          </Paragraph>
+          </Paragraph> */}
         </div>
         {/* <div className="sales">
           <ul>

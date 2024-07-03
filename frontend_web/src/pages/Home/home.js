@@ -86,9 +86,17 @@ const Home = () => {
   ];
   const count = [
     {
-      today: "Người dùng",
-      title: "12",
+      today: "Bác sĩ",
+      title: "2",
       persent: "+20%",
+      icon: profile,
+      bnb: "bnb2",
+    },
+    
+    {
+      today: "Bệnh nhân",
+      title: "7",
+      persent: "+10%",
       icon: profile,
       bnb: "bnb2",
     },
@@ -98,8 +106,7 @@ const Home = () => {
       persent: "",
       icon: heart,
       bnb: "redtext",
-    },
-    {
+    },{
       today: "Bản ghi",
       title: "5",
       persent: "+10%",
