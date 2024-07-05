@@ -16,7 +16,7 @@ hình vẽ:
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=12cm,height=10cm]{Images/system/fmECG_architecture-System_Architecture.png}
+  \includegraphics[width=12cm,height=12cm]{Images/system/fmECG_architecture-System_Architecture.png}
   \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
   \label{fmECG_architecture-System} %đặt tên cho ảnh
 \end{figure}
@@ -26,37 +26,43 @@ Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item Device: Thiết bị phần cứng đo điện tim, để kết nối với App bệnh nhân thông qua Bluetooth 
-  \item Application: Bao gồm ứng dụng của bệnh nhân, ứng dụng của bác sĩ và Website của Admin
-  \item Server: Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu và Cloud lưu trữ
+  \item Application: Bao gồm mobile app của bệnh nhân, bác sĩ và Website của Admin, Website của bác sĩ, Website của bệnh nhân
+  \item Server: Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu, Cloud lưu trữ, kết nối với model GPT-4 trên OpenAI thông qua api
 \end{itemize}
 \end{adjustwidth}
 
-Trong hệ thống thì Devices là phần mà chúng em sẽ không trực tiếp thực hiện trong đồ án này, Application và Server sẽ là
+Trong hệ thống thì Devices và Mobile App là phần mà chúng em sẽ không trực tiếp thực hiện trong đồ án này, Website và Server sẽ là
 phần mà đồ án chúng em thực hiện. Ở trong sơ đồ kiến trúc hệ thống riêng có bệnh nhân sẽ có tương tác trực tiếp với Devices,
 còn lại khối Application sẽ tương tác với Server thông qua API với giao thức HTTP. Khi nhận được yêu cầu từ Application,
-Server sẽ thực hiện xử lý dữ liệu, mọi yêu cầu đến đều được xử lý bởi Services, tuỳ vào yêu cầu đến Services tương ứng sẽ đảm nhiệm 
+Server sẽ thực hiện xử lý dữ liệu, mọi yêu cầu đến đều được xử lý bởi các Services, tuỳ vào yêu cầu đến Services tương ứng sẽ đảm nhiệm 
 việc lấy/lưu dữ liệu trong cơ sở dữ liệu sau đó trả ra kết quả cho người dùng.
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item User Services: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin tài khoản
-  \item ECG Services: Xử lý các tác vụ liên quan tới dữ liệu điện tim
-  \item Storage Services: Xử lý các tác vụ lưu trữ dữ liệu của hệ thống với AWS
+  \item User Services: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin cá nhân
+  \item Storage Services: Xử lý các tác vụ liên quan tới lưu trữ dữ liệu của hệ thống
+  \item AI Services: Xử lý các tác vụ liên quan tới trợ lý ảo, bao gồm: huấn luyện, kết nối với model gpt-4 thông qua api và xử lý kết quả 
+  và trả về tin nhắn và các hành động của ai can thiệp trực tiếp vào hệ thống 
   \item Message Services: Xử lý các yêu cầu liên quan tới hội thoại, tin nhắn.
+  \item Device Services: Xử lý các tác vụ liên quan tới thiết bị như thêm, sửa, xoá thiết bị, cập nhật thông tin.
+  \item Record Services: Xử lý các tác vụ liên quan tới bản ghi như là thêm sửa xoá, xử lý dữ liệu file đo, vẽ đồ thị
+  \item Authen Services: Xử lý các tác vụ liên quan tới bảo mật như: mã hoá và cung cấp token, kiểm tra token, phân quyền truy cập api, mã hoá các dữ liệu nhạy cảm trước khi lưu trữ.
+  \item Static Services: Xử lý các tác vụ liên quan tới thống kê như: thống kê người dùng, thiết bị, bản ghi, tin nhắn theo tuần theo tháng.
 \end{itemize}
 \end{adjustwidth}
-Ngoài ra, hệ thống sẽ phải có kết nối bluetooth low energy giữa thiết bị đo và ứng dụng di động để có thể truyền/nhận dữ liệu.
+Ngoài ra hệ thống sẽ có thêm chức năng tự động triển khai trên môi trường internet để việc phát triển và kiểm thử dễ dàng 
+làm tăng chất lượng và độ hoàn thiện của hệ thống
 Trên đây là tổng quan về kiến trúc hệ thống, phần tiếp dưới đây chúng em xin phép trình bày kỹ hơn về từng khối nhỏ hơn
 dựa vào những đối tượng đã được xác định trong hệ thống.
 
 \newpage
 \subsection{Sơ đồ khối phần mềm}
 
-\subsubsection{Ứng dụng di động cho bệnh nhân}
+\subsubsection{Website dành cho bệnh nhân}
 \mbox{}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=15cm]{Images/system/fmECG_architecture-Patient.drawio.png}
+  \includegraphics[width=12cm,height=14cm]{Images/system/fmECG_architecture-Patient.drawio.png}
   \caption[Sơ đồ khối cho App bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bệnh nhân}
   \label{fmECG_architecture-Patient} %đặt tên cho ảnh
 \end{figure}
@@ -66,16 +72,16 @@ các yêu cầu của người dùng sẽ được xử lý thông qua Services 
 giải thích Services trong hình:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item ECG Service: Khối có nhiệm vụ xử lý yêu cầu cho các trạng thái đo: thực hiện đo, kết thúc đo, lưu kết quả đo
-  \item ECG Signal Processing Service: Khối có nhiệm vụ xử lý tín hiệu đo để phân tích sâu, hiển thị lên màn hình
-  \item User Management Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến người dùng như đăng nhập, đăng ký
-  \item Chat Service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin
+  \item Record Service: Khối có nhiệm vụ xử lý yêu cầu cho chức năng đo và quản lý bản ghi: thực hiện đo, kết thúc đo, lưu kết quả đo, xử lý kết quả đo và cung cấp dữ liệu để vẽ đồ thị điện tim
+  \item User Management Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến người dùng như đăng nhập, đăng ký, xem thông tin người dùng
+  \item Device Service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến thiết bị như thêm sửa xoá, thay đổi thông tin, cung cấp thiết bị cho người dùng
+  \item Chat Service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ và trợ lý ảo
   \item Storage Service: Khối có nhiệm vụ lưu thông tin vào bộ nhớ
 \end{itemize}
 \end{adjustwidth}
 
-Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Device để phục vụ cho việc đo điện tim.
-\subsubsection{Ứng dụng di động cho bác sĩ}
+
+\subsubsection{Website dành cho bác sĩ}
 
 \begin{figure}[H]
   \centering
@@ -84,9 +90,7 @@ Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Devi
   \label{fmECG_architecture-Doctors} %đặt tên cho ảnh
 \end{figure}
 
-Về cơ bản, ứng dụng di động cho bác sĩ có những khối tương tự với bệnh nhân, trừ việc bác sĩ sẽ không có hai khối Device
-và Bluetooth để phục vụ việc đo như bệnh nhân.
-
+Về cơ bản, website cho bác sĩ có những khối tương tự với bệnh nhân, trừ việc bác sĩ sẽ có thêm quyền quản lý thiết bị (Device Service)
 
 \subsubsection{Website cho quản trị viên}
 
@@ -97,8 +101,8 @@ và Bluetooth để phục vụ việc đo như bệnh nhân.
   \label{fmECG_architecture-Admin} %đặt tên cho ảnh
 \end{figure}
 
-Quản trị viên sẽ quản lý 2 Services chính đó là quản lý người dùng (User Management Service) và quản lý phân công
-bác sĩ - bệnh nhân (Patient Assignment Service), logic và thứ tự các khối tương đồng với ứng dụng dành cho bác sĩ.
+Quản trị viên sẽ quản lý 6 Services chính đó là quản lý người dùng (User Management Service), quản lý phân công
+bác sĩ - bệnh nhân (Patient Assignment Service), quản lý bản ghi (Record Service), Chat Service, Thêm dữ liệu mới để huấn luyện trợ lý ảo (AI service).
 
 Tiếp theo để phân tích cụ thể hơn từng luồng trong hệ thống qua use case, chúng em xin phép được trình bày các sơ đồ tuần
 tự. 
@@ -116,7 +120,7 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    user\_id & INTEGER & Khóa chính của bảng, đại diện cho ID người dùng. \\
+    user\_id & STRING & Khóa chính của bảng, đại diện cho ID người dùng. \\
     \hline
     password & STRING & Mật khẩu của người dùng. \\
     \hline
@@ -124,44 +128,103 @@ tự.
     \hline
     name & STRING & Tên của người dùng. \\
     \hline
-    doB & DATE & Ngày sinh của người dùng. \\
+    gender & INT & Giới tính của người dùng. \\
+    \hline
+    birth & DATE & Ngày sinh của người dùng. \\
     \hline
     phone\_number & STRING & Số điện thoại của người dùng. \\
     \hline
-    role & INTEGER & Quyền của người dùng (0-patient, 1-doctor, 2-admin). \\
+    image & STRING & Ảnh đại diện của người dùng. \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    status & INTEGER & Trạng thái sử dụng của người dùng (0 - còn đang sử dụng, 1 - không còn đang sử dụng). \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    information & STRING & Thông tin thêm về người dùng. \\
+    \hline
+    role & INTEGER & Quyền của người dùng (0 - bệnh nhân, 1 - bác sĩ, 2 - quản trị viên). \\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
     \hline
     
   \end{tabularx}
 \end{table}
 
+
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng ecg\_record}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng account}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    record\_id & INTEGER & Khóa chính của bảng, đại diện cho ID bản ghi ECG. \\
+    account\_id & STRING & Khóa chính của bảng, đại diện cho ID tài khoản. \\
     \hline
-    user\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
+    email & STRING & Địa chỉ email đăng kí của người dùng. \\
     \hline
-    device\_id & STRING & ID thiết bị. \\
+    password & STRING & Mật khẩu của người dùng. \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng register}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    register\_id & STRING & Khóa chính của bảng, đại diện cho ID tài khoản. \\
+    \hline
+    email & STRING & Địa chỉ email đăng kí của người dùng. \\
+    \hline
+    password & STRING & Mật khẩu của người dùng. \\
+    \hline
+    username & STRING & Tên của người dùng. \\
+    \hline
+    gender & INT & Giới tính của người dùng. \\
+    \hline
+    birth & DATE & Ngày sinh của người dùng. \\
+    \hline
+    phone\_number & STRING & Số điện thoại của người dùng. \\
+    \hline
+    image & STRING & Ảnh đại diện của người dùng. \\
+    \hline
+    status & INTEGER & Trạng thái chờ của người dùng (0 - đang chờ xử lý, 1 - được admin chấp nhận, 2 - bị admin từ chối). \\
+    \hline
+    information & STRING & Thông tin thêm về người dùng. \\
+    \hline
+    role & INTEGER & Quyền của người dùng (0 - bệnh nhân, 1 - bác sĩ, 2 - quản trị viên).\\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng record}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    record\_id & STRING & Khóa chính của bảng, đại diện cho ID bản ghi record. \\
+    \hline
+    user\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
+    \hline
+    device\_id & STRING & Khóa ngoại tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}, đại diện cho ID thiết bị. \\
+    \hline
+    record\_type & INTEGER & Loại của record (0 - PPG, 1 - PCG, 2 - HeartRate, 3 - ECG). \\
     \hline
     data\_directory & STRING & Đường dẫn lưu trữ dữ liệu. \\
     \hline
-    start\_time & DATE & Thời gian bắt đầu ghi lại ECG. \\
+    start\_time & DATE & Thời gian bắt đầu ghi lại record. \\
     \hline
-    stop\_time & DATE & Thời gian kết thúc ghi lại ECG. \\
+    stop\_time & DATE & Thời gian kết thúc ghi lại record. \\
     \hline
     sensor\_type & STRING & Loại cảm biến. \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -173,15 +236,15 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    category\_id & INTEGER & Khóa chính của bảng, đại diện cho ID danh mục tin tức. \\
+    category\_id & STRING & Khóa chính của bảng, đại diện cho ID danh mục tin tức. \\
     \hline
     category\_name & STRING & Tên danh mục tin tức. \\
     \hline
     category\_description & STRING & Mô tả danh mục tin tức. \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -193,7 +256,7 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    news\_id & INTEGER & Khóa chính của bảng, đại diện cho ID tin tức. \\
+    news\_id & STRING & Khóa chính của bảng, đại diện cho ID tin tức. \\
     \hline
     title & STRING & Tiêu đề tin tức. \\
     \hline
@@ -207,9 +270,9 @@ tự.
     \hline
     image & STRING & Đường dẫn hình ảnh tin tức (có thể là null). \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -221,65 +284,45 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    assign\_id & INTEGER & Khóa chính của bảng, đại diện cho ID phân công bệnh nhân - bác sĩ. \\
+    assign\_id & STRING & Khóa chính của bảng, đại diện cho ID phân công bệnh nhân - bác sĩ. \\
     \hline
-    patient\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user} (với quyền là bệnh nhân). \\
+    patient\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user} (với quyền là bệnh nhân). \\
     \hline
     doctor\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user} (với quyền là bác sĩ). \\
     \hline
     start\_date & DATE & Ngày bắt đầu phân công. \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
     \hline
   \end{tabularx}
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng reset\_token}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng token}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & INTEGER & Khóa chính của bảng, đại diện cho ID mã thông báo đặt lại. \\
+    id & STRING & Khóa chính của bảng, đại diện cho ID mã thông báo đặt lại. \\
     \hline
-    user\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
+    account\_id & STRING & Khóa ngoại tham chiếu đến \texttt{account\_id} trong bảng \texttt{account}. \\
     \hline
-    token & STRING & Mã thông báo đặt lại. \\
+    access\_token & STRING & Mã đại diện cho người dùng thao tác với hệ thống. \\
     \hline
-    expiration & DATE & Thời gian hết hạn của mã thông báo đặt lại. \\
+    refresh\_token & STRING & Mã đại diện cho người dùng thao tác với hệ thống sau khi \texttt{access\_token} hết hạn. \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
     \hline
   \end{tabularx}
 \end{table}
 
 
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng session}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    session\_id & INTEGER & Khóa chính của bảng, đại diện cho ID phiên đăng nhập. \\
-    \hline
-    user\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
-    \hline
-    token & STRING & Mã phiên đăng nhập. \\
-    \hline
-    expiration & DATE & Thời gian hết hạn của phiên đăng nhập. \\
-    \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
-    \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
-    \hline
-  \end{tabularx}
-\end{table}
+
 
 \begin{table}[H]
   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng device}
@@ -288,13 +331,52 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    device\_id & INTEGER & Khóa chính của bảng, đại diện cho ID thiết bị. \\
+    device\_id & STRING & Khóa chính của bảng, đại diện cho ID thiết bị. \\
+    \hline
+    user\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{users}, đại diện cho ID bệnh nhân. \\
+    \hline
+    doctor\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{users}, đại diện cho ID bác sĩ. \\
     \hline
     device\_name & STRING & Tên thiết bị. \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    information & STRING & Thông tin thêm về thiết bị. \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    device\_type & INTEGER & Loại thiết bị (1 - thiết bị đo điện tim, 2 - thiết bị đo nhịp tim, âm thanh tim). \\
+    \hline
+    start\_date & DATE & Thời điểm bắt đàu sử dụng thiết bị. \\
+    \hline
+    status & INTEGER & Trạng thái của thiết bị (0 - đang được sử dụng, 1 - đang không được sử dụng). \\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng device\_detail}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    device\_detail\_id & STRING & Khóa chính của bảng, đại diện cho ID thông tin một device. \\
+    \hline
+    device\_id & STRING & Khóa ngoại tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}. \\
+    \hline
+    detail\_name & STRING & Tên trường liên quan thiết bị dựa vào \texttt{detail\_type}. \\
+    \hline
+    infomation & STRING & Thông tin về trường \texttt{detail\_name} của thiết bị. \\
+    \hline
+    value & STRING & Giá trị về loại thông tin của thiết bị dựa vào \texttt{detail\_type} (1 - tần số, 2 - dữ liệu kết nối, 3 - dung lượng lưu trữ). \\
+    \hline
+    detail\_type & INTEGER & Loại thông tin về thiết bị (1 - tín hiệu đo, 2 - loại kết nối, 3 - kiểu lưu trữ). \\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -306,15 +388,17 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    conversation\_id & STRING & Khóa chính của bảng, đại diện cho ID hội thoại \\
+    conversation\_id & STRING & Khóa chính của bảng, đại diện cho ID hội thoại. \\
     \hline
-    members\_id & MAP<String, Boolean> & Danh sách ID của người dùng trong hội thoại \\
+    name & STRING & Tên cuộc hội thoại. \\
     \hline
-    recent\_message & MAP<String, dynamic> & Thông tin tin nhắn gần nhất \\
+    type & INTEGER & Loại của cuộc hội thoại (0 - hội thoại 2 người, 1 - hội thoại nhóm, 2 - chatbot). \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
+    avatar & STRING & Đoạn mã chứa url ảnh đại diện của cuộc hội thoại  \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database \\
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL \\
     \hline
   \end{tabularx}
 \end{table}
@@ -326,37 +410,82 @@ tự.
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    message\_id & STRING & Khóa chính của bảng, đại diện cho ID tin nhắn \\
+    message\_id & STRING & Khóa chính của bảng, đại diện cho ID tin nhắn. \\
     \hline
-    conversation\_id & STRING & ID hội thoại chứa tin nhắn \\
+    conversation\_id & STRING & Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}, đại diện cho ID hội thoại chứa tin nhắn. \\
     \hline
-    message\_content & STRING & Nội dung tin nhắn \\
+    sender\_id & STRING & Khóa ngoại tham chiếu đến \texttt{id} trong bảng \texttt{conversation\_member}, đại diện cho ID người gửi tin nhắn. \\
     \hline
-    sender\_id & INTEGER & ID Người gửi tin nhắn\\
+    attachments & LIST <Map> & Danh sách tệp tin đính kèm khi gửi tin nhắn.\\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database \\
+    system\_message & BOOLEAN & Tin nhắn trả về từ hệ thống.\\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database \\
+    pin & BOOLEAN & Đánh dấu tin nhắn có được ghim không.\\
+    \hline
+    pin\_time & DATE & Thời gian ghim tin nhắn.\\
+    \hline
+    reactions & LIST <Map> & Danh sách các phản ứng lại với tin nhắn này.\\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL \\
     \hline
   \end{tabularx}
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng user\_firebase\_token}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng conversation\_member}
   \centering
   \begin{tabularx}{0.9\textwidth}{|c|c|X|}
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    token\_id & String & Khóa chính của bảng, đại diện cho ID firebase token \\
+    id & STRING & Khóa chính của bảng, đại diện cho ID của thành viên đoạn hội thoại. \\
     \hline
-    firebase\_token & STRING & Token của thiết bị đăng nhập vào hệ thống do Firebase sinh ra \\
+    conversation\_id & STRING & Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}, đại diện cho ID hội thoại chứa tin nhắn. \\
     \hline
-    user\_id & INTEGER & ID của người dùng sử dụng token \\
+    user\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}, đại diện cho ID người gửi tin nhắn. \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào database. \\
+    status\_notify & INTEGER & Trạng thái thông báo tin nhắn (0 - có thông báo tin nhắn, 1 - không nhận thông báo tin nhắn).\\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào database. \\
+    seen & BOOLEAN & Tin nhắn đã được xem chưa.\\
+    \hline
+    role & INTEGER & Vai trò của người dùng trong hội thoại (tương ứng trong bảng \texttt{user}).\\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng conversation\_attachment}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
+    \hline
+    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
+    \hline
+    id & STRING & Khóa chính của bảng, đại diện cho ID tệp đính kèm tin nhắn. \\
+    \hline
+    conversation\_id & STRING & Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}, đại diện cho ID hội thoại chứa tin nhắn. \\
+    \hline
+    message\_id & STRING & Khóa ngoại tham chiếu đến \texttt{message\_id} trong bảng \texttt{message}, đại diện cho ID tin nhắn. \\
+    \hline
+    content\_url & STRING & Đoạn mã chứa nội dung của tệp tin.\\
+    \hline
+    file\_name & STRING & Tên của tệp tin.\\
+    \hline
+    size & INTEGER & Dung lượng của tệp tin.\\
+    \hline
+    thumbnail\_url & STRING & Đoạn mã chứa hình ảnh tĩnh của tệp tin.\\
+    \hline
+    type & INTEGER & Loại của tệp tin (0 - ảnh, 1 - video, 2 - tệp). \\
+    \hline
+    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL \\
+    \hline
+    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL \\
     \hline
   \end{tabularx}
 \end{table}
@@ -372,57 +501,306 @@ tự.
 
 \subsection{Thiết kế giao diện}
 
-\subsubsection{Website}
-
 Dưới đây là các giao diện thực tế mà chúng em thiết kế cho trang web quản trị
-
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.7]{Images/server/webUI/login.PNG}
+  \includegraphics[scale=0.4]{Images/server/webUI/register_1.png}
+  \includegraphics[scale=0.4]{Images/server/webUI/register_2.png}
+  \caption[Giao diện trang đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng ký tài khoản}
+  \label{register} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{register} mô tả giao diện cho màn hình đăng ký tài khoản, màn hình này sẽ bao
+ gồm các thông tin để người dùng đăng ký tài khoản vào hệ thống
+ nếu các thông tin là chính xác thì sẽ chuyển hướng đến trang đăng nhập và chờ kết quả phê duyệt qua email, 
+ còn nếu sai thông tin thì sẽ có popup thông báo sai trường thông tin
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]{Images/server/webUI/login.png}
   \caption[Giao diện trang đăng nhập]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng nhập}
   \label{login} %đặt tên cho ảnh
 \end{figure}
 
 Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình này sẽ bao
- gồm hai trường thông tin là Email và Password để admin đăng nhập vào trang quản trị
- nếu hai trường thông tin email và password là chính xác thì sẽ chuyển hướng đến trang dashboard 
- quản lý như hình \ref{dashboard}, còn nếu sai thông tin thì sẽ có popup thông báo sai email hoặc mật khẩu hiện lên
- 
+ gồm hai trường thông tin là Tên đăng nhập và Mật khẩu để người dùng đăng nhập vào trang quản trị
+ nếu hai trường thông tin username và password là chính xác thì sẽ chuyển hướng đến trang dashboard 
+ quản lý, còn nếu sai thông tin thì sẽ có popup thông báo sai tên đăng nhập hoặc mật khẩu hiện lên
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]{Images/server/webUI/dashboard_admin.png}
+  \caption[Giao diện trang dashboard dành cho admin sau khi đăng nhập thành công]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang dashboard dành cho admin sau khi đăng nhập thành công}
+  \label{dashboard_admin} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]{Images/server/webUI/dashboard_doctor.png}
+  \caption[Giao diện trang dashboard dành cho bác sĩ sau khi đăng nhập thành công]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang dashboard dành cho bác sĩ sau khi đăng nhập thành công}
+  \label{dashboard_doctor} %đặt tên cho ảnh
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]{Images/server/webUI/dashboard_patient.png}
+  \caption[Giao diện trang dashboard dành cho bệnh nhân sau khi đăng nhập thành công]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang dashboard dành cho bệnh nhân sau khi đăng nhập thành công}
+  \label{dashboard_patient} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{dashboard_admin}, \ref{dashboard_doctor}, \ref{dashboard_patient} mô tả giao diện cho trang dashboard, trong màn hình này phần bên trái sẽ bao
+ gồm thanh điều hướng dẫn đến trang quản lý từng mục khác nhau theo từng loại tài khoản (admin, bác sĩ, bệnh nhân) và 
+ thông tin tài khoản. Còn ở giữa là thông tin tổng số các mục mà hệ thống quản lý (người dùng, thiết bị, bản ghi)
+ cùng với đó là biểu đồ thống kê số lượng người dùng và bản ghi mới theo tháng.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/webUI/userTable.png}
+  \caption[Giao diện trang quản lý người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý người dùng}
+  \label{userTable} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{userTable} mô tả giao diện cho trang quản lý người dùng, trang này sẽ hiển thị danh sách
+thông tin của các người dùng đang có trên hệ thống, bên cạnh đó khi tích vào mỗi bệnh
+nhân tương ứng sẽ có các lựa chọn để xem chi tiết thông tin người dùng, cập nhật thông
+tin hay xóa thông tin.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/webUI/patientTable.png}
+  \caption[Giao diện trang quản lý bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý bệnh nhân}
+  \label{patientTable} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{patientTable} mô tả giao diện cho trang quản lý bệnh nhân, trang này có giao diện tương tự với trang 
+quản lý người dùng ở hình \ref{userTable} nhưng thông tin ở đây sẽ dành cho bác sĩ, và trang này chỉ có chức năng xem thông tin bệnh nhân.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/webUI/manageDoctor.png}
+  \caption[Giao diện trang danh sách bác sĩ phụ trách]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang danh sách bác sĩ phụ trách}
+  \label{doctorTable} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{doctorTable} mô tả giao diện cho trang danh sách bác sĩ phụ trách, trang này có giao diện tương tự với trang 
+quản lý người dùng ở hình \ref{userTable} nhưng thông tin ở đây sẽ dành cho bệnh nhân, và trang này chỉ có chức năng xem thông tin bác sĩ.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{Images/server/webUI/userInfo.png}
+  \caption[Giao diện màn thông tin chi tiết người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn thông tin chi tiết người dùng}
+  \label{userInfo} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{userInfo} mô tả giao diện cho màn thông tin chi tiết người dùng, màn này sẽ hiển thị thông tin
+chi tiết của người dùng quản trị viên chọn vào một người dùng trong danh sách.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{Images/server/webUI/updateUser.png}
+  \caption[Giao diện màn cập nhật thông tin người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn cập nhật thông tin người dùng}
+  \label{editUser} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{editUser} mô tả giao diện cho màn cập nhật thông tin người dùng. Màn này sẽ có các trường thông tin bao gồm 
+tên, giới tính, ngày sinh, số điện thoại, tác vụ, trạng thái. Trên các trường sẽ hiện thông tin người dùng mà admin đã chọn. 
+Admin sẽ chỉnh sửa thông tin, sau đó nhấn nút Lưu để lưu dữ liệu.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{Images/server/webUI/delete.png}
+  \caption[Giao diện màn xóa thông tin trong trang quản lý]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn xóa thông tin trong trang quản lý}
+  \label{delete} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{delete} mô tả giao diện cho màn xóa thông tin trong trang quản lý. Màn này sẽ hiện lên thông tin xác nhận người dùng có muốn 
+xóa trường thông tin ấy không. Nếu người dùng muốn xóa sẽ nhấn nút Xóa, còn nếu không sẽ nhấn nút Hủy bỏ.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/webUI/deviceTable.png}
+  \caption[Giao diện trang quản lý thiết bị]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý thiết bị}
+  \label{deviceTable} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{deviceTable} mô tả giao diện cho trang quản lý người dùng, trang này sẽ hiển thị danh sách
+thông tin của các thiết bị đang có trên hệ thống, bên cạnh đó khi tích vào mỗi thiết bị tương ứng sẽ 
+có các lựa chọn để xem chi tiết thông tin thiết bị, cập nhật thông
+tin hay xóa thông tin. Và ở trang này sẽ có thêm các nút bấm để tạo mới thông tin thiết bị.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{Images/server/webUI/deviceInfo_1.png}
+  \caption[Giao diện màn thông tin chi tiết thiết bị]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn thông tin chi tiết thiết bị}
+  \label{deviceInfo} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{deviceInfo} mô tả giao diện cho màn thông tin chi tiết thiết bị, màn này sẽ hiển thị thông tin
+chi tiết của thiết bị khi quản trị viên chọn vào một thiết bị trong danh sách.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{Images/server/webUI/editDevice.png}
+  \caption[Giao diện màn cập nhật thông tin thiết bị]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn cập nhật thông tin thiết bị}
+  \label{editDevice} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{editDevice} mô tả giao diện cho màn cập nhật thông tin thiết bị. Màn này sẽ có các trường thông tin bao gồm 
+tên thiết bị, loại thiết bị, tên người dùng, trạng thái, thông tin, ngày bắt đầu. Trên các trường sẽ hiện thông tin thiết bị mà quản trị viên đã chọn. 
+Admin sẽ chỉnh sửa thông tin, sau đó nhấn nút Lưu để lưu dữ liệu.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/webUI/recordTable.png}
+  \caption[Giao diện trang quản lý phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý phiên đo}
+  \label{recordTable} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{recordTable} mô tả giao diện cho trang quản lý phiên đo, trang này sẽ hiển thị danh sách
+thông tin của các phiên đo trên hệ thống, bên cạnh đó khi tích vào mỗi phiên đo tương ứng sẽ 
+có các lựa chọn để cập nhật thông tin, xóa thông tin, tải bản ghi cũng như xem đồ thị phiên đo. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{Images/server/webUI/editRecord.png}
+  \caption[Giao diện màn cập nhật thông tin phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn cập nhật thông tin phiên đo}
+  \label{editRecord} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{editRecord} mô tả giao diện cho màn cập nhật thông tin thiết bị. Màn này sẽ có các trường thông tin bao gồm 
+tên người dùng, tên thiết bị, loại bản ghi, thời gian bắt đầu, thời gian kết thúc. Trên các trường sẽ hiện thông tin phiên đo mà quản trị viên đã chọn. 
+Admin sẽ chỉnh sửa thông tin, sau đó nhấn nút Lưu để lưu dữ liệu.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{Images/server/webUI/downloadRecord.png}
+  \caption[Giao diện màn tải bản ghi dữ liệu phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn tải bản ghi dữ liệu phiên đo}
+  \label{downloadRecord} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{downloadRecord} mô tả giao diện cho màn tải bản ghi dữ liệu phiên đo. Màn này sẽ hiện lên thông tin xác nhận người dùng có muốn 
+tải bản ghi dữ liệu phiên đo không cũng như trạng thái tải. Nếu người dùng muốn tải bản ghi sẽ nhấn nút Tải, còn nếu không sẽ nhấn nút Hủy bỏ.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{Images/server/webUI/chart.png}
+  \caption[Giao diện màn biểu đồ dữ liệu phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn biểu đồ dữ liệu phiên đo}
+  \label{recordChart} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{recordChart} mô tả giao diện cho màn biểu đồ dữ liệu phiên đo. Màn này sẽ hiện lên thông tin dữ liệu phiên đo theo biểu đồ đường, người dùng 
+có thể phóng to thu nhỏ. Nếu có nhiều hơn một dữ liệu đo, thể hiện qua màu sắc các đường và trục tung sẽ hiển thị tên kênh đo dữ liệu giúp người dùng dễ dàng theo dõi.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/webUI/pdaTable.png}
+  \caption[Giao diện trang quản lý phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý phân công bác sĩ - bệnh nhân}
+  \label{pdaTable} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{pdaTable} mô tả giao diện cho trang quản lý phân công bác sĩ - bệnh nhân, trang này sẽ hiển thị danh sách
+thông tin của các phân công trên hệ thống, bên cạnh đó khi tích vào mỗi phân công tương ứng sẽ 
+có các lựa chọn để cập nhật thông tin, xóa thông tin, bên cạnh đó sẽ có nút tạo phân công mới. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{Images/server/webUI/editPDA.png}
+  \caption[Giao diện màn cập nhật thông tin phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn cập nhật thông tin phân công bác sĩ - bệnh nhân}
+  \label{editPDA} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{editPDA} mô tả giao diện cho màn cập nhật thông tin phân công bác sĩ - bệnh nhân. Màn này sẽ có các trường thông tin bao gồm 
+tên bác sĩ, tên bệnh nhân, ngày bắt đầu, ngày kết thúc. Trên các trường sẽ hiện thông tin phân công mà quản trị viên đã chọn. 
+Admin sẽ chỉnh sửa thông tin, sau đó nhấn nút Lưu để lưu dữ liệu.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/webUI/accountInfo.png}
+  \caption[Giao diện trang thông tin tài khoản]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn cập nhật thông tin phân công bác sĩ - bệnh nhân}
+  \label{accountInfo} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{accountInfo} mô tả giao diện cho trang thông tin tài khoản. Trang này sẽ có các trường thông tin bao gồm 
+họ và tên, giới tính, số điện thoại, ngày sinh, số bản ghi, quyền truy cập, mật khẩu và xác nhận mật khẩu. Trên các trường sẽ hiện thông tin của tài khoản. 
+Người dùng sẽ chỉnh sửa thông tin, sau đó nhấn nút Lưu để lưu dữ liệu.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/webUI/chat_ai.png}
+  \caption[Giao diện màn hỏi, nhận tư vấn từ AI]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn hỏi, nhận tư vấn từ AI}
+  \label{chatAI} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{chatAI} mô tả giao diện cho màn hỏi, nhận tư vấn từ AI. Khi người dùng nhấn vào nút ở góc phải màn hình sẽ hiện lên màn chat với AI. 
+Người dùng có thể bắt đầu nhắn tin ở thanh nhắn tin, các tin nhắn sẽ hiển thị theo thứ tự trên xuống. Khi người dùng nhắn một tin, tin nhắn sẽ hiện ở dưới cùng và 
+có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/webUI/chat.png}
+  \caption[Giao diện trang chi tiết hội thoại bệnh nhân, bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang hỏi, nhận tư vấn từ AI}
+  \label{chat} %đặt tên cho ảnh
+\end{figure}
+
+Hình \ref{chat} mô tả giao diện cho trang chi tiết hội thoại bệnh nhân, bác sĩ. Ở trong trang này, phía bên trái là danh sách các bệnh nhân, bác sĩ 
+bao gồm tên và tin nhắn cuối mà người dùng đã trò chuyện, bên phải là nội dung chi tiết cuộc hội thoại. Người dùng có thể bắt đầu nhắn tin ở thanh nhắn tin 
+có thể đính kèm tệp hình ảnh, các tin nhắn sẽ hiển thị theo thứ tự trên xuống. Khi người dùng nhắn một tin, tin nhắn sẽ hiện ở dưới cùng và 
+có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám. 
 
 \subsection{Thiết kế các chức năng cho website và server}
 
 \subsubsection{Thiết kế API}
 
+
 \begin{enumerate}[a)]
   \item API liên quan đến việc xác thực người dùng
-  
-  
-  \begin{table}[H]
-    \centering
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến việc xác thực người dùng}
-    \begin{tabularx}{0.9\textwidth}{
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{2cm}
-    | >{\raggedright\arraybackslash}X|
-    }
-    \hline
-    \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-    api/auth/register     &   POST    & Đăng ký tài khoản và thông tin người dùng (lưu dữ liệu vào bảng tạm registers) \\ \hline
-    api/auth/login        &   POST    & Đăng nhập vào tài khoản \\ \hline
-    api/register/update   &   POST    & Cập nhật tài khoản và thông tin người dùng trong bảng registers \\ \hline
-    api/register/accepted &   POST    & Chấp nhận đăng ký (lưu dữ liệu này vào bảng account và user, xóa dữ liệu ở bảng registers)\\ \hline
-    api/register/rejected &   POST    & Từ chối đăng ký \\ \hline
-    api/auth/login   &  POST   & Đăng nhập vào hệ thống \\ \hline
-    api/auth         &  GET    & Lấy tất cả thông tin về tài khoản của người dùng (ID tài khoản, email, password) \\ \hline
-    api/register     &  GET    & Lấy tất cả thông tin về người dùng trong bảng registers \\ \hline
-    \end{tabularx}
-    \label{table_api_auth}
-  \end{table}
-  
+
+
+\begin{table}[H]
+  \centering
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến việc xác thực người dùng}
+  \begin{tabularx}{0.9\textwidth}{
+  | >{\raggedright\arraybackslash}X
+  | >{\raggedright\arraybackslash}m{2cm}
+  | >{\raggedright\arraybackslash}X|
+  }
+  \hline
+  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+  api/auth/register   &   POST  & Đăng ký tài khoản \\ \hline
+  api/auth/login   &    POST    & Đăng nhập vào hệ thống \\ \hline
+  api/auth/logout   &    POST    & Đăng xuất khỏi hệ thống \\ \hline
+  api/auth/reset-password  &     POST   &  Gửi reset link đến email của người dùng để reset mật khẩu \\  \hline
+  api/auth/reset-password/reset &   POST     & Giúp reset lại mật khẩu mới với verify token được nhận từ api: api/reset-password  \\ \hline
+
+  \end{tabularx}
+  \label{table_api_auth}
+\end{table}
+
+  \item API liên quan đến việc đăng ký tài khoản
+
+
+\begin{table}[H]
+  \centering
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến việc đăng ký tài khoản}
+  \begin{tabularx}{0.9\textwidth}{
+  | >{\raggedright\arraybackslash}X
+  | >{\raggedright\arraybackslash}m{2cm}
+  | >{\raggedright\arraybackslash}X|
+  }
+  \hline
+  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+  api/register/list   &   GET  & Lấy danh sách các tài khoản đăng ký đang chờ phê duyệt \\ \hline
+  api/register/accepted   &    POST    & Phê duyệt tài khoản đăng ký \\ \hline
+  api/register/rejected  &     POST   &  Từ chối phê duyệt tài khoản đăng ký \\  \hline
+
+  \end{tabularx}
+  \label{table_api_register}
+\end{table}
+
   \item API liên quan đến thông tin người dùng
-    
   
+
   \begin{table}[H]
     \centering
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến thông tin người dùng}
@@ -433,13 +811,15 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
     }
     \hline
     \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-    api/user  &   POST &  Đăng ký thông tin người dùng \\ \hline
-    api/user/update  &  POST   &  Cập nhật thông tin người dùng \\ \hline
-    api/user/upload  &  POST   &  Tải ảnh lên theo id người dùng \\ \hline
-    api/user  &   GET  &  Lấy thông tin tất cả người dùng \\ \hline
-    api/user/id/\{:id\}  &   GET     & Lấy thông tin người dùng cụ thể theo id người dùng \\ \hline
-    api/user/role/\{:role\}  &   GET     & Lấy thông tin người dùng cụ thể theo quyền \\ \hline
-    api/user/delete  &  DELETE &  Xóa thông tin người dùng theo id người dùng \\ \hline
+   api/user   &   GET  &  Lấy danh sách thông tin của tất cả người dùng \\  \hline
+   api/user/id/\{:userId\}  &   GET     & Lấy thông tin cụ thể của người dùng theo Id \\ \hline
+   api/user/role/\{:role\}  &   GET     & Lấy danh sách người dùng theo chức vụ \\ \hline
+   api/user/update   &    POST    &  Cập nhật thông tin người dùng \\  \hline
+   api/user/delete/\{:userId\}  &   DELETE     & Xóa thông tin người dùng theo Id \\ \hline
+
+    \end{tabularx}
+    \label{table_api_user}
+\end{table}
 
 \item API liên quan đến chat
 
@@ -454,14 +834,31 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
   }
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
- api/news/\{:newsId\}   &   GET  & Lấy nội của tin tức tương ứng với id dưới dạng HTML \\ \hline
- api/news   &    GET    & Lấy toàn bộ danh sách thông tin của tin tức \\ \hline
- api/categories  &   GET     & Lấy toàn bộ danh sách thông tin của tin tức \\ \hline
- api/category/\{:categoryId\}   &     GET   & Lấy thông tin của loại tin tức theo id tương ứng \\ \hline
- api/ news/category/\{:categoryId\} &   GET     & Lấy toàn bộ thông tin của tin tức theo id của loại tin \\ \hline
 
   \end{tabularx}
   \label{table_api_chats}
+\end{table}
+\item API liên quan đến quản lý thiết bị
+
+
+\begin{table}[H]
+  \centering
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến quản lý thiết bị}
+  \begin{tabularx}{0.9\textwidth}{
+  | >{\raggedright\arraybackslash}X
+  | >{\raggedright\arraybackslash}m{2cm}
+  | >{\raggedright\arraybackslash}X|
+  }
+  \hline
+  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+ api/device   &   GET  & Lấy danh sách thông tin tất cả thiết bị \\ \hline
+ api/devide/\{:deviceId\}   &    GET    & Lấy thông tin của một thiết bị \\ \hline
+ api/device/add &   POST     & Thêm thông tin thiết bị mới \\ \hline
+ api/device/update  &     POST   & Cập nhật thông tin một thiết bị \\ \hline
+ api/device/delete/\{:deviceId\}  &     DELETE   & Xóa thông tin một thiết bị theo Id \\ \hline
+
+  \end{tabularx}
+  \label{table_api_device}
 \end{table}
 
 \item API liên quan đến bản ghi ECG
@@ -477,41 +874,21 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
   }
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
- api/ecg-records/upload   &   POST  & Tải dữ liệu của phiên đo ECG lên server \\ \hline
- api/ecg-records/patient/\{:patientId\}   &    GET    & Lấy danh sách thông tin các phiên đo ECG của bệnh nhân \\ \hline
- api/ecg-records/doctor/\{:doctorId\} &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sỹ \\ \hline
- api/ecg-records/record-data/\{:recordId\}  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
+ api/record   &   GET  & Lấy danh sách thông tin các phiên đo ECG \\ \hline
+ api/record/user/\{:userId\}   &    GET    & Lấy danh sách thông tin các phiên đo ECG của bệnh nhân \\ \hline
+ api/record/doctor/\{:doctorId\} &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sỹ \\ \hline
+ api/record/id/\{:recordId\}  &     GET   & Lấy thông tin một phiên đo của bệnh nhân \\ \hline
+ api/record/getData/\{:recordId\}  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
+ api/ record/download/\{:recordId\}  &     GET   & Tải dữ liệu một phiên đo của bệnh nhân \\ \hline
+ api/record/update  &     POST   & Cập nhật thông tin một phiên đo của bệnh nhân \\ \hline
+ api/record/delete/\{:recordId\}  &     DELETE   & Xóa thông tin một phiên đo của bệnh nhân \\ \hline
 
   \end{tabularx}
   \label{table_api_ecg}
 \end{table}
 
-\item API liên quan đến quản lý thiết bị
-
-
-\begin{table}[H]
-  \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến bản ghi ECG}
-  \begin{tabularx}{0.9\textwidth}{
-  | >{\raggedright\arraybackslash}X
-  | >{\raggedright\arraybackslash}m{2cm}
-  | >{\raggedright\arraybackslash}X|
-  }
-  \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
- api/ecg-records/upload   &   POST  & Tải dữ liệu của phiên đo ECG lên server \\ \hline
- api/ecg-records/patient/\{:patientId\}   &    GET    & Lấy danh sách thông tin các phiên đo ECG của bệnh nhân \\ \hline
- api/ecg-records/doctor/\{:doctorId\} &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sỹ \\ \hline
- api/ecg-records/record-data/\{:recordId\}  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
-
-  \end{tabularx}
-  \label{table_api_device}
-\end{table}
-
 
 \item API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ
-
-
 
 \begin{table}[H]
   \centering
@@ -523,11 +900,16 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
   }
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-   api/doctor/\{:doctorId\}/patients   &   GET  & Lấy danh sách thông tin bệnh nhân được phân công cho bác sĩ \\ \hline
-  api/patient/\{:patientId\}/doctor  &    GET    & Lấy thông tin bác sỹ được phân công cho bệnh nhân \\ \hline
+  api/pda   &   GET  & Lấy danh sách tất cả thông tin phân công bác sĩ - bệnh nhân \\ \hline
+  api/pda/create  &    POST    & Tạo một phân công bác sĩ - bệnh nhân mới \\ \hline
+  api/pda/update  &    POST    & Cập nhật thông tin một phân công bác sĩ - bệnh nhân mới \\ \hline
+  api/pda/delete/\{:deviceId\}  &    DELETE    & Xóa một phân công bác sĩ - bệnh nhân mới \\ \hline
+  api/pda/patient/\{:doctorId\} &  GET  & Lấy danh sách tất cả bệnh nhân theo ID bác sĩ \\ \hline
+  api/pda/doctor/\{:patientId\} &  GET  & Lấy danh sách tất cả bác sĩ theo ID bệnh nhân \\ \hline
+
 
   \end{tabularx}
-  \label{table_api_pat_doc}
+  \label{table_api_pda}
 \end{table}
 
 
@@ -547,12 +929,23 @@ Hình \ref{login} mô tả giao diện cho màn hình đăng nhập, màn hình 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=12cm]{Images/server/sequence/server/login.png}
+  \includegraphics[width=16cm,height=15cm]{Images/sequence_api/register.png}
+  \caption[Sơ đồ tuần tự cho API đăng ký tài khoản vào hệ thống]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API đăng ký tài khoản vào hệ thống }
+  \label{api_register} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_register}  mô tả quá trình xác thực người dùng đăng ký tài khoản. Người dùng gửi yêu cầu đăng ký, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AutheController. AuthenController kiểm tra thông tin người dùng, tạo tài khoản phê duyệt 
+nếu đúng thông tin đăng ký và trả về response cho người dùng.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=16cm]{Images/sequence_api/login.png}
   \caption[Sơ đồ tuần tự cho API đăng nhập vào hệ thống]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API đăng nhập vào hệ thống }
-  \label{backend_login} %đặt tên cho ảnh
+  \label{api_login} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{backend_login}  mô tả quá trình xác thực người dùng đăng nhập vào ứng dụng. Người dùng gửi yêu cầu đăng nhập, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. AuthController kiểm tra thông tin người dùng, tạo token nếu đúng thông tin đăng nhập và trả về response cho người dùng.
+Hình \ref{api_login}  mô tả quá trình xác thực người dùng đăng ký tài khoản. Người dùng gửi yêu cầu đăng nhập, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AutheController. AuthenController kiểm tra thông tin người dùng, tạo token truy cập và token làm mới 
+nếu đúng thông tin đăng nhập và trả về response cho người dùng.
 
 % ----------------------------------------------
 
@@ -563,16 +956,62 @@ Hình \ref{backend_login}  mô tả quá trình xác thực người dùng đăn
 \paragraph{API liên quan đến thông tin người dùng}
 \mbox{}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getAllUsers.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách tất cả người dùng ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả người dùng }
+  \label{api_getAllUser} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_getAllUser} mô tả quá trình lấy danh sách thông tin tất cả người dùng trong hệ thống. Người dùng gửi yêu cầu lấy danh sách người dùng, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi UserController. UserController kiểm tra thông tin và truy vấn UserModel để lấy danh sách người dùng. 
+Nếu có lỗi xảy ra, hệ thống trả về response lỗi, ngược lại, response chứa danh sách thông tin người dùng được gửi lại từ UserController tới người dùng (quản trị viên).
+
 % sửa lại ảnh 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getUserById.png}
+  \includegraphics[width=16cm,height=11.5cm]{Images/sequence_api/getUserById.png}
   \caption[Sơ đồ tuần tự cho API lấy thông tin của người dùng dựa trên ID ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy thông tin của người dùng dựa trên ID }
-  \label{getUserById} %đặt tên cho ảnh
+  \label{api_getUserById} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{getUserById} mô tả quá trình lấy thông tin người dùng dựa trên ID trong ứng dụng. Người dùng gửi yêu cầu lấy thông tin người dùng theo ID, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi UserController. UserController kiểm tra thông tin và truy vấn UserModel để lấy thông tin người dùng. Nếu người dùng không tồn tại, hệ thống trả về response lỗi, ngược lại, response chứa thông tin người dùng được gửi lại từ UserController tới người dùng.
+Hình \ref{api_getUserById} mô tả quá trình lấy thông tin người dùng dựa trên ID trong hệ thống. Người dùng gửi yêu cầu lấy thông tin người dùng theo ID, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi UserController. UserController kiểm tra thông tin và truy vấn UserModel để lấy thông tin người dùng. 
+Nếu người dùng không tồn tại, hệ thống trả về response lỗi, ngược lại, response chứa thông tin người dùng được gửi lại từ UserController tới người dùng.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=10cm]{Images/sequence_api/getUserByRole.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách người dùng dựa trên chức vụ ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách người dùng dựa trên chức vụ }
+  \label{api_getUserByRole} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_getUserByRole} mô tả quá trình lấy danh sách thông tin người dùng dựa trên chức vụ trong hệ thống. Người dùng gửi yêu cầu lấy danh sách người dùng theo chức vụ, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi UserController. UserController kiểm tra thông tin và truy vấn UserModel để lấy danh sách người dùng. 
+Nếu có lỗi xảy ra, hệ thống trả về response lỗi, ngược lại, response chứa danh sách thông tin người dùng được gửi lại từ UserController tới người dùng.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=14cm]{Images/sequence_api/editUser.png}
+  \caption[Sơ đồ tuần tự cho API cập nhật thông tin người dùng ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API cập nhật thông tin người dùng }
+  \label{api_updateUserById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_updateUserById} mô tả quá trình cập nhật thông tin người dùng trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu cập nhật thông tin người dùng, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi UserController. UserController gửi truy vấn đến UserService để kiểm tra thông tin người dùng trong hệ thống dựa theo id (ID của người dùng) được truyền vào từ yêu cầu. 
+Nếu không tồn tại người dùng, hệ thống sẽ trả về response lỗi tương ứng, ngược lại, UserController tiếp tục gửi truy vấn đến UserService, UserService gửi truy vấn đến UserModel để cập nhật thông tin
+người dùng. Sau đó, kết quả cập nhật được trả về từ UserModel và được gửi trở lại UserRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=13cm]{Images/sequence_api/deleteUserById.png}
+  \caption[Sơ đồ tuần tự cho API xóa thông tin người dùng ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API xóa thông tin người dùng }
+  \label{api_deleteUser} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_deleteUser} mô tả quá trình xóa thông tin người dùng trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin người dùng, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi UserController. UserController gửi truy vấn đến UserService để kiểm tra thông tin người dùng trong hệ thống dựa theo id (ID của người dùng) được truyền vào từ yêu cầu. 
+Nếu không tồn tại người dùng, hệ thống sẽ trả về response lỗi tương ứng, ngược lại, UserController tiếp tục gửi truy vấn đến UserService, UserService gửi truy vấn đến UserModel để xóa thông tin
+người dùng. Sau đó, kết quả cập nhật được trả về từ UserModel và được gửi trở lại UserRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng.
 
 % \linebreak
 
@@ -585,15 +1024,6 @@ Hình \ref{getUserById} mô tả quá trình lấy thông tin người dùng d�
 \paragraph{API liên quan đến việc chat}
 \mbox{}
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=12cm]{Images/server/sequence/server/login.png}
-  \caption[Sơ đồ tuần tự cho API đăng nhập vào hệ thống]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự cho API đăng nhập vào hệ thống }
-  \label{backend_login} %đặt tên cho ảnh
-\end{figure}
-Hình \ref{backend_login}  mô tả quá trình xác thực người dùng đăng nhập vào ứng dụng. Người dùng gửi yêu cầu đăng nhập, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. AuthController kiểm tra thông tin người dùng, tạo token nếu đúng thông tin đăng nhập và trả về response cho người dùng.
-
 % ----------------------------------------------
 
 % -------------------------ECG----------------------------
@@ -602,12 +1032,104 @@ Hình \ref{backend_login}  mô tả quá trình xác thực người dùng đăn
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getEcgRecordsByDoctor.png}
-  \caption[Sơ đồ tuần tự cho API lấy thông tin phiên đo ECG của các bệnh nhân được quản lý bởi một bác sĩ ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự cho API lấy thông tin phiên đo ECG của các bệnh nhân được quản lý bởi một bác sĩ }
-  \label{getEcgRecordsByDoctor} %đặt tên cho ảnh
+  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getAllRecord.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách tất cả phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả phiên đo ECG }
+  \label{api_getAllEcgRecords} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{getEcgRecordsByDoctor} mô tả quá trình lấy dữ liệu ECG (Electrocardiogram) của tất cả bệnh nhân được quản lý bởi một bác sĩ trong ứng dụng. Người dùng (bác sĩ) gửi yêu cầu lấy dữ liệu ECG của tất cả bệnh nhân mà họ quản lý, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi ECGRecordController. ECGRecordController tiếp tục truy vấn ECGRecordModel để lấy dữ liệu ECG dựa trên doctorId (ID của bác sĩ) được truyền vào từ yêu cầu. Sau đó, danh sách dữ liệu ECG của các bệnh nhân được trả về từ ECGRecordModel và được gửi trở lại ECGRecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách dữ liệu ECG cho bác sĩ. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (bác sĩ).
+Hình \ref{api_getAllEcgRecords} mô tả quá trình lấy danh sách tất cả phiên đo ECG (Electrocardiogram) của tất cả bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách phiên đo ECG của tất cả bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG. Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute
+ để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=10.5cm]{Images/sequence_api/getRecordsByUser.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của một bệnh nhân ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của một bệnh nhân }
+  \label{api_getRecordsByUser} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_getRecordsByUser} mô tả quá trình lấy danh sách các phiên đo ECG (Electrocardiogram) của một bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách các phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân có tồn tại trong hệ thống dựa theo userId (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, hệ thống sẽ
+trả về response lỗi tương ứng. Nếu bệnh nhân có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên userId (ID của bệnh nhân) được truyền vào từ yêu cầu. 
+Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG của bệnh nhân cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/getRecordsByDoctor.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ}
+  \label{api_getRecordsByDoctor} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_getRecordsByDoctor} mô tả quá trình lấy danh sách các phiên đo ECG (Electrocardiogram) của bệnh nhân được quản lý bởi một bác sỹ trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách các phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ, 
+thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bác sỹ có tồn tại trong hệ thống dựa theo doctorId (ID của bác sỹ) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bác sỹ hay không phải là bác sỹ, hệ thống sẽ
+trả về response lỗi tương ứng. Nếu bác sỹ có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên doctorId (ID của bác sỹ) được truyền vào từ yêu cầu. 
+Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG của bệnh nhân cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getRecordById.png}
+  \caption[Sơ đồ tuần tự cho API lấy thông tin một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy thông tin một phiên đo ECG }
+  \label{api_getRecordById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_getRecordById} mô tả quá trình lấy thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy thông tin một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy thông tin dữ liệu ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. 
+Sau đó, thông tin dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=11.5cm]{Images/sequence_api/getRecordDataById.png}
+  \caption[Sơ đồ tuần tự cho API lấy dữ liệu một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy dữ liệu một phiên đo ECG }
+  \label{api_getRecordDataById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_getRecordDataById} mô tả quá trình lấy dữ liệu một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy dữ liệu một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin, đường dẫn bản ghi có tồn tại trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo hay đường dẫn bản ghi, hệ thống sẽ
+trả về response lỗi tương ứng. Nếu bản ghi có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy dữ liệu ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. 
+Sau đó, dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/downloadRecordDataById.png}
+  \caption[Sơ đồ tuần tự cho API tải tệp dữ liệu một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API tải tệp dữ liệu một phiên đo ECG }
+  \label{api_downloadRecordDataById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_downloadRecordDataById} mô tả quá trình tải tệp dữ liệu một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu tải dữ liệu một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin, đường dẫn bản ghi có tồn tại trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo hay đường dẫn bản ghi, hệ thống sẽ
+trả về response lỗi tương ứng. Nếu bản ghi có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến Server để lấy tệp dữ liệu ECG dựa trên đường dẫn tệp bản ghi được truyền vào từ yêu cầu. 
+Sau đó, tệp bản ghi ECG được trả về từ Server và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa tệp bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=14cm]{Images/sequence_api/editRecordById.png}
+  \caption[Sơ đồ tuần tự cho API cập nhật thông tin một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API cập nhật thông tin một phiên đo ECG }
+  \label{api_editRecordById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_editRecordById} mô tả quá trình cập nhật thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu cập nhật thông tin một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService, DeviceService, UserService để kiểm tra thông tin bản ghi, thiết bị và bệnh nhân trong hệ thống dựa theo id (ID của phiên đo), user\_id (ID của bệnh nhân), device\_id (ID của thiết bị)
+ được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo, bệnh nhân hay thiết bị, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để cập nhật thông tin
+phiên đo ECG dựa trên thông tin được truyền vào từ yêu cầu. Sau đó, kết quả cập nhật được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=11.5cm]{Images/sequence_api/deleteRecordById.png}
+  \caption[Sơ đồ tuần tự cho API xóa thông tin một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API xóa thông tin một phiên đo ECG }
+  \label{api_deleteRecordById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_deleteRecordById} mô tả quá trình xóa thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin bản ghi trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo, hệ thống sẽ trả về response lỗi tương ứng. 
+Nếu thông tin phiên đo có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để xóa thông tin phiên đo ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. Sau đó, kết quả cập nhật được trả về từ RecordModel 
+và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra  trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
 
 
 % -----------------------------------------------------
@@ -618,13 +1140,66 @@ Hình \ref{getEcgRecordsByDoctor} mô tả quá trình lấy dữ liệu ECG (El
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/server/sequence/server/getEcgRecordsByDoctor.png}
-  \caption[Sơ đồ tuần tự cho API lấy thông tin phiên đo ECG của các bệnh nhân được quản lý bởi một bác sĩ ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự cho API lấy thông tin phiên đo ECG của các bệnh nhân được quản lý bởi một bác sĩ }
-  \label{getEcgRecordsByDoctor} %đặt tên cho ảnh
+  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getAllDevices.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách tất cả thiết bị ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả thiết bị }
+  \label{api_getAllDevices} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{getEcgRecordsByDoctor} mô tả quá trình lấy dữ liệu ECG (Electrocardiogram) của tất cả bệnh nhân được quản lý bởi một bác sĩ trong ứng dụng. Người dùng (bác sĩ) gửi yêu cầu lấy dữ liệu ECG của tất cả bệnh nhân mà họ quản lý, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi ECGRecordController. ECGRecordController tiếp tục truy vấn ECGRecordModel để lấy dữ liệu ECG dựa trên doctorId (ID của bác sĩ) được truyền vào từ yêu cầu. Sau đó, danh sách dữ liệu ECG của các bệnh nhân được trả về từ ECGRecordModel và được gửi trở lại ECGRecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách dữ liệu ECG cho bác sĩ. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (bác sĩ).
+Hình \ref{api_getAllDevices} mô tả quá trình lấy danh sách tất cả thiết bị trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách thiết bị, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi DeviceController. DeviceController tiếp tục gửi truy vấn đến DeviceService, DeviceService gửi truy vấn đến DeviceModel để lấy danh sách thiết bị. Sau đó, danh sách thiết bị được trả về từ DeviceModel và được gửi trở lại DeviceRoute
+ để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách thiết bị cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được 
+trả về tới người dùng (quản trị viên).
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=10cm]{Images/sequence_api/getDeviceById.png}
+  \caption[Sơ đồ tuần tự cho API lấy thông tin thiết bị dựa trên ID]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy thông tin thiết bị dựa trên ID }
+  \label{api_getDeviceById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_getDeviceById} mô tả quá trình lấy thông tin thiết bị dựa trên ID trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy thông tin thiết bị theo ID, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi DeviceController. DeviceController tiếp tục gửi truy vấn đến DeviceService, DeviceService gửi truy vấn đến DeviceModel để lấy thông tin thiết bị dựa theo deviceId (ID của thiết bị). 
+Sau đó, thông tin thiết bị được trả về từ DeviceModel và được gửi trở lại DeviceRoute để trả về response cho người dùng. Nếu thiết bị tồn tại, hệ thống trả về response chứa thông tin thiết bị cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. 
+Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=13cm]{Images/sequence_api/addDevice.png}
+  \caption[Sơ đồ tuần tự cho API thêm thiết bị]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API thêm thiết bị }
+  \label{api_addDevice} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_addDevice} mô tả quá trình thêm thiết bị vào hệ thống. Người dùng (quản trị viên) gửi yêu cầu tạo thông tin thiết bị, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến UserService để kiểm tra thông tin người dùng trong hệ thống dựa theo user\_id (ID của bệnh nhân) được truyền vào từ yêu cầu. 
+Nếu hệ thống không tồn tại bệnh nhân, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, DeviceController tiếp tục gửi truy vấn đến DeviceService, DeviceService gửi truy vấn đến DeviceModel để thêm thông tin thiết bị 
+dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ DeviceModel và được gửi trở lại DeviceRoute để trả về response cho người dùng. Nếu kết quả tạo thành công, hệ thống trả về response chứa thông tin thiết bị cho quản trị viên. 
+Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=14cm]{Images/sequence_api/editDevice.png}
+  \caption[Sơ đồ tuần tự cho API cập nhật thông tin thiết bị ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API cập nhật thông tin thiết bị }
+  \label{api_editDevice} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_editDevice} mô tả quá trình cập nhật thông tin một thiết bị trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu cập nhật thông tin một thiết bị, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến DeviceService, UserService để kiểm tra thông tin thiết bị và bệnh nhân trong hệ thống dựa theo id (ID của thiết bị),
+ user\_id (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại thông tin, hệ thống sẽ trả về response lỗi tương ứng. Ngược lại, DeviceController tiếp tục gửi truy vấn đến DeviceService, 
+ DeviceService gửi truy vấn đến DeviceModel để cập nhật thông tin thiết bị dựa trên thông tin được truyền vào từ yêu cầu. Sau đó, kết quả cập nhật được trả về từ DeviceModel và được gửi trở lại DeviceRoute để 
+ trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=12cm]{Images/sequence_api/deleteDeviceById.png}
+  \caption[Sơ đồ tuần tự cho API xóa thiết bị]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API xóa thiết bị }
+  \label{api_deleteDeviceById} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_deleteDeviceById} mô tả quá trình xóa thiết bị trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin thiết bị, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến DeviceService để kiểm tra thông tin thiết bị trong hệ thống dựa theo deviceId (ID của thiết bị) được truyền vào từ yêu cầu. 
+Nếu hệ thống không tồn tại thiết bị, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, DeviceController tiếp tục gửi truy vấn đến DeviceService, DeviceService gửi truy vấn đến DeviceModel để xóa thông tin thiết bị 
+dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ DeviceModel và được gửi trở lại DeviceRoute để trả về response cho người dùng. Nếu kết quả xóa thành công, hệ thống trả về response chứa kết quả cho quản trị viên. 
+Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
 
 % -----------------------------------------------------
 
@@ -636,300 +1211,61 @@ Hình \ref{getEcgRecordsByDoctor} mô tả quá trình lấy dữ liệu ECG (El
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=10cm]{Images/server/sequence/server/getDoctorByPatient.png}
-  \caption[Sơ đồ tuần tự cho API lấy thông tin bác sĩ được phân công cho một bệnh nhân ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự cho API lấy thông tin bác sĩ được phân công cho một bệnh nhân }
-  \label{getDoctorByPatient} %đặt tên cho ảnh
+  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getAllPDA.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách tất cả phân công bác sĩ - bệnh nhân ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả phân công bác sĩ - bệnh nhân }
+  \label{api_getAllPDA} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{getDoctorByPatient} mô tả quá trình lấy thông tin bác sĩ được phân công cho một bệnh nhân cụ thể. Người dùng (User) gửi yêu cầu lấy thông tin bác sĩ của một bệnh nhân cụ thể, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi PatientDoctorAssignmentController. PatientDoctorAssignmentController tìm kiếm thông tin liên kết giữa bệnh nhân và bác sĩ trong PatientDoctorAssignmentModel bằng cách tìm bản ghi với patient\_id trùng khớp với bệnh nhân được chỉ định. Nếu không tìm thấy thông tin liên kết, hệ thống trả về response lỗi tương ứng. Nếu tìm thấy thông tin liên kết, PatientDoctorAssignmentController sẽ tiếp tục tìm kiếm thông tin của bác sĩ trong UserModel bằng cách sử dụng doctor\_id lấy từ bản ghi liên kết. Sau khi tìm thấy thông tin của bác sĩ, hệ thống trả về response thành công chứa thông tin về bác sĩ đó. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng.
+Hình \ref{api_getAllPDA} mô tả quá trình lấy danh sách tất cả phân công bác sĩ - bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách phân công bác sĩ - bệnh nhân, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi PDAController. PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để lấy danh sách phân công. Sau đó, danh sách phân công được trả về từ PDAModel và được gửi trở lại PDARoute
+ để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách phân công cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được 
+trả về tới người dùng (quản trị viên).
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=14cm]{Images/sequence_api/addAssignment.png}
+  \caption[Sơ đồ tuần tự cho API thêm phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API thêm phân công bệnh nhân - bác sĩ }
+  \label{api_addPDA} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_addPDA} mô tả quá trình thêm phân công bệnh nhân - bác sĩ vào hệ thống. Người dùng (quản trị viên) gửi yêu cầu tạo phân công bệnh nhân - bác sĩ, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân, bác sĩ trong hệ thống dựa theo patient\_id (ID của bệnh nhân), doctor\_id (ID bác sĩ);PDAService để kiểm
+tra bệnh nhân đã có phân công bác sĩ dựa theo patient\_id được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, bác sĩ hay bệnh nhân đã có bác sĩ phân công, hệ thống sẽ trả về response lỗi tương ứng. 
+Ngược lại, PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để thêm thông tin phân công dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ PDAModel và được gửi trở lại 
+PDARoute để trả về response cho người dùng. Nếu kết quả tạo thành công, hệ thống trả về response chứa kết quả thêm phân công cho quản trị viên. 
+Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=13cm]{Images/sequence_api/editAssignment.png}
+  \caption[Sơ đồ tuần tự cho API cập nhật thông tin phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API cập nhật thông tin phân công bệnh nhân - bác sĩ }
+  \label{api_editPDA} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_editPDA} mô tả quá trình cập nhật thông tin phân công bệnh nhân - bác sĩ vào hệ thống. Người dùng (quản trị viên) gửi yêu cầu sửa thông tin phân công bệnh nhân - bác sĩ, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân, bác sĩ trong hệ thống dựa theo patient\_id (ID của bệnh nhân), doctor\_id (ID bác sĩ);PDAService để kiểm
+tra bệnh nhân đã có phân công bác sĩ dựa theo patient\_id được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, bác sĩ hay bệnh nhân chưa có bác sĩ phân công, hệ thống sẽ trả về response lỗi tương ứng. 
+Ngược lại, PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để sửa thông tin phân công dựa theo thông tin truyền vào. Sau đó, kết quả cập nhật được trả về từ PDAModel và được gửi trở lại 
+PDARoute để trả về response cho người dùng. Nếu kết quả tạo thành công, hệ thống trả về response chứa kết quả thêm phân công cho quản trị viên. 
+Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/deleteAssignment.png}
+  \caption[Sơ đồ tuần tự cho API xóa phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API xóa phân công bệnh nhân - bác sĩ }
+  \label{api_deletePDA} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_deletePDA} mô tả quá trình xóa phân công bệnh nhân - bác sĩ trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin phân công, thông qua các tầng của hệ thống, 
+yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến PDAService để kiểm tra thông tin phân công trong hệ thống dựa theo pdaId (ID của phân công) được truyền vào từ yêu cầu. 
+Nếu hệ thống không tồn tại phân công, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để xóa thông tin phân công 
+dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ PDAModel và được gửi trở lại PDARoute để trả về response cho người dùng. Nếu kết quả xóa thành công, hệ thống trả về response chứa kết quả cho quản trị viên. 
 % -----------------------------------------------------
 
-\paragraph{Website quản trị}
-\mbox{}
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=10cm]{Images/server/sequence/web/seq_auth.png}
-  \caption[Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự cho quá trình truy cập vào trang quản trị (admin dashboard) }
-  \label{seq_auth} %đặt tên cho ảnh
-\end{figure}
-Hình \ref{seq_auth} mô tả quá trình truy cập vào bảng điều khiển quản trị (admin dashboard) của người dùng (User). Khi người dùng yêu cầu truy cập vào admin dashboard, hệ thống sẽ yêu cầu xác thực thông qua ViewComponent. Nếu xác thực thành công, AdminJS sẽ xây dựng admin dashboard và yêu cầu dữ liệu từ các tài nguyên (resources) khác nhau để hiển thị thông tin.
-
-
-
-Nếu xác thực thành công, AdminJS sẽ yêu cầu dữ liệu từ các tài nguyên khác nhau, bao gồm DoctorResource, AdminResource, PatientResource, NewsResource, NewsCategoryResource, EcgRecordsResource và PatientDoctorAssignmentResource. Mỗi tài nguyên sẽ trả về dữ liệu tương ứng và AdminJS sẽ sử dụng các dữ liệu này để hiển thị trên admin dashboard.
-
-
-
-Sau khi AdminJS đã thu thập đủ dữ liệu từ các tài nguyên, nó sẽ chuyển hướng ViewComponent đến trang /admin để hiển thị admin dashboard cho người dùng. Nếu xác thực không thành công, AdminJS sẽ chuyển hướng ViewComponent đến trang /admin/login để hiển thị trang đăng nhập cho người dùng.
-
-
-
-Sau khi hoàn tất, hệ thống sẽ trả về response cuối cùng và hiển thị trang tương ứng cho người dùng.
-
-
-\subsection{Thiết kế các chức năng cho ứng dụng di động}
-\label{design_function_mobile}
-
-Ứng dụng di động được trong hệ thống được chia cụ thể gồm ứng dụng di động cho bệnh nhân và ứng dụng di động cho bác sĩ. 
-Hầu hết các chức năng cơ bản được thể hiện trong sơ đồ usecase của hai ứng dụng đều giống nhau như đăng nhập, xem lịch sử đo, nhắn tin.
-Điểm khác biệt giữa hai ứng dụng di động là ứng dụng di động cho bệnh nhân sẽ có thêm chức năng kết nối với thiết bị đo cũng như xem tin tức.
-
-Trong nội dung của mục \ref{design_function_mobile}, chúng em xin được phép trình bày chi tiết hướng thực hiện các chức năng
-từ các chức năng chung đến chức năng riêng cho bệnh nhân, đồng thời sẽ triển khai hướng tối ưu của từng chức năng (nếu có).
-
-Các chức năng chung của hai ứng dụng cho bác sĩ và bệnh nhân bao gồm: 
-
-\begin{adjustwidth}{1.5em}{}
-\begin{itemize}
-  \item Chức năng đăng nhập
-  \item Chức năng xem lịch sử đo
-  \item Chức năng nhắn tin.
-\end{itemize}
-\end{adjustwidth}
-
-Các chức năng riêng của bệnh nhân bao gồm:
-\begin{adjustwidth}{1.5em}{}
-\begin{itemize}
-  \item Chức năng kết nối, thực hiện theo dõi và lưu dữ liệu với thiết bị điện tim
-  \item Chức năng xem tin tức.
-\end{itemize}
-\end{adjustwidth}
-\subsubsection{Chức năng đăng nhập}
-
-
-Chức năng đăng nhập là chức năng chung của hai ứng dụng, có tương tác trực tiếp với API, logic cơ bản được thể hiện ở Hình \ref{login}
-luồng thực hiện ở phía server được triển khai ở 
-Hình \ref{backend_login}. Có thể nhận thấy việc đăng nhập trên App chỉ nên diễn ra một lần sau khi người dùng nhập thông tin,
-và đã được xác thực. Bởi mỗi lần tắt đi bật lại ứng dụng, nếu phải đăng nhập lại thì rất phiền cho người sử dụng, đặc biệt
-với những ứng dụng không đòi hỏi tính truy nhập và bảo mật quá cao. Có nhiều cách để lưu dữ liệu đăng nhập như:
-
-\begin{itemize}
-  \item Lưu ở bộ nhớ ngoài: Mỗi lần mở app sẽ kiểm tra dữ liệu trong file. Nếu khớp với điều kiện đặt ra sẽ cho người dùng vào thẳng app.
-  Tuy nhiên cách này khá rườm rà và yêu cầu người thực hiện phải truy xuất file nhiều.
-  \item Lưu trên server: Mỗi lần mở app sẽ đẩy một yêu cầu lên server và server sẽ trả về trạng thái. Tuy nhiên, như vậy mọi tác
-  vụ sẽ phụ thuộc hoàn toàn vào internet. Và nếu số lượng người sử dụng lớn thì hoàn toàn không phù hợp.
-  \item Lưu trong bộ nhớ cục bộ của ứng dụng: Các hệ điều hành đều cung cấp những thư viện giúp việc lưu trữ dữ liệu nhỏ một cách 
-  dễ dàng trong cục bộ ứng dụng. Đây là một phương pháp lưu dưới dạng key-value (khoá-giá trị), giúp việc truy/xuất hay ghi nhanh chóng.
-  Với Android, chúng ta có thể sử dụng SharedPreferences \cite{intro_sharedpref}, với IOS là UserDefault (thêm tham khảo)
-
-\end{itemize}
-Vậy luồng đăng nhập và lưu dữ liệu đăng nhập trên ứng dụng di động sẽ là: người dùng nhập thông tin, thông tin được gửi lên server xác thực,
-nếu kết quả trả về của server là đúng, sẽ lưu dữ liệu đăng nhập của người dùng vào trong Shared Preferences (Local Storage). Khi tắt và mở lại app,
-ứng dụng sẽ lấy dữ liệu và kiểm tra, nếu có dữ liệu thì người dùng sẽ không phải đăng nhập lại. Hình dưới mô tả chi tiết phần thiết
-kế việc lưu dữ liệu đăng nhập.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=10cm]{Images/mobile_app/design_store_data_login.png}
-  \caption[Sơ đồ tuần tự phần thiết kế chức năng đăng nhập và lưu dữ liệu đăng nhập]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự phần thiết kế chức năng đăng nhập và lưu dữ liệu đăng nhập}
-  \label{seq_auth} %đặt tên cho ảnh
-\end{figure}
-
-\subsubsection{Chức năng kết nối và nhận/lưu dữ liệu từ thiết bị điện tim}
-\mbox{}
-Chức năng kết nối và thực hiện đo với thiết bị điện tim là một trong những chức năng quan trọng nhất của ứng dụng. Chức năng này yêu cầu
-ứng dụng phải bật được bluetooth. Đầu tiên để có thể tiến hành đo, chúng ta phải thực hiện một kết nối bluetooth giữa ứng dụng di động và
-thiết bị đo điện tim. Sau khi dã kết nối thành công, dựa vào cơ chế của bluetooth low energy \cite{intro_ble}, chúng ta sẽ thiết lập để ứng dụng lắng
-nghe dữ liệu trả ra từ thiết bị điện tim. Dữ liệu thô được xử lý theo công thức tính toán và sau đó được vẽ trên biểu đồ. Người dùng sau
-khi thực hiện đo xong có thể chọn lưu kết quả đo lại (điều này sẽ đẩy dữ liệu đo lên server và bác sĩ có thể xem được).
-
-Đầu tiên việc kết nối Bluetooth với thiết bị đo điện tim là không khó khi có sự hỗ trợ của các thư viện và hệ điều hành, sau đó việc xử lý sau
-kết nối mới là một điều chúng ta cần phải lưu tâm tới. Sau khi kết nối với thiết bị đo điện tim, câu hỏi đặt ra là \textbf{làm thế nào
-để lắng nghe được dữ liệu} từ thiết bị điện tim? Đối với hệ thống BLE, sau khi kết nối thành công, một Profile Protocol được gọi
-là GATT \cite{intro_ble_gatt} (Generic ATTribute Profile) - xác định cách hai thiết bị sẽ truyền và nhận dữ liệu như thế nào thông qua
-Services và Characteristics sẽ được hình thành.
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=9cm]{Images/mobile_app/ecg_calculation/ble_gatt.png}
-  \caption[Cấu trúc dữ liệu gói của]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Cấu trúc dữ liệu gói của}
-  \label{ble_gatt} %đặt tên cho ảnh
-\end{figure}
-Services là tập hợp của một nhóm thông tin để thực hiện một chức năng cụ thể,
-ví dụ Battery Service, Sensor Service, trong mỗi Service chính là một hoặc nhiều Characteristic, mỗi Characteristic đảm nhận
-một thông tin hoặc chức năng riêng biệt phục vụ cho Service đó. Mỗi một Service hay Characteristic đều có UUID (mã định danh duy nhất toàn cầu).
-
-Từ cơ sở trên, để có thể sẵn sàng lắng nghe được dữ liệu từ thiết bị điện tim, thiết bị di động cần kết nối đến đúng Services và Characteristics.
-
-Trong thiết bị đo thực hiện trong đồ án lần này, chúng em xác định được những UUID tiêu chuẩn (biểu diễn dưới dạng String) để có thể lắng nghe được dữ liệu từ
-thiết bị:
-\begin{itemize}
-  \item UUID Service: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
-  \item UUID Characteristic: 6E400003-B5A3-F393-E0A9-E50E24DCCA9E
-\end{itemize}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=10cm]{Images/mobile_app/design_connect_and_receive_ECG_data.png}
-  \caption[Sơ đồ tuần tự thiết kế chức năng kết nối và nhận dữ liệu điện tim real-time]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự thiết kế chức năng kết nối và nhận dữ liệu điện tim real-time}
-  \label{seq_auth} %đặt tên cho ảnh
-\end{figure}
-
-Sau khi hoàn thành phần xây dựng kết nối với thiết bị đo điện tim, quá trình thực hiện đo được bắt đầu. Ứng dụng sẽ lắng nghe
-dữ liệu từ thiết bị thông qua một hàm "subscribe characteristic", dữ liệu sẽ gửi liên tục qua characteristic này. Nhiệm vụ sau đó của ứng dụng là
-định nghĩa cấu trúc gói dữ liệu, xử lý và chuẩn hoá số liệu, từ đó vẽ lên biểu đồ dữ liệu điện tim, và lưu dữ liệu sau khi đo.
-
-\begin{enumerate} [a)]
-  \item Định nghĩa cấu trúc gói dữ liệu
-
-    % FIXME: lùi đầu dòng anh Tuấn
-    Khi ứng dụng di động bắt đầu nhận được gói, điều đầu tiên là phải xác định dữ liệu trong gói được định dạng như thế nào.
-    Dưới đây là hình ảnh về cấu trúc một gói dữ liệu của BLE:
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=14cm,height=4cm]{Images/mobile_app/ecg_calculation/preview_packet.png}
-      \caption[Cấu trúc gói BLE]{\bfseries \fontsize{12pt}{0pt}
-      \selectfont Cấu trúc gói BLE}
-      \label{preview_packet} %đặt tên cho ảnh
-    \end{figure}
-    Trong một gói mà ứng dụng nhận được, dữ liệu nằm trong DataPDU, đó chính là phần Payload, vậy dữ liệu điện tim tối đa
-    trong một gói là 255 bytes. Nói cách khác, mỗi khi BLE gửi một gói đến, dữ liệu thô mà ứng dụng nhận được sẽ là một
-    list các bytes. Sau khi đã nắm được khung dữ liệu trong một gói, cần sự kết hợp của cả bên phần cứng 
-    và người lập trình firmware để xác định chi tiết ý nghĩa về dữ liệu trong gói bởi nếu không nắm được dữ liệu
-    trong một gói được tổ chức ra sao, những bytes nào đảm nhận nhiệm vụ gì, sẽ không thể tính toán ra số liệu và vẽ lên biểu
-    đồ được.
-    
-    Trong đồ án lần này, chúng em có thử nghiệm với hai thiết bị đo là ống nghe điện tử sử dụng trong thính chẩn tim (electronic stethoscope for cardiac auscultation)
-    và thiết bị đo điện tim bằng điện cực không tiếp xúc, hai thiết bị phần cứng đều được nghiên cứu và phát triển bởi BKIC Lab, trường Điện - Điện tử,
-    Đại học Bách khoa Hà Nội. Dưới đây là hai hình vẽ thể hiện cấu trúc gói chi tiết của hai thiết bị:
-
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=12cm,height=4.8cm]{Images/mobile_app/ecg_calculation/data_packet_all.png}
-      \caption[Cấu trúc dữ liệu gói gửi qua Bluetooth của thiết bị đo tiếng tim]{\bfseries \fontsize{12pt}{0pt}
-      \selectfont Cấu trúc dữ liệu gói gửi qua Bluetooth của thiết bị đo tiếng tim}
-      \label{data_packet_ecg}
-    \end{figure}
-
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=12cm,height=3cm]{Images/mobile_app/ecg_calculation/ble_packet_fmECG.jpeg}
-      \caption[Cấu trúc dữ liệu gói gửi qua Bluetooth của thiết bị đo điện tim]{\bfseries \fontsize{12pt}{0pt}
-      \selectfont Cấu trúc dữ liệu gói của thiết bị đo điện tim}
-      \label{ble_packet_fmECG}
-    \end{figure}
-
-    Về cơ bản, 0 - 240 bytes trong trường Data, chính là gộp của nhiều mẫu đo nhỏ, rồi mới gửi qua Bluetooth.
-    Sau khi xác định được đủ các yếu tố và hiểu được cấu trúc gói, chúng em sẽ bắt đầu xử lý gói dữ liệu.
-
-  \item Xử lý gói dữ liệu
-
-    Sau khi đã hiểu về mỗi bytes trong một gói đảm nhận nhiệm vụ gì, việc tiếp theo là phân tách các bytes cần thiết,
-    thực hiện tính toán. 
-    
-    Với dữ liệu gửi từ thiết bị đo tiếng tim có 16 bytes/gói dữ liệu ở Hình \ref{data_packet_ecg}, 3 bytes đầu và 1 byte cuối được bỏ qua (3 bytes status, 
-    1 byte đếm), ứng dụng sẽ cần thực hiện xử lý và tính toán với 12 bytes. Dưới đây là chi tiết các bước thiết lập tính toán cho channel 1 trong Hình \ref{data_packet_ecg}:
-
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=16cm,height=4cm]{Images/mobile_app/ecg_calculation/handle_one_channel.png}
-      \caption[Các bước tính điện áp channel 1 từ 3 bytes của channel]{\bfseries \fontsize{12pt}{0pt}
-      \selectfont Các bước tính điện áp channel 1 từ 3 bytes của channel}
-      \label{channel_01_calculation} %đặt tên cho ảnh
-    \end{figure}
-
-    Nhìn vào trong hình \ref{channel_01_calculation}, bước (1) sẽ thực hiện công đoạn chuyển 3 bytes sang số thập phân,
-    bước (2) kiểm tra điều kiện khi so sánh với \(2^{23}\), bước (3) do giá trị ở bước (1) lớn hơn \(2^{23}\) nên thực hiện
-    phép trừ để trả về đúng dấu, nếu giá trị bước (1) nhỏ hơn \(2^{23}\) thì giữ nguyên giá trị mà không trừ.
-    bước (4) thực hiện công thức quy đổi ra điện áp theo công thức tính được cung cấp trong Table 9, ADS 1299
-    Datasheet.
-
-    Dữ liệu output trả ra chính là giá trị điện áp của channel 1 dùng để vẽ lên biểu đồ. Lần lượt thực hiện với các channel
-    còn lại, kết quả thu được sẽ là 4 giá trị điện áp với từng channel tính toán thành công trong một gói nhận từ thiết bị.
-    Nói cách khác, một gói dữ liệu mà ứng dụng nhận được, sau khi qua xử lý sẽ trả ra các giá trị điện áp tương ứng với các
-    channel, mỗi giá trị sẽ là một điểm trên biểu đồ điện tim.
-
-    Đối với gói dữ liệu gửi từ thiết bị đo điện tim, sẽ phức tạp hơn một chút khi phải chia nhỏ dữ liệu trong trường Data,
-    thành từng cụm 12 bytes và xử lý 12 bytes y hệt như công thức xử lý ở trên. 
-
-  \item Vẽ dữ liệu đã được xử lý lên biểu đồ
-
-    Sau khi dữ liệu được xử lý, ứng dụng đã có các điểm cần thiết để vẽ lên biểu đồ. Và với tần số lấy mẫu cơ bản là 250Hz, 
-    tức nghĩa là sẽ có 250 gói được gửi tới ứng dụng trong 1 giây, 250 điểm thuộc một channel có thể vẽ lên biểu đồ trong một giây.
-    Với tốc độ 250Hz, hoàn toàn có thể vẽ đủ các điểm lên biểu đồ mà không gây ra hiện tượng lag ứng dụng khi phải xử lý và vẽ một
-    lượng lớn số liệu trong khoảng thời gian rất ngắn. Tuy nhiên khi tần số lấy mẫu tăng, thì việc vẽ đủ tất cả các mẫu lên
-    biểu đồ có thể không xử lý kịp. Phương án khả thi có thể đưa ra đó là áp dụng định lý lấy mẫu Nyquist-Shannon để giảm
-    đến mức cho phép số mẫu cần phải xử lý và vẽ lên biểu đồ.
-
-  \item Lưu dữ liệu sau khi kết thúc quá trình theo dõi
-    
-    Trước khi đo, ứng dụng sẽ yêu cầu được cấp quyền ghi file để có thể lưu dữ liệu vào file trong máy. Lần đầu đo người dùng,
-    sẽ được tạo một folder để lưu dữ liệu điện tim.
-  
-    Dữ liệu điện tim được thiết kế lưu tạm thời trong RAM (lưu trong một biến khi chương trình đang chạy) trong quá trình 
-    đang thực hiện đo/theo dõi, đồng thời để giảm tải cho biến, dữ liệu sẽ được ghi vào file trong máy người dùng khi đạt tới số mẫu nhất định và xoá dữ liệu trong biến.
-    Số mẫu 5000 cần được kiểm thử trong môi trường thực tế nhiều hơn.
-
-    Sau mỗi lần đo, dữ liệu sẽ được gửi lên server để lưu trữ và hiển thị lại cho bệnh nhân/bác sĩ quản lý xem nếu cần.
-
-\end{enumerate}
-Trên đây là phần thiết kế chức năng quan trọng nhất của ứng dụng di động. Sau khi có dữ liệu đo, việc xem lịch sử đo được chúng em 
-tiếp tục trình bày ở mục \ref{function_view_history_record}.
-
-\subsubsection{Chức năng xem lịch sử đo}
-\label{function_view_history_record}
-
-
-Chức năng xem lịch sử đo lấy dữ liệu trực tiếp trên server, với logic cơ bản được thể hiện ở Hình \ref{view_record_timeline}. 
-Để xem được lịch sử các lần đo, bệnh nhân cần thực hiện đo ít nhất một lần (hệ thống sẽ tự gửi dữ liệu lên server). Dữ liệu sau khi được
-load từ API về sẽ được vẽ lên biểu đồ. Các Hình \ref{getEcgRecordsByDoctor}, Hình \ref{getEcgRecordsByUserId}
-lần lượt thể hiện luồng API hoạt động ở server để lấy dữ liệu về danh sách các phiên đo. 
-
-Trong các API trên hoàn toàn chưa có dữ liệu chính của phiên đo, chỉ khi người dùng chọn một phiên đo muốn xem, lúc đó dữ liệu
-mới được tải về từ server (thể hiện trong Hình \ref{convertExceltoJson}). Dữ liệu sau khi được lấy về sẽ được vẽ lên biểu đồ giống
-như biểu đồ theo dõi dữ liệu điện tim real-time.
-
-Biểu đồ có trục tung là giá trị điện áp, trục hoành là toàn bộ thời gian từ lúc bắt đầu đo đến khi kết thúc. Người dùng có thể,
-thực hiện các thao tác phóng to, thu nhỏ để xem khoảng thời gian.
-
-\subsubsection{Chức năng xem tin tức}
-
-Chức năng xem tin tức lấy dữ liệu trực tiếp trên server, với logic cơ bản được thể hiện ở Hình \ref{view_news}. 
-Danh sách tin tức sẽ được load ngay khi người dùng mở ứng dụng (nếu có mạng). Tất cả phần xem trước của tin tức sẽ được lưu
-trong biến khi ứng dụng chạy, dữ liệu tin tức được lấy từ danh sách tin tức không bao gồm nội dung để giảm thiểu khối lượng
-thông tin dư thừa của gói tin. Chỉ khi người dùng chọn một tin tức cụ thể, khi đó ứng dụng mới gửi yêu cầu lên server để lấy
-nội dung tin tức đó về, nội dung tin tức được chúng em thống nhất lưu dưới dạng HTML và khi hiện lên sẽ hiển thị dạng HTML view.
-Điều này giúp cấu trúc của thông tin được nguyên vẹn và không cần phải chỉnh sửa nhiều.
-
-\subsubsection{Chức năng nhắn tin}
-
-Chức năng nhắn tin là chức năng được thiết kế để không phụ thuộc vào server của hệ thống mà độc lập đứng riêng. Chúng em
-chọn Firebase làm nền tảng để phát triển chức năng nhắn tin bởi tính phổ biến, hỗ trợ rất nhiều ngôn ngữ đi kèm với tài liệu đầy đủ 
-và dễ dàng phát triển.
-Ở chức năng nhắn tin, mọi dữ liệu về tin nhắn sẽ được lưu trên Firestore (Cơ sở dữ liệu NoSQL của Firebase), cơ sở dữ liệu sẽ
-bao gồm ba bảng chính. 
-
-Việc xử lý tin nhắn, gửi tin nhắn, hay các thao tác với tin nhắn đều có thể sử dụng các câu lệnh truy vấn và truy/xuất
-trực tiếp vào cơ sở dữ liệu, đồng thời các ví dụ và câu lệnh được Firebase hỗ trợ rất kĩ về mặt tài liệu, vì lẽ đó, khi sử dụng
-Firebase, ứng dụng sẽ linh hoạt và dễ cải tiến.
-
-Ví dụ, ứng dụng di động đang trong giao diện trò chuyện, tức nghĩa là phải có một câu truy vấn lấy các tin nhắn trong hội thoại
-để hiển thị cho người dùng. Khi gửi tin nhắn, một hàng được thêm vào
-cơ sở dữ liệu, tuỳ theo cơ chế của ngôn ngữ lập trình, Firebase lắng nghe được sự thay đổi
-trong cơ sở dữ liệu và lập tức gửi một thông điệp đến ứng dụng để cho người dùng biết, đồng thời cập nhật tin nhắn kèm giao diện.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm,height=14cm]{Images/mobile_app/design_send_receive_message.png}
-  \caption[Sơ đồ tuần tự thiết kế chức năng gửi và nhận tin nhắn real-time]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự thiết kế chức năng gửi và nhận tin nhắn real-time}
-  \label{design_send_receive_firebase_message} %đặt tên cho ảnh
-\end{figure}
-
-Hình \ref{design_send_receive_firebase_message} biểu diễn chi tiết cách gửi/nhận tin nhắn thông qua Firebase. Khi người dùng,
-gửi một tin nhắn thông qua FirebaseMessagesController, dữ liệu được lưu vào trong FirebaseDatabase, ngay lúc đó, Firebase sẽ có
-cơ chế thông báo cho người dùng đã thực hiện query ở luồng 6, có một tin nhắn mới được thêm. Ứng dụng có thể nhận được tin nhắn
-đó ngay lập tức và hiển thị lên màn hình.
 
 \subsection{Kết luận chương}
 
-Chương 2 đã trình bày quá trình thiết kế hệ thống 
+Chương 3 đã trình bày quá trình thiết kế hệ thống 
 dưới góc độ kiến trúc và các thành
  phần cụ thể. Trong quá trình thiết kế, chúng em đã tập trung
   vào việc xây dựng một kiến trúc hoạt động mượt mà và hiệu quả,
