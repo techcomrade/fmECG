@@ -71,7 +71,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \label{activity_register} %đặt tên cho ảnh
   \end{figure}
 
-\subsubsection{Use case chức năng đăng nhập/đăng xuất }
+\subsubsection{Use case chức năng đăng nhập/đăng xuất}
   \begin{figure}[H]
     \centering
     \includegraphics[width=9cm,height=2.5cm]{Images/use_case/use_case_login.png}
@@ -402,13 +402,44 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \label{activity_chat_ai} %đặt tên cho ảnh
   \end{figure}
 
-\subsubsection{Use case chức năng xem danh sách bệnh nhân}
+  \subsubsection{Use case chức năng quản lý phân công bác sĩ - bệnh nhân}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=11cm,height=4.5cm]{Images/use_case/use_case_manage_patients.png}
-    \caption[Sơ đồ use case chức năng xem danh sách bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ use case chức năng xem danh sách bệnh nhân}
-    \label{use_case_patient_management} %đặt tên cho ảnh
+    \includegraphics[width=12cm,height=16cm]{Images/use_case/use_case_manage_pda.png}
+    \caption[Sơ đồ use case chức năng quản lý phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ use case chức năng quản lý phân công bác sĩ - bệnh nhân}
+    \label{use_case_pda_management} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng xem danh sách bác sĩ}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Xem danh sách bác sĩ} \\
+      \hline
+      Tác nhân & Bệnh nhân \\
+      \hline
+      Mô tả & Cho phép bác sĩ thực hiện hành động xem danh sách bác sĩ phụ trách mình \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_list_doctor}, Hình \ref{sequence_manage_patient}
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  Dưới đây là sơ đồ hoạt động mô tả chức năng xem danh sách bác sĩ
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=9cm]{Images/activity/activity_manage_doctor.png}
+    \caption[Sơ đồ hoạt động chức năng xem danh sách bác sĩ]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng xem danh sách bác sĩ}
+    \label{activity_list_doctor} %đặt tên cho ảnh
   \end{figure}
 
   \begin{table}[H]
@@ -440,6 +471,112 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \caption[Sơ đồ hoạt động chức năng xem danh sách bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ hoạt động chức năng xem danh sách bệnh nhân}
     \label{activity_list_patient} %đặt tên cho ảnh
+  \end{figure}
+  
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng xem danh sách phân công bác sĩ - bệnh nhân}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Xem danh sách phân công bác sĩ - bệnh nhân} \\
+      \hline
+      Tác nhân & Quản trị viên \\
+      \hline
+      Mô tả & Cho phép quản trị thực hiện hành động xem danh sách phân công bác sĩ - bệnh nhân \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_pda}, Hình \ref{sequence_manage_pda}
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng thêm phân công bác sĩ - bệnh nhân}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Thêm phân công bác sĩ - bệnh nhân} \\
+      \hline
+      Tác nhân & Quản trị viên \\
+      \hline
+      Mô tả & Cho phép quản trị thực hiện hành động thêm phân công bác sĩ - bệnh nhân \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_pda}, Hình \ref{sequence_manage_pda}
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  Dưới đây là sơ đồ hoạt động mô tả chức năng xem/thêm phân công bác sĩ - bệnh nhân
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=13cm]{Images/activity/activity_add_pda.png}
+    \caption[Sơ đồ hoạt động chức năng xem/thêm người dùng]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng xem/thêm người dùng}
+    \label{activity_add_pda} %đặt tên cho ảnh
+  \end{figure}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng sửa thông tin phân công bác sĩ - bệnh nhân}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Sửa thông tin phân công bác sĩ - bệnh nhân} \\
+      \hline
+      Tác nhân & Quản trị viên \\
+      \hline
+      Mô tả & Cho phép quản trị thực hiện hành động sửa thông tin phân công bác sĩ - bệnh nhân \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_pda}, Hình \ref{sequence_manage_edit_pda}
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng xóa phân công bác sĩ - bệnh nhân}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{|c|X|}
+      \hline
+      \textbf{Tên chức năng} & \textbf{Xóa phân công bác sĩ - bệnh nhân} \\
+      \hline
+      Tác nhân & Quản trị viên \\
+      \hline
+      Mô tả & Cho phép quản trị thực hiện hành động xóa phân công bác sĩ - bệnh nhân \\
+      \hline
+      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
+      \hline
+      Dòng sự kiện chính & 
+      % \begin{tabular}{@{}l@{}}
+        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_pda}, Hình \ref{sequence_manage_delete_user} 
+        \\
+      % \end{tabular} \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  Dưới đây là sơ đồ hoạt động mô tả chức năng sửa/xóa phân công bác sĩ - bệnh nhân
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=13.5cm,height=17cm]{Images/activity/activity_edit_pda.png}
+    \caption[Sơ đồ hoạt động chức năng sửa/xóa phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Sơ đồ hoạt động chức năng sửa/xóa phân công bác sĩ - bệnh nhân}
+    \label{activity_edit_pda} %đặt tên cho ảnh
   \end{figure}
 
 \subsubsection{Use case chức năng quản lý thiết bị}
@@ -555,121 +692,6 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \caption[Sơ đồ hoạt động chức năng sửa/xóa thiết bị]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ hoạt động chức năng sửa/xóa thiết bị}
     \label{activity_edit_device} %đặt tên cho ảnh
-  \end{figure}
-
-\subsubsection{Use case chức năng quản lý phân công bác sĩ - bệnh nhân}
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=12cm,height=11.5cm]{Images/use_case/use_case_manage_pda.png}
-    \caption[Sơ đồ use case chức năng quản lý phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ use case chức năng quản lý phân công bác sĩ - bệnh nhân}
-    \label{use_case_pda_management} %đặt tên cho ảnh
-  \end{figure}
-
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng xem danh sách phân công bác sĩ - bệnh nhân}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{|c|X|}
-      \hline
-      \textbf{Tên chức năng} & \textbf{Xem danh sách phân công bác sĩ - bệnh nhân} \\
-      \hline
-      Tác nhân & Quản trị viên \\
-      \hline
-      Mô tả & Cho phép quản trị thực hiện hành động xem danh sách phân công bác sĩ - bệnh nhân \\
-      \hline
-      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
-      \hline
-      Dòng sự kiện chính & 
-      % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_pda}, Hình \ref{sequence_manage_pda}
-        \\
-      % \end{tabular} \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng thêm phân công bác sĩ - bệnh nhân}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{|c|X|}
-      \hline
-      \textbf{Tên chức năng} & \textbf{Thêm phân công bác sĩ - bệnh nhân} \\
-      \hline
-      Tác nhân & Quản trị viên \\
-      \hline
-      Mô tả & Cho phép quản trị thực hiện hành động thêm phân công bác sĩ - bệnh nhân \\
-      \hline
-      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
-      \hline
-      Dòng sự kiện chính & 
-      % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_add_pda}, Hình \ref{sequence_manage_pda}
-        \\
-      % \end{tabular} \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
-  Dưới đây là sơ đồ hoạt động mô tả chức năng xem/thêm phân công bác sĩ - bệnh nhân
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=13.5cm,height=13cm]{Images/activity/activity_add_pda.png}
-    \caption[Sơ đồ hoạt động chức năng xem/thêm người dùng]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ hoạt động chức năng xem/thêm người dùng}
-    \label{activity_add_pda} %đặt tên cho ảnh
-  \end{figure}
-
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng sửa thông tin phân công bác sĩ - bệnh nhân}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{|c|X|}
-      \hline
-      \textbf{Tên chức năng} & \textbf{Sửa thông tin phân công bác sĩ - bệnh nhân} \\
-      \hline
-      Tác nhân & Quản trị viên \\
-      \hline
-      Mô tả & Cho phép quản trị thực hiện hành động sửa thông tin phân công bác sĩ - bệnh nhân \\
-      \hline
-      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
-      \hline
-      Dòng sự kiện chính & 
-      % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_pda}, Hình \ref{sequence_manage_edit_pda}
-        \\
-      % \end{tabular} \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng phân tích use case chức năng xóa phân công bác sĩ - bệnh nhân}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{|c|X|}
-      \hline
-      \textbf{Tên chức năng} & \textbf{Xóa phân công bác sĩ - bệnh nhân} \\
-      \hline
-      Tác nhân & Quản trị viên \\
-      \hline
-      Mô tả & Cho phép quản trị thực hiện hành động xóa phân công bác sĩ - bệnh nhân \\
-      \hline
-      Điều kiện trước & Người dùng cần có kết nối Internet và đã đăng nhập \\
-      \hline
-      Dòng sự kiện chính & 
-      % \begin{tabular}{@{}l@{}}
-        Chi tiết luồng sự kiện được thể hiện ở Hình \ref{activity_edit_pda}, Hình \ref{sequence_manage_delete_user} 
-        \\
-      % \end{tabular} \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
-  Dưới đây là sơ đồ hoạt động mô tả chức năng sửa/xóa phân công bác sĩ - bệnh nhân
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=13.5cm,height=17cm]{Images/activity/activity_edit_pda.png}
-    \caption[Sơ đồ hoạt động chức năng sửa/xóa phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Sơ đồ hoạt động chức năng sửa/xóa phân công bác sĩ - bệnh nhân}
-    \label{activity_edit_pda} %đặt tên cho ảnh
   \end{figure}
   
 \subsubsection{Use case chức năng quản lý tài khoản người dùng}
@@ -863,128 +885,6 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
   \end{table}
 
-  \subsubsection{Thẻ CRC lớp Thiết bị}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thiết bị}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Thiết bị & \textbf{ID:} 2 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin thiết bị & \textbf{Use case liên quan:} Quản lý thiết bị, Quản lý lịch sử đo bệnh nhân \\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin thiết bị
-      
-      Quản lý danh sách thiết bị
-      & 
-      Người dùng 
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(String) 
-      
-      user\_id(String)
-
-      device\_name(String)
-
-      infomation(String)
-
-      device\_type(Integer)
-      & 
-      start\_date(Timestamps) 
-      
-      end\_date(Timestamps) 
-      
-      created\_at(Timestamps)
-
-      updated\_at(Timestamps)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):  
-
-      Toàn thể - Bộ phận (Aggregation): Người dùng
-      
-      Liên kết (Association):
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
-\subsubsection{Thẻ CRC lớp Bản ghi}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Bản ghi}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Bản ghi & \textbf{ID:} 3 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin bản ghi & \textbf{Use case liên quan:} Quản lý lịch sử đo bệnh nhân \\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin bản ghi 
-
-      Quản lý danh sách bản ghi
-
-      Đọc, tải bản ghi
-      & 
-      Người dùng
-      
-      Thiết bị
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(String) 
-      
-      user\_id(String)
-
-      device\_id(String)
-
-      start\_time(Timestamps)
-      & 
-      end\_time(Timestamps) 
-      
-      data\_rec\_url(String) 
-      
-      created\_at(Timestamps)
-
-      updated\_at(Timestamps)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):  
-
-      Toàn thể - Bộ phận (Aggregation): 
-      
-      Liên kết (Association): Người dùng, Thiết bị 
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
   \subsubsection{Thẻ CRC lớp Tài khoản}
   \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tài khoản}
@@ -994,7 +894,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Tài khoản & \textbf{ID:} 4 \\
+      \textbf{Tên lớp:} Tài khoản & \textbf{ID:} 2 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin tài khoản & \textbf{Use case liên quan:} Đăng ký, Đăng nhập/Đăng xuất, Quên mật khẩu, Quản lý tài khoản người dùng \\
       \hline
@@ -1041,7 +941,6 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
   \end{table}
 
-
 \subsubsection{Thẻ CRC lớp Tài khoản phê duyệt}
   \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tài khoản phê duyệt}
@@ -1051,7 +950,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Tài khoản phê duyệt & \textbf{ID:} 4 \\
+      \textbf{Tên lớp:} Tài khoản phê duyệt & \textbf{ID:} 3 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin tài khoản đang chờ phê duyệt & \textbf{Use case liên quan:} Đăng ký, Quản lý tài khoản người dùng \\
       \hline
@@ -1114,6 +1013,183 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
   \end{table}
 
+  \subsubsection{Thẻ CRC lớp Token đăng nhập}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Token tài khoản}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Tên lớp:} Token đăng nhập & \textbf{ID:} 4  \\
+      \hline
+      \textbf{Mô tả:} Đối tượng mô tả thông tin token tài khoản & \textbf{Use case liên quan:} Đăng nhập/Đăng xuất \\
+      \hline
+      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+      Mô tả thông tin token tài khoản
+
+      Tạo/xóa access token và refresh token khi đăng nhập/đăng xuất
+
+      Xác thực token khi đăng nhập
+      & 
+      Tài khoản
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Thuộc tính (Attributes):} & \\
+      id(String) 
+      
+      account\_id(String)
+
+      access\_token(String)
+      & 
+      refresh\_token(String) 
+            
+      created\_at(Timestamps)
+
+      updated\_at(Timestamps)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Mối quan hệ (Relationships):} \\
+      Tổng quát hóa (Generalize):
+
+      Toàn thể - Bộ phận (Aggregation):
+      
+      Liên kết (Association): Tài khoản
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+  \subsubsection{Thẻ CRC lớp Thiết bị}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thiết bị}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Tên lớp:} Thiết bị & \textbf{ID:} 5 \\
+      \hline
+      \textbf{Mô tả:} Đối tượng mô tả thông tin thiết bị & \textbf{Use case liên quan:} Quản lý thiết bị, Quản lý lịch sử đo bệnh nhân \\
+      \hline
+      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+      Mô tả thông tin thiết bị
+      
+      Quản lý danh sách thiết bị
+      & 
+      Người dùng 
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Thuộc tính (Attributes):} & \\
+      id(String) 
+      
+      user\_id(String)
+
+      device\_name(String)
+
+      infomation(String)
+
+      device\_type(Integer)
+      & 
+      start\_date(Timestamps) 
+      
+      end\_date(Timestamps) 
+      
+      created\_at(Timestamps)
+
+      updated\_at(Timestamps)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Mối quan hệ (Relationships):} \\
+      Tổng quát hóa (Generalize):  
+
+      Toàn thể - Bộ phận (Aggregation): Người dùng
+      
+      Liên kết (Association):
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+\subsubsection{Thẻ CRC lớp Bản ghi}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Bản ghi}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Tên lớp:} Bản ghi & \textbf{ID:} 6 \\
+      \hline
+      \textbf{Mô tả:} Đối tượng mô tả thông tin bản ghi & \textbf{Use case liên quan:} Quản lý lịch sử đo bệnh nhân \\
+      \hline
+      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+      Mô tả thông tin bản ghi 
+
+      Quản lý danh sách bản ghi
+
+      Đọc, tải bản ghi
+      & 
+      Người dùng
+      
+      Thiết bị
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Thuộc tính (Attributes):} & \\
+      id(String) 
+      
+      user\_id(String)
+
+      device\_id(String)
+
+      start\_time(Timestamps)
+      & 
+      end\_time(Timestamps) 
+      
+      data\_rec\_url(String) 
+      
+      created\_at(Timestamps)
+
+      updated\_at(Timestamps)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Mối quan hệ (Relationships):} \\
+      Tổng quát hóa (Generalize):  
+
+      Toàn thể - Bộ phận (Aggregation): 
+      
+      Liên kết (Association): Người dùng, Thiết bị 
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
 \subsubsection{Thẻ CRC lớp Phân công bác sĩ - bệnh nhân}
   \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Quản lý bác sĩ - bệnh nhân}
@@ -1123,7 +1199,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Phân công bác sĩ - bệnh nhân & \textbf{ID:} 5 \\
+      \textbf{Tên lớp:} Phân công bác sĩ - bệnh nhân & \textbf{ID:} 7 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin quản lý giữa bác sĩ và bệnh nhân & \textbf{Use case liên quan:} Quản lý phân công bác sĩ - bệnh nhân \\
       \hline
@@ -1170,62 +1246,6 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
   \end{table}
 
-\subsubsection{Thẻ CRC lớp Token đăng nhập}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Token tài khoản}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Token đăng nhập & \textbf{ID:} 6  \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin token tài khoản & \textbf{Use case liên quan:} Đăng nhập/Đăng xuất \\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin token tài khoản
-
-      Tạo/xóa access token và refresh token khi đăng nhập/đăng xuất
-
-      Xác thực token khi đăng nhập
-      & 
-      Tài khoản
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(String) 
-      
-      account\_id(String)
-
-      access\_token(String)
-      & 
-      refresh\_token(String) 
-            
-      created\_at(Timestamps)
-
-      updated\_at(Timestamps)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):
-
-      Toàn thể - Bộ phận (Aggregation):
-      
-      Liên kết (Association): Tài khoản
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
   \subsubsection{Thẻ CRC lớp Tin tức}
   \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tin tức}
@@ -1235,7 +1255,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Tin tức & \textbf{ID:} 6 \\
+      \textbf{Tên lớp:} Tin tức & \textbf{ID:} 8 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin Tin tức & \textbf{Use case liên quan:}  \\
       \hline
@@ -1297,7 +1317,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Danh mục tin tức & \textbf{ID:} 6 \\
+      \textbf{Tên lớp:} Danh mục tin tức & \textbf{ID:} 9 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin Danh mục tin tức & \textbf{Use case liên quan:}  \\
       \hline
@@ -1349,7 +1369,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Thành viên tham gia hội thoại & \textbf{ID:} 6 \\
+      \textbf{Tên lớp:} Thành viên tham gia hội thoại & \textbf{ID:} 10 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin, Hỏi, tư vấn từ trợ lý ảo \\
       \hline
@@ -1403,7 +1423,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Thông tin hội thoại & \textbf{ID:} 6 \\
+      \textbf{Tên lớp:} Thông tin hội thoại & \textbf{ID:} 11 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin, Hỏi, tư vấn từ trợ lý ảo \\
       \hline
@@ -1453,7 +1473,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Tin nhắn & \textbf{ID:} 6 \\
+      \textbf{Tên lớp:} Tin nhắn & \textbf{ID:} 12 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin Tin nhắn & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin, Hỏi, tư vấn từ trợ lý ảo \\
       \hline
@@ -1513,7 +1533,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Tệp đính kèm & \textbf{ID:} 6 \\
+      \textbf{Tên lớp:} Tệp đính kèm & \textbf{ID:} 13 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin Tệp đính kèm tin nhắn & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin \\
       \hline
@@ -1713,17 +1733,6 @@ Nếu người dùng gửi tin nhắn, yêu cầu sẽ được xử lý bởi l
 Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem và gửi tin nhắn với trợ lý ảo trên hệ thống. Người dùng chọn mở giao diện nhắn tin với trợ lý ảo, 
 khi người dùng gửi tin nhắn đến trợ lý ảo, yêu cầu sẽ được xử lý bởi lớp Conversation gửi đến trợ lý ảo và phản hồi lại câu trả lời từ trợ lý ảo.
 
-\subsubsection{Sơ đồ tuần tự chức năng xem danh sách bệnh nhân}
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=13cm,height=10cm]{Images/sequence/sequence_manage_patient.png}
-  \caption[Sơ đồ tuần tự chức năng xem danh sách bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự chức năng xem danh sách bệnh nhân}
-  \label{sequence_manage_patient} %đặt tên cho ảnh
-\end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình bác sĩ xem danh sách bệnh nhân trên hệ thống. Bác sĩ chọn mở giao diện quản lý bệnh nhân, 
-yêu cầu sẽ được xử lý bởi lớp PDA, hiện danh sách bệnh nhân, bác sĩ có thể chọn một bệnh nhân và xem thông tin của họ. 
-
 \subsubsection{Sơ đồ tuần tự chức năng quản lý thiết bị}
 \begin{figure}[H]
   \centering
@@ -1761,7 +1770,27 @@ bởi lớp Device, nếu có lỗi phát sinh sẽ hiển thị lên màn hình
 \end{figure}
 Nếu quản trị viên yêu cầu xóa thiết bị, lớp Device sẽ xử lý xóa thiết bị ở cơ sở dữ liệu và trả về thông báo cho quản trị viên.
 
+
 \subsubsection{Sơ đồ tuần tự chức năng quản lý phân công bác sĩ - bệnh nhân}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=13cm,height=9.5cm]{Images/sequence/sequence_manage_doctor.png}
+  \caption[Sơ đồ tuần tự chức năng xem danh sách bác sĩ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng xem danh sách bác sĩ}
+  \label{sequence_manage_doctor} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình bệnh nhân xem danh sách bác sĩ phụ trách mình trên hệ thống. Bệnh nhân chọn mở giao diện xem danh sách bác sĩ, 
+yêu cầu sẽ được xử lý bởi lớp PDA, hiện danh sách bác sĩ, bệnh nhân có thể chọn một bác sĩ và xem thông tin của họ. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=13cm,height=9.5cm]{Images/sequence/sequence_manage_patient.png}
+  \caption[Sơ đồ tuần tự chức năng xem danh sách bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng xem danh sách bệnh nhân}
+  \label{sequence_manage_patient} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự trên mô tả chi tiết quá trình bác sĩ xem danh sách bệnh nhân trên hệ thống. Bác sĩ chọn mở giao diện xem danh sách bệnh nhân, 
+yêu cầu sẽ được xử lý bởi lớp PDA, hiện danh sách bệnh nhân, bác sĩ có thể chọn một bệnh nhân và xem thông tin của họ. 
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=11cm,height=8cm]{Images/sequence/sequence_manage_pda.png}
