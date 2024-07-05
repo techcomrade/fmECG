@@ -147,3 +147,7 @@ out/
 latex_thesis/main.pdf
 *.nav
 *.snm
+docker
+server-web
+server_chat
+frontend_web

@@ -7,6 +7,59 @@
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 4. TRIỂN KHAI VÀ KIỂM THỬ}
 
 \subsection{Công nghệ sử dụng}
+
+\subsubsection{Thiết kế giao diện website}
+
+\paragraph{ReactJs}
+\mbox{}
+
+ReactJs là framework được chúng em sử dụng để lập trình giao diện website, dưới đây là phần giới thiệu về ReactJs cũng
+như những tính năng sẽ được chúng em sử dụng trong ứng dụng này.
+
+ReactJs là một framework mã nguồn mở phát triển bởi Facebook, được sử dụng để xây dựng giao diện website nhanh chóng. 
+ReactJs sử dụng ngôn ngữ lập trình JavaScript, là một ngôn ngữ hiện đại và linh hoạt, giúp tạo ra các giao diện đẹp mắt và hiệu ứng mượt mà trên môi trường internet browser.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm,height=5.4cm]{Images/reactjs_cover.png}
+  \caption[Logo ReactJs]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Logo ReactJs}
+  \label{reactjs_cover} %đặt tên cho ảnh
+\end{figure}
+
+Một số điểm nổi bật của ReactJs được chúng em sử dụng bao gồm:
+
+
+\begin{itemize}
+  \item Giao diện được xây dựng dễ dàng với tư duy Component, có thể tuỳ biến tái sử dụng những component giống nhau để code ngắn gọn dễ hiểu hơn
+  \item Tích hợp nhanh chóng: ReactJs hỗ trợ việc code và render giao diện một cách nhanh chóng tối ưu hoá được thời gian phát triển giao diện
+  \item Tương thích đa nền tảng: ReactJs tương thích với hầu hết các internet browser hiện nay như: chrome, firefox, coc coc, microsoft edge, opera, brave,...
+\end{itemize}
+
+Ngoài ra điểm đặc biệt của ReactJs so với một số Framework khác đó là việc có rất nhiều thư viện hỗ trợ việc tương tác với dữ liệu phía server thông qua các API.
+ReactJs có hoạt động dựa trên 5 nguyên tắc chính giúp tối ưu hoá hiệu suất và tạo ra các giao diện mượt mà.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm,height=8cm]{Images/system/reactjs_action.png}
+  \caption[Nguyên tắc hoạt động của ReactJs]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Nguyên tắc hoạt động của ReactJs}
+  \label{reactjs_action_code} %đặt tên cho ảnh
+\end{figure}
+
+Các nguyên tắc và cơ chế hoạt động của ReactJs được thể hiện trong hình ảnh trên bao gồm 6 nguyên tắc chính:
+
+
+\begin{itemize}
+  \item Virtual DOM: React thao tác với Virtual DOM trước, sau đó đồng bộ các thay đổi cần thiết với DOM thật.
+  \item Component-Based Architecture: Xây dựng các khối giao diện hiển thị thành các module độc lập, có thể tái sử dụng và lồng vào nhau để tạo ra các cấu trúc phức tạp.
+  \item State và Props: Quản lý dữ liệu trong các component qua state và props tương tự các biến tham chiếu trong hàm 
+  \item Lifecycle Methods và Hooks: Quản lý việc render giao diện theo sự thay đổi của từng biến thành phần
+  \item  One-Way Data Binding: Dữ liệu luôn đi theo một chiều từ component cha xuống các component con
+  \item Handling Events: Quản lý các sự kiện như click, input trong React với cú pháp giống so với HTML.
+\end{itemize}
+
+
+\subsubsection{Server}
 \subsubsection{Javascript}
 \mbox{}
 
@@ -32,7 +85,8 @@ Tuy nhiên, JavaScript cũng có một số hạn chế như việc thực hiệ
 
 Tổng kết lại, JavaScript là một ngôn ngữ lập trình linh hoạt, mạnh mẽ và phổ biến, có nhiều ưu điểm vượt trội như tích hợp tốt với trình duyệt, đa dạng kiểu dữ liệu, khả năng thực hiện bất đồng bộ, và cộng đồng phát triển mạnh mẽ. JavaScript đã định hình lại cách các ứng dụng web tương tác và được sử dụng rộng rãi trong nhiều lĩnh vực phát triển phần mềm. Sự phát triển của các framework và thư viện JavaScript giúp người phát triển xây dựng các ứng dụng web phức tạp và mạnh mẽ một cách dễ dàng và hiệu quả hơn.
 
-\subsubsection{ReactJs}
+
+
 
 \subsubsection{NodeJs}
 \mbox{}
@@ -109,6 +163,22 @@ Postman cung cấp giao diện người dùng thân thiện và trực quan, gi�
 Ngoài ra, Postman còn hỗ trợ tích hợp với Postman Cloud, một dịch vụ lưu trữ dữ liệu trực tuyến cho phép người dùng chia sẻ và quản lý các bài kiểm thử và dữ liệu API trực tuyến. Điều này giúp tăng cường sự cộng tác và quản lý dự án trong quá trình phát triển.
 
 Postman đã trở thành một công cụ quan trọng và không thể thiếu trong quá trình phát triển và kiểm thử các ứng dụng và dịch vụ web. Sự dễ dàng sử dụng, tích hợp và tự động hóa giúp tăng cường năng suất và chất lượng của quá trình phát triển, đồng thời giảm thiểu nguy cơ lỗi và tối ưu hóa hiệu suất của ứng dụng.
+
+\paragraph{GPT-4 API}
+\mbox{}
+
+GPT API (Generative Pre-trained Transformer API) 
+là một dịch vụ được cung cấp bởi OpenAI cho phép các nhà phát triển tích hợp khả năng xử lý ngôn ngữ tự nhiên (NLP) vào ứng dụng, 
+trang web hoặc dịch vụ của họ. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.9]{Images/server/ai/openai.png}
+  \caption[OpenAi API]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont OpenAi API}
+  \label{openai} %đặt tên cho ảnh
+\end{figure}
+
 
 \subsection{Triển khai ứng dụng}
 Trong quá trình triển khai ứng dụng, chúng em sử dụng dịch vụ Elastic Compute
