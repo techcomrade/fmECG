@@ -1889,7 +1889,10 @@ Tại phần này, chúng em sẽ tiến hành xác định và mô tả các th
     \textbf{Thực thể} & \textbf{Thuộc tính} \\
     \hline
     Người dùng & 
-    ID người dùng, ID tài khoản, Tên người dùng, Email, Mật khẩu, Ngày sinh, Giới tính, Số điện thoại, Quyền, Thông tin người dùng \\
+    ID người dùng, ID tài khoản, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
+    \hline
+    Tài khoản &
+    ID tài khoản, Email, Mật khẩu  \\
     \hline
     Token đăng nhập &
     ID token, ID tài khoản, Token truy cập, Token làm mới \\
@@ -1942,7 +1945,8 @@ Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em x
 Dựa trên phần mô tả các thực thể, chúng em sẽ chuyển mô hình thực thể liên kết sang mô hình quan hệ như sau:
 
 \begin{itemize}
-  \item Người dùng (\textbf{ID người dùng}, ID tài khoản, Tên người dùng, Email, Mật khẩu, Ngày sinh, Giới tính, Số điện thoại, Quyền, Thông tin người dùng)
+  \item Người dùng (\textbf{ID người dùng}, ID tài khoản, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng)
+  \item Tài khoản (\textbf{ID tài khoản}, Email, Mật khẩu)
   \item Token đăng nhập (\textbf{ID token}, ID tài khoản, Token truy cập, Token làm mới)
   \item Thiết bị (\textbf{ID thiết bị}, ID người dùng thiết bị, ID bác sĩ theo dõi, Tên thiết bị, Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng)
   \item Bản ghi dữ liệu (\textbf{ID bản ghi dữ liệu}, ID người dùng, ID thiết bị, Loại bản ghi, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo)
@@ -1966,12 +1970,12 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
   \centering
   \begin{tabularx}{0.9\textwidth}{|X|X|}
     \hline
-    \textbf{Danh sách thuộc tính} & ID người dùng, ID tài khoản, Tên người dùng, Email, Mật khẩu, Ngày sinh, Giới tính, Số điện thoại, Quyền, Thông tin người dùng \\
+    \textbf{Danh sách thuộc tính} & ID người dùng, ID tài khoản, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
     \hline
     \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
     \hline
-    Mỗi người dùng có một ID riêng, có duy nhất mật khẩu, email, tên, ngày sinh, số điện thoại, quyền,
-    giới tính, thông tin & \parbox[t]{\linewidth}{$\text{ID người dùng} \rightarrow$ mật khẩu, email, tên, ngày sinh, số điện thoại, quyền, thông tin} \\
+    Mỗi người dùng có một ID riêng, có duy nhất ID tài khoản, tên, ngày sinh, giới tính, số điện thoại, quyền,
+    trạng thái, đường dẫn lưu trữ ảnh, thông tin & \parbox[t]{\linewidth}{$\text{ID người dùng} \rightarrow$ ID tài khoản, Tên người dùng, Ngày sinh, Giới Tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin} \\
     \hline
     \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID người dùng}$} \\
     \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Người dùng đã ở 3NF}$} \\
@@ -1979,6 +1983,25 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
   \end{tabularx}
 \end{table}
 
+\subsubsection{Chuẩn hoá bảng Tài khoản}
+
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tài khoản}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID tài khoản, Email, Mật khẩu \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi tài khoản có một ID riêng, có duy nhất email, mật khẩu 
+    & \parbox[t]{\linewidth}{$\text{ID tài khoản} \rightarrow$ Email, mật khẩu} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tài khoản}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tài khoản đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
 \subsubsection{Chuẩn hoá bảng Token đăng nhập}
 
 \begin{table}[H]
