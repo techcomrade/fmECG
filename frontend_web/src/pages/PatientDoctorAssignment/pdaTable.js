@@ -166,19 +166,19 @@ const PdaTable = () => {
         deleteButton
         deleteFunction = {handleDeleteFunction}
         updateSelectedData={setSelectedData}
-        name="Bảng quản lý assignment"
+        name="Bảng quản lý phân công bác sĩ - bệnh nhân"
         data={dataTable}
         column={columns}
         loading={dataState.loadDataStatus === loadStatus.Loading}
       />
       <ModalControlData
         ref={modalAddRef}
-        title="Thêm thiết bị mới"
+        title="Thêm phân công mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
       />
       <ModalControlData 
       ref={modalUpdateRef}
-      title="Sửa thông tin bác sĩ điều trị bệnh nhân"
+      title="Sửa thông tin phân công bác sĩ - bệnh nhân"
       submitFunction = {(data) => handleSubmitEditFunction(data)}
       />
     </>

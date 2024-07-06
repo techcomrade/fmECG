@@ -261,7 +261,7 @@ const RecordTable = () => {
 
       <ModalControlData
         ref={modalUpdateRef}
-        title="Sửa thông tin bản ghi"
+        title="Sửa thông tin phiên đo"
         submitFunction={(data) => handleSubmitEditUser(data)}
       />
 

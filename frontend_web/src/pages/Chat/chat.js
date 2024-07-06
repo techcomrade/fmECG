@@ -6,39 +6,43 @@ const AITraining = () => {
   const [message, setMessage] = useState([
     {
       id: 0,
-      actor: "user",
+      actor: "system",
       message:
-        "Chào bạn, tôi là bác si Dương tôi sẽ hỗ trợ bạn sử dụng thiết bị, nếu có bất kỳ vấn đề gì hãy nhắn tin cho tôi ",
+        "Chào bạn, tôi là bác sĩ Dũng. Hiện tại, huyết áp của của bạn đang khá cao. Bạn cần điều chỉnh lại khẩu phần ăn của mình với rau củ, trái cây, ngũ cốc; hạn chế sử dụng thực phẩm nhiều đường, dầu mỡ hay quá mặn. Cùng với đó là hạn chế sử dụng đồ uống có cồn, cafein và tăng cường thể dục nhé. ",
     },
     {
       id: 1,
+      actor: "user",
+      message: "Chào bác sĩ, cảm ơn bác sĩ. Tôi sẽ chú ý hơn trong sinh hoạt.",
+    },
+    {
+      id: 2,
       actor: "system",
-      message: "chào bác sĩ, cảm ơn bác sĩ",
+      message:
+        "Bạn hãy chú ý hơn nhé. Khoảng 2,3 tuần nữa bạn quay lại khám nhé",
     },
     {
       id: 3,
       actor: "user",
-      message:
-        "bạn vui lòng cung cấp cho thêm về tiền sử bệnh án về tim mạch và huyết áp của bạn. ",
+      message: "Vâng cảm ơn bác sĩ rất nhiều ạ",
     },
-    {
-      id: 4,
-      actor: "system",
-      message: "tôi bị huyết áp cao còn lại các vấn đề khác bình thường",
-    },
-    ,
-    {
-      id: 3,
-      actor: "user",
-      message:
-        "tôi sẽ ghi nhận lại thông tin của bạn, ngoài ra bạn từng đi kiểm tra tổng quát sức khoẻ chưa",
-    }
   ]);
   return (
     <div className="chat-container">
       <div className="sidebar">
         <div className="navbar">
-          <span className="logo">Danh sách trợ lý ảo</span>
+          <span className="logo">Chat giữa bác sĩ - bệnh nhân</span>
+        </div>
+        <div className="search">
+          <div className="searchForm">
+            <input
+              type="text"
+              placeholder="Tìm người dùng"
+              // onKeyDown={handleKey}
+              // onChange={(e) => setUsername(e.target.value)}
+              // value={username}
+            />
+          </div>
         </div>
         <div className="chats">
           <div
@@ -50,11 +54,11 @@ const AITraining = () => {
             <div className="userChatInfo">
               <span>
                 {/* {chat[1].userInfo.displayName} */}
-                Dũng
+                Bác sĩ Dũng
               </span>
               <p>
                 {/* {chat[1].lastMessage?.text} */}
-                Chào bạn, tôi là bác si Dương ...
+                Vâng cảm ơn bác sĩ rất nhiều ạ
               </p>
             </div>
           </div>
@@ -62,7 +66,7 @@ const AITraining = () => {
       </div>
       <div className="chat">
         <div className="chatInfo">
-          <span>Nam</span>
+          <span>Bác sĩ Dũng</span>
         </div>
         <div className="messages">
          
@@ -79,7 +83,7 @@ const AITraining = () => {
                         // message.senderId === currentUser.uid
                         // ? currentUser.photoURL
                         // : data.user.photoURL
-                        "avatar.png"
+                        "user.png"
                       }
                       alt=""
                     />
@@ -106,7 +110,7 @@ const AITraining = () => {
                         // message.senderId === currentUser.uid
                         // ? currentUser.photoURL
                         // : data.user.photoURL
-                        "user.png"
+                        "avatar.png"
                       }
                       alt=""
                     />
@@ -143,7 +147,7 @@ const AITraining = () => {
             <button
             // onClick={handleSend}
             >
-              Send
+              Gửi
             </button>
           </div>
         </div>

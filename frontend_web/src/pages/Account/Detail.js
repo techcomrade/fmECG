@@ -10,6 +10,7 @@ import {
   Input,
   Select,
   DatePicker,
+  Button
 } from "antd";
 import avatarDemo from "../../assets/icons/avatar.svg";
 import dayjs from "dayjs";
@@ -109,7 +110,7 @@ export default function Detail() {
             </Col>
             <Col span={10} offset={2}>
               <Form.Item label="Quyền truy cập">
-                <Input value={convertRoleToString(accountData.role)} name="gender" />
+                <Input value={convertRoleToString(accountData.role)} name="role" disabled/>
               </Form.Item>
             </Col>
           </Row>
@@ -154,21 +155,20 @@ export default function Detail() {
               </Form.Item>
             </Col>
           </Row>
-          {/* <Row>
+           <Row className="btn-row">
             <Col span={10}>
-              <Form.Item>
+              <Form.Item className="detail-btn">
+                <Button>Hủy bỏ</Button>
                 <Button
                   type="primary"
                   className="account-submit-button"
-                  onClick={handleSubmitButton}
+                  // onClick={handleSubmitButton}
                 >
                   Lưu
                 </Button>
-
-                <Button>Hủy bỏ</Button>
               </Form.Item>
             </Col>
-          </Row> */}
+          </Row> 
         </Form>
       </Col>
     </div>
