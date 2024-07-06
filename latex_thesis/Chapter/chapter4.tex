@@ -35,55 +35,12 @@ Một số điểm nổi bật của ReactJs được chúng em sử dụng bao 
   \item Tương thích đa nền tảng: ReactJs tương thích với hầu hết các internet browser hiện nay như: chrome, firefox, coc coc, microsoft edge, opera, brave,...
 \end{itemize}
 
-Ngoài ra điểm đặc biệt của ReactJs so với một số Framework khác đó là việc có rất nhiều thư viện hỗ trợ việc tương tác với dữ liệu phía server thông qua các API.
-ReactJs có hoạt động dựa trên 5 nguyên tắc chính giúp tối ưu hoá hiệu suất và tạo ra các giao diện mượt mà.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=12cm,height=8cm]{Images/system/reactjs_action.png}
-  \caption[Nguyên tắc hoạt động của ReactJs]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Nguyên tắc hoạt động của ReactJs}
-  \label{reactjs_action_code} %đặt tên cho ảnh
-\end{figure}
-
-Các nguyên tắc và cơ chế hoạt động của ReactJs được thể hiện trong hình ảnh trên bao gồm 6 nguyên tắc chính:
-
-
-\begin{itemize}
-  \item Virtual DOM: React thao tác với Virtual DOM trước, sau đó đồng bộ các thay đổi cần thiết với DOM thật.
-  \item Component-Based Architecture: Xây dựng các khối giao diện hiển thị thành các module độc lập, có thể tái sử dụng và lồng vào nhau để tạo ra các cấu trúc phức tạp.
-  \item State và Props: Quản lý dữ liệu trong các component qua state và props tương tự các biến tham chiếu trong hàm 
-  \item Lifecycle Methods và Hooks: Quản lý việc render giao diện theo sự thay đổi của từng biến thành phần
-  \item  One-Way Data Binding: Dữ liệu luôn đi theo một chiều từ component cha xuống các component con
-  \item Handling Events: Quản lý các sự kiện như click, input trong React với cú pháp giống so với HTML.
-\end{itemize}
-
-
 \subsubsection{Server}
 \subsubsection{Javascript}
 \mbox{}
 
 JavaScript là một ngôn ngữ lập trình thông dịch, đa mục đích và được sử dụng phổ biến trên web. Nó ra đời vào năm 1995 bởi Brendan Eich, khi còn là một ngôn ngữ lập trình đơn giản để cung cấp tính năng tương tác và hiệu ứng động cho trang web \cite{js_1}. Tuy nhiên, từ đó đến nay, JavaScript đã trở thành một trong những ngôn ngữ lập trình quan trọng nhất trên thế giới, vượt qua giới hạn trang web và mở rộng sang nhiều lĩnh vực phát triển phần mềm khác nhau.
-
-Một trong những yếu tố quan trọng đóng góp vào sự phổ biến của JavaScript là việc nó được tích hợp một cách tự nhiên và mạnh mẽ với các trình duyệt web. Trước khi JavaScript xuất hiện, việc tạo ra hiệu ứng động và tương tác trên trang web đòi hỏi sự hỗ trợ của các ngôn ngữ lập trình phía server như PHP hoặc các công nghệ khác. JavaScript đã định hình lại cách các ứng dụng web tương tác và hiển thị nội dung, giúp chúng trở nên đa dạng và mạnh mẽ hơn.
-
-JavaScript là một ngôn ngữ linh hoạt và dễ tiếp cận, cho phép người phát triển xây dựng các ứng dụng phong phú và phức tạp với giao diện tương tác, kiểu dáng đẹp mắt và tính năng đa dạng. Ngôn ngữ này hỗ trợ một loạt các kiểu dữ liệu như số, chuỗi, mảng, đối tượng và hỗ trợ xử lý chuỗi, số học, ngày tháng, và các phép tính logic phức tạp.
-
-Một điểm mạnh của JavaScript là khả năng xử lý các sự kiện (event) và gắn kết chúng vào các thành phần trên trang web. Sự kiện là những hành động như nhấp chuột, nhập liệu từ bàn phím, hoặc thay đổi trạng thái của trang web. JavaScript cho phép người phát triển xử lý các sự kiện này và thay đổi nội dung hoặc hành vi của trang web một cách linh hoạt, đáp ứng tương tác của người dùng.
-
-Ngoài ra, JavaScript còn hỗ trợ các khái niệm cấu trúc dữ liệu và kiểu dữ liệu linh hoạt như đối tượng (object), mảng (array), và chuỗi (string). Điều này cho phép người phát triển xây dựng các ứng dụng phức tạp và có tính mô đun cao, giúp quản lý mã nguồn dễ dàng và giảm thiểu lỗi trong quá trình phát triển.
-
-Một trong những tính năng đáng chú ý của JavaScript là khả năng thực hiện các yêu cầu mạng bất đồng bộ (asynchronous) thông qua việc sử dụng các API như XMLHttpRequest (XHR) hay Fetch API. Điều này cho phép trang web tương tác với các dịch vụ web và cơ sở dữ liệu một cách hiệu quả mà không làm trì hoãn trình duyệt. \cite{js_2}
-
-JavaScript cũng hỗ trợ việc tạo ra các ứng dụng web động, đặc biệt là những ứng dụng đơn trang (single-page applications - SPA). SPA là mô hình phát triển ứng dụng web mà trang web chỉ tải một lần duy nhất khi người dùng truy cập, và sau đó các tương tác tiếp theo được thực hiện một cách bất đồng bộ thông qua JavaScript để cập nhật nội dung và thay đổi giao diện mà không cần tải lại trang. Điều này giúp tăng tốc độ và trải nghiệm người dùng.
-
-Một yếu tố quan trọng khác là cộng đồng JavaScript rất đông đảo và nhiệt tình. Có rất nhiều người dùng và nhà phát triển trên toàn thế giới đóng góp và chia sẻ mã nguồn, thư viện, framework và các tài liệu học tập trực tuyến. Điều này làm cho việc học và sử dụng JavaScript trở nên dễ dàng và thuận tiện, đồng thời giúp phát triển viên giải quyết các vấn đề và thách thức trong quá trình xây dựng ứng dụng.
-
-Một trong những hướng phát triển quan trọng của JavaScript là sự phát triển của các framework và thư viện mã nguồn mở như React, Angular, và Vue.js. Các framework này giúp người phát triển xây dựng các ứng dụng web phức tạp và mạnh mẽ một cách dễ dàng và hiệu quả hơn, đồng thời đảm bảo tính tương thích và bảo mật.
-
-Tuy nhiên, JavaScript cũng có một số hạn chế như việc thực hiện mã nguồn phức tạp có thể dẫn đến các vấn đề bảo mật và hiệu suất. Để giải quyết vấn đề này, người phát triển cần phải tuân thủ các nguyên tắc phát triển an toàn và tối ưu hóa mã nguồn.
-
-Tổng kết lại, JavaScript là một ngôn ngữ lập trình linh hoạt, mạnh mẽ và phổ biến, có nhiều ưu điểm vượt trội như tích hợp tốt với trình duyệt, đa dạng kiểu dữ liệu, khả năng thực hiện bất đồng bộ, và cộng đồng phát triển mạnh mẽ. JavaScript đã định hình lại cách các ứng dụng web tương tác và được sử dụng rộng rãi trong nhiều lĩnh vực phát triển phần mềm. Sự phát triển của các framework và thư viện JavaScript giúp người phát triển xây dựng các ứng dụng web phức tạp và mạnh mẽ một cách dễ dàng và hiệu quả hơn.
+JavaScript là một ngôn ngữ lập trình linh hoạt, mạnh mẽ và phổ biến, có nhiều ưu điểm vượt trội như tích hợp tốt với trình duyệt, đa dạng kiểu dữ liệu, khả năng thực hiện bất đồng bộ, và cộng đồng phát triển mạnh mẽ. JavaScript đã định hình lại cách các ứng dụng web tương tác và được sử dụng rộng rãi trong nhiều lĩnh vực phát triển phần mềm. Sự phát triển của các framework và thư viện JavaScript giúp người phát triển xây dựng các ứng dụng web phức tạp và mạnh mẽ một cách dễ dàng và hiệu quả hơn.
 
 
 
@@ -100,23 +57,6 @@ Node.js là một nền tảng phát triển ứng dụng mã nguồn mở cực
   \selectfont Kiến trúc của NodeJS}
   \label{ble_services} %đặt tên cho ảnh
 \end{figure}
-
-Một trong những điểm mạnh nổi bật của Node.js là sự hỗ trợ tốt cho kiến trúc không đồng bộ (asynchronous architecture). Bản chất của kiến trúc này là khả năng xử lý đa luồng (multithreading) không đồng bộ, giúp ứng dụng có thể xử lý nhiều yêu cầu cùng một lúc mà không phải chờ đợi hoàn thành từng yêu cầu trước. Điều này cho phép Node.js xử lý các yêu cầu I/O (Input/Output) nặng như truy vấn cơ sở dữ liệu, đọc/ghi dữ liệu từ tập tin, hay gửi và nhận các yêu cầu HTTP một cách hiệu quả và nhanh chóng. Sự không đồng bộ cũng giúp tăng hiệu suất cho ứng dụng, đồng thời tiết kiệm tài nguyên hệ thống.
-
-Node.js được xây dựng dựa trên JavaScript, ngôn ngữ lập trình phổ biến và có tính linh hoạt cao. Sự hòa quyện giữa Node.js và JavaScript cho phép phát triển viên sử dụng cùng một ngôn ngữ cho cả phía client và phía server, giúp đơn giản hóa việc phát triển và duy trì mã nguồn. Ngoài ra, cộng đồng phát triển JavaScript rất lớn và đầy đủ tài nguyên học tập và hỗ trợ trực tuyến, điều này làm cho việc học và sử dụng Node.js trở nên dễ dàng và thuận tiện.
-
-Vì Node.js là mã nguồn mở, nên nó rất linh hoạt và có khả năng tùy chỉnh cao. Phát triển viên có thể sửa đổi và mở rộng các tính năng của Node.js tùy theo nhu cầu của dự án một cách dễ dàng. Hơn nữa, Node.js có cộng đồng lớn và năng động, luôn cập nhật và cải tiến mã nguồn để đáp ứng yêu cầu của các dự án phức tạp và đa dạng. Cộng đồng Node.js cũng cung cấp rất nhiều các thư viện và module mở rộng, giúp tăng tính năng và hiệu suất của ứng dụng.
-
-Một trong những ưu điểm nổi bật của Node.js là hỗ trợ đa nền tảng (cross-platform), cho phép chạy ứng dụng trên nhiều hệ điều hành khác nhau như Windows, macOS, Linux, và nhiều nền tảng khác. Điều này giúp đơn giản hóa quá trình triển khai và triển khai ứng dụng trên nhiều môi trường mà không cần thay đổi mã nguồn. \cite{nodejs_2}
-
-Một ưu điểm khác của Node.js là hỗ trợ tốt cho việc xây dựng các ứng dụng thời gian thực (real-time applications). Điều này rất hữu ích trong việc xây dựng các ứng dụng trò chơi trực tuyến, ứng dụng trò chuyện (chat applications), hay ứng dụng giao tiếp thời gian thực. Cơ chế WebSocket được tích hợp sẵn trong Node.js giúp kết nối và truyền thông dữ liệu giữa server và client một cách liên tục và nhanh chóng.
-
-Bên cạnh đó, Node.js cũng hỗ trợ các thư viện và giao thức mạng như HTTP, HTTPS, TCP, và UDP, cho phép phát triển viên xây dựng các ứng dụng mạng phức tạp và mạnh mẽ. Node.js cũng cung cấp khả năng tạo máy chủ đơn giản và hiệu quả, giúp xây dựng các ứng dụng web phức tạp với khả năng mở rộng linh hoạt.
-
-Trong việc lưu trữ dữ liệu, Node.js hỗ trợ cơ chế xử lý dữ liệu không đồng bộ, giúp tối ưu hóa hiệu suất của ứng dụng trong việc truy xuất và lưu trữ dữ liệu vào cơ sở dữ liệu. Node.js cũng hỗ trợ các cơ sở dữ liệu phổ biến như MySQL, PostgreSQL, MongoDB, và Redis, cho phép phát triển viên lựa chọn cơ sở dữ liệu phù hợp với yêu cầu của dự án.
-
-Ngoài ra, Node.js còn hỗ trợ các tiện ích cho việc phát triển ứng dụng như gỡ lỗi (debugging), kiểm thử (testing), và quản lý gói (package management) thông qua npm (Node Package Manager). Việc sử dụng các công cụ và thư viện này giúp đơn giản hóa việc phát triển và nâng cao chất lượng của mã nguồn.
-
 Trong quá trình triển khai ứng dụng, Node.js hỗ trợ dễ dàng tích hợp với các công cụ triển khai (deployment tools) như Docker và Kubernetes, giúp đơn giản hóa quá trình triển khai và vận hành ứng dụng trên các môi trường khác nhau.
 
 Tổng kết lại, Node.js là một nền tảng phát triển ứng dụng đa dạng và mạnh mẽ, với nhiều ưu điểm nổi trội như kiến trúc không đồng bộ, tích hợp với JavaScript, đa nền tảng, hỗ trợ ứng dụng thời gian thực, và cộng đồng lớn hỗ trợ phong phú. Với những lợi ích đáng kể này, Node.js đã trở thành một lựa chọn ưu việt cho việc xây dựng các ứng dụng web và dịch vụ server-side hiệu quả và mạnh mẽ.
@@ -128,43 +68,40 @@ MySQL là một hệ quản trị cơ sở dữ liệu mã nguồn mở phổ bi
 
 MySQL là hệ quản trị cơ sở dữ liệu (DBMS - Database Management System) dựa trên mô hình quan hệ (relational database) và sử dụng ngôn ngữ truy vấn cấu trúc (Structured Query Language - SQL) để thực hiện các thao tác truy vấn dữ liệu. Mô hình quan hệ của MySQL cho phép lưu trữ và quản lý dữ liệu trong các bảng có mối quan hệ với nhau, tạo điều kiện để thực hiện các truy vấn phức tạp và hiệu quả. \cite{myql_2}
 
-MySQL hỗ trợ nhiều loại dữ liệu phổ biến như số, chuỗi, ngày tháng, boolean, và các kiểu dữ liệu đặc biệt khác như JSON và các kiểu dữ liệu không gian (spatial data types). Điều này giúp người dùng lưu trữ và xử lý các loại dữ liệu khác nhau một cách linh hoạt và hiệu quả.
-
-Một trong những ưu điểm quan trọng của MySQL là hiệu suất cao và khả năng mở rộng linh hoạt. MySQL được tối ưu hóa để xử lý các yêu cầu truy vấn nhanh chóng và hiệu quả, cho phép xử lý hàng triệu hoặc thậm chí hàng tỷ bản ghi một cách mượt mà. Ngoài ra, MySQL cũng hỗ trợ tính năng phân chia dữ liệu (sharding) và nhân bản dữ liệu (replication), giúp tăng khả năng chịu tải và đảm bảo tính sẵn sàng và tin cậy của hệ thống.
-
-MySQL cung cấp các tính năng bảo mật và quản lý người dùng mạnh mẽ. Người quản trị có thể xác định và quản lý các quyền truy cập của người dùng và vai trò của họ trên các bảng và cơ sở dữ liệu. Điều này giúp bảo vệ dữ liệu quan trọng và ngăn chặn truy cập trái phép.
-
-MySQL hỗ trợ các công cụ và giao thức mạng như JDBC, ODBC, và các API kết nối khác, cho phép ứng dụng kết nối và tương tác với cơ sở dữ liệu MySQL từ các ứng dụng phần mềm và trang web khác nhau. MySQL cũng hỗ trợ giao thức kết nối và truy vấn an toàn, giúp đảm bảo tính bảo mật và chống lại các cuộc tấn công từ xa.
-
-MySQL có sự hỗ trợ mạnh mẽ từ cộng đồng và cung cấp rất nhiều tài liệu học tập và hỗ trợ trực tuyến. Cộng đồng MySQL rất đông đảo và năng động, luôn cập nhật và đóng góp cho mã nguồn để nâng cao tính năng và hiệu suất của hệ quản trị cơ sở dữ liệu này.
-
-MySQL cũng hỗ trợ tích hợp với các công cụ phát triển và quản lý mã nguồn như MySQL Workbench, phpMyAdmin và các công cụ khác, giúp quản lý và xem xét dữ liệu một cách thuận tiện và hiệu quả.
-
-Một điểm đáng chú ý nữa của MySQL là tính tương thích với nhiều hệ điều hành và nền tảng khác nhau. MySQL có phiên bản dành cho Windows, macOS và các hệ điều hành Linux khác nhau, giúp người dùng lựa chọn và triển khai phù hợp với môi trường họ sử dụng.
-
 Tóm lại, MySQL là một hệ quản trị cơ sở dữ liệu mã nguồn mở mạnh mẽ và phổ biến, được sử dụng rộng rãi trong nhiều ứng dụng và dự án phát triển phần mềm. Với tính năng hiệu suất cao, khả năng mở rộng linh hoạt, tính bảo mật và quản lý người dùng, sự hỗ trợ từ cộng đồng và tích hợp với nhiều công cụ phát triển, MySQL đã trở thành một lựa chọn ưu việt cho việc quản lý và xử lý cơ sở dữ liệu.
 
+\subsubsection{PostgreSQL}
+\mbox{}
+PostgreSQL là một hệ quản trị cơ sở dữ liệu quan hệ đối tượng (ORDBMS) mã nguồn mở, miễn phí, được phát triển bởi cộng đồng toàn cầu. PostgreSQL bắt nguồn từ dự án POSTGRES của Đại học California tại Berkeley vào những năm 1980. Nó chính thức được phát hành lần đầu tiên vào năm 1996 dưới tên PostgreSQL.
 
+PostgreSQL hỗ trợ một loạt các kiểu dữ liệu đa dạng và phong phú, giúp nó trở nên linh hoạt và mạnh mẽ trong việc quản lý dữ liệu. Do đó trong hệ thống đề xuất chúng em đã sử dụng PostgreSql để lưu trữ dữ liệu tin nhắn, giúp cải thiện khả năng quản lý dữ liệu và tăng tốc độ truy vấn tin nhắn.
 \subsubsection{Postman}
 \mbox{}
 
 Postman là một ứng dụng máy tính được sử dụng phổ biến trong quá trình phát triển và kiểm thử các dịch vụ web (web service) và các API (Application Programming Interface) \cite{postman_1}. Được phát triển bởi công ty Postman Inc., ứng dụng này cung cấp một giao diện đơn giản và dễ sử dụng để gửi các yêu cầu HTTP (HTTP request) và nhận các phản hồi (response) từ các API. Postman giúp người phát triển dễ dàng thử nghiệm và kiểm tra tính năng, hiệu năng và bảo mật của các dịch vụ web và API, từ đó đảm bảo chất lượng và độ tin cậy của ứng dụng.
 
-Một trong những ưu điểm nổi bật của Postman là khả năng gửi các yêu cầu HTTP một cách linh hoạt và dễ dàng. Người dùng có thể tùy chỉnh các yêu cầu HTTP bằng cách thêm các thông số và tham số, cũng như xác định các phương thức HTTP như GET, POST, PUT, DELETE, và nhiều phương thức khác. Điều này giúp người phát triển kiểm tra các chức năng khác nhau của API và dịch vụ web một cách hiệu quả.
-
-Postman cũng hỗ trợ quản lý các môi trường (environments) khác nhau, cho phép người dùng cấu hình các giá trị môi trường như URL, token xác thực, hay các giá trị động khác. Nhờ vậy, người dùng có thể thử nghiệm các yêu cầu API trên nhiều môi trường khác nhau một cách dễ dàng, từ đó giả lập các trường hợp sử dụng và kiểm tra tính ổn định của API.
-
-Một tính năng mạnh mẽ khác của Postman là khả năng tự động hóa các bước kiểm thử và thực hiện các bộ kiểm thử (test suite). Người dùng có thể viết các mã kiểm thử (test script) bằng ngôn ngữ JavaScript để kiểm tra phản hồi từ API và đánh giá tính đúng đắn của dữ liệu trả về. Điều này giúp tăng cường tính tin cậy của các bài kiểm thử và giảm thiểu nguy cơ sai sót từ phía người dùng.
-
-Postman hỗ trợ tích hợp với các công cụ và dịch vụ phổ biến khác như GitHub, Jenkins, và các công cụ kiểm thử liên quan khác. Điều này giúp người phát triển tích hợp Postman vào quy trình phát triển phần mềm tự động một cách dễ dàng, từ việc kiểm tra mã nguồn đến việc chạy các bài kiểm thử tự động.
-
-Postman cung cấp giao diện người dùng thân thiện và trực quan, giúp người dùng dễ dàng thao tác và nắm bắt các tính năng của ứng dụng. Nó cũng hỗ trợ nhiều loại dữ liệu và định dạng như JSON, XML, và form data, giúp người dùng kiểm thử các yêu cầu API đa dạng và phong phú.
-
-Ngoài ra, Postman còn hỗ trợ tích hợp với Postman Cloud, một dịch vụ lưu trữ dữ liệu trực tuyến cho phép người dùng chia sẻ và quản lý các bài kiểm thử và dữ liệu API trực tuyến. Điều này giúp tăng cường sự cộng tác và quản lý dự án trong quá trình phát triển.
-
 Postman đã trở thành một công cụ quan trọng và không thể thiếu trong quá trình phát triển và kiểm thử các ứng dụng và dịch vụ web. Sự dễ dàng sử dụng, tích hợp và tự động hóa giúp tăng cường năng suất và chất lượng của quá trình phát triển, đồng thời giảm thiểu nguy cơ lỗi và tối ưu hóa hiệu suất của ứng dụng.
 
-\paragraph{GPT-4 API}
+\subsubsection{Github}
+\mbox{}
+
+GitHub là một nền tảng lưu trữ mã nguồn và quản lý dự án phát triển phần mềm, được xây dựng trên hệ thống kiểm soát phiên bản phân tán Git. Trong việc xây dựng hệ thống github được dùng để làm kho lưu trữ, quản lý code của dự án. Chức năng action flow trên github được chúng em sử dụng để tự động hoá việc deploy hệ thống sau mỗi lần cập nhật code mới.
+
+\subsubsection{Docker}
+\mbox{}
+
+Docker là một nền tảng phần mềm cho phép bạn tạo, triển khai và quản lý các ứng dụng trong các container. Container là các gói nhỏ gọn, nhẹ và có thể di chuyển, chứa tất cả những gì cần thiết để chạy ứng dụng, bao gồm mã nguồn, thư viện, phụ thuộc và cấu hình.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.8]{Images/server/deploy/docker.png}
+  \caption[Docker]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Docker}
+  \label{docker} %đặt tên cho ảnh
+\end{figure}
+
+
+\subsubsection{GPT-4 API}
 \mbox{}
 
 GPT API (Generative Pre-trained Transformer API) 
@@ -179,2050 +116,2024 @@ trang web hoặc dịch vụ của họ.
   \label{openai} %đặt tên cho ảnh
 \end{figure}
 
+\paragraph{Model GPT-4}
+\mbox{}
 
-\subsection{Triển khai ứng dụng}
-Trong quá trình triển khai ứng dụng, chúng em sử dụng dịch vụ Elastic Compute
- Cloud (EC2) của AWS để chạy ứng dụng và sử dụng dịch vụ Relational Database Service
-  (RDS) để lưu trữ cơ sở dữ liệu của ứng dụng. Việc sử dụng EC2 và RDS giúp
-   chúng em tối ưu hóa việc quản lý hệ thống, đảm bảo tính sẵn sàng và
-    mở rộng khả năng chịu tải cho ứng dụng.
+GPT-4 là phiên bản mới nhất và tiên tiến nhất trong dòng mô hình GPT của OpenAI. 
+Được xây dựng dựa trên nền tảng của các phiên bản trước, 
+GPT-4 mang lại nhiều cải tiến đáng kể:
 
-\subsubsection{Triển khai API và ứng dụng web trên AWS EC2}
 \begin{itemize}
-  \item Tạo máy ảo EC2: Chúng em đã tạo một EC2 instance với loại instance t2.micro. Đây là loại instance nhỏ, phù hợp với các ứng dụng có lưu lượng truy cập thấp hoặc giai đoạn phát triển. Instance này sử dụng kiến trúc 64-bit, cho phép chạy các ứng dụng trên cả hệ thống 32-bit và 64-bit. Bộ nhớ của instance là 1 GiB, đủ để chạy ứng dụng Node.js cùng với các dependencies. Dung lượng lưu trữ 8GB, chúng em đã cài đặt hệ điều hành Linux/UNIX để chạy mã nguồn của ứng dụng.
-  
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.5]{Images/server/deploy/create_ec2.PNG}
-    \caption[Tạo máy ảo EC2]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Tạo máy ảo EC2}
-    \label{create_ec2} %đặt tên cho ảnh
-  \end{figure}
-
-  Sau khi tạo thành công, trên trang dashboad quản lý EC2 sẽ xuất hiện máy ảo mà ta đã tạo vừa xong
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.4]{Images/server/deploy/ec2_dashboard.PNG}
-    \caption[Trang dashboad quản lý EC2 instance]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Trang dashboad quản lý EC2 instance}
-    \label{ec2_dashboard} %đặt tên cho ảnh
-  \end{figure}
-
-  Từ trang dashboard, ta sẽ thực hiện kết nối với máy ảo thông qua nút Connect
-
-  \begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.5]{Images/server/deploy/connect_ec2.PNG}
-  \caption[Trang kết nối tới máy ảo]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Trang kết nối tới máy ảo}
-  \label{connect_ec2} %đặt tên cho ảnh
-\end{figure}
-
-
-  Sau khi kết nối thành công trang console của máy ảo sẽ xuất hiện, từ đây ta có thể thực hiện các thao tác mong muốn trên server thông qua console
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.55]{Images/server/deploy/ec2_console.PNG}
-    \caption[Trang console của máy ảo]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Trang console của máy ảo}
-    \label{ec2_console} %đặt tên cho ảnh
-  \end{figure}
-
-
-
-  \item Cài đặt các phần mềm và dependencies: Sau khi triển khai máy ảo EC2, chúng em đã cài đặt các phần mềm và dependencies cần thiết để chạy ứng dụng, bao gồm Node.js và các thư viện hỗ trợ và các gói npm cần thiết.
-  
-
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.7]{Images/server/deploy/list_node_package.PNG}
-    \caption[Các packages và dependencies cần thiết]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Các packages và dependencies cần thiết}
-    \label{ec2_dashboard} %đặt tên cho ảnh
-  \end{figure}
-
-
-  \item Tạo và cấu hình môi trường ứng dụng: Chúng em đã tạo môi trường ứng dụng, bao gồm việc cấu hình các biến môi trường, thiết lập các file cấu hình, và chạy các lệnh khởi tạo ban đầu cho ứng dụng.
-  \item Triển khai ứng dụng: Tiếp theo, chúng em tải lên mã nguồn của ứng dụng lên máy ảo EC2 thông qua git
-  
-  \begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.7]{Images/server/deploy/git_ec2.PNG}
-    \caption[Tải mã nguồn lên server thông qua git]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Tải mã nguồn lên server thông qua git}
-    \label{ec2_dashboard} %đặt tên cho ảnh
-  \end{figure}
-
-  \item Mở cổng cho ứng dụng: Chúng em đã mở cổng mạng trên máy ảo EC2 để cho phép ứng dụng lắng nghe các yêu cầu từ internet.
-  \item Khởi động ứng dụng: Để khởi động ứng dụng, chúng em chạy các lệnh quản lý quá trình như npm start
-  
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.7]{Images/server/deploy/execute_sever.PNG}
-    \caption[Chạy ứng dụng]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Chạy ứng dụng}
-    \label{execute_sever} %đặt tên cho ảnh
-  \end{figure}
-
-
+  \item Khả Năng Hiểu Biết Tốt Hơn: GPT-4 có khả năng hiểu ngữ cảnh và ngữ nghĩa tốt hơn, giúp tạo ra các phản hồi chính xác và phù hợp hơn.
+  \item Tăng Cường Khả Năng Tạo Văn Bản: Với kho dữ liệu huấn luyện rộng lớn và đa dạng, GPT-4 có thể tạo ra văn bản tự nhiên và mạch lạc, thậm chí trong các ngữ cảnh phức tạp.
+  \item Tích Hợp Đa Nhiệm: GPT-4 API cho phép người dùng dễ dàng tuỳ biến và đào tạo dựa trên dữ liệu có sẵn của họ để tạo ra các trợ lý ảo phù hợp với đặc điểm của hệ thống
 \end{itemize}
 
-\subsubsection{Triển khai cơ sở dữ liệu trên RDS}
+\paragraph{Ứng dụng của GPT-4 trong đồ án}
+\mbox{}
+
+Vì những ưu điểm trên chúng em đã tích hợp GPT API vào việc xây dựng trợ lý ảo dùng để tư vấn cho người dùng về hệ thống, 
+cách sử dụng thiết bị và cách tích hợp thiết bị của hệ thống, ngoài ra trợ lý ảo còn giúp người dùng tự động hoá việc sử dụng hệ thống.
+\subsection{Triển khai ứng dụng}
+Trong quá trình triển khai ứng dụng, chúng em áp dụng quy trình phát triển ứng dụng CI/CD để phát triển và xây dựng hệ thống. Để triển khai hệ thống theo đúng quy trình CI/CD thì chúng em đã sử dụng các dịch vụ, VPS server để triển khai server API và website, Docker để tự động deploy ứng dụng, MySQL Server để quản lý cơ sở dữ liệu, Github để quản lý code.
+
+\subsection{Quy trình CI/CD}
+CI/CD là viết tắt của Continuous Integration (CI) và Continuous Delivery (CD). Có thể hiểu nó được kết hợp bởi quy trình Tích hợp liên tục và Phân phối liên tục. CI/CD giúp tạo ra sản phẩm cuối cùng nhanh chóng dựa trên kết hợp công việc của mỗi cá nhân.
+
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{Images/server/deploy/ci-cd.png}
+  \caption[Quy trình CI/CD]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Quy trình CI/CD}
+  \label{ci-cd} %đặt tên cho ảnh
+\end{figure}
+
+Hệ thống được xây dựng theo quy trình CI/CD, sử dụng các công nghệ như docker, github, vps server để tự động hoá quy trình deploy hệ thống. Từ đó việc kiểm thử được diễn ra thường xuyên, dễ dàng và chính xác hơn. 
+
+\subsection{Kiến trúc Microservices}
+
+Kiến trúc Microservices là một phương pháp phát triển phần mềm trong đó một ứng dụng lớn được chia thành nhiều dịch vụ nhỏ độc lập với nhau. Mỗi dịch vụ thực hiện một chức năng cụ thể và giao tiếp với các dịch vụ khác qua các giao thức giao tiếp nhẹ như HTTP/HTTPS, JSON, WebHooks, Notification.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{Images/server/deploy/micro-service.png}
+  \caption[Kiến trúc Microservices]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Kiến trúc Microservices}
+  \label{micro-service} %đặt tên cho ảnh
+\end{figure}
+
+Trong hệ thống chúng em đã tách riêng phần chat, server, mobile app và giao diện người dùng, phát triển từng phần thành các ứng dụng độc lập với nhau kết nối qua API. Điều này giúp việc code nhanh hơn, dữ liệu được lưu trữ phân tán dễ dàng bảo trì và nâng cấp 
+\subsubsection{Triển khai Server và ứng dụng web trên máy chủ VPS}
 \begin{itemize}
-  \item Tạo cơ sở dữ liệu RDS: Chúng em đã triển khai một cơ sở dữ liệu MySQL trên dịch vụ RDS của AWS. Cơ sở dữ liệu này được đặt tên là "fm\_ecg" và có mật khẩu "fmecgdatabase" để bảo mật. Địa chỉ host của cơ sở dữ liệu là "fm-ecg-database.cx3akkmg3hid.ap-southeast-1.rds.amazonaws.com" cho phép EC2 instance kết nối và truy vấn dữ liệu từ cơ sở dữ liệu. Để truy cập và quản lý cơ sở dữ liệu, chúng em sử dụng tài khoản "admin" với các quyền tương ứng.
+  \item Cài đặt các dịch vụ cần thiết cho máy chủ VPS sử dụng hệ điều hành Unbutu như: nodejs, npm, pm2, nginx, docker, github,...
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{Images/server/deploy/config_server.png}
+    \caption[Cài đặt các dịch vụ cần thiết cho server]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Cài đặt các dịch vụ cần thiết cho server}
+    \label{create_server} %đặt tên cho ảnh
+  \end{figure}
+
+  Sau khi thành công chúng ta có thể kéo code về từ github và build ứng dụng bằng docker 
   
   \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{Images/server/deploy/create_rds.PNG}
-    \caption[Tạo cơ sở dữ liệu RDS]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Tạo cơ sở dữ liệu RDS}
-    \label{create_rds} %đặt tên cho ảnh
+    \includegraphics[scale=0.5]{Images/server/deploy/docker-run.png}
+    \caption[Khởi chạy hệ thống bằng docker]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Khởi chạy hệ thống bằng docker}
+    \label{docker-run} %đặt tên cho ảnh
   \end{figure}
 
+  Lúc này docker sẽ tự động build và chạy tát cả các dịch vụ trong hệ thống như: server-ecd, server-chat, ui-web, mysql server, postgreSQL server. Sau khi chạy hoàn tất các cục ứng dụng sẽ được hiển thị lên như sau:
 
   \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.43]{Images/server/deploy/rds_detail.PNG}
-    \caption[Cơ sở dữ liệu RDS sau khi tạo thành công]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Cơ sở dữ liệu RDS sau khi tạo thành công}
-    \label{rds_detail} %đặt tên cho ảnh
+    \includegraphics[scale=0.5]{Images/server/deploy/docker-container.png}
+    \caption[Trạng thái hoạt động của các dịch vụ]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Trạng thái hoạt động của các dịch vụ}
+    \label{docker-container-status} %đặt tên cho ảnh
   \end{figure}
 
-  \item Kết nối giữa EC2 và RDS: Chúng em đã cấu hình ứng dụng Node.js chạy trên EC2 instance để kết nối đến cơ sở dữ liệu RDS thông qua thông tin host, tên người dùng và mật khẩu đã cung cấp. Khi ứng dụng gửi các truy vấn SQL đến cơ sở dữ liệu, RDS sẽ xử lý các truy vấn này và trả về kết quả cho ứng dụng.
-  
+  Cài đặt Github action workflow để tự động update code khi có code mới được ghép vào hệ thống 
+ 
+  \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{Images/server/deploy/github-workflow.png}
+    \caption[Cài đặt github-workflow]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Cài đặt github-workflow}
+    \label{github-workflow} %đặt tên cho ảnh
+  \end{figure}
+
+  Tạo API lắng nghe phản hồi từ github, khi có code mới github sẽ tự động gửi dữ liệu về api đã tạo.
 
   \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{Images/server/deploy/connect_rds_1.PNG}
-    \caption[Kết nối giữa EC2 và RDS trên máy ảo EC2]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Kết nối giữa EC2 và RDS trên máy ảo EC2}
-    \label{rds_detail} %đặt tên cho ảnh
+    \includegraphics[scale=0.5]{Images/server/deploy/github-api.png}
+    \caption[API nhận dữ liệu từ github]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont API nhận dữ liệu từ github}
+    \label{github-api} %đặt tên cho ảnh
   \end{figure}
 
-  Sau khi kết nối thành công, ta vào đường dẫn \underline{http://13.250.106.115:8080/} để đăng nhập vào trang quản lý database của hệ thống với tên máy chủ, tài khoản, mật khẩu đã tạo trước đó
-
-
+  Sau khi hoàn tất các bước hệ thống sẽ tự động build các cục dịch vụ trên github, và khi build xong code mới sẽ được gửi về VPS server để chạy
   \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{Images/server/deploy/connect_rds_2.PNG}
-    \caption[Cơ sở dữ liệu RDS sau khi tạo thành công]{\bfseries \fontsize{12pt}{0pt}
-    \selectfont Cơ sở dữ liệu RDS sau khi tạo thành công}
-    \label{rds_detail} %đặt tên cho ảnh
+    \includegraphics[scale=0.5]{Images/server/deploy/auto-deploy.png}
+    \caption[Tự động build dữ liệu trên github]{\bfseries \fontsize{12pt}{0pt}
+    \selectfont Tự động build dữ liệu trên github}
+    \label{github-build} %đặt tên cho ảnh
   \end{figure}
-
-
-  \item Backup và giám sát cơ sở dữ liệu: Chúng em đã thiết lập các chính sách sao lưu định kỳ cho cơ sở dữ liệu RDS để đảm bảo an toàn cho dữ liệu và khả năng khôi phục trong trường hợp xảy ra sự cố.
+  Hệ thống sẽ tự động quét vào 11 giờ 30 phút tối hàng ngày nếu có code mới được cập nhật sẽ tự động deploy lại phiên bản mới của hệ thống.
+  Sau mỗi lượt deploy cập nhật các tính năng mới thì chúng em sẽ tiến hành kiểm thử chi tiết.
+  Backup và giám sát cơ sở dữ liệu: Chúng em đã thiết lập các chính sách sao lưu định kỳ cho cơ sở dữ liệu và lưu các bản sao lưu lên trên github để đảm bảo an toàn cho dữ liệu và khả năng khôi phục trong trường hợp xảy ra sự cố.
 \end{itemize}
 
 \subsection{Kiểm thử}
 
-% \subsubsection{Kiểm thử hoạt động của các API}
+\subsubsection{Kiểm thử hoạt động của các API}
 
 
-% Môi trường: 
+Môi trường: 
 
-% \begin{adjustwidth}{1.5em}{}
-% \begin{itemize}
-%   \item Base URL: http://13.250.106.115/
-% \end{itemize}
-% \end{adjustwidth}
+\begin{adjustwidth}{1.5em}{}
+\begin{itemize}
+  \item Base URL: http://13.250.106.115/
+\end{itemize}
+\end{adjustwidth}
 
-% Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
+Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 
-% \paragraph{API liên quan đến thông tin người dùng}
-% \mbox{}
+\paragraph{API liên quan đến thông tin người dùng}
+\mbox{}
 
-% Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liên quan
+Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liên quan
 
-% \begin{enumerate}[a)]
-%   \item URL: GET api/users/profile 
+\begin{enumerate}[a)]
+  \item URL: GET api/users/profile 
   
-%   \begin{table}[H]
-%     \centering
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin profile của người dùng}
-%     \begin{tabularx}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{2cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  \begin{table}[H]
+    \centering
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin profile của người dùng}
+    \begin{tabularx}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
 
 
-%     TC-1
-%     & User đã đăng nhập vào hệ thống thành công
-%     & JWT Cookie có tồn tại
-%     & 
+    TC-1
+    & User đã đăng nhập vào hệ thống thành công
+    & JWT Cookie có tồn tại
+    & 
 
-%     Status code: 200 OK
+    Status code: 200 OK
 
-%       Response content:
+      Response content:
 
-%       \{
+      \{
 
-%     "status": "success",
+    "status": "success",
 
-%     "data": Thông tin của user
+    "data": Thông tin của user
 
-%     \}
+    \}
     
-%     & OK
+    & OK
 
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & User chưa đăng nhập vào hệ thống
-%     & JWT Cookie không tồn tại
-%     & 
+    TC-2
+    & User chưa đăng nhập vào hệ thống
+    & JWT Cookie không tồn tại
+    & 
 
-%     Status code: 500 Internal Server Error
+    Status code: 500 Internal Server Error
 
-%       Response content:
+      Response content:
 
-%       \{
+      \{
 
-%     "status": "error",
+    "status": "error",
 
-%     "msg": "An error occurred while retrieving the user profile"
+    "msg": "An error occurred while retrieving the user profile"
 
-%     \}
+    \}
     
-%     & OK
+    & OK
 
-%     \\ \hline
+    \\ \hline
   
-%     \end{tabularx}
-%     \label{table_api_news}
-%   \end{table}
+    \end{tabularx}
+    \label{table_api_news}
+  \end{table}
   
-%   % TODO: Note new page
-%   \item URL: PUT api/users/profile
+  % TODO: Note new page
+  \item URL: PUT api/users/profile
   
-%   \begin{table}[H]
-%     \centering
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API cập nhật thông tin profile của người dùng}
-%     \begin{tabularx}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{2cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  \begin{table}[H]
+    \centering
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API cập nhật thông tin profile của người dùng}
+    \begin{tabularx}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
 
 
-%     TC-1
-%     & User đã đăng nhập vào hệ thống thành công
-%     & Thông tin user muốn cập nhật
+    TC-1
+    & User đã đăng nhập vào hệ thống thành công
+    & Thông tin user muốn cập nhật
 
-%     \{
+    \{
 
-%     "name": họ tên,
-%     "doB": ngày sinh,
-%     "phone\_number": số điện thoại
+    "name": họ tên,
+    "doB": ngày sinh,
+    "phone\_number": số điện thoại
 
-% \}
+\}
 
-%     & 
+    & 
 
-%     Status code: 200 OK
+    Status code: 200 OK
 
-%       Response content:
+      Response content:
 
-%       \{
+      \{
 
-%     "status": "success",
+    "status": "success",
 
-%     "data": Thông tin của user sau khi cập nhật lại
+    "data": Thông tin của user sau khi cập nhật lại
 
-%     \}
+    \}
     
-%     & OK
+    & OK
 
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & User chưa đăng nhập vào hệ thống
-%     & Thông tin user muốn cập nhật
+    TC-2
+    & User chưa đăng nhập vào hệ thống
+    & Thông tin user muốn cập nhật
 
-%     \{
+    \{
 
-%     "name": họ tên,
-%     "doB": ngày sinh,
-%     "phone\_number": số điện thoại
+    "name": họ tên,
+    "doB": ngày sinh,
+    "phone\_number": số điện thoại
 
-% \}
-%     & 
+\}
+    & 
 
-%     Status code: 500 Internal Server Error
+    Status code: 500 Internal Server Error
 
-%       Response content:
+      Response content:
 
-%       \{
+      \{
 
-%     "status": "error",
+    "status": "error",
 
-%     "msg": "An error occurred while retrieving the user profile"
+    "msg": "An error occurred while retrieving the user profile"
 
-%     \}
+    \}
     
-%     & OK
+    & OK
 
-%     \\ \hline
+    \\ \hline
   
-%     \end{tabularx}
-%     \label{table_api_news}
-%   \end{table}
+    \end{tabularx}
+    \label{table_api_news}
+  \end{table}
 
-%   \item URL: PUT api/users/change-password
+  \item URL: PUT api/users/change-password
   
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API thay đổi mật khẩu người dùng}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API thay đổi mật khẩu người dùng}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
   
   
-%     TC-1
-%     & User đã đăng nhập vào hệ thống thành công và mật khẩu hiện tại trùng với req.currentPassword, req.newPassword và req.confirmPassword trùng nhau 
-%     & Thông tin thay đổi mật khẩu
+    TC-1
+    & User đã đăng nhập vào hệ thống thành công và mật khẩu hiện tại trùng với req.currentPassword, req.newPassword và req.confirmPassword trùng nhau 
+    & Thông tin thay đổi mật khẩu
   
-%     \{
+    \{
   
-%       "currentPassword": "123456",
-%       "newPassword": "1234567",
-%       "confirmPassword": "1234567"
+      "currentPassword": "123456",
+      "newPassword": "1234567",
+      "confirmPassword": "1234567"
   
-%   \}
+  \}
   
-%     & 
+    & 
   
-%     Status code: 200 OK
+    Status code: 200 OK
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "success",
+    "status": "success",
   
-%     msg: "Password changed successfully"
+    msg: "Password changed successfully"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & User chưa đăng nhập vào hệ thống
-%     & Thông tin thay đổi mật khẩu
+    TC-2
+    & User chưa đăng nhập vào hệ thống
+    & Thông tin thay đổi mật khẩu
   
-%     \{
+    \{
   
-%       "currentPassword": mật khẩu hiện tại,
-%       "newPassword": mật khẩu mới,
-%       "confirmPassword": xác nhận lại mật khẩu
+      "currentPassword": mật khẩu hiện tại,
+      "newPassword": mật khẩu mới,
+      "confirmPassword": xác nhận lại mật khẩu
   
-%   \}
-%     & 
+  \}
+    & 
   
-%     Status code: 500 Internal Server Error
+    Status code: 500 Internal Server Error
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     "msg": "An error occurred while retrieving the user profile"
+    "msg": "An error occurred while retrieving the user profile"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-3
-%     & User đã đăng nhập vào hệ thống thành công và mật khẩu hiện tại không
-%     trùng với
-%     req.currentPassword 
-%     & Thông tin thay đổi mật khẩu
+    TC-3
+    & User đã đăng nhập vào hệ thống thành công và mật khẩu hiện tại không
+    trùng với
+    req.currentPassword 
+    & Thông tin thay đổi mật khẩu
   
-%     \{
+    \{
   
-%       "currentPassword": "1234568",
-%       "newPassword": "1234567",
-%       "confirmPassword": "1234567"
+      "currentPassword": "1234568",
+      "newPassword": "1234567",
+      "confirmPassword": "1234567"
   
-%   \}
+  \}
   
-%     & 
+    & 
   
-%     Status code: 401 Unauthorized
+    Status code: 401 Unauthorized
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     msg: "Current password is incorrect"
+    msg: "Current password is incorrect"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-4
-%     & User đã đăng nhập vào hệ thống thành công và và mật khẩu hiện tại trùng với req.currentPassword, req.newPassword và req.confirmPassword không trùng nhau 
-%     & Thông tin thay đổi mật khẩu
+    TC-4
+    & User đã đăng nhập vào hệ thống thành công và và mật khẩu hiện tại trùng với req.currentPassword, req.newPassword và req.confirmPassword không trùng nhau 
+    & Thông tin thay đổi mật khẩu
   
-%     \{
+    \{
   
-%       "currentPassword": "123456",
-%       "newPassword": "1234567324",
-%       "confirmPassword": "127"
+      "currentPassword": "123456",
+      "newPassword": "1234567324",
+      "confirmPassword": "127"
   
-%   \}
+  \}
   
-%     & 
+    & 
   
-%     Status code: 401 Unauthorized
+    Status code: 401 Unauthorized
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     msg: "New password and confirm password do not match"
+    msg: "New password and confirm password do not match"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-    
-  
-%     \end{xltabular}
-
-
-
-%   \item URL: GET api/users/{:userId}
-  
-
-%   \break
-  
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin của người dùng thông qua ID}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
-  
-  
-%     TC-1
-%     & User ID có tồn tại trên database
-%     & User ID
-  
-%     & 
-  
-%     Status code: 200 OK
-  
-%       Response content:
-  
-%       \{
-  
-%     "status": "success",
-  
-%     data: Thông tin user
-  
-%     \}
-    
-%     & OK
-  
-%     \\ \hline
-  
-%     TC-2
-%     & User ID không tồn tại trên database
-%     & User ID
-  
-%     & 
-  
-%     Status code: 404 Not Found
-  
-%       Response content:
-  
-%       \{
-  
-%     "status": "error",
-  
-%     "msg": "User not found"
-  
-%     \}
-    
-%     & OK
-  
-%     \\ \hline
     
   
-%     \end{xltabular}
-
-  
-% \end{enumerate}
-
-
-% \paragraph{API liên quan đến việc xác thực người dùng}
-% \mbox{}
-
-% Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liên quan
+    \end{xltabular}
 
 
 
-% \begin{enumerate}[a)]
-%   \item URL: POST api/register
+  \item URL: GET api/users/{:userId}
   
-% \break
 
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{2.5cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng ký tài khoản}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  \break
+  
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin của người dùng thông qua ID}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
   
   
-%     TC-1
-%     & User chưa có tài khoản trên hệ thống
-%     & Thông tin đăng ký tài khoản
-
-%     \{
-
-%     "password": "123456789",
-%     "confirm\_password": "123456789",
-%     "name": "Anh Tuan",
-%     "doB": "20-10-2001",
-%     "email": "test@gmail.com",
-%     "phone\_number": "0123344562",
-%     "role": 0
-
-%    \}
+    TC-1
+    & User ID có tồn tại trên database
+    & User ID
   
-%     & 
+    & 
   
-%     Status code: 200 OK
+    Status code: 200 OK
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "success",
+    "status": "success",
   
-%     data: Thông tin user sau khi đăng ký thành công
+    data: Thông tin user
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & User đã có tài khoản trên hệ thống
-%     & Thông tin đăng ký tài khoản
-
-%     \{
-
-%     "password": "123456789",
-%     "confirm\_password": "123456789",
-%     "name": "Anh Tuan",
-%     "doB": "20-10-2001",
-%     "email": "test@gmail.com",
-%     "phone\_number": "0123344562",
-%     "role": 0
-
-%    \}
+    TC-2
+    & User ID không tồn tại trên database
+    & User ID
   
-%     & 
+    & 
   
-%     Status code: 400 Bad Request
+    Status code: 404 Not Found
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     "msg": "Email is already in use"
+    "msg": "User not found"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
-
-
-%     TC-3
-%     & User chưa có tài khoản trên hệ thống, req.password và req.-
-%     confirm\_password không trùng nhau
-%     & Thông tin đăng ký tài khoản
-
-%     \{
-
-%     "password": "123456789",
-
-%     "confirm\_password": "123456789",
-
-%     "name": "Anh Tuan",
-
-%     "doB": "20-10-2001",
-
-%     "email": "test@gmail.com",
-
-%     "phone\_number": "0123344562",
-
-%     "role": 0
-
-%    \}
-  
-%     & 
-  
-%     Status code: 400 Bad Request
-  
-%       Response content:
-  
-%       \{
-  
-%     "status": "error",
-  
-%     "msg": "Passwords do not match"
-  
-%     \}
-    
-%     & OK
-  
-%     \\ \hline
+    \\ \hline
     
   
-%     \end{xltabular}
+    \end{xltabular}
 
   
+\end{enumerate}
 
 
-%   \item URL: POST api/login
-  
+\paragraph{API liên quan đến việc xác thực người dùng}
+\mbox{}
 
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng nhập}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
-  
-  
-%     TC-1
-%     & Thông tin tài khoản và mật khẩu hợp lệ
-%     & Thông tin đăng nhập
+Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liên quan
 
-%     \{
 
-%     "email": email của user,
-%     "password": mật khẩu của user
 
-%    \}
+\begin{enumerate}[a)]
+  \item URL: POST api/register
   
-%     & 
+\break
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng ký tài khoản}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
   
-%     Status code: 200 OK
   
-%       Response content:
+    TC-1
+    & User chưa có tài khoản trên hệ thống
+    & Thông tin đăng ký tài khoản
+
+    \{
+
+    "password": "123456789",
+    "confirm\_password": "123456789",
+    "name": "Anh Tuan",
+    "doB": "20-10-2001",
+    "email": "test@gmail.com",
+    "phone\_number": "0123344562",
+    "role": 0
+
+   \}
   
-%       \{
+    & 
   
-%     "status": "success",
+    Status code: 200 OK
   
-%     data: Thông tin user sau khi đăng ký thành công
+      Response content:
   
-%     \}
+      \{
+  
+    "status": "success",
+  
+    data: Thông tin user sau khi đăng ký thành công
+  
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & Thông tin tài khoản và mật khẩu không hợp lệ
-%     & Thông tin đăng nhập
+    TC-2
+    & User đã có tài khoản trên hệ thống
+    & Thông tin đăng ký tài khoản
 
-%     \{
+    \{
 
-%     "email": email của user,
-%     "password": mật khẩu của user
+    "password": "123456789",
+    "confirm\_password": "123456789",
+    "name": "Anh Tuan",
+    "doB": "20-10-2001",
+    "email": "test@gmail.com",
+    "phone\_number": "0123344562",
+    "role": 0
 
-%    \}
+   \}
   
-%    &
+    & 
   
-%     Status code: 401 Unauthorized
+    Status code: 400 Bad Request
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     "msg": "Invalid email or password"
+    "msg": "Email is already in use"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
-
-  
-%     \end{xltabular}
+    \\ \hline
 
 
+    TC-3
+    & User chưa có tài khoản trên hệ thống, req.password và req.-
+    confirm\_password không trùng nhau
+    & Thông tin đăng ký tài khoản
 
-%   \item URL: GET api/logout
-  
+    \{
 
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng xuất}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+    "password": "123456789",
+
+    "confirm\_password": "123456789",
+
+    "name": "Anh Tuan",
+
+    "doB": "20-10-2001",
+
+    "email": "test@gmail.com",
+
+    "phone\_number": "0123344562",
+
+    "role": 0
+
+   \}
   
+    & 
   
-%     TC-1
-%     & User đã đăng nhập vào hệ thống
-%     & JWT Token tồn tại
+    Status code: 400 Bad Request
   
-%     & 
+      Response content:
   
-%     Status code: 200 OK
+      \{
   
-%       Response content:
+    "status": "error",
   
-%       \{
+    "msg": "Passwords do not match"
   
-%     "status": "success",
-  
-%     "msg": "Logged out successfully"
-  
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
-  
-%     TC-2
-%     & User chưa đăng nhập vào hệ thống
-%     & JWT Token không tồn tại
-  
-%    &
-  
-%     Status code: 401 Unauthorized
-  
-%       Response content:
-  
-%       \{
-  
-%     "status": "error",
-  
-%     "msg": "No token found"
-  
-%     \}
+    \\ \hline
     
-%     & OK
   
-%     \\ \hline
+    \end{xltabular}
 
-  
-%     \end{xltabular}
-
-
-
-%   \item URL: POST api/reset-password
   
 
 
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API gửi token đặt lại mật khẩu}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  \item URL: POST api/login
   
-  
-%     TC-1
-%     & User đã đăng ký tài khoản
-%     & Email user
 
-%     \{
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng nhập}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Thông tin tài khoản và mật khẩu hợp lệ
+    & Thông tin đăng nhập
 
-%     "email": email user
+    \{
 
-%     \}
-%     & 
-  
-%     Status code: 200 OK
-  
-%       Response content:
-  
-%       \{
-  
-%     "status": "success",
-  
-%     "msg": "Reset token sent to email"
+    "email": email của user,
+    "password": mật khẩu của user
 
-%     "resetToken": token
+   \}
   
-%     \}
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    data: Thông tin user sau khi đăng ký thành công
+  
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & User chưa đăng ký tài khoản
-%     & Email user
+    TC-2
+    & Thông tin tài khoản và mật khẩu không hợp lệ
+    & Thông tin đăng nhập
 
-%     \{
+    \{
 
-%     "email": email user
+    "email": email của user,
+    "password": mật khẩu của user
 
-%     \}
-%    &
+   \}
   
-%     Status code: 404 Not Found
+   &
   
-%       Response content:
+    Status code: 401 Unauthorized
   
-%       \{
+      Response content:
   
-%     "status": "error",
+      \{
   
-%     "msg": "User not found"
+    "status": "error",
   
-%     \}
+    "msg": "Invalid email or password"
+  
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
 
   
-%     \end{xltabular}
+    \end{xltabular}
 
 
 
-%   \item URL: POST api/reset-password/reset 
+  \item URL: GET api/logout
   
 
-
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{2.5cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đặt lại mật khẩu}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng xuất}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
   
   
-%     TC-1
-%     & User đã đăng ký tài khoản, reset token và mật khẩu hợp lệ
-%     & Thông tin reset mật khẩu
-
-%     \{
-
-%       "resetToken": "816e8d",
-
-%       "password": "123456",
-
-%       "confirm\_password": "123456",
-
-%       "email": "test@gmail.com"
-
-%   \}
+    TC-1
+    & User đã đăng nhập vào hệ thống
+    & JWT Token tồn tại
   
-%     & 
+    & 
   
-%     Status code: 200 OK
+    Status code: 200 OK
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "success",
+    "status": "success",
   
-%     "msg": "Password reset successful"
+    "msg": "Logged out successfully"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & Reset token không hợp lệ
-%     & Thông tin reset mật khẩu
-
-%     \{
-
-%       "resetToken": "816e8d",
-
-%       "password": "123456",
-
-%       "confirm\_password": "123456",
-
-%       "email": "test@gmail.com"
-
-%   \}
-%    &
+    TC-2
+    & User chưa đăng nhập vào hệ thống
+    & JWT Token không tồn tại
   
-%     Status code: 400 Bad Request
+   &
   
-%       Response content:
+    Status code: 401 Unauthorized
   
-%       \{
+      Response content:
   
-%     "status": "error",
+      \{
   
-%     "msg": "Invalid reset token"
+    "status": "error",
   
-%     \}
+    "msg": "No token found"
+  
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
 
-%     TC-3
-%     & Reset token hết hạn
-%     & Thông tin reset mật khẩu
-
-%     \{
-
-%       "resetToken": "816e8d",
-
-%       "password": "123456",
-
-%       "confirm\_password": "123456",
-
-%       "email": "test@gmail.com"
-
-%   \}
-%    &
   
-%     Status code: 400 Bad Request
+    \end{xltabular}
+
+
+
+  \item URL: POST api/reset-password
   
-%       Response content:
+
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API gửi token đặt lại mật khẩu}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
   
-%       \{
   
-%     "status": "error",
+    TC-1
+    & User đã đăng ký tài khoản
+    & Email user
+
+    \{
+
+    "email": email user
+
+    \}
+    & 
   
-%     "msg": "Reset token has expired"
+    Status code: 200 OK
   
-%     \}
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    "msg": "Reset token sent to email"
+
+    "resetToken": token
+  
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
-
-
-%     TC-4
-%     & req.password và req-
-%     .confirm\_password không trùng
-%     & Thông tin reset mật khẩu
-
-%     \{
-
-%       "resetToken": "816e8d",
-
-%       "password": "123456",
-
-%       "confirm\_password": "123456",
-
-%       "email": "test@gmail.com"
-
-%   \}
-%    &
+    \\ \hline
   
-%     Status code: 400 Bad Request
-  
-%       Response content:
-  
-%       \{
-  
-%     "status": "error",
-  
-%     "msg": "Password confirmation does not match"
-  
-%     \}
-%     & OK
-%     \\ \hline  
-%     \end{xltabular}
+    TC-2
+    & User chưa đăng ký tài khoản
+    & Email user
 
+    \{
 
+    "email": email user
 
-% \end{enumerate}
-
-
-% \paragraph{API liên quan đến tin tức}
-% \mbox{}
-
-% Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liên quan
-% \newpage
-% \begin{enumerate}[a)]
-%   \item URL: GET api/news/{:newsId}
+    \}
+   &
   
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{2cm}
-%     | >{\raggedright\arraybackslash}p{2cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy nội dung của tin tức theo ID}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+    Status code: 404 Not Found
   
+      Response content:
   
-%     TC-1
-%     & Tin tức tồn tại với ID tương ứng
-%     & ID tin tức
-%     & 
+      \{
   
-%     Status code: 200 OK
+    "status": "error",
   
-%       Response content:
+    "msg": "User not found"
   
-%       \{
-  
-%     "status": "success",
-
-%     data: Nội dung của tin tức
-  
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
+
   
-%     TC-2
-%     & Tin tức không tồn tại với ID tương ứng
-%     & ID danh mục tin tức
-%    &
+    \end{xltabular}
+
+
+
+  \item URL: POST api/reset-password/reset 
   
-%     Status code: 404 Not Found
+
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đặt lại mật khẩu}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
   
-%       Response content:
   
-%       \{
+    TC-1
+    & User đã đăng ký tài khoản, reset token và mật khẩu hợp lệ
+    & Thông tin reset mật khẩu
+
+    \{
+
+      "resetToken": "816e8d",
+
+      "password": "123456",
+
+      "confirm\_password": "123456",
+
+      "email": "test@gmail.com"
+
+  \}
   
-%     "status": "error",
+    & 
   
-%     "msg": "News not found"
+    Status code: 200 OK
   
-%     \}
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    "msg": "Password reset successful"
+  
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
+  
+    TC-2
+    & Reset token không hợp lệ
+    & Thông tin reset mật khẩu
 
-  
-%     \end{xltabular}
+    \{
 
-%   % //TODO: new page
-%   \item URL: GET api/news
+      "resetToken": "816e8d",
 
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách tin tức}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
-  
-  
-%     TC-1
-%     & NULL
-%     & NULL
-%     & 
-  
-%     Status code: 200 OK
-  
-%       Response content:
-  
-%       \{
-  
-%     "status": "success",
-  
-%     "count": Số lượng tin tức
+      "password": "123456",
 
-%     data: Danh sách các tin tức
+      "confirm\_password": "123456",
+
+      "email": "test@gmail.com"
+
+  \}
+   &
   
-%     \}
+    Status code: 400 Bad Request
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "Invalid reset token"
+  
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
+
+    TC-3
+    & Reset token hết hạn
+    & Thông tin reset mật khẩu
+
+    \{
+
+      "resetToken": "816e8d",
+
+      "password": "123456",
+
+      "confirm\_password": "123456",
+
+      "email": "test@gmail.com"
+
+  \}
+   &
   
-%     TC-2
-%     & NULL
-%     & Lỗi đường truyền server
-%    &
+    Status code: 400 Bad Request
   
-%     Status code: 500 Internal Server Error
+      Response content:
   
-%       Response content:
+      \{
   
-%       \{
+    "status": "error",
   
-%     "status": "error",
+    "msg": "Reset token has expired"
   
-%     "msg": "An error occurred while retrieving the news"
-  
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
-
-  
-%     \end{xltabular}
+    \\ \hline
 
 
+    TC-4
+    & req.password và req-
+    .confirm\_password không trùng
+    & Thông tin reset mật khẩu
 
-%   \item URL: GET api/categories
-  
+    \{
 
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách danh mục tin tức}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
-  
-  
-%     TC-1
-%     & NULL
-%     & NULL
-%     & 
-  
-%     Status code: 200 OK
-  
-%       Response content:
-  
-%       \{
-  
-%     "status": "success",
-  
-%     "count": Số lượng danh mục tin tức
+      "resetToken": "816e8d",
 
-%     data: Danh sách các danh mục tin tức
+      "password": "123456",
+
+      "confirm\_password": "123456",
+
+      "email": "test@gmail.com"
+
+  \}
+   &
   
-%     \}
+    Status code: 400 Bad Request
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "Password confirmation does not match"
+  
+    \}
+    & OK
+    \\ \hline  
+    \end{xltabular}
+
+
+
+\end{enumerate}
+
+
+\paragraph{API liên quan đến tin tức}
+\mbox{}
+
+Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liên quan
+\newpage
+\begin{enumerate}[a)]
+  \item URL: GET api/news/{:newsId}
+  
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2cm}
+    | >{\raggedright\arraybackslash}p{2cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy nội dung của tin tức theo ID}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Tin tức tồn tại với ID tương ứng
+    & ID tin tức
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+
+    data: Nội dung của tin tức
+  
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & Lỗi đường truyền server
-%     & NULL
-%    &
+    TC-2
+    & Tin tức không tồn tại với ID tương ứng
+    & ID danh mục tin tức
+   &
   
-%     Status code: 500 Internal Server Error
+    Status code: 404 Not Found
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     "msg": "An error occurred while retrieving the news categories"
+    "msg": "News not found"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
 
   
-%     \end{xltabular}
+    \end{xltabular}
 
+  % //TODO: new page
+  \item URL: GET api/news
 
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & NULL
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    "count": Số lượng tin tức
 
-%   \item URL: GET api/category/{:categoryId}
-%   \newpage
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin danh mục tin tức theo ID}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+    data: Danh sách các tin tức
   
-  
-%     TC-1
-%     & Danh mục tin tức tồn tại với ID tương ứng
-%     & ID danh mục tin tức
-%     & 
-  
-%     Status code: 200 OK
-  
-%       Response content:
-  
-%       \{
-  
-%     "status": "success",
-
-%     data: Thông tin danh mục tin tức
-  
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & Danh mục tin tức không tồn tại với ID tương ứng
-%     & ID danh mục tin tức
-%    &
+    TC-2
+    & NULL
+    & Lỗi đường truyền server
+   &
   
-%     Status code: 404 Not Found
+    Status code: 500 Internal Server Error
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     "msg": "News category not found"
+    "msg": "An error occurred while retrieving the news"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
 
   
-%     \end{xltabular}
+    \end{xltabular}
 
 
-%   % //TODO: new page
-%   \item URL: GET api/news/category/{:categoryId}
-  
-  
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách tin tứu theo ID danh mục tin tức}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
-  
-  
-%     TC-1
-%     & Danh mục tin tức tồn tại với ID tương ứng
-%     & ID danh mục tin tức
-%     & 
-  
-%     Status code: 200 OK
-  
-%       Response content:
-  
-%       \{
-  
-%     "status": "success",
-%     "count": Số lượng tin tức
 
-%     data: Thông tin tin tức
+  \item URL: GET api/categories
   
-%     \}
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách danh mục tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & NULL
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    "count": Số lượng danh mục tin tức
+
+    data: Danh sách các danh mục tin tức
+  
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & Danh mục tin tức không tồn tại với ID tương ứng
-%     & ID danh mục tin tức
-%    &
+    TC-2
+    & Lỗi đường truyền server
+    & NULL
+   &
   
-%     Status code: 404 Not Found
+    Status code: 500 Internal Server Error
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     "msg": "News category not found"
+    "msg": "An error occurred while retrieving the news categories"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
 
   
-%     \end{xltabular}
+    \end{xltabular}
 
 
 
-
-% \end{enumerate}
-
-
-
-% \paragraph{API liên quan đến bản ghi ECG}
-% \mbox{}
-
-% Tham khảo bảng \ref{table_api_ecg} để xem thông tin của các api liên quan
-
-% \begin{enumerate}[a)]
-%   \item URL: POST api/ecg-records/upload 
-  
-
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tải dữ liệu đo ECG lên server}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  \item URL: GET api/category/{:categoryId}
+  \newpage
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin danh mục tin tức theo ID}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
   
   
-%     TC-1
-%     & NULL
-%     & Thông tin của ECG record dưới dạng form-data
-
-% \{
-
-% file: File dữ liệu
-
-% user\_id: ID user
-
-% device\_id: ID thiết bị
-
-% stop\_time: Thời gian dừng đo
-
-% start\_time: Thời gian bắt đầu đo
-
-% sensor\_type: Loại cảm biến
-
-
-% \}
-
-%     & 
+    TC-1
+    & Danh mục tin tức tồn tại với ID tương ứng
+    & ID danh mục tin tức
+    & 
   
-%     Status code: 200 OK
+    Status code: 200 OK
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "success",
+    "status": "success",
 
-%     data: Thông tin của ECG record
+    data: Thông tin danh mục tin tức
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & Lỗi đường truyền server
-%     & Thông tin của ECG record dưới dạng form-data
-
-% \{
-
-% file: File dữ liệu
-
-% user\_id: ID user
-
-% device\_id: ID thiết bị
-
-% stop\_time: Thời gian dừng đo
-
-% start\_time: Thời gian bắt đầu đo
-
-% sensor\_type: Loại cảm biến
-
-
-% \}
-%    &
+    TC-2
+    & Danh mục tin tức không tồn tại với ID tương ứng
+    & ID danh mục tin tức
+   &
   
-%     Status code: 500 Internal Server Error
+    Status code: 404 Not Found
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     "msg": "An error occurred while retrieving the news categories"
+    "msg": "News category not found"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
 
   
-%     \end{xltabular}
+    \end{xltabular}
 
 
-%   \item URL: GET api/ecg-records/patient/{:patientId}
-  
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin phiên đo ECG của bệnh nhân}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  % //TODO: new page
+  \item URL: GET api/news/category/{:categoryId}
   
   
-%     TC-1
-%     & NULL
-%     & ID bệnh nhân
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách tin tứu theo ID danh mục tin tức}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Danh mục tin tức tồn tại với ID tương ứng
+    & ID danh mục tin tức
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+    "count": Số lượng tin tức
 
-%     & 
+    data: Thông tin tin tức
   
-%     Status code: 200 OK
-  
-%       Response content:
-  
-%       \{
-  
-%     "status": "success",
-%     "count": Số lượng ECG record của bệnh nhân
-
-%     data: Thông tin của tất cả ECG record của bệnh nhân
-  
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & Lỗi đường truyền server
-%     & ID bệnh nhân
-
-%    &
+    TC-2
+    & Danh mục tin tức không tồn tại với ID tương ứng
+    & ID danh mục tin tức
+   &
   
-%     Status code: 500 Internal Server Error
+    Status code: 404 Not Found
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     "msg": "An error occurred while retrieving the news categories"
+    "msg": "News category not found"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
 
   
-%     \end{xltabular}
+    \end{xltabular}
 
 
 
 
-%   \item URL: GET api/ecg-records/doctor/{:doctorId}
+\end{enumerate}
+
+
+
+\paragraph{API liên quan đến bản ghi ECG}
+\mbox{}
+
+Tham khảo bảng \ref{table_api_ecg} để xem thông tin của các api liên quan
+
+\begin{enumerate}[a)]
+  \item URL: POST api/ecg-records/upload 
   
 
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách phiên đo ECG của các bệnh nhân mà bác sĩ đang quản lý}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tải dữ liệu đo ECG lên server}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
   
   
-%     TC-1
-%     & NULL
-%     & ID bác sỹ
+    TC-1
+    & NULL
+    & Thông tin của ECG record dưới dạng form-data
 
-%     & 
+\{
+
+file: File dữ liệu
+
+user\_id: ID user
+
+device\_id: ID thiết bị
+
+stop\_time: Thời gian dừng đo
+
+start\_time: Thời gian bắt đầu đo
+
+sensor\_type: Loại cảm biến
+
+
+\}
+
+    & 
   
-%     Status code: 200 OK
+    Status code: 200 OK
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "success",
-%     data: Thông tin của tất cả ECG record của từng bệnh nhân mà bác sỹ quản lý
+    "status": "success",
+
+    data: Thông tin của ECG record
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & Lỗi đường truyền server
-%     & ID bác sĩ
+    TC-2
+    & Lỗi đường truyền server
+    & Thông tin của ECG record dưới dạng form-data
 
-%    &
+\{
+
+file: File dữ liệu
+
+user\_id: ID user
+
+device\_id: ID thiết bị
+
+stop\_time: Thời gian dừng đo
+
+start\_time: Thời gian bắt đầu đo
+
+sensor\_type: Loại cảm biến
+
+
+\}
+   &
   
-%     Status code: 500 Internal Server Error
+    Status code: 500 Internal Server Error
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     "msg": "An error occurred while retrieving the news categories"
+    "msg": "An error occurred while retrieving the news categories"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
 
   
-%     \end{xltabular}
+    \end{xltabular}
 
 
+  \item URL: GET api/ecg-records/patient/{:patientId}
+  
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin phiên đo ECG của bệnh nhân}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & ID bệnh nhân
 
-%   \item URL: GET api/ecg-records/record-data/{:recordId}
+    & 
   
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+    "count": Số lượng ECG record của bệnh nhân
 
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy dữ liệu một phiên đo ECG}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+    data: Thông tin của tất cả ECG record của bệnh nhân
   
-  
-%     TC-1
-%     & Có tồn tại ECG record
-%     & ID ECG record 
-
-%     & 
-  
-%     Status code: 200 OK
-  
-%       Response content:
-  
-%       \{
-  
-%     "status": "success",
-%     count: Tổng số lượng dữ liệu của ECG record
-%     data: Dữ liệu của ECG record
-  
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & Không tồn tại ECG record
-%     & ID ECG record 
+    TC-2
+    & Lỗi đường truyền server
+    & ID bệnh nhân
 
-%    &
+   &
   
-%     Status code: 404 Not Found
+    Status code: 500 Internal Server Error
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     "msg": "EcgRecord not found"
+    "msg": "An error occurred while retrieving the news categories"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
 
   
-%     \end{xltabular}
+    \end{xltabular}
 
 
-% \end{enumerate}
 
 
-% \paragraph{API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ}
-% \mbox{}
+  \item URL: GET api/ecg-records/doctor/{:doctorId}
+  
 
-% Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api liên quan
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách phiên đo ECG của các bệnh nhân mà bác sĩ đang quản lý}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & ID bác sỹ
 
-% \begin{enumerate}[a)]
-%   \item URL: GET api/doctor/{:doctorId}/patients
+    & 
   
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}p{1.5cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bệnh nhân mà bác sĩ đang quản lý theo ID bác sĩ}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+    Status code: 200 OK
   
+      Response content:
   
-%     TC-1
-%     & NULL
-%     & ID Doctor
-
-%     & 
+      \{
   
-%     Status code: 200 OK
+    "status": "success",
+    data: Thông tin của tất cả ECG record của từng bệnh nhân mà bác sỹ quản lý
   
-%       Response content:
-  
-%       \{
-  
-%     "status": "success",
-%     count: Tổng số lượng bệnh nhân mà bác sỹ đang được phân công,
-%     data: Thông tin của các bệnh nhân mà bác sỹ đang được phân công
-  
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & Lỗi đường truyền server
-%     & ID Doctor
+    TC-2
+    & Lỗi đường truyền server
+    & ID bác sĩ
 
-%    &
+   &
   
-%     Status code: 500 Internal Server Error
+    Status code: 500 Internal Server Error
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     "msg": "An error occurred while retrieving the patients"
+    "msg": "An error occurred while retrieving the news categories"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
 
   
-%     \end{xltabular}
+    \end{xltabular}
 
-%   \break
-%   \item URL: GET api/patient/{:patientId}/doctor
 
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{1cm}
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}X
-%     | >{\raggedright\arraybackslash}p{1cm}|
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin bác sĩ đang quản lý bệnh nhân theo ID bệnh nhân}
-%     % \label{table_api_news}
-%     \\
-%     \hline
-%     \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-%     &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
-  
-  
-%     TC-1
-%     & NULL
-%     & ID Patient
 
-%     & 
+  \item URL: GET api/ecg-records/record-data/{:recordId}
   
-%     Status code: 200 OK
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy dữ liệu một phiên đo ECG}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
   
-%       Response content:
   
-%       \{
+    TC-1
+    & Có tồn tại ECG record
+    & ID ECG record 
+
+    & 
   
-%     "status": "success",
-%     data: Thông tin của bác sỹ được phân công cho bệnh nhân
+    Status code: 200 OK
   
-%     \}
+      Response content:
+  
+      \{
+  
+    "status": "success",
+    count: Tổng số lượng dữ liệu của ECG record
+    data: Dữ liệu của ECG record
+  
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
   
-%     TC-2
-%     & Lỗi đường truyền server
-%     & ID Patient
+    TC-2
+    & Không tồn tại ECG record
+    & ID ECG record 
 
-%    &
+   &
   
-%     Status code: 500 Internal Server Error
+    Status code: 404 Not Found
   
-%       Response content:
+      Response content:
   
-%       \{
+      \{
   
-%     "status": "error",
+    "status": "error",
   
-%     "msg": "An error occurred while retrieving the patients"
+    "msg": "EcgRecord not found"
   
-%     \}
+    \}
     
-%     & OK
+    & OK
   
-%     \\ \hline
+    \\ \hline
 
   
-%     \end{xltabular}
-
-% \end{enumerate}
-
-% \subsubsection{Kiểm thử ứng dụng web}
-
-% \begin{xltabular}{\textwidth}{
-%   | >{\raggedright\arraybackslash}p{2cm}
-%   | >{\raggedright\arraybackslash}X
-%   | >{\raggedright\arraybackslash}X
-%   | >{\raggedright\arraybackslash}p{1cm}|
-%   }
-%   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng của website quản trị}
-%   % \label{table_api_news}
-%   \\
-%   \hline
-%   \bfseries Test case    &\bfseries Tái hiện 
-%   &\bfseries Kết quả mong muốn &\bfseries Đánh giá\\ \hline
+    \end{xltabular}
 
 
-%   Kiểm tra chức năng đăng nhập
-%   & 1. Vào màn hình đăng nhập $\rightarrow$ Nhập thông tin tài khoản hoặc mật khẩu chưa có trên hệ thống
-%   $\rightarrow$ Nhấn nút đăng nhập
-
-%   % \\ &
-
-%   2. Vào màn hình đăng nhập $\rightarrow$ Nhập thông tin tài khoản hoặc mật khẩu hơp lệ
-%   $\rightarrow$ Nhấn nút đăng nhập 
-%   & 
-
-% 1. Hiển thị thông báo sai email hoặc mật khẩu
+\end{enumerate}
 
 
-% 2. Đăng nhập thành công vào hệ thống
-%   & OK
+\paragraph{API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ}
+\mbox{}
 
-%   \\ \hline
+Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api liên quan
+
+\begin{enumerate}[a)]
+  \item URL: GET api/doctor/{:doctorId}/patients
+  
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bệnh nhân mà bác sĩ đang quản lý theo ID bác sĩ}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & ID Doctor
+
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+    count: Tổng số lượng bệnh nhân mà bác sỹ đang được phân công,
+    data: Thông tin của các bệnh nhân mà bác sỹ đang được phân công
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Lỗi đường truyền server
+    & ID Doctor
+
+   &
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "An error occurred while retrieving the patients"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+  \break
+  \item URL: GET api/patient/{:patientId}/doctor
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin bác sĩ đang quản lý bệnh nhân theo ID bệnh nhân}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & ID Patient
+
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+    data: Thông tin của bác sỹ được phân công cho bệnh nhân
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Lỗi đường truyền server
+    & ID Patient
+
+   &
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "msg": "An error occurred while retrieving the patients"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+\end{enumerate}
+
+\subsubsection{Kiểm thử ứng dụng web}
+
+\begin{xltabular}{\textwidth}{
+  | >{\raggedright\arraybackslash}p{2cm}
+  | >{\raggedright\arraybackslash}X
+  | >{\raggedright\arraybackslash}X
+  | >{\raggedright\arraybackslash}p{1cm}|
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng của website quản trị}
+  % \label{table_api_news}
+  \\
+  \hline
+  \bfseries Test case    &\bfseries Tái hiện 
+  &\bfseries Kết quả mong muốn &\bfseries Đánh giá\\ \hline
+
+
+  Kiểm tra chức năng đăng nhập
+  & 1. Vào màn hình đăng nhập $\rightarrow$ Nhập thông tin tài khoản hoặc mật khẩu chưa có trên hệ thống
+  $\rightarrow$ Nhấn nút đăng nhập
+
+  % \\ &
+
+  2. Vào màn hình đăng nhập $\rightarrow$ Nhập thông tin tài khoản hoặc mật khẩu hơp lệ
+  $\rightarrow$ Nhấn nút đăng nhập 
+  & 
+
+1. Hiển thị thông báo sai email hoặc mật khẩu
+
+
+2. Đăng nhập thành công vào hệ thống
+  & OK
+
+  \\ \hline
 
    
-%   Kiểm tra chức năng đăng ký
-%   & 
+  Kiểm tra chức năng đăng ký
+  & 
 
-% 1. Vào màn hình đăng ký
+1. Vào màn hình đăng ký
 
-% 2. Thêm bệnh nhân mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
+2. Thêm bệnh nhân mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
 
-% 3. Sửa thông tin bệnh nhân có sẵn $\rightarrow$ Lưu thay đổi
+3. Sửa thông tin bệnh nhân có sẵn $\rightarrow$ Lưu thay đổi
 
-% 4. Xóa một bệnh nhân khỏi hệ thống
+4. Xóa một bệnh nhân khỏi hệ thống
  
-%   & 
+  & 
 
 
-% 1. Hiển thị danh sách bệnh nhân
+1. Hiển thị danh sách bệnh nhân
 
-% 2. Thêm bệnh nhân thành công
+2. Thêm bệnh nhân thành công
 
-% 3. Cập nhật thông tin bệnh nhân thành công
+3. Cập nhật thông tin bệnh nhân thành công
 
-% 4. Xóa bệnh nhân khỏi hệ thống thành công
+4. Xóa bệnh nhân khỏi hệ thống thành công
 
-%   & OK
+  & OK
 
-%   \\ \hline
+  \\ \hline
 
-%   Kiểm tra chức năng quản lý bác sĩ
-%   & 
+  Kiểm tra chức năng quản lý bác sĩ
+  & 
 
-% 1. Vào màn hình quản lý bác sĩ 
+1. Vào màn hình quản lý bác sĩ 
 
-% 2. Thêm bác sĩ mới với thông tin hợp lệ  $\rightarrow$ Lưu thông tin
+2. Thêm bác sĩ mới với thông tin hợp lệ  $\rightarrow$ Lưu thông tin
 
-% 3. Sửa thông tin bác sĩ có sẵn  $\rightarrow$ Lưu thay đổi
+3. Sửa thông tin bác sĩ có sẵn  $\rightarrow$ Lưu thay đổi
 
-% 4. Xóa một bác sĩ khỏi hệ thống
+4. Xóa một bác sĩ khỏi hệ thống
  
-%   & 
+  & 
 
-%   1. Hiển thị danh sách bác sĩ
+  1. Hiển thị danh sách bác sĩ
 
-% 2. Thêm bác sĩ thành công
+2. Thêm bác sĩ thành công
 
-% 3. Cập nhật thông tin bác sĩ thành công
+3. Cập nhật thông tin bác sĩ thành công
 
-% 4. Xóa bác sĩ khỏi hệ thống thành công
+4. Xóa bác sĩ khỏi hệ thống thành công
 
-%   & OK
+  & OK
 
-%   \\ \hline
+  \\ \hline
 
-%   Kiểm tra chức năng quản lý admin
-%   & 
+  Kiểm tra chức năng quản lý admin
+  & 
 
-% 1. Vào màn hình quản lý admin 
+1. Vào màn hình quản lý admin 
 
-% 2. Thêm admin mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
+2. Thêm admin mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
 
-% 3. Sửa thông tin admin có sẵn $\rightarrow$ Lưu thay đổi
+3. Sửa thông tin admin có sẵn $\rightarrow$ Lưu thay đổi
 
-% 4. Xóa một admin khỏi hệ thống
+4. Xóa một admin khỏi hệ thống
  
-%   & 
+  & 
 
-% 1. Hiển thị danh sách admin
+1. Hiển thị danh sách admin
 
-% 2. Thêm admin thành công
+2. Thêm admin thành công
 
-% 3. Cập nhật thông tin admin thành công
+3. Cập nhật thông tin admin thành công
 
-% 4. Xóa admin khỏi hệ thống thành công
+4. Xóa admin khỏi hệ thống thành công
 
-%   & OK
+  & OK
 
-%   \\ \hline
+  \\ \hline
 
 
-%   Kiểm tra chức năng quản lý tin tức
-%   & 
+  Kiểm tra chức năng quản lý tin tức
+  & 
 
-% 1. Vào màn hình quản lý tin tức 
+1. Vào màn hình quản lý tin tức 
 
-% 2. Thêm tin tức mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
+2. Thêm tin tức mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
 
-% 3. Sửa thông tin tin tức có sẵn $\rightarrow$ Lưu thay đổi
+3. Sửa thông tin tin tức có sẵn $\rightarrow$ Lưu thay đổi
 
-% 4. Xóa một tin tức khỏi hệ thống
+4. Xóa một tin tức khỏi hệ thống
  
-%   & 
+  & 
 
-% 1. Hiển thị danh sách tin tức
+1. Hiển thị danh sách tin tức
 
-% 2. Thêm tin tức thành công
+2. Thêm tin tức thành công
 
-% 3. Cập nhật thông tin tin tức thành công
+3. Cập nhật thông tin tin tức thành công
 
-% 4. Xóa tin tức khỏi hệ thống thành công
+4. Xóa tin tức khỏi hệ thống thành công
 
-%   & OK
+  & OK
 
-%   \\ \hline
+  \\ \hline
 
-%   Kiểm tra chức năng quản lý danh mục tin tức
-%   & 
+  Kiểm tra chức năng quản lý danh mục tin tức
+  & 
  
-%   1. Vào màn hình quản lý danh mục tin tức 
+  1. Vào màn hình quản lý danh mục tin tức 
 
-%   2. Thêm danh mục mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
+  2. Thêm danh mục mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
 
-%   3. Sửa thông tin danh mục có sẵn $\rightarrow$ Lưu thay đổi
+  3. Sửa thông tin danh mục có sẵn $\rightarrow$ Lưu thay đổi
 
-%   4. Xóa một danh mục khỏi hệ thống
+  4. Xóa một danh mục khỏi hệ thống
 
 
-%   & 
+  & 
 
-% 1. Hiển thị danh sách danh mục tin tức
+1. Hiển thị danh sách danh mục tin tức
 
-% 2. Thêm danh mục thành công
+2. Thêm danh mục thành công
 
-% 3. Cập nhật thông tin danh mục thành công
+3. Cập nhật thông tin danh mục thành công
 
-% 4. Xóa danh mục khỏi hệ thống thành công
+4. Xóa danh mục khỏi hệ thống thành công
 
-%   & OK
+  & OK
 
-%   \\ \hline
+  \\ \hline
 
-%   Kiểm tra chức năng quản lý phân công bệnh nhân - bác sĩ
-%   & 
+  Kiểm tra chức năng quản lý phân công bệnh nhân - bác sĩ
+  & 
  
-%   1. Vào màn hình quản lý phân công 
+  1. Vào màn hình quản lý phân công 
 
-%   2. Phân công bệnh nhân cho bác sĩ $\rightarrow$ Lưu thông tin
+  2. Phân công bệnh nhân cho bác sĩ $\rightarrow$ Lưu thông tin
 
-%   3. Sửa thông tin phân công có sẵn $\rightarrow$ Lưu thay đổi
+  3. Sửa thông tin phân công có sẵn $\rightarrow$ Lưu thay đổi
 
-%   4. Hủy phân công bệnh nhân cho bác sĩ
+  4. Hủy phân công bệnh nhân cho bác sĩ
 
-%   & 
+  & 
 
-% 1. Hiển thị danh sách phân công
+1. Hiển thị danh sách phân công
 
-% 2. Phân công thành công
+2. Phân công thành công
 
-% 3. Cập nhật thông tin phân công thành công
+3. Cập nhật thông tin phân công thành công
 
-% 4. Hủy phân công thành công
+4. Hủy phân công thành công
 
-%   & OK
+  & OK
 
-%   \\ \hline
+  \\ \hline
 
   
-%   Kiểm tra chức năng quản lý dữ liệu ECG
-%   & 
-% 1. Vào màn hình quản lý dữ liệu ECG 
+  Kiểm tra chức năng quản lý dữ liệu ECG
+  & 
+1. Vào màn hình quản lý dữ liệu ECG 
 
-% 2. Tải dữ liệu ECG từ thiết bị lên hệ thống $\rightarrow$ Lưu thông tin
+2. Tải dữ liệu ECG từ thiết bị lên hệ thống $\rightarrow$ Lưu thông tin
 
-% 3. Hiển thị danh sách dữ liệu ECG
+3. Hiển thị danh sách dữ liệu ECG
 
-% 4. Xem chi tiết dữ liệu ECG
+4. Xem chi tiết dữ liệu ECG
  
-%   & 
+  & 
 
-% 1. Hiển thị danh sách dữ liệu ECG
+1. Hiển thị danh sách dữ liệu ECG
 
-% 2. Tải dữ liệu ECG thành công
+2. Tải dữ liệu ECG thành công
 
-% 3. Hiển thị chi tiết dữ liệu ECG
+3. Hiển thị chi tiết dữ liệu ECG
 
-%   & OK
+  & OK
 
-%   \\ \hline
+  \\ \hline
 
-%   \end{xltabular}
+  \end{xltabular}
 
 
 \subsection{Kết luận chương}
