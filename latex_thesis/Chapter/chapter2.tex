@@ -36,11 +36,13 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       \textbf{Mô tả:} Đối tượng mô tả thông tin người dùng & \textbf{Use case liên quan:}  Đăng ký tài khoản, Quản lý tài khoản cá nhân, Xem danh sách bệnh nhân\\
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Đăng ký tài khoản
-      
       Mô tả thông tin người dùng
 
-      Quản lý danh sách người dùng 
+      Thêm, sửa, xóa thông tin người dùng 
+
+      Lấy danh sách người dùng
+
+      Lấy thông tin người dùng qua id, tài khoản, chức vụ
       & 
       Tài khoản, Phân công bác sĩ - bệnh nhân
       \\
@@ -105,6 +107,10 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       Đăng ký tài khoản
 
       Quên mật khẩu
+
+      Chỉnh sửa thông tin tài khoản
+
+      Lấy thông tin tài khoản qua email
       & 
       Người dùng, Token đăng nhập
       \\
@@ -151,6 +157,8 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
       Mô tả thông tin tài khoản đang chờ phê duyệt
+
+      Lấy danh sách tài khoản đang chờ phê duyệt
       
       Đăng ký tài khoản
 
@@ -274,10 +282,14 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
       Mô tả thông tin thiết bị
+
+      Lấy danh sách tất cả thiết bị
+
+      Lấy danh sách thiết bị theo người dùng, bác sĩ
       
-      Quản lý danh sách thiết bị
+      Thêm, sửa, xóa thiết bị
       & 
-      Người dùng, Thông tin thiết bị 
+      Người dùng, Thông số thiết bị 
       \\
       \hline
     \end{tabularx}
@@ -291,12 +303,14 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       
       user\_id(String)
 
+      doctor\_id(String)
+
       device\_name(String)
 
       infomation(String)
-
-      device\_type(Integer)
       & 
+      device\_type(Integer)
+
       start\_date(Timestamps) 
       
       end\_date(Timestamps) 
@@ -311,9 +325,67 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       \textbf{Mối quan hệ (Relationships):} \\
       Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation): Thông tin thiết bị
+      Toàn thể - Bộ phận (Aggregation): Thông số thiết bị
       
       Liên kết (Association): Người dùng
+      \\
+      \hline
+    \end{tabularx}
+  \end{table}
+
+  \subsubsection{Thẻ CRC lớp Thông số thiết bị}
+  \begin{table}[H]
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thông số thiết bị}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt trước thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Tên lớp:} Thông số thiết bị & \textbf{ID:} 6 \\
+      \hline
+      \textbf{Mô tả:} Đối tượng mô tả thông tin thông số thiết bị & \textbf{Use case liên quan:} Quản lý thiết bị\\
+      \hline
+      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+      Mô tả thông tin thông số thiết bị
+
+      Lấy thông số theo thiết bị
+      & 
+      Thiết bị 
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{X}
+      Mặt sau thẻ
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|X|}
+      \hline
+      \textbf{Thuộc tính (Attributes):} & \\
+      id(String) 
+      
+      device\_id(String)
+
+      detail\_name(String)
+
+      infomation(String)
+      & 
+      value(Integer)
+
+      detail\_type(Integer)
+      
+      created\_at(Timestamps)
+
+      updated\_at(Timestamps)
+      \\
+      \hline
+    \end{tabularx}
+    \begin{tabularx}{0.9\textwidth}{|X|}
+      \textbf{Mối quan hệ (Relationships):} \\
+      Tổng quát hóa (Generalize):  
+
+      Toàn thể - Bộ phận (Aggregation): Thiết bị
+      
+      Liên kết (Association): 
       \\
       \hline
     \end{tabularx}
@@ -328,14 +400,18 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Bản ghi & \textbf{ID:} 6 \\
+      \textbf{Tên lớp:} Bản ghi & \textbf{ID:} 7 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin bản ghi & \textbf{Use case liên quan:} Quản lý lịch sử đo bệnh nhân \\
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
       Mô tả thông tin bản ghi 
 
-      Quản lý danh sách bản ghi
+      Lấy danh sách tất cả bản ghi
+
+      Lấy danh sách bản ghi theo người dùng, thiết bị
+
+      Thêm, sửa, xóa thông tin bản ghi
 
       Đọc, tải bản ghi
       & 
@@ -388,12 +464,16 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Phân công bác sĩ - bệnh nhân & \textbf{ID:} 7 \\
+      \textbf{Tên lớp:} Phân công bác sĩ - bệnh nhân & \textbf{ID:} 8 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin quản lý giữa bác sĩ và bệnh nhân & \textbf{Use case liên quan:} Quản lý phân công bác sĩ - bệnh nhân \\
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
       Mô tả thông tin quan lý giữa bác sĩ và bệnh nhân
+
+      Lấy danh sách tất cả phân công
+
+      Lấy danh sách phân công theo bác sĩ, bệnh nhân
 
       Phân công bệnh nhân theo bác sĩ
       & 
@@ -425,9 +505,9 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       \textbf{Mối quan hệ (Relationships):} \\
       Tổng quát hóa (Generalize):
 
-      Toàn thể - Bộ phận (Aggregation):
+      Toàn thể - Bộ phận (Aggregation): Người dùng
       
-      Liên kết (Association): Người dùng 
+      Liên kết (Association):  
       \\
       \hline
     \end{tabularx}
@@ -442,14 +522,18 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Tin tức & \textbf{ID:} 8 \\
+      \textbf{Tên lớp:} Tin tức & \textbf{ID:} 9 \\
       \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin Tin tức & \textbf{Use case liên quan:}  \\
+      \textbf{Mô tả:} Đối tượng mô tả thông tin Tin tức & \textbf{Use case liên quan:}  Quản lý bài đăng\\
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
       Mô tả thông tin tin tức
 
-      Quản lý danh sách tin tức
+      Lấy danh sách tất cả tin tức
+
+      Lấy thông tin tin tức theo id, người dùng
+
+      Thêm, sửa, xóa bài đăng tin tức
       & 
       Người dùng, Danh mục tin tức
       \\
@@ -502,14 +586,14 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Danh mục tin tức & \textbf{ID:} 9 \\
+      \textbf{Tên lớp:} Danh mục tin tức & \textbf{ID:} 10 \\
       \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin Danh mục tin tức & \textbf{Use case liên quan:}  \\
+      \textbf{Mô tả:} Đối tượng mô tả thông tin Danh mục tin tức & \textbf{Use case liên quan:}  Quản lý nhãn bài đăng\\
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
       Mô tả thông tin danh mục tin tức
 
-      Quản lý danh sách danh mục tin tức
+      Thêm, sửa, xóa danh mục tin tức
       & 
       Tin tức
       \\
@@ -554,12 +638,16 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Thành viên tham gia hội thoại & \textbf{ID:} 10 \\
+      \textbf{Tên lớp:} Thành viên tham gia hội thoại & \textbf{ID:} 11 \\
       \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin, Hỏi, tư vấn từ trợ lý ảo \\
+      \textbf{Mô tả:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin; Hỏi, tư vấn từ trợ lý ảo \\
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
       Thông tin Thành viên tham gia hội thoại
+
+      Lấy danh sách thành viên theo hội thoại
+
+      Lấy danh sách hội thoại theo thành viên
       & 
       Người dùng, Cuộc hội thoại 
       \\
@@ -606,7 +694,7 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Cuộc hội thoại & \textbf{ID:} 11 \\
+      \textbf{Tên lớp:} Cuộc hội thoại & \textbf{ID:} 12 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin; Hỏi, tư vấn từ trợ lý ảo \\
       \hline
@@ -654,14 +742,16 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Tin nhắn & \textbf{ID:} 12 \\
+      \textbf{Tên lớp:} Tin nhắn & \textbf{ID:} 13 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin Tin nhắn & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin; Hỏi, tư vấn từ trợ lý ảo \\
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
       Mô tả thông tin Tin nhắn
 
-      Gửi tin nhắn
+      Xem/gửi tin nhắn
+
+      Lấy danh sách tin nhắn theo hội thoại, người gửi
       & 
       Thành viên tham gia hội thoại, Cuộc hội thoại, Tệp đính kèm
       \\
@@ -712,12 +802,14 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
     \end{tabularx}
     \begin{tabularx}{0.9\textwidth}{|X|X|}
       \hline
-      \textbf{Tên lớp:} Tệp đính kèm & \textbf{ID:} 13 \\
+      \textbf{Tên lớp:} Tệp đính kèm & \textbf{ID:} 14 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin Tệp đính kèm tin nhắn & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin \\
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
       Mô tả thông tin Tệp đính kèm
+
+      Lấy thông tin tệp đính kèm theo tin nhắn, cuộc hội thoại
       & 
       Tin nhắn, Cuộc hội thoại
       \\
@@ -1106,6 +1198,9 @@ Tại phần này, chúng em sẽ tiến hành xác định và mô tả các th
     Tin tức &
     ID tin tức, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn, Đường dẫn hình ảnh \\
     \hline
+    Tài khoản phê duyệt & 
+    ID tài khoản phê duyệt, Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
+    \hline
   \end{tabularx}
 
   
@@ -1120,297 +1215,13 @@ Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em x
   \label{ttlk} %đặt tên cho ảnh
 \end{figure}
 
-\subsection{Mô hình quan hệ}
-Dựa trên phần mô tả các thực thể, chúng em sẽ chuyển mô hình thực thể liên kết sang mô hình quan hệ như sau:
-
-\begin{itemize}
-  \item Người dùng (\textbf{ID người dùng}, ID tài khoản, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng)
-  \item Tài khoản (\textbf{ID tài khoản}, Email, Mật khẩu)
-  \item Token đăng nhập (\textbf{ID token}, ID tài khoản, Token truy cập, Token làm mới)
-  \item Thiết bị (\textbf{ID thiết bị}, ID người dùng thiết bị, ID bác sĩ theo dõi, Tên thiết bị, Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng)
-  \item Bản ghi dữ liệu (\textbf{ID bản ghi dữ liệu}, ID người dùng, ID thiết bị, Loại bản ghi, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo)
-  \item Thông tin hội thoại (\textbf{ID hội thoại}, Tên hội thoại, Loại hội thoại, Đường dẫn avatar hội thoại)
-  \item Thành viên tham gia hội thoại (\textbf{ID}, ID hội thoại, ID người dùng tham gia, Trạng thái thông báo, Tác vụ, Trạng thái đã xem)
-  \item Tin nhắn (\textbf{ID tin nhắn}, ID hội thoại, ID người gửi, Các tệp đính kèm, Tin nhắn hệ thống, Ghim, Thời gian ghim tin nhắn, Các lượt thả cảm xúc)
-  \item Tệp đính kèm (\textbf{ID tệp đính kèm}, ID tin nhắn, ID hội thoại, Đường dẫn nội dung, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm)
-  \item Phân công bệnh nhân - bác sĩ (\textbf{ID phân công}, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu)
-  \item Danh mục tin tức (\textbf{ID danh mục tin tức}, Tên danh mục tin tức, Mô tả danh mục tin tức)
-  \item Tin tức (\textbf{ID tin tức}, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn, Đường dẫn hình ảnh)
-\end{itemize}
-
-
-\subsection{Chuẩn hoá 3NF}
-Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì không có thuộc tính lặp lại và các thuộc tính không phụ thuộc vào một tập hợp con của khóa chính.
-
-\subsubsection{Chuẩn hoá bảng Người dùng}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Người dùng}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID người dùng, ID tài khoản, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi người dùng có một ID riêng, có duy nhất ID tài khoản, tên, ngày sinh, giới tính, số điện thoại, quyền,
-    trạng thái, đường dẫn lưu trữ ảnh, thông tin & \parbox[t]{\linewidth}{$\text{ID người dùng} \rightarrow$ ID tài khoản, Tên người dùng, Ngày sinh, Giới Tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID người dùng}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Người dùng đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\subsubsection{Chuẩn hoá bảng Tài khoản}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tài khoản}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID tài khoản, Email, Mật khẩu \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi tài khoản có một ID riêng, có duy nhất email, mật khẩu 
-    & \parbox[t]{\linewidth}{$\text{ID tài khoản} \rightarrow$ Email, mật khẩu} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tài khoản}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tài khoản đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-\subsubsection{Chuẩn hoá bảng Token đăng nhập}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Token đăng nhập}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID token, ID tài khoản, Token truy cập, Token làm mới \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi người dùng có một ID token riêng, có duy nhất ID tài khoản, token truy cập và token làm mới 
-    & \parbox[t]{\linewidth}{$\text{ID token} \rightarrow$ ID tài khoản, Token truy cập, Token làm mới} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID token đăng nhập}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Token  đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\subsubsection{Chuẩn hoá bảng Thiết bị}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thiết bị}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID thiết bị, ID người dùng thiết bị, ID bác sĩ theo dõi, Tên thiết bị, 
-    Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi thiết bị khi được sử dụng sẽ có một ID thiết bị riêng, có duy nhất tên thiết bị, loại thiết bị, thông tin thiết bị.
-    ID người dùng thiết bị, ID bác sĩ theo dõi, trạng thái thiết bị, ngày bắt đầu sử dụng
-    & \parbox[t]{\linewidth}{$\text{ID thiết bị} \rightarrow$ ID người dùng thiết bị, ID bác sĩ theo dõi, Tên thiết bị, 
-    Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID thiết bị}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\subsubsection{Chuẩn hoá bảng Bản ghi dữ liệu}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Bản ghi dữ liệu}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID bản ghi dữ liệu, ID người dùng, ID thiết bị, Loại bản ghi, 
-    Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi bản ghi có một ID bản ghi dữ liệu riêng, có duy nhất ID người dùng, ID thiết bị, Loại bản ghi, 
-    Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo
-    & \parbox[t]{\linewidth}{$\text{ID bản ghi dữ liệu} \rightarrow$ ID người dùng, ID thiết bị, Loại bản ghi, 
-    Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID bản ghi dữ liệu}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Bản ghi dữ liệu đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\subsubsection{Chuẩn hoá bảng Thông tin hội thoại}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thông tin hội thoại}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID hội thoại, Tên hội thoại, 
-    Loại hội thoại, Đường dẫn avatar hội thoại \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi hội thoại có một ID hội thoại riêng, có duy nhất tên hội thoại, 
-    loại hội thoại, đường dẫn avatar hội thoại
-    & \parbox[t]{\linewidth}{$\text{ID hội thoại} \rightarrow$ Tên hội thoại, 
-    Loại hội thoại, Đường dẫn avatar hội thoại} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID hội thoại}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thông tin hội thoại đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\subsubsection{Chuẩn hoá bảng Thành viên tham gia hội thoại}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thành viên tham gia hội thoại}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID, ID hội thoại, ID người dùng tham gia,
-    Trạng thái thông báo, Tác vụ, Trạng thái đã xem \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi hội thoại có nhiều ID người dùng tham gia, mỗi người dùng có duy nhất trạng thái thông báo,
-    tác vụ, trạng thái đã xem trong một hội thoại
-    & \parbox[t]{\linewidth}{$\text{ID} \rightarrow$ ID hội thoại, ID người dùng tham gia,
-    Trạng thái thông báo, Tác vụ, Trạng thái đã xem} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thành viên tham gia hội thoại đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\subsubsection{Chuẩn hoá bảng Tin nhắn}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tin nhắn}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID tin nhắn, ID hội thoại, ID người gửi, Các tệp đính kèm, 
-    Tin nhắn hệ thống, Ghim, Thời gian ghim tin nhắn, Các lượt thả cảm xúc \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi tin nhắn có một ID tin nhắn riêng, thuộc một hội thoại, có duy nhất ID người gửi, các tệp đính kèm,
-    tin nhắn hệ thống, ghim, thời gian ghim tin nhắn, các lượt thả cảm xúc
-    & \parbox[t]{\linewidth}{$\text{ID tin nhắn} \rightarrow$ ID hội thoại, ID người gửi, các tệp đính kèm,
-    tin nhắn hệ thống, ghim, thời gian ghim tin nhắn, các lượt thả cảm xúc} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tin nhắn}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tin nhắn đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\subsubsection{Chuẩn hoá bảng Tệp đính kèm}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tệp đính kèm}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID tệp đính kèm, ID tin nhắn, ID hội thoại, Đường dẫn nội
-    dung, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi tệp đính kèm có một ID tệp đính kèm riêng, thuộc một tin nhắn trong một hội thoại, có duy nhất đường dẫn nội
-    dung, tên tệp, kích thước tệp, đường dẫn thumbnail, loại đính kèm
-    & \parbox[t]{\linewidth}{$\text{ID tệp đính kèm} \rightarrow$ ID tin nhắn, ID hội thoại, Đường dẫn nội
-    dung, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tệp đính kèm}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tệp đính kèm đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\subsubsection{Chuẩn hoá bảng Phân công bệnh nhân - bác sĩ}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Phân công bệnh nhân - bác sĩ}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi phân công bệnh nhân - bác sĩ có một ID phân công riêng, có duy nhất ID bệnh nhân, ID bác sĩ, ngày bắt đầu.
-    Mỗi bệnh nhân thuộc một phân công duy nhất, còn mỗi bác sĩ có thể được giao nhiều phân công.
-    & \parbox[t]{\linewidth}{$\text{ID phân công} \rightarrow$ ID bệnh nhân, ID bác sĩ, Ngày bắt đầu} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID phân công}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Phân công bệnh nhân - bác sĩ đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\subsubsection{Chuẩn hoá bảng Danh mục tin tức}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Danh mục tin tức}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID danh mục tin tức, Tên danh mục tin tức, Mô tả danh mục tin tức \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi danh mục tin tức có một ID danh mục tin tức riêng, có duy nhất tên danh mục tin tức, mô tả danh mục tin tức
-    & \parbox[t]{\linewidth}{$\text{ID danh mục tin tức} \rightarrow$ Tên danh mục tin tức, Mô tả danh mục tin tức} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID danh mục tin tức}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Danh mục tin tức đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\subsubsection{Chuẩn hoá bảng Tin tức}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tin tức}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID tin tức, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn,
-    Đường dẫn hình ảnh \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi tin tức có một ID tin tức riêng, thuộc duy nhất một danh mục tin tức, có duy nhất tiêu đề, 
-    nội dung, tác giả, đường dẫn, đường dẫn hình ảnh
-    & \parbox[t]{\linewidth}{$\text{ID tin tức} \rightarrow$ Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, 
-    Đường dẫn, Đường dẫn hình ảnh} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tin tức}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tin tức đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
 \subsection{Kết luận chương}
 
 Trong chương này, chúng em đã thực hiện phân tích toàn diện về
- hệ thống cho đề tài , nhằm đáp ứng
-  các mục tiêu và yêu cầu đã được đề xuất.
+ hệ thống, nhằm đáp ứng các mục tiêu và yêu cầu đã được đề xuất.
 
 Chúng em đã xác định rõ ràng các khía cạnh quan trọng của hệ thống,
- tập trung vào việc thiết kế một hệ thống quản lý ECG hiệu quả,
+ tập trung vào việc thiết kế một hệ thống quản lý dữ liệu điện tim hiệu quả hiệu quả,
   trực quan và có khả năng theo dõi sức khỏe tim mạch một cách
    chính xác. 
 
