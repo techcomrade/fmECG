@@ -829,16 +829,20 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 \subsection{Thiết kế giao diện}
 
 Dưới đây là các giao diện thực tế mà chúng em thiết kế cho trang web quản trị
-
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.4]{Images/server/webUI/register_1.png}
+  \caption[Giao diện trang đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng ký tài khoản}
+  \label{register_1} %đặt tên cho ảnh
+\end{figure}
+\begin{figure}[H]
+  \centering
   \includegraphics[scale=0.4]{Images/server/webUI/register_2.png}
   \caption[Giao diện trang đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng ký tài khoản}
-  \label{register} %đặt tên cho ảnh
+  \label{register_2} %đặt tên cho ảnh
 \end{figure}
 
-Hình \ref{register} mô tả giao diện cho màn hình đăng ký tài khoản, màn hình này sẽ bao
+Hình \ref{register_1}, \ref{register_2} mô tả giao diện cho màn hình đăng ký tài khoản, màn hình này sẽ bao
  gồm các thông tin để người dùng đăng ký tài khoản vào hệ thống
  nếu các thông tin là chính xác thì sẽ chuyển hướng đến trang đăng nhập và chờ kết quả phê duyệt qua email, 
  còn nếu sai thông tin thì sẽ có popup thông báo sai trường thông tin

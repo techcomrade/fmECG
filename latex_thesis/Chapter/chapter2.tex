@@ -21,78 +21,85 @@ Việc phân tích chi tiết các yêu cầu hệ thống sẽ được chúng 
 \subsection{Thẻ CRC (Class - Responsibility - Collaboration Card)}
 
 \subsubsection{Thẻ CRC lớp Người dùng}
+\begin{xltabular}{\textwidth}{
+   >{\centering\arraybackslash}X 
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Người dùng}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Người dùng & \textbf{ID:} 1 \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin người dùng & \textbf{Use case liên quan:}  Đăng ký tài khoản, Quản lý tài khoản cá nhân, Quản lý phân công bác sĩ - bệnh nhân\\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Thêm, sửa, xóa thông tin người dùng 
 
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Người dùng}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Người dùng & \textbf{ID:} 1 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin người dùng & \textbf{Use case liên quan:}  Đăng ký tài khoản, Quản lý tài khoản cá nhân, Quản lý phân công bác sĩ - bệnh nhân\\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Thêm, sửa, xóa thông tin người dùng 
+    Lấy danh sách người dùng
 
-      Lấy danh sách người dùng
+    Lấy thông tin người dùng qua ID, tài khoản, chức vụ
+    & 
+    Tài khoản, Phân công bác sĩ - bệnh nhân
+    \\
+    \hline
+  \end{tabularx}
+  \\ 
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx} 
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} & \\
+    id(uuid) 
+    
+    account\_id(String)
 
-      Lấy thông tin người dùng qua ID, tài khoản, chức vụ
-      & 
-      Tài khoản, Phân công bác sĩ - bệnh nhân
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(uuid) 
-      
-      account\_id(String)
+    username(String)
 
-      username(String)
+    birth(Timestamps)
 
-      birth(Timestamps)
+    phone\_number(String)
+    & 
+    image(String) 
+    
+    role(Integer) 
+    
+    created\_at(Timestamps)
 
-      phone\_number(String)
-      & 
-      image(String) 
-      
-      role(Integer) 
-      
-      created\_at(Timestamps)
+    updated\_at(Timestamps)
+    \\ \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \hline
+    \textbf{Mối quan hệ (Relationships)} \\
+    Tổng quát hóa (Generalize):  
 
-      updated\_at(Timestamps)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Relationships} \\
-      Generalize:  
-
-      Toàn thể - Bộ phận (Aggregation):
-      
-      Liên kết (Association): Tài khoản, Phân công bác sĩ - bệnh nhân 
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
+    Toàn thể - Bộ phận (Aggregation):
+    
+    Liên kết (Association): Tài khoản, Phân công bác sĩ - bệnh nhân 
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
 
   \subsubsection{Thẻ CRC lớp Tài khoản}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tài khoản}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Tài khoản & \textbf{ID:} 2 \\
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+   }
+   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tài khoản}
+   % \label{table_api_news}
+   \\
+   \begin{tabularx}{0.9\textwidth}{X}
+     Mặt trước thẻ
+   \end{tabularx}
+   \begin{tabularx}{0.9\textwidth}{|X|X|}
+     \hline
+     \textbf{Tên lớp:} Tài khoản & \textbf{ID:} 2 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin tài khoản & \textbf{Use case liên quan:} Đăng ký, Đăng nhập/Đăng xuất, Quên mật khẩu, Quản lý tài khoản người dùng \\
       \hline
@@ -109,740 +116,806 @@ Việc phân tích chi tiết các yêu cầu hệ thống sẽ được chúng 
       & 
       Người dùng, Token đăng nhập
       \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} \\
-      id(String) 
-      
-      email(String)
+     \hline
+   \end{tabularx}
+   \\ 
+   \begin{tabularx}{0.9\textwidth}{X}
+     Mặt sau thẻ
+   \end{tabularx}
+   \begin{tabularx}{0.9\textwidth}{|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} \\
+    id(String) 
+    
+    email(String)
 
-      password(String)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):  
+    password(String)
+    \\
+    \hline
+  \end{tabularx}
+   \\     
+   \begin{tabularx}{0.9\textwidth}{|X|}
+     \textbf{Mối quan hệ (Relationships)} \\
+     Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation):   
-      
-      Liên kết (Association): Người dùng, Token đăng nhập 
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
+     Toàn thể - Bộ phận (Aggregation):   
+     
+     Liên kết (Association): Người dùng, Token đăng nhập      \\
+     \hline
+   \end{tabularx}
+   \end{xltabular}
+   
 
 \subsubsection{Thẻ CRC lớp Tài khoản phê duyệt}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tài khoản phê duyệt}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Tài khoản phê duyệt & \textbf{ID:} 3 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin tài khoản đang chờ phê duyệt & \textbf{Use case liên quan:} Đăng ký, Quản lý tài khoản người dùng \\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Lấy danh sách tài khoản đang chờ phê duyệt
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+  }
+  \newpage
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tài khoản phê duyệt}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Tài khoản phê duyệt & \textbf{ID:} 3 \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin tài khoản đang chờ phê duyệt & \textbf{Use case liên quan:} Đăng ký, Quản lý tài khoản người dùng \\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Lấy danh sách tài khoản đang chờ phê duyệt
+    
+    Đăng ký tài khoản
+
+    Phê duyệt tài khoản
+    & 
+    Người dùng, Tài khoản
+    \\
+    \hline
+  \end{tabularx}
+  \\ 
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} & \\
+    id(uuid) 
+    
+    email(String)
+
+    password(String)
+
+    birth(Timestamps)
+
+    gender(Integer)
+
+    phone\_number(String)
+    &
+    image(String)
+
+    status(Integer)
+
+    infomation(String)
+
+    role(Integer)
+
+    created\_at(Timestamps)
+
+    updated\_at(Timestamps)
+    \\
+    \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \textbf{Mối quan hệ (Relationships)} \\
+    Tổng quát hóa (Generalize):  
+
+    Toàn thể - Bộ phận (Aggregation):   
       
-      Đăng ký tài khoản
+    Liên kết (Association): Người dùng, Tài khoản
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
 
-      Phê duyệt tài khoản
-      & 
-      Người dùng, Tài khoản
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(uuid) 
+\subsubsection{Thẻ CRC lớp Token đăng nhập}
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Token đăng nhập}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Token đăng nhập & \textbf{ID:} 4  \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin token tài khoản & \textbf{Use case liên quan:} Đăng nhập/Đăng xuất \\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Mô tả thông tin token tài khoản
+
+    Tạo/xóa access token và refresh token khi đăng nhập/đăng xuất
+
+    Xác thực token khi đăng nhập
+    & 
+    Tài khoản
+    \\
+    \hline
+  \end{tabularx}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx} 
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} & \\
+    id(String) 
+    
+    account\_id(String)
+
+    access\_token(String)
+    & 
+    refresh\_token(String) 
+          
+    created\_at(Timestamps)
+
+    updated\_at(Timestamps)
+    \\
+    \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \textbf{Mối quan hệ (Relationships)} \\
+    Tổng quát hóa (Generalize):
+
+    Toàn thể - Bộ phận (Aggregation):
       
-      email(String)
+    Liên kết (Association): Tài khoản
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
 
-      password(String)
-
-      birth(Timestamps)
-
-      gender(Integer)
-
-      phone\_number(String)
-      &
-      image(String)
-
-      status(Integer)
-
-      infomation(String)
-
-      role(Integer)
-
-      created\_at(Timestamps)
-
-      updated\_at(Timestamps)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):  
-
-      Toàn thể - Bộ phận (Aggregation):   
-      
-      Liên kết (Association): Người dùng, Tài khoản 
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
-  \subsubsection{Thẻ CRC lớp Token đăng nhập}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Token tài khoản}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Token đăng nhập & \textbf{ID:} 4  \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin token tài khoản & \textbf{Use case liên quan:} Đăng nhập/Đăng xuất \\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin token tài khoản
-
-      Tạo/xóa access token và refresh token khi đăng nhập/đăng xuất
-
-      Xác thực token khi đăng nhập
-      & 
-      Tài khoản
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(String) 
-      
-      account\_id(String)
-
-      access\_token(String)
-      & 
-      refresh\_token(String) 
-            
-      created\_at(Timestamps)
-
-      updated\_at(Timestamps)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):
-
-      Toàn thể - Bộ phận (Aggregation):
-      
-      Liên kết (Association): Tài khoản
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
   \subsubsection{Thẻ CRC lớp Thiết bị}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thiết bị}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Thiết bị & \textbf{ID:} 5 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin thiết bị & \textbf{Use case liên quan:} Quản lý thiết bị, Quản lý lịch sử đo bệnh nhân \\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin thiết bị
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thiết bị}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Thiết bị & \textbf{ID:} 5 \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin thiết bị & \textbf{Use case liên quan:} Quản lý thiết bị, Quản lý lịch sử đo bệnh nhân \\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Mô tả thông tin thiết bị
 
-      Lấy danh sách tất cả thiết bị
+    Lấy danh sách tất cả thiết bị
 
-      Lấy danh sách thiết bị theo người dùng, bác sĩ
+    Lấy danh sách thiết bị theo người dùng, bác sĩ
+    
+    Thêm, sửa, xóa thiết bị
+    & 
+    Người dùng, Thông số thiết bị 
+    \\
+    \hline
+  \end{tabularx}
+  \\ 
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx} 
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} & \\
+    id(String) 
+    
+    user\_id(String)
+
+    doctor\_id(String)
+
+    device\_name(String)
+
+    infomation(String)
+    & 
+    device\_type(Integer)
+
+    start\_date(Timestamps) 
+    
+    end\_date(Timestamps) 
+    
+    created\_at(Timestamps)
+
+    updated\_at(Timestamps)
+    \\
+    \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \textbf{Mối quan hệ (Relationships)} \\
+    Tổng quát hóa (Generalize):  
+
+    Toàn thể - Bộ phận (Aggregation): Người dùng
       
-      Thêm, sửa, xóa thiết bị
-      & 
-      Người dùng, Thông số thiết bị 
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(String) 
-      
-      user\_id(String)
-
-      doctor\_id(String)
-
-      device\_name(String)
-
-      infomation(String)
-      & 
-      device\_type(Integer)
-
-      start\_date(Timestamps) 
-      
-      end\_date(Timestamps) 
-      
-      created\_at(Timestamps)
-
-      updated\_at(Timestamps)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):  
-
-      Toàn thể - Bộ phận (Aggregation): Người dùng
-      
-      Liên kết (Association): Thông số thiết bị
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
-
+    Liên kết (Association): Thông số thiết bị
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
+  \newpage
   \subsubsection{Thẻ CRC lớp Thông số thiết bị}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thông số thiết bị}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Thông số thiết bị & \textbf{ID:} 6 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin thông số thiết bị & \textbf{Use case liên quan:} Quản lý thiết bị\\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin thông số thiết bị
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thông số thiết bị}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Thông số thiết bị & \textbf{ID:} 6 \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin thông số thiết bị & \textbf{Use case liên quan:} Quản lý thiết bị\\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Mô tả thông tin thông số thiết bị
 
-      Lấy thông số theo thiết bị
-      & 
-      Thiết bị 
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(String) 
-      
-      device\_id(String)
+    Lấy thông số theo thiết bị
+    & 
+    Thiết bị 
+    \\
+    \hline
+  \end{tabularx}
+  \\ 
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx} 
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} & \\
+    id(String) 
+    
+    device\_id(String)
 
-      detail\_name(String)
+    detail\_name(String)
 
-      infomation(String)
-      & 
-      value(Integer)
+    infomation(String)
+    & 
+    value(Integer)
 
-      detail\_type(Integer)
-      
-      created\_at(Timestamps)
+    detail\_type(Integer)
+    
+    created\_at(Timestamps)
 
-      updated\_at(Timestamps)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):  
+    updated\_at(Timestamps)
+    \\
+    \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \textbf{Mối quan hệ (Relationships):} \\
+    Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation): 
-      
-      Liên kết (Association): Thiết bị
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
+    Toàn thể - Bộ phận (Aggregation): 
+    
+    Liên kết (Association): Thiết bị
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
 
 \subsubsection{Thẻ CRC lớp Bản ghi}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Bản ghi}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Bản ghi & \textbf{ID:} 7 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin bản ghi & \textbf{Use case liên quan:} Quản lý lịch sử đo bệnh nhân \\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin bản ghi 
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Bản ghi}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Bản ghi & \textbf{ID:} 7 \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin bản ghi & \textbf{Use case liên quan:} Quản lý lịch sử đo bệnh nhân \\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Mô tả thông tin bản ghi 
 
-      Lấy danh sách tất cả bản ghi
+    Lấy danh sách tất cả bản ghi
 
-      Lấy danh sách bản ghi theo người dùng, thiết bị
+    Lấy danh sách bản ghi theo người dùng, thiết bị
 
-      Thêm, sửa, xóa thông tin bản ghi
+    Thêm, sửa, xóa thông tin bản ghi
 
-      Đọc, tải bản ghi
-      & 
-      Người dùng, Thiết bị
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(String) 
-      
-      user\_id(String)
+    Đọc, tải bản ghi
+    & 
+    Người dùng, Thiết bị
+    \\
+    \hline
+  \end{tabularx}
+  \\ 
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} & \\
+    id(String) 
+    
+    user\_id(String)
 
-      device\_id(String)
+    device\_id(String)
 
-      start\_time(Timestamps)
-      & 
-      end\_time(Timestamps) 
-      
-      data\_rec\_url(String) 
-      
-      created\_at(Timestamps)
+    start\_time(Timestamps)
+    & 
+    end\_time(Timestamps) 
+    
+    data\_rec\_url(String) 
+    
+    created\_at(Timestamps)
 
-      updated\_at(Timestamps)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):  
+    updated\_at(Timestamps)
+    \\
+    \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \textbf{Mối quan hệ (Relationships):} \\
+    Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation): Người dùng, Thiết bị
-      
-      Liên kết (Association):  
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
+    Toàn thể - Bộ phận (Aggregation): Người dùng, Thiết bị
+    
+    Liên kết (Association):  
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
 
 \subsubsection{Thẻ CRC lớp Phân công bác sĩ - bệnh nhân}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Quản lý bác sĩ - bệnh nhân}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Phân công bác sĩ - bệnh nhân & \textbf{ID:} 8 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin quản lý giữa bác sĩ và bệnh nhân & \textbf{Use case liên quan:} Quản lý phân công bác sĩ - bệnh nhân \\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin quan lý giữa bác sĩ và bệnh nhân
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Phân công bác sĩ - bệnh nhân}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Phân công bác sĩ - bệnh nhân & \textbf{ID:} 8 \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin quản lý giữa bác sĩ và bệnh nhân & \textbf{Use case liên quan:} Quản lý phân công bác sĩ - bệnh nhân \\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Mô tả thông tin quan lý giữa bác sĩ và bệnh nhân
 
-      Lấy danh sách tất cả phân công
+    Lấy danh sách tất cả phân công
 
-      Lấy danh sách phân công theo bác sĩ, bệnh nhân
+    Lấy danh sách phân công theo bác sĩ, bệnh nhân
 
-      Phân công bệnh nhân theo bác sĩ
-      & 
-      Người dùng
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(String) 
-      
-      patient\_id(String)
+    Phân công bệnh nhân theo bác sĩ
+    & 
+    Người dùng
+    \\
+    \hline
+  \end{tabularx}
+  \\ 
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx} 
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} & \\
+    id(String) 
+    
+    patient\_id(String)
 
-      doctor\_id(String)
-      & 
-      start\_date(Timestamps) 
-            
-      created\_at(Timestamps)
+    doctor\_id(String)
+    & 
+    start\_date(Timestamps) 
+          
+    created\_at(Timestamps)
 
-      updated\_at(Timestamps)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):
+    updated\_at(Timestamps)
+    \\
+    \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \textbf{Mối quan hệ (Relationships):} \\
+    Tổng quát hóa (Generalize):
 
-      Toàn thể - Bộ phận (Aggregation): Người dùng
-      
-      Liên kết (Association):  
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
+    Toàn thể - Bộ phận (Aggregation): Người dùng
+    
+    Liên kết (Association):  
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
 
-  \subsubsection{Thẻ CRC lớp Tin tức}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tin tức}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Tin tức & \textbf{ID:} 9 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin Tin tức & \textbf{Use case liên quan:}  Quản lý bài đăng\\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin tin tức
+\newpage
+\subsubsection{Thẻ CRC lớp Tin tức}
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tài khoản}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Tin tức & \textbf{ID:} 9 \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin Tin tức & \textbf{Use case liên quan:}  Quản lý bài đăng\\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Mô tả thông tin tin tức
 
-      Lấy danh sách tất cả tin tức
+    Lấy danh sách tất cả tin tức
 
-      Lấy thông tin tin tức theo id, người dùng
+    Lấy thông tin tin tức theo id, người dùng
 
-      Thêm, sửa, xóa bài đăng tin tức
-      & 
-      Người dùng, Danh mục tin tức
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(String) 
-      
-      title(String)
+    Thêm, sửa, xóa bài đăng tin tức
+    & 
+    Người dùng, Danh mục tin tức
+    \\
+    \hline
+  \end{tabularx}
+  \\ 
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} & \\
+    id(String) 
+    
+    title(String)
 
-      content(String)
+    content(String)
 
-      category\_id(String)
+    category\_id(String)
 
-      author(String) 
-      & 
-      url(String) 
+    author(String) 
+    & 
+    url(String) 
 
-      image(String) 
-            
-      created\_at(Timestamps)
+    image(String) 
+          
+    created\_at(Timestamps)
 
-      updated\_at(Timestamps)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):
+    updated\_at(Timestamps)
+    \\
+    \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \textbf{Mối quan hệ (Relationships):} \\
+    Tổng quát hóa (Generalize):
 
-      Toàn thể - Bộ phận (Aggregation): Danh mục tin tức
-      
-      Liên kết (Association): Người dùng
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
+    Toàn thể - Bộ phận (Aggregation): Danh mục tin tức
+    
+    Liên kết (Association): Người dùng
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
 
   \subsubsection{Thẻ CRC lớp Danh mục tin tức}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Danh mục tin tức}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Danh mục tin tức & \textbf{ID:} 10 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin Danh mục tin tức & \textbf{Use case liên quan:}  Quản lý nhãn bài đăng\\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin danh mục tin tức
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Danh mục tin tức}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Danh mục tin tức & \textbf{ID:} 10 \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin Danh mục tin tức & \textbf{Use case liên quan:}  Quản lý nhãn bài đăng\\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Mô tả thông tin danh mục tin tức
 
-      Thêm, sửa, xóa danh mục tin tức
-      & 
-      Tin tức
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} \\
-      id(String) 
-      
-      category\_name(String)
+    Thêm, sửa, xóa danh mục tin tức
+    & 
+    Tin tức
+    \\
+    \hline
+  \end{tabularx}
+  \\ 
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx} 
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} \\
+    id(String) 
+    
+    category\_name(String)
 
-      category\_description(String)
+    category\_description(String)
 
-      created\_at(Timestamps)
+    created\_at(Timestamps)
 
-      updated\_at(Timestamps)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):  
+    updated\_at(Timestamps)
+    \\
+    \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \textbf{Mối quan hệ (Relationships):} \\
+    Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation): Tin tức
-      
-      Liên kết (Association): 
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
+    Toàn thể - Bộ phận (Aggregation): Tin tức
+    
+    Liên kết (Association): 
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
 
   \subsubsection{Thẻ CRC lớp Thành viên tham gia hội thoại}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thành viên tham gia hội thoại}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Thành viên tham gia hội thoại & \textbf{ID:} 11 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin; Hỏi, tư vấn từ trợ lý ảo \\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Thông tin Thành viên tham gia hội thoại
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tài khoản}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Thành viên tham gia hội thoại & \textbf{ID:} 11 \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin; Hỏi, tư vấn từ trợ lý ảo \\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Thông tin Thành viên tham gia hội thoại
 
-      Lấy danh sách thành viên theo hội thoại
+    Lấy danh sách thành viên theo hội thoại
 
-      Lấy danh sách hội thoại theo thành viên
-      & 
-      Người dùng, Cuộc hội thoại 
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(String) 
-      
-      conversation\_id(String)
+    Lấy danh sách hội thoại theo thành viên
+    & 
+    Người dùng, Cuộc hội thoại 
+    \\
+    \hline
+  \end{tabularx}
+  \\ 
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx} 
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} & \\
+    id(String) 
+    
+    conversation\_id(String)
 
-      user\_id(String)
-      &
-      status\_notify(Integer)
+    user\_id(String)
+    &
+    status\_notify(Integer)
 
-      role(Integer)
+    role(Integer)
 
-      seen(Boolean)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):  
+    seen(Boolean)
+    \\
+    \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \textbf{Mối quan hệ (Relationships):} \\
+    Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation): Người dùng
-      
-      Liên kết (Association): Cuộc hội thoại
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
+    Toàn thể - Bộ phận (Aggregation): Người dùng
+    
+    Liên kết (Association): Cuộc hội thoại
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
 
   \subsubsection{Thẻ CRC lớp Cuộc hội thoại}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thông tin hội thoại}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Cuộc hội thoại & \textbf{ID:} 12 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin; Hỏi, tư vấn từ trợ lý ảo \\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin cuộc hội thoại
-      & 
-      Thành viên tham gia hội thoại, Tin nhắn
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} \\
-      conversation\_id(String) 
-      
-      name(String)
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Cuộc hội thoại}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Cuộc hội thoại & \textbf{ID:} 12 \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin; Hỏi, tư vấn từ trợ lý ảo \\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Mô tả thông tin cuộc hội thoại
+    & 
+    Thành viên tham gia hội thoại, Tin nhắn
+    \\
+    \hline
+  \end{tabularx}
+  \\ 
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx} 
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} \\
+    conversation\_id(String) 
+    
+    name(String)
 
-      type(Integer)
+    type(Integer)
 
-      avatar\_url(String)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):  
+    avatar\_url(String)
+    \\
+    \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \textbf{Mối quan hệ (Relationships):} \\
+    Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation): 
-      
-      Liên kết (Association): Thành viên tham gia hội thoại, Tin nhắn 
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
+    Toàn thể - Bộ phận (Aggregation): 
+    
+    Liên kết (Association): Thành viên tham gia hội thoại, Tin nhắn 
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
 
-  \subsubsection{Thẻ CRC lớp Tin nhắn}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tin nhắn}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Tin nhắn & \textbf{ID:} 13 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin Tin nhắn & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin; Hỏi, tư vấn từ trợ lý ảo \\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin Tin nhắn
+\subsubsection{Thẻ CRC lớp Tin nhắn}
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tin nhắn}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Tin nhắn & \textbf{ID:} 13 \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin Tin nhắn & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin; Hỏi, tư vấn từ trợ lý ảo \\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Mô tả thông tin Tin nhắn
 
-      Xem/gửi tin nhắn
+    Xem/gửi tin nhắn
 
-      Lấy danh sách tin nhắn theo hội thoại, người gửi
-      & 
-      Thành viên tham gia hội thoại, Cuộc hội thoại, Tệp đính kèm
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      message\_id(String) 
-      
-      conversation\_id(String)
+    Lấy danh sách tin nhắn theo hội thoại, người gửi
+    & 
+    Thành viên tham gia hội thoại, Cuộc hội thoại, Tệp đính kèm
+    \\
+    \hline
+  \end{tabularx}
+  \\ 
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx} 
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} & \\
+    message\_id(String) 
+    
+    conversation\_id(String)
 
-      sender\_id(String)
+    sender\_id(String)
 
-      attachments(List)
-      &
-      system\_message(Boolean)
+    attachments(List)
+    &
+    system\_message(Boolean)
 
-      pin(Boolean)
+    pin(Boolean)
 
-      pin\_time(Timestamps)
+    pin\_time(Timestamps)
 
-      reactions(List)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):  
+    reactions(List)
+    \\
+    \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \textbf{Mối quan hệ (Relationships):} \\
+    Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation): 
-      
-      Liên kết (Association): Thành viên tham gia hội thoại, Cuộc hội thoại, Tệp đính kèm 
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
+    Toàn thể - Bộ phận (Aggregation): 
+    
+    Liên kết (Association): Thành viên tham gia hội thoại, Cuộc hội thoại, Tệp đính kèm 
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
 
   \subsubsection{Thẻ CRC lớp Tệp đính kèm}
-  \begin{table}[H]
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tệp đính kèm}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt trước thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Tên lớp:} Tệp đính kèm & \textbf{ID:} 14 \\
-      \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin Tệp đính kèm tin nhắn & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin \\
-      \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin Tệp đính kèm
+  \begin{xltabular}{\textwidth}{
+    >{\centering\arraybackslash}X 
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tệp đính kèm}
+  % \label{table_api_news}
+  \\
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt trước thẻ
+  \end{tabularx}
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Tên lớp:} Tệp đính kèm & \textbf{ID:} 14 \\
+    \hline
+    \textbf{Mô tả:} Đối tượng mô tả thông tin Tệp đính kèm tin nhắn & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin \\
+    \hline
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    Mô tả thông tin Tệp đính kèm
 
-      Lấy thông tin tệp đính kèm theo tin nhắn, cuộc hội thoại
-      & 
-      Tin nhắn, Cuộc hội thoại
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{X}
-      Mặt sau thẻ
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|X|}
-      \hline
-      \textbf{Thuộc tính (Attributes):} & \\
-      id(String) 
-      
-      message\_id(String)
+    Lấy thông tin tệp đính kèm theo tin nhắn, cuộc hội thoại
+    & 
+    Tin nhắn, Cuộc hội thoại
+    \\
+    \hline
+  \end{tabularx}
+  \\ 
+  \begin{tabularx}{0.9\textwidth}{X}
+    Mặt sau thẻ
+  \end{tabularx} 
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Thuộc tính (Attributes):} & \\
+    id(String) 
+    
+    message\_id(String)
 
-      conversation\_id(String)
+    conversation\_id(String)
 
-      content\_url(String)
-      &
-      file\_name(String)
+    content\_url(String)
+    &
+    file\_name(String)
 
-      size(Integer)
+    size(Integer)
 
-      thumbnail\_url(String)
+    thumbnail\_url(String)
 
-      type(Integer)
-      \\
-      \hline
-    \end{tabularx}
-    \begin{tabularx}{0.9\textwidth}{|X|}
-      \textbf{Mối quan hệ (Relationships):} \\
-      Tổng quát hóa (Generalize):  
+    type(Integer)
+    \\
+    \hline
+  \end{tabularx}
+  \\     
+  \begin{tabularx}{0.9\textwidth}{|X|}
+    \textbf{Mối quan hệ (Relationships):} \\
+    Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation): 
-      
-      Liên kết (Association): Tin nhắn, Cuộc hội thoại 
-      \\
-      \hline
-    \end{tabularx}
-  \end{table}
+    Toàn thể - Bộ phận (Aggregation): 
+    
+    Liên kết (Association): Tin nhắn, Cuộc hội thoại 
+    \\
+    \hline
+  \end{tabularx}
+  \end{xltabular}
+
 
 % \newpage
 \subsection{Sơ đồ lớp}
@@ -880,7 +953,7 @@ Việc phân tích chi tiết các yêu cầu hệ thống sẽ được chúng 
 \subsubsection{Sơ đồ tuần tự chức năng đăng ký tài khoản}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=11cm,height=13.5cm]{Images/sequence/sequence_register.png}
+  \includegraphics[width=10cm,height=12.5cm]{Images/sequence/sequence_register.png}
   \caption[Sơ đồ tuần tự chức năng đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng đăng ký tài khoản}
   \label{sequence_register} %đặt tên cho ảnh
@@ -892,7 +965,7 @@ chuyển sang phê duyệt tài khoản và thông báo kết quả.
 \subsubsection{Sơ đồ tuần tự chức năng đăng nhập/đăng xuất}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm,height=12cm]{Images/sequence/sequence_login.png}
+  \includegraphics[width=12cm,height=11cm]{Images/sequence/sequence_login.png}
   \caption[Sơ đồ tuần tự chức năng đăng nhập]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng đăng nhập}
   \label{sequence_login} %đặt tên cho ảnh
@@ -902,7 +975,7 @@ bởi lớp Account, nếu có lỗi phát sinh sẽ hiển thị lên màn hìn
 tạo token truy cập mới và thông báo thành công. 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=10cm,height=7cm]{Images/sequence/sequence_logout.png}
+  \includegraphics[width=9.5cm,height=6.5cm]{Images/sequence/sequence_logout.png}
   \caption[Sơ đồ tuần tự chức năng đăng xuất]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng đăng xuất}
   \label{sequence_logout} %đặt tên cho ảnh
@@ -913,7 +986,7 @@ bởi lớp Token. Lớp Token sẽ xóa thông tin token truy cập và trả v
 \subsubsection{Sơ đồ tuần tự chức năng quên mật khẩu}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=10.5cm,height=14cm]{Images/sequence/sequence_forgot_password.png}
+  \includegraphics[width=10cm,height=13.5cm]{Images/sequence/sequence_forgot_password.png}
   \caption[Sơ đồ tuần tự chức năng quên mật khẩu]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng quên mật khẩu}
   \label{sequence_forgot_pass} %đặt tên cho ảnh
@@ -925,7 +998,7 @@ lấy lại mật khẩu. Yêu cầu sẽ được xử lý bởi lớp Account,
 \subsubsection{Sơ đồ tuần tự chức năng quản lý tài khoản cá nhân}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm,height=13cm]{Images/sequence/sequence_manage_info.png}
+  \includegraphics[width=12cm,height=12cm]{Images/sequence/sequence_manage_info.png}
   \caption[Sơ đồ tuần tự chức năng quản lý tài khoản cá nhân]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng quản lý tài khoản cá nhân}
   \label{sequence_account} %đặt tên cho ảnh
@@ -937,7 +1010,7 @@ thành công.
 \subsubsection{Sơ đồ tuần tự chức năng quản lý dữ liệu đo}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=10cm,height=7cm]{Images/sequence/sequence_manage_record.png}
+  \includegraphics[width=10cm,height=6.5cm]{Images/sequence/sequence_manage_record.png}
   \caption[Sơ đồ tuần tự chức năng xem danh sách lịch sử đo]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng xem danh sách lịch sử đo}
   \label{sequence_manage_record} %đặt tên cho ảnh
@@ -947,7 +1020,7 @@ yêu cầu sẽ được xử lý bởi lớp Record, hiện danh sách các b�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=11cm,height=10.5cm]{Images/sequence/sequence_manage_chart_record.png}
+  \includegraphics[width=10.5cm,height=10cm]{Images/sequence/sequence_manage_chart_record.png}
   \caption[Sơ đồ tuần tự chức năng xem đồ thị phiên đo]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng xem đồ thị phiên đo}
   \label{sequence_manage_chart_record} %đặt tên cho ảnh
@@ -957,7 +1030,7 @@ yêu cầu sẽ được xử lý bởi lớp Record, hiện đồ thị phiên 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=11cm,height=9.5cm]{Images/sequence/sequence_manage_edit_record.png}
+  \includegraphics[width=10.5cm,height=9cm]{Images/sequence/sequence_manage_edit_record.png}
   \caption[Sơ đồ tuần tự chức năng sửa thông tin phiên đo]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng sửa thông tin phiên đo}
   \label{sequence_edit_record} %đặt tên cho ảnh
@@ -967,7 +1040,7 @@ nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=11cm,height=9.5cm]{Images/sequence/sequence_download_records.png}
+  \includegraphics[width=10cm,height=9cm]{Images/sequence/sequence_download_records.png}
   \caption[Sơ đồ tuần tự chức năng tải bản ghi dữ liệu đo]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng tải bản ghi dữ liệu đo}
   \label{sequence_download_record} %đặt tên cho ảnh
@@ -977,7 +1050,7 @@ nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi 
 \subsubsection{Sơ đồ tuần tự chức năng quản lý dịch vụ nhắn tin}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm,height=13.5cm]{Images/sequence/sequence_chat.png}
+  \includegraphics[width=15.5cm,height=14cm]{Images/sequence/sequence_chat.png}
   \caption[Sơ đồ tuần tự chức năng quản lý dịch vụ nhắn tin]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng quản lý dịch vụ nhắn tin}
   \label{sequence_chat} %đặt tên cho ảnh
@@ -989,7 +1062,7 @@ Nếu người dùng gửi tin nhắn, yêu cầu sẽ được xử lý bởi l
 \subsubsection{Sơ đồ tuần tự chức năng hỏi, nhận tư vấn từ trợ lý ảo}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=14.5cm,height=10cm]{Images/sequence/sequence_chat_ai.png}
+  \includegraphics[width=15.5cm,height=11cm]{Images/sequence/sequence_chat_ai.png}
   \caption[Sơ đồ tuần tự chức năng hỏi, nhận tư vấn từ trợ lý ảo]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng hỏi, nhận tư vấn từ trợ lý ảo}
   \label{sequence_chat_ai} %đặt tên cho ảnh
@@ -1000,7 +1073,7 @@ khi người dùng gửi tin nhắn đến trợ lý ảo, yêu cầu sẽ đư�
 \subsubsection{Sơ đồ tuần tự chức năng quản lý thiết bị}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm,height=11cm]{Images/sequence/sequence_manage_device.png}
+  \includegraphics[width=11cm,height=9cm]{Images/sequence/sequence_manage_device.png}
   \caption[Sơ đồ tuần tự chức năng xem danh sách thiết bị]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng xem danh sách thiết bị}
   \label{sequence_manage_device} %đặt tên cho ảnh
@@ -1009,7 +1082,7 @@ Sơ đồ tuần tự trên mô tả chi tiết quá trình quản trị viên x
 API sẽ được xử lý bởi lớp Device, hiện danh sách thiết bị, quản trị viên có thể chọn một thiết bị và xem thông tin của họ. 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm,height=10cm]{Images/sequence/sequence_manage_add_device.png}
+  \includegraphics[width=11cm,height=8cm]{Images/sequence/sequence_manage_add_device.png}
   \caption[Sơ đồ tuần tự chức năng thêm thiết bị]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng thêm thiết bị}
   \label{sequence_manage_add_device} %đặt tên cho ảnh
@@ -1018,7 +1091,7 @@ Nếu quản trị viên muốn tạo một thiết bị mới, quản trị vi�
 nếu tạo thành công lớp Device sẽ gửi kết quả trả về. 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm,height=12.5cm]{Images/sequence/sequence_manage_edit_device.png}
+  \includegraphics[width=11cm,height=12cm]{Images/sequence/sequence_manage_edit_device.png}
   \caption[Sơ đồ tuần tự chức năng sửa thông tin thiết bị]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng sửa thông tin thiết bị}
   \label{sequence_manage_edit_device} %đặt tên cho ảnh
@@ -1027,7 +1100,7 @@ Nếu quản trị viên muốn chỉnh sửa thông tin thiết bị, quản tr
 bởi lớp Device, nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi thành công Control sẽ gửi thông báo thành công. 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm,height=10cm]{Images/sequence/sequence_manage_delete_device.png}
+  \includegraphics[width=11cm,height=8cm]{Images/sequence/sequence_manage_delete_device.png}
   \caption[Sơ đồ tuần tự chức năng xóa thiết bị]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng xóa thiết bị}
   \label{sequence_manage_delete_device} %đặt tên cho ảnh
@@ -1047,7 +1120,7 @@ Sơ đồ tuần tự trên mô tả chi tiết quá trình bệnh nhân xem dan
 yêu cầu sẽ được xử lý bởi lớp PDA, hiện danh sách bác sĩ, bệnh nhân có thể chọn một bác sĩ và xem thông tin của họ. 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm,height=9.5cm]{Images/sequence/sequence_manage_patient.png}
+  \includegraphics[width=12cm,height=8.5cm]{Images/sequence/sequence_manage_patient.png}
   \caption[Sơ đồ tuần tự chức năng xem danh sách bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng xem danh sách bệnh nhân}
   \label{sequence_manage_patient} %đặt tên cho ảnh
@@ -1057,7 +1130,7 @@ yêu cầu sẽ được xử lý bởi lớp PDA, hiện danh sách bệnh nhâ
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=11cm,height=8cm]{Images/sequence/sequence_manage_pda.png}
+  \includegraphics[width=9cm,height=6cm]{Images/sequence/sequence_manage_pda.png}
   \caption[Sơ đồ tuần tự chức năng xem danh sách phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng xem danh sách phân công bác sĩ - bệnh nhân}
   \label{sequence_manage_pda} %đặt tên cho ảnh
@@ -1067,7 +1140,7 @@ quản lý phân công bác sĩ - bệnh nhân, yêu cầu sẽ được xử l�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm,height=10cm]{Images/sequence/sequence_manage_add_pda.png}
+  \includegraphics[width=11cm,height=8cm]{Images/sequence/sequence_manage_add_pda.png}
   \caption[Sơ đồ tuần tự chức năng thêm phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng thêm phân công bác sĩ - bệnh nhân}
   \label{sequence_manage_add_pda} %đặt tên cho ảnh
@@ -1077,7 +1150,7 @@ quản lý phân công bác sĩ - bệnh nhân, yêu cầu sẽ được xử l�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm,height=12cm]{Images/sequence/sequence_manage_edit_pda.png}
+  \includegraphics[width=11cm,height=10cm]{Images/sequence/sequence_manage_edit_pda.png}
   \caption[Sơ đồ tuần tự chức năng sửa thông tin phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng sửa thông tin phân công bác sĩ - bệnh nhân}
   \label{sequence_manage_edit_pda} %đặt tên cho ảnh
@@ -1086,7 +1159,7 @@ Nếu quản trị viên muốn chỉnh sửa thông tin phân công bác sĩ - 
 yêu cầu sẽ được xử lý bởi lớp PDA, nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi thành công Control sẽ gửi thông báo thành công. 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=11cm,height=8.5cm]{Images/sequence/sequence_manage_delete_pda.png}
+  \includegraphics[width=9cm,height=7cm]{Images/sequence/sequence_manage_delete_pda.png}
   \caption[Sơ đồ tuần tự chức năng xóa phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng xóa phân công bác sĩ - bệnh nhân}
   \label{sequence_manage_delete_pda} %đặt tên cho ảnh
@@ -1096,7 +1169,7 @@ Nếu quản trị viên yêu cầu xóa phân công bác sĩ - bệnh nhân, Co
 \subsubsection{Sơ đồ tuần tự chức năng quản lý tài khoản người dùng}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm,height=11cm]{Images/sequence/sequence_manage_user.png}
+  \includegraphics[width=11.5cm,height=10cm]{Images/sequence/sequence_manage_user.png}
   \caption[Sơ đồ tuần tự chức năng xem danh sách tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng xem danh sách tài khoản người dùng}
   \label{sequence_manage_user} %đặt tên cho ảnh
@@ -1105,7 +1178,7 @@ Sơ đồ tuần tự trên mô tả chi tiết quá trình quản trị viên x
 quản lý tài khoản người dùng, yêu cầu sẽ được xử lý bởi lớp User, trả về danh sách tài khoản người dùng, quản trị viên có thể chọn một người dùng và xem thông tin của họ. 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm,height=13cm]{Images/sequence/sequence_manage_edit_user.png}
+  \includegraphics[width=12cm,height=12cm]{Images/sequence/sequence_manage_edit_user.png}
   \caption[Sơ đồ tuần tự chức năng sửa thông tin người dùng]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng sửa thông tin người dùng}
   \label{sequence_manage_edit_user} %đặt tên cho ảnh
@@ -1114,7 +1187,7 @@ Nếu quản trị viên muốn chỉnh sửa thông tin người dùng, quản 
 nếu thay đổi thành công lớp User sẽ gửi thông báo thành công. 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=11cm,height=8.5cm]{Images/sequence/sequence_manage_delete_user.png}
+  \includegraphics[width=10cm,height=7.5cm]{Images/sequence/sequence_manage_delete_user.png}
   \caption[Sơ đồ tuần tự chức năng xóa người dùng]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng xóa người dùng}
   \label{sequence_manage_delete_user} %đặt tên cho ảnh
