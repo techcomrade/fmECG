@@ -5,18 +5,15 @@
 \setcounter{table}{0} % LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 2. PHÂN TÍCH HỆ THỐNG}
-Trong chương này, chúng em sẽ tiến hành phân tích hệ thống cho dự án đề tài "Hệ thống theo dõi và quản lý dữ liệu điện tim" dựa trên các mục tiêu
-đã nêu ra trong Phần mở đầu. Trước tiên, bài toán đặt ra ở hệ thống là:
+Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ thống dựa trên các yêu cầu đã đưa ra ở Phần mở đầu và Chương 1, bao gồm các bước như sau:
 \begin{adjustwidth}{1.5em}{}
-\begin{itemize}
-  \item Một ứng dụng để có thể giúp người dùng/bệnh nhân theo dõi được những thông tin cần về sức khoẻ tim mạch
-  \item Trực quan và tiêu chuẩn hoá những thông tin đo được
-    bằng hình ảnh hoặc số liệu để bác sĩ có thể dựa vào đó để đưa ra những đánh giá cho người dùng. 
-  \item Quản trị viên sẽ là người có thể phân công bác sĩ để chăm sóc, theo dõi sức khoẻ từ
-  xa cho bệnh nhân
-\end{itemize}
-\end{adjustwidth}
-Việc phân tích chi tiết các yêu cầu hệ thống sẽ được chúng em trình bày ở các phần dưới đây.
+  \begin{itemize}
+    \item Thiết kế các thẻ CRC (Class - Responsibility - Collaboration Card) cùng các lớp dựa trên thông tin từ các sơ đồ use case chức năng của hệ thống
+    \item Xây dựng sơ đồ lớp dựa trên các lớp đã được định nghĩa với thuộc tính và phương thức
+    \item Sau khi đã xác định về phương thức cũng như thuộc tính các lớp cùng chức năng trong sơ đồ use case, chúng em sẽ thiết kế các sơ đồ tuần tự minh họa sự tương tác giữa các lớp 
+          khi thực hiện chức năng cụ thể
+  \end{itemize}
+  \end{adjustwidth}
 % \newpage
 \subsection{Thẻ CRC (Class - Responsibility - Collaboration Card)}
 
@@ -76,7 +73,7 @@ Việc phân tích chi tiết các yêu cầu hệ thống sẽ được chúng 
   \\     
   \begin{tabularx}{0.9\textwidth}{|X|}
     \hline
-    \textbf{Mối quan hệ (Relationships)} \\
+   \textbf{Mối quan hệ (Relationships)} \\
     Tổng quát hóa (Generalize):  
 
     Toàn thể - Bộ phận (Aggregation):
@@ -959,8 +956,8 @@ Việc phân tích chi tiết các yêu cầu hệ thống sẽ được chúng 
   \label{sequence_register} %đặt tên cho ảnh
 \end{figure}
 Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng ký tài khoản trên hệ thống. Người dùng sẽ gửi yêu cầu đăng ký, yêu cầu sẽ được xử lý
-bởi lớp Register, nếu có lỗi phát sinh sẽ hiển thị lên màn hình và yêu cầu người dùng nhập lại. Nếu việc đăng ký thành công, lớp Register sẽ gửi thông báo 
-chuyển sang phê duyệt tài khoản và thông báo kết quả.  
+bởi lớp Register, nếu có lỗi phát sinh trả về lỗi cho người dùng. Nếu việc đăng ký thành công, lớp Register sẽ gửi thông báo 
+chuyển sang phê duyệt tài khoản và trả về kết quả.  
 
 \subsubsection{Sơ đồ tuần tự chức năng đăng nhập/đăng xuất}
 \begin{figure}[H]
@@ -971,7 +968,7 @@ chuyển sang phê duyệt tài khoản và thông báo kết quả.
   \label{sequence_login} %đặt tên cho ảnh
 \end{figure}
 Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng nhập trên hệ thống. Người dùng sẽ gửi yêu cầu đăng nhập, yêu cầu sẽ được xử lý
-bởi lớp Account, nếu có lỗi phát sinh sẽ hiển thị lên màn hình và yêu cầu người dùng nhập lại. Nếu việc đăng ký thành công, lớp Account sẽ gửi thông báo 
+bởi lớp Account, nếu có lỗi phát sinh sẽ trả về người dùng. Nếu việc đăng ký thành công, lớp Account sẽ gửi thông báo 
 tạo token truy cập mới và thông báo thành công. 
 \begin{figure}[H]
   \centering
@@ -991,7 +988,7 @@ bởi lớp Token. Lớp Token sẽ xóa thông tin token truy cập và trả v
   \selectfont Sơ đồ tuần tự chức năng quên mật khẩu}
   \label{sequence_forgot_pass} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng thay đổi mật khẩu trên hệ thống. Người dùng sẽ gửi nhập email đã đăng ký tài khoản, gửi yêu cầu
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng quên mật khẩu trên hệ thống. Người dùng sẽ gửi email đã đăng ký tài khoản, gửi yêu cầu
 lấy lại mật khẩu. Yêu cầu sẽ được xử lý bởi lớp Account, nếu có lỗi phát sinh sẽ hiển thị lên màn hình và yêu cầu người dùng nhập lại. Lớp Account sẽ gửi một mã xác thực
 đến email, người dùng sẽ nhập mã xác thực và thay đổi mật khẩu mới. Nếu việc thay đổi thành công, lớp Account sẽ gửi thông báo thành công và chuyển sang đăng nhập.
 
@@ -1003,19 +1000,19 @@ lấy lại mật khẩu. Yêu cầu sẽ được xử lý bởi lớp Account,
   \selectfont Sơ đồ tuần tự chức năng quản lý tài khoản cá nhân}
   \label{sequence_account} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem và thay đổi thông tin tài khoản trên hệ thống. Người dùng thay đổi thông tin và gửi yêu cầu, 
-yêu cầu sẽ được xử lý bởi lớp Account và User, nếu có lỗi phát sinh sẽ hiển thị lên màn hình và yêu cầu người dùng nhập lại. Nếu việc thay đổi thành công, lớp Account sẽ gửi thông báo 
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng lấy và thay đổi thông tin tài khoản trên hệ thống. Người dùng thay đổi thông tin và gửi yêu cầu, 
+yêu cầu sẽ được xử lý bởi lớp Account và User, nếu có lỗi phát sinh sẽ trả về lỗi cho người dùng. Nếu việc thay đổi thành công, lớp Account sẽ gửi thông báo 
 thành công.  
 
 \subsubsection{Sơ đồ tuần tự chức năng quản lý dữ liệu đo}
 \begin{figure}[H]
   \centering
   \includegraphics[width=10cm,height=6.5cm]{Images/sequence/sequence_manage_record.png}
-  \caption[Sơ đồ tuần tự chức năng xem danh sách lịch sử đo]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự chức năng xem danh sách lịch sử đo}
+  \caption[Sơ đồ tuần tự chức năng xem danh sách phiên đo]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự chức năng xem danh sách phiên đo}
   \label{sequence_manage_record} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem danh sách lịch sử đo trên hệ thống. Người dùng chọn mở giao diện quản lý dữ liệu đo, 
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng lấy danh sách lịch sử đo trên hệ thống. Người dùng gửi yêu cầu xem danh sách phiên đo, 
 yêu cầu sẽ được xử lý bởi lớp Record, hiện danh sách các bản ghi phiên đo cho người dùng.
 
 \begin{figure}[H]
@@ -1026,7 +1023,7 @@ yêu cầu sẽ được xử lý bởi lớp Record, hiện danh sách các b�
   \label{sequence_manage_chart_record} %đặt tên cho ảnh
 \end{figure}
 Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem đồ thị phiên đo trên hệ thống. Người dùng chọn một phiên đo sau đó yêu cầu xem đồ thị, 
-yêu cầu sẽ được xử lý bởi lớp Record, hiện đồ thị phiên đo cho người dùng.
+yêu cầu sẽ được xử lý bởi lớp Record, trả về dữ liệu đồ thị phiên đo cho người dùng.
 
 \begin{figure}[H]
   \centering
@@ -1036,7 +1033,7 @@ yêu cầu sẽ được xử lý bởi lớp Record, hiện đồ thị phiên 
   \label{sequence_edit_record} %đặt tên cho ảnh
 \end{figure}
 Nếu bác sĩ, quản trị viên muốn sửa thông tin phiên đo, bác sĩ và quản trị viên gửi yêu cầu thay đổi, yêu cầu sẽ được xử lý bởi lớp Record, 
-nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi thành công lớp Record sẽ gửi thông báo thành công. 
+nếu có lỗi phát sinh sẽ trả về người dùng, nếu thay đổi thành công lớp Record sẽ gửi thông báo thành công. 
 
 \begin{figure}[H]
   \centering
@@ -1046,7 +1043,7 @@ nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi 
   \label{sequence_download_record} %đặt tên cho ảnh
 \end{figure}
 Nếu bác sĩ, quản trị viên muốn tải bản ghi dữ liệu đo, bác sĩ và quản trị viên gửi yêu cầu tải, yêu cầu sẽ được xử lý bởi lớp Record, 
-nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi thành công lớp Record sẽ gửi file về máy tính. 
+nếu có lỗi phát sinh sẽ trả về người dùng, nếu thay đổi thành công lớp Record sẽ gửi file về máy tính. 
 \subsubsection{Sơ đồ tuần tự chức năng quản lý dịch vụ nhắn tin}
 \begin{figure}[H]
   \centering
@@ -1056,8 +1053,8 @@ nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi 
   \label{sequence_chat} %đặt tên cho ảnh
 \end{figure}
 Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng xem và gửi tin nhắn giữa bệnh nhân và bác sĩ trên hệ thống. Người dùng gửi yêu cầu nhắn tin, 
-chọn người mà mình muốn xem/gửi tin nhắn. Khi đó yêu cầu sẽ được xử lý bởi lớp Conversation, nếu bạn đã có hội thoại sẽ trả về lịch sử đoạn hội thoại, ngược lại bạn sẽ tạo cuộc hội thoại mới. 
-Nếu người dùng gửi tin nhắn, yêu cầu sẽ được xử lý bởi lớp Conversation gửi tin nhắn đến đối phương và lưu vào cơ sở dữ liệu.
+chọn người mà mình muốn xem/gửi tin nhắn. Khi đó yêu cầu sẽ được xử lý bởi lớp Conversation, nếu người dùng đã có hội thoại sẽ trả về lịch sử đoạn hội thoại, ngược lại người dùng sẽ tạo cuộc hội thoại mới. 
+Khi người dùng gửi tin nhắn, yêu cầu sẽ được xử lý bởi lớp Conversation gửi tin nhắn đến ngưởi nhận và lưu vào cơ sở dữ liệu.
 
 \subsubsection{Sơ đồ tuần tự chức năng hỏi, nhận tư vấn từ trợ lý ảo}
 \begin{figure}[H]
@@ -1078,8 +1075,8 @@ khi người dùng gửi tin nhắn đến trợ lý ảo, yêu cầu sẽ đư�
   \selectfont Sơ đồ tuần tự chức năng xem danh sách thiết bị}
   \label{sequence_manage_device} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình quản trị viên xem danh sách thiết bị trên hệ thống. Quản trị viên chọn mở giao diện quản lý thiết bị, 
-API sẽ được xử lý bởi lớp Device, hiện danh sách thiết bị, quản trị viên có thể chọn một thiết bị và xem thông tin của họ. 
+Sơ đồ tuần tự trên mô tả chi tiết quá trình quản trị viên xem danh sách thiết bị trên hệ thống. Quản trị viên gửi yêu cầu xem danh sách thiết bị, 
+yêu cầu sẽ được xử lý bởi lớp Device, hiện danh sách thiết bị, quản trị viên có thể chọn một thiết bị và xem thông tin của họ. 
 \begin{figure}[H]
   \centering
   \includegraphics[width=11cm,height=8cm]{Images/sequence/sequence_manage_add_device.png}
@@ -1087,7 +1084,7 @@ API sẽ được xử lý bởi lớp Device, hiện danh sách thiết bị, q
   \selectfont Sơ đồ tuần tự chức năng thêm thiết bị}
   \label{sequence_manage_add_device} %đặt tên cho ảnh
 \end{figure}
-Nếu quản trị viên muốn tạo một thiết bị mới, quản trị viên nhập các thông tin và gửi yêu cầu tạo, yêu cầu sẽ được xử lý bởi lớp Device, nếu có lỗi phát sinh sẽ hiển thị lên màn hình, 
+Nếu quản trị viên muốn tạo một thiết bị mới, quản trị viên nhập các thông tin và gửi yêu cầu tạo, yêu cầu sẽ được xử lý bởi lớp Device, nếu có lỗi phát sinh sẽ trả về quản trị viên, 
 nếu tạo thành công lớp Device sẽ gửi kết quả trả về. 
 \begin{figure}[H]
   \centering
@@ -1097,7 +1094,7 @@ nếu tạo thành công lớp Device sẽ gửi kết quả trả về.
   \label{sequence_manage_edit_device} %đặt tên cho ảnh
 \end{figure}
 Nếu quản trị viên muốn chỉnh sửa thông tin thiết bị, quản trị viên nhập các thông tin cần sửa và gửi yêu cầu thay đổi, yêu cầu sẽ được xử lý
-bởi lớp Device, nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi thành công Control sẽ gửi thông báo thành công. 
+bởi lớp Device, nếu có lỗi phát sinh sẽ trả về quản trị viên, nếu thay đổi thành công Control sẽ gửi thông báo thành công. 
 \begin{figure}[H]
   \centering
   \includegraphics[width=11cm,height=8cm]{Images/sequence/sequence_manage_delete_device.png}
@@ -1116,8 +1113,8 @@ Nếu quản trị viên yêu cầu xóa thiết bị, lớp Device sẽ xử l�
   \selectfont Sơ đồ tuần tự chức năng xem danh sách bác sĩ}
   \label{sequence_manage_doctor} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình bệnh nhân xem danh sách bác sĩ phụ trách mình trên hệ thống. Bệnh nhân chọn mở giao diện xem danh sách bác sĩ, 
-yêu cầu sẽ được xử lý bởi lớp PDA, hiện danh sách bác sĩ, bệnh nhân có thể chọn một bác sĩ và xem thông tin của họ. 
+Sơ đồ tuần tự trên mô tả chi tiết quá trình bệnh nhân xem danh sách bác sĩ phụ trách mình trên hệ thống. Bệnh nhân gửi yêu cầu xem danh sách bác sĩ, 
+yêu cầu sẽ được xử lý bởi lớp PDA, trả về danh sách bác sĩ, bệnh nhân có thể chọn một bác sĩ và xem thông tin của họ. 
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm,height=8.5cm]{Images/sequence/sequence_manage_patient.png}
@@ -1125,8 +1122,8 @@ yêu cầu sẽ được xử lý bởi lớp PDA, hiện danh sách bác sĩ, b
   \selectfont Sơ đồ tuần tự chức năng xem danh sách bệnh nhân}
   \label{sequence_manage_patient} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình bác sĩ xem danh sách bệnh nhân trên hệ thống. Bác sĩ chọn mở giao diện xem danh sách bệnh nhân, 
-yêu cầu sẽ được xử lý bởi lớp PDA, hiện danh sách bệnh nhân, bác sĩ có thể chọn một bệnh nhân và xem thông tin của họ. 
+Sơ đồ tuần tự trên mô tả chi tiết quá trình bác sĩ xem danh sách bệnh nhân trên hệ thống. Bác sĩ gửi yêu cầu xem danh sách bệnh nhân, 
+yêu cầu sẽ được xử lý bởi lớp PDA, trả về danh sách bệnh nhân, bác sĩ có thể chọn một bệnh nhân và xem thông tin của họ. 
 
 \begin{figure}[H]
   \centering
@@ -1135,8 +1132,8 @@ yêu cầu sẽ được xử lý bởi lớp PDA, hiện danh sách bệnh nhâ
   \selectfont Sơ đồ tuần tự chức năng xem danh sách phân công bác sĩ - bệnh nhân}
   \label{sequence_manage_pda} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình quản trị viên xem danh sách phân công bác sĩ - bệnh nhân trên hệ thống. Quản trị viên chọn mở giao diện
-quản lý phân công bác sĩ - bệnh nhân, yêu cầu sẽ được xử lý bởi lớp PDA, hiện danh sách phân công bác sĩ - bệnh nhân. 
+Sơ đồ tuần tự trên mô tả chi tiết quá trình quản trị viên xem danh sách phân công bác sĩ - bệnh nhân trên hệ thống. Quản trị viên gửi yêu cầu
+xem danh sách phân công bác sĩ - bệnh nhân, yêu cầu sẽ được xử lý bởi lớp PDA, trả về danh sách phân công bác sĩ - bệnh nhân. 
 
 \begin{figure}[H]
   \centering
@@ -1145,8 +1142,8 @@ quản lý phân công bác sĩ - bệnh nhân, yêu cầu sẽ được xử l�
   \selectfont Sơ đồ tuần tự chức năng thêm phân công bác sĩ - bệnh nhân}
   \label{sequence_manage_add_pda} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình quản trị viên tạo với danh sách phân công bác sĩ - bệnh nhân trên hệ thống. Quản trị viên chọn mở giao diện
-quản lý phân công bác sĩ - bệnh nhân, yêu cầu sẽ được xử lý bởi lớp PDA, hiện danh sách phân công bác sĩ - bệnh nhân. 
+Sơ đồ tuần tự trên mô tả chi tiết quá trình quản trị viên tạo với danh sách phân công bác sĩ - bệnh nhân trên hệ thống. Quản trị viên gửi yêu cầu
+thêm phân công bác sĩ - bệnh nhân, yêu cầu sẽ được xử lý bởi lớp PDA, nếu có lỗi phát sinh sẽ trả về người dùng, nếu thêm thành công sẽ gửi thông báo thành công.
 
 \begin{figure}[H]
   \centering
@@ -1155,8 +1152,8 @@ quản lý phân công bác sĩ - bệnh nhân, yêu cầu sẽ được xử l�
   \selectfont Sơ đồ tuần tự chức năng sửa thông tin phân công bác sĩ - bệnh nhân}
   \label{sequence_manage_edit_pda} %đặt tên cho ảnh
 \end{figure}
-Nếu quản trị viên muốn chỉnh sửa thông tin phân công bác sĩ - bệnh nhân, quản trị viên nhập các thông tin cần sửa và gửi yêu cầu thay đổi, 
-yêu cầu sẽ được xử lý bởi lớp PDA, nếu có lỗi phát sinh sẽ hiển thị lên màn hình, nếu thay đổi thành công Control sẽ gửi thông báo thành công. 
+Nếu quản trị viên muốn chỉnh sửa thông tin phân công bác sĩ - bệnh nhân, quản trị viên gửi yêu cầu thay đổi, 
+yêu cầu sẽ được xử lý bởi lớp PDA, nếu có lỗi phát sinh sẽ trả về người dùng, nếu thành công sẽ gửi thông báo thành công. 
 \begin{figure}[H]
   \centering
   \includegraphics[width=9cm,height=7cm]{Images/sequence/sequence_manage_delete_pda.png}
@@ -1164,7 +1161,7 @@ yêu cầu sẽ được xử lý bởi lớp PDA, nếu có lỗi phát sinh s�
   \selectfont Sơ đồ tuần tự chức năng xóa phân công bác sĩ - bệnh nhân}
   \label{sequence_manage_delete_pda} %đặt tên cho ảnh
 \end{figure}
-Nếu quản trị viên yêu cầu xóa phân công bác sĩ - bệnh nhân, Control sẽ xử lý xóa phân công ở cơ sở dữ liệu và trả về thông báo cho quản trị viên.
+Nếu quản trị viên yêu cầu xóa phân công bác sĩ - bệnh nhân, lớp PDA sẽ xử lý xóa phân công ở cơ sở dữ liệu và trả về thông báo cho quản trị viên.
 
 \subsubsection{Sơ đồ tuần tự chức năng quản lý tài khoản người dùng}
 \begin{figure}[H]
@@ -1183,7 +1180,7 @@ quản lý tài khoản người dùng, yêu cầu sẽ được xử lý bởi 
   \selectfont Sơ đồ tuần tự chức năng sửa thông tin người dùng}
   \label{sequence_manage_edit_user} %đặt tên cho ảnh
 \end{figure}
-Nếu quản trị viên muốn chỉnh sửa thông tin người dùng, quản trị viên nhập các thông tin cần sửa và gửi yêu cầu thay đổi, yêu cầu sẽ được xử lý bởi lớp User, nếu có lỗi phát sinh sẽ hiển thị lên màn hình,
+Nếu quản trị viên muốn chỉnh sửa thông tin người dùng, quản trị viên gửi yêu cầu thay đổi, yêu cầu sẽ được xử lý bởi lớp User, nếu có lỗi phát sinh sẽ hiển thị lên màn hình,
 nếu thay đổi thành công lớp User sẽ gửi thông báo thành công. 
 \begin{figure}[H]
   \centering
@@ -1200,23 +1197,17 @@ Nếu quản trị viên yêu cầu xóa tài khoản người dùng, lớp User
   \selectfont Sơ đồ tuần tự chức năng phê duyệt tài khoản người dùng}
   \label{sequence_manage_register} %đặt tên cho ảnh
 \end{figure}
-Nếu quản trị viên muốn phê duyệt tài khoản người dùng, quản trị sẽ chọn phê duyệt hoặc không phê duyệt, yêu cầu sẽ được xử lý bởi lớp Register, nếu có lỗi phát sinh sẽ hiển thị lên màn hình,
+Nếu quản trị viên muốn phê duyệt tài khoản người dùng, quản trị sẽ chọn phê duyệt hoặc không phê duyệt, yêu cầu sẽ được xử lý bởi lớp Register, nếu có lỗi phát sinh sẽ trả về quản trị viên,
 nếu phê duyệt thành công lớp Register sẽ gửi thông báo thành công. 
 
 \subsection{Phân tích dữ liệu}
 
 Tại phần này, chúng em sẽ tiến hành xác định và mô tả các thực thể cũng như
- thuộc tính quan trọng trong hệ thống. Việc này giúp chúng ta có cái
-  nhìn tổng quan về các yếu tố chính cần được quản lý và lưu trữ
-   trong cơ sở dữ liệu. Bằng cách làm điều này, chúng ta có thể
-    xây dựng một mô hình dữ liệu cơ bản để hỗ trợ việc thiết kế và
-     triển khai hệ thống một cách hiệu quả.
+ thuộc tính trong hệ thống. Việc này giúp chúng em có thể nắm được các phần chính 
+ trong việc thiết kế nên cơ sở dữ liệu.
 
-     Trước hết, chúng em sẽ xác định và mô tả các thực thể chính trong hệ
-      thống. Thực thể là các đối tượng hoặc khái niệm quan
-       trọng mà chúng ta cần theo dõi và quản lý. Sau đó, chúng ta sẽ xác
-        định các thuộc tính liên quan đến mỗi thực thể, các thông tin cần
-         được lưu trữ và quản lý.
+     Đầu tiên, chúng em sẽ xác định các thực thể và mô tả thuộc tính của nó trong hệ
+      thống dươi dạng bảng và sơ đồ mô hình liên kết. 
 
 \begin{table}[H]
   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng thực thể và thuộc tính}
@@ -1283,11 +1274,11 @@ Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em x
 
 \subsection{Kết luận chương}
 
-Trong chương này, chúng em đã thực hiện phân tích toàn diện về
- hệ thống, nhằm đáp ứng các mục tiêu và yêu cầu đã được đề xuất.
+Trong chương này, chúng em đã thực hiện phân tích khái quát về
+ hệ thống, nhằm đáp ứng các mục tiêu và yêu cầu đã được đề ra trước đó.
 
-Chúng em đã xác định rõ ràng các khía cạnh quan trọng của hệ thống,
- tập trung vào việc thiết kế một hệ thống quản lý dữ liệu điện tim hiệu quả hiệu quả,
+Chúng em đã xác định các yếu tố quan trọng của hệ thống một cách rõ ràng,
+ tập trung vào việc thiết kế một hệ thống quản lý dữ liệu điện tim hiệu quả,
   trực quan và có khả năng theo dõi sức khỏe tim mạch một cách
    chính xác. 
 

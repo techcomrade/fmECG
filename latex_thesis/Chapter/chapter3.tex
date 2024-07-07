@@ -6,8 +6,8 @@
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 3. THIẾT KẾ HỆ THỐNG}
 
-Đây là chương chúng em sẽ thực hiện thiết kế từ tổng quan đến chi tiết của hệ thống. Từ việc xây dựng sơ đồ kiến trúc hệ thống,
-đến thiết kế từng chức năng cho cả ứng dụng di động, website và server, nội dung chủ yếu của chương sẽ xoay quanh các hình
+Trong chương này, chúng em sẽ thực hiện thiết kế hệ thống từ tổng quan đến chi tiết dựa trên phân tích từ Chương 2 . Từ việc xây dựng sơ đồ kiến trúc hệ thống,
+đến thiết kế từng chức năng cho website và server, nội dung chủ yếu của chương sẽ xoay quanh các hình
 ảnh và sơ đồ nhằm diễn tả chi tiết từng luồng hoạt động của hệ thống và cách các phần trong hệ thống tương tác với nhau.
 
 \subsection{Sơ đồ kiến trúc hệ thống}
@@ -1319,11 +1319,11 @@ Nếu có lỗi xảy ra, hệ thống trả về response lỗi, ngược lại
   \selectfont Sơ đồ tuần tự cho API cập nhật thông tin người dùng }
   \label{api_updateUserById} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_updateUserById} mô tả quá trình cập nhật thông tin người dùng trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu cập nhật thông tin người dùng, thông qua các tầng của hệ thống, 
+Hình \ref{api_updateUserById} mô tả quá trình cập nhật thông tin người dùng trong hệ thống. Người dùng gửi yêu cầu cập nhật thông tin người dùng, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi UserController. UserController gửi truy vấn đến UserService để kiểm tra thông tin người dùng trong hệ thống dựa theo id (ID của người dùng) được truyền vào từ yêu cầu. 
-Nếu không tồn tại người dùng, hệ thống sẽ trả về response lỗi tương ứng, ngược lại, UserController tiếp tục gửi truy vấn đến UserService, UserService gửi truy vấn đến UserModel để cập nhật thông tin
-người dùng. Sau đó, kết quả cập nhật được trả về từ UserModel và được gửi trở lại UserRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra
- trong quá trình này, hệ thống trả về response lỗi tương ứng.
+Nếu không tồn tại người dùng, hệ thống sẽ trả về response lỗi tương ứng, ngược lại, UserService gửi truy vấn đến UserModel để cập nhật thông tin người dùng. Sau đó, kết quả cập nhật được trả về 
+từ UserModel và được gửi trở lại UserRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra
+trong quá trình này, hệ thống trả về response lỗi tương ứng.
 
 \begin{figure}[H]
   \centering
@@ -1334,8 +1334,8 @@ người dùng. Sau đó, kết quả cập nhật được trả về từ User
 \end{figure}
 Hình \ref{api_deleteUser} mô tả quá trình xóa thông tin người dùng trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin người dùng, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi UserController. UserController gửi truy vấn đến UserService để kiểm tra thông tin người dùng trong hệ thống dựa theo id (ID của người dùng) được truyền vào từ yêu cầu. 
-Nếu không tồn tại người dùng, hệ thống sẽ trả về response lỗi tương ứng, ngược lại, UserController tiếp tục gửi truy vấn đến UserService, UserService gửi truy vấn đến UserModel để xóa thông tin
-người dùng. Sau đó, kết quả cập nhật được trả về từ UserModel và được gửi trở lại UserRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra
+Nếu không tồn tại người dùng, hệ thống sẽ trả về response lỗi tương ứng, ngược lại, UserService gửi truy vấn đến UserModel để xóa thông tin người dùng. Sau đó, kết quả cập nhật được trả về 
+từ UserModel và được gửi trở lại UserRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra
  trong quá trình này, hệ thống trả về response lỗi tương ứng.
 
 % \linebreak
@@ -1354,8 +1354,8 @@ người dùng. Sau đó, kết quả cập nhật được trả về từ User
   \label{api_getAllEcgRecords} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{api_getAllEcgRecords} mô tả quá trình lấy danh sách tất cả phiên đo ECG (Electrocardiogram) của tất cả bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách phiên đo ECG của tất cả bệnh nhân, thông qua các tầng của hệ thống, 
-yêu cầu này được xử lý bởi RecordController. RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG. Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute
- để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+yêu cầu này được xử lý bởi RecordController. RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG. Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute
+ để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng.
 
 \begin{figure}[H]
   \centering
@@ -1366,9 +1366,9 @@ yêu cầu này được xử lý bởi RecordController. RecordController tiế
 \end{figure}
 Hình \ref{api_getRecordsByUser} mô tả quá trình lấy danh sách các phiên đo ECG (Electrocardiogram) của một bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách các phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân có tồn tại trong hệ thống dựa theo userId (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, hệ thống sẽ
-trả về response lỗi tương ứng. Nếu bệnh nhân có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên userId (ID của bệnh nhân) được truyền vào từ yêu cầu. 
+trả về response lỗi tương ứng. Nếu bệnh nhân có trong hệ thống, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên userId (ID của bệnh nhân) được truyền vào từ yêu cầu. 
 Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG của bệnh nhân cho quản trị viên. Nếu có lỗi xảy ra
- trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. 
 
  \begin{figure}[H]
   \centering
@@ -1379,9 +1379,9 @@ Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và đ
 \end{figure}
 Hình \ref{api_getRecordsByDoctor} mô tả quá trình lấy danh sách các phiên đo ECG (Electrocardiogram) của bệnh nhân được quản lý bởi một bác sỹ trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách các phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ, 
 thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bác sỹ có tồn tại trong hệ thống dựa theo doctorId (ID của bác sỹ) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bác sỹ hay không phải là bác sỹ, hệ thống sẽ
-trả về response lỗi tương ứng. Nếu bác sỹ có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên doctorId (ID của bác sỹ) được truyền vào từ yêu cầu. 
+trả về response lỗi tương ứng. Nếu bác sỹ có trong hệ thống, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên doctorId (ID của bác sỹ) được truyền vào từ yêu cầu. 
 Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG của bệnh nhân cho quản trị viên. Nếu có lỗi xảy ra
- trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. 
 
 \begin{figure}[H]
   \centering
@@ -1391,9 +1391,9 @@ Sau đó, danh sách dữ liệu ECG được trả về từ RecordModel và đ
   \label{api_getRecordById} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{api_getRecordById} mô tả quá trình lấy thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy thông tin một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
-yêu cầu này được xử lý bởi RecordController. RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy thông tin dữ liệu ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. 
+yêu cầu này được xử lý bởi RecordController. RecordService gửi truy vấn đến RecordModel để lấy thông tin dữ liệu ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. 
 Sau đó, thông tin dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra
- trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. 
 
  \begin{figure}[H]
   \centering
@@ -1404,9 +1404,9 @@ Sau đó, thông tin dữ liệu ECG được trả về từ RecordModel và đ
 \end{figure}
 Hình \ref{api_getRecordDataById} mô tả quá trình lấy dữ liệu một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy dữ liệu một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin, đường dẫn bản ghi có tồn tại trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo hay đường dẫn bản ghi, hệ thống sẽ
-trả về response lỗi tương ứng. Nếu bản ghi có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để lấy dữ liệu ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. 
+trả về response lỗi tương ứng. Nếu bản ghi có trong hệ thống, RecordService gửi truy vấn đến RecordModel để lấy dữ liệu ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. 
 Sau đó, dữ liệu ECG được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra
- trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. 
 
 
  \begin{figure}[H]
@@ -1416,11 +1416,11 @@ Sau đó, dữ liệu ECG được trả về từ RecordModel và được gử
   \selectfont Sơ đồ tuần tự cho API tải tệp dữ liệu một phiên đo ECG }
   \label{api_downloadRecordDataById} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_downloadRecordDataById} mô tả quá trình tải tệp dữ liệu một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu tải dữ liệu một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
+Hình \ref{api_downloadRecordDataById} mô tả quá trình tải tệp dữ liệu một phiên đo của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu tải dữ liệu một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin, đường dẫn bản ghi có tồn tại trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo hay đường dẫn bản ghi, hệ thống sẽ
-trả về response lỗi tương ứng. Nếu bản ghi có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến Server để lấy tệp dữ liệu ECG dựa trên đường dẫn tệp bản ghi được truyền vào từ yêu cầu. 
+trả về response lỗi tương ứng. Nếu bản ghi có trong hệ thống, RecordService gửi truy vấn đến Server để lấy tệp dữ liệu ECG dựa trên đường dẫn tệp bản ghi được truyền vào từ yêu cầu. 
 Sau đó, tệp bản ghi ECG được trả về từ Server và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa tệp bản ghi ECG cho quản trị viên. Nếu có lỗi xảy ra
- trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+ trong quá trình này, hệ thống trả về response lỗi tương ứng. 
 
  \begin{figure}[H]
   \centering
@@ -1431,9 +1431,9 @@ Sau đó, tệp bản ghi ECG được trả về từ Server và được gửi
 \end{figure}
 Hình \ref{api_editRecordById} mô tả quá trình cập nhật thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu cập nhật thông tin một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService, DeviceService, UserService để kiểm tra thông tin bản ghi, thiết bị và bệnh nhân trong hệ thống dựa theo id (ID của phiên đo), user\_id (ID của bệnh nhân), device\_id (ID của thiết bị)
- được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo, bệnh nhân hay thiết bị, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để cập nhật thông tin
+ được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo, bệnh nhân hay thiết bị, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, RecordService gửi truy vấn đến RecordModel để cập nhật thông tin
 phiên đo ECG dựa trên thông tin được truyền vào từ yêu cầu. Sau đó, kết quả cập nhật được trả về từ RecordModel và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra
- trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+ trong quá trình này, hệ thống trả về response lỗi tương ứng.
 
  \begin{figure}[H]
   \centering
@@ -1444,8 +1444,8 @@ phiên đo ECG dựa trên thông tin được truyền vào từ yêu cầu. Sa
 \end{figure}
 Hình \ref{api_deleteRecordById} mô tả quá trình xóa thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin một phiên đo ECG của bệnh nhân, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin bản ghi trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo, hệ thống sẽ trả về response lỗi tương ứng. 
-Nếu thông tin phiên đo có trong hệ thống, RecordController tiếp tục gửi truy vấn đến RecordService, RecordService gửi truy vấn đến RecordModel để xóa thông tin phiên đo ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. Sau đó, kết quả cập nhật được trả về từ RecordModel 
-và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra  trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+Nếu thông tin phiên đo có trong hệ thống, RecordService gửi truy vấn đến RecordModel để xóa thông tin phiên đo ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. Sau đó, kết quả cập nhật được trả về từ RecordModel 
+và được gửi trở lại RecordRoute để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra  trong quá trình này, hệ thống trả về response lỗi tương ứng. 
 
 
 % -----------------------------------------------------
@@ -1474,9 +1474,8 @@ trả về tới người dùng (quản trị viên).
   \label{api_getDeviceById} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{api_getDeviceById} mô tả quá trình lấy thông tin thiết bị dựa trên ID trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy thông tin thiết bị theo ID, thông qua các tầng của hệ thống, 
-yêu cầu này được xử lý bởi DeviceController. DeviceController tiếp tục gửi truy vấn đến DeviceService, DeviceService gửi truy vấn đến DeviceModel để lấy thông tin thiết bị dựa theo deviceId (ID của thiết bị). 
+yêu cầu này được xử lý bởi DeviceController.DeviceService gửi truy vấn đến DeviceModel để lấy thông tin thiết bị dựa theo deviceId (ID của thiết bị). 
 Sau đó, thông tin thiết bị được trả về từ DeviceModel và được gửi trở lại DeviceRoute để trả về response cho người dùng. Nếu thiết bị tồn tại, hệ thống trả về response chứa thông tin thiết bị cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. 
-Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
 
 \begin{figure}[H]
   \centering
@@ -1487,9 +1486,9 @@ Sau khi xử lý, response cuối cùng được trả về tới người dùng
 \end{figure}
 Hình \ref{api_addDevice} mô tả quá trình thêm thiết bị vào hệ thống. Người dùng (quản trị viên) gửi yêu cầu tạo thông tin thiết bị, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến UserService để kiểm tra thông tin người dùng trong hệ thống dựa theo user\_id (ID của bệnh nhân) được truyền vào từ yêu cầu. 
-Nếu hệ thống không tồn tại bệnh nhân, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, DeviceController tiếp tục gửi truy vấn đến DeviceService, DeviceService gửi truy vấn đến DeviceModel để thêm thông tin thiết bị 
+Nếu hệ thống không tồn tại bệnh nhân, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, DeviceService gửi truy vấn đến DeviceModel để thêm thông tin thiết bị 
 dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ DeviceModel và được gửi trở lại DeviceRoute để trả về response cho người dùng. Nếu kết quả tạo thành công, hệ thống trả về response chứa thông tin thiết bị cho quản trị viên. 
-Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. 
 
 \begin{figure}[H]
   \centering
@@ -1500,9 +1499,9 @@ Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về respons
 \end{figure}
 Hình \ref{api_editDevice} mô tả quá trình cập nhật thông tin một thiết bị trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu cập nhật thông tin một thiết bị, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến DeviceService, UserService để kiểm tra thông tin thiết bị và bệnh nhân trong hệ thống dựa theo id (ID của thiết bị),
- user\_id (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại thông tin, hệ thống sẽ trả về response lỗi tương ứng. Ngược lại, DeviceController tiếp tục gửi truy vấn đến DeviceService, 
+ user\_id (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại thông tin, hệ thống sẽ trả về response lỗi tương ứng. Ngược lại, 
  DeviceService gửi truy vấn đến DeviceModel để cập nhật thông tin thiết bị dựa trên thông tin được truyền vào từ yêu cầu. Sau đó, kết quả cập nhật được trả về từ DeviceModel và được gửi trở lại DeviceRoute để 
- trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+ trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response kết quả cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. 
 
  \begin{figure}[H]
   \centering
@@ -1513,9 +1512,9 @@ yêu cầu này được xử lý bởi DeviceController. DeviceController gửi
 \end{figure}
 Hình \ref{api_deleteDeviceById} mô tả quá trình xóa thiết bị trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin thiết bị, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến DeviceService để kiểm tra thông tin thiết bị trong hệ thống dựa theo deviceId (ID của thiết bị) được truyền vào từ yêu cầu. 
-Nếu hệ thống không tồn tại thiết bị, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, DeviceController tiếp tục gửi truy vấn đến DeviceService, DeviceService gửi truy vấn đến DeviceModel để xóa thông tin thiết bị 
+Nếu hệ thống không tồn tại thiết bị, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, DeviceService gửi truy vấn đến DeviceModel để xóa thông tin thiết bị 
 dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ DeviceModel và được gửi trở lại DeviceRoute để trả về response cho người dùng. Nếu kết quả xóa thành công, hệ thống trả về response chứa kết quả cho quản trị viên. 
-Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. 
 
 % -----------------------------------------------------
 
@@ -1533,9 +1532,8 @@ Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về respons
   \label{api_getAllPDA} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{api_getAllPDA} mô tả quá trình lấy danh sách tất cả phân công bác sĩ - bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu lấy danh sách phân công bác sĩ - bệnh nhân, thông qua các tầng của hệ thống, 
-yêu cầu này được xử lý bởi PDAController. PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để lấy danh sách phân công. Sau đó, danh sách phân công được trả về từ PDAModel và được gửi trở lại PDARoute
- để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách phân công cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được 
-trả về tới người dùng (quản trị viên).
+yêu cầu này được xử lý bởi PDAController. PDAService gửi truy vấn đến PDAModel để lấy danh sách phân công. Sau đó, danh sách phân công được trả về từ PDAModel và được gửi trở lại PDARoute
+ để trả về response cho người dùng. Nếu quá trình thực hiện thành công, hệ thống trả về response chứa danh sách phân công cho quản trị viên. Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. 
 
 \begin{figure}[H]
   \centering
@@ -1547,9 +1545,9 @@ trả về tới người dùng (quản trị viên).
 Hình \ref{api_addPDA} mô tả quá trình thêm phân công bệnh nhân - bác sĩ vào hệ thống. Người dùng (quản trị viên) gửi yêu cầu tạo phân công bệnh nhân - bác sĩ, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân, bác sĩ trong hệ thống dựa theo patient\_id (ID của bệnh nhân), doctor\_id (ID bác sĩ);PDAService để kiểm
 tra bệnh nhân đã có phân công bác sĩ dựa theo patient\_id được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, bác sĩ hay bệnh nhân đã có bác sĩ phân công, hệ thống sẽ trả về response lỗi tương ứng. 
-Ngược lại, PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để thêm thông tin phân công dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ PDAModel và được gửi trở lại 
+Ngược lại, PDAService gửi truy vấn đến PDAModel để thêm thông tin phân công dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ PDAModel và được gửi trở lại 
 PDARoute để trả về response cho người dùng. Nếu kết quả tạo thành công, hệ thống trả về response chứa kết quả thêm phân công cho quản trị viên. 
-Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng.
 
 \begin{figure}[H]
   \centering
@@ -1561,9 +1559,9 @@ Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về respons
 Hình \ref{api_editPDA} mô tả quá trình cập nhật thông tin phân công bệnh nhân - bác sĩ vào hệ thống. Người dùng (quản trị viên) gửi yêu cầu sửa thông tin phân công bệnh nhân - bác sĩ, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân, bác sĩ trong hệ thống dựa theo patient\_id (ID của bệnh nhân), doctor\_id (ID bác sĩ);PDAService để kiểm
 tra bệnh nhân đã có phân công bác sĩ dựa theo patient\_id được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, bác sĩ hay bệnh nhân chưa có bác sĩ phân công, hệ thống sẽ trả về response lỗi tương ứng. 
-Ngược lại, PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để sửa thông tin phân công dựa theo thông tin truyền vào. Sau đó, kết quả cập nhật được trả về từ PDAModel và được gửi trở lại 
+Ngược lại, PDAService gửi truy vấn đến PDAModel để sửa thông tin phân công dựa theo thông tin truyền vào. Sau đó, kết quả cập nhật được trả về từ PDAModel và được gửi trở lại 
 PDARoute để trả về response cho người dùng. Nếu kết quả tạo thành công, hệ thống trả về response chứa kết quả thêm phân công cho quản trị viên. 
-Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. Sau khi xử lý, response cuối cùng được trả về tới người dùng (quản trị viên).
+Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về response lỗi tương ứng. 
 
 \begin{figure}[H]
   \centering
@@ -1574,8 +1572,8 @@ Nếu có lỗi xảy ra trong quá trình này, hệ thống trả về respons
 \end{figure}
 Hình \ref{api_deletePDA} mô tả quá trình xóa phân công bệnh nhân - bác sĩ trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin phân công, thông qua các tầng của hệ thống, 
 yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến PDAService để kiểm tra thông tin phân công trong hệ thống dựa theo pdaId (ID của phân công) được truyền vào từ yêu cầu. 
-Nếu hệ thống không tồn tại phân công, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để xóa thông tin phân công 
-dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ PDAModel và được gửi trở lại PDARoute để trả về response cho người dùng. Nếu kết quả xóa thành công, hệ thống trả về response chứa kết quả cho quản trị viên. 
+Nếu hệ thống không tồn tại phân công, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, PDAService gửi truy vấn đến PDAModel để xóa thông tin phân công 
+dựa theo thông tin truyền vào. 
 % -----------------------------------------------------
 \subsubsection{Chức năng nhắn tin}
 Chức năng nhắn tin là chức năng được thiết kế để không phụ thuộc vào server của
