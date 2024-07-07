@@ -221,7 +221,7 @@ Trong hệ thống chúng em đã tách riêng phần chat, server, mobile app v
   Sau khi hoàn tất các bước hệ thống sẽ tự động build các cục dịch vụ trên github, và khi build xong code mới sẽ được gửi về VPS server để chạy
   \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.5]{Images/server/deploy/auto-deploy.png}
+    \includegraphics[scale=0.4]{Images/server/deploy/auto-deploy.png}
     \caption[Tự động build dữ liệu trên github]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Tự động build dữ liệu trên github}
     \label{github-build} %đặt tên cho ảnh
@@ -229,6 +229,78 @@ Trong hệ thống chúng em đã tách riêng phần chat, server, mobile app v
   Hệ thống sẽ tự động quét vào 11 giờ 30 phút tối hàng ngày nếu có code mới được cập nhật sẽ tự động deploy lại phiên bản mới của hệ thống.
   Sau mỗi lượt deploy cập nhật các tính năng mới thì chúng em sẽ tiến hành kiểm thử chi tiết.
   Backup và giám sát cơ sở dữ liệu: Chúng em đã thiết lập các chính sách sao lưu định kỳ cho cơ sở dữ liệu và lưu các bản sao lưu lên trên github để đảm bảo an toàn cho dữ liệu và khả năng khôi phục trong trường hợp xảy ra sự cố.
+
+\end{itemize}
+\subsubsection{Tiến hành tạo model và tranning ai}
+Tạo project trên open ai api để đăng ký model ai cần sử dụng 
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{Images/server/ai/create-project.png}
+  \caption[Tạo project trên openai api]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Tạo project trên openai api}
+  \label{create-ai-project} %đặt tên cho ảnh
+\end{figure}
+
+Đăng ký model ai hợp lý, ở đây chúng em lựa chọn model gpt-4, đưa hướng dẫn chung về cấu trúc, công việc của trợ lý ảo cần làm
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]{Images/server/ai/create-assistant.png}
+  \caption[Tạo model ai phù hợp]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Tạo model ai phù hợp}
+  \label{create-ai-assistant} %đặt tên cho ảnh
+\end{figure}
+
+Tạo khoá bảo mật để có thể liên kết trực tiếp với model gpt-4 thông qua api 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]{Images/server/ai/private-key.png}
+  \caption[Tạo key bảo mật cho api]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Tạo key bảo mật cho api}
+  \label{create-ai-project} %đặt tên cho ảnh
+\end{figure}
+
+Cung cấp dữ liệu ban Đầu dưới dạng file csv. Dữ liệu sẽ bao gồm giới thiệu chi tiết về các thành phần, cách sử dụng, người dùng của hệ thống
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]{Images/server/ai/training-ai.png}
+  \caption[Cung cấp dữ liệu cho ai]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Cung cấp dữ liệu cho ai}
+  \label{create-ai-project} %đặt tên cho ảnh
+\end{figure}
+
+Kiểm tra việc học dữ liệu của ai bằng cách đặt câu hỏi liên quan đến các vấn đề nằm trong file dữ liệu ban đầu, để đánh giá mức độ tiếp thu của model và hiệu chỉnh dữ liệu
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/ai/check-ai.png}
+  \caption[Kiểm tra độ chính xác câu trả lời của ai]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Kiểm tra độ chính xác câu trả lời của ai}
+  \label{check-ai} %đặt tên cho ảnh
+\end{figure}
+
+Sau khi hoàn tất các bước ta đã có một trợ lý ảo, nhưng trợ lý ảo sẽ không thể tiếp nhận cùng lúc được nhiều người dùng cùng hỏi. Do đó chúng em đã chia đoạn chat của từng người dùng với ai thành một luồng riêng biệt. Để ai có thể hiểu và hỗ trợ riêng biệt cho mỗi người dùng. Dữ liệu chat của người dùng với ai sẽ được lưu trữ và tiếp tục huấn luyện cho ai để ai co thể duy trì cuộc hội thoại với họ 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/ai/tranning-ai-data.png}
+  \caption[Phân luồng trò chuyện của từng người dùng]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Phân luồng trò chuyện của từng người dùng}
+  \label{thread-ai} %đặt tên cho ảnh
+\end{figure}
+
+Bây giờ môi cuộc trò chuyện giữa người dùng và ai sẽ diễn ra riêng biệt để AI có thể duy trì và trả lời chính xác.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{Images/server/ai/thread-message.png}
+  \caption[Mô hình hoạt động của từng cuộc hội thoại]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Mô hình hoạt động của từng cuộc hội thoại}
+  \label{check-ai} %đặt tên cho ảnh
+\end{figure}
+
+Sau khi hoàn tất chúng ta sẽ có được một trợ lý được tinh chỉnh dể phù hợp với hệ thống và cung cấp tư vấn chính xác cho từng người dùng với dữ liệu cá nhân của họ.
 
 \subsection{Kiểm thử}
 
