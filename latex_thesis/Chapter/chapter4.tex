@@ -311,378 +311,11 @@ Môi trường:
 
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item Base URL: http://13.250.106.115/
+  \item Base URL: http://103.200.20.59/ hoặc http://localhost:3000/
 \end{itemize}
 \end{adjustwidth}
 
 Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
-
-
-
-\paragraph{API liên quan đến thông tin người dùng}
-\mbox{}
-
-Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liên quan
-
-\begin{enumerate}[a)]
-  \item URL: GET api/users/profile 
-  
-  \begin{table}[H]
-    \centering
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin profile của người dùng}
-    \begin{tabularx}{\textwidth}{
-    | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{2cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}p{1cm}|
-    }
-    \hline
-    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
-
-
-    TC-1
-    & User đã đăng nhập vào hệ thống thành công
-    & JWT Cookie có tồn tại
-    & 
-
-    Status code: 200 OK
-
-      Response content:
-
-      \{
-
-    "status": "success",
-
-    "data": Thông tin của user
-
-    \}
-    
-    & OK
-
-    \\ \hline
-  
-    TC-2
-    & User chưa đăng nhập vào hệ thống
-    & JWT Cookie không tồn tại
-    & 
-
-    Status code: 500 Internal Server Error
-
-      Response content:
-
-      \{
-
-    "status": "error",
-
-    "msg": "An error occurred while retrieving the user profile"
-
-    \}
-    
-    & OK
-
-    \\ \hline
-  
-    \end{tabularx}
-    \label{table_api_news}
-  \end{table}
-  
-  % TODO: Note new page
-  \item URL: PUT api/users/profile
-  
-  \begin{table}[H]
-    \centering
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API cập nhật thông tin profile của người dùng}
-    \begin{tabularx}{\textwidth}{
-    | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{2cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}p{1cm}|
-    }
-    \hline
-    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
-
-
-    TC-1
-    & User đã đăng nhập vào hệ thống thành công
-    & Thông tin user muốn cập nhật
-
-    \{
-
-    "name": họ tên,
-    "doB": ngày sinh,
-    "phone\_number": số điện thoại
-
-\}
-
-    & 
-
-    Status code: 200 OK
-
-      Response content:
-
-      \{
-
-    "status": "success",
-
-    "data": Thông tin của user sau khi cập nhật lại
-
-    \}
-    
-    & OK
-
-    \\ \hline
-  
-    TC-2
-    & User chưa đăng nhập vào hệ thống
-    & Thông tin user muốn cập nhật
-
-    \{
-
-    "name": họ tên,
-    "doB": ngày sinh,
-    "phone\_number": số điện thoại
-
-\}
-    & 
-
-    Status code: 500 Internal Server Error
-
-      Response content:
-
-      \{
-
-    "status": "error",
-
-    "msg": "An error occurred while retrieving the user profile"
-
-    \}
-    
-    & OK
-
-    \\ \hline
-  
-    \end{tabularx}
-    \label{table_api_news}
-  \end{table}
-
-  \item URL: PUT api/users/change-password
-  
-  \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}p{1cm}|
-    }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API thay đổi mật khẩu người dùng}
-    % \label{table_api_news}
-    \\
-    \hline
-    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
-  
-  
-    TC-1
-    & User đã đăng nhập vào hệ thống thành công và mật khẩu hiện tại trùng với req.currentPassword, req.newPassword và req.confirmPassword trùng nhau 
-    & Thông tin thay đổi mật khẩu
-  
-    \{
-  
-      "currentPassword": "123456",
-      "newPassword": "1234567",
-      "confirmPassword": "1234567"
-  
-  \}
-  
-    & 
-  
-    Status code: 200 OK
-  
-      Response content:
-  
-      \{
-  
-    "status": "success",
-  
-    msg: "Password changed successfully"
-  
-    \}
-    
-    & OK
-  
-    \\ \hline
-  
-    TC-2
-    & User chưa đăng nhập vào hệ thống
-    & Thông tin thay đổi mật khẩu
-  
-    \{
-  
-      "currentPassword": mật khẩu hiện tại,
-      "newPassword": mật khẩu mới,
-      "confirmPassword": xác nhận lại mật khẩu
-  
-  \}
-    & 
-  
-    Status code: 500 Internal Server Error
-  
-      Response content:
-  
-      \{
-  
-    "status": "error",
-  
-    "msg": "An error occurred while retrieving the user profile"
-  
-    \}
-    
-    & OK
-  
-    \\ \hline
-  
-    TC-3
-    & User đã đăng nhập vào hệ thống thành công và mật khẩu hiện tại không
-    trùng với
-    req.currentPassword 
-    & Thông tin thay đổi mật khẩu
-  
-    \{
-  
-      "currentPassword": "1234568",
-      "newPassword": "1234567",
-      "confirmPassword": "1234567"
-  
-  \}
-  
-    & 
-  
-    Status code: 401 Unauthorized
-  
-      Response content:
-  
-      \{
-  
-    "status": "error",
-  
-    msg: "Current password is incorrect"
-  
-    \}
-    
-    & OK
-  
-    \\ \hline
-  
-    TC-4
-    & User đã đăng nhập vào hệ thống thành công và và mật khẩu hiện tại trùng với req.currentPassword, req.newPassword và req.confirmPassword không trùng nhau 
-    & Thông tin thay đổi mật khẩu
-  
-    \{
-  
-      "currentPassword": "123456",
-      "newPassword": "1234567324",
-      "confirmPassword": "127"
-  
-  \}
-  
-    & 
-  
-    Status code: 401 Unauthorized
-  
-      Response content:
-  
-      \{
-  
-    "status": "error",
-  
-    msg: "New password and confirm password do not match"
-  
-    \}
-    
-    & OK
-  
-    \\ \hline
-  
-    
-  
-    \end{xltabular}
-
-
-
-  \item URL: GET api/users/{:userId}
-  
-
-  \break
-  
-  \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}p{1cm}|
-    }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin của người dùng thông qua ID}
-    % \label{table_api_news}
-    \\
-    \hline
-    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
-  
-  
-    TC-1
-    & User ID có tồn tại trên database
-    & User ID
-  
-    & 
-  
-    Status code: 200 OK
-  
-      Response content:
-  
-      \{
-  
-    "status": "success",
-  
-    data: Thông tin user
-  
-    \}
-    
-    & OK
-  
-    \\ \hline
-  
-    TC-2
-    & User ID không tồn tại trên database
-    & User ID
-  
-    & 
-  
-    Status code: 404 Not Found
-  
-      Response content:
-  
-      \{
-  
-    "status": "error",
-  
-    "msg": "User not found"
-  
-    \}
-    
-    & OK
-  
-    \\ \hline
-    
-  
-    \end{xltabular}
-
-  
-\end{enumerate}
-
 
 \paragraph{API liên quan đến việc xác thực người dùng}
 \mbox{}
@@ -690,12 +323,10 @@ Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liê
 Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liên quan
 
 
-
 \begin{enumerate}[a)]
-  \item URL: POST api/register
+  \item URL: POST api/auth/register
   
-\break
-
+  \break
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
     | >{\raggedright\arraybackslash}p{2.5cm}
@@ -712,17 +343,23 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
   
     TC-1
-    & User chưa có tài khoản trên hệ thống
+    & Người dùng chưa có tài khoản trên hệ thống
     & Thông tin đăng ký tài khoản
 
     \{
 
+    "username": "Nguyen Van A",
+
     "password": "123456789",
-    "confirm\_password": "123456789",
-    "name": "Anh Tuan",
-    "doB": "20-10-2001",
+
     "email": "test@gmail.com",
+
+    "birth": "",
+
+    "gender": 1,
+
     "phone\_number": "0123344562",
+
     "role": 0
 
    \}
@@ -737,7 +374,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
     "status": "success",
   
-    data: Thông tin user sau khi đăng ký thành công
+    "message": "Your account is pending."
   
     \}
     
@@ -746,56 +383,20 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
     \\ \hline
   
     TC-2
-    & User đã có tài khoản trên hệ thống
+    & Người dùng đã có tài khoản trên hệ thống
     & Thông tin đăng ký tài khoản
 
     \{
 
-    "password": "123456789",
-    "confirm\_password": "123456789",
-    "name": "Anh Tuan",
-    "doB": "20-10-2001",
-    "email": "test@gmail.com",
-    "phone\_number": "0123344562",
-    "role": 0
-
-   \}
-  
-    & 
-  
-    Status code: 400 Bad Request
-  
-      Response content:
-  
-      \{
-  
-    "status": "error",
-  
-    "msg": "Email is already in use"
-  
-    \}
-    
-    & OK
-  
-    \\ \hline
-
-
-    TC-3
-    & User chưa có tài khoản trên hệ thống, req.password và req.-
-    confirm\_password không trùng nhau
-    & Thông tin đăng ký tài khoản
-
-    \{
+    "username": "Nguyen Van A",
 
     "password": "123456789",
 
-    "confirm\_password": "123456789",
-
-    "name": "Anh Tuan",
-
-    "doB": "20-10-2001",
-
     "email": "test@gmail.com",
+
+    "birth": "",
+
+    "gender": 1,
 
     "phone\_number": "0123344562",
 
@@ -813,7 +414,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
     "status": "error",
   
-    "msg": "Passwords do not match"
+    "message": "Email has already been in use"
   
     \}
     
@@ -824,15 +425,13 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
     \end{xltabular}
 
-  
 
-
-  \item URL: POST api/login
+  \item URL: POST api/auth/login
   
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
@@ -851,8 +450,8 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
     \{
 
-    "email": email của user,
-    "password": mật khẩu của user
+    "email": email người dùng,
+    "password": mật khẩu người dùng
 
    \}
   
@@ -880,8 +479,8 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
     \{
 
-    "email": email của user,
-    "password": mật khẩu của user
+    "email": email người dùng,
+    "password": mật khẩu người dùng
 
    \}
   
@@ -895,7 +494,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
     "status": "error",
   
-    "msg": "Invalid email or password"
+    "message": "Invalid email or password"
   
     \}
     
@@ -908,12 +507,12 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
 
 
-  \item URL: GET api/logout
+  \item URL: POST api/auth/logout
   
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
@@ -940,7 +539,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
     "status": "success",
   
-    "msg": "Logged out successfully"
+    "message": "Logged out successfully"
   
     \}
     
@@ -962,7 +561,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
     "status": "error",
   
-    "msg": "No token found"
+    "message": "No token found"
   
     \}
     
@@ -975,13 +574,13 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
 
 
-  \item URL: POST api/reset-password
+  \item URL: POST api/auth/reset-password
   
 
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
@@ -995,12 +594,12 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
   
     TC-1
-    & User đã đăng ký tài khoản
-    & Email user
+    & Người dùng đã đăng ký tài khoản
+    & Email người dùng
 
     \{
 
-    "email": email user
+    "email": email người dùng
 
     \}
     & 
@@ -1013,7 +612,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
     "status": "success",
   
-    "msg": "Reset token sent to email"
+    "message": "Reset token sent to email"
 
     "resetToken": token
   
@@ -1024,12 +623,12 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
     \\ \hline
   
     TC-2
-    & User chưa đăng ký tài khoản
-    & Email user
+    & Người dùng chưa đăng ký tài khoản
+    & Email người dùng
 
     \{
 
-    "email": email user
+    "email": email người dùng
 
     \}
    &
@@ -1042,7 +641,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
     "status": "error",
   
-    "msg": "User not found"
+    "message": "User not found"
   
     \}
     
@@ -1055,7 +654,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
 
 
-  \item URL: POST api/reset-password/reset 
+  \item URL: POST api/auth/reset-password/reset 
   
 
 
@@ -1084,8 +683,6 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
       "password": "123456",
 
-      "confirm\_password": "123456",
-
       "email": "test@gmail.com"
 
   \}
@@ -1100,7 +697,7 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
     "status": "success",
   
-    "msg": "Password reset successful"
+    "message": "Password reset successful"
   
     \}
     
@@ -1117,8 +714,6 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
       "resetToken": "816e8d",
 
       "password": "123456",
-
-      "confirm\_password": "123456",
 
       "email": "test@gmail.com"
 
@@ -1151,8 +746,6 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
 
       "password": "123456",
 
-      "confirm\_password": "123456",
-
       "email": "test@gmail.com"
 
   \}
@@ -1166,69 +759,39 @@ Tham khảo bảng \ref{table_api_auth} để xem thông tin của các api liê
   
     "status": "error",
   
-    "msg": "Reset token has expired"
+    "message": "Reset token has expired"
   
     \}
     
     & OK
   
     \\ \hline
-
-
-    TC-4
-    & req.password và req-
-    .confirm\_password không trùng
-    & Thông tin reset mật khẩu
-
-    \{
-
-      "resetToken": "816e8d",
-
-      "password": "123456",
-
-      "confirm\_password": "123456",
-
-      "email": "test@gmail.com"
-
-  \}
-   &
-  
-    Status code: 400 Bad Request
-  
-      Response content:
-  
-      \{
-  
-    "status": "error",
-  
-    "msg": "Password confirmation does not match"
-  
-    \}
-    & OK
-    \\ \hline  
     \end{xltabular}
 
 
 
 \end{enumerate}
 
-
-\paragraph{API liên quan đến tin tức}
+\paragraph{API liên quan đến việc xét duyệt đăng ký tài khoản}
 \mbox{}
 
-Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liên quan
-\newpage
+Tham khảo bảng \ref{table_api_register} để xem thông tin của các api liên quan
+
+
+
 \begin{enumerate}[a)]
-  \item URL: GET api/news/{:newsId}
+  \item URL: GET api/register/list
   
+\break
+
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{2cm}
-    | >{\raggedright\arraybackslash}p{2cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{3.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy nội dung của tin tức theo ID}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API đăng ký tài khoản}
     % \label{table_api_news}
     \\
     \hline
@@ -1237,8 +800,9 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
   
     TC-1
-    & Tin tức tồn tại với ID tương ứng
-    & ID tin tức
+    & Người dùng là admin của hệ thống kèm theo token
+    & Access token của người dùng trong Bearer Token
+  
     & 
   
     Status code: 200 OK
@@ -1248,8 +812,8 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
       \{
   
     "status": "success",
-
-    data: Nội dung của tin tức
+  
+    "data": Danh sách các tài khoản chờ phê duyệt
   
     \}
     
@@ -1258,8 +822,95 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
     \\ \hline
   
     TC-2
-    & Tin tức không tồn tại với ID tương ứng
-    & ID danh mục tin tức
+    & Người dùng không phải là admin của hệ thống kèm theo token
+    & Access token của người dùng trong Bearer Token
+  
+    & 
+  
+    Status code: 403 Forbidden
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "You don't have permission to access"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+    TC-3
+    & Yêu cầu không kèm theo token
+    & NULL
+  
+    & 
+  
+    Status code: 401 Unauthorized  
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "No token found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+    
+  
+    \end{xltabular}
+
+
+  \item URL: POST api/register/accepted
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{3.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API chấp nhận tài khoản}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Tài khoản phê duyệt tồn tại trên hệ thống
+    & ID tài khoản phê duyệt
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    "message": "Accept account successfully"
+  
+    \}
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Tài khoản phê duyệt không tồn tại trên hệ thống
+    & ID tài khoản phê duyệt
+  
    &
   
     Status code: 404 Not Found
@@ -1270,10 +921,583 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
     "status": "error",
   
-    "msg": "News not found"
+    "message": "Register account not found"
+  
+    \}
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+
+  \item URL: POST api/register/rejected
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{3.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API từ chối phê duyệt tài khoản}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Tài khoản phê duyệt tồn tại trên hệ thống
+    & ID tài khoản phê duyệt
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    "message": "Reject account successfully"
   
     \}
     
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Tài khoản phê duyệt tồn tại trên hệ thống
+    & ID tài khoản phê duyệt
+  
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "Register account not found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+\end{enumerate}
+
+
+\paragraph{API liên quan đến thông tin người dùng}
+\mbox{}
+
+Tham khảo bảng \ref{table_api_user} để xem thông tin của các api liên quan
+
+\begin{enumerate}[a)]
+  \item URL: GET api/user
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{3.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách người dùng}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Người dùng là admin của hệ thống kèm theo token
+    & Access token của người dùng trong Bearer Token
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    "data": Danh sách người dùng
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Người dùng không phải là admin của hệ thống kèm theo token
+    & Access token của người dùng trong Bearer Token
+  
+    & 
+  
+    Status code: 403 Forbidden
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "You don't have permission to access"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+
+
+    TC-3
+    & Yêu cầu không kèm theo token
+    & NULL
+  
+    & 
+  
+    Status code: 401 Unauthorized  
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "No token found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+    
+  
+    \end{xltabular}
+
+  \item URL: GET api/user/id/{:userId}
+    
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin của người dùng thông qua ID}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Người dùng tồn tại với ID tương ứng 
+    & ID người dùng
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    data: Thông tin người dùng
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Người dùng không tồn tại với ID tương ứng
+    & ID người dùng
+  
+    & 
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "User not found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+    
+  
+    \end{xltabular}
+  
+  \item URL: GET api/user/{:role}
+  
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin của người dùng thông qua chức vụ}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Role tồn tại trong CSDL 
+    & Role
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    data: Danh sách người dùng ứng với role
+  
+    \}
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Role không tồn tại trong CSDL
+    & Role
+  
+    & 
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "Role does not exist"
+  
+    \}
+    & OK
+  
+    \\ \hline
+    
+  
+    \end{xltabular}
+
+
+  \item URL: POST api/user/update 
+  
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API cập nhật thông tin người dùng}
+  \\
+  \hline
+  \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+  &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+
+
+  TC-1
+  & Người dùng tồn tại với ID tương ứng
+  & Thông tin cập nhật của người dùng
+  \{
+
+  "username": Họ và tên,
+
+  "birth": Ngày sinh,
+
+  "phone\_number": Số điện thoại,
+
+  "gender": Giới tính,
+
+  "status": Trạng thái
+
+  \}
+  & 
+
+  Status code: 200 OK
+
+    Response content:
+
+    \{
+
+  "status": "success",
+
+  "data": Thông tin sau khi cập nhật của người dùng
+
+  \}
+  
+  & OK
+
+  \\ \hline
+
+  TC-2
+  & Người dùng không tồn tại với ID tương ứng
+  & Thông tin cập nhật của người dùng
+
+  \{
+
+  "username": Họ và tên,
+
+  "birth": Ngày sinh,
+
+  "phone\_number": Số điện thoại,
+
+  "gender": Giới tính,
+
+  "status": Trạng thái
+
+  \}
+  & 
+
+  Status code: 404 Not found
+
+    Response content:
+
+    \{
+
+  "status": "error",
+
+  "message": "User not found"
+
+  \}
+  
+  & OK
+
+  \\ \hline
+
+  \end{xltabular}
+
+  
+  % TODO: Note new page
+  \item URL: DELETE api/user/delete/{:userId}
+
+  \begin{xltabular}{\textwidth}{
+      | >{\raggedright\arraybackslash}p{1cm}
+      | >{\raggedright\arraybackslash}p{2cm}
+      | >{\raggedright\arraybackslash}p{2cm}
+      | >{\raggedright\arraybackslash}X
+      | >{\raggedright\arraybackslash}p{1cm}|
+      }
+      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API xóa thông tin người dùng}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+
+
+    TC-1
+    & Người dùng tồn tại với ID tương ứng
+    & ID người dùng
+
+    & 
+
+    Status code: 200 OK
+
+      Response content:
+
+      \{
+
+    "status": "success",
+
+    "message": "Delete user successfully"
+
+    \}
+    
+    & OK
+
+    \\ \hline
+  
+    TC-2
+    & Người dùng không tồn tại với ID tương ứng
+    & ID người dùng
+
+    & 
+
+    Status code: 404 Not found
+
+      Response content:
+
+      \{
+
+    "status": "error",
+
+    "message": "User not found"
+
+    \}
+    
+    & OK
+    \\ \hline
+  
+    \end{xltabular}
+
+
+\end{enumerate}
+
+
+\paragraph{API liên quan đến thiết bị}
+\mbox{}
+
+Tham khảo bảng \ref{table_api_device} để xem thông tin của các api liên quan
+
+\begin{enumerate}[a)]
+  \item URL: GET api/device
+    
+    \begin{xltabular}{\textwidth}{
+      | >{\raggedright\arraybackslash}p{1cm}
+      | >{\raggedright\arraybackslash}p{2.5cm}
+      | >{\raggedright\arraybackslash}p{2.5cm}
+      | >{\raggedright\arraybackslash}X
+      | >{\raggedright\arraybackslash}p{1cm}|
+      }
+      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách thiết bị}
+      % \label{table_api_news}
+      \\
+      \hline
+      \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+      &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+    
+    
+      TC-1
+      & Người dùng đã đăng nhập vào hệ thống
+      & Access token của người dùng trong Bearer Token
+    
+      & 
+    
+      Status code: 200 OK
+    
+        Response content:
+    
+        \{
+    
+      "status": "success",
+    
+      "data": Danh sách thiết bị
+    
+      \}
+      & OK
+    
+      \\ \hline
+    
+      TC-2
+      & Người dùng chưa đăng nhập vào hệ thống
+      & Access token của người dùng trong Bearer Token
+    
+      & 
+    
+      Status code: 401 Unauthorized
+    
+        Response content:
+    
+        \{
+    
+      "status": "error",
+    
+      "message": "No token found"
+    
+      \}
+      & OK
+      \\ \hline
+
+    
+      \end{xltabular}
+  
+
+  \item URL: GET api/device/{:deviceId}
+  
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin thiết bị theo ID}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Thiết bị tồn tại với ID tương ứng
+    & ID thiết bị
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+
+    data: Thông tin của thiết bị
+  
+    \}
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Thiết bị không tồn tại với ID tương ứng
+    & ID thiết bị
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "Device not found"
+  
+    \}
     & OK
   
     \\ \hline
@@ -1282,16 +1506,16 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
     \end{xltabular}
 
   % //TODO: new page
-  \item URL: GET api/news
-
+  \item URL: POST api/device/add
+  
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API thêm thiết bị}
     % \label{table_api_news}
     \\
     \hline
@@ -1300,8 +1524,26 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
   
     TC-1
-    & NULL
-    & NULL
+    & Bệnh nhân và bác sĩ tồn tại với ID tương ứng
+    & Thông tin thiết bị
+
+    \{
+
+    "device\_name": Tên thiết bị,
+
+    "device\_type": Loại thiết bị,
+
+    "user\_id": ID bệnh nhân,
+
+    "doctor\_id": ID bác sĩ,
+
+    "status": Trạng thái,
+
+    "infomation": Thông tin thiết bị,
+
+    "start\_date": Ngày bắt đầu sử dụng
+
+   \}
     & 
   
     Status code: 200 OK
@@ -1312,9 +1554,7 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
     "status": "success",
   
-    "count": Số lượng tin tức
-
-    data: Danh sách các tin tức
+    data: Thông tin của thiết bị
   
     \}
     
@@ -1323,11 +1563,29 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
     \\ \hline
   
     TC-2
-    & NULL
-    & Lỗi đường truyền server
-   &
+    & Bệnh nhân hoặc bác sĩ không tồn tại với ID tương ứng
+    & Thông tin thiết bị
+
+    \{
+
+    "device\_name": Tên thiết bị,
+
+    "device\_type": Loại thiết bị,
+
+    "user\_id": ID bệnh nhân,
+
+    "doctor\_id": ID bác sĩ,
+
+    "status": Trạng thái,
+
+    "infomation": Thông tin thiết bị,
+
+    "start\_date": Ngày bắt đầu sử dụng
+
+   \}
+    & 
   
-    Status code: 500 Internal Server Error
+    Status code: 404 Not found
   
       Response content:
   
@@ -1335,30 +1593,27 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
     "status": "error",
   
-    "msg": "An error occurred while retrieving the news"
+    "message": "User not found"
   
     \}
     
     & OK
   
     \\ \hline
-
+    
   
     \end{xltabular}
 
-
-
-  \item URL: GET api/categories
+  \item URL: POST api/device/update
   
-
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách danh mục tin tức}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API cập nhật thông tin thiết bị}
     % \label{table_api_news}
     \\
     \hline
@@ -1367,8 +1622,26 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
   
     TC-1
-    & NULL
-    & NULL
+    & Thiết bị tồn tại với ID tương ứng
+    & Thông tin thiết bị
+
+    \{
+
+    "device\_name": Tên thiết bị,
+
+    "device\_type": Loại thiết bị,
+
+    "user\_id": ID bệnh nhân,
+
+    "doctor\_id": ID bác sĩ,
+
+    "status": Trạng thái,
+
+    "infomation": Thông tin thiết bị,
+
+    "start\_date": Ngày bắt đầu sử dụng
+
+   \}
     & 
   
     Status code: 200 OK
@@ -1379,9 +1652,7 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
     "status": "success",
   
-    "count": Số lượng danh mục tin tức
-
-    data: Danh sách các danh mục tin tức
+    data: Thông tin sau khi cập nhật của thiết bị
   
     \}
     
@@ -1390,11 +1661,29 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
     \\ \hline
   
     TC-2
-    & Lỗi đường truyền server
-    & NULL
-   &
+    & Thiết bị không tồn tại với ID tương ứng
+    & Thông tin thiết bị
+
+    \{
+
+    "device\_name": Tên thiết bị,
+
+    "device\_type": Loại thiết bị,
+
+    "user\_id": ID bệnh nhân,
+
+    "doctor\_id": ID bác sĩ,
+
+    "status": Trạng thái,
+
+    "infomation": Thông tin thiết bị,
+
+    "start\_date": Ngày bắt đầu sử dụng
+
+   \}
+    & 
   
-    Status code: 500 Internal Server Error
+    Status code: 404 Not found
   
       Response content:
   
@@ -1402,7 +1691,7 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
     "status": "error",
   
-    "msg": "An error occurred while retrieving the news categories"
+    "message": "Device not found"
   
     \}
     
@@ -1410,21 +1699,57 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
     \\ \hline
 
+    TC-3
+    & Bệnh nhân hoặc bác sĩ không tồn tại với ID tương ứng
+    & Thông tin thiết bị
+
+    \{
+
+    "device\_name": Tên thiết bị,
+
+    "device\_type": Loại thiết bị,
+
+    "user\_id": ID bệnh nhân,
+
+    "doctor\_id": ID bác sĩ,
+
+    "status": Trạng thái,
+
+    "infomation": Thông tin thiết bị,
+
+    "start\_date": Ngày bắt đầu sử dụng
+
+   \}
+    & 
+  
+    Status code: 404 Not found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "User not found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
   
     \end{xltabular}
 
-
-
-  \item URL: GET api/category/{:categoryId}
-  \newpage
+  \item URL: DELETE api/device/delete/{:deviceId}
+  
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin danh mục tin tức theo ID}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API xóa thiết bị}
     % \label{table_api_news}
     \\
     \hline
@@ -1433,8 +1758,9 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
   
     TC-1
-    & Danh mục tin tức tồn tại với ID tương ứng
-    & ID danh mục tin tức
+    & Thiết bị tồn tại với ID tương ứng
+    & ID thiết bị
+
     & 
   
     Status code: 200 OK
@@ -1444,8 +1770,8 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
       \{
   
     "status": "success",
-
-    data: Thông tin danh mục tin tức
+  
+    "message": "Delete device successful"
   
     \}
     
@@ -1454,77 +1780,12 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
     \\ \hline
   
     TC-2
-    & Danh mục tin tức không tồn tại với ID tương ứng
-    & ID danh mục tin tức
-   &
+    & Thiết bị không tồn tại với ID tương ứng
+    & ID thiết bị
   
-    Status code: 404 Not Found
-  
-      Response content:
-  
-      \{
-  
-    "status": "error",
-  
-    "msg": "News category not found"
-  
-    \}
-    
-    & OK
-  
-    \\ \hline
-
-  
-    \end{xltabular}
-
-
-  % //TODO: new page
-  \item URL: GET api/news/category/{:categoryId}
-  
-  
-  \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}p{1cm}|
-    }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách tin tứu theo ID danh mục tin tức}
-    % \label{table_api_news}
-    \\
-    \hline
-    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
-    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
-  
-  
-    TC-1
-    & Danh mục tin tức tồn tại với ID tương ứng
-    & ID danh mục tin tức
     & 
   
-    Status code: 200 OK
-  
-      Response content:
-  
-      \{
-  
-    "status": "success",
-    "count": Số lượng tin tức
-
-    data: Thông tin tin tức
-  
-    \}
-    
-    & OK
-  
-    \\ \hline
-  
-    TC-2
-    & Danh mục tin tức không tồn tại với ID tương ứng
-    & ID danh mục tin tức
-   &
-  
-    Status code: 404 Not Found
+    Status code: 404 Not found
   
       Response content:
   
@@ -1532,18 +1793,16 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
   
     "status": "error",
   
-    "msg": "News category not found"
+    "message": "Device not found"
   
     \}
     
     & OK
   
     \\ \hline
-
+    
   
     \end{xltabular}
-
-
 
 
 \end{enumerate}
@@ -1556,17 +1815,16 @@ Tham khảo bảng \ref{table_api_news} để xem thông tin của các api liê
 Tham khảo bảng \ref{table_api_ecg} để xem thông tin của các api liên quan
 
 \begin{enumerate}[a)]
-  \item URL: POST api/ecg-records/upload 
-  
-
+  \item URL: GET api/record
+    
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tải dữ liệu đo ECG lên server}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bản ghi}
     % \label{table_api_news}
     \\
     \hline
@@ -1575,26 +1833,9 @@ Tham khảo bảng \ref{table_api_ecg} để xem thông tin của các api liên
   
   
     TC-1
-    & NULL
-    & Thông tin của ECG record dưới dạng form-data
-
-\{
-
-file: File dữ liệu
-
-user\_id: ID user
-
-device\_id: ID thiết bị
-
-stop\_time: Thời gian dừng đo
-
-start\_time: Thời gian bắt đầu đo
-
-sensor\_type: Loại cảm biến
-
-
-\}
-
+    & Người dùng đăng nhập vào hệ thống
+    & Access token của người dùng trong Bearer Token
+  
     & 
   
     Status code: 200 OK
@@ -1604,8 +1845,8 @@ sensor\_type: Loại cảm biến
       \{
   
     "status": "success",
-
-    data: Thông tin của ECG record
+  
+    data: Danh sách bản ghi 
   
     \}
     
@@ -1614,28 +1855,12 @@ sensor\_type: Loại cảm biến
     \\ \hline
   
     TC-2
-    & Lỗi đường truyền server
-    & Thông tin của ECG record dưới dạng form-data
-
-\{
-
-file: File dữ liệu
-
-user\_id: ID user
-
-device\_id: ID thiết bị
-
-stop\_time: Thời gian dừng đo
-
-start\_time: Thời gian bắt đầu đo
-
-sensor\_type: Loại cảm biến
-
-
-\}
-   &
+    & Người dùng chưa đăng nhập vào hệ thống
+    & NULL
   
-    Status code: 500 Internal Server Error
+    & 
+  
+    Status code: 401 Unauthorized
   
       Response content:
   
@@ -1643,28 +1868,27 @@ sensor\_type: Loại cảm biến
   
     "status": "error",
   
-    "msg": "An error occurred while retrieving the news categories"
+    "message": "No token found"
   
     \}
     
     & OK
-  
     \\ \hline
 
   
     \end{xltabular}
 
-
-  \item URL: GET api/ecg-records/patient/{:patientId}
+  
+  \item URL: GET api/record/user/{:userId}
   
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin phiên đo ECG của bệnh nhân}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách phiên đo ECG của bệnh nhân}
     % \label{table_api_news}
     \\
     \hline
@@ -1685,12 +1909,10 @@ sensor\_type: Loại cảm biến
       \{
   
     "status": "success",
-    "count": Số lượng ECG record của bệnh nhân
 
-    data: Thông tin của tất cả ECG record của bệnh nhân
+    "data": Danh sách thông tin của tất cả phiên đo của bệnh nhân
   
     \}
-    
     & OK
   
     \\ \hline
@@ -1709,10 +1931,9 @@ sensor\_type: Loại cảm biến
   
     "status": "error",
   
-    "msg": "An error occurred while retrieving the news categories"
+    "message": "An error occurred while retrieving the records"
   
     \}
-    
     & OK
   
     \\ \hline
@@ -1720,20 +1941,17 @@ sensor\_type: Loại cảm biến
   
     \end{xltabular}
 
-
-
-
-  \item URL: GET api/ecg-records/doctor/{:doctorId}
   
-
+  \item URL: GET api/record/doctor/{:doctorId}
+  
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách phiên đo ECG của các bệnh nhân mà bác sĩ đang quản lý}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách phiên đo ECG mà bác sĩ phụ trách}
     % \label{table_api_news}
     \\
     \hline
@@ -1743,7 +1961,7 @@ sensor\_type: Loại cảm biến
   
     TC-1
     & NULL
-    & ID bác sỹ
+    & ID bác sĩ
 
     & 
   
@@ -1754,12 +1972,11 @@ sensor\_type: Loại cảm biến
       \{
   
     "status": "success",
-    data: Thông tin của tất cả ECG record của từng bệnh nhân mà bác sỹ quản lý
+
+    "data": Danh sách thông tin của tất cả phiên đo mà bác sĩ phụ trách
   
     \}
-    
     & OK
-  
     \\ \hline
   
     TC-2
@@ -1776,10 +1993,9 @@ sensor\_type: Loại cảm biến
   
     "status": "error",
   
-    "msg": "An error occurred while retrieving the news categories"
+    "message": "An error occurred while retrieving the records"
   
     \}
-    
     & OK
   
     \\ \hline
@@ -1787,19 +2003,16 @@ sensor\_type: Loại cảm biến
   
     \end{xltabular}
 
-
-
-  \item URL: GET api/ecg-records/record-data/{:recordId}
+  \item URL: GET api/record/id/{:recordId}
   
-
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy dữ liệu một phiên đo ECG}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin một phiên đo ECG}
     % \label{table_api_news}
     \\
     \hline
@@ -1808,8 +2021,8 @@ sensor\_type: Loại cảm biến
   
   
     TC-1
-    & Có tồn tại ECG record
-    & ID ECG record 
+    & Phiên đo tồn tại với ID tương ứng
+    & ID phiên đo 
 
     & 
   
@@ -1820,18 +2033,17 @@ sensor\_type: Loại cảm biến
       \{
   
     "status": "success",
-    count: Tổng số lượng dữ liệu của ECG record
-    data: Dữ liệu của ECG record
+
+    data: Thông tin phiên đo ECG
   
     \}
-    
     & OK
   
     \\ \hline
   
     TC-2
-    & Không tồn tại ECG record
-    & ID ECG record 
+    & Phiên đo không tồn tại với ID tương ứng
+    & ID phiên đo 
 
    &
   
@@ -1843,10 +2055,363 @@ sensor\_type: Loại cảm biến
   
     "status": "error",
   
-    "msg": "EcgRecord not found"
+    "message": "Record not found"
+  
+    \}
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+  \item URL: GET api/record/getData/{:recordId}
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy dữ liệu bản ghi một phiên đo ECG}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Phiên đo tồn tại với ID tương ứng
+    & ID phiên đo 
+
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+
+    data: Dữ liệu bản ghi phiên đo ECG
   
     \}
     
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Phiên đo không tồn tại với ID tương ứng
+    & ID phiên đo 
+
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "Record not found"
+  
+    \}
+    & OK
+  
+    \\ \hline
+    TC-3
+    & Lỗi đường truyền server
+    & ID phiên đo
+
+   &
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "An error occurred while retrieving the records"
+  
+    \}
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}  
+
+  \item URL: GET api/record/download/{:recordId} 
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tải dữ liệu đo ECG}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Bản ghi tồn tại với ID phiên đo tương ứng
+    & ID phiên đo
+
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+
+    data: File bản ghi dữ liệu ECG
+  
+    \}
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Phiên đo không tồn tại với ID tương ứng
+    & ID phiên đo 
+
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "Record not found"
+    \}
+    
+    & OK
+  
+    \\ \hline
+    TC-3
+    & Lỗi đường truyền server
+    & ID phiên đo
+
+   &
+  
+    Status code: 500 Internal Server Error
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "An error occurred while downloading the record file"
+  
+    \}
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+  
+  \item URL: POST api/record/update
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API cập nhật thông tin phiên đo}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Phiên đo tồn tại với ID tương ứng
+    & Thông tin phiên đo 
+    \{
+
+    "user\_id": ID bệnh nhân,
+
+    "device\_id": ID thiết bị,
+
+    "record\_type": Loại bản ghi,
+
+    "start\_time": Thời gian bắt đầu,
+
+    "end\_time": Thời gian kết thúc
+
+   \}
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+
+    "message": "Update record successful"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Phiên đo không tồn tại với ID tương ứng
+    & Thông tin phiên đo 
+    \{
+
+    "user\_id": ID bệnh nhân,
+
+    "device\_id": ID thiết bị,
+
+    "record\_type": Loại bản ghi,
+
+    "start\_time": Thời gian bắt đầu,
+
+    "end\_time": Thời gian kết thúc
+
+   \} 
+
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "Record not found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+    TC-3
+    & Thông tin người dùng hoặc thiết bị không tồn tại với ID tương ứng
+    & Thông tin phiên đo 
+    \{
+
+    "user\_id": ID bệnh nhân,
+
+    "device\_id": ID thiết bị,
+
+    "record\_type": Loại bản ghi,
+
+    "start\_time": Thời gian bắt đầu,
+
+    "end\_time": Thời gian kết thúc
+
+   \} 
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "Update info error"
+  
+    \}
+    & OK
+  
+    \\ \hline
+    
+  
+    \end{xltabular}
+
+  \item URL: DELETE api/record/delete/{:recordId}
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API xóa thông tin một phiên đo ECG}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Phiên đo tồn tại với ID tương ứng
+    & ID phiên đo 
+
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+
+    "message": "Delete record successfull"
+  
+    \}
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Phiên đo không tồn tại với ID tương ứng
+    & ID phiên đo 
+
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "Record not found"
+  
+    \}
     & OK
   
     \\ \hline
@@ -1858,18 +2423,363 @@ sensor\_type: Loại cảm biến
 \end{enumerate}
 
 
-\paragraph{API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ}
+\paragraph{API liên quan liên quan đến việc phân công bác sĩ - bệnh nhân}
 \mbox{}
 
-Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api liên quan
+Tham khảo bảng \ref{table_api_pda} để xem thông tin của các api liên quan
 
 \begin{enumerate}[a)]
-  \item URL: GET api/doctor/{:doctorId}/patients
+  \item URL: GET api/pda
+    
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách phân công bác sĩ - bệnh nhân}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Người dùng truy cập với quyền admin
+    & Access token của người dùng trong Bearer Token
+  
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+  
+    data: Danh sách phân công bác sĩ bệnh nhân 
+  
+    \}
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Người dùng truy cập không phải với tư cách admin
+    & NULL
+  
+    & 
+  
+    Status code: 403 Forbidden
+  
+    Response content:
+
+    \{
+
+  "status": "error",
+
+  "message": "You don't have permission to access"
+
+  \}
+    & OK
+    \\ \hline
+    TC-3
+    & Người dùng chưa đăng nhập
+    & NULL
+  
+    & 
+  
+    Status code: 401 Unauthorized
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "No token found"
+  
+    \}
+    & OK
+    \\ \hline
+
+  
+    \end{xltabular}
+
+
+  \item URL: POST api/pda/create
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tạo một phân công bác sĩ - bệnh nhân}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & NULL
+    & Thông tin phân công bác sĩ - bệnh nhân 
+    \{
+
+    "user\_id": ID bệnh nhân,
+
+    "doctor\_id": ID bác sĩ,
+
+    "start\_date": Ngày bắt đầu,
+
+    "end\_date": Ngày kết thúc
+
+   \}
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+    data: Thông tin phân công
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Thông tin bệnh nhân hoặc bác sĩ không tồn tại với ID tương ứng
+    & Thông tin phiên đo 
+    \{
+
+    "user\_id": ID bệnh nhân,
+
+    "doctor\_id": ID bác sĩ,
+
+    "start\_date": Ngày bắt đầu,
+
+    "end\_date": Ngày kết thúc
+
+   \} 
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "User not found"
+  
+    \}
+    
+    & OK
+  
+    \\ \hline
+    
+  
+    \end{xltabular}
+
+  
+  \item URL: POST api/pda/update
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API cập nhật thông tin phân công}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Phân công tồn tại với ID tương ứng
+    & Thông tin phân công
+    \{
+
+    "user\_id": ID bệnh nhân,
+
+    "doctor\_id": ID bác sĩ,
+
+    "start\_date": Ngày bắt đầu,
+
+    "end\_date": Ngày kết thúc
+
+   \}
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+
+    "message": "Update pda successful"
+  
+    \}
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Phân công không tồn tại với ID tương ứng
+    & Thông tin phân công 
+    \{
+
+    "user\_id": ID bệnh nhân,
+
+    "device\_id": ID thiết bị,
+
+    "record\_type": Loại bản ghi,
+
+    "start\_time": Thời gian bắt đầu,
+
+    "end\_time": Thời gian kết thúc
+
+   \} 
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "PDA not found"
+  
+    \}
+    & OK
+  
+    \\ \hline
+    TC-3
+    & Thông tin bác sĩ hoặc bệnh nhân không tồn tại với ID tương ứng
+    & Thông tin phân công 
+    \{
+
+    "user\_id": ID bệnh nhân,
+
+    "doctor\_id": ID bác sĩ,
+
+    "start\_date": Ngày bắt đầu,
+
+    "end\_date": Ngày kết thúc
+
+   \} 
+
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "User not found"
+  
+    \}
+    & OK
+  
+    \\ \hline
+    
+  
+    \end{xltabular}
+  
+  \item URL: DELETE api/pda/delete/{:pdaId}
+  
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{1cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{1cm}|
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API xóa thông tin phân công}
+    % \label{table_api_news}
+    \\
+    \hline
+    \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào 
+    &\bfseries Đầu ra mong muốn &\bfseries Kết quả\\ \hline
+  
+  
+    TC-1
+    & Phân công tồn tại với ID tương ứng
+    & ID phân công 
+
+    & 
+  
+    Status code: 200 OK
+  
+      Response content:
+  
+      \{
+  
+    "status": "success",
+
+    "message": "Delete PDA successfull"
+  
+    \}
+    & OK
+  
+    \\ \hline
+  
+    TC-2
+    & Phân công không tồn tại với ID tương ứng
+    & ID phân công 
+
+   &
+  
+    Status code: 404 Not Found
+  
+      Response content:
+  
+      \{
+  
+    "status": "error",
+  
+    "message": "PDA not found"
+  
+    \}
+    & OK
+  
+    \\ \hline
+
+  
+    \end{xltabular}
+
+  \item URL: GET api/pda/patient/\{:doctorId\}
   
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}p{1.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
@@ -1883,7 +2793,7 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
   
     TC-1
     & NULL
-    & ID Doctor
+    & ID bác sĩ
 
     & 
   
@@ -1894,22 +2804,21 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
       \{
   
     "status": "success",
-    count: Tổng số lượng bệnh nhân mà bác sỹ đang được phân công,
+
     data: Thông tin của các bệnh nhân mà bác sỹ đang được phân công
   
     \}
-    
     & OK
   
     \\ \hline
   
     TC-2
-    & Lỗi đường truyền server
-    & ID Doctor
+    & Bác sĩ không tồn tại với ID tương ứng
+    & ID bác sĩ 
 
    &
   
-    Status code: 500 Internal Server Error
+    Status code: 404 Not Found
   
       Response content:
   
@@ -1917,10 +2826,9 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
   
     "status": "error",
   
-    "msg": "An error occurred while retrieving the patients"
+    "message": "Doctor not found"
   
     \}
-    
     & OK
   
     \\ \hline
@@ -1928,13 +2836,12 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
   
     \end{xltabular}
 
-  \break
-  \item URL: GET api/patient/{:patientId}/doctor
+  \item URL: GET api/pda/doctor/\{:patientId\}
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{1cm}
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}X
+    | >{\raggedright\arraybackslash}p{2.5cm}
+    | >{\raggedright\arraybackslash}p{2.5cm}
     | >{\raggedright\arraybackslash}X
     | >{\raggedright\arraybackslash}p{1cm}|
     }
@@ -1948,7 +2855,7 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
   
     TC-1
     & NULL
-    & ID Patient
+    & ID bệnh nhân
 
     & 
   
@@ -1959,21 +2866,21 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
       \{
   
     "status": "success",
+
     data: Thông tin của bác sỹ được phân công cho bệnh nhân
   
     \}
-    
     & OK
   
     \\ \hline
   
     TC-2
-    & Lỗi đường truyền server
-    & ID Patient
+    & Bệnh nhân không tồn tại với ID tương ứng
+    & ID bệnh nhân 
 
    &
   
-    Status code: 500 Internal Server Error
+    Status code: 404 Not Found
   
       Response content:
   
@@ -1981,10 +2888,9 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
   
     "status": "error",
   
-    "msg": "An error occurred while retrieving the patients"
+    "message": "Patient not found"
   
     \}
-    
     & OK
   
     \\ \hline
@@ -2032,126 +2938,135 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
   Kiểm tra chức năng đăng ký
   & 
 
-1. Vào màn hình đăng ký
+  1. Vào màn hình đăng ký $\rightarrow$ Nhập thông tin tài khoản đã có trên hệ thống
+  $\rightarrow$ Nhấn nút đăng ký
 
-2. Thêm bệnh nhân mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
+  % \\ &
 
-3. Sửa thông tin bệnh nhân có sẵn $\rightarrow$ Lưu thay đổi
-
-4. Xóa một bệnh nhân khỏi hệ thống
+  2. Vào màn hình đăng ký $\rightarrow$ Nhập thông tin đăng ký hơp lệ
+  $\rightarrow$ Nhấn nút đăng ký 
  
   & 
 
 
-1. Hiển thị danh sách bệnh nhân
+  1. Hiển thị thông báo email đã tồn tại trong hệ thông
 
-2. Thêm bệnh nhân thành công
+  2. Hiển thị thông báo tài khoản đang chờ phê duyệt
 
-3. Cập nhật thông tin bệnh nhân thành công
+  & OK
 
-4. Xóa bệnh nhân khỏi hệ thống thành công
+  \\ \hline
+    Kiểm tra chức năng quản lý người dùng
+  & 
+
+1. Vào màn hình quản lý người dùng 
+
+2. Xem thông tin người dùng
+
+3. Sửa thông tin người dùng có sẵn  $\rightarrow$ Lưu thay đổi
+
+4. Xóa một người dùng khỏi hệ thống
+ 
+  & 
+
+1. Hiển thị danh sách người dùng
+
+2. Hiển thị thông tin cụ thể của người dùng
+
+3. Cập nhật thông tin người dùng thành công
+
+4. Xóa tài khoản người dùng khỏi hệ thống thành công
 
   & OK
 
   \\ \hline
 
-  Kiểm tra chức năng quản lý bác sĩ
+  Kiểm tra chức năng xem danh sách bác sĩ
   & 
 
-1. Vào màn hình quản lý bác sĩ 
+1. Vào màn hình danh sách bác sĩ phụ trách 
 
-2. Thêm bác sĩ mới với thông tin hợp lệ  $\rightarrow$ Lưu thông tin
-
-3. Sửa thông tin bác sĩ có sẵn  $\rightarrow$ Lưu thay đổi
-
-4. Xóa một bác sĩ khỏi hệ thống
+2. Xem thông tin cụ thể của bác sĩ
  
   & 
 
   1. Hiển thị danh sách bác sĩ
 
-2. Thêm bác sĩ thành công
+2. Hiển thị thông tin cụ thể bác sĩ
 
-3. Cập nhật thông tin bác sĩ thành công
-
-4. Xóa bác sĩ khỏi hệ thống thành công
 
   & OK
 
   \\ \hline
 
-  Kiểm tra chức năng quản lý admin
+  Kiểm tra chức năng xem danh sách bệnh nhân
   & 
 
-1. Vào màn hình quản lý admin 
+1. Vào màn hình quản lý bệnh nhân 
 
-2. Thêm admin mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
+2. Hiển thị thông tin cụ thể bệnh nhân
 
-3. Sửa thông tin admin có sẵn $\rightarrow$ Lưu thay đổi
+& 
 
-4. Xóa một admin khỏi hệ thống
- 
-  & 
+1. Hiển thị danh sách bệnh nhân
 
-1. Hiển thị danh sách admin
-
-2. Thêm admin thành công
-
-3. Cập nhật thông tin admin thành công
-
-4. Xóa admin khỏi hệ thống thành công
+2. Hiển thị thông tin cụ thể bệnh nhân
 
   & OK
 
   \\ \hline
 
 
-  Kiểm tra chức năng quản lý tin tức
+  Kiểm tra chức năng quản lý thiết bị
   & 
 
-1. Vào màn hình quản lý tin tức 
+1. Vào màn hình quản lý thiết bị 
 
-2. Thêm tin tức mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
+2. Xem thông tin chi tiết thiết bị 
 
-3. Sửa thông tin tin tức có sẵn $\rightarrow$ Lưu thay đổi
+3. Thêm thiết bị mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
 
-4. Xóa một tin tức khỏi hệ thống
+4. Sửa thông tin thiết bị có sẵn $\rightarrow$ Lưu thay đổi
+
+5. Xóa một thiết bị khỏi hệ thống
  
   & 
 
-1. Hiển thị danh sách tin tức
+1. Hiển thị danh sách thiết bị
 
-2. Thêm tin tức thành công
+2. Hiển thị thông tin chi tiết thiết bị
 
-3. Cập nhật thông tin tin tức thành công
+3. Thêm thiết bị thành công
 
-4. Xóa tin tức khỏi hệ thống thành công
+4. Cập nhật thông tin thiết bị thành công
+
+5. Xóa thiết bị khỏi hệ thống thành công
 
   & OK
 
   \\ \hline
 
-  Kiểm tra chức năng quản lý danh mục tin tức
+  Kiểm tra chức năng quản lý phiên đo
   & 
  
-  1. Vào màn hình quản lý danh mục tin tức 
+  1. Vào màn hình quản lý phiên đo
 
-  2. Thêm danh mục mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
+  2. Sửa thông tin danh mục có sẵn $\rightarrow$ Lưu thay đổi
 
-  3. Sửa thông tin danh mục có sẵn $\rightarrow$ Lưu thay đổi
+  3. Xem đồ thị một phiên đo
 
-  4. Xóa một danh mục khỏi hệ thống
+  4. Tải bản ghi phiên đo $\rightarrow$ Lưu tệp
 
 
   & 
 
-1. Hiển thị danh sách danh mục tin tức
+1. Hiển thị danh sách phiên đo
 
-2. Thêm danh mục thành công
+2. Cập nhật thông tin phiên đo
 
-3. Cập nhật thông tin danh mục thành công
+3. Hiển thị đồ thị dữ liệu phiên đo
 
-4. Xóa danh mục khỏi hệ thống thành công
+4. Tải file dữ liệu phiên đo thành công
 
   & OK
 
@@ -2182,26 +3097,73 @@ Tham khảo bảng \ref{table_api_pat_doc} để xem thông tin của các api l
 
   \\ \hline
 
-  
-  Kiểm tra chức năng quản lý dữ liệu ECG
+  Kiểm tra chức năng quản lý phê duyệt tài khoản
   & 
-1. Vào màn hình quản lý dữ liệu ECG 
+1. Vào màn hình quản lý phê duyệt tài khoản 
 
-2. Tải dữ liệu ECG từ thiết bị lên hệ thống $\rightarrow$ Lưu thông tin
-
-3. Hiển thị danh sách dữ liệu ECG
-
-4. Xem chi tiết dữ liệu ECG
+2. Phê duyệt/Từ chối tài khoản 
  
   & 
 
-1. Hiển thị danh sách dữ liệu ECG
+1. Hiển thị danh sách tài khoản phê duyệt
 
-2. Tải dữ liệu ECG thành công
+2. Phê duyệt/Từ chối tài khoản thành công
 
-3. Hiển thị chi tiết dữ liệu ECG
 
   & OK
+
+
+  \\ \hline
+  
+  Kiểm tra chức năng quản lý thông tin cá nhân
+  & 
+1. Vào màn hình quản lý thông tin cá nhân 
+
+2. Sửa thông tin cá nhân có sẵn $\rightarrow$ Lưu thông tin
+ 
+  & 
+
+1. Hiển thị thông tin tài khoản cá nhân
+
+2. Cập nhật thông tin cá nhân thành công
+
+
+  & OK
+
+
+  \\ \hline
+  Kiểm tra chức năng nhắn tin
+  & 
+1. Vào màn hình nhắn tin bệnh nhân/bác sĩ
+
+2. Nhập và gửi tin nhắn 
+ 
+  & 
+
+1. Hiển thị danh sách các cuộc hội thoại
+
+2. Hiển thị tin nhắn lên màn hình
+
+
+  & OK
+
+
+  \\ \hline
+  Kiểm tra chức năng hỏi, nhận tư vấn từ trợ lý ảo
+  & 
+1. Vào màn hình nhắn tin với trợ lý ảo
+
+2. Nhập và gửi tin nhắn 
+ 
+  & 
+
+1. Hiển thị màn hình nhắn tin với trợ lý ảo
+
+2. Hiển thị tin nhắn lên màn hình và phản hồi từ trợ lý ảo
+
+
+  & OK
+
 
   \\ \hline
 
