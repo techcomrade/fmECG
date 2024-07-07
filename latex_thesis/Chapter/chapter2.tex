@@ -6,23 +6,22 @@
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 2. PHÂN TÍCH HỆ THỐNG}
 Trong chương này, chúng em sẽ tiến hành phân tích hệ thống cho dự án đề tài "Hệ thống theo dõi và quản lý dữ liệu điện tim" dựa trên các mục tiêu
-đã nêu ra trong Mục Đề xuất hệ thống ở Phần mở đầu. Trước tiên bài toán đặt ra ở hệ thống là:
+đã nêu ra trong Phần mở đầu. Trước tiên, bài toán đặt ra ở hệ thống là:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item Một ứng dụng để có thể giúp người dùng/bệnh nhân theo dõi được những thông tin cần về sức khoẻ tim mạch
   \item Trực quan và tiêu chuẩn hoá những thông tin đo được
-    bằng hình ảnh hoặc số liệu để bác sĩ có thể dựa vào đó để đưa ra những đánh giá cho người dùng. Ngoài ra những thông tin này
-    có thể hữu ích trong việc theo dõi sức khỏe tim mạch, theo dõi hiệu quả của liệu pháp 
-    và hỗ trợ quyết định của người dùng
+    bằng hình ảnh hoặc số liệu để bác sĩ có thể dựa vào đó để đưa ra những đánh giá cho người dùng. 
   \item Quản trị viên sẽ là người có thể phân công bác sĩ để chăm sóc, theo dõi sức khoẻ từ
   xa cho bệnh nhân
 \end{itemize}
 \end{adjustwidth}
-Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được chúng em trình bày ở các chương dưới.
+Việc phân tích chi tiết các yêu cầu hệ thống sẽ được chúng em trình bày ở các phần dưới đây.
 % \newpage
 \subsection{Thẻ CRC (Class - Responsibility - Collaboration Card)}
 
 \subsubsection{Thẻ CRC lớp Người dùng}
+
   \begin{table}[H]
     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Người dùng}
     \centering
@@ -33,16 +32,14 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       \hline
       \textbf{Tên lớp:} Người dùng & \textbf{ID:} 1 \\
       \hline
-      \textbf{Mô tả:} Đối tượng mô tả thông tin người dùng & \textbf{Use case liên quan:}  Đăng ký tài khoản, Quản lý tài khoản cá nhân, Xem danh sách bệnh nhân\\
+      \textbf{Mô tả:} Đối tượng mô tả thông tin người dùng & \textbf{Use case liên quan:}  Đăng ký tài khoản, Quản lý tài khoản cá nhân, Quản lý phân công bác sĩ - bệnh nhân\\
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin người dùng
-
       Thêm, sửa, xóa thông tin người dùng 
 
       Lấy danh sách người dùng
 
-      Lấy thông tin người dùng qua id, tài khoản, chức vụ
+      Lấy thông tin người dùng qua ID, tài khoản, chức vụ
       & 
       Tài khoản, Phân công bác sĩ - bệnh nhân
       \\
@@ -100,8 +97,6 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       \textbf{Mô tả:} Đối tượng mô tả thông tin tài khoản & \textbf{Use case liên quan:} Đăng ký, Đăng nhập/Đăng xuất, Quên mật khẩu, Quản lý tài khoản người dùng \\
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin tài khoản
-      
       Đăng nhập/Đăng xuất hệ thống
 
       Đăng ký tài khoản
@@ -156,8 +151,6 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       \textbf{Mô tả:} Đối tượng mô tả thông tin tài khoản đang chờ phê duyệt & \textbf{Use case liên quan:} Đăng ký, Quản lý tài khoản người dùng \\
       \hline
       \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
-      Mô tả thông tin tài khoản đang chờ phê duyệt
-
       Lấy danh sách tài khoản đang chờ phê duyệt
       
       Đăng ký tài khoản
@@ -325,9 +318,9 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       \textbf{Mối quan hệ (Relationships):} \\
       Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation): Thông số thiết bị
+      Toàn thể - Bộ phận (Aggregation): Người dùng
       
-      Liên kết (Association): Người dùng
+      Liên kết (Association): Thông số thiết bị
       \\
       \hline
     \end{tabularx}
@@ -383,9 +376,9 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       \textbf{Mối quan hệ (Relationships):} \\
       Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation): Thiết bị
+      Toàn thể - Bộ phận (Aggregation): 
       
-      Liên kết (Association): 
+      Liên kết (Association): Thiết bị
       \\
       \hline
     \end{tabularx}
@@ -447,9 +440,9 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       \textbf{Mối quan hệ (Relationships):} \\
       Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation): 
+      Toàn thể - Bộ phận (Aggregation): Người dùng, Thiết bị
       
-      Liên kết (Association): Người dùng, Thiết bị 
+      Liên kết (Association):  
       \\
       \hline
     \end{tabularx}
@@ -677,9 +670,9 @@ Chi tiết về việc phân tích các yêu cầu hệ thống sẽ được ch
       \textbf{Mối quan hệ (Relationships):} \\
       Tổng quát hóa (Generalize):  
 
-      Toàn thể - Bộ phận (Aggregation): 
+      Toàn thể - Bộ phận (Aggregation): Người dùng
       
-      Liên kết (Association): Người dùng, Cuộc hội thoại
+      Liên kết (Association): Cuộc hội thoại
       \\
       \hline
     \end{tabularx}
