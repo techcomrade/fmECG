@@ -25,9 +25,9 @@ Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item Device: Thiết bị phần cứng đo điện tim, để kết nối với App bệnh nhân thông qua Bluetooth 
-  \item Application: Bao gồm mobile app của bệnh nhân, bác sĩ và Website của Admin, Website của bác sĩ, Website của bệnh nhân
-  \item Server: Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu, Cloud lưu trữ, kết nối với model GPT-4 trên OpenAI thông qua api
+  \item Device (Thiết bị): Thiết bị phần cứng đo điện tim, để kết nối với App bệnh nhân thông qua Bluetooth 
+  \item Application (Ứng dụng): Bao gồm ứng dụng di động cho bệnh nhân, bác sĩ và Website của Admin, Website của bác sĩ, Website của bệnh nhân
+  \item Server (Máy chủ): Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu, Cloud lưu trữ, kết nối với model GPT-4 trên OpenAI thông qua API
 \end{itemize}
 \end{adjustwidth}
 
@@ -63,7 +63,7 @@ dựa vào những đối tượng đã được xác định trong hệ thống
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm,height=14cm]{Images/system/fmECG_architecture-Patient.drawio.png}
-  \caption[Sơ đồ khối cho App bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bệnh nhân}
+  \caption[Sơ đồ khối Website dành cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối Sơ đồ khối Website dành cho bệnh nhân}
   \label{fmECG_architecture-Patient} %đặt tên cho ảnh
 \end{figure}
 
@@ -86,7 +86,7 @@ giải thích Services trong hình:
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm,height=14cm]{Images/system/fmECG_architecture-Doctors.drawio.png}
-  \caption[Sơ đồ khói cho App bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho App bác sĩ}
+  \caption[Sơ đồ khối Website dành cho bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối Website dành cho bác sĩ}
   \label{fmECG_architecture-Doctors} %đặt tên cho ảnh
 \end{figure}
 
@@ -97,19 +97,346 @@ Về cơ bản, website cho bác sĩ có những khối tương tự với bện
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm,height=14cm]{Images/system/fmECG_architecture-Admin.drawio.png}
-  \caption[Sơ đồ khối cho Website quản trị viên]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối cho Website quản trị viên}
+  \caption[Sơ đồ khối Website dành cho quản trị viên]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối Website dành cho quản trị viên}
   \label{fmECG_architecture-Admin} %đặt tên cho ảnh
 \end{figure}
 
 Quản trị viên sẽ quản lý 6 Services chính đó là quản lý người dùng (User Management Service), quản lý phân công
 bác sĩ - bệnh nhân (Patient Assignment Service), quản lý bản ghi (Record Service), Chat Service, Thêm dữ liệu mới để huấn luyện trợ lý ảo (AI service).
-
-Tiếp theo để phân tích cụ thể hơn từng luồng trong hệ thống qua use case, chúng em xin phép được trình bày các sơ đồ tuần
-tự. 
+ 
 \newpage
 
 \subsection{Thiết kế cơ sở dữ liệu}
 \label{design_database}
+\subsubsection{Chuyển mô hình thực thể sang mô hình quan hệ}
+Dựa trên phần mô tả các thực thể, chúng em sẽ chuyển mô hình thực thể liên kết sang mô hình quan hệ như sau:
+
+\begin{itemize}
+  \item Người dùng (\textbf{ID người dùng}, ID tài khoản, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh đại diện, Thông tin người dùng)
+  \item Tài khoản (\textbf{ID tài khoản}, Email, Mật khẩu)
+  \item Token đăng nhập (\textbf{ID token}, ID tài khoản, Token truy cập, Token làm mới)
+  \item Thiết bị (\textbf{ID thiết bị}, ID người dùng thiết bị, ID bác sĩ theo dõi, Tên thiết bị, Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng)
+  \item Thông số thiết bị (\textbf{ID thông số}, ID thiết bị, Tên thông số, Giá trị, Thông tin thông số, Loại thông số)
+  \item Bản ghi dữ liệu (\textbf{ID bản ghi dữ liệu}, ID người dùng, ID thiết bị, Loại bản ghi, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo)
+  \item Cuộc hội thoại (\textbf{ID hội thoại}, Tên hội thoại, Loại hội thoại, Đường dẫn avatar hội thoại)
+  \item Thành viên tham gia hội thoại (\textbf{ID thành viên}, ID hội thoại, ID người dùng, Trạng thái thông báo, Tác vụ, Trạng thái đã xem)
+  \item Tin nhắn (\textbf{ID tin nhắn}, ID hội thoại, ID người gửi, Các tệp đính kèm, Tin nhắn hệ thống, Ghim, Thời gian ghim tin nhắn, Các lượt thả cảm xúc)
+  \item Tệp đính kèm (\textbf{ID tệp đính kèm}, ID tin nhắn, ID hội thoại, Đường dẫn nội dung, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm)
+  \item Phân công bệnh nhân - bác sĩ (\textbf{ID phân công}, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu)
+  \item Danh mục tin tức (\textbf{ID danh mục tin tức}, Tên danh mục tin tức, Mô tả danh mục tin tức)
+  \item Tin tức (\textbf{ID tin tức}, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn, Đường dẫn hình ảnh)
+  \item Tài khoản phê duyệt (\textbf{ID tài khoản phê duyệt}, Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh đại diện, Thông tin người dùng)
+\end{itemize}
+
+\subsubsection{Chuẩn hoá 3NF}
+Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì không có thuộc tính lặp lại và các thuộc tính không phụ thuộc vào một tập hợp con của khóa chính.
+
+\paragraph{Chuẩn hoá bảng Người dùng}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Người dùng}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID người dùng, ID tài khoản, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi người dùng có một ID riêng, có duy nhất ID tài khoản, tên, ngày sinh, giới tính, số điện thoại, quyền,
+    trạng thái, đường dẫn lưu trữ ảnh, thông tin & \parbox[t]{\linewidth}{$\text{ID người dùng} \rightarrow$ ID tài khoản, Tên người dùng, Ngày sinh, Giới Tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID người dùng}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Người dùng đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Tài khoản}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tài khoản}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID tài khoản, Email, Mật khẩu \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi tài khoản có một ID riêng, có duy nhất email, mật khẩu 
+    & \parbox[t]{\linewidth}{$\text{ID tài khoản} \rightarrow$ Email, mật khẩu} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tài khoản}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tài khoản đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Token đăng nhập}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Token đăng nhập}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID token, ID tài khoản, Token truy cập, Token làm mới \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi người dùng có một ID token riêng, có duy nhất ID tài khoản, token truy cập và token làm mới 
+    & \parbox[t]{\linewidth}{$\text{ID token} \rightarrow$ ID tài khoản, Token truy cập, Token làm mới} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID token đăng nhập}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Token  đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Thiết bị}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thiết bị}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID thiết bị, ID người dùng thiết bị, ID bác sĩ theo dõi, Tên thiết bị, 
+    Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi thiết bị khi được sử dụng sẽ có một ID thiết bị riêng, có duy nhất tên thiết bị, loại thiết bị, thông tin thiết bị.
+    ID người dùng thiết bị, ID bác sĩ theo dõi, trạng thái thiết bị, ngày bắt đầu sử dụng
+    & \parbox[t]{\linewidth}{$\text{ID thiết bị} \rightarrow$ ID người dùng thiết bị, ID bác sĩ theo dõi, Tên thiết bị, 
+    Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID thiết bị}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Thông số thiết bị}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thông số thiết bị}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID thông số, ID thiết bị, Tên thông số, Giá trị, 
+    Thông tin thông số, Loại thông số \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi thông số thiết bị sẽ có một ID thông số riêng, có duy nhất Tên thông số, ID thiết bị, Giá trị,
+    Thông tin thông số, Loại thông số
+    & \parbox[t]{\linewidth}{$\text{ID thông số} \rightarrow$ Tên thông số, ID thiết bị, Giá trị,
+    Thông tin thông số, Loại thông số} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID thông số thiết bị}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Bản ghi dữ liệu}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Bản ghi dữ liệu}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID bản ghi dữ liệu, ID người dùng, ID thiết bị, Loại bản ghi, 
+    Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi bản ghi có một ID bản ghi dữ liệu riêng, có duy nhất ID người dùng, ID thiết bị, Loại bản ghi, 
+    Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo
+    & \parbox[t]{\linewidth}{$\text{ID bản ghi dữ liệu} \rightarrow$ ID người dùng, ID thiết bị, Loại bản ghi, 
+    Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID bản ghi dữ liệu}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Bản ghi dữ liệu đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Thông tin hội thoại}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thông tin hội thoại}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID hội thoại, Tên hội thoại, 
+    Loại hội thoại, Đường dẫn avatar hội thoại \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi hội thoại có một ID hội thoại riêng, có duy nhất tên hội thoại, 
+    loại hội thoại, đường dẫn avatar hội thoại
+    & \parbox[t]{\linewidth}{$\text{ID hội thoại} \rightarrow$ Tên hội thoại, 
+    Loại hội thoại, Đường dẫn avatar hội thoại} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID hội thoại}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thông tin hội thoại đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Thành viên tham gia hội thoại}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thành viên tham gia hội thoại}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID, ID hội thoại, ID người dùng tham gia,
+    Trạng thái thông báo, Tác vụ, Trạng thái đã xem \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi hội thoại có nhiều ID người dùng tham gia, mỗi người dùng có duy nhất trạng thái thông báo,
+    tác vụ, trạng thái đã xem trong một hội thoại
+    & \parbox[t]{\linewidth}{$\text{ID} \rightarrow$ ID hội thoại, ID người dùng tham gia,
+    Trạng thái thông báo, Tác vụ, Trạng thái đã xem} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thành viên tham gia hội thoại đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Tin nhắn}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tin nhắn}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID tin nhắn, ID hội thoại, ID người gửi, Các tệp đính kèm, 
+    Tin nhắn hệ thống, Ghim, Thời gian ghim tin nhắn, Các lượt thả cảm xúc \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi tin nhắn có một ID tin nhắn riêng, thuộc một hội thoại, có duy nhất ID người gửi, các tệp đính kèm,
+    tin nhắn hệ thống, ghim, thời gian ghim tin nhắn, các lượt thả cảm xúc
+    & \parbox[t]{\linewidth}{$\text{ID tin nhắn} \rightarrow$ ID hội thoại, ID người gửi, các tệp đính kèm,
+    tin nhắn hệ thống, ghim, thời gian ghim tin nhắn, các lượt thả cảm xúc} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tin nhắn}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tin nhắn đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Tệp đính kèm}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tệp đính kèm}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID tệp đính kèm, ID tin nhắn, ID hội thoại, Đường dẫn nội
+    dung, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi tệp đính kèm có một ID tệp đính kèm riêng, thuộc một tin nhắn trong một hội thoại, có duy nhất đường dẫn nội
+    dung, tên tệp, kích thước tệp, đường dẫn thumbnail, loại đính kèm
+    & \parbox[t]{\linewidth}{$\text{ID tệp đính kèm} \rightarrow$ ID tin nhắn, ID hội thoại, Đường dẫn nội
+    dung, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tệp đính kèm}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tệp đính kèm đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Phân công bệnh nhân - bác sĩ}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Phân công bệnh nhân - bác sĩ}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi phân công bệnh nhân - bác sĩ có một ID phân công riêng, có duy nhất ID bệnh nhân, ID bác sĩ, ngày bắt đầu.
+    Mỗi bệnh nhân thuộc một phân công duy nhất, còn mỗi bác sĩ có thể được giao nhiều phân công.
+    & \parbox[t]{\linewidth}{$\text{ID phân công} \rightarrow$ ID bệnh nhân, ID bác sĩ, Ngày bắt đầu} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID phân công}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Phân công bệnh nhân - bác sĩ đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Danh mục tin tức}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Danh mục tin tức}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID danh mục tin tức, Tên danh mục tin tức, Mô tả danh mục tin tức \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi danh mục tin tức có một ID danh mục tin tức riêng, có duy nhất tên danh mục tin tức, mô tả danh mục tin tức
+    & \parbox[t]{\linewidth}{$\text{ID danh mục tin tức} \rightarrow$ Tên danh mục tin tức, Mô tả danh mục tin tức} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID danh mục tin tức}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Danh mục tin tức đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Tin tức}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tin tức}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID tin tức, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn,
+    Đường dẫn hình ảnh \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi tin tức có một ID tin tức riêng, thuộc duy nhất một danh mục tin tức, có duy nhất tiêu đề, 
+    nội dung, tác giả, đường dẫn, đường dẫn hình ảnh
+    & \parbox[t]{\linewidth}{$\text{ID tin tức} \rightarrow$ Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, 
+    Đường dẫn, Đường dẫn hình ảnh} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tin tức}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tin tức đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Tài khoản phê duyệt}
+\mbox{}
+\begin{table}[H]
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tài khoản phê duyệt}
+  \centering
+  \begin{tabularx}{0.9\textwidth}{|X|X|}
+    \hline
+    \textbf{Danh sách thuộc tính} & ID tài khoản phê duyệt, Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
+    \hline
+    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+    \hline
+    Mỗi tài khoản chờ phê duyệt có một ID riêng, có duy nhất Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính,
+     Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng 
+    & \parbox[t]{\linewidth}{$\text{ID tài khoản phê duyệt} \rightarrow$ Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính,
+    Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng} \\
+    \hline
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tài khoản phê duyệt}$} \\
+    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Người dùng đã ở 3NF}$} \\
+    \hline
+  \end{tabularx}
+\end{table}
 
 \subsubsection{Từ điển dữ liệu}
 
@@ -212,7 +539,7 @@ tự.
     \hline
     device\_id & STRING & Khóa ngoại tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}, đại diện cho ID thiết bị. \\
     \hline
-    record\_type & INTEGER & Loại của record (0 - PPG, 1 - PCG, 2 - HeartRate, 3 - ECG). \\
+    record\_type & INTEGER & Loại bản ghi (0 - PPG, 1 - PCG, 2 - HeartRate, 3 - ECG). \\
     \hline
     data\_directory & STRING & Đường dẫn lưu trữ dữ liệu. \\
     \hline
@@ -821,23 +1148,6 @@ có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám.
     \label{table_api_user}
 \end{table}
 
-\item API liên quan đến chat
-
-
-\begin{table}[H]
-  \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin tức}
-  \begin{tabularx}{0.9\textwidth}{
-  | >{\raggedright\arraybackslash}X
-  | >{\raggedright\arraybackslash}m{2cm}
-  | >{\raggedright\arraybackslash}X|
-  }
-  \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-
-  \end{tabularx}
-  \label{table_api_chats}
-\end{table}
 \item API liên quan đến quản lý thiết bị
 
 
@@ -919,7 +1229,7 @@ có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám.
 
 
 
-\subsubsection{Sơ đồ tuần tự}
+\subsubsection{Sơ đồ tuần tự API}
 
 % ------------------------Auth----------------------
 
@@ -1014,15 +1324,6 @@ người dùng. Sau đó, kết quả cập nhật được trả về từ User
  trong quá trình này, hệ thống trả về response lỗi tương ứng.
 
 % \linebreak
-
-
-% ----------------------------------------------
-
-% ------------------------Chat----------------------
-
-
-\paragraph{API liên quan đến việc chat}
-\mbox{}
 
 % ----------------------------------------------
 
@@ -1261,8 +1562,47 @@ yêu cầu này được xử lý bởi PDAController. PDAController gửi truy 
 Nếu hệ thống không tồn tại phân công, hệ thống sẽ trả về response lỗi tương ứng. Nếu thông tin có trong hệ thống, PDAController tiếp tục gửi truy vấn đến PDAService, PDAService gửi truy vấn đến PDAModel để xóa thông tin phân công 
 dựa theo thông tin truyền vào. Sau đó, kết quả tạo được trả về từ PDAModel và được gửi trở lại PDARoute để trả về response cho người dùng. Nếu kết quả xóa thành công, hệ thống trả về response chứa kết quả cho quản trị viên. 
 % -----------------------------------------------------
+\subsubsection{Chức năng nhắn tin}
+Chức năng nhắn tin là chức năng được thiết kế để không phụ thuộc vào server của
+hệ thống mà độc lập đứng riêng. Chúng em chọn PostgreSQL làm nền tảng để phát triển
+chức năng nhắn tin bởi tính phổ biến, hiệu năng cao, hỗ trợ kết nối socket đi kèm với tài liệu đầy
+đủ và dễ dàng phát triển cũng như tính bảo mật. Ở chức năng nhắn tin, mọi dữ liệu về tin nhắn sẽ được lưu trên
+PostgreSQL, cơ sở dữ liệu sẽ bao gồm bốn bảng chính.
 
+Việc xử lý tin nhắn, gửi tin nhắn, hay các thao tác với tin nhắn đều có thể sử dụng
+các câu lệnh truy vấn và truy/xuất trực tiếp vào cơ sở dữ liệu, đồng thời các ví dụ và câu
+lệnh được PostgreSQL hỗ trợ rất mạnh, vì lẽ đó, khi sử dụng Firebase, ứng dụng
+sẽ linh hoạt và dễ cải tiến.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=18cm]{Images/sequence_api/sendGetMessage.png}
+  \caption[Sơ đồ tuần tự thiết kế chức năng gửi và nhận tin nhắn]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự thiết kế chức năng gửi và nhận tin nhắn}
+  \label{api_sendMessage} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_sendMessage} biểu diễn chi tiết cách gửi/nhận tin nhắn trên hệ thống. Khi người dùng gửi một tin nhắn qua ChatController, dữ liệu được lưu vào các Model trong CSDL bao gồm Conversation Model, 
+Conversation Member Model, Message Model, Message Attachment Model. Ngay sau đó, hệ thống sẽ hiển thị tin nhắn trên màn hội thoại và gửi sang cho người gửi. 
+\subsubsection{Chức năng hỏi, nhận tư vấn từ trợ lý ảo}
+Chức năng hỏi, nhận tư vấn từ trợ lý ảo giống với chức năng tin, đều được thiết kế để không phụ thuộc vào server của
+hệ thống mà sử dụng trợ lý ảo độc lập. Chúng em chọn OpenAI Model làm nền tảng để phát triển
+chức năng chat với trợ lý ảo bởi tính phổ biến, hỗ trợ rất nhiều ngôn ngữ đi kèm với tài liệu đầy
+đủ và dễ dàng phát triển. Ở chức năng nhắn tin với trợ lý ảo, mọi dữ liệu về tin nhắn sẽ được lưu tạm thời ở 
+server và sẽ mất khi người dùng rời khỏi hệ thống.
+
+Sử dụng mô hình GPT-3.5-Turbo (Generative Pre-trained Transformer) được phát triển bởi OpenAI dựa trên kiến trúc Transformer giúp 
+cho tốc độ phản hồi nhanh chóng cùng với đó là cơ chế lưu trữ và học hỏi thông qua các câu hỏi hay câu nhắn tin từ người dùng. 
+Qua đó, cải thiện chất lượng, độ chính xác trong phản hồi với người dùng.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=8cm]{Images/sequence_api/sendMessageChatBot.png}
+  \caption[Sơ đồ tuần tự thiết kế chức năng hỏi, nhận tư vấn từ trợ lý ảo]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự thiết kế chức năng hỏi, nhận tư vấn từ trợ lý ảo}
+  \label{api_sendMessageChatBot} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_sendMessageChatBot} biểu diễn chi tiết cách gửi/nhận tin nhắn cho trợ lý ảo trên hệ thống. Khi người dùng gửi một tin nhắn qua ChatBotController, sau đó sẽ tạo nên cuộc hội thoại mới nếu như người dùng nhắn tin lần đầu. 
+Tin nhắn của người dùng sẽ được GPT Model xử lý và trả về tin nhắn phản hồi hiển thị lên màn hình nhắn tin với trợ lý ảo.
 \subsection{Kết luận chương}
 
 Chương 3 đã trình bày quá trình thiết kế hệ thống 

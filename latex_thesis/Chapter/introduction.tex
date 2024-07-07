@@ -32,18 +32,18 @@ Trong mục Đặt vấn đề, chúng em có trình bày về vấn đề chăm
 dựa trên những tiến bộ của khoa học kĩ thuật, với sự kết hợp giữa thiết bị IOT cùng hệ thống ứng dụng theo dõi, lưu trữ,
 giúp tiết kiệm thời gian cũng như tăng khả năng tiếp cận cho nhiều người dùng. 
 
-Với nền tảng được tiếp cận thiết bị đo điện tim của mẹ và thai nhi bằng điện cực không tiếp xúc trong thời gian gần đây, 
+Với nền tảng được tiếp cận thiết bị đo điện tim bằng điện cực không tiếp xúc trong thời gian gần đây, 
 cùng với đó là việc phát triển các thiết bị IOT đang rất được chú trọng hiện nay, chúng em mong muốn xây dựng được một hệ thống
 có thể kết nối được các thiết bị đo điện tim, thu thập dữ liệu điện tim thời gian thực, đồng thời có thể lưu trữ và phục vụ cho mục đích
-phân tích dữ liệu về sau này. Cụ thể, hệ thống chúng em đề xuất sẽ gồm:
+phân tích dữ liệu về sau này. Cụ thể, hệ thống sẽ bao gồm:
 
 \begin{adjustwidth}{1.5em}{}
   \begin{itemize}
-      \item Một ứng dụng di động cho riêng những người dùng để có thể kết nối với thiết bị đo điện tim để theo dõi trực tiếp tình trạng sức khoẻ, đồng
+      \item Một ứng dụng di động dành riêng cho người dùng có thể kết nối với thiết bị đo điện tim để theo dõi trực tiếp tình trạng sức khoẻ, đồng
       thời có thể trao đổi với bác sĩ về tình trạng sau các lần đo, xem tin tức về các thông tin liên quan tới sức khoẻ
       \item Một ứng dụng di động cho bác sĩ để có thể xem được kết quả đo của các bệnh nhân được quản lý, trao đổi được với bệnh nhân
-      \item Một ứng dụng web cho admin để quản lý hệ thống, đặc biệt là có phần phân công bác sĩ quản lý cho bệnh nhân
-      \item Một server để lưu cơ sở dữ liệu liên quan đến người dùng và dữ liệu đo của người dùng, có thể phục vụ cho công tác nghiên cứu và
+      \item Một ứng dụng web cho admin để quản lý hệ thống, đặc biệt là có phần phân công bác sĩ quản lý cho bệnh nhân, xem được thông tin thiết bị đang có cũng như theo dõi kết quả đo
+      \item Một server để lưu cơ sở dữ liệu liên quan đến người dùng và dữ liệu đo của bệnh nhân, có thể phục vụ cho công tác nghiên cứu và
       phân tich dữ liệu sau này
       \item Có tích hợp trợ lý ảo giúp người dùng dễ dàng tiếp cận và sử dụng hệ thống
   \end{itemize}
@@ -51,8 +51,8 @@ phân tích dữ liệu về sau này. Cụ thể, hệ thống chúng em đề 
 
 
 \subsection*{Mục tiêu của đề tài}
-Sau khi đã trình bày đề xuất về một hệ thống theo dõi và quản lý dữ liệu điện tim, mục tiêu chúng em muốn đạt được khi
-làm đề tài này đó là:
+Sau khi đã trình bày đề xuất về một hệ thống theo dõi và quản lý dữ liệu điện tim, mục tiêu đặt ra khi thực hiện
+đề tài này đó là:
 
 \begin{adjustwidth}{1.5em}{}
   \begin{itemize}
@@ -84,7 +84,7 @@ hệ thống IOT, cách kết nối các hệ thống với nhau. Các kết qu�
       \item Hoàn thành quyển đồ án với nội dung chi tiết về quá trình xây dựng và phát triển hệ thống
       \item Hoàn thành các sản phẩm ứng dụng đã đề ra trong mục Đề xuất hệ thống, các sản phẩm đã có sự kết nối, dữ liệu điện tim được theo dõi
       thời gian thực được lưu trên server, dữ liệu có thể được phân tích và nghiên cứu sau này
-      \item Được phát triển các kỹ năng làm việc nhóm, viết đồ án, kết hợp với team phần cứng, team firmware để các sản phẩm được hoàn thiện hơn
+      \item Được phát triển các kỹ năng làm việc nhóm, viết đồ án, kết hợp với nhóm phần cứng, nhóm firmware để các sản phẩm được hoàn thiện hơn
     \end{itemize}
   \end{adjustwidth}
 \subsection*{Cấu trúc đồ án}
@@ -92,12 +92,13 @@ hệ thống IOT, cách kết nối các hệ thống với nhau. Các kết qu�
 % \phantomsection\addcontentsline{toc}{section}{\numberline{} Cấu trúc đồ án}
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item Phần mở đầu: Trình bày về mục đích của đồ án, thu thập yêu cầu, đề xuất hệ thống, phần tích tính khả thi và bố cục đồ án
-  \item Chương 1: Trình bày chi tiết các khâu trong phân tích hệ thống. Bao gồm xác định yêu cầu, thiết kế sơ đồ use case, sơ đồ tuần tự
-  \item Chương 2: Trình bày chi tiết khâu thiết kế cho hệ thống. Bao gồm thiết kế sơ đồ kiến trúc hệ thống, sơ đồ khối
+  \item Phần mở đầu: Trình bày về mục đích của đồ án, đề xuất hệ thống, phần tích tính khả thi và bố cục đồ án
+  \item Chương 1: Trình bày chi tiết các khâu thu thập yêu cầu. Bao gồm kĩ thuật thu thập, xác định yêu cầu hệ thống, thiết kế sơ đồ use case
+  \item Chương 2: Trình bày chi tiết các khâu trong phân tích hệ thống. Bao gồm mô tả thẻ CRC, thiết kế sơ đồ lớp, sơ đồ tuần tự
+  \item Chương 3: Trình bày chi tiết khâu thiết kế cho hệ thống. Bao gồm thiết kế sơ đồ kiến trúc hệ thống, sơ đồ khối
   phần mềm, thiết kế cơ sở dữ liệu, thiết kế giao diện, sơ đồ lớp và thiết kế chức năng cho hệ thống
-  \item Chương 3: Trình bày khâu triền khai và kiểm thử
-  \item Chương 4: Kết luận và nêu ra hướng phát triển
+  \item Chương 4: Trình bày khâu triền khai và kiểm thử
+  \item Chương 5: Kết luận và nêu ra hướng phát triển
 \end{itemize}
 \end{adjustwidth}
 
