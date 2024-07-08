@@ -1002,7 +1002,7 @@ Nếu quản trị viên muốn chỉnh sửa thông tin phân công bác sĩ - 
 yêu cầu sẽ được xử lý bởi lớp PDA, nếu có lỗi phát sinh sẽ trả về người dùng, nếu thành công sẽ gửi thông báo thành công. 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=9cm,height=7cm]{Images/sequence/sequence_manage_delete_pda.png}
+  \includegraphics[width=8.5cm,height=6cm]{Images/sequence/sequence_manage_delete_pda.png}
   \caption[Sơ đồ tuần tự chức năng xóa phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự chức năng xóa phân công bác sĩ - bệnh nhân}
   \label{sequence_manage_delete_pda} %đặt tên cho ảnh
@@ -1055,52 +1055,54 @@ Tại phần này, chúng em sẽ tiến hành xác định và mô tả các th
      Đầu tiên, chúng em sẽ xác định các thực thể và mô tả thuộc tính của nó trong hệ
       thống dươi dạng bảng và sơ đồ mô hình liên kết. 
 
-\begin{table}[H]
+  \begin{xltabular}{\textwidth}{
+  | >{\raggedright\arraybackslash}p{4.5cm}
+  | >{\raggedright\arraybackslash}X |
+  }
   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng thực thể và thuộc tính}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|c|X|}
-    \hline
-    \textbf{Thực thể} & \textbf{Thuộc tính} \\
-    \hline
-    Người dùng & 
-    ID người dùng, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
-    \hline
-    Tài khoản &
-    ID tài khoản, Email, Mật khẩu  \\
-    \hline
-    Token đăng nhập &
-    ID token, Token truy cập, Token làm mới \\
-    \hline
-    Thiết bị & 
-    ID thiết bị, Tên thiết bị, Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng\\
-    \hline
-    Thông số thiết bị &
-    ID thông số, Tên thông số, Giá trị thông số, Thông tin cụ thể, Loại thông số \\
-    \hline
-    Bản ghi dữ liệu & 
-    ID bản ghi dữ liệu, Loại bản ghi, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo \\
-    \hline
-    Thông tin hội thoại &
-    ID hội thoại, Tên hội thoại, Loại hội thoại, Đường dẫn avatar hội thoại \\
-    \hline
-    Thành viên tham gia hội thoại &
-    ID thành viên tham gia, Trạng thái thông báo (Có thông báo, Không thông báo), Tác vụ (người tạo đoạn hội thoại, thành viên trong đoạn hội thoại), Trạng thái đã xem\\
-    \hline
-    Tin nhắn & 
-    ID tin nhắn, Nội dung tin nhắn, Tin nhắn hệ thống, Ghim (tin nhắn được ghim, không được ghim), Thời gian ghim tin nhắn, Các lượt thả cảm xúc \\
-    \hline
-    Tệp đính kèm &
-    ID tệp đính kèm, Đường dẫn tệp, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm (hình ảnh, video, tệp tin) \\
-    \hline 
-    Phân công bệnh nhân - bác sĩ & 
-    ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu, Ngày kết thúc \\
-    Tài khoản phê duyệt & 
-    ID tài khoản phê duyệt, Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
-    \hline
-  \end{tabularx}
+  % \label{table_api_news}
+  \\
+  \hline
+  \bfseries Thực thể    &\bfseries Thuộc tính   \\ \hline
+  Người dùng & 
+  ID người dùng, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
+  \hline
+  Tài khoản &
+  ID tài khoản, Email, Mật khẩu  \\
+  \hline
+  Token đăng nhập &
+  ID token, Token truy cập, Token làm mới \\
+  \hline
+  Thiết bị & 
+  ID thiết bị, Tên thiết bị, Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng\\
+  \hline
+  Thông số thiết bị &
+  ID thông số, Tên thông số, Giá trị thông số, Thông tin cụ thể, Loại thông số \\
+  \hline
+  Bản ghi dữ liệu & 
+  ID bản ghi dữ liệu, Loại bản ghi, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo \\
+  \hline
+  Thông tin hội thoại &
+  ID hội thoại, Tên hội thoại, Loại hội thoại, Đường dẫn avatar hội thoại \\
+  \hline
+  Thành viên tham gia hội thoại &
+  ID thành viên tham gia, Trạng thái thông báo (Có thông báo, Không thông báo), Tác vụ (người tạo đoạn hội thoại, thành viên trong đoạn hội thoại), Trạng thái đã xem\\
+  \hline
+  Tin nhắn & 
+  ID tin nhắn, Nội dung tin nhắn, Tin nhắn hệ thống, Ghim (tin nhắn được ghim, không được ghim), Thời gian ghim tin nhắn, Các lượt thả cảm xúc \\
+  \hline
+  Tệp đính kèm &
+  ID tệp đính kèm, Đường dẫn tệp, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm (hình ảnh, video, tệp tin) \\
+  \hline 
+  Phân công bệnh nhân - bác sĩ & 
+  ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu, Ngày kết thúc \\
+  \hline 
+  Tài khoản phê duyệt & 
+  ID tài khoản phê duyệt, Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng
+  \\ \hline
+  \end{xltabular}
 
-  
-\end{table}
+
 Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em xác định được mô hình thực thể liên kết như sau:
 
 \begin{figure}[H]
