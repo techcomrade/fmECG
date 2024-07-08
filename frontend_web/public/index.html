@@ -5,10 +5,7 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="ECG admin website"
-    />
+    <meta name="description" content="ECG admin website" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -53,6 +50,7 @@
         refresh_token: "",
         user_id: "",
       };
+
       const access_token = getCookie("access_token");
       if (access_token) {
         localStorage.setItem("user", getCookie("user"));
@@ -60,7 +58,10 @@
         localStorage.setItem("refresh_token", getCookie("refresh_token"));
         localStorage.setItem("api", decodeURIComponent(getCookie("api")));
         localStorage.setItem("role", getCookie("role"));
-        localStorage.setItem("redirect_api",decodeURIComponent(getCookie("redirect_api")))
+        localStorage.setItem(
+          "redirect_api",
+          decodeURIComponent(getCookie("redirect_api"))
+        );
         cookieData = {
           access_token: localStorage.getItem("access_token"),
           refresh_token: localStorage.getItem("refresh_token"),
@@ -68,14 +69,25 @@
           role: localStorage.getItem("role"),
           api: localStorage.getItem("api"),
         };
+        console.log("hi");
+
       } else {
+        console.log("hi");
         cookieData = {
           access_token: "",
           refresh_token: "",
           user_id: "",
           api: "",
         };
+        var url = window.location.host;
         localStorage.clear();
+        window.location.href = "http://127.0.0.1:3001/login";
+
+        if (url !== "127.0.0.1:3002") {
+          window.location.href = "/login";
+        } else {
+          window.location.href = "http://127.0.0.1:3001/login";
+        }
       }
       // Set a global variable to indicate whether the cookie exists
       window.hasCookie = cookieData;

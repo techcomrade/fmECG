@@ -41,7 +41,7 @@ class DeviceService extends CommonService {
   }
 
   ValidateDevice(device, checkId) {
-    console.log(device);
+
     const schema = Joi.object({
       id: checkId ? Joi.string().required() : Joi.string().allow(" "),
       user_id: Joi.string().required(),
@@ -50,7 +50,10 @@ class DeviceService extends CommonService {
       device_type: Joi.number().integer().min(0).max(100).required(),
       status: Joi.number(),
       start_date: Joi.number().required(),
-      dummy_data: Joi.boolean(),
+      dummy_data: Joi.number(),
+      created_at: Joi.number(),
+      updated_at: Joi.number(),
+      username: Joi.string()
     });
     return schema.validate(device);
   }

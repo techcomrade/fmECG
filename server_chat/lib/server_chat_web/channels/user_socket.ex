@@ -4,7 +4,7 @@ defmodule ServerChatWeb.UserSocket do
 
   @impl true
   
-  channel "message:*",               ServerChatWeb.MessageChannel
+  channel "message:*", ServerChatWeb.MessageChannel
 
   def connect(params, socket, _connect_info) do
     token = params["token"] || ""

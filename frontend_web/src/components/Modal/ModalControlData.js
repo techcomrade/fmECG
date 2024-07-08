@@ -16,7 +16,6 @@ const ModalComponent = (props, ref) => {
       ...data,
       ...handleData(values)
     };
-
     const res = await props?.submitFunction(payload);
     if (!res?.error) {
       setIsOpen(false);
@@ -41,7 +40,7 @@ const ModalComponent = (props, ref) => {
   options
     ? options.map((option) => ({
         value: option.id || option.value,
-        label: option.label || option.username || option.device_name,
+        label: option.label || option.device_name || option.username,
       }))
     : [];
 

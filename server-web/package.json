@@ -19,13 +19,14 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.9.2",
     "nodemon": "^3.1.0",
+    "openai": "^4.52.1",
     "redis": "^4.6.13",
     "util": "^0.12.5",
     "uuid": "^9.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
+    "start": "nodemon --legacy-watch server.js",
     "migration": "node migration.js",
     "migrate": "npx sequelize-cli db:migrate --name",
     "migrate.all": "npx sequelize-cli db:migrate",

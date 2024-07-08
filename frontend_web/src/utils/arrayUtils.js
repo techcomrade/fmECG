@@ -15,7 +15,7 @@ export const objectArrayValues = obj => Object.values(obj);
 export const toggleElement = (arr, val) => arr.includes(val) ? arr.filter(item => item !== val) : [...arr, val];
 
 export const checkDateTypeKey = (key) => {
-    const dateKeyGroups = ["birth", "start_date", "start_time", "end_time"];
+    const dateKeyGroups = ["birth", "start_date", "start_time", "end_time","end_date"];
     return dateKeyGroups.includes(key);
 }
 export const CheckKeyNeedDisplayTag = (key) => {

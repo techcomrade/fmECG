@@ -59,15 +59,30 @@ app.post("/login", async (req, res, next) => {
       if (result.ok) {
         const userInfo = await result.json();
         const isDevEnv = config.default_api_url.match("127.0.0.1:3000") != null
-        res.cookie("user", userInfo.metadata.id);
+        res.cookie("user", userInfo.metadata.id, {
+          maxAge: 60000 * userInfo.metadata.expired_time,
+          httpOnly: false,
+        });
         res.cookie("access_token", userInfo.metadata.access_token, {
           maxAge: 60000 * userInfo.metadata.expired_time,
           httpOnly: false,
         });
-        res.cookie("refresh_token", userInfo.metadata.refresh_token);
-        res.cookie("role", userInfo.metadata.role);
-        res.cookie("api", isDevEnv ? config.default_api_url : `${config.redirect_url}/api`);
-        res.cookie("redirect_api", isDevEnv ? `http://${config.default_app_host}:${config.default_app_port}/login` : `${config.redirect_url}/login`);
+        res.cookie("refresh_token", userInfo.metadata.refresh_token, {
+          maxAge: 60000 * userInfo.metadata.expired_time,
+          httpOnly: false,
+        });
+        res.cookie("role", userInfo.metadata.role, {
+          maxAge: 60000 * userInfo.metadata.expired_time,
+          httpOnly: false,
+        });
+        res.cookie("api", isDevEnv ? config.default_api_url : `${config.redirect_url}/api`, {
+          maxAge: 60000 * userInfo.metadata.expired_time,
+          httpOnly: false,
+        });
+        res.cookie("redirect_api", isDevEnv ? `http://${config.default_app_host}:${config.default_app_port}/login` : `${config.redirect_url}/login`, {
+          maxAge: 60000 * userInfo.metadata.expired_time,
+          httpOnly: false,
+        });
         return res.status(200).json("login successfully");
       }
       return res.status(400).json("login failed");

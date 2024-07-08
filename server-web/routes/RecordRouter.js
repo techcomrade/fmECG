@@ -4,7 +4,7 @@ const RecordMiddleware = require("../middlewares/RecordMiddleware");
 const router = express.Router();
 const fileUploader = require("../services/FileService");
 const RecordService = require("../services/RecordService");
-const uploadController = require('../controllers/uploadController');
+const UploadController = require('../controllers/UploadController');
 const {
   commonMiddleware,
   roleGroup,
@@ -13,7 +13,7 @@ router.get("", commonMiddleware.validationToken, RecordController.getAll);
 router.post(
   "",
   // commonMiddleware.validationToken,
-  uploadController.setUploadToDisk,
+  UploadController.setUploadToDisk,
   RecordController.uploadFileRecord,
   RecordController.createRecord
 );
@@ -34,7 +34,7 @@ router.get(
 router.get(
   "/user/:userId",
   commonMiddleware.validationToken,
-  RecordMiddleware.checkUserId,
+  // RecordMiddleware.checkUserId,
   RecordController.getRecordByUserId
 );
 router.get(
@@ -73,9 +73,9 @@ router.get(
   RecordMiddleware.checkEndTimeInterval,
   RecordController.getRecordByEndTimeInterval
 );
-router.get("/download/:id", commonMiddleware.validationToken, RecordController.downloadRecordFile);
+router.get("/download/:id", RecordController.downloadRecordFile);
 router.get("/check-file/:id", commonMiddleware.validationToken, RecordController.checkRecordFile);
-router.post("/upload-file", commonMiddleware.validationToken, RecordController.uploadFileRecord, (req, res) => {
+router.post("/upload-file", commonMiddleware.validationToken, UploadController.setUploadToDisk, RecordController.uploadFileRecord, (req, res) => {
   if (req.file) res.status(200).json({ file: req.file });
   else
     res.status(400).json({

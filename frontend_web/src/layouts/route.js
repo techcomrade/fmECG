@@ -1,45 +1,63 @@
 import Home from "../pages/Home/home";
 import DetailUser from "../pages/Account/Detail";
-import NotFound from "../pages/NotFound/notfound";
 import { Navigate, Route, Routes as ReactRoutes } from "react-router-dom";
 import UserTable from "../pages/User/userTable";
 import DeviceTable from "../pages/Device/deviceTable";
 import RecordTable from "../pages/Record/recordTable";
 import PdaTable from "../pages/PatientDoctorAssignment/pdaTable";
+import RegisterTable from "../pages/Register/registerTable"
 import {
   UserOutlined,
-  HomeOutlined,
   UnorderedListOutlined,
+  WechatWorkOutlined,
+  UsergroupAddOutlined,
+  DesktopOutlined,
+  LineChartOutlined,
+  UserAddOutlined,
+  UserSwitchOutlined,
+  OpenAIOutlined
 } from "@ant-design/icons";
-import DocTorInformation from "../pages/DoctorInformation/doctorInfomation";
-import DeviceInformation from "../pages/DeviceInformation/deviceInformation";
 import { userRole } from "../constants";
 import { context } from "../utils/context";
+import Chat from "../pages/Chat/chat";
+import AITraining from "../pages/AITranningChat/chat";
 
 export const AdminRouterMappingGroup = {
   User: {
     key: "/user",
     label: "Thông tin người dùng",
     component: <UserTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <UsergroupAddOutlined />,
   },
   Device: {
     key: "/device",
     label: "Thông tin thiết bị",
     component: <DeviceTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <DesktopOutlined />,
   },
   Record: {
     key: "/record",
     label: "Thông tin bản ghi",
     component: <RecordTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <LineChartOutlined />,
   },
   AssignmentPatientDoctor: {
     key: "/pda",
-    label: "Thông tin assignment",
+    label: "Phân công bác sĩ",
     component: <PdaTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <UserSwitchOutlined />,
+  },
+  Register: {
+    key: "/registers",
+    label: "Xét duyệt tài khoản",
+    component: <RegisterTable />,
+    icon: <UserAddOutlined />,
+  },
+  Chat: {
+    key: "/training",
+    label: "Training AI",
+    component:<AITraining />,
+    icon: <OpenAIOutlined />,
   }
 };
 
@@ -48,19 +66,25 @@ export const doctorRouterMappingGroup = {
     key: "/user",
     label: "Quản lý bệnh nhân",
     component: <UserTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <UsergroupAddOutlined />,
   },
   Device: {
     key: "/device",
     label: "Quản lý thiết bị",
     component: <DeviceTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <DesktopOutlined />,
   },
   Record: {
     key: "/record",
     label: "Quản lý bản ghi",
     component: <RecordTable />,
-    icon: <UnorderedListOutlined />,
+    icon: <LineChartOutlined />,
+  },
+  Chat:{
+    key:"/chat",
+    label: "Chat với bệnh nhân",
+    component: <Chat />,
+    icon: <WechatWorkOutlined />
   }
 };
 
@@ -76,13 +100,20 @@ export const patientRouterMappingGroup = {
     key: "/device",
     label: "Thông tin thiết bị",
     component: <DeviceTable />,
-    icon: <UserOutlined />,
+    icon: <DesktopOutlined />,
   },
   RecordInformation: {
     key: "/record",
     label: "Dữ liệu sức khoẻ",
     component: <RecordTable />,
-    icon: <UserOutlined />,
+    icon: <LineChartOutlined />,
+  }
+  ,
+  Chat:{
+    key:"/chat",
+    label: "Chat với bác sĩ",
+    component: <Chat />,
+    icon: <WechatWorkOutlined />
   }
 };
 

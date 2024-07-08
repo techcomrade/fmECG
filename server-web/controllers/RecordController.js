@@ -1,10 +1,18 @@
 const { response } = require("express");
 const RecordService = require("../services/RecordService");
+const DeviceDetailsService = require("../services/DeviceDetailsService");
 const fs = require("fs");
 class RecordController {
   async getAll(req, res, next) {
     console.log(`[P]:::Get all records: `);
     const records = await RecordService.getAll();
+    const length = records.length;
+    for (let i = 0; i < length; i++) {
+      records[i] = {
+        ...records[i],
+        record_name: records[i].data_rec_url.split("/").pop(),
+      };
+    }
     return res.status(200).json({
       message: "Get all records successful!",
       metadata: records,
@@ -247,24 +255,32 @@ class RecordController {
   }
   async getDataRecordFile(req, res) {
     console.log(`[P]:::Get data from record file: `, req.params.id);
+    const record = await RecordService.getRecordById(req.params.id);
+    if (!record[0]?.dataValues) {
+      return res.status(404).json({
+        message: "Record not found",
+      });
+    }
+
     const filepath = await RecordService.getFilePathById(req.params.id);
     if (!fs.existsSync(filepath)) {
       return res.status(404).json({
         message: "record file not found",
       });
     }
-    let arrayValue = await RecordService.getDataRecord(filepath);
-    if(arrayValue) {
+    const deviceId = record[0].dataValues.device_id;
+    let arrayValue = await RecordService.getDataRecord(filepath, deviceId);
+    if (arrayValue) {
       return res.status(200).json({
         message: "Get data successfully",
         metadata: arrayValue,
-      })
+      });
     }
-      return res.status(400).json({
-        message: "Record file not found"
-      })
+    return res.status(400).json({
+      message: "Record file not found",
+    });
   }
-  async getRecordByDoctorId(req,res){
+  async getRecordByDoctorId(req, res) {
     console.log(`[P]:::Get record by doctor id: `, req.params.id);
     const recordByUser = await RecordService.getRecordByDoctorId(req.params.id);
     console.log(recordByUser);

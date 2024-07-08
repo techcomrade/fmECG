@@ -6,7 +6,7 @@ const {
 } = require("../middlewares/CommonMiddleware");
 const UserMiddleware = require("../middlewares/UserMiddleware");
 
-const uploadController = require("../controllers/uploadController");
+const UploadController = require("../controllers/UploadController");
 const FileUploadService = require("../services/FileService");
 
 const router = express.Router();
@@ -21,7 +21,7 @@ router.post(
 
 router.post(
   "/upload",
-  uploadController.setUploadToDrive,
+  UploadController.setUploadToDrive,
   FileUploadService.uploadFile.bind(FileUploadService),
   UserMiddleware.checkUserId,
   UserController.uploadImage
@@ -32,7 +32,8 @@ router.get(
   // commonMiddleware.restrictRole(roleGroup.admin),
   UserController.getAll
 );
-router.get("/id/:id", UserController.getUserById);
+router.get("/role/:role",commonMiddleware.validationToken,UserController.getUserByRole);
+router.get("/id/:id",commonMiddleware.validationToken, UserController.getUserById);
 router.delete("", UserMiddleware.checkUserId, UserController.deleteUser);
 
 module.exports = router;

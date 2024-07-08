@@ -1,6 +1,6 @@
 const FileService = require("../services/FileService");
 
-class uploadController {
+class UploadController {
     async setUploadToDrive(req, res, next) {
         await FileService.setStorageToMemory();
         next();
@@ -35,4 +35,4 @@ class uploadController {
 
 }
 
-module.exports = new uploadController();
+module.exports = new UploadController();

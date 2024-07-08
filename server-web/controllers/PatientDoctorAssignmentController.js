@@ -18,7 +18,7 @@ class PatientDoctorAssignmentController {
   }
 
   async getAllAssignment(req, res, next) {
-    console.log(`[P]::: Get all assignment: `);
+    console.log(`[G]::: Get all assignment: `);
     const assignments = await PatientDoctorAssignmentService.getAll();
     return res.status(200).json({
       message: "Get all data successful!",
@@ -27,7 +27,7 @@ class PatientDoctorAssignmentController {
   }
 
   async getPatientByDoctorId(req, res, next) {
-    console.log(`[P]::: Get patient by doctor id: `, req.params.doctor_id);
+    console.log(`[G]::: Get patient by doctor id: `, req.params.doctor_id);
     try {
       const patient = await PatientDoctorAssignmentService.getPatientByDoctorId(
         req.params.doctor_id
@@ -43,7 +43,7 @@ class PatientDoctorAssignmentController {
     }
   }
   async getDoctorByPatientId(req,res) {
-    console.log(`[P]::: Get doctor by patient id: `, req.params.patient_id);
+    console.log(`[G]::: Get doctor by patient id: `, req.params.patient_id);
     try {
       const patient = await PatientDoctorAssignmentService.getDoctorByPatientId(
         req.params.patient_id
@@ -55,6 +55,36 @@ class PatientDoctorAssignmentController {
     } catch (err) {
       return res.status(500).json({
         message: "Error when get doctor by patient id!",
+      });
+    }
+  }
+  async updateAssignment(req,res){
+    const assignment = req.body;
+    console.log(`[P]::: Update assignment by id: `, assignment.id);
+    try {
+      await PatientDoctorAssignmentService.updateAssignment(assignment);
+      return res.status(200).json({
+        message: "Updated assignment successful!",
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        message: "Updated assignment failed!",
+      });
+    }
+
+  }
+  async deleteAssignmentById(req,res){
+    console.log(`[D]::: Delete assignment by id: `,req.params.id);
+    try {
+      await PatientDoctorAssignmentService.deleteAssignmentById(req.params.id);
+      return res.status(200).json({
+        message: "Delete assignment successful!",
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        message: "Delete assignment failed!",
       });
     }
   }

@@ -1,7 +1,7 @@
-const DeviceFreqService = require('../services/DeviceFrequencyService');
+const DeviceDetailsService = require('../services/DeviceDetailsService');
 const DeviceService = require('../services/DeviceService');
 
-class DeviceFreqController {
+class DeviceDetailsController {
    async add(req, res) {
     console.log(`[P]:::Add device frequency data`, req.body);
     const deviceFreq = req.body;
@@ -11,7 +11,7 @@ class DeviceFreqController {
             message: 'Device frequency not found',
         })
     }
-    await DeviceFreqService.add(deviceFreq)
+    await DeviceDetailsService.add(deviceFreq)
         .then(checked => {
             if(checked) {
                 return res.status(200).json({
@@ -38,13 +38,13 @@ class DeviceFreqController {
             message: 'No id provided',
         })
     }
-    let checkExistDeviceFreq = await DeviceFreqService.getById(id);
+    let checkExistDeviceFreq = await DeviceDetailsService.getById(id);
     if(!checkExistDeviceFreq?.dataValues) {
         return res.status(400).json({
             message: 'no device frequency found',
         })
     }
-    await DeviceFreqService.deleteById(id)
+    await DeviceDetailsService.deleteById(id)
     .then(checked => {
         if(checked) {
             return res.status(200).json({
@@ -67,7 +67,7 @@ class DeviceFreqController {
     console.log(`[P]::: Update device frequency`, req.body);
     const id = req.body.id;
     const deviceFreq = req.body;
-    let checkExistDeviceFreq = await DeviceFreqService.getById(id);
+    let checkExistDeviceFreq = await DeviceDetailsService.getById(id);
     if(!checkExistDeviceFreq?.dataValues){
         return res.status(400).json({
             message: 'device frequency not found'
@@ -79,7 +79,7 @@ class DeviceFreqController {
             message: 'device id not found'
         })
     }
-    await DeviceFreqService.updateById(deviceFreq, id)
+    await DeviceDetailsService.updateById(deviceFreq, id)
     .then(checked => {
         if(checked) return res.status(200).json({
             message: 'updated device frequency successfully'
@@ -97,4 +97,4 @@ class DeviceFreqController {
    }
 }
 
-module.exports = new DeviceFreqController();
+module.exports = new DeviceDetailsController();

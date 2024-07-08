@@ -8,12 +8,11 @@ import {
   Upload,
   Form,
   Input,
-  Button,
   Select,
   DatePicker,
+  Button
 } from "antd";
 import avatarDemo from "../../assets/icons/avatar.svg";
-import { showNotiError } from "../../components/Notification";
 import dayjs from "dayjs";
 import { getUserById } from "../../redux/reducer/userSlice";
 import { loadStatus } from "../../redux/reducer/recordSlice";
@@ -21,13 +20,11 @@ import "./detail.scss";
 import { convertGenderToString, convertRoleToString } from "../../constants";
 import { context } from "../../utils/context";
 
-const { Option } = Select;
 export default function Detail() {
   const dispatch = useDispatch();
 
   const [accountData, setData] = useState({});
   const dataState = useSelector((state) => state.user);
-  const [password, setPassword] = useState("");
   useEffect(() => {
     dispatch(getUserById(context.user_id));
   }, []);
@@ -113,7 +110,7 @@ export default function Detail() {
             </Col>
             <Col span={10} offset={2}>
               <Form.Item label="Quyền truy cập">
-                <Input value={convertRoleToString(accountData.role)} name="gender" disabled />
+                <Input value={convertRoleToString(accountData.role)} name="role" disabled/>
               </Form.Item>
             </Col>
           </Row>
@@ -158,21 +155,20 @@ export default function Detail() {
               </Form.Item>
             </Col>
           </Row>
-          {/* <Row>
+           <Row className="btn-row">
             <Col span={10}>
-              <Form.Item>
+              <Form.Item className="detail-btn">
+                <Button>Hủy bỏ</Button>
                 <Button
                   type="primary"
                   className="account-submit-button"
-                  onClick={handleSubmitButton}
+                  // onClick={handleSubmitButton}
                 >
                   Lưu
                 </Button>
-
-                <Button>Hủy bỏ</Button>
               </Form.Item>
             </Col>
-          </Row> */}
+          </Row> 
         </Form>
       </Col>
     </div>

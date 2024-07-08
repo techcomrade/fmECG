@@ -21,7 +21,14 @@ import { httpGetData } from "../../api/common.api";
 import dayjs from "dayjs";
 import { DeviceDetail } from "./deviceDetail";
 import { context } from "../../utils/context";
-import { DeviceStatus, convertDeviceStatusColor, convertDeviceStatusToString, userRole } from "../../constants";
+import {
+  DeviceStatus,
+  convertDeviceStatusColor,
+  convertDeviceStatusToString,
+  convertDeviceTypeColor,
+  convertDeviceTypeToString,
+  userRole,
+} from "../../constants";
 import { Tag } from "antd";
 
 const DeviceTable = () => {
@@ -48,6 +55,14 @@ const DeviceTable = () => {
       key: "device_type",
       type: "text",
       isEdit: true,
+      render: (status) => {
+        let color = convertDeviceTypeColor(status);
+        return (
+          <Tag color={color} key={status}>
+            {convertDeviceTypeToString(status)}
+          </Tag>
+        );
+      },
     },
     {
       title: "Tên người dùng",
@@ -64,14 +79,14 @@ const DeviceTable = () => {
       type: "select",
       dataSelect: DeviceStatus,
       isEdit: true,
-      render: (status)=>{
+      render: (status) => {
         let color = convertDeviceStatusColor(status);
-        return ( 
+        return (
           <Tag color={color} key={status}>
             {convertDeviceStatusToString(status)}
           </Tag>
-        )
-      }
+        );
+      },
     },
     {
       title: "Thông tin thiết bị",
@@ -86,14 +101,14 @@ const DeviceTable = () => {
       key: "start_date",
       type: "date",
       isEdit: true,
-    }
+    },
   ];
 
   useEffect(() => {
     if (context.role === userRole.doctor) {
       dispatch(getDeviceByDoctorId(context.user_id));
     } else if (context.role === userRole.patient) {
-      dispatch(getDevicesById(context.user_id))
+      dispatch(getDevicesById(context.user_id));
     } else {
       dispatch(getDevice());
     }
@@ -138,17 +153,17 @@ const DeviceTable = () => {
   }, [dataState.loadCreateDataStatus]);
 
   const handleDeleteFunction = (id) => {
-    dispatch(deleteDevice({ id: id }));
+    dispatch(deleteDevice( id ));
   };
 
   const handleEditFunction = () => {
     const rowData = findElementById(dataTable, selectedData[0]);
-    const dataModal = handleData(rowData, 'form');
+    const dataModal = handleData(rowData, "form");
     modalUpdateRef.current?.open(dataModal, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    const {doctor_id, frequency, ...payload} = {...data};   
+    const { doctor_id, frequency, ...payload } = { ...data };
     return dispatch(updateDevice(payload));
   };
 

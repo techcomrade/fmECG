@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bluetooth_ecg/app.dart';
+import 'package:bluetooth_ecg/constants/api_constant.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/networks/socket_channel.dart';
 import 'package:bluetooth_ecg/providers/bluetooth_provider.dart';
@@ -16,6 +18,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'providers/auth_provider.dart';
+import 'package:http/http.dart' as http;
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -31,13 +34,28 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await FirebaseMessaging.instance.getInitialMessage();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  // await FirebaseMessaging.instance.getInitialMessage();
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  apiConstant.getMode();
+  // try {
+  //   final String url = "${apiConstant.apiUrl}/record";
+  //   print('aaa:${url}');
+  //   final Map<String, String> headers = {...apiConstant.headers, 
+  //     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiODM1NzM0MjEtOTk0My00YTI1LTlmZTEtMDBmMDQ3N2FhYmE0Iiwicm9sZSI6MiwiZXhwIjoyNDk1OTYxNzc5LCJpYXQiOjE3MTgzNjE3Nzl9.JIhIavutTEQBEJp_H03TN2TudCQBhfKfUP5lbBjQFvg'
+  //   };
+
+  //   final res = await http.get(Uri.parse(url), headers: headers);
+  //   print('aaaa:${jsonDecode(res.body)}');
+  // } catch (e) {
+  //   print('sdgndjfkg:$e');
+  // }
   // final SocketChannel socketChannel = SocketChannel();
   // await socketChannel.connect();
+
   if (Platform.isAndroid) {
     WidgetsFlutterBinding.ensureInitialized();
     [

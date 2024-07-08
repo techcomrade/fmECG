@@ -10,11 +10,15 @@ const router = express.Router();
 
 router.post(
   "/create",
+  commonMiddleware.validationToken,
   PatientDoctorAssignmentMiddleware.validateAssignment,
-  PatientDoctorAssignmentMiddleware.checkDoctorById,
-  PatientDoctorAssignmentMiddleware.checkPatientById,
   PatientDoctorAssignmentMiddleware.checkAssignmentByPatientId,
   PatientDoctorAssignmentController.createAssigment
+);
+router.post(
+  "/update",
+  commonMiddleware.validationToken,
+  PatientDoctorAssignmentController.updateAssignment
 );
 router.get("", PatientDoctorAssignmentController.getAllAssignment);
 router.get(
@@ -28,6 +32,11 @@ router.get(
   "/doctor/:patient_id",
   commonMiddleware.validationToken,
   PatientDoctorAssignmentController.getDoctorByPatientId
+);
+router.delete(
+  "/delete/:id",
+  commonMiddleware.validationToken,
+  PatientDoctorAssignmentController.deleteAssignmentById
 );
 
 module.exports = router;

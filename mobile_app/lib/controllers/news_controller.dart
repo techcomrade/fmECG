@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 NewsProvider newsProvider = Utils.globalContext!.read<NewsProvider>();
 
 class NewsController {
-  static String apiGetAllNews = APIConstant.apiUrlProduction + 'news';
+  static String apiGetAllNews = apiConstant.apiUrl + 'news';
 
   static Future<void> getAllNews() async {
     try {

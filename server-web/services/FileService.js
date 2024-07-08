@@ -1,6 +1,6 @@
 require('dotenv').config();
 const multer = require("multer");
-const maxSize = 2 * 1024 * 1024;
+const maxSize = 4 * 1024 * 1024;
 const fs = require("fs");
 const credentials = require("../certs/google_credentials.json");
 const { google } = require("googleapis");
@@ -103,7 +103,7 @@ class FileUploader {
   }
 
   async uploadDrive(buffer, fileName) {
-    const SCOPES = ["https://www.googleapis.com/auth/drive"];
+    const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
     
     const auth = new google.auth.GoogleAuth({
       credentials: credentials,
@@ -130,7 +130,7 @@ class FileUploader {
         fileId: file.data.id,
         fields: "webViewLink, webContentLink",
       });
-    
+      console.log(result.data.webViewLink, result.data.webContentLink);
       return result.data.webContentLink;
     } catch (err) {
       console.log(err);

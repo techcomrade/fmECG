@@ -25,35 +25,35 @@ export const ROLE = [
 ];
 
 export const userRole = {
-  admin: '0',
-  doctor: '1',
-  patient: '2'
+  admin: "0",
+  doctor: "1",
+  patient: "2",
 };
 
 export const UserStatus = [
   {
     value: 0,
-    label: "Đang hoạt động"
+    label: "Đang hoạt động",
   },
   {
     value: 1,
-    label: "Đã nghỉ"
-  }
+    label: "Đã nghỉ",
+  },
 ];
 
 export const DeviceStatus = [
   {
     value: 0,
-    label: "Đang hoạt động"
+    label: "Đang hoạt động",
   },
   {
     value: 1,
-    label: "Đang trống"
+    label: "Đang trống",
   },
   {
     value: 2,
-    label: "Đang bảo trì"
-  }
+    label: "Đang bảo trì",
+  },
 ];
 
 export const convertGenderToString = (gender) => {
@@ -102,8 +102,8 @@ export const convertStringToRole = (gender) => {
   }
 };
 
-export const convertStatusToString =  (status) => {
-  switch (status){
+export const convertStatusToString = (status) => {
+  switch (status) {
     case 0:
       return "Đang hoạt đông";
     case 1:
@@ -111,10 +111,10 @@ export const convertStatusToString =  (status) => {
     default:
       return "Không xác định";
   }
-}
+};
 
-export const convertDeviceStatusToString =  (status) => {
-  switch (status){
+export const convertDeviceStatusToString = (status) => {
+  switch (status) {
     case 0:
       return "Đang hoạt đông";
     case 1:
@@ -124,10 +124,10 @@ export const convertDeviceStatusToString =  (status) => {
     default:
       return "Không xác định";
   }
-}
+};
 
-export const convertDeviceStatusColor =  (status) => {
-  switch (status){
+export const convertDeviceStatusColor = (status) => {
+  switch (status) {
     case 0:
       return "geekblue";
     case 1:
@@ -136,5 +136,50 @@ export const convertDeviceStatusColor =  (status) => {
       return "volcano";
     default:
       return "red";
+  }
+};
+
+export const colorChart = [
+  "rgb(54, 162, 235)",
+  "rgb(255, 99, 132)",
+  "rgb(75, 192, 192)",
+  "rgb(255, 205, 86)",
+  "rgba(153, 102, 255)",
+];
+
+export const convertDeviceTypeToString = (status) => {
+  switch (status) {
+    case 1:
+      return "Đo điện tim";
+    case 2:
+      return "Đo chỉ số tim mạch";
+    case 3:
+      return "Đo âm thanh";
+    default:
+      return "Không xác định";
+  }
+};
+
+export const convertDeviceTypeColor = (status) => {
+  switch (status) {
+    case 1:
+      return "volcano";
+    case 2:
+      return "green";
+    case 3:
+      return "geekblue";
+    default:
+      return "red";
+  }
+};
+
+export const convertRegisterStatusToString = ( status) => {
+  switch (status) {
+    case 0:
+      return "Đang chờ duyệt";
+    case 1:
+      return "Đã duyệt";
+    default:
+      return "Từ chối";
   }
 }

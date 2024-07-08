@@ -6,7 +6,6 @@ defmodule ServerChatWeb.MessageChannel do
   end
 
   def handle_in("ping", payload, socket) do
-    IO.inspect(socket.assigns, label: "ngjkgnfkdfngjkfd")
     {:reply, {:ok, payload}, socket}
   end
 end
