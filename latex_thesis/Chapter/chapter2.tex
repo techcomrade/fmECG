@@ -793,28 +793,28 @@ Chương này sẽ trình bày chi tiết về quá trình phân tích hệ th�
 Để phân tích cụ thể hơn về từng luồng trong hệ thống thông qua sơ đồ use case và sơ đồ hoạt động, dưới đây là phần thiết kế
  về các sơ đồ tuần tự.
 
-\subsubsection{Sơ đồ tuần tự chức năng đăng ký tài khoản}
+\subsubsection{Sơ đồ tuần tự đăng ký tài khoản}
 \begin{figure}[H]
   \centering
   \includegraphics[width=10cm,height=12.5cm]{Images/sequence/sequence_register.png}
-  \caption[Sơ đồ tuần tự chức năng đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự chức năng đăng ký tài khoản}
+  \caption[Sơ đồ tuần tự đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự đăng ký tài khoản}
   \label{sequence_register} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng ký tài khoản trên hệ thống. Người dùng sẽ gửi yêu cầu đăng ký, yêu cầu sẽ được xử lý
-bởi lớp Register, nếu có lỗi phát sinh trả về lỗi cho người dùng. Nếu việc đăng ký thành công, lớp Register sẽ gửi thông báo 
+Sơ đồ tuần tự mô tả chi tiết quá trình người dùng đăng ký một tài khoản mới trên hệ thống. Người dùng sẽ phải gửi yêu cầu đăng ký, hệ thống sẽ được xử lý
+bởi lớp Register, nếu có lỗi phát sinh hệ thống sẽ thông báo lõi cho người dùng. Nếu việc đăng ký thành công, lớp Register sẽ gửi thông báo 
 chuyển sang phê duyệt tài khoản và trả về kết quả.  
 
-\subsubsection{Sơ đồ tuần tự chức năng đăng nhập/đăng xuất}
+\subsubsection{Sơ đồ tuần tự đăng nhập/xuất}
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm,height=11cm]{Images/sequence/sequence_login.png}
-  \caption[Sơ đồ tuần tự chức năng đăng nhập]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự chức năng đăng nhập}
+  \caption[Sơ đồ tuần tự đăng nhập]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự đăng nhập}
   \label{sequence_login} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng nhập trên hệ thống. Người dùng sẽ gửi yêu cầu đăng nhập, yêu cầu sẽ được xử lý
-bởi lớp Account, nếu có lỗi phát sinh sẽ trả về người dùng. Nếu việc đăng ký thành công, lớp Account sẽ gửi thông báo 
+Sơ đồ tuần tự mô tả chi tiết quá trình đăng nhập trên hệ thống của người dùng. Người dùng sẽ phải gửi yêu cầu đăng nhập, hệ thống sẽ được xử lý
+bởi lớp Account, nếu có lỗi sẽ trả về người dùng. Nếu việc đăng ký thành công, lớp Account sẽ gửi thông báo 
 tạo token truy cập mới và thông báo thành công. 
 \begin{figure}[H]
   \centering
@@ -823,22 +823,22 @@ tạo token truy cập mới và thông báo thành công.
   \selectfont Sơ đồ tuần tự chức năng đăng xuất}
   \label{sequence_logout} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng đăng xuất khỏi hệ thống. Người dùng sẽ gửi yêu cầu đăng xuất, yêu cầu sẽ được xử lý
+Sơ đồ tuần tự trên mô tả quá trình đăng xuất khỏi hệ thống. Người dùng sẽ gửi yêu cầu đăng xuất, yêu cầu sẽ được xử lý
 bởi lớp Token. Lớp Token sẽ xóa thông tin token truy cập và trả về kết quả đăng xuất.
 
-\subsubsection{Sơ đồ tuần tự chức năng quên mật khẩu}
+\subsubsection{Sơ đồ tuần tự quên mật khẩu}
 \begin{figure}[H]
   \centering
   \includegraphics[width=10cm,height=13.5cm]{Images/sequence/sequence_forgot_password.png}
-  \caption[Sơ đồ tuần tự chức năng quên mật khẩu]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự chức năng quên mật khẩu}
+  \caption[Sơ đồ tuần tự quên mật khẩu]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự quên mật khẩu}
   \label{sequence_forgot_pass} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng quên mật khẩu trên hệ thống. Người dùng sẽ gửi email đã đăng ký tài khoản, gửi yêu cầu
+Sơ đồ tuần tự trên mô tả chi tiết quá trình lấy mật khẩu mới trên hệ thống. Người dùng sẽ gửi email đã đăng ký tài khoản, gửi yêu cầu
 lấy lại mật khẩu. Yêu cầu sẽ được xử lý bởi lớp Account, nếu có lỗi phát sinh sẽ hiển thị lên màn hình và yêu cầu người dùng nhập lại. Lớp Account sẽ gửi một mã xác thực
 đến email, người dùng sẽ nhập mã xác thực và thay đổi mật khẩu mới. Nếu việc thay đổi thành công, lớp Account sẽ gửi thông báo thành công và chuyển sang đăng nhập.
 
-\subsubsection{Sơ đồ tuần tự chức năng quản lý tài khoản cá nhân}
+\subsubsection{Sơ đồ tuần tự quản lý tài khoản cá nhân}
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm,height=12cm]{Images/sequence/sequence_manage_info.png}
@@ -846,8 +846,8 @@ lấy lại mật khẩu. Yêu cầu sẽ được xử lý bởi lớp Account,
   \selectfont Sơ đồ tuần tự chức năng quản lý tài khoản cá nhân}
   \label{sequence_account} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng lấy và thay đổi thông tin tài khoản trên hệ thống. Người dùng thay đổi thông tin và gửi yêu cầu, 
-yêu cầu sẽ được xử lý bởi lớp Account và User, nếu có lỗi phát sinh sẽ trả về lỗi cho người dùng. Nếu việc thay đổi thành công, lớp Account sẽ gửi thông báo 
+Sơ đồ tuần tự trên mô tả chi tiết quá trình người dùng lấy và thay đổi thông tin tài khoản trên hệ thống. Người dùng thay đổi thông tin cá nhân và gửi yêu cầu tới hệ thống, 
+yêu cầu sẽ được xử lý bởi 2 lớp Account và lớp User, nếu có lỗi phát sinh sẽ thông báo lỗi cho người dùng. Nếu việc thay đổi thành công, lớp Account sẽ gửi thông báo 
 thành công.  
 
 \subsubsection{Sơ đồ tuần tự chức năng quản lý dữ liệu đo}
@@ -926,8 +926,8 @@ yêu cầu sẽ được xử lý bởi lớp Device, hiện danh sách thiết 
 \begin{figure}[H]
   \centering
   \includegraphics[width=11cm,height=8cm]{Images/sequence/sequence_manage_add_device.png}
-  \caption[Sơ đồ tuần tự chức năng thêm thiết bị]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự chức năng thêm thiết bị}
+  \caption[Sơ đồ tuần tự thêm thiết bị]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự thêm thiết bị}
   \label{sequence_manage_add_device} %đặt tên cho ảnh
 \end{figure}
 Nếu quản trị viên muốn tạo một thiết bị mới, quản trị viên nhập các thông tin và gửi yêu cầu tạo, yêu cầu sẽ được xử lý bởi lớp Device, nếu có lỗi phát sinh sẽ trả về quản trị viên, 
@@ -1111,15 +1111,9 @@ Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em x
   \label{ttlk} %đặt tên cho ảnh
 \end{figure}
 
-\subsection{Kết luận chương}
+\subsection{Kết luận}
 
-Trong chương này, chúng em đã thực hiện phân tích khái quát về
- hệ thống, nhằm đáp ứng các mục tiêu và yêu cầu đã được đề ra trước đó.
-
-Chúng em đã xác định các yếu tố trong hệ thống một cách rõ ràng.
- Qua đó, tập trung vào việc thiết kế một hệ thống quản lý dữ liệu điện tim hiệu quả,
-  trực quan và có khả năng theo dõi sức khỏe tim mạch một cách
-   chính xác. 
-
+Chương này thực hiện phân tích khái quát về
+ hệ thống, nhằm đáp ứng các yêu cầu và mục tiêu đã được đề ra trong các phần trên.
 
 \newpage
