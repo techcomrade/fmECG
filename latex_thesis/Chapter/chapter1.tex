@@ -5,7 +5,7 @@
 \setcounter{table}{0} % LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 1. THU THẬP YÊU CẦU}
-Trong chương này, chúng em sẽ tiến hành thu thập yêu cầu cho dự án đề tài "Hệ thống theo dõi và quản lý dữ liệu điện tim" dựa trên các mục tiêu
+Chương này sẽ tiến hành thu thập yêu cầu cho dự án đề tài "Hệ thống theo dõi và quản lý dữ liệu điện tim" dựa trên các mục tiêu
 đã nêu ra trong Mục Đề xuất hệ thống ở Phần mở đầu.
 
 \subsection{Yêu cầu hệ thống}
@@ -13,7 +13,7 @@ Trong chương này, chúng em sẽ tiến hành thu thập yêu cầu cho dự 
 Hệ thống được thiết kế để phục vụ các đối tượng sau:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-    \item Bệnh nhân: Người sử dụng hệ thống để thực hiện theo dõi dữ liệu điện tim thông qua Bluetooth. Bệnh nhân có quyền truy cập vào kết quả ECG của mình, có thể được một bác sĩ phụ trách và theo dõi các thông tin liên quan đến điện tim và sức khoẻ
+    \item Bệnh nhân: Người sử dụng hệ thống để thực hiện theo dõi dữ liệu điện tim thông qua website. Bệnh nhân có quyền truy cập vào kết quả ECG của mình, có thể được một bác sĩ phụ trách và theo dõi các thông tin liên quan đến điện tim và sức khoẻ
     \item Bác sĩ: Người sử dụng hệ thống để thực hiện quản lý, theo dõi các bệnh nhân mình được phân công. Bác sĩ có quyền truy cập vào kết quả ECG của bệnh nhân, có thể trao đổi, tư vấn với bệnh nhân về các thông tin liên quan
     \item Quản trị viên: Người sử dụng hệ thống để quản lý các tài khoản người dùng, thiết bị, quản lý phân công giữa bác sĩ và bệnh nhân, quản lý các bản dữ liệu đo
 \end{itemize}
@@ -23,7 +23,7 @@ Hệ thống được thiết kế để phục vụ các đối tượng sau:
 Các chức năng chính của hệ thống bao gồm:
 \begin{adjustwidth}{1.5em}{}
   \begin{itemize}
-      \item Ghi lại dữ liệu thiết bị: Hệ thống cho phép ghi lại dữ liệu từ thiết bị y tế được truyền qua Bluetooth. Dữ liệu được chuyển tới ứng dụng của người dùng thông qua Bluetooth để lưu trữ, phân tích và có thể xem lại sau này
+      \item Ghi lại dữ liệu thiết bị: Hệ thống cho phép ghi lại dữ liệu từ thiết bị y tế được truyền qua Mobile app. Dữ liệu được chuyển tới website của người dùng thông qua mobile app để lưu trữ, phân tích và có thể xem lại sau này
       \item Hiển thị và phân tích dữ liệu: Hệ thống hiển thị dữ liệu y tế theo dạng bảng biểu và đồ thị. Hệ thống cũng hỗ trợ xuất ra các tệp đã được chuẩn hoá cho các dữ liệu chuỗi thời gian (time-series database) để phục vụ mục đích phân tích và nghiên cứu
       \item Lưu trữ: Hệ thống hỗ trợ lưu dữ liệu mà người dùng đo được từ thiết bị trên cả ứng dụng và trên server của hệ thống. Dữ liệu điện tim cũng được đồng bộ hóa và lưu trữ trên máy chủ của hệ thống. Qua quá trình đồng bộ hóa, dữ liệu từ ứng dụng được truyền đến máy chủ và được lưu trữ an toàn và bảo mật trên hệ thống. Việc lưu trữ dữ liệu trên cả ứng dụng và máy chủ giúp đảm bảo rằng dữ liệu quan trọng này được lưu trữ một cách đáng tin cậy và có sẵn cho phân tích hoặc sử dụng tương lai
       \item Trao đổi và chia sẻ thông tin về dữ liệu y tế: Hệ thống giúp người dùng có thể trao đổi trực tiếp với bác sĩ và trợ lý ảo, chia sẻ kết quả đo điện tim, hỏi đáp về các vấn đề sức khỏe, các vấn đề liên quan đến hệ thống và thiết bị hoặc thảo luận về các quyết định. Điều này mang lại sự tiện lợi và hỗ trợ đáng kể cho người dùng trong việc xác định về tình trạng sức khoẻ hiện tại của bản thân.
@@ -73,12 +73,9 @@ Các chức năng chính của hệ thống bao gồm:
     \item Hệ thống đảm bảo tính bảo mật và quyền riêng tư thông tin của người dùng
     \item Hệ thống phải có giao diện người dùng thân thiện, dễ sử dụng để có thể tương tác mà không gặp quá nhiều khó khăn
     \item Thời gian phản hồi của hệ thống phải nhanh chóng và ổn định
-    \item Hệ thống cần sao lưu dữ liệu định kỳ để đảm bảo tính an toàn và khả năng khôi phục dữ liệu khi cần thiết.
+    % \item Hệ thống cần sao lưu dữ liệu định kỳ để đảm bảo tính an toàn và khả năng khôi phục dữ liệu khi cần thiết.
 \end{itemize}
 
-Thông qua việc phân tích yêu cầu hệ thống, chúng ta có cái nhìn tổng quan về các chức năng, yêu cầu phi chức năng và 
-các đối tượng người dùng mà hệ thống phải hỗ trợ. Phần phân tích này sẽ cung cấp cơ sở cho việc thiết kế và phát triển hệ thống quản lý ECG, 
-đáp ứng đầy đủ các yêu cầu của người dùng và đảm bảo hiệu suất, bảo mật và tính khả dụng của hệ thống
 % \subsection{Phân tích tổng quan hệ thống}
 \subsection{Sơ đồ use case}
 \subsubsection{Use case tổng quát hệ thống}
@@ -117,9 +114,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Người dùng chọn đăng ký tài khoản
+        - Người dùng yêu cầu đăng ký tài khoản
 
-        - Người dùng nhập thông tin trên màn hình đăng ký
+        - Người dùng cung cấp thông tin tài khoản để đăng ký
 
         - Hệ thống xác minh các thông tin, nếu thỏa mãn sẽ thông báo thành công và kết thúc luồng sự kiện, ngược lại 
         sẽ thông báo lỗi 
@@ -156,18 +153,18 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       % \begin{tabular}{@{}l@{}}
         Chức năng đăng nhập:
 
-        - Người dùng chọn đăng nhập
+        - Người dùng yêu cầu đăng nhập
 
-        - Người dùng nhập thông tin trên màn hình đăng nhập
+        - Người dùng cung cấp thông tin đăng nhập
 
         - Hệ thống xác minh các thông tin, nếu thỏa mãn sẽ thông báo thành công và kết thúc luồng sự kiện, ngược lại 
         sẽ thông báo lỗi 
 
         Chức năng đăng xuất:
 
-        - Người dùng chọn đăng xuất
+        - Người dùng yêu cầu đăng xuất
 
-        - Hệ thống chuyển sang màn hình đăng nhập và kết thúc luồng sự kiện 
+        - Hệ thống đăng xuất tài khoản người dùng và kết thúc luồng sự kiện
         \\
       % \end{tabular} \\
       \hline
@@ -199,14 +196,13 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Người dùng chọn quên mật khẩu
+        - Người dùng yêu cầu quên mật khẩu
 
-        - Người dùng nhập email tài khoản trên màn hình và gửi thông tin
+        - Người dùng cung cấp email tài khoản để xác nhận
 
-        - Hệ thống xác minh các thông tin, nếu thỏa mãn sẽ thông báo thành công và gửi đường dẫn thay đổi mật khẩu, ngược lại 
+        - Hệ thống xác minh các thông tin, nếu thỏa mãn sẽ thông báo thành công và yêu cầu người dùng cung cấp mật khẩu mới, ngược lại 
         sẽ thông báo lỗi 
 
-        - Người dùng nhấn đường dẫn thay đổi mật khẩu và nhập mật khẩu mới
 
         - Hệ thống xác minh các thông tin, nếu thỏa mãn sẽ thông báo thành công và kết thúc luồng sự kiện, ngược lại 
         sẽ thông báo lỗi 
@@ -241,11 +237,11 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Người dùng chọn cập nhật thông tin cá nhân
+        - Người dùng yêu cầu cập nhật thông tin cá nhân
 
-        - Hệ thống hiển thị thông tin cá nhân của người dùng
+        - Hệ thống cung cấp thông tin cá nhân của người dùng
 
-        - Người dùng nhập thông tin cập nhật trên màn hình và nhấn xác nhận
+        - Người dùng cung cấp thông tin cập nhật ài khoản cho hệ thống
 
         - Hệ thống xác minh các thông tin, nếu thỏa mãn sẽ thông báo thành công và kết thúc luồng sự kiện, ngược lại 
         sẽ thông báo lỗi         
@@ -280,9 +276,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Người dùng chọn quản lý lịch sử đo bệnh nhân
+        - Người dùng yêu cầu quản lý lịch sử đo bệnh nhân
 
-        - Hệ thống hiển thị danh sách phiên đo của người dùng (đối với bệnh nhân), danh sách phiên đo của 
+        - Hệ thống cung cấp danh sách phiên đo của người dùng (đối với bệnh nhân), danh sách phiên đo của 
         bệnh nhân mà bác sĩ phụ trách (đối với bác sĩ), danh sách tất cả phiên đo (đối với quản trị viên). Luồng sự kiện 
         kết thúc
         \\
@@ -307,9 +303,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Người dùng chọn một phiên đo bất kì
+        - Người dùng yêu cầu xem một phiên đo bất kì
 
-        - Hệ thống hiển thị đồ thị dựa trên dữ liệu phiên đo mà người dùng đã chọn, luồng sự kiện 
+        - Hệ thống cung cấp đồ thị dựa trên dữ liệu phiên đo mà người dùng đã yêu cầu, luồng sự kiện 
         kết thúc        
         \\
       % \end{tabular} \\
@@ -332,11 +328,11 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Bác sĩ, Quản trị viên chọn cập nhật thông tin phiên đo
+        - Bác sĩ, Quản trị viên yêu cầu cập nhật thông tin phiên đo
 
-        - Hệ thống hiển thị thông tin phiên đo
+        - Hệ thống cung cấp thông tin phiên đo
 
-        - Bác sĩ, Quản trị viên nhập thông tin cập nhật trên màn hình và nhấn xác nhận
+        - Bác sĩ, Quản trị viên cung cấp thông tin cập nhật cho hệ thống
 
         - Hệ thống xác minh các thông tin, nếu thỏa mãn sẽ thông báo thành công và kết thúc luồng sự kiện, ngược lại 
         sẽ thông báo lỗi          
@@ -362,7 +358,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Người dùng chọn một phiên đo bất kì và chọn tải bản ghi dữ liệu
+        - Người dùng yêu cầu tải bản ghi dữ liệu
 
         - Hệ thống trả về tệp dữ liệu phiên đo, luồng sự kiện kết thúc        
         \\
@@ -395,13 +391,11 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Bệnh nhân, Bác sĩ chọn mục nhắn tin với bác sĩ - bệnh nhân
+        - Bệnh nhân, Bác sĩ yêu cầu nhắn tin với bệnh nhân
 
-        - Bệnh nhân, Bác sĩ chọn người trò chuyện
-        
-        - Hệ thống hiển thị lịch sử cuộc hội thoại
+        - Hệ thống cung cấp lịch sử cuộc hội thoại
 
-        - Bệnh nhân, Bác sĩ nhập tin nhắn và gửi. Tin nhắn sẽ hiện lên trên màn hình và chuyển đến người nhận. Luồng sự kiện kết thúc
+        - Bệnh nhân, Bác sĩ trao đổi tin nhắn. Luồng sự kiện kết thúc
         \\
       % \end{tabular} \\
       \hline
@@ -431,10 +425,11 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Người dùng chọn mục hỏi, nhận tư vấn từ trợ lý ảo
+        - Người dùng yêu cầu hỏi, nhận tư vấn từ trợ lý ảo
         
-        - Người dùng nhập tin nhắn và gửi tới trợ lý ảo. Tin nhắn sẽ hiện lên trên màn hình và chuyển đến trợ lý ảo. 
-        Sau đó, trợ lý ảo sẽ phản hồi lại tin nhắn và hiện phản hồi lên màn hình. Luồng sự kiện kết thúc
+        - Người dùng cung cấp tin nhắn và gửi tới trợ lý ảo 
+
+        - Sau đó, trợ lý ảo sẽ phản hồi lại tin nhắn và hiện phản hồi lên màn hình. Luồng sự kiện kết thúc
         \\
       % \end{tabular} \\
       \hline
@@ -465,11 +460,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Bệnh nhân chọn mục xem danh sách bác sĩ
+        - Bệnh nhân yêu cầu xem danh sách bác sĩ
         
-        - Hệ thống hiển thị danh sách bác sĩ phụ trách bệnh nhân 
-
-        - Bệnh nhân chọn một bác sĩ và xem thông tin của họ. Luồng sự kiện kết thúc        
+        - Hệ thống cung cấp danh sách bác sĩ phụ trách bệnh nhân. Luồng sự kiện kết thúc        
         \\
       % \end{tabular} \\
       \hline
@@ -491,11 +484,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Bác sĩ chọn mục xem danh sách bệnh nhân
+        - Bác sĩ yêu cầu xem danh sách bệnh nhân
         
-        - Hệ thống hiển thị danh sách bệnh nhân mà bác sĩ phụ trách 
-
-        - Bác sĩ chọn một bệnh nhân và xem thông tin của họ. Luồng sự kiện kết thúc                
+        - Hệ thống cung cấp danh sách bệnh nhân mà bác sĩ phụ trách. Luồng sự kiện kết thúc         
         \\
       % \end{tabular} \\
       \hline
@@ -517,9 +508,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Quản trị viên chọn xem danh sách phân công bác sĩ - bệnh nhân
+        - Quản trị viên yêu cầu xem danh sách phân công bác sĩ - bệnh nhân
         
-        - Hệ thống hiển thị danh sách phân công, luồng sự kiện kết thúc         
+        - Hệ thống cung cấp danh sách phân công, luồng sự kiện kết thúc         
         \\
       % \end{tabular} \\
       \hline
@@ -541,9 +532,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Quản trị viên chọn thêm phân công bác sĩ - bệnh nhân
+        - Quản trị viên yêu cầu thêm phân công bác sĩ - bệnh nhân
 
-        - Quản trị viên nhập thông tin phân công trên màn hình và nhấn xác nhận
+        - Quản trị viên cung cấp thông tin phân công
 
         - Hệ thống xác minh các thông tin, nếu thỏa mãn sẽ thông báo thành công và kết thúc luồng sự kiện, ngược lại 
         sẽ thông báo lỗi         
@@ -568,11 +559,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Quản trị viên chọn cập nhật thông tin phân công bác sĩ - bệnh nhân
+        - Quản trị viên yêu cầu cập nhật thông tin phân công bác sĩ - bệnh nhân
 
-        - Hệ thống hiển thị thông tin phân công
-
-        - Quản trị viên nhập thông tin cập nhật trên màn hình và nhấn xác nhận
+        - Quản trị viên cung cấp thông tin cập nhật trên màn hình và nhấn xác nhận
 
         - Hệ thống xác minh các thông tin, nếu thỏa mãn sẽ thông báo thành công và kết thúc luồng sự kiện, ngược lại 
         sẽ thông báo lỗi         
@@ -633,14 +622,10 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Người dùng chọn xem danh sách thiết bị
+        - Người dùng yêu cầu xem danh sách thiết bị
         
-        - Hệ thống hiển thị danh sách thiết bị sử dụng (đối với bệnh nhân), danh sách thiết bị bác sĩ phụ trách (đối với bác sĩ), 
-        danh sách tất cả thiết bị (đối với quản trị viên)
-
-        - Người dùng chọn một thiết bị
-
-        - Hệ thống hiển thị thông tin thiết bị, luồng sự kiện kết thúc 
+        - Hệ thống cung cấp danh sách thiết bị sử dụng (đối với bệnh nhân), danh sách thiết bị bác sĩ phụ trách (đối với bác sĩ), 
+        danh sách tất cả thiết bị (đối với quản trị viên). Luồng sự kiện kết thúc 
         \\
       % \end{tabular} \\
       \hline
@@ -662,9 +647,9 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Quản trị viên chọn thêm thiết bị
+        - Quản trị viên yêu cầu thêm thiết bị
 
-        - Quản trị viên nhập thông tin thiết bị trên màn hình và nhấn xác nhận
+        - Quản trị viên cung cấp thông tin thiết bị
 
         - Hệ thống xác minh các thông tin, nếu thỏa mãn sẽ thông báo thành công và kết thúc luồng sự kiện, ngược lại 
         sẽ thông báo lỗi           
@@ -689,11 +674,11 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Quản trị viên chọn cập nhật thông tin thiết bị
+        - Quản trị viên yêu cầu cập nhật thông tin thiết bị
 
-        - Hệ thống hiển thị thông tin thiết bị
+        - Hệ thống cung cấp thông tin thiết bị
 
-        - Quản trị viên nhập thông tin cập nhật trên màn hình và nhấn xác nhận
+        - Quản trị viên cung cáp thông tin cập nhật thiết bị
 
         - Hệ thống xác minh các thông tin, nếu thỏa mãn sẽ thông báo thành công và kết thúc luồng sự kiện, ngược lại 
         sẽ thông báo lỗi           
@@ -718,12 +703,11 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Quản trị viên chọn một hoặc nhiều thiết bị và nhấn nút xóa
+        - Quản trị viên yêu cầu một hoặc nhiều thiết bị và nhấn nút xóa
 
-        - Hệ thống hiển thị màn xác nhận xóa
+        - Hệ thống cung cấp thông tin thiết bị cần xoá
 
-        - Quản trị viên chọn xác nhận xóa, hệ thống xóa thông tin và gửi thông báo kết quả. Ngược lại, quản trị viên 
-        chọn hủy bỏ, hệ thống sẽ quay về màn danh sách thiết bị. Luồng sự kiện kết thúc
+        - Quản trị viên yêu cầu xác nhận xóa, hệ thống xóa thông tin và gửi thông báo kết quả. Luồng sự kiện kết thúc
         \\
       % \end{tabular} \\
       \hline
@@ -754,13 +738,13 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Quản trị viên chọn xem danh sách tài khoản người dùng
+        - Quản trị viên yêu cầu xem danh sách tài khoản người dùng
         
-        - Hệ thống hiển thị danh sách tài khoản người dùng
+        - Hệ thống cung cấp danh sách tài khoản người dùng
 
-        - Quản trị viên chọn một tài khoản người dùng
+        - Quản trị viên yêu cầu một tài khoản người dùng
 
-        - Hệ thống hiển thị thông tin tài khoản người dùng, luồng sự kiện kết thúc         
+        - Hệ thống cung cấp thông tin tài khoản người dùng, luồng sự kiện kết thúc         
         \\
       % \end{tabular} \\
       \hline
@@ -782,11 +766,11 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Quản trị viên chọn cập nhật thông tin người dùng
+        - Quản trị viên yêu cầu cập nhật thông tin người dùng
 
         - Hệ thống hiển thị thông tin người dùng
 
-        - Quản trị viên nhập thông tin cập nhật trên màn hình và nhấn xác nhận
+        - Quản trị viên cung cấp thông tin cập nhật
 
         - Hệ thống xác minh các thông tin, nếu thỏa mãn sẽ thông báo thành công và kết thúc luồng sự kiện, ngược lại 
         sẽ thông báo lỗi         
@@ -811,12 +795,11 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Quản trị viên chọn một hoặc nhiều tài khoản người dùng và nhấn nút xóa
+        - Quản trị viên yêu cầu xoá một hoặc nhiều tài khoản người dùng
 
-        - Hệ thống hiển thị màn xác nhận xóa
+        - Hệ thống cung cấp thông tin người dùng cần xoá
 
-        - Quản trị viên chọn xác nhận xóa, hệ thống xóa thông tin và gửi thông báo kết quả. Ngược lại, quản trị viên 
-        chọn hủy bỏ, hệ thống sẽ quay về màn danh sách tài khoản người dùng. Luồng sự kiện kết thúc
+        - Quản trị viên chọn xác nhận xóa, hệ thống xóa thông tin và gửi thông báo kết quả. Luồng sự kiện kết thúc
         \\
       % \end{tabular} \\
       \hline
@@ -838,14 +821,13 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
       \hline
       Dòng sự kiện chính & 
       % \begin{tabular}{@{}l@{}}
-        - Quản trị viên chọn xem danh sách tài khoản phê duyệt
+        - Quản trị viên yêu cầu xem danh sách tài khoản phê duyệt
 
-        - Hệ thống hiển thị danh sách tài khoản phê duyệt
+        - Hệ thống cung cấp danh sách tài khoản phê duyệt
 
-        - Quản trị viên chọn một hoặc nhiều tài khoản phê duyệt
+        - Quản trị viên yêu cầu phê duyệt một hoặc nhiều tài khoản
 
-        - Quản trị viên chọn phê duyệt, hệ thống lưu lại thông tin tài khoản người dùng. Ngược lại, quản trị viên 
-        chọn hủy bỏ, hệ thống sẽ xóa thông tin trong danh sách. Luồng sự kiện kết thúc        
+        - Hệ thống lưu lại thông tin tài khoản người dùng. Luồng sự kiện kết thúc        
         \\
       % \end{tabular} \\
       \hline
@@ -854,13 +836,7 @@ Dựa vào những phân tích về yêu cầu chức năng, các use case trong
 
 \subsection{Kết luận chương}
 
-Trong chương này, chúng em đã thực hiện thu thập yêu cầu về
- hệ thống, nhằm tìm hiểu   các mục tiêu và yêu cầu đã được đề xuất.
-
-Chúng em đã xác định rõ ràng các khía cạnh quan trọng của hệ thống,
- tập trung vào việc thiết kế một hệ thống quản lý dữ liệu y tế hiệu quả,
-  trực quan và có khả năng theo dõi sức khỏe tim mạch một cách
-   chính xác. 
-
+Chương này đã thực hiện thu thập yêu cầu về
+ hệ thống, nhằm tìm hiểu các mục tiêu và yêu cầu đã được đề xuất.
 
 \newpage
