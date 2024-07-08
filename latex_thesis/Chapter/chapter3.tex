@@ -726,7 +726,7 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 
 \subsection{Thiết kế giao diện}
 
-Dưới đây là các giao diện thực tế mà chúng em thiết kế cho trang web quản trị
+Sau khi thiết kế cơ sơ dữ liệu cho hệ thống, bước tiếp theo cho việc thiết kế hệ thống là thiết kế giao diện website quản trị cùng các chức năng. 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.4]{Images/server/webUI/register_2.png}
@@ -816,7 +816,7 @@ quản lý người dùng ở hình \ref{userTable} nhưng thông tin ở đây 
 \end{figure}
 
 Hình \ref{userInfo} mô tả giao diện cho màn thông tin chi tiết người dùng, màn này sẽ hiển thị thông tin
-chi tiết của người dùng quản trị viên chọn vào một người dùng trong danh sách.
+chi tiết của người dùng trong danh sách.
 
 \begin{figure}[H]
   \centering
@@ -919,8 +919,8 @@ có thể phóng to thu nhỏ. Nếu có nhiều hơn một dữ liệu đo, th�
   \label{pdaTable} %đặt tên cho ảnh
 \end{figure}
 
-Hình \ref{pdaTable} mô tả giao diện cho trang quản lý phân công bác sĩ - bệnh nhân, trang này sẽ có giao diện tương tự với các trang quản lý để hiển thị danh sách phân công trên hệ thống, 
-Bên cạnh đó, khi tích vào mỗi phân công tương ứng sẽ có các lựa chọn để cập nhật thông tin, xóa nhiều thông tin cùng một lúc, và sẽ có nút tạo phân công mới. 
+Hình \ref{pdaTable} mô tả giao diện cho trang quản lý phân công bác sĩ - bệnh nhân, trang này sẽ có giao diện hiển thị danh sách phân công tương tự với các trang quản lý khác . 
+Khi chọn vào mỗi phân công tương ứng sẽ có các lựa chọn để cập nhật phân công, xóa nhiều phân công cùng một lúc, và sẽ có nút tạo phân công mới. 
 
 \begin{figure}[H]
   \centering
@@ -984,7 +984,7 @@ có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám.
 
 
 \begin{enumerate}[a)]
-  \item API liên quan đến việc xác thực người dùng
+  \item API xác thực người dùng
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{4.5cm}
@@ -999,11 +999,11 @@ có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám.
     api/auth/register   &   POST  & Đăng ký tài khoản \\ \hline
   api/auth/login   &    POST    & Đăng nhập vào hệ thống \\ \hline
   api/auth/logout   &    POST    & Đăng xuất khỏi hệ thống \\ \hline
-  api/auth/reset-password  &     POST   &  Gửi reset link kèm reset token đến email của người dùng để reset mật khẩu \\  \hline
-  api/auth/reset-password/reset &   POST     & Giúp reset lại mật khẩu mới với verify token được nhận từ api: api/reset-password  \\ \hline
+  api/auth/reset-password  &     POST   &  Gửi reset link kèm reset token đến email của người dùng để thay đổi mật khẩu \\  \hline
+  api/auth/reset-password/reset &   POST     &  Thay đổi lại mật khẩu với mã token được nhận  \\ \hline
   \end{xltabular}
 
-  \item API liên quan đến việc xét duyệt đăng ký tài khoản
+  \item API xét duyệt đăng ký tài khoản
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}p{4cm}
@@ -1039,7 +1039,7 @@ có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám.
    api/user/delete/:userId  &   DELETE     & Xóa thông tin người dùng theo Id \\ \hline
   \end{xltabular}
 
-\item API liên quan đến quản lý thiết bị
+\item API quản lý thiết bị
 \begin{xltabular}{\textwidth}{
   | >{\raggedright\arraybackslash}p{4.8cm}
   | >{\centering\arraybackslash}m{2.8cm}
@@ -1057,7 +1057,7 @@ có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám.
   api/device/delete/:deviceId  &     DELETE   & Xóa thông tin một thiết bị theo Id \\ \hline
 \end{xltabular}
 
-\item API liên quan đến bản ghi ECG
+\item API quản lý bản ghi ECG
 \begin{xltabular}{\textwidth}{
   | >{\raggedright\arraybackslash}p{5cm}
   | >{\centering\arraybackslash}m{2.8cm}
@@ -1070,7 +1070,7 @@ có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám.
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
  api/record   &   GET  & Lấy danh sách thông tin các phiên đo ECG \\ \hline
  api/record/user/:userId   &    GET    & Lấy danh sách thông tin các phiên đo ECG của bệnh nhân \\ \hline
- api/record/doctor/:doctorId &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sỹ \\ \hline
+ api/record/doctor/:doctorId &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sĩ \\ \hline
  api/record/id/:recordId  &     GET   & Lấy thông tin một phiên đo của bệnh nhân \\ \hline
  api/record/getData/:recordId  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
  api/ record/download/:recordId  &     GET   & Tải dữ liệu một phiên đo của bệnh nhân \\ \hline
@@ -1079,7 +1079,7 @@ có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám.
   \end{xltabular}
 
 
-\item API liên quan liên quan đến việc phân công bệnh nhân - bác sĩ
+\item API quản lý phân công bệnh nhân - bác sĩ
 \begin{xltabular}{\textwidth}{
   | >{\raggedright\arraybackslash}p{4.5cm}
   | >{\centering\arraybackslash}m{2.8cm}
@@ -1108,7 +1108,7 @@ có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám.
 % ------------------------Auth----------------------
 
 
-\paragraph{API liên quan đến việc xác thực người dùng}
+\paragraph{API xác thực người dùng}
 \mbox{}
 
 \begin{figure}[H]
@@ -1118,8 +1118,8 @@ có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám.
   \selectfont Sơ đồ tuần tự cho API đăng ký tài khoản vào hệ thống }
   \label{api_register} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_register} mô tả quá trình người dùng đăng ký tài khoản trên hệ thống. Người dùng gửi yêu cầu đăng ký, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. AuthController kiểm tra thông tin người dùng qua RegisterService, 
-nếu sai thông tin sẽ trả về lỗi, ngược lại sẽ tạo tài khoản phê duyệt và trả thông báo cho người dùng. 
+Hình \ref{api_register} phân tích luồng thông tin người dùng đăng ký tài khoản trên hệ thống. Người dùng gửi yêu cầu đăng ký, yêu cầu được xử lý bởi AuthenController. AuthenController kiểm tra thông tin người dùng qua RegisterService, 
+nếu thông tin xác minh chính xác, hệ thống sẽ tạo tài khoản phê duyệt trên RegisterModel và trả về thông báo cho người dùng. Ngược lại, nếu có lỗi xảy ra, hệ thống trả về lỗi tương ứng. 
 
 \begin{figure}[H]
   \centering
@@ -1128,8 +1128,8 @@ nếu sai thông tin sẽ trả về lỗi, ngược lại sẽ tạo tài kho�
   \selectfont Sơ đồ tuần tự cho API đăng nhập vào hệ thống }
   \label{api_login} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_login}  mô tả quá trình người dùng đăng nhập vào hệ thống. Người dùng gửi yêu cầu đăng nhập, yêu cầu này được xử lý bởi AuthController. AuthController xác minh thông tin người dùng qua AccountModel, sau đó tạo token truy cập và token làm mới 
-nếu đúng thông tin đăng nhập và trả về response cho người dùng. Ngược lại sẽ trả về lỗi nếu thông tin không chính xác.
+Hình \ref{api_login}  phân tích luồng thông tin người dùng đăng nhập tài khoản trên hệ thống. Người dùng gửi yêu cầu đăng nhập, yêu cầu được xử lý bởi AuthenController. AuthenController xác minh thông tin người dùng qua AuthenService. Nếu 
+thông tin xác minh chính xác,  TokenService tạo token truy cập và token làm mới và trả về kết quả cho người dùng. Ngược lại, nếu có lỗi xảy ra, hệ thống trả về lỗi tương ứng
 
 % ----------------------------------------------
 
@@ -1137,7 +1137,7 @@ nếu đúng thông tin đăng nhập và trả về response cho người dùng
 % ------------------------User----------------------
 
 
-\paragraph{API liên quan đến thông tin người dùng}
+\paragraph{API quản lý thông tin người dùng}
 \mbox{}
 
 \begin{figure}[H]
@@ -1147,7 +1147,7 @@ nếu đúng thông tin đăng nhập và trả về response cho người dùng
   \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả người dùng }
   \label{api_getAllUser} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_getAllUser} mô tả quá trình lấy danh sách thông tin tất cả người dùng trong hệ thống. Quản trị viên gửi yêu cầu lấy danh sách người dùng, yêu cầu này được xử lý bởi UserController. UserController thông qua User Service gửi truy vấn UserModel để lấy danh sách người dùng . 
+Hình \ref{api_getAllUser} phân tích luồng thông tin lấy danh sách tất cả người dùng trong hệ thống. Quản trị viên gửi yêu cầu lấy danh sách người dùng, yêu cầu này được xử lý bởi UserController. UserController thông qua User Service gửi truy vấn UserModel để lấy danh sách người dùng . 
 Nếu kết quả thành công, hệ thống trả về danh sách người dùng, ngược lại, hệ thống trả về lỗi tương ứng.
 
 % sửa lại ảnh 
@@ -1158,18 +1158,18 @@ Nếu kết quả thành công, hệ thống trả về danh sách người dùn
   \selectfont Sơ đồ tuần tự cho API lấy thông tin của người dùng dựa trên ID }
   \label{api_getUserById} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_getUserById} mô tả quá trình lấy thông tin người dùng dựa trên ID trong hệ thống. Người dùng gửi yêu cầu lấy thông tin người dùng theo ID, yêu cầu này được xử lý bởi UserController. UserController kiểm tra thông tin qua UserService và sau đó truy vấn UserModel để lấy thông tin người dùng nếu 
-thông tin tồn tại trong hệ thống. Nếu truy vấn thành công, hệ thống trả về thông tin người dùng, ngược lại, hệ thống trả về lỗi tương ứng.
+Hình \ref{api_getUserById} phân tích luồng thông tin lấy dữ liệu người dùng theo ID trên hệ thống. Người dùng gửi yêu cầu lấy thông tin người dùng theo ID, yêu cầu này được xử lý bởi UserController. UserController kiểm tra thông tin qua UserService, nếu 
+xác minh thông tin có trong hệ thống, UserService sẽ truy vấn UserModel để lấy thông tin người dùng. Nếu truy vấn thành công, hệ thống trả về thông tin người dùng, ngược lại, hệ thống trả về lỗi tương ứng.
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.4]{Images/sequence_api/getUserByRole.png}
-  \caption[Sơ đồ tuần tự cho API lấy danh sách người dùng dựa trên chức vụ ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự cho API lấy danh sách người dùng dựa trên chức vụ }
+  \caption[Sơ đồ tuần tự cho API lấy danh sách người dùng dựa theo chức vụ ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách người dùng dựa theo chức vụ }
   \label{api_getUserByRole} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_getUserByRole} mô tả quá trình lấy danh sách thông tin người dùng dựa trên chức vụ trong hệ thống. Người dùng gửi yêu cầu lấy danh sách người dùng theo chức vụ, yêu cầu này được xử lý bởi UserController. UserController kiểm tra thông tin qua UserService và truy vấn UserModel để lấy danh sách người dùng nếu thông tin 
-chức vụ tồn tại trong hệ thống. Nếu kết quả thành công, hệ thống trả về danh sách người dùng theo chức vụ, ngược lại, hệ thống trả về lỗi tương ứng.
+Hình \ref{api_getUserByRole} phân tích luồng thông tin lấy danh sách dữ liệu người dùng dựa theo chức vụ trong hệ thống. Người dùng gửi yêu cầu lấy danh sách người dùng theo chức vụ, yêu cầu này được xử lý bởi UserController. UserController kiểm tra thông tin qua UserService. nếu thông tin 
+chức vụ có trong hệ thống, UserService truy vấn UserModel để lấy danh sách người dùng. Nếu kết quả thành công, hệ thống trả về danh sách người dùng theo chức vụ, ngược lại, hệ thống trả về lỗi tương ứng.
 
 \begin{figure}[H]
   \centering
@@ -1178,10 +1178,9 @@ chức vụ tồn tại trong hệ thống. Nếu kết quả thành công, hệ
   \selectfont Sơ đồ tuần tự cho API cập nhật thông tin người dùng }
   \label{api_updateUserById} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_updateUserById} mô tả quá trình cập nhật thông tin người dùng trong hệ thống. Người dùng gửi yêu cầu cập nhật thông tin người dùng, 
+Hình \ref{api_updateUserById} phân tích luồng thông tin cập nhật dữ liệu người dùng trong hệ thống. Người dùng gửi yêu cầu cập nhật thông tin người dùng, 
 yêu cầu này được xử lý bởi UserController. UserController gửi truy vấn đến UserService để kiểm tra thông tin người dùng trong hệ thống dựa theo id (ID của người dùng) được truyền vào từ yêu cầu. 
-Nếu không tồn tại người dùng, hệ thống sẽ trả về lỗi tương ứng, ngược lại, UserService gửi truy vấn đến UserModel để cập nhật thông tin người dùng. Sau đó, kết quả cập nhật được trả về 
-từ UserModel và được gửi trở lại UserRoute để trả về response cho người dùng. Nếu kết quả thành công, hệ thống trả về kết quả cập nhật cho người dùng, ngược lại, hệ thống trả về lỗi tương ứng.
+Nếu không tồn tại người dùng, hệ thống sẽ trả về lỗi tương ứng, ngược lại, UserService gửi truy vấn đến UserModel để cập nhật thông tin người dùng. Nếu kết quả thành công, hệ thống trả về kết quả cập nhật cho người dùng, ngược lại, hệ thống trả về lỗi tương ứng.
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.4]{Images/sequence_api/deleteUserById.png}
@@ -1189,7 +1188,7 @@ từ UserModel và được gửi trở lại UserRoute để trả về respons
   \selectfont Sơ đồ tuần tự cho API xóa thông tin người dùng }
   \label{api_deleteUser} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_deleteUser} mô tả quá trình xóa thông tin người dùng trong hệ thống. Quản trị viên gửi yêu cầu xóa thông tin người dùng, 
+Hình \ref{api_deleteUser} phân tích luồng thông tin xóa dữ liệu người dùng trong hệ thống. Quản trị viên gửi yêu cầu xóa dữ liệu người dùng, 
 yêu cầu này được xử lý bởi UserController. UserController gửi truy vấn đến UserService để kiểm tra thông tin người dùng trong hệ thống dựa theo id (ID của người dùng) được truyền vào từ yêu cầu. 
 Nếu không tồn tại người dùng, hệ thống sẽ trả về lỗi tương ứng, ngược lại, UserService gửi truy vấn đến UserModel để xóa thông tin người dùng. Sau đó, kết quả cập nhật được trả về 
 từ UserModel và được gửi trở lại UserRoute để trả về cho người dùng. Nếu kết quả thành công, hệ thống trả về kết quả cho quản trị viên, ngược lại, hệ thống trả về lỗi tương ứng.
@@ -1209,7 +1208,7 @@ từ UserModel và được gửi trở lại UserRoute để trả về cho ng�
   \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả phiên đo ECG }
   \label{api_getAllEcgRecords} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_getAllEcgRecords} mô tả quá trình lấy danh sách tất cả phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Quản trị viên gửi yêu cầu lấy danh sách phiên đo ECG của tất cả bệnh nhân, 
+Hình \ref{api_getAllEcgRecords} phân tích luồng thông tin lấy danh sách dữ liệu tất cả phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Quản trị viên gửi yêu cầu lấy danh sách phiên đo ECG của tất cả bệnh nhân, 
 yêu cầu này được xử lý bởi RecordController. RecordService gửi yêu cầu qua RecordService, tiếp đó truy vấn đến RecordModel để lấy danh sách dữ liệu ECG. Nếu kết quả thành công, hệ thống trả về danh sách phiên đo, 
 ngược lại, hệ thống trả về lỗi tương ứng.
 
@@ -1220,22 +1219,22 @@ ngược lại, hệ thống trả về lỗi tương ứng.
   \selectfont Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của một bệnh nhân }
   \label{api_getRecordsByUser} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_getRecordsByUser} mô tả quá trình lấy danh sách các phiên đo ECG (Electrocardiogram) của một bệnh nhân trong hệ thống. Người dùng gửi yêu cầu lấy danh sách các phiên đo ECG của bệnh nhân, 
-yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân có tồn tại trong hệ thống dựa theo userId (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu bệnh nhân không tồn tại ứng với ID, hệ thống sẽ
-trả về   lỗi tương ứng. Nếu bệnh nhân có trong hệ thống, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên userId (ID của bệnh nhân) được truyền vào từ yêu cầu. 
+Hình \ref{api_getRecordsByUser} phân tích luồng thông tin lấy danh sách các phiên đo ECG (Electrocardiogram) của một bệnh nhân trong hệ thống. Người dùng gửi yêu cầu lấy danh sách các phiên đo ECG của bệnh nhân, 
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân có tồn tại trong hệ thống dựa theo userId (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu thông tin bệnh nhân ứng vơi ID không tồn tại trong hệ thống, hệ thống sẽ
+trả về lỗi tương ứng. Ngược lại, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên userId (ID của bệnh nhân) được truyền vào từ yêu cầu. 
 Nếu kết quả thành công, hệ thống trả về danh sách phiên đo của bệnh nhân, ngược lại, hệ thống trả về lỗi tương ứng.
 
  \begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]{Images/sequence_api/getRecordsByDoctor.png}
-  \caption[Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ ]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của bệnh nhân được quản lý bởi một bác sĩ ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của bệnh nhân được quản lý bởi một bác sĩ}
   \label{api_getRecordsByDoctor} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_getRecordsByDoctor} mô tả quá trình lấy danh sách các phiên đo ECG (Electrocardiogram) của bệnh nhân được quản lý bởi một bác sỹ trong hệ thống. Người dùng gửi yêu cầu lấy danh sách các phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ, 
-yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bác sỹ có tồn tại trong hệ thống dựa theo doctorId (ID của bác sỹ) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bác sỹ hay không phải là bác sỹ, hệ thống sẽ
-trả về response lỗi tương ứng. Nếu bác sỹ có trong hệ thống, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên doctorId (ID của bác sỹ) được truyền vào từ yêu cầu. 
-Nếu kết quả thành công, hệ thống trả về danh sách phiên đo của bệnh nhân do bác sỹ phụ trách, ngược lại, hệ thống trả về lỗi tương ứng.
+Hình \ref{api_getRecordsByDoctor} phân tích luồng thông tin lấy danh sách dữ liệu các phiên đo ECG (Electrocardiogram) của bệnh nhân được quản lý bởi một bác sĩ trong hệ thống. Người dùng gửi yêu cầu lấy danh sách các phiên đo ECG của bệnh nhân được quản lý bởi một bác sĩ, 
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bác sĩ có tồn tại trong hệ thống dựa theo doctorId (ID của bác sĩ) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bác sĩ hay không phải là bác sĩ, hệ thống sẽ
+trả về response lỗi tương ứng. Nếu hệ thồng không có thông tin bác sĩ, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên doctorId (ID của bác sĩ) được truyền vào từ yêu cầu. 
+Nếu kết quả thành công, hệ thống trả về danh sách phiên đo của bệnh nhân do bác sĩ phụ trách, ngược lại, hệ thống trả về lỗi tương ứng.
 
 \begin{figure}[H]
   \centering
@@ -1244,7 +1243,7 @@ Nếu kết quả thành công, hệ thống trả về danh sách phiên đo c�
   \selectfont Sơ đồ tuần tự cho API lấy thông tin một phiên đo ECG }
   \label{api_getRecordById} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_getRecordById} mô tả quá trình lấy thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng gửi yêu cầu lấy thông tin một phiên đo ECG, 
+Hình \ref{api_getRecordById} phân tích luồng thông tin lấy thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng gửi yêu cầu lấy thông tin một phiên đo ECG, 
 yêu cầu này được xử lý bởi RecordController. RecordService gửi truy vấn đến RecordModel để lấy thông tin dữ liệu ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. 
 Nếu kết quả thành công, hệ thống trả về thông tin phiên đo ECG, ngược lại, hệ thống trả về lỗi tương ứng.
  \begin{figure}[H]
@@ -1254,7 +1253,7 @@ Nếu kết quả thành công, hệ thống trả về thông tin phiên đo EC
   \selectfont Sơ đồ tuần tự cho API lấy dữ liệu bản ghi một phiên đo ECG }
   \label{api_getRecordDataById} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_getRecordDataById} mô tả quá trình lấy dữ liệu bản ghi một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng gửi yêu cầu lấy dữ liệu một phiên đo ECG của bệnh nhân, 
+Hình \ref{api_getRecordDataById} phân tích luồng thông tin lấy dữ liệu bản ghi một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng gửi yêu cầu lấy dữ liệu bản ghi một phiên đo của bệnh nhân, 
 yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin, đường dẫn bản ghi có tồn tại trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo hay đường dẫn bản ghi, hệ thống sẽ
 trả về lỗi tương ứng. Nếu bản ghi có trong hệ thống, RecordService gửi truy vấn đến RecordModel để lấy dữ liệu ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. 
 Nếu kết quả thành công, hệ thống trả về dữ liệu bản ghi phiên đo, ngược lại, hệ thống trả về lỗi tương ứng.
@@ -1266,7 +1265,7 @@ Nếu kết quả thành công, hệ thống trả về dữ liệu bản ghi ph
   \selectfont Sơ đồ tuần tự cho API tải tệp bản ghi một phiên đo ECG }
   \label{api_downloadRecordDataById} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_downloadRecordDataById} mô tả quá trình tải tệp bản ghi một phiên đo của bệnh nhân trong hệ thống. Người dùng gửi yêu cầu tải dữ liệu một phiên đo ECG của bệnh nhân, 
+Hình \ref{api_downloadRecordDataById} phân tích luồng thông tin tải tệp bản ghi một phiên đo của bệnh nhân trong hệ thống. Người dùng gửi yêu cầu tải dữ liệu bản ghi một phiên đo ECG của bệnh nhân, 
 yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin, đường dẫn bản ghi có tồn tại trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo hay đường dẫn bản ghi, hệ thống sẽ
 trả về response lỗi tương ứng. Nếu bản ghi có trong hệ thống, RecordService gửi truy vấn đến Server để lấy tệp dữ liệu ECG dựa trên đường dẫn tệp bản ghi được truyền vào từ yêu cầu. 
 Nếu kết quả thành công, hệ thống trả về tệp bản ghi của phiên đo, ngược lại, hệ thống trả về lỗi tương ứng.
@@ -1277,7 +1276,7 @@ Nếu kết quả thành công, hệ thống trả về tệp bản ghi của ph
   \selectfont Sơ đồ tuần tự cho API cập nhật thông tin một phiên đo ECG }
   \label{api_editRecordById} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_editRecordById} mô tả quá trình cập nhật thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng gửi yêu cầu cập nhật thông tin một phiên đo ECG của bệnh nhân, 
+Hình \ref{api_editRecordById} phân tích luồng thông tin cập nhật thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng gửi yêu cầu cập nhật thông tin một phiên đo ECG của bệnh nhân, 
 yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService, DeviceService, UserService để kiểm tra thông tin bản ghi, thiết bị và bệnh nhân trong hệ thống dựa theo id (ID của phiên đo), user\_id (ID của bệnh nhân), device\_id (ID của thiết bị)
  được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo, bệnh nhân hay thiết bị, hệ thống sẽ trả về lỗi tương ứng. Nếu thông tin có trong hệ thống, RecordService gửi truy vấn đến RecordModel để cập nhật thông tin
 phiên đo ECG dựa trên thông tin được truyền vào từ yêu cầu. Nếu kết quả thành công, hệ thống trả về kết quả cho người dùng, ngược lại, hệ thống trả về lỗi tương ứng.
@@ -1289,8 +1288,8 @@ phiên đo ECG dựa trên thông tin được truyền vào từ yêu cầu. N�
   \selectfont Sơ đồ tuần tự cho API xóa thông tin một phiên đo ECG }
   \label{api_deleteRecordById} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_deleteRecordById} mô tả quá trình xóa thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin một phiên đo ECG của bệnh nhân,  
-yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin bản ghi trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo, hệ thống sẽ trả về response lỗi tương ứng. 
+Hình \ref{api_deleteRecordById} phân tích luồng thông tin xóa thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin một phiên đo ECG của bệnh nhân,  
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin bản ghi trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu.
 Nếu thông tin phiên đo có trong hệ thống, RecordService gửi truy vấn đến RecordModel để xóa thông tin phiên đo ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu kết quả thành công, hệ thống trả về kết quả cập nhật cho người dùng, ngược lại, hệ thống trả về lỗi tương ứng.
 
 % -----------------------------------------------------
@@ -1306,7 +1305,7 @@ Nếu thông tin phiên đo có trong hệ thống, RecordService gửi truy v�
   \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả thiết bị }
   \label{api_getAllDevices} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_getAllDevices} mô tả quá trình lấy danh sách tất cả thiết bị trong hệ thống. Quản trị viên gửi yêu cầu lấy danh sách thiết bị, 
+Hình \ref{api_getAllDevices} phân tích luồng thông tin lấy danh sách tất cả thiết bị trong hệ thống. Quản trị viên gửi yêu cầu lấy danh sách thiết bị, 
 yêu cầu này được xử lý bởi DeviceController. DeviceController tiếp tục gửi truy vấn đến DeviceService, DeviceService gửi truy vấn đến DeviceModel 
 để lấy danh sách thiết bị. Nếu kết quả thành công, hệ thống trả về danh sách thiết bị trong hệ thống, ngược lại, hệ thống trả về lỗi tương ứng.
 
@@ -1317,7 +1316,7 @@ yêu cầu này được xử lý bởi DeviceController. DeviceController tiế
   \selectfont Sơ đồ tuần tự cho API lấy thông tin thiết bị dựa trên ID }
   \label{api_getDeviceById} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_getDeviceById} mô tả quá trình lấy thông tin thiết bị dựa trên ID trong hệ thống. Quản trị viên gửi yêu cầu lấy thông tin thiết bị theo ID, 
+Hình \ref{api_getDeviceById} phân tích luồng thông tin lấy thông tin thiết bị theo ID trên hệ thống. Quản trị viên gửi yêu cầu lấy thông tin thiết bị theo ID, 
 yêu cầu này được xử lý bởi DeviceController. DeviceService gửi truy vấn đến DeviceModel để lấy thông tin thiết bị dựa theo deviceId (ID của thiết bị). 
 Nếu kết quả thành công, hệ thống trả về thông tin thiết bị, ngược lại, hệ thống trả về lỗi tương ứng.
 \begin{figure}[H]
@@ -1327,9 +1326,9 @@ Nếu kết quả thành công, hệ thống trả về thông tin thiết bị,
   \selectfont Sơ đồ tuần tự cho API thêm thiết bị }
   \label{api_addDevice} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_addDevice} mô tả quá trình thêm thiết bị vào hệ thống. Quản trị viên gửi yêu cầu tạo thông tin thiết bị, 
+Hình \ref{api_addDevice} phân tích luồng thông tin thêm thiết bị vào hệ thống. Quản trị viên gửi yêu cầu tạo thông tin thiết bị, 
 yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến UserService để kiểm tra thông tin người dùng trong hệ thống dựa theo user\_id (ID của bệnh nhân) được truyền vào từ yêu cầu. 
-Nếu bệnh nhân không tồn tại trong hệ thống, hệ thống sẽ trả về lỗi tương ứng. Nếu thông tin có trong hệ thống, DeviceService gửi truy vấn đến DeviceModel để thêm thông tin thiết bị 
+Nếu bệnh nhân không có trong hệ thống, hệ thống sẽ trả về lỗi tương ứng. Nếu thông tin có trong hệ thống, DeviceService gửi truy vấn đến DeviceModel để thêm thông tin thiết bị 
 dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thống trả về kết quả cho quản trị viên, ngược lại, hệ thống trả về lỗi tương ứng.
 
 \begin{figure}[H]
@@ -1339,9 +1338,9 @@ dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thốn
   \selectfont Sơ đồ tuần tự cho API cập nhật thông tin thiết bị }
   \label{api_editDevice} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_editDevice} mô tả quá trình cập nhật thông tin một thiết bị trong hệ thống. Quản trị viên gửi yêu cầu cập nhật thông tin một thiết bị, 
+Hình \ref{api_editDevice} phân tích luồng thông tin cập nhật thông tin một thiết bị trong hệ thống. Quản trị viên gửi yêu cầu cập nhật thông tin một thiết bị, 
 yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến DeviceService, UserService để kiểm tra thông tin thiết bị và bệnh nhân trong hệ thống dựa theo id (ID của thiết bị),
- user\_id (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu thông tin không tồn tại trong hệ thống, hệ thống sẽ trả về lỗi tương ứng. Ngược lại, 
+ user\_id (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu thông tin có trong hệ thống, 
  DeviceService gửi truy vấn đến DeviceModel để cập nhật thông tin thiết bị dựa trên thông tin được truyền vào từ yêu cầu. Nếu kết quả thành công, hệ thống trả về kết quả cập nhật, ngược lại, hệ thống trả về lỗi tương ứng.
 
  \begin{figure}[H]
@@ -1351,16 +1350,16 @@ yêu cầu này được xử lý bởi DeviceController. DeviceController gửi
   \selectfont Sơ đồ tuần tự cho API xóa thiết bị }
   \label{api_deleteDeviceById} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_deleteDeviceById} mô tả quá trình xóa thiết bị trong hệ thống. Quản trị viên gửi yêu cầu xóa thông tin thiết bị, 
+Hình \ref{api_deleteDeviceById} phân tích luồng thông tin xóa thiết bị trong hệ thống. Quản trị viên gửi yêu cầu xóa thông tin thiết bị, 
 yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến DeviceService để kiểm tra thông tin thiết bị trong hệ thống dựa theo deviceId (ID của thiết bị) được truyền vào từ yêu cầu. 
-Nếu thiết bị không tồn tại trong hệ thống, hệ thống sẽ trả về lỗi tương ứng. DeviceService sẽ gửi truy vấn đến DeviceModel để xóa thông tin thiết bị 
+Nếu thiết bị tồn tại trong hệ thống, DeviceService sẽ gửi truy vấn đến DeviceModel để xóa thông tin thiết bị 
 dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thống trả về kết quả xóa cho quản trị viên, ngược lại, hệ thống trả về lỗi tương ứng.
 
 % -----------------------------------------------------
 
 % -----------------------PatientDoctor------------------------------
 
-\paragraph{API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ}
+\paragraph{API liên quan liên quan đến việc phân công bệnh nhân cho bác sĩ}
 \mbox{}
 
 
@@ -1371,7 +1370,7 @@ dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thốn
   \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả phân công bác sĩ - bệnh nhân }
   \label{api_getAllPDA} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_getAllPDA} mô tả quá trình lấy danh sách tất cả phân công bác sĩ - bệnh nhân trong hệ thống. Quản trị viên gửi yêu cầu lấy danh sách phân công bác sĩ - bệnh nhân, 
+Hình \ref{api_getAllPDA} phân tích luồng thông tin lấy danh sách tất cả phân công bác sĩ - bệnh nhân trong hệ thống. Quản trị viên gửi yêu cầu lấy danh sách phân công bác sĩ - bệnh nhân, 
 yêu cầu này được xử lý bởi PDAController. PDAService gửi truy vấn đến PDAModel để lấy danh sách phân công. Nếu kết quả thành công, hệ thống trả về danh sách phân công bác sĩ - bệnh nhân cho quản trị viên, ngược lại, hệ thống trả về lỗi tương ứng.
 \begin{figure}[H]
   \centering
@@ -1380,7 +1379,7 @@ yêu cầu này được xử lý bởi PDAController. PDAService gửi truy v�
   \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả bệnh nhân phụ trách bởi một bác sĩ }
   \label{api_getPatient} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_getPatient} mô tả quá trình lấy danh sách tất cả bệnh nhân phụ trách bởi một bác sĩ trong hệ thống. Bác sĩ gửi yêu cầu lấy danh sách bệnh nhân mà mình phụ trách, 
+Hình \ref{api_getPatient} phân tích luồng thông tin lấy danh sách tất cả bệnh nhân phụ trách bởi một bác sĩ trong hệ thống. Bác sĩ gửi yêu cầu lấy danh sách bệnh nhân mà mình phụ trách, 
 yêu cầu này được xử lý bởi PDAController. PDAService gửi truy vấn đến UserModel để lấy danh sách bệnh nhân dựa theo doctor\_id (ID của bác sĩ). Nếu kết quả thành công, hệ thống trả về danh sách bệnh nhân cho bác sĩ, ngược lại, hệ thống trả về lỗi tương ứng.
 Sơ đồ tuần tự lấy thông tin bác sĩ phụ trách của một bệnh nhân cũng tương tự như vậy
 \begin{figure}[H]
@@ -1390,7 +1389,7 @@ Sơ đồ tuần tự lấy thông tin bác sĩ phụ trách của một bệnh 
   \selectfont Sơ đồ tuần tự cho API thêm phân công bệnh nhân - bác sĩ }
   \label{api_addPDA} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_addPDA} mô tả quá trình thêm phân công bệnh nhân - bác sĩ vào hệ thống. Quản trị viên gửi yêu cầu tạo phân công bệnh nhân - bác sĩ,  
+Hình \ref{api_addPDA} phân tích luồng thông tin thêm phân công bệnh nhân - bác sĩ vào hệ thống. Quản trị viên gửi yêu cầu tạo phân công bệnh nhân - bác sĩ,  
 yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân, bác sĩ trong hệ thống dựa theo patient\_id (ID của bệnh nhân), doctor\_id (ID bác sĩ);PDAService để kiểm
 tra bệnh nhân đã có phân công bác sĩ dựa theo patient\_id được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, bác sĩ hay bệnh nhân đã có bác sĩ phân công, hệ thống sẽ trả về lỗi tương ứng. 
 Ngược lại, PDAService gửi truy vấn đến PDAModel để thêm thông tin phân công dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thống trả về kết quả thêm phân công, ngược lại, hệ thống trả về lỗi tương ứng.
@@ -1402,7 +1401,7 @@ Ngược lại, PDAService gửi truy vấn đến PDAModel để thêm thông t
   \selectfont Sơ đồ tuần tự cho API cập nhật thông tin phân công bệnh nhân - bác sĩ }
   \label{api_editPDA} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_editPDA} mô tả quá trình cập nhật thông tin phân công bệnh nhân - bác sĩ vào hệ thống. Quản trị viên gửi yêu cầu sửa thông tin phân công bệnh nhân - bác sĩ, 
+Hình \ref{api_editPDA} phân tích luồng thông tin cập nhật thông tin phân công bệnh nhân - bác sĩ vào hệ thống. Quản trị viên gửi yêu cầu sửa thông tin phân công bệnh nhân - bác sĩ, 
 yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân, bác sĩ trong hệ thống dựa theo patient\_id (ID của bệnh nhân), doctor\_id (ID bác sĩ);PDAService để kiểm
 tra bệnh nhân đã có phân công bác sĩ dựa theo patient\_id được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, bác sĩ hay bệnh nhân chưa có bác sĩ phân công, hệ thống sẽ trả về lỗi tương ứng. 
 Ngược lại, PDAService gửi truy vấn đến PDAModel để sửa thông tin phân công dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thống trả về kết quả cập nhật thông tin phân công bác sĩ - bệnh nhân, ngược lại, hệ thống trả về lỗi tương ứng.
@@ -1414,18 +1413,16 @@ Ngược lại, PDAService gửi truy vấn đến PDAModel để sửa thông t
   \selectfont Sơ đồ tuần tự cho API xóa phân công bệnh nhân - bác sĩ }
   \label{api_deletePDA} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_deletePDA} mô tả quá trình xóa phân công bệnh nhân - bác sĩ trong hệ thống. Người dùng (quản trị viên) gửi yêu cầu xóa thông tin phân công, thông qua các tầng của hệ thống, 
+Hình \ref{api_deletePDA} phân tích luồng thông tin xóa phân công bệnh nhân - bác sĩ trong hệ thống. Quản trị viên gửi yêu cầu xóa thông tin phân công, 
 yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến PDAService để kiểm tra thông tin phân công trong hệ thống dựa theo pdaId (ID của phân công) được truyền vào từ yêu cầu. 
-Nếu hệ thống không tồn tại phân công, hệ thống sẽ trả về lỗi tương ứng. Nếu thông tin có trong hệ thống, PDAService gửi truy vấn đến PDAModel để xóa thông tin phân công 
+Nếu thông tin có trong hệ thống, PDAService gửi truy vấn đến PDAModel để xóa thông tin phân công 
 dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thống trả về kết quả xóa phân công, ngược lại, hệ thống trả về lỗi tương ứng.
 % -----------------------------------------------------
 \subsubsection{Chức năng nhắn tin}
 Chức năng nhắn tin được thiết kế độc lập với server của hệ thống, có thể tăng khả năng mở rộng, linh hoạt hơn. 
-PostgreSQL là nền tảng cơ sở dữ liệu cho chức năng bởi tính phổ biến, hiệu năng cao, hỗ trợ kết nối socket, dễ dàng phát triển cũng như tính bảo mật. Ở chức năng nhắn tin, mọi dữ liệu về tin nhắn sẽ được lưu trên
-PostgreSQL, cơ sở dữ liệu sẽ bao gồm bốn bảng chính.
+PostgreSQL là nền tảng cơ sở dữ liệu cho chức năng bởi tính phổ biến, hiệu năng cao, hỗ trợ kết nối socket, dễ dàng phát triển cũng như tính bảo mật. PostgreSQL đóng vai trò là trung tâm lưu trữ dữ liệu tin nhắn cho hệ thống nhắn tin, bao gồm bốn bảng chính. 
 
-Việc xử lý tin nhắn, gửi tin nhắn, hay các thao tác với tin nhắn đều có thể sử dụng
-các câu lệnh truy vấn và truy/xuất trực tiếp vào cơ sở dữ liệu. PostgreSQL cung cấp nhiều
+Các hoạt động liên quan đến tin nhắn như xử lý, gửi và thao tác đều được thực hiện thông qua truy vấn và truy cập trực tiếp vào cơ sở dữ liệu. PostgreSQL cung cấp nhiều
 ví dụ và câu lệnh truy vấn sẵn có, giúp việc truy cập và thao tác dữ liệu trở nên dễ dàng và linh hoạt.
 
 \begin{figure}[H]
@@ -1435,7 +1432,7 @@ ví dụ và câu lệnh truy vấn sẵn có, giúp việc truy cập và thao 
   \selectfont Sơ đồ tuần tự chức năng gửi và nhận tin nhắn trong hệ thống}
   \label{api_sendMessage} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_sendMessage} mô tả quá trình gửi/nhận tin nhắn trên hệ thống. Khi người dùng gửi một tin nhắn qua ChatController, dữ liệu được lưu vào các Model trong CSDL bao gồm Conversation Model, 
+Hình \ref{api_sendMessage} phân tích luồng thông tin gửi/nhận tin nhắn trên hệ thống. Khi người dùng gửi một tin nhắn qua ChatController, dữ liệu được lưu vào các Model trong CSDL bao gồm Conversation Model, 
 Conversation Member Model, Message Model, Message Attachment Model. Ngay sau đó, hệ thống sẽ hiển thị tin nhắn trên màn hội thoại và gửi sang cho người gửi. 
 \subsubsection{Chức năng hỏi, nhận tư vấn từ trợ lý ảo}
 Chức năng hỏi, nhận tư vấn từ trợ lý ảo giống với chức năng tin, đều được thiết kế để không phụ thuộc vào server của
@@ -1460,7 +1457,5 @@ Tin nhắn của người dùng sẽ được GPT Model xử lý và trả về 
 \subsection{Kết luận chương}
 
 Chương 3 trình bày chi tiết về quá trình thiết kế hệ thống, bao gồm kiến trúc tổng thể và các thành phần cụ thể. 
-Trọng tâm của việc thiết kế là xây dựng một kiến trúc vận hành hiệu quả và mượt mà, đảm bảo tính bảo mật, hiệu suất 
-và khả năng mở rộng của hệ thống.
-
+Thiết kế hệ thống tập trung vào việc xây dựng kiến trúc vận hành hiệu quả và mượt mà, chú trọng vào tính bảo mật, hiệu suất và khả năng mở rộng tối ưu.
 \newpage
