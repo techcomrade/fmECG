@@ -5,12 +5,11 @@
 \setcounter{table}{0} % LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 2. PHÂN TÍCH HỆ THỐNG}
-Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ thống dựa trên các yêu cầu đã đưa ra ở Phần mở đầu và Chương 1, bao gồm các bước như sau:
-\begin{adjustwidth}{1.5em}{}
+Chương này sẽ trình bày chi tiết về quá trình phân tích hệ thống, dựa trên các yêu cầu đã được nêu trong Phần mở đầu và Chương 1. Quá trình này bao gồm các bước sau:\begin{adjustwidth}{1.5em}{}
   \begin{itemize}
     \item Thiết kế các thẻ CRC (Class - Responsibility - Collaboration Card) cùng các lớp dựa trên thông tin từ các sơ đồ use case chức năng của hệ thống
     \item Xây dựng sơ đồ lớp dựa trên các lớp đã được định nghĩa với thuộc tính và phương thức
-    \item Sau khi đã xác định về phương thức cũng như thuộc tính các lớp cùng chức năng trong sơ đồ use case, chúng em sẽ thiết kế các sơ đồ tuần tự minh họa sự tương tác giữa các lớp 
+    \item Sau khi đã xác định về phương thức cũng như thuộc tính các lớp cùng chức năng, bước tiếp theo sẽ thiết kế các sơ đồ tuần tự minh họa sự tương tác giữa các lớp 
           khi thực hiện chức năng cụ thể
   \end{itemize}
   \end{adjustwidth}
@@ -29,18 +28,18 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
   \end{tabularx}
   \begin{tabularx}{0.9\textwidth}{|X|X|}
     \hline
-    \textbf{Tên lớp:} Người dùng & \textbf{ID:} 1 \\
+    \textbf{Tên lớp:} Người dùng (User) & \textbf{ID:} 1 \\
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin người dùng & \textbf{Use case liên quan:}  Đăng ký tài khoản, Quản lý tài khoản cá nhân, Quản lý phân công bác sĩ - bệnh nhân\\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Thêm, sửa, xóa thông tin người dùng 
 
     Lấy danh sách người dùng
 
     Lấy thông tin người dùng qua ID, tài khoản, chức vụ
     & 
-    Tài khoản, Phân công bác sĩ - bệnh nhân
+    Tài khoản
     \\
     \hline
   \end{tabularx}
@@ -53,8 +52,6 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \textbf{Thuộc tính (Attributes):} & \\
     id(uuid) 
     
-    account\_id(String)
-
     username(String)
 
     birth(Timestamps)
@@ -96,11 +93,11 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
    \end{tabularx}
    \begin{tabularx}{0.9\textwidth}{|X|X|}
      \hline
-     \textbf{Tên lớp:} Tài khoản & \textbf{ID:} 2 \\
+     \textbf{Tên lớp:} Tài khoản (Account) & \textbf{ID:} 2 \\
       \hline
       \textbf{Mô tả:} Đối tượng mô tả thông tin tài khoản & \textbf{Use case liên quan:} Đăng ký, Đăng nhập/Đăng xuất, Quên mật khẩu, Quản lý tài khoản người dùng \\
       \hline
-      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+      \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
       Đăng nhập/Đăng xuất hệ thống
 
       Đăng ký tài khoản
@@ -111,7 +108,7 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
 
       Lấy thông tin tài khoản qua email
       & 
-      Người dùng, Token đăng nhập
+      Token đăng nhập
       \\
      \hline
    \end{tabularx}
@@ -156,11 +153,11 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
   \end{tabularx}
   \begin{tabularx}{0.9\textwidth}{|X|X|}
     \hline
-    \textbf{Tên lớp:} Tài khoản phê duyệt & \textbf{ID:} 3 \\
+    \textbf{Tên lớp:} Tài khoản phê duyệt (Register) & \textbf{ID:} 3 \\
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin tài khoản đang chờ phê duyệt & \textbf{Use case liên quan:} Đăng ký, Quản lý tài khoản người dùng \\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Lấy danh sách tài khoản đang chờ phê duyệt
     
     Đăng ký tài khoản
@@ -178,7 +175,7 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
   \begin{tabularx}{0.9\textwidth}{|X|X|}
     \hline
     \textbf{Thuộc tính (Attributes):} & \\
-    id(uuid) 
+    id(String) 
     
     email(String)
 
@@ -229,11 +226,11 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
   \end{tabularx}
   \begin{tabularx}{0.9\textwidth}{|X|X|}
     \hline
-    \textbf{Tên lớp:} Token đăng nhập & \textbf{ID:} 4  \\
+    \textbf{Tên lớp:} Token đăng nhập (Token) & \textbf{ID:} 4  \\
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin token tài khoản & \textbf{Use case liên quan:} Đăng nhập/Đăng xuất \\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Mô tả thông tin token tài khoản
 
     Tạo/xóa access token và refresh token khi đăng nhập/đăng xuất
@@ -253,12 +250,11 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \textbf{Thuộc tính (Attributes):} & \\
     id(String) 
     
-    account\_id(String)
-
     access\_token(String)
-    & 
+    
     refresh\_token(String) 
-          
+    & 
+    
     created\_at(Timestamps)
 
     updated\_at(Timestamps)
@@ -290,11 +286,11 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
   \end{tabularx}
   \begin{tabularx}{0.9\textwidth}{|X|X|}
     \hline
-    \textbf{Tên lớp:} Thiết bị & \textbf{ID:} 5 \\
+    \textbf{Tên lớp:} Thiết bị (Device) & \textbf{ID:} 5 \\
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin thiết bị & \textbf{Use case liên quan:} Quản lý thiết bị, Quản lý lịch sử đo bệnh nhân \\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Mô tả thông tin thiết bị
 
     Lấy danh sách tất cả thiết bị
@@ -315,17 +311,13 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \hline
     \textbf{Thuộc tính (Attributes):} & \\
     id(String) 
-    
-    user\_id(String)
-
-    doctor\_id(String)
 
     device\_name(String)
 
     infomation(String)
-    & 
-    device\_type(Integer)
 
+    device\_type(Integer)
+    & 
     start\_date(Timestamps) 
     
     end\_date(Timestamps) 
@@ -361,11 +353,11 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
   \end{tabularx}
   \begin{tabularx}{0.9\textwidth}{|X|X|}
     \hline
-    \textbf{Tên lớp:} Thông số thiết bị & \textbf{ID:} 6 \\
+    \textbf{Tên lớp:} Thông số thiết bị (Device Detail) & \textbf{ID:} 6 \\
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin thông số thiết bị & \textbf{Use case liên quan:} Quản lý thiết bị\\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Mô tả thông tin thông số thiết bị
 
     Lấy thông số theo thiết bị
@@ -382,15 +374,13 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \hline
     \textbf{Thuộc tính (Attributes):} & \\
     id(String) 
-    
-    device\_id(String)
-
+  
     detail\_name(String)
 
     infomation(String)
-    & 
+    
     value(Integer)
-
+    & 
     detail\_type(Integer)
     
     created\_at(Timestamps)
@@ -424,11 +414,11 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
   \end{tabularx}
   \begin{tabularx}{0.9\textwidth}{|X|X|}
     \hline
-    \textbf{Tên lớp:} Bản ghi & \textbf{ID:} 7 \\
+    \textbf{Tên lớp:} Bản ghi (Record) & \textbf{ID:} 7 \\
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin bản ghi & \textbf{Use case liên quan:} Quản lý lịch sử đo bệnh nhân \\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Mô tả thông tin bản ghi 
 
     Lấy danh sách tất cả bản ghi
@@ -451,14 +441,11 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \hline
     \textbf{Thuộc tính (Attributes):} & \\
     id(String) 
-    
-    user\_id(String)
-
-    device\_id(String)
 
     start\_time(Timestamps)
-    & 
+
     end\_time(Timestamps) 
+    & 
     
     data\_rec\_url(String) 
     
@@ -493,11 +480,11 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
   \end{tabularx}
   \begin{tabularx}{0.9\textwidth}{|X|X|}
     \hline
-    \textbf{Tên lớp:} Phân công bác sĩ - bệnh nhân & \textbf{ID:} 8 \\
+    \textbf{Tên lớp:} Phân công bác sĩ - bệnh nhân (Patient Doctor Assignment) & \textbf{ID:} 8 \\
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin quản lý giữa bác sĩ và bệnh nhân & \textbf{Use case liên quan:} Quản lý phân công bác sĩ - bệnh nhân \\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Mô tả thông tin quan lý giữa bác sĩ và bệnh nhân
 
     Lấy danh sách tất cả phân công
@@ -518,11 +505,7 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \hline
     \textbf{Thuộc tính (Attributes):} & \\
     id(String) 
-    
-    patient\_id(String)
 
-    doctor\_id(String)
-    & 
     start\_date(Timestamps) 
           
     created\_at(Timestamps)
@@ -557,11 +540,11 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
   \end{tabularx}
   \begin{tabularx}{0.9\textwidth}{|X|X|}
     \hline
-    \textbf{Tên lớp:} Tin tức & \textbf{ID:} 9 \\
+    \textbf{Tên lớp:} Tin tức (News) & \textbf{ID:} 9 \\
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin Tin tức & \textbf{Use case liên quan:}  Quản lý bài đăng\\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Mô tả thông tin tin tức
 
     Lấy danh sách tất cả tin tức
@@ -587,8 +570,6 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
 
     content(String)
 
-    category\_id(String)
-
     author(String) 
     & 
     url(String) 
@@ -606,9 +587,9 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \textbf{Mối quan hệ (Relationships):} \\
     Tổng quát hóa (Generalize):
 
-    Toàn thể - Bộ phận (Aggregation): Danh mục tin tức
+    Toàn thể - Bộ phận (Aggregation): 
     
-    Liên kết (Association): Người dùng
+    Liên kết (Association): Người dùng, Danh mục tin tức
     \\
     \hline
   \end{tabularx}
@@ -630,12 +611,12 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin Danh mục tin tức & \textbf{Use case liên quan:}  Quản lý nhãn bài đăng\\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Mô tả thông tin danh mục tin tức
 
     Thêm, sửa, xóa danh mục tin tức
     & 
-    Tin tức
+    
     \\
     \hline
   \end{tabularx}
@@ -663,9 +644,9 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \textbf{Mối quan hệ (Relationships):} \\
     Tổng quát hóa (Generalize):  
 
-    Toàn thể - Bộ phận (Aggregation): Tin tức
+    Toàn thể - Bộ phận (Aggregation): 
     
-    Liên kết (Association): 
+    Liên kết (Association): Tin tức
     \\
     \hline
   \end{tabularx}
@@ -687,14 +668,12 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin; Hỏi, tư vấn từ trợ lý ảo \\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Thông tin Thành viên tham gia hội thoại
 
     Lấy danh sách thành viên theo hội thoại
-
-    Lấy danh sách hội thoại theo thành viên
     & 
-    Người dùng, Cuộc hội thoại 
+    Cuộc hội thoại 
     \\
     \hline
   \end{tabularx}
@@ -706,11 +685,7 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \hline
     \textbf{Thuộc tính (Attributes):} & \\
     id(String) 
-    
-    conversation\_id(String)
 
-    user\_id(String)
-    &
     status\_notify(Integer)
 
     role(Integer)
@@ -724,9 +699,9 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \textbf{Mối quan hệ (Relationships):} \\
     Tổng quát hóa (Generalize):  
 
-    Toàn thể - Bộ phận (Aggregation): Người dùng
+    Toàn thể - Bộ phận (Aggregation): 
     
-    Liên kết (Association): Cuộc hội thoại
+    Liên kết (Association): Người dùng, Cuộc hội thoại
     \\
     \hline
   \end{tabularx}
@@ -748,10 +723,12 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin Thành viên tham gia hội thoại & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin; Hỏi, tư vấn từ trợ lý ảo \\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Mô tả thông tin cuộc hội thoại
+
+    Thêm, xóa hội thoại
     & 
-    Thành viên tham gia hội thoại, Tin nhắn
+
     \\
     \hline
   \end{tabularx}
@@ -801,7 +778,7 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin Tin nhắn & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin; Hỏi, tư vấn từ trợ lý ảo \\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Mô tả thông tin Tin nhắn
 
     Xem/gửi tin nhắn
@@ -820,15 +797,11 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \hline
     \textbf{Thuộc tính (Attributes):} & \\
     message\_id(String) 
-    
-    conversation\_id(String)
-
-    sender\_id(String)
 
     attachments(List)
-    &
+    
     system\_message(Boolean)
-
+    &
     pin(Boolean)
 
     pin\_time(Timestamps)
@@ -866,7 +839,7 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \hline
     \textbf{Mô tả:} Đối tượng mô tả thông tin Tệp đính kèm tin nhắn & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin \\
     \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp liên quan (Collaboration):} \\
+    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
     Mô tả thông tin Tệp đính kèm
 
     Lấy thông tin tệp đính kèm theo tin nhắn, cuộc hội thoại
@@ -883,15 +856,11 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
     \hline
     \textbf{Thuộc tính (Attributes):} & \\
     id(String) 
-    
-    message\_id(String)
-
-    conversation\_id(String)
 
     content\_url(String)
-    &
+    
     file\_name(String)
-
+    &
     size(Integer)
 
     thumbnail\_url(String)
@@ -919,29 +888,29 @@ Trong chương này, chúng em sẽ tiến hành các bước phân tích hệ t
   Dựa trên các thẻ CRC đã được mô tả ở phần trên, chúng em xin phép trình bày về sơ đồ lớp của hệ thống.
   \begin{figure}[H]
     \centering
-    \includegraphics*[width = 16cm, height = 19cm ]{Images/UML/UML.drawio.png}
+    \includegraphics*[width = 16cm, height = 19cm]{Images/UML/UML.drawio.png}
     \caption[Sơ đồ lớp của hệ thống]{\bfseries \fontsize{12pt}{0pt}
     \selectfont Sơ đồ lớp của hệ thống}
     \label{UML}
   \end{figure}
 
-  Hình \ref*{UML} thể hiện các lớp trong hệ thống:
-  \begin{itemize}
-    \item Lớp Account (Tài khoản): Lớp thể hiện cho cấu trúc của một account khi đăng ký sử dụng hệ thống, cung cấp các hàm và các biến để thực hiện chức năng đăng ký người dùng
-    \item Lớp Register (Tài khoản phê duyệt): Lớp thể hiện cho cấu trúc của người dùng khi mới đăng ký, cung cấp các hàm, phương thức thao tác dữ liệu người dùng khi mới đăng ký
-    \item Lớp User (Người dùng): Lớp thể hiện cho cấu trúc của người dùng sau khi đã đăng ký, cung cấp các hàm, phương thức liên quan đến dữ liệu người dùng sau đăng ký
-    \item Lớp Token: Lớp thể hiện cho cấu trúc của một token, cung cấp biến, hàm để thao tác với người dùng khi thực hiện đăng ký, đăng nhập
-    \item Lớp PatientDoctorAssignment (Phân công bác sĩ - bệnh nhân): Lớp thể hiện cho cấu trúc của một bảng phân công giữa bệnh nhân và bác sĩ, cung cấp các hàm, phương thức để lấy dữ liệu phân công bệnh nhân/bác sĩ
-    \item Lớp Record (Bản ghi): Lớp thể hiện cho cấu trúc của một bản ghi record, cung cấp các hàm, phương thức để thực hiện liên quan đến các bản ghi dữ liệu sức khỏe của bệnh nhân
-    \item Lớp Device (Thiết bị): Lớp thể hiện cho cấu trúc của một thiết bị, cung cấp các biến, hàm, phương thức để thực hiện liên quan đến thông tin các thiết bị sử dụng trong các ghi record
-    \item Lớp DeviceDetail (Thông số thiết bị): Lớp thể hiện cho cấu trúc của chi tiết liên quan đến lớp thiết bị, cung cấp các hàm, phương thức để thực hiện thao tác với dữ liệu các thiết bị và các bản ghi record
-    \item Lớp News (Tin tức): Lớp thể hiện cho cấu trúc của một tin tức, cung cấp các hàm, phương thức để lấy dữ liệu tin tức
-    \item Lớp NewsCategories (Danh mục tin tức): Lớp thể hiện cho cấu trúc của một danh mục tin tức, cung cấp các hàm, phương thức để lấy dữ liệu từ danh mục tin tức
-    \item Lớp Conversation (Cuộc hội thoại): Lớp thể hiện cho cấu trúc của một cuộc hội thoại, cung cấp các biến, hàm, phương thức để lấy dữ liệu liên quan đến cuộc hội thoại
-    \item Lớp ConversationMember (Thành viên tham gia hội thoại): Lớp thể hiện cho cấu trúc của danh sách những người tham gia một cuộc hội thoại, cung cấp các hàm, phương thức để xử lý dữ liệu liên quan đến người dùng
-    \item Lớp ConversationAttachment (Tệp đính kèm): Lớp thể hiện cho cấu trúc của danh sách những tệp được đính kém trong danh sách hội thoại, cung cấp các hàm, phương thức để xử lý các chức năng liên quan đến hội thoại
-    \item Lớp Message (Tin nhắn): Lớp thể hiện cho cấu trúc của một message được sử dụng trong hội thoại, cung cấp các hàm, phương thức để xử lý dữ liệu trong cuộc hội thoại
-  \end{itemize}
+  % Hình \ref*{UML} thể hiện các lớp trong hệ thống:
+  % \begin{itemize}
+  %   \item Lớp Account (Tài khoản): Lớp thể hiện cho cấu trúc của một account khi đăng ký sử dụng hệ thống, cung cấp các hàm và các biến để thực hiện chức năng đăng ký người dùng
+  %   \item Lớp Register (Tài khoản phê duyệt): Lớp thể hiện cho cấu trúc của người dùng khi mới đăng ký, cung cấp các hàm, phương thức thao tác dữ liệu người dùng khi mới đăng ký
+  %   \item Lớp User (Người dùng): Lớp thể hiện cho cấu trúc của người dùng sau khi đã đăng ký, cung cấp các hàm, phương thức liên quan đến dữ liệu người dùng sau đăng ký
+  %   \item Lớp Token: Lớp thể hiện cho cấu trúc của một token, cung cấp biến, hàm để thao tác với người dùng khi thực hiện đăng ký, đăng nhập
+  %   \item Lớp PatientDoctorAssignment (Phân công bác sĩ - bệnh nhân): Lớp thể hiện cho cấu trúc của một bảng phân công giữa bệnh nhân và bác sĩ, cung cấp các hàm, phương thức để lấy dữ liệu phân công bệnh nhân/bác sĩ
+  %   \item Lớp Record (Bản ghi): Lớp thể hiện cho cấu trúc của một bản ghi record, cung cấp các hàm, phương thức để thực hiện liên quan đến các bản ghi dữ liệu sức khỏe của bệnh nhân
+  %   \item Lớp Device (Thiết bị): Lớp thể hiện cho cấu trúc của một thiết bị, cung cấp các biến, hàm, phương thức để thực hiện liên quan đến thông tin các thiết bị sử dụng trong các ghi record
+  %   \item Lớp DeviceDetail (Thông số thiết bị): Lớp thể hiện cho cấu trúc của chi tiết liên quan đến lớp thiết bị, cung cấp các hàm, phương thức để thực hiện thao tác với dữ liệu các thiết bị và các bản ghi record
+  %   \item Lớp News (Tin tức): Lớp thể hiện cho cấu trúc của một tin tức, cung cấp các hàm, phương thức để lấy dữ liệu tin tức
+  %   \item Lớp NewsCategories (Danh mục tin tức): Lớp thể hiện cho cấu trúc của một danh mục tin tức, cung cấp các hàm, phương thức để lấy dữ liệu từ danh mục tin tức
+  %   \item Lớp Conversation (Cuộc hội thoại): Lớp thể hiện cho cấu trúc của một cuộc hội thoại, cung cấp các biến, hàm, phương thức để lấy dữ liệu liên quan đến cuộc hội thoại
+  %   \item Lớp ConversationMember (Thành viên tham gia hội thoại): Lớp thể hiện cho cấu trúc của danh sách những người tham gia một cuộc hội thoại, cung cấp các hàm, phương thức để xử lý dữ liệu liên quan đến người dùng
+  %   \item Lớp ConversationAttachment (Tệp đính kèm): Lớp thể hiện cho cấu trúc của danh sách những tệp được đính kém trong danh sách hội thoại, cung cấp các hàm, phương thức để xử lý các chức năng liên quan đến hội thoại
+  %   \item Lớp Message (Tin nhắn): Lớp thể hiện cho cấu trúc của một message được sử dụng trong hội thoại, cung cấp các hàm, phương thức để xử lý dữ liệu trong cuộc hội thoại
+  % \end{itemize}
 % \newpage
 \subsection{Sơ đồ tuần tự}
 Để phân tích cụ thể hơn về từng luồng trong hệ thống thông qua sơ đồ use case và sơ đồ hoạt động, dưới đây là phần thiết kế
@@ -1217,34 +1186,34 @@ Tại phần này, chúng em sẽ tiến hành xác định và mô tả các th
     \textbf{Thực thể} & \textbf{Thuộc tính} \\
     \hline
     Người dùng & 
-    ID người dùng, ID tài khoản, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
+    ID người dùng, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
     \hline
     Tài khoản &
     ID tài khoản, Email, Mật khẩu  \\
     \hline
     Token đăng nhập &
-    ID token, ID tài khoản, Token truy cập, Token làm mới \\
+    ID token, Token truy cập, Token làm mới \\
     \hline
     Thiết bị & 
-    ID thiết bị, ID người dùng thiết bị, ID bác sĩ theo dõi, Tên thiết bị, Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng\\
+    ID thiết bị, Tên thiết bị, Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng\\
     \hline
     Thông số thiết bị &
-    ID thông số, ID thiết bị, Tên thông số, Giá trị thông số, Thông tin cụ thể, Loại thông số \\
+    ID thông số, Tên thông số, Giá trị thông số, Thông tin cụ thể, Loại thông số \\
     \hline
     Bản ghi dữ liệu & 
-    ID bản ghi dữ liệu, ID người dùng, ID thiết bị, Loại bản ghi, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo \\
+    ID bản ghi dữ liệu, Loại bản ghi, Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo \\
     \hline
     Thông tin hội thoại &
     ID hội thoại, Tên hội thoại, Loại hội thoại, Đường dẫn avatar hội thoại \\
     \hline
     Thành viên tham gia hội thoại &
-    ID hội thoại, ID người dùng tham gia, Trạng thái thông báo (Có thông báo, Không thông báo), Tác vụ (người tạo đoạn hội thoại, thành viên trong đoạn hội thoại), Trạng thái đã xem\\
+    ID thành viên tham gia, Trạng thái thông báo (Có thông báo, Không thông báo), Tác vụ (người tạo đoạn hội thoại, thành viên trong đoạn hội thoại), Trạng thái đã xem\\
     \hline
     Tin nhắn & 
-    ID tin nhắn, ID hội thoại, ID người gửi, Các tệp đính kèm, Tin nhắn hệ thống, Ghim (tin nhắn được ghim, không được ghim), Thời gian ghim tin nhắn, Các lượt thả cảm xúc \\
+    ID tin nhắn, Nội dung tin nhắn, Tin nhắn hệ thống, Ghim (tin nhắn được ghim, không được ghim), Thời gian ghim tin nhắn, Các lượt thả cảm xúc \\
     \hline
     Tệp đính kèm &
-    ID tệp đính kèm, ID tin nhắn, ID hội thoại, Đường dẫn nội dung, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm (hình ảnh, video, tệp tin) \\
+    ID tệp đính kèm, Đường dẫn tệp, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm (hình ảnh, video, tệp tin) \\
     \hline 
     Phân công bệnh nhân - bác sĩ & 
     ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu, Ngày kết thúc \\
@@ -1253,7 +1222,7 @@ Tại phần này, chúng em sẽ tiến hành xác định và mô tả các th
     ID danh mục tin tức, Tên danh mục tin tức, Mô tả danh mục tin tức \\
     \hline
     Tin tức &
-    ID tin tức, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn, Đường dẫn hình ảnh \\
+    ID tin tức, Tiêu đề, Nội dung, Tác giả, Đường dẫn, Đường dẫn hình ảnh \\
     \hline
     Tài khoản phê duyệt & 
     ID tài khoản phê duyệt, Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
@@ -1277,8 +1246,8 @@ Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em x
 Trong chương này, chúng em đã thực hiện phân tích khái quát về
  hệ thống, nhằm đáp ứng các mục tiêu và yêu cầu đã được đề ra trước đó.
 
-Chúng em đã xác định các yếu tố quan trọng của hệ thống một cách rõ ràng,
- tập trung vào việc thiết kế một hệ thống quản lý dữ liệu điện tim hiệu quả,
+Chúng em đã xác định các yếu tố trong hệ thống một cách rõ ràng.
+ Qua đó, tập trung vào việc thiết kế một hệ thống quản lý dữ liệu điện tim hiệu quả,
   trực quan và có khả năng theo dõi sức khỏe tim mạch một cách
    chính xác. 
 
