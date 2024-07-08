@@ -9,15 +9,21 @@ class FilesManagement {
     return directoryToSaveData;
   }
 
+  static Future<void> createDirectoryFirstTimeWithDevice() async {
+    final directoryPath = await _pathToSaveData;
+    Directory(directoryPath).createSync(recursive: true);
+  }
+
   static setUpFileToSaveDataMeasurement() async {
     final directoryPath = await _pathToSaveData;
     final String fileNameAsTimestamp = Utils.getCurrentTimestamp().toString();
     return File('$directoryPath/$fileNameAsTimestamp.csv');
   }
 
-  static void createDirectoryFirstTimeWithDevice() async {
+  static setUpFileSaveTxt() async {
     final directoryPath = await _pathToSaveData;
-    Directory(directoryPath).createSync(recursive: true);
+    final String fileNameAsTimestamp = Utils.getCurrentTimestamp().toString();
+    return File('$directoryPath/pcg_ppg_$fileNameAsTimestamp.txt');
   }
 
   static convertRowToStringBeforeSaving(List<dynamic> row) {
@@ -31,14 +37,20 @@ class FilesManagement {
     file.writeAsStringSync(data, mode: FileMode.append);
   }
 
-  static Future<void> handleSaveDataToFileV2(File file, List rawData) async {
-    String dataConverted = convertDataToCSVFormat(rawData);
+  static Future<void> handleSaveDataToFileV2(File file, List rawData, {String format = "csv"}) async {
+    String dataConverted = format == "txt" ? convertDataToTxtFormat(rawData) : convertDataToCSVFormat(rawData);
+    print('1233333333:$dataConverted');
     await appendDataToFileV2(file, dataConverted);
   }
 
   static String convertDataToCSVFormat(List data) {
     final removingBracketsRegex = RegExp(r'\[|\]');
     String dataConverted = data.join("\n").replaceAll(removingBracketsRegex, "");
+    return dataConverted;
+  }
+
+  static String convertDataToTxtFormat(List data) {
+    String dataConverted = data.join("\n");
     return dataConverted;
   }
 

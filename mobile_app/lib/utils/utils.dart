@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Utils {
   static BuildContext? globalContext;
@@ -46,6 +47,15 @@ class Utils {
     //   return -1;
     // }
     return 1;
+  }
+
+  static Future<bool> requestManageStorage() async {
+    final PermissionStatus status = await Permission.manageExternalStorage.request();  
+    if (status == PermissionStatus.granted) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   static Future<dynamic> showDialogWarningError(BuildContext context, bool isDark, String warningContent) {

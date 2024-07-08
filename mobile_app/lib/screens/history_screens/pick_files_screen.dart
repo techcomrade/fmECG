@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:bluetooth_ecg/screens/history_screens/chart_result_python_screen.dart';
+import 'package:bluetooth_ecg/screens/preview_calculation.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,10 +31,11 @@ class _PickFilesState extends State<PickFiles> {
   }
 
   void choosePythonModulePath() async {
-    final FilePickerResult? result = await FilePicker.platform
-        .pickFiles();
-    final bool canAddPath =
-        result != null && !result.paths.contains(null) && result.isSinglePick && result.files.first.extension == "py";
+    final FilePickerResult? result = await FilePicker.platform.pickFiles();
+    final bool canAddPath = result != null &&
+        !result.paths.contains(null) &&
+        result.isSinglePick &&
+        result.files.first.extension == "py";
     if (canAddPath) {
       print('sdgndjkd:${result.files.first.extension}');
       setState(() {
@@ -55,7 +58,9 @@ class _PickFilesState extends State<PickFiles> {
   }
 
   void sendDataToNativePython() async {
-    final bool cannotSend = pythonModulePath == "" || txtFilePaths.contains(null) || txtFilePaths.length != 2;
+    final bool cannotSend = pythonModulePath == "" ||
+        txtFilePaths.contains(null) ||
+        txtFilePaths.length != 2;
     if (cannotSend) return;
     // TODO: Show error in here
     final Map pathContext = {
@@ -63,8 +68,12 @@ class _PickFilesState extends State<PickFiles> {
       'pcg_path': txtFilePaths[0],
       'ppg_path': txtFilePaths[1]
     };
-    final Map? dataProcessed = await platform.invokeMethod('transfer_context_to_python', pathContext);
-    print('gnjgdf:$dataProcessed');
+    final Map? dataProcessed =
+        await platform.invokeMethod('transfer_context_to_python', pathContext);
+    if (dataProcessed != null) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ChartsResultPythonScreen(data: dataProcessed)));
+    }
   }
 
   @override
@@ -101,17 +110,18 @@ class _PickFilesState extends State<PickFiles> {
         ),
         const SizedBox(height: 4),
         Text("$txtPath"),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
         InkWell(
           onTap: sendDataToNativePython,
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: Colors.blue,
-            ),
-            child: Text("Send to Python Native")
-          ),
+              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color: Colors.blue,
+              ),
+              child: Text("Send to Python Native")),
         )
       ],
     ));

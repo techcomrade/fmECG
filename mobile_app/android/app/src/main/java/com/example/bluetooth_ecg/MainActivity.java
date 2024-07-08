@@ -47,6 +47,12 @@ public class MainActivity extends FlutterActivity {
                     HashMap<String, int[]> dataCalculated = transferContextToPython(pythonPath, pcgPath, ppgPath);
                     result.success(dataCalculated);
                 }
+
+                if (call.method.equals("transfer_txt_path_to_python")) {
+                    String txtPath = call.argument("txt_path");
+                    HashMap<String, int[]> dataCalculated = transferTxtPathAndCalculatePython(txtPath);
+                    result.success(dataCalculated);
+                }
            });
     }
 
@@ -69,7 +75,28 @@ public class MainActivity extends FlutterActivity {
         // PyObject data = module.callAttr("calculate", pcgPath, ppgPath);
 
         Set<PyObject> pyKeySet = data.callAttr("keys").asSet();
-        System.out.println("hehehe" + data);
+        HashMap<String, int[]> map = new HashMap<>();
+
+        for (PyObject pyKey:pyKeySet) {
+            String key = pyKey.toString();
+            map.put(key, data.callAttr("get",key).toJava(int[].class));
+        }
+        return map;
+    }
+
+    private HashMap<String, int[]> transferTxtPathAndCalculatePython(
+        String txtPath
+    ) {
+        if (!Python.isStarted()) {
+            Python.start(new AndroidPlatform(this));
+        }
+
+        Python py = Python.getInstance();
+        // hoạt động với file backup ở máy chứ không phải file được chọn từ file picker
+        PyObject module = py.getModule("main_script_bluetooth_classic");
+        PyObject data = module.callAttr("calculate", txtPath);
+
+        Set<PyObject> pyKeySet = data.callAttr("keys").asSet();
         HashMap<String, int[]> map = new HashMap<>();
 
         for (PyObject pyKey:pyKeySet) {
