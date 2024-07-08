@@ -10,8 +10,8 @@ Trong chương này, chúng em sẽ trình bày về thiết kế hệ thống t
 sau đó là thiết kế giao diện, chức năng cho website và server. Nội dung chính của chương sẽ tập trung vào các hình
 ảnh và sơ đồ mô tả chi tiết từng luồng hoạt động của hệ thống và đồng thời minh họa cách các phần trong hệ thống tương tác với nhau.
 
-\subsection{Sơ đồ kiến trúc tổng quan hệ thống}
-Hệ thống được chia làm ba thành phần chính bao gồm Device (Thiết bị), Application (Ứng dụng) và Server (Máy chủ). Mỗi thành phần đóng vai trò quan trọng trong việc vận hành tổng thể hệ thống trong hình vẽ:
+\subsection{Sơ đồ kiến trúc tổng quan của hệ thống}
+Hệ thống được chia làm ba phần chính bao gồm Device (Thiết bị), Server (Máy chủ) và Application (Ứng dụng bao gồm: web và app). Mỗi thành phần đóng vai trò quan trọng trong việc vận hành tổng thể hệ thống trong hình vẽ:
 
 \begin{figure}[H]
   \centering
@@ -727,12 +727,6 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 \subsection{Thiết kế giao diện}
 
 Dưới đây là các giao diện thực tế mà chúng em thiết kế cho trang web quản trị
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.4]{Images/server/webUI/register_1.png}
-  \caption[Giao diện trang đăng ký tài khoản]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng ký tài khoản}
-  \label{register_1} %đặt tên cho ảnh
-\end{figure}
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.4]{Images/server/webUI/register_2.png}
