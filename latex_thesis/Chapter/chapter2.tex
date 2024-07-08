@@ -460,9 +460,9 @@ Chương này sẽ trình bày chi tiết về quá trình phân tích hệ th�
     \textbf{Mối quan hệ (Relationships):} \\
     Tổng quát hóa (Generalize):  
 
-    Toàn thể - Bộ phận (Aggregation): Người dùng, Thiết bị
+    Toàn thể - Bộ phận (Aggregation): 
     
-    Liên kết (Association):  
+    Liên kết (Association):  Người dùng, Thiết bị
     \\
     \hline
   \end{tabularx}
@@ -501,9 +501,9 @@ Chương này sẽ trình bày chi tiết về quá trình phân tích hệ th�
   \begin{tabularx}{0.9\textwidth}{X}
     Mặt sau thẻ
   \end{tabularx} 
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
+  \begin{tabularx}{0.9\textwidth}{|X|}
     \hline
-    \textbf{Thuộc tính (Attributes):} & \\
+    \textbf{Thuộc tính (Attributes):} \\
     id(String) 
 
     start\_date(Timestamps) 
@@ -519,138 +519,15 @@ Chương này sẽ trình bày chi tiết về quá trình phân tích hệ th�
     \textbf{Mối quan hệ (Relationships):} \\
     Tổng quát hóa (Generalize):
 
-    Toàn thể - Bộ phận (Aggregation): Người dùng
+    Toàn thể - Bộ phận (Aggregation): 
     
-    Liên kết (Association):  
+    Liên kết (Association): Người dùng
     \\
     \hline
   \end{tabularx}
   \end{xltabular}
 
 \newpage
-\subsubsection{Thẻ CRC lớp Tin tức}
-  \begin{xltabular}{\textwidth}{
-    >{\centering\arraybackslash}X 
-  }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tài khoản}
-  % \label{table_api_news}
-  \\
-  \begin{tabularx}{0.9\textwidth}{X}
-    Mặt trước thẻ
-  \end{tabularx}
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Tên lớp:} Tin tức (News) & \textbf{ID:} 9 \\
-    \hline
-    \textbf{Mô tả:} Đối tượng mô tả thông tin Tin tức & \textbf{Use case liên quan:}  Quản lý bài đăng\\
-    \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
-    Mô tả thông tin tin tức
-
-    Lấy danh sách tất cả tin tức
-
-    Lấy thông tin tin tức theo id, người dùng
-
-    Thêm, sửa, xóa bài đăng tin tức
-    & 
-    Người dùng, Danh mục tin tức
-    \\
-    \hline
-  \end{tabularx}
-  \\ 
-  \begin{tabularx}{0.9\textwidth}{X}
-    Mặt sau thẻ
-  \end{tabularx}
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Thuộc tính (Attributes):} & \\
-    id(String) 
-    
-    title(String)
-
-    content(String)
-
-    author(String) 
-    & 
-    url(String) 
-
-    image(String) 
-          
-    created\_at(Timestamps)
-
-    updated\_at(Timestamps)
-    \\
-    \hline
-  \end{tabularx}
-  \\     
-  \begin{tabularx}{0.9\textwidth}{|X|}
-    \textbf{Mối quan hệ (Relationships):} \\
-    Tổng quát hóa (Generalize):
-
-    Toàn thể - Bộ phận (Aggregation): 
-    
-    Liên kết (Association): Người dùng, Danh mục tin tức
-    \\
-    \hline
-  \end{tabularx}
-  \end{xltabular}
-
-  \subsubsection{Thẻ CRC lớp Danh mục tin tức}
-  \begin{xltabular}{\textwidth}{
-    >{\centering\arraybackslash}X 
-  }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Danh mục tin tức}
-  % \label{table_api_news}
-  \\
-  \begin{tabularx}{0.9\textwidth}{X}
-    Mặt trước thẻ
-  \end{tabularx}
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Tên lớp:} Danh mục tin tức & \textbf{ID:} 10 \\
-    \hline
-    \textbf{Mô tả:} Đối tượng mô tả thông tin Danh mục tin tức & \textbf{Use case liên quan:}  Quản lý nhãn bài đăng\\
-    \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
-    Mô tả thông tin danh mục tin tức
-
-    Thêm, sửa, xóa danh mục tin tức
-    & 
-    
-    \\
-    \hline
-  \end{tabularx}
-  \\ 
-  \begin{tabularx}{0.9\textwidth}{X}
-    Mặt sau thẻ
-  \end{tabularx} 
-  \begin{tabularx}{0.9\textwidth}{|X|}
-    \hline
-    \textbf{Thuộc tính (Attributes):} \\
-    id(String) 
-    
-    category\_name(String)
-
-    category\_description(String)
-
-    created\_at(Timestamps)
-
-    updated\_at(Timestamps)
-    \\
-    \hline
-  \end{tabularx}
-  \\     
-  \begin{tabularx}{0.9\textwidth}{|X|}
-    \textbf{Mối quan hệ (Relationships):} \\
-    Tổng quát hóa (Generalize):  
-
-    Toàn thể - Bộ phận (Aggregation): 
-    
-    Liên kết (Association): Tin tức
-    \\
-    \hline
-  \end{tabularx}
-  \end{xltabular}
 
   \subsubsection{Thẻ CRC lớp Thành viên tham gia hội thoại}
   \begin{xltabular}{\textwidth}{
@@ -681,9 +558,9 @@ Chương này sẽ trình bày chi tiết về quá trình phân tích hệ th�
   \begin{tabularx}{0.9\textwidth}{X}
     Mặt sau thẻ
   \end{tabularx} 
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
+  \begin{tabularx}{0.9\textwidth}{|X|}
     \hline
-    \textbf{Thuộc tính (Attributes):} & \\
+    \textbf{Thuộc tính (Attributes):} \\
     id(String) 
 
     status\_notify(Integer)
@@ -1217,13 +1094,6 @@ Tại phần này, chúng em sẽ tiến hành xác định và mô tả các th
     \hline 
     Phân công bệnh nhân - bác sĩ & 
     ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu, Ngày kết thúc \\
-    \hline
-    Danh mục tin tức &
-    ID danh mục tin tức, Tên danh mục tin tức, Mô tả danh mục tin tức \\
-    \hline
-    Tin tức &
-    ID tin tức, Tiêu đề, Nội dung, Tác giả, Đường dẫn, Đường dẫn hình ảnh \\
-    \hline
     Tài khoản phê duyệt & 
     ID tài khoản phê duyệt, Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
     \hline
