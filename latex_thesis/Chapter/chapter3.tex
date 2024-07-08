@@ -94,7 +94,7 @@ Về cơ bản, website cho bác sĩ có những khối tương tự với bện
   \label{fmECG_architecture-Admin} %đặt tên cho ảnh
 \end{figure}
 
-Quản trị viên sẽ quản lý 6 Services chính đó là quản lý người dùng (User Management Service), quản lý phân công
+Website cho quản trị viên có kiến trúc tương tự với website bệnh nhân và bác sĩ. Các Service trong được quản trị viên quản lý bao gồm quản lý người dùng (User Service), quản lý thiết bị (Device Service), quản lý phân công
 bác sĩ - bệnh nhân (Patient Assignment Service), quản lý bản ghi (Record Service), Chat Service, huấn luyện trợ lý ảo (AI service).
  
 \newpage
@@ -116,8 +116,6 @@ Dựa trên phần mô tả các thực thể, chúng em sẽ chuyển mô hình
   \item Tin nhắn (\textbf{ID tin nhắn}, ID hội thoại, ID người gửi, Các tệp đính kèm, Tin nhắn hệ thống, Ghim, Thời gian ghim tin nhắn, Các lượt thả cảm xúc)
   \item Tệp đính kèm (\textbf{ID tệp đính kèm}, ID tin nhắn, ID hội thoại, Đường dẫn nội dung, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm)
   \item Phân công bệnh nhân - bác sĩ (\textbf{ID phân công}, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu)
-  \item Danh mục tin tức (\textbf{ID danh mục tin tức}, Tên danh mục tin tức, Mô tả danh mục tin tức)
-  \item Tin tức (\textbf{ID tin tức}, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn, Đường dẫn hình ảnh)
   \item Tài khoản phê duyệt (\textbf{ID tài khoản phê duyệt}, Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh đại diện, Thông tin người dùng)
 \end{itemize}
 
@@ -366,49 +364,6 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
   \end{tabularx}
 \end{table}
 
-\paragraph{Chuẩn hoá bảng Danh mục tin tức}
-\mbox{}
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Danh mục tin tức}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID danh mục tin tức, Tên danh mục tin tức, Mô tả danh mục tin tức \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi danh mục tin tức có một ID danh mục tin tức riêng, có duy nhất tên danh mục tin tức, mô tả danh mục tin tức
-    & \parbox[t]{\linewidth}{$\text{ID danh mục tin tức} \rightarrow$ Tên danh mục tin tức, Mô tả danh mục tin tức} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID danh mục tin tức}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Danh mục tin tức đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\paragraph{Chuẩn hoá bảng Tin tức}
-\mbox{}
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tin tức}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID tin tức, Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, Đường dẫn,
-    Đường dẫn hình ảnh \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi tin tức có một ID tin tức riêng, thuộc duy nhất một danh mục tin tức, có duy nhất tiêu đề, 
-    nội dung, tác giả, đường dẫn, đường dẫn hình ảnh
-    & \parbox[t]{\linewidth}{$\text{ID tin tức} \rightarrow$ Tiêu đề, Nội dung, ID danh mục tin tức, Tác giả, 
-    Đường dẫn, Đường dẫn hình ảnh} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tin tức}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tin tức đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
 \paragraph{Chuẩn hoá bảng Tài khoản phê duyệt}
 \mbox{}
 \begin{table}[H]
@@ -440,17 +395,15 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    user\_id & STRING & Khóa chính của bảng, đại diện cho ID người dùng. \\
+    id & STRING & ID người dùng. (Khóa chính của bảng) \\
     \hline
-    password & STRING & Mật khẩu của người dùng. \\
+    account\_id & STRING & ID tài khoản người dùng. (Khóa ngoại tham chiếu đến \texttt{account\_id}) trong bảng \texttt{account}\\
     \hline
-    email & STRING & Địa chỉ email của người dùng. \\
-    \hline
-    name & STRING & Tên của người dùng. \\
+    username & STRING & Họ và tên người dùng. \\
     \hline
     gender & INT & Giới tính của người dùng. \\
     \hline
-    birth & DATE & Ngày sinh của người dùng. \\
+    birth & DATE & Ngày tháng năm sinh của người dùng. \\
     \hline
     phone\_number & STRING & Số điện thoại của người dùng. \\
     \hline
@@ -460,11 +413,11 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     information & STRING & Thông tin thêm về người dùng. \\
     \hline
-    role & INTEGER & Quyền của người dùng (0 - bệnh nhân, 1 - bác sĩ, 2 - quản trị viên). \\
+    role & INTEGER & Chức vụ của người dùng (0 - bệnh nhân, 1 - bác sĩ, 2 - quản trị viên). \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
+    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu. \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
+    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu. \\
     \hline
     
   \end{tabularx}
@@ -478,11 +431,11 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    account\_id & STRING & Khóa chính của bảng, đại diện cho ID tài khoản. \\
+    id & STRING & ID tài khoản (Khóa chính của bảng). \\
     \hline
-    email & STRING & Địa chỉ email đăng kí của người dùng. \\
+    email & STRING & Địa chỉ email của tài khoản. \\
     \hline
-    password & STRING & Mật khẩu của người dùng. \\
+    password & STRING & Mật khẩu của tài khoản. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -494,27 +447,27 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    register\_id & STRING & Khóa chính của bảng, đại diện cho ID tài khoản. \\
+    id & STRING & ID tài khoản đăng ký (Khóa chính của bảng). \\
     \hline
-    email & STRING & Địa chỉ email đăng kí của người dùng. \\
+    email & STRING & Địa chỉ email của tài khoản đăng ký. \\
     \hline
-    password & STRING & Mật khẩu của người dùng. \\
+    password & STRING & Mật khẩu của tài khoản đâng ký. \\
     \hline
-    username & STRING & Tên của người dùng. \\
+    username & STRING & Họ và tên của tài khoản đăng ký. \\
     \hline
-    gender & INT & Giới tính của người dùng. \\
+    gender & INT & Giới tính của tài khoản đăng ký. \\
     \hline
-    birth & DATE & Ngày sinh của người dùng. \\
+    birth & DATE & Ngày sinh của tài khoản đăng ký. \\
     \hline
-    phone\_number & STRING & Số điện thoại của người dùng. \\
+    phone\_number & STRING & Số điện thoại của tài khoản đăng ký. \\
     \hline
-    image & STRING & Ảnh đại diện của người dùng. \\
+    image & STRING & Ảnh đại diện của tài khoản đăng ký. \\
     \hline
-    status & INTEGER & Trạng thái chờ của người dùng (0 - đang chờ xử lý, 1 - được admin chấp nhận, 2 - bị admin từ chối). \\
+    status & INTEGER & Trạng thái của tài khoản đăng ký (0 - đang chờ xử lý, 1 - được admin chấp nhận, 2 - bị admin từ chối). \\
     \hline
     information & STRING & Thông tin thêm về người dùng. \\
     \hline
-    role & INTEGER & Quyền của người dùng (0 - bệnh nhân, 1 - bác sĩ, 2 - quản trị viên).\\
+    role & INTEGER & Chức vụ của tài khoản đăng ký (0 - bệnh nhân, 1 - bác sĩ, 2 - quản trị viên).\\
     \hline
   \end{tabularx}
 \end{table}
@@ -526,73 +479,23 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    record\_id & STRING & Khóa chính của bảng, đại diện cho ID bản ghi record. \\
+    id & STRING & ID bản ghi record (Khóa chính của bảng). \\
     \hline
-    user\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}. \\
+    user\_id & STRING & ID bệnh nhân (Khóa ngoại của bảng, tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}). \\
     \hline
-    device\_id & STRING & Khóa ngoại tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}, đại diện cho ID thiết bị. \\
+    device\_id & STRING & ID thiết bị theo dõi (Khóa ngoại của bảng, tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}). \\
     \hline
     record\_type & INTEGER & Loại bản ghi (0 - PPG, 1 - PCG, 2 - HeartRate, 3 - ECG). \\
     \hline
-    data\_directory & STRING & Đường dẫn lưu trữ dữ liệu. \\
+    data\_rec\_url & STRING & Đường dẫn lưu trữ bản ghi. \\
     \hline
-    start\_time & DATE & Thời gian bắt đầu ghi lại record. \\
+    start\_time & DATE & Thời gian bắt đầu phiên đo. \\
     \hline
-    stop\_time & DATE & Thời gian kết thúc ghi lại record. \\
+    end\_time & DATE & Thời gian kết thúc phiên đo. \\
     \hline
-    sensor\_type & STRING & Loại cảm biến. \\
+    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu. \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
-    \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng news\_category}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    category\_id & STRING & Khóa chính của bảng, đại diện cho ID danh mục tin tức. \\
-    \hline
-    category\_name & STRING & Tên danh mục tin tức. \\
-    \hline
-    category\_description & STRING & Mô tả danh mục tin tức. \\
-    \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
-    \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng news}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    news\_id & STRING & Khóa chính của bảng, đại diện cho ID tin tức. \\
-    \hline
-    title & STRING & Tiêu đề tin tức. \\
-    \hline
-    content & TEXT & Nội dung tin tức. \\
-    \hline
-    category\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{category\_id} trong bảng \texttt{news\_category}. \\
-    \hline
-    author & STRING & Tác giả tin tức. \\
-    \hline
-    url & STRING & Đường dẫn tin tức. \\
-    \hline
-    image & STRING & Đường dẫn hình ảnh tin tức (có thể là null). \\
-    \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
-    \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
+    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -604,17 +507,19 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    assign\_id & STRING & Khóa chính của bảng, đại diện cho ID phân công bệnh nhân - bác sĩ. \\
+    id & STRING & ID phân công bác sĩ - bệnh nhân (Khóa chính của bảng). \\
     \hline
-    patient\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user} (với quyền là bệnh nhân). \\
+    patient\_id & STRING & ID bệnh nhân (Khóa ngoại của bảng, tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}). \\
     \hline
-    doctor\_id & INTEGER & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user} (với quyền là bác sĩ). \\
+    doctor\_id & INTEGER & ID bác sĩ (Khóa ngoại của bảng, tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}). \\
     \hline
     start\_date & DATE & Ngày bắt đầu phân công. \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
+    end\_date & DATE & Ngày kết thúc phân công. \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
+    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu. \\
+    \hline
+    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -626,17 +531,17 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & Khóa chính của bảng, đại diện cho ID mã thông báo đặt lại. \\
+    id & STRING & ID của mã đại diện xác thực (Khóa chính của bảng). \\
     \hline
-    account\_id & STRING & Khóa ngoại tham chiếu đến \texttt{account\_id} trong bảng \texttt{account}. \\
+    account\_id & STRING & ID tài khoản (Khóa ngoại tham chiếu đến \texttt{account\_id} trong bảng \texttt{account}). \\
     \hline
     access\_token & STRING & Mã đại diện cho người dùng thao tác với hệ thống. \\
     \hline
     refresh\_token & STRING & Mã đại diện cho người dùng thao tác với hệ thống sau khi \texttt{access\_token} hết hạn. \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
+    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu.. \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
+    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu.. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -651,11 +556,11 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    device\_id & STRING & Khóa chính của bảng, đại diện cho ID thiết bị. \\
+    id & STRING & ID thiết bị (Khóa chính của bảng). \\
     \hline
-    user\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{users}, đại diện cho ID bệnh nhân. \\
+    user\_id & STRING & ID bệnh nhân (Khóa ngoại của bảng, tham chiếu đến \texttt{user\_id} trong bảng \texttt{users}). \\
     \hline
-    doctor\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{users}, đại diện cho ID bác sĩ. \\
+    doctor\_id & STRING & ID bác sĩ (Khóa ngoại của bảng, tham chiếu đến \texttt{user\_id} trong bảng \texttt{users}). \\
     \hline
     device\_name & STRING & Tên thiết bị. \\
     \hline
@@ -663,13 +568,13 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     device\_type & INTEGER & Loại thiết bị (1 - thiết bị đo điện tim, 2 - thiết bị đo nhịp tim, âm thanh tim). \\
     \hline
-    start\_date & DATE & Thời điểm bắt đàu sử dụng thiết bị. \\
+    start\_date & DATE & Thời điểm bắt đầu sử dụng thiết bị. \\
     \hline
     status & INTEGER & Trạng thái của thiết bị (0 - đang được sử dụng, 1 - đang không được sử dụng). \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
+    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu. \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
+    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -682,21 +587,21 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    device\_detail\_id & STRING & Khóa chính của bảng, đại diện cho ID thông tin một device. \\
+    id & STRING & ID thông số thiết bị (Khóa chính của bảng). \\
     \hline
-    device\_id & STRING & Khóa ngoại tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}. \\
+    device\_id & STRING & ID thiết bị (Khóa ngoại của bảng,  tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}). \\
     \hline
-    detail\_name & STRING & Tên trường liên quan thiết bị dựa vào \texttt{detail\_type}. \\
+    detail\_name & STRING & Tên trường thông số thiết bị dựa vào \texttt{detail\_type}. \\
     \hline
     infomation & STRING & Thông tin về trường \texttt{detail\_name} của thiết bị. \\
     \hline
-    value & STRING & Giá trị về loại thông tin của thiết bị dựa vào \texttt{detail\_type} (1 - tần số, 2 - dữ liệu kết nối, 3 - dung lượng lưu trữ). \\
+    value & STRING & Giá trị thông số của thiết bị dựa vào \texttt{detail\_type} (1 - tần số, 2 - dữ liệu kết nối, 3 - dung lượng lưu trữ). \\
     \hline
     detail\_type & INTEGER & Loại thông tin về thiết bị (1 - tín hiệu đo, 2 - loại kết nối, 3 - kiểu lưu trữ). \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL. \\
+    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu. \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL. \\
+    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -708,17 +613,17 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    conversation\_id & STRING & Khóa chính của bảng, đại diện cho ID hội thoại. \\
+    conversation\_id & STRING & ID cuộc hội thoại (Khóa chính của bảng). \\
     \hline
-    name & STRING & Tên cuộc hội thoại. \\
+    name & STRING & Tên cuộc hội thoại \\
     \hline
-    type & INTEGER & Loại của cuộc hội thoại (0 - hội thoại 2 người, 1 - hội thoại nhóm, 2 - chatbot). \\
+    type & INTEGER & Loại cuộc hội thoại (0 - hội thoại 2 người, 1 - hội thoại nhóm, 2 - chatbot) \\
     \hline
-    avatar & STRING & Đoạn mã chứa url ảnh đại diện của cuộc hội thoại  \\
+    avatar & STRING & Đường dẫn ảnh đại diện của cuộc hội thoại  \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL \\
+    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL \\
+    updated\_at & DATE & Thời điểm thay đôi dữ liệu trong cơ sở dữ liệu \\
     \hline
   \end{tabularx}
 \end{table}
@@ -730,25 +635,25 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    message\_id & STRING & Khóa chính của bảng, đại diện cho ID tin nhắn. \\
+    message\_id & STRING & ID tin nhắn (Khóa chính của bảng). \\
     \hline
-    conversation\_id & STRING & Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}, đại diện cho ID hội thoại chứa tin nhắn. \\
+    conversation\_id & STRING & ID hội thoại (Khóa ngoại của bảng, tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}). \\
     \hline
-    sender\_id & STRING & Khóa ngoại tham chiếu đến \texttt{id} trong bảng \texttt{conversation\_member}, đại diện cho ID người gửi tin nhắn. \\
+    sender\_id & STRING & ID người gửi tin nhắn (Khóa ngoại của bảng, tham chiếu đến \texttt{id} trong bảng \texttt{conversation\_member}). \\
     \hline
-    attachments & LIST <Map> & Danh sách tệp tin đính kèm khi gửi tin nhắn.\\
+    attachments & LIST <Map> & Danh sách tệp tin đính kèm khi gửi tin nhắn\\
     \hline
-    system\_message & BOOLEAN & Tin nhắn trả về từ hệ thống.\\
+    system\_message & BOOLEAN & Tin nhắn trả về từ hệ thống\\
     \hline
-    pin & BOOLEAN & Đánh dấu tin nhắn có được ghim không.\\
+    pin & BOOLEAN & Đánh dấu tin nhắn có được ghim không\\
     \hline
-    pin\_time & DATE & Thời gian ghim tin nhắn.\\
+    pin\_time & DATE & Thời gian ghim tin nhắn\\
     \hline
     reactions & LIST <Map> & Danh sách các phản ứng lại với tin nhắn này.\\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL \\
+    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL \\
+    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu \\
     \hline
   \end{tabularx}
 \end{table}
@@ -760,11 +665,11 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & Khóa chính của bảng, đại diện cho ID của thành viên đoạn hội thoại. \\
+    id & STRING & ID của thành viên hội thoại (Khóa chính của bảng)\\
     \hline
-    conversation\_id & STRING & Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}, đại diện cho ID hội thoại chứa tin nhắn. \\
+    conversation\_id & STRING & ID hội thoại (Khóa ngoại của bảng, tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}). \\
     \hline
-    user\_id & STRING & Khóa ngoại tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}, đại diện cho ID người gửi tin nhắn. \\
+    user\_id & STRING & ID người dùng (Khóa ngoại của bảng, tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}). \\
     \hline
     status\_notify & INTEGER & Trạng thái thông báo tin nhắn (0 - có thông báo tin nhắn, 1 - không nhận thông báo tin nhắn).\\
     \hline
@@ -772,9 +677,9 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     role & INTEGER & Vai trò của người dùng trong hội thoại (tương ứng trong bảng \texttt{user}).\\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL \\
+    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL \\
+    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu \\
     \hline
   \end{tabularx}
 \end{table}
@@ -787,13 +692,13 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & Khóa chính của bảng, đại diện cho ID tệp đính kèm tin nhắn. \\
+    id & STRING & ID tệp đính kèm tin nhắn (Khóa chính của bảng) \\
     \hline
-    conversation\_id & STRING & Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}, đại diện cho ID hội thoại chứa tin nhắn. \\
+    conversation\_id & STRING & ID cuộc hội thoại (Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}). \\
     \hline
-    message\_id & STRING & Khóa ngoại tham chiếu đến \texttt{message\_id} trong bảng \texttt{message}, đại diện cho ID tin nhắn. \\
+    message\_id & STRING & ID tin nhắn (Khóa ngoại của bảng, tham chiếu đến \texttt{message\_id} trong bảng \texttt{message}) \\
     \hline
-    content\_url & STRING & Đoạn mã chứa nội dung của tệp tin.\\
+    content\_url & STRING & Đường dẫn lưu trữ tệp đính kèm\\
     \hline
     file\_name & STRING & Tên của tệp tin.\\
     \hline
@@ -803,9 +708,9 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     type & INTEGER & Loại của tệp tin (0 - ảnh, 1 - video, 2 - tệp). \\
     \hline
-    created\_at & DATE & Thời điểm thêm mới dữ liệu vào CSDL \\
+    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu \\
     \hline
-    updated\_at & DATE & Thời điểm cập nhật dữ liệu vào CSDL \\
+    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu \\
     \hline
   \end{tabularx}
 \end{table}
@@ -1081,146 +986,117 @@ có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám.
 \begin{enumerate}[a)]
   \item API liên quan đến việc xác thực người dùng
 
-
-\begin{table}[H]
-  \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến việc xác thực người dùng}
-  \begin{tabularx}{0.9\textwidth}{
-  | >{\raggedright\arraybackslash}X
-  | >{\raggedright\arraybackslash}m{2cm}
-  | >{\raggedright\arraybackslash}X|
-  }
-  \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-  api/auth/register   &   POST  & Đăng ký tài khoản \\ \hline
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{4.5cm}
+    | >{\centering\arraybackslash}m{2.8cm}
+    | >{\raggedright\arraybackslash}X |
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến xác thực người dùng}
+    \label{table_api_auth}
+    \\
+    \hline
+    \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+    api/auth/register   &   POST  & Đăng ký tài khoản \\ \hline
   api/auth/login   &    POST    & Đăng nhập vào hệ thống \\ \hline
   api/auth/logout   &    POST    & Đăng xuất khỏi hệ thống \\ \hline
   api/auth/reset-password  &     POST   &  Gửi reset link kèm reset token đến email của người dùng để reset mật khẩu \\  \hline
   api/auth/reset-password/reset &   POST     & Giúp reset lại mật khẩu mới với verify token được nhận từ api: api/reset-password  \\ \hline
-
-  \end{tabularx}
-  \label{table_api_auth}
-\end{table}
+  \end{xltabular}
 
   \item API liên quan đến việc xét duyệt đăng ký tài khoản
 
-
-\begin{table}[H]
-  \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến việc đăng ký tài khoản}
-  \begin{tabularx}{0.9\textwidth}{
-  | >{\raggedright\arraybackslash}X
-  | >{\raggedright\arraybackslash}m{2cm}
-  | >{\raggedright\arraybackslash}X|
-  }
-  \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-  api/register/list   &   GET  & Lấy danh sách các tài khoản đăng ký đang chờ phê duyệt \\ \hline
-  api/register/accepted   &    POST    & Phê duyệt tài khoản đăng ký \\ \hline
-  api/register/rejected  &     POST   &  Từ chối phê duyệt tài khoản đăng ký \\  \hline
-
-  \end{tabularx}
-  \label{table_api_register}
-\end{table}
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{4cm}
+    | >{\centering\arraybackslash}m{2.8cm}
+    | >{\raggedright\arraybackslash}X |
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến xét duyệt đăng ký tài khoản}
+    \label{table_api_register}
+    \\
+    \hline
+    \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+    api/register/list   &   GET  & Lấy danh sách các tài khoản đang chờ phê duyệt \\ \hline
+    api/register/accepted   &    POST    & Phê duyệt tài khoản đăng ký \\ \hline
+    api/register/rejected  &     POST   &  Từ chối phê duyệt tài khoản đăng ký \\  \hline  
+  \end{xltabular}
 
   \item API liên quan đến thông tin người dùng
   
-
-  \begin{table}[H]
-    \centering
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến thông tin người dùng}
-    \begin{tabularx}{0.9\textwidth}{
-    | >{\raggedright\arraybackslash}X
-    | >{\raggedright\arraybackslash}m{2cm}
-    | >{\raggedright\arraybackslash}X|
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}p{4cm}
+    | >{\centering\arraybackslash}m{2.8cm}
+    | >{\raggedright\arraybackslash}X |
     }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến thông tin người dùng}
+    \label{table_api_user}
+    \\
     \hline
     \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-   api/user   &   GET  &  Lấy danh sách thông tin của tất cả người dùng \\  \hline
-   api/user/id/\{:userId\}  &   GET     & Lấy thông tin cụ thể của người dùng theo Id \\ \hline
-   api/user/role/\{:role\}  &   GET     & Lấy danh sách người dùng theo chức vụ \\ \hline
+    api/user   &   GET  &  Lấy danh sách thông tin của tất cả người dùng \\  \hline
+   api/user/id/:userId  &   GET     & Lấy thông tin cụ thể của người dùng theo Id \\ \hline
+   api/user/role/:role  &   GET     & Lấy danh sách người dùng theo chức vụ \\ \hline
    api/user/update   &    POST    &  Cập nhật thông tin người dùng \\  \hline
-   api/user/delete/\{:userId\}  &   DELETE     & Xóa thông tin người dùng theo Id \\ \hline
-
-    \end{tabularx}
-    \label{table_api_user}
-\end{table}
+   api/user/delete/:userId  &   DELETE     & Xóa thông tin người dùng theo Id \\ \hline
+  \end{xltabular}
 
 \item API liên quan đến quản lý thiết bị
-
-
-\begin{table}[H]
-  \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến quản lý thiết bị}
-  \begin{tabularx}{0.9\textwidth}{
-  | >{\raggedright\arraybackslash}X
-  | >{\raggedright\arraybackslash}m{2cm}
-  | >{\raggedright\arraybackslash}X|
+\begin{xltabular}{\textwidth}{
+  | >{\raggedright\arraybackslash}p{4.8cm}
+  | >{\centering\arraybackslash}m{2.8cm}
+  | >{\raggedright\arraybackslash}X |
   }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến quản lý thiết bị}
+  \label{table_api_device}
+  \\
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
- api/device   &   GET  & Lấy danh sách thông tin tất cả thiết bị \\ \hline
- api/devide/\{:deviceId\}   &    GET    & Lấy thông tin của một thiết bị \\ \hline
- api/device/add &   POST     & Thêm thông tin thiết bị mới \\ \hline
- api/device/update  &     POST   & Cập nhật thông tin một thiết bị \\ \hline
- api/device/delete/\{:deviceId\}  &     DELETE   & Xóa thông tin một thiết bị theo Id \\ \hline
-
-  \end{tabularx}
-  \label{table_api_device}
-\end{table}
+  api/device   &   GET  & Lấy danh sách thông tin tất cả thiết bị \\ \hline
+  api/devide/:deviceId   &    GET    & Lấy thông tin của một thiết bị \\ \hline
+  api/device/add &   POST     & Thêm thông tin thiết bị mới \\ \hline
+  api/device/update  &     POST   & Cập nhật thông tin một thiết bị \\ \hline
+  api/device/delete/:deviceId  &     DELETE   & Xóa thông tin một thiết bị theo Id \\ \hline
+\end{xltabular}
 
 \item API liên quan đến bản ghi ECG
-
-
-\begin{table}[H]
-  \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến bản ghi ECG}
-  \begin{tabularx}{0.9\textwidth}{
-  | >{\raggedright\arraybackslash}X
-  | >{\raggedright\arraybackslash}m{2cm}
-  | >{\raggedright\arraybackslash}X|
+\begin{xltabular}{\textwidth}{
+  | >{\raggedright\arraybackslash}p{5cm}
+  | >{\centering\arraybackslash}m{2.8cm}
+  | >{\raggedright\arraybackslash}X |
   }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan liên quan đến bản ghi ECG}
+  \label{table_api_ecg}
+  \\
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
  api/record   &   GET  & Lấy danh sách thông tin các phiên đo ECG \\ \hline
- api/record/user/\{:userId\}   &    GET    & Lấy danh sách thông tin các phiên đo ECG của bệnh nhân \\ \hline
- api/record/doctor/\{:doctorId\} &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sỹ \\ \hline
- api/record/id/\{:recordId\}  &     GET   & Lấy thông tin một phiên đo của bệnh nhân \\ \hline
- api/record/getData/\{:recordId\}  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
- api/ record/download/\{:recordId\}  &     GET   & Tải dữ liệu một phiên đo của bệnh nhân \\ \hline
+ api/record/user/:userId   &    GET    & Lấy danh sách thông tin các phiên đo ECG của bệnh nhân \\ \hline
+ api/record/doctor/:doctorId &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sỹ \\ \hline
+ api/record/id/:recordId  &     GET   & Lấy thông tin một phiên đo của bệnh nhân \\ \hline
+ api/record/getData/:recordId  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
+ api/ record/download/:recordId  &     GET   & Tải dữ liệu một phiên đo của bệnh nhân \\ \hline
  api/record/update  &     POST   & Cập nhật thông tin một phiên đo của bệnh nhân \\ \hline
- api/record/delete/\{:recordId\}  &     DELETE   & Xóa thông tin một phiên đo của bệnh nhân \\ \hline
-
-  \end{tabularx}
-  \label{table_api_ecg}
-\end{table}
+ api/record/delete/:recordId  &     DELETE   & Xóa thông tin một phiên đo của bệnh nhân \\ \hline
+  \end{xltabular}
 
 
-\item API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ
-
-\begin{table}[H]
-  \centering
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan liên quan đến việc phân công bệnh nhân cho bác sỹ}
-  \begin{tabularx}{0.9\textwidth}{
-  | >{\raggedright\arraybackslash}X
-  | >{\raggedright\arraybackslash}m{2cm}
-  | >{\raggedright\arraybackslash}X|
+\item API liên quan liên quan đến việc phân công bệnh nhân - bác sĩ
+\begin{xltabular}{\textwidth}{
+  | >{\raggedright\arraybackslash}p{4.5cm}
+  | >{\centering\arraybackslash}m{2.8cm}
+  | >{\raggedright\arraybackslash}X |
   }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan liên quan đến việc phân công bệnh nhân - bác sĩ}
+  \label{table_api_pda}
+  \\
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
   api/pda   &   GET  & Lấy danh sách tất cả thông tin phân công bác sĩ - bệnh nhân \\ \hline
   api/pda/create  &    POST    & Tạo một phân công bác sĩ - bệnh nhân mới \\ \hline
   api/pda/update  &    POST    & Cập nhật thông tin một phân công bác sĩ - bệnh nhân mới \\ \hline
-  api/pda/delete/\{:pdaId\}  &    DELETE    & Xóa một phân công bác sĩ - bệnh nhân mới \\ \hline
-  api/pda/patient/\{:doctorId\} &  GET  & Lấy danh sách tất cả bệnh nhân theo ID bác sĩ \\ \hline
-  api/pda/doctor/\{:patientId\} &  GET  & Lấy danh sách tất cả bác sĩ theo ID bệnh nhân \\ \hline
-
-
-  \end{tabularx}
-  \label{table_api_pda}
-\end{table}
-
-
+  api/pda/delete/:pdaId  &    DELETE    & Xóa một phân công bác sĩ - bệnh nhân mới \\ \hline
+  api/pda/patient/:doctorId &  GET  & Lấy danh sách tất cả bệnh nhân theo ID bác sĩ \\ \hline
+  api/pda/doctor/:patientId &  GET  & Lấy danh sách tất cả bác sĩ theo ID bệnh nhân \\ \hline
+  \end{xltabular}
 
 \end{enumerate}
 
@@ -1237,17 +1113,17 @@ có màu xanh, còn tin nhắn phản hồi từ AI sẽ có nền màu xám.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=15cm]{Images/sequence_api/register.png}
+  \includegraphics[scale=0.4]{Images/sequence_api/register.png}
   \caption[Sơ đồ tuần tự cho API đăng ký tài khoản vào hệ thống]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API đăng ký tài khoản vào hệ thống }
   \label{api_register} %đặt tên cho ảnh
 \end{figure}
-Hình \ref{api_register} mô tả quá trình người dùng đăng ký tài khoản trên hệ thống. Người dùng gửi yêu cầu đăng ký, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. AutheController kiểm tra thông tin người dùng qua RegisterService, 
-nếu sai thông tin sẽ trả về lỗi, ngược lại sẽ tạo tài khoản phê duyệt và trả về response cho người dùng. 
+Hình \ref{api_register} mô tả quá trình người dùng đăng ký tài khoản trên hệ thống. Người dùng gửi yêu cầu đăng ký, thông qua các tầng của hệ thống, yêu cầu này được xử lý bởi AuthController. AuthController kiểm tra thông tin người dùng qua RegisterService, 
+nếu sai thông tin sẽ trả về lỗi, ngược lại sẽ tạo tài khoản phê duyệt và trả thông báo cho người dùng. 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=16cm]{Images/sequence_api/login.png}
+  \includegraphics[scale=0.3]{Images/sequence_api/login.png}
   \caption[Sơ đồ tuần tự cho API đăng nhập vào hệ thống]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API đăng nhập vào hệ thống }
   \label{api_login} %đặt tên cho ảnh
@@ -1266,7 +1142,7 @@ nếu đúng thông tin đăng nhập và trả về response cho người dùng
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getAllUsers.png}
+  \includegraphics[scale=0.33]{Images/sequence_api/getAllUsers.png}
   \caption[Sơ đồ tuần tự cho API lấy danh sách tất cả người dùng ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả người dùng }
   \label{api_getAllUser} %đặt tên cho ảnh
@@ -1277,7 +1153,7 @@ Nếu kết quả thành công, hệ thống trả về danh sách người dùn
 % sửa lại ảnh 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=11.5cm]{Images/sequence_api/getUserById.png}
+  \includegraphics[scale=0.3]{Images/sequence_api/getUserById.png}
   \caption[Sơ đồ tuần tự cho API lấy thông tin của người dùng dựa trên ID ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy thông tin của người dùng dựa trên ID }
   \label{api_getUserById} %đặt tên cho ảnh
@@ -1287,7 +1163,7 @@ thông tin tồn tại trong hệ thống. Nếu truy vấn thành công, hệ t
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=10cm]{Images/sequence_api/getUserByRole.png}
+  \includegraphics[scale=0.4]{Images/sequence_api/getUserByRole.png}
   \caption[Sơ đồ tuần tự cho API lấy danh sách người dùng dựa trên chức vụ ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy danh sách người dùng dựa trên chức vụ }
   \label{api_getUserByRole} %đặt tên cho ảnh
@@ -1297,7 +1173,7 @@ chức vụ tồn tại trong hệ thống. Nếu kết quả thành công, hệ
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=14cm]{Images/sequence_api/editUser.png}
+  \includegraphics[scale=0.35]{Images/sequence_api/editUser.png}
   \caption[Sơ đồ tuần tự cho API cập nhật thông tin người dùng ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API cập nhật thông tin người dùng }
   \label{api_updateUserById} %đặt tên cho ảnh
@@ -1308,7 +1184,7 @@ Nếu không tồn tại người dùng, hệ thống sẽ trả về lỗi tư�
 từ UserModel và được gửi trở lại UserRoute để trả về response cho người dùng. Nếu kết quả thành công, hệ thống trả về kết quả cập nhật cho người dùng, ngược lại, hệ thống trả về lỗi tương ứng.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=13cm]{Images/sequence_api/deleteUserById.png}
+  \includegraphics[scale=0.4]{Images/sequence_api/deleteUserById.png}
   \caption[Sơ đồ tuần tự cho API xóa thông tin người dùng ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API xóa thông tin người dùng }
   \label{api_deleteUser} %đặt tên cho ảnh
@@ -1328,7 +1204,7 @@ từ UserModel và được gửi trở lại UserRoute để trả về cho ng�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getAllRecord.png}
+  \includegraphics[scale=0.35]{Images/sequence_api/getAllRecord.png}
   \caption[Sơ đồ tuần tự cho API lấy danh sách tất cả phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả phiên đo ECG }
   \label{api_getAllEcgRecords} %đặt tên cho ảnh
@@ -1339,7 +1215,7 @@ ngược lại, hệ thống trả về lỗi tương ứng.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=10.5cm]{Images/sequence_api/getRecordsByUser.png}
+  \includegraphics[scale=0.3]{Images/sequence_api/getRecordsByUser.png}
   \caption[Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của một bệnh nhân ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của một bệnh nhân }
   \label{api_getRecordsByUser} %đặt tên cho ảnh
@@ -1351,7 +1227,7 @@ Nếu kết quả thành công, hệ thống trả về danh sách phiên đo c�
 
  \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/getRecordsByDoctor.png}
+  \includegraphics[scale=0.3]{Images/sequence_api/getRecordsByDoctor.png}
   \caption[Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy danh sách phiên đo ECG của bệnh nhân được quản lý bởi một bác sỹ}
   \label{api_getRecordsByDoctor} %đặt tên cho ảnh
@@ -1363,7 +1239,7 @@ Nếu kết quả thành công, hệ thống trả về danh sách phiên đo c�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getRecordById.png}
+  \includegraphics[scale=0.35]{Images/sequence_api/getRecordById.png}
   \caption[Sơ đồ tuần tự cho API lấy thông tin một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy thông tin một phiên đo ECG }
   \label{api_getRecordById} %đặt tên cho ảnh
@@ -1373,7 +1249,7 @@ yêu cầu này được xử lý bởi RecordController. RecordService gửi tr
 Nếu kết quả thành công, hệ thống trả về thông tin phiên đo ECG, ngược lại, hệ thống trả về lỗi tương ứng.
  \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=11.5cm]{Images/sequence_api/getRecordDataById.png}
+  \includegraphics[scale=0.33]{Images/sequence_api/getRecordDataById.png}
   \caption[Sơ đồ tuần tự cho API lấy dữ liệu bản ghi một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy dữ liệu bản ghi một phiên đo ECG }
   \label{api_getRecordDataById} %đặt tên cho ảnh
@@ -1385,7 +1261,7 @@ Nếu kết quả thành công, hệ thống trả về dữ liệu bản ghi ph
 
  \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/downloadRecordDataById.png}
+  \includegraphics[scale=0.38]{Images/sequence_api/downloadRecordDataById.png}
   \caption[Sơ đồ tuần tự cho API tải tệp bản ghi một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API tải tệp bản ghi một phiên đo ECG }
   \label{api_downloadRecordDataById} %đặt tên cho ảnh
@@ -1396,7 +1272,7 @@ trả về response lỗi tương ứng. Nếu bản ghi có trong hệ thống,
 Nếu kết quả thành công, hệ thống trả về tệp bản ghi của phiên đo, ngược lại, hệ thống trả về lỗi tương ứng.
  \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=14cm]{Images/sequence_api/editRecordById.png}
+  \includegraphics[scale=0.25]{Images/sequence_api/editRecordById.png}
   \caption[Sơ đồ tuần tự cho API cập nhật thông tin một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API cập nhật thông tin một phiên đo ECG }
   \label{api_editRecordById} %đặt tên cho ảnh
@@ -1408,7 +1284,7 @@ phiên đo ECG dựa trên thông tin được truyền vào từ yêu cầu. N�
 
  \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=11.5cm]{Images/sequence_api/deleteRecordById.png}
+  \includegraphics[scale=0.4]{Images/sequence_api/deleteRecordById.png}
   \caption[Sơ đồ tuần tự cho API xóa thông tin một phiên đo ECG ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API xóa thông tin một phiên đo ECG }
   \label{api_deleteRecordById} %đặt tên cho ảnh
@@ -1425,7 +1301,7 @@ Nếu thông tin phiên đo có trong hệ thống, RecordService gửi truy v�
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getAllDevices.png}
+  \includegraphics[scale=0.4]{Images/sequence_api/getAllDevices.png}
   \caption[Sơ đồ tuần tự cho API lấy danh sách tất cả thiết bị ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả thiết bị }
   \label{api_getAllDevices} %đặt tên cho ảnh
@@ -1436,7 +1312,7 @@ yêu cầu này được xử lý bởi DeviceController. DeviceController tiế
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=10cm]{Images/sequence_api/getDeviceById.png}
+  \includegraphics[scale=0.4]{Images/sequence_api/getDeviceById.png}
   \caption[Sơ đồ tuần tự cho API lấy thông tin thiết bị dựa trên ID]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy thông tin thiết bị dựa trên ID }
   \label{api_getDeviceById} %đặt tên cho ảnh
@@ -1446,7 +1322,7 @@ yêu cầu này được xử lý bởi DeviceController. DeviceService gửi tr
 Nếu kết quả thành công, hệ thống trả về thông tin thiết bị, ngược lại, hệ thống trả về lỗi tương ứng.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=13cm]{Images/sequence_api/addDevice.png}
+  \includegraphics[scale=0.3]{Images/sequence_api/addDevice.png}
   \caption[Sơ đồ tuần tự cho API thêm thiết bị]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API thêm thiết bị }
   \label{api_addDevice} %đặt tên cho ảnh
@@ -1458,7 +1334,7 @@ dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thốn
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=14cm]{Images/sequence_api/editDevice.png}
+  \includegraphics[scale=0.3]{Images/sequence_api/editDevice.png}
   \caption[Sơ đồ tuần tự cho API cập nhật thông tin thiết bị ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API cập nhật thông tin thiết bị }
   \label{api_editDevice} %đặt tên cho ảnh
@@ -1470,14 +1346,14 @@ yêu cầu này được xử lý bởi DeviceController. DeviceController gửi
 
  \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=12cm]{Images/sequence_api/deleteDeviceById.png}
+  \includegraphics[scale=0.4]{Images/sequence_api/deleteDeviceById.png}
   \caption[Sơ đồ tuần tự cho API xóa thiết bị]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API xóa thiết bị }
   \label{api_deleteDeviceById} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{api_deleteDeviceById} mô tả quá trình xóa thiết bị trong hệ thống. Quản trị viên gửi yêu cầu xóa thông tin thiết bị, 
 yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến DeviceService để kiểm tra thông tin thiết bị trong hệ thống dựa theo deviceId (ID của thiết bị) được truyền vào từ yêu cầu. 
-Nếu thiết bị không tồn tại trong hệ thống, hệ thống sẽ trả về lỗi tương ứng. Nếu thông tin có trong hệ thống, DeviceService gửi truy vấn đến DeviceModel để xóa thông tin thiết bị 
+Nếu thiết bị không tồn tại trong hệ thống, hệ thống sẽ trả về lỗi tương ứng. DeviceService sẽ gửi truy vấn đến DeviceModel để xóa thông tin thiết bị 
 dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thống trả về kết quả xóa cho quản trị viên, ngược lại, hệ thống trả về lỗi tương ứng.
 
 % -----------------------------------------------------
@@ -1490,7 +1366,7 @@ dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thốn
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=9cm]{Images/sequence_api/getAllPDA.png}
+  \includegraphics[scale=0.35]{Images/sequence_api/getAllPDA.png}
   \caption[Sơ đồ tuần tự cho API lấy danh sách tất cả phân công bác sĩ - bệnh nhân ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả phân công bác sĩ - bệnh nhân }
   \label{api_getAllPDA} %đặt tên cho ảnh
@@ -1499,7 +1375,17 @@ Hình \ref{api_getAllPDA} mô tả quá trình lấy danh sách tất cả phân
 yêu cầu này được xử lý bởi PDAController. PDAService gửi truy vấn đến PDAModel để lấy danh sách phân công. Nếu kết quả thành công, hệ thống trả về danh sách phân công bác sĩ - bệnh nhân cho quản trị viên, ngược lại, hệ thống trả về lỗi tương ứng.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=14cm]{Images/sequence_api/addAssignment.png}
+  \includegraphics[scale=0.3]{Images/sequence_api/getPatientByDoctorId.png}
+  \caption[Sơ đồ tuần tự cho API lấy danh sách tất cả bệnh nhân phụ trách bởi một bác sĩ ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API lấy danh sách tất cả bệnh nhân phụ trách bởi một bác sĩ }
+  \label{api_getPatient} %đặt tên cho ảnh
+\end{figure}
+Hình \ref{api_getPatient} mô tả quá trình lấy danh sách tất cả bệnh nhân phụ trách bởi một bác sĩ trong hệ thống. Bác sĩ gửi yêu cầu lấy danh sách bệnh nhân mà mình phụ trách, 
+yêu cầu này được xử lý bởi PDAController. PDAService gửi truy vấn đến UserModel để lấy danh sách bệnh nhân dựa theo doctor\_id (ID của bác sĩ). Nếu kết quả thành công, hệ thống trả về danh sách bệnh nhân cho bác sĩ, ngược lại, hệ thống trả về lỗi tương ứng.
+Sơ đồ tuần tự lấy thông tin bác sĩ phụ trách của một bệnh nhân cũng tương tự như vậy
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{Images/sequence_api/addAssignment.png}
   \caption[Sơ đồ tuần tự cho API thêm phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API thêm phân công bệnh nhân - bác sĩ }
   \label{api_addPDA} %đặt tên cho ảnh
@@ -1511,7 +1397,7 @@ Ngược lại, PDAService gửi truy vấn đến PDAModel để thêm thông t
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=13cm]{Images/sequence_api/editAssignment.png}
+  \includegraphics[scale=0.3]{Images/sequence_api/editAssignment.png}
   \caption[Sơ đồ tuần tự cho API cập nhật thông tin phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API cập nhật thông tin phân công bệnh nhân - bác sĩ }
   \label{api_editPDA} %đặt tên cho ảnh
@@ -1523,7 +1409,7 @@ Ngược lại, PDAService gửi truy vấn đến PDAModel để sửa thông t
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=16cm,height=11cm]{Images/sequence_api/deleteAssignment.png}
+  \includegraphics[scale=0.4]{Images/sequence_api/deleteAssignment.png}
   \caption[Sơ đồ tuần tự cho API xóa phân công bệnh nhân - bác sĩ]{\bfseries \fontsize{12pt}{0pt}
   \selectfont Sơ đồ tuần tự cho API xóa phân công bệnh nhân - bác sĩ }
   \label{api_deletePDA} %đặt tên cho ảnh
