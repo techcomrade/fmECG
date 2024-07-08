@@ -395,9 +395,9 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & ID người dùng. (Khóa chính của bảng) \\
+    id & STRING & ID người dùng.  \\
     \hline
-    account\_id & STRING & ID tài khoản người dùng. (Khóa ngoại tham chiếu đến \texttt{account\_id}) trong bảng \texttt{account}\\
+    account\_id & STRING & ID tài khoản người dùng. \\
     \hline
     username & STRING & Họ và tên người dùng. \\
     \hline
@@ -415,9 +415,9 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     role & INTEGER & Chức vụ của người dùng (0 - bệnh nhân, 1 - bác sĩ, 2 - quản trị viên). \\
     \hline
-    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu. \\
+    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu. \\
     \hline
-    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu. \\
+    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu. \\
     \hline
     
   \end{tabularx}
@@ -431,7 +431,7 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & ID tài khoản (Khóa chính của bảng). \\
+    id & STRING & ID tài khoản  \\
     \hline
     email & STRING & Địa chỉ email của tài khoản. \\
     \hline
@@ -447,7 +447,7 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & ID tài khoản đăng ký (Khóa chính của bảng). \\
+    id & STRING & ID tài khoản đăng ký \\
     \hline
     email & STRING & Địa chỉ email của tài khoản đăng ký. \\
     \hline
@@ -479,11 +479,11 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & ID bản ghi record (Khóa chính của bảng). \\
+    id & STRING & ID bản ghi record  \\
     \hline
-    user\_id & STRING & ID bệnh nhân (Khóa ngoại của bảng, tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}). \\
+    user\_id & STRING & ID bệnh nhân  \\
     \hline
-    device\_id & STRING & ID thiết bị theo dõi (Khóa ngoại của bảng, tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}). \\
+    device\_id & STRING & ID thiết bị theo dõi  \\
     \hline
     record\_type & INTEGER & Loại bản ghi (0 - PPG, 1 - PCG, 2 - HeartRate, 3 - ECG). \\
     \hline
@@ -493,9 +493,9 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     end\_time & DATE & Thời gian kết thúc phiên đo. \\
     \hline
-    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu. \\
+    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu. \\
     \hline
-    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu. \\
+    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -507,19 +507,19 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & ID phân công bác sĩ - bệnh nhân (Khóa chính của bảng). \\
+    id & STRING & ID phân công bác sĩ - bệnh nhân  \\
     \hline
-    patient\_id & STRING & ID bệnh nhân (Khóa ngoại của bảng, tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}). \\
+    patient\_id & STRING & ID bệnh nhân  \\
     \hline
-    doctor\_id & INTEGER & ID bác sĩ (Khóa ngoại của bảng, tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}). \\
+    doctor\_id & INTEGER & ID bác sĩ  \\
     \hline
     start\_date & DATE & Ngày bắt đầu phân công. \\
     \hline
     end\_date & DATE & Ngày kết thúc phân công. \\
     \hline
-    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu. \\
+    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu. \\
     \hline
-    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu. \\
+    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -531,17 +531,17 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & ID của mã đại diện xác thực (Khóa chính của bảng). \\
+    id & STRING & ID của mã đại diện xác thực  \\
     \hline
-    account\_id & STRING & ID tài khoản (Khóa ngoại tham chiếu đến \texttt{account\_id} trong bảng \texttt{account}). \\
+    account\_id & STRING & ID tài khoản  \\
     \hline
     access\_token & STRING & Mã đại diện cho người dùng thao tác với hệ thống. \\
     \hline
     refresh\_token & STRING & Mã đại diện cho người dùng thao tác với hệ thống sau khi \texttt{access\_token} hết hạn. \\
     \hline
-    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu.. \\
+    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu.. \\
     \hline
-    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu.. \\
+    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu.. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -556,11 +556,11 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & ID thiết bị (Khóa chính của bảng). \\
+    id & STRING & ID thiết bị  \\
     \hline
-    user\_id & STRING & ID bệnh nhân (Khóa ngoại của bảng, tham chiếu đến \texttt{user\_id} trong bảng \texttt{users}). \\
+    user\_id & STRING & ID bệnh nhân  \\
     \hline
-    doctor\_id & STRING & ID bác sĩ (Khóa ngoại của bảng, tham chiếu đến \texttt{user\_id} trong bảng \texttt{users}). \\
+    doctor\_id & STRING & ID bác sĩ  \\
     \hline
     device\_name & STRING & Tên thiết bị. \\
     \hline
@@ -568,13 +568,13 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     device\_type & INTEGER & Loại thiết bị (1 - thiết bị đo điện tim, 2 - thiết bị đo nhịp tim, âm thanh tim). \\
     \hline
-    start\_date & DATE & Thời điểm bắt đầu sử dụng thiết bị. \\
+    start\_date & DATE & Thời gian lúc bắt đầu sử dụng thiết bị. \\
     \hline
     status & INTEGER & Trạng thái của thiết bị (0 - đang được sử dụng, 1 - đang không được sử dụng). \\
     \hline
-    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu. \\
+    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu. \\
     \hline
-    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu. \\
+    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -587,9 +587,9 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & ID thông số thiết bị (Khóa chính của bảng). \\
+    id & STRING & ID thông số thiết bị  \\
     \hline
-    device\_id & STRING & ID thiết bị (Khóa ngoại của bảng,  tham chiếu đến \texttt{device\_id} trong bảng \texttt{device}). \\
+    device\_id & STRING & ID thiết bị  \\
     \hline
     detail\_name & STRING & Tên trường thông số thiết bị dựa vào \texttt{detail\_type}. \\
     \hline
@@ -599,9 +599,9 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     detail\_type & INTEGER & Loại thông tin về thiết bị (1 - tín hiệu đo, 2 - loại kết nối, 3 - kiểu lưu trữ). \\
     \hline
-    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu. \\
+    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu. \\
     \hline
-    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu. \\
+    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -613,7 +613,7 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    conversation\_id & STRING & ID cuộc hội thoại (Khóa chính của bảng). \\
+    conversation\_id & STRING & ID cuộc hội thoại  \\
     \hline
     name & STRING & Tên cuộc hội thoại \\
     \hline
@@ -621,9 +621,9 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     avatar & STRING & Đường dẫn ảnh đại diện của cuộc hội thoại  \\
     \hline
-    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu \\
+    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu \\
     \hline
-    updated\_at & DATE & Thời điểm thay đôi dữ liệu trong cơ sở dữ liệu \\
+    updated\_at & DATE & Thời gian lúc thay đôi dữ liệu trong cơ sở dữ liệu \\
     \hline
   \end{tabularx}
 \end{table}
@@ -635,11 +635,11 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    message\_id & STRING & ID tin nhắn (Khóa chính của bảng). \\
+    message\_id & STRING & ID tin nhắn  \\
     \hline
-    conversation\_id & STRING & ID hội thoại (Khóa ngoại của bảng, tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}). \\
+    conversation\_id & STRING & ID hội thoại  \\
     \hline
-    sender\_id & STRING & ID người gửi tin nhắn (Khóa ngoại của bảng, tham chiếu đến \texttt{id} trong bảng \texttt{conversation\_member}). \\
+    sender\_id & STRING & ID người gửi tin nhắn  \\
     \hline
     attachments & LIST <Map> & Danh sách tệp tin đính kèm khi gửi tin nhắn\\
     \hline
@@ -651,9 +651,9 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     reactions & LIST <Map> & Danh sách các phản ứng lại với tin nhắn này.\\
     \hline
-    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu \\
+    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu \\
     \hline
-    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu \\
+    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu \\
     \hline
   \end{tabularx}
 \end{table}
@@ -665,11 +665,11 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & ID của thành viên hội thoại (Khóa chính của bảng)\\
+    id & STRING & ID của thành viên hội thoại \\
     \hline
-    conversation\_id & STRING & ID hội thoại (Khóa ngoại của bảng, tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}). \\
+    conversation\_id & STRING & ID hội thoại \\
     \hline
-    user\_id & STRING & ID người dùng (Khóa ngoại của bảng, tham chiếu đến \texttt{user\_id} trong bảng \texttt{user}). \\
+    user\_id & STRING & ID người dùng  \\
     \hline
     status\_notify & INTEGER & Trạng thái thông báo tin nhắn (0 - có thông báo tin nhắn, 1 - không nhận thông báo tin nhắn).\\
     \hline
@@ -677,9 +677,9 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     role & INTEGER & Vai trò của người dùng trong hội thoại (tương ứng trong bảng \texttt{user}).\\
     \hline
-    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu \\
+    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu \\
     \hline
-    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu \\
+    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu \\
     \hline
   \end{tabularx}
 \end{table}
@@ -692,11 +692,11 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
     \hline
-    id & STRING & ID tệp đính kèm tin nhắn (Khóa chính của bảng) \\
+    id & STRING & ID tệp đính kèm tin nhắn  \\
     \hline
-    conversation\_id & STRING & ID cuộc hội thoại (Khóa ngoại tham chiếu đến \texttt{conversation\_id} trong bảng \texttt{conversation}). \\
+    conversation\_id & STRING & ID cuộc hội thoại  \\
     \hline
-    message\_id & STRING & ID tin nhắn (Khóa ngoại của bảng, tham chiếu đến \texttt{message\_id} trong bảng \texttt{message}) \\
+    message\_id & STRING & ID tin nhắn  \\
     \hline
     content\_url & STRING & Đường dẫn lưu trữ tệp đính kèm\\
     \hline
@@ -708,9 +708,9 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     type & INTEGER & Loại của tệp tin (0 - ảnh, 1 - video, 2 - tệp). \\
     \hline
-    created\_at & DATE & Thời điểm tạo mới dữ liệu trong cơ sở dữ liệu \\
+    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu \\
     \hline
-    updated\_at & DATE & Thời điểm thay đổi dữ liệu trong cơ sở dữ liệu \\
+    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu \\
     \hline
   \end{tabularx}
 \end{table}
@@ -1190,7 +1190,7 @@ Nếu không tồn tại người dùng, hệ thống sẽ trả về lỗi tư�
 \end{figure}
 Hình \ref{api_deleteUser} phân tích luồng thông tin xóa dữ liệu người dùng trong hệ thống. Quản trị viên gửi yêu cầu xóa dữ liệu người dùng, 
 yêu cầu này được xử lý bởi UserController. UserController gửi truy vấn đến UserService để kiểm tra thông tin người dùng trong hệ thống dựa theo id (ID của người dùng) được truyền vào từ yêu cầu. 
-Nếu không tồn tại người dùng, hệ thống sẽ trả về lỗi tương ứng, ngược lại, UserService gửi truy vấn đến UserModel để xóa thông tin người dùng. Sau đó, kết quả cập nhật được trả về 
+Nếu thông tin người dùng không có trong hệ thống, hệ thống sẽ trả về lỗi tương ứng, ngược lại, UserService gửi truy vấn đến UserModel để xóa thông tin người dùng. Sau đó, kết quả cập nhật được trả về 
 từ UserModel và được gửi trở lại UserRoute để trả về cho người dùng. Nếu kết quả thành công, hệ thống trả về kết quả cho quản trị viên, ngược lại, hệ thống trả về lỗi tương ứng.
 
 % \linebreak
@@ -1220,7 +1220,7 @@ ngược lại, hệ thống trả về lỗi tương ứng.
   \label{api_getRecordsByUser} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{api_getRecordsByUser} phân tích luồng thông tin lấy danh sách các phiên đo ECG (Electrocardiogram) của một bệnh nhân trong hệ thống. Người dùng gửi yêu cầu lấy danh sách các phiên đo ECG của bệnh nhân, 
-yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân có tồn tại trong hệ thống dựa theo userId (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu thông tin bệnh nhân ứng vơi ID không tồn tại trong hệ thống, hệ thống sẽ
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân có tồn tại trong hệ thống dựa theo userId (ID của bệnh nhân) được truyền vào từ yêu cầu. Nếu thông tin bệnh nhân ứng vơi ID không có trong hệ thống, hệ thống sẽ
 trả về lỗi tương ứng. Ngược lại, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên userId (ID của bệnh nhân) được truyền vào từ yêu cầu. 
 Nếu kết quả thành công, hệ thống trả về danh sách phiên đo của bệnh nhân, ngược lại, hệ thống trả về lỗi tương ứng.
 
@@ -1232,7 +1232,7 @@ Nếu kết quả thành công, hệ thống trả về danh sách phiên đo c�
   \label{api_getRecordsByDoctor} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{api_getRecordsByDoctor} phân tích luồng thông tin lấy danh sách dữ liệu các phiên đo ECG (Electrocardiogram) của bệnh nhân được quản lý bởi một bác sĩ trong hệ thống. Người dùng gửi yêu cầu lấy danh sách các phiên đo ECG của bệnh nhân được quản lý bởi một bác sĩ, 
-yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bác sĩ có tồn tại trong hệ thống dựa theo doctorId (ID của bác sĩ) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bác sĩ hay không phải là bác sĩ, hệ thống sẽ
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến UserService để kiểm tra thông tin bác sĩ có tồn tại trong hệ thống dựa theo doctorId (ID của bác sĩ) được truyền vào từ yêu cầu. Nếu hệ thống không có bác sĩ hay người dùng không phải là bác sĩ, hệ thống sẽ
 trả về response lỗi tương ứng. Nếu hệ thồng không có thông tin bác sĩ, RecordService gửi truy vấn đến RecordModel để lấy danh sách dữ liệu ECG dựa trên doctorId (ID của bác sĩ) được truyền vào từ yêu cầu. 
 Nếu kết quả thành công, hệ thống trả về danh sách phiên đo của bệnh nhân do bác sĩ phụ trách, ngược lại, hệ thống trả về lỗi tương ứng.
 
@@ -1254,7 +1254,7 @@ Nếu kết quả thành công, hệ thống trả về thông tin phiên đo EC
   \label{api_getRecordDataById} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{api_getRecordDataById} phân tích luồng thông tin lấy dữ liệu bản ghi một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng gửi yêu cầu lấy dữ liệu bản ghi một phiên đo của bệnh nhân, 
-yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin, đường dẫn bản ghi có tồn tại trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo hay đường dẫn bản ghi, hệ thống sẽ
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin, đường dẫn bản ghi có tồn tại trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không có thông tin phiên đo hay đường dẫn bản ghi, hệ thống sẽ
 trả về lỗi tương ứng. Nếu bản ghi có trong hệ thống, RecordService gửi truy vấn đến RecordModel để lấy dữ liệu ECG dựa trên recordId (ID của phiên đo) được truyền vào từ yêu cầu. 
 Nếu kết quả thành công, hệ thống trả về dữ liệu bản ghi phiên đo, ngược lại, hệ thống trả về lỗi tương ứng.
 
@@ -1266,7 +1266,7 @@ Nếu kết quả thành công, hệ thống trả về dữ liệu bản ghi ph
   \label{api_downloadRecordDataById} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{api_downloadRecordDataById} phân tích luồng thông tin tải tệp bản ghi một phiên đo của bệnh nhân trong hệ thống. Người dùng gửi yêu cầu tải dữ liệu bản ghi một phiên đo ECG của bệnh nhân, 
-yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin, đường dẫn bản ghi có tồn tại trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo hay đường dẫn bản ghi, hệ thống sẽ
+yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService để kiểm tra thông tin, đường dẫn bản ghi có tồn tại trong hệ thống dựa theo recordId (ID của phiên đo) được truyền vào từ yêu cầu. Nếu hệ thống không có thông tin phiên đo hay đường dẫn bản ghi, hệ thống sẽ
 trả về response lỗi tương ứng. Nếu bản ghi có trong hệ thống, RecordService gửi truy vấn đến Server để lấy tệp dữ liệu ECG dựa trên đường dẫn tệp bản ghi được truyền vào từ yêu cầu. 
 Nếu kết quả thành công, hệ thống trả về tệp bản ghi của phiên đo, ngược lại, hệ thống trả về lỗi tương ứng.
  \begin{figure}[H]
@@ -1278,7 +1278,7 @@ Nếu kết quả thành công, hệ thống trả về tệp bản ghi của ph
 \end{figure}
 Hình \ref{api_editRecordById} phân tích luồng thông tin cập nhật thông tin một phiên đo ECG (Electrocardiogram) của bệnh nhân trong hệ thống. Người dùng gửi yêu cầu cập nhật thông tin một phiên đo ECG của bệnh nhân, 
 yêu cầu này được xử lý bởi RecordController. RecordController gửi truy vấn đến RecordService, DeviceService, UserService để kiểm tra thông tin bản ghi, thiết bị và bệnh nhân trong hệ thống dựa theo id (ID của phiên đo), user\_id (ID của bệnh nhân), device\_id (ID của thiết bị)
- được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại phiên đo, bệnh nhân hay thiết bị, hệ thống sẽ trả về lỗi tương ứng. Nếu thông tin có trong hệ thống, RecordService gửi truy vấn đến RecordModel để cập nhật thông tin
+ được truyền vào từ yêu cầu. Nếu hệ thống không có thông tin phiên đo, bệnh nhân hay thiết bị, hệ thống sẽ trả về lỗi tương ứng. Nếu thông tin có trong hệ thống, RecordService gửi truy vấn đến RecordModel để cập nhật thông tin
 phiên đo ECG dựa trên thông tin được truyền vào từ yêu cầu. Nếu kết quả thành công, hệ thống trả về kết quả cho người dùng, ngược lại, hệ thống trả về lỗi tương ứng.
 
  \begin{figure}[H]
@@ -1352,7 +1352,7 @@ yêu cầu này được xử lý bởi DeviceController. DeviceController gửi
 \end{figure}
 Hình \ref{api_deleteDeviceById} phân tích luồng thông tin xóa thiết bị trong hệ thống. Quản trị viên gửi yêu cầu xóa thông tin thiết bị, 
 yêu cầu này được xử lý bởi DeviceController. DeviceController gửi truy vấn đến DeviceService để kiểm tra thông tin thiết bị trong hệ thống dựa theo deviceId (ID của thiết bị) được truyền vào từ yêu cầu. 
-Nếu thiết bị tồn tại trong hệ thống, DeviceService sẽ gửi truy vấn đến DeviceModel để xóa thông tin thiết bị 
+Nếu thiết bị có trong hệ thống, DeviceService sẽ gửi truy vấn đến DeviceModel để xóa thông tin thiết bị 
 dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thống trả về kết quả xóa cho quản trị viên, ngược lại, hệ thống trả về lỗi tương ứng.
 
 % -----------------------------------------------------
@@ -1391,7 +1391,7 @@ Sơ đồ tuần tự lấy thông tin bác sĩ phụ trách của một bệnh 
 \end{figure}
 Hình \ref{api_addPDA} phân tích luồng thông tin thêm phân công bệnh nhân - bác sĩ vào hệ thống. Quản trị viên gửi yêu cầu tạo phân công bệnh nhân - bác sĩ,  
 yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân, bác sĩ trong hệ thống dựa theo patient\_id (ID của bệnh nhân), doctor\_id (ID bác sĩ);PDAService để kiểm
-tra bệnh nhân đã có phân công bác sĩ dựa theo patient\_id được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, bác sĩ hay bệnh nhân đã có bác sĩ phân công, hệ thống sẽ trả về lỗi tương ứng. 
+tra bệnh nhân đã có phân công bác sĩ dựa theo patient\_id được truyền vào từ yêu cầu. Nếu hệ thống không có bệnh nhân, bác sĩ hay bệnh nhân đã có bác sĩ phân công, hệ thống sẽ trả về lỗi tương ứng. 
 Ngược lại, PDAService gửi truy vấn đến PDAModel để thêm thông tin phân công dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thống trả về kết quả thêm phân công, ngược lại, hệ thống trả về lỗi tương ứng.
 
 \begin{figure}[H]
@@ -1403,7 +1403,7 @@ Ngược lại, PDAService gửi truy vấn đến PDAModel để thêm thông t
 \end{figure}
 Hình \ref{api_editPDA} phân tích luồng thông tin cập nhật thông tin phân công bệnh nhân - bác sĩ vào hệ thống. Quản trị viên gửi yêu cầu sửa thông tin phân công bệnh nhân - bác sĩ, 
 yêu cầu này được xử lý bởi PDAController. PDAController gửi truy vấn đến UserService để kiểm tra thông tin bệnh nhân, bác sĩ trong hệ thống dựa theo patient\_id (ID của bệnh nhân), doctor\_id (ID bác sĩ);PDAService để kiểm
-tra bệnh nhân đã có phân công bác sĩ dựa theo patient\_id được truyền vào từ yêu cầu. Nếu hệ thống không tồn tại bệnh nhân, bác sĩ hay bệnh nhân chưa có bác sĩ phân công, hệ thống sẽ trả về lỗi tương ứng. 
+tra bệnh nhân đã có phân công bác sĩ dựa theo patient\_id được truyền vào từ yêu cầu. Nếu hệ thống không có bệnh nhân, bác sĩ hay bệnh nhân chưa có bác sĩ phân công, hệ thống sẽ trả về lỗi tương ứng. 
 Ngược lại, PDAService gửi truy vấn đến PDAModel để sửa thông tin phân công dựa theo thông tin truyền vào. Nếu kết quả thành công, hệ thống trả về kết quả cập nhật thông tin phân công bác sĩ - bệnh nhân, ngược lại, hệ thống trả về lỗi tương ứng.
 
 \begin{figure}[H]
