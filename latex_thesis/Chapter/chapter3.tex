@@ -715,16 +715,16 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
   \end{tabularx}
 \end{table}
 
-\subsubsection{Sơ đồ ERD}
+\subsubsection{Sơ đồ thiết kế ERD}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm,height=15cm]{Images/system/fmECG_database.png}
-  \caption[Sơ đồ ERD]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ ERD}
+  \caption[Sơ đồ thiết kế ERD]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ thiết kế ERD}
   \label{fmECG_architecture-Database} %đặt tên cho ảnh
 \end{figure}
 
-\subsection{Thiết kế giao diện}
+\subsection{Thiết kế giao diện hệ thống}
 
 Sau khi thiết kế cơ sơ dữ liệu cho hệ thống, bước tiếp theo cho việc thiết kế hệ thống là thiết kế giao diện website quản trị cùng các chức năng. 
 \begin{figure}[H]
@@ -915,11 +915,11 @@ có thể phóng to thu nhỏ. Nếu có nhiều hơn một dữ liệu đo, th�
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{Images/server/webUI/pdaTable.png}
-  \caption[Giao diện trang quản lý phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý phân công bác sĩ - bệnh nhân}
+  \caption[Giao diện quản lý phân công bác sĩ - bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý phân công bác sĩ - bệnh nhân}
   \label{pdaTable} %đặt tên cho ảnh
 \end{figure}
 
-Hình \ref{pdaTable} mô tả giao diện cho trang quản lý phân công bác sĩ - bệnh nhân, trang này sẽ có giao diện hiển thị danh sách phân công tương tự với các trang quản lý khác . 
+Hình \ref{pdaTable} mô tả giao diện cho màn hình quản lý phân công bác sĩ - bệnh nhân, trang này sẽ có giao diện để hiển thị danh sách phân công giống với các trang quản lý khác. 
 Khi chọn vào mỗi phân công tương ứng sẽ có các lựa chọn để cập nhật phân công, xóa nhiều phân công cùng một lúc, và sẽ có nút tạo phân công mới. 
 
 \begin{figure}[H]
@@ -1124,8 +1124,8 @@ nếu thông tin xác minh chính xác, hệ thống sẽ tạo tài khoản ph�
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]{Images/sequence_api/login.png}
-  \caption[Sơ đồ tuần tự cho API đăng nhập vào hệ thống]{\bfseries \fontsize{12pt}{0pt}
-  \selectfont Sơ đồ tuần tự cho API đăng nhập vào hệ thống }
+  \caption[Sơ đồ tuần tự cho API đăng nhập ]{\bfseries \fontsize{12pt}{0pt}
+  \selectfont Sơ đồ tuần tự cho API đăng nhập }
   \label{api_login} %đặt tên cho ảnh
 \end{figure}
 Hình \ref{api_login}  phân tích luồng thông tin người dùng đăng nhập tài khoản trên hệ thống. Người dùng gửi yêu cầu đăng nhập, yêu cầu được xử lý bởi AuthenController. AuthenController xác minh thông tin người dùng qua AuthenService. Nếu 
