@@ -15,7 +15,7 @@ class BluetoothClassicScreen extends StatefulWidget {
 
 class _BluetoothClassicScreen extends State<BluetoothClassicScreen> {
   BluetoothState _bluetoothState = BluetoothState.UNKNOWN;
-
+  List<BluetoothDevice> bondedDevices = [];
   String _address = "...";
   String _name = "...";
 
@@ -31,6 +31,14 @@ class _BluetoothClassicScreen extends State<BluetoothClassicScreen> {
       setState(() {
         _bluetoothState = state;
       });
+
+    FlutterBluetoothSerial.instance
+        .getBondedDevices()
+        .then((List<BluetoothDevice> bondedDevices) {
+      setState(() {
+        this.bondedDevices = bondedDevices;
+      });
+    });
     });
 
     Future.doWhile(() async {
@@ -89,47 +97,150 @@ class _BluetoothClassicScreen extends State<BluetoothClassicScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<BluetoothDeviceListEntry> list = bondedDevices
+        .map((_device) => BluetoothDeviceListEntry(
+          device: _device,
+          enabled: true,
+          onTap: () async {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return ChatPage(server: _device);
+                },
+              )
+            );
+          },
+        ))
+        .toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flutter Bluetooth Serial'),
       ),
-      body: Container(
-        child: ListView(
-          children: <Widget>[
-            SwitchListTile(
-                title: const Text('Enable Bluetooth'),
-                value: _bluetoothState.isEnabled,
-                onChanged: (bool value) async {
-                  // Do the request and update with the true value then
-                  if (value)
-                    await FlutterBluetoothSerial.instance.requestEnable();
-                  else
-                    await FlutterBluetoothSerial.instance.requestDisable();
-                }),
-            ListTile(
-              title: const Text('Bluetooth status'),
-              subtitle: Text(_bluetoothState.toString()),
-              trailing: ElevatedButton(
-                child: const Text('Settings'),
-                onPressed: () {
-                  FlutterBluetoothSerial.instance.openSettings();
-                },
-              ),
+      body: ListView(
+        children: <Widget>[
+          SwitchListTile(
+              title: const Text('Enable Bluetooth'),
+              value: _bluetoothState.isEnabled,
+              onChanged: (bool value) async {
+                // Do the request and update with the true value then
+                if (value)
+                  await FlutterBluetoothSerial.instance.requestEnable();
+                else
+                  await FlutterBluetoothSerial.instance.requestDisable();
+              }),
+          ListTile(
+            title: const Text('Bluetooth status'),
+            subtitle: Text(_bluetoothState.toString()),
+            trailing: ElevatedButton(
+              child: const Text('Settings'),
+              onPressed: () {
+                FlutterBluetoothSerial.instance.openSettings();
+              },
             ),
-            ListTile(
-              title: const Text('Local adapter address'),
-              subtitle: Text(_address),
+          ),
+          ListTile(
+            title: const Text('Local adapter address'),
+            subtitle: Text(_address),
+          ),
+          ListTile(
+            title: const Text('Local adapter name'),
+            subtitle: Text(_name),
+            onLongPress: null,
+          ),
+          Divider(),
+          ListTile(title: const Text('Paired devices')),
+          if (bondedDevices.isNotEmpty)
+          ListView(children: list, shrinkWrap: true,),
+          ListTile(
+            title: ElevatedButton(
+              child: const Text('Connect to paired device to chat'),
+              onPressed: () async {
+                final bool hasOn =
+                    (await FlutterBluetoothSerial.instance.isEnabled) ??
+                        false;
+                if (!hasOn) {
+                  showToastWarningTurnOnBluetooth();
+                  return;
+                }
+                final BluetoothDevice? selectedDevice =
+                    await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return SelectBondedDevicePage(checkAvailability: false);
+                    },
+                  ),
+                );
+                if (selectedDevice != null) {
+                  print('Connect -> selected ' + selectedDevice.address);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ChatPage(server: selectedDevice);
+                      },
+                    ),
+                  );
+                } else {
+                  print('Connect -> no device selected');
+                }
+              },
             ),
-            ListTile(
-              title: const Text('Local adapter name'),
-              subtitle: Text(_name),
-              onLongPress: null,
+          ),
+          Divider(),
+          ListTile(
+            title: _discoverableTimeoutSecondsLeft == 0
+                ? const Text("Discoverable")
+                : Text(
+                    "Discoverable for ${_discoverableTimeoutSecondsLeft}s"),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Checkbox(
+                  value: _discoverableTimeoutSecondsLeft != 0,
+                  onChanged: null,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.refresh),
+                  onPressed: () async {
+                    print('Discoverable requested');
+                    final int timeout = (await FlutterBluetoothSerial.instance
+                        .requestDiscoverable(60))!;
+                    if (timeout < 0) {
+                      print('Discoverable mode denied');
+                    } else {
+                      print(
+                          'Discoverable mode acquired for $timeout seconds');
+                    }
+                    setState(() {
+                      _discoverableTimeoutTimer?.cancel();
+                      _discoverableTimeoutSecondsLeft = timeout;
+                      _discoverableTimeoutTimer =
+                          Timer.periodic(Duration(seconds: 1), (Timer timer) {
+                        setState(() {
+                          if (_discoverableTimeoutSecondsLeft < 0) {
+                            FlutterBluetoothSerial.instance.isDiscoverable
+                                .then((isDiscoverable) {
+                              if (isDiscoverable ?? false) {
+                                print(
+                                    "Discoverable after timeout... might be infinity timeout :F");
+                                _discoverableTimeoutSecondsLeft += 1;
+                              }
+                            });
+                            timer.cancel();
+                            _discoverableTimeoutSecondsLeft = 0;
+                          } else {
+                            _discoverableTimeoutSecondsLeft -= 1;
+                          }
+                        });
+                      });
+                    });
+                  },
+                )
+              ],
             ),
-            Divider(),
-            ListTile(title: const Text('Paired devices')),
-            ListTile(
-              title: ElevatedButton(
-                child: const Text('Connect to paired device to chat'),
+          ),
+          ListTile(
+            title: ElevatedButton(
+                child: const Text('Explore discovered devices'),
                 onPressed: () async {
                   final bool hasOn =
                       (await FlutterBluetoothSerial.instance.isEnabled) ??
@@ -142,107 +253,19 @@ class _BluetoothClassicScreen extends State<BluetoothClassicScreen> {
                       await Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return SelectBondedDevicePage(checkAvailability: false);
+                        return DiscoveryPage();
                       },
                     ),
                   );
+      
                   if (selectedDevice != null) {
-                    print('Connect -> selected ' + selectedDevice.address);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return ChatPage(server: selectedDevice);
-                        },
-                      ),
-                    );
+                    print('Discovery -> selected ' + selectedDevice.address);
                   } else {
-                    print('Connect -> no device selected');
+                    print('Discovery -> no device selected');
                   }
-                },
-              ),
-            ),
-            Divider(),
-            ListTile(
-              title: _discoverableTimeoutSecondsLeft == 0
-                  ? const Text("Discoverable")
-                  : Text(
-                      "Discoverable for ${_discoverableTimeoutSecondsLeft}s"),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Checkbox(
-                    value: _discoverableTimeoutSecondsLeft != 0,
-                    onChanged: null,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.refresh),
-                    onPressed: () async {
-                      print('Discoverable requested');
-                      final int timeout = (await FlutterBluetoothSerial.instance
-                          .requestDiscoverable(60))!;
-                      if (timeout < 0) {
-                        print('Discoverable mode denied');
-                      } else {
-                        print(
-                            'Discoverable mode acquired for $timeout seconds');
-                      }
-                      setState(() {
-                        _discoverableTimeoutTimer?.cancel();
-                        _discoverableTimeoutSecondsLeft = timeout;
-                        _discoverableTimeoutTimer =
-                            Timer.periodic(Duration(seconds: 1), (Timer timer) {
-                          setState(() {
-                            if (_discoverableTimeoutSecondsLeft < 0) {
-                              FlutterBluetoothSerial.instance.isDiscoverable
-                                  .then((isDiscoverable) {
-                                if (isDiscoverable ?? false) {
-                                  print(
-                                      "Discoverable after timeout... might be infinity timeout :F");
-                                  _discoverableTimeoutSecondsLeft += 1;
-                                }
-                              });
-                              timer.cancel();
-                              _discoverableTimeoutSecondsLeft = 0;
-                            } else {
-                              _discoverableTimeoutSecondsLeft -= 1;
-                            }
-                          });
-                        });
-                      });
-                    },
-                  )
-                ],
-              ),
-            ),
-            ListTile(
-              title: ElevatedButton(
-                  child: const Text('Explore discovered devices'),
-                  onPressed: () async {
-                    final bool hasOn =
-                        (await FlutterBluetoothSerial.instance.isEnabled) ??
-                            false;
-                    if (!hasOn) {
-                      showToastWarningTurnOnBluetooth();
-                      return;
-                    }
-                    final BluetoothDevice? selectedDevice =
-                        await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return DiscoveryPage();
-                        },
-                      ),
-                    );
-
-                    if (selectedDevice != null) {
-                      print('Discovery -> selected ' + selectedDevice.address);
-                    } else {
-                      print('Discovery -> no device selected');
-                    }
-                  }),
-            ),
-          ],
-        ),
+                }),
+          ),
+        ],
       ),
     );
   }
@@ -416,9 +439,7 @@ class _SelectBondedDevicePage extends State<SelectBondedDevicePage> {
 
   @override
   void dispose() {
-    // Avoid memory leak (`setState` after dispose) and cancel discovery
     _discoveryStreamSubscription?.cancel();
-
     super.dispose();
   }
 

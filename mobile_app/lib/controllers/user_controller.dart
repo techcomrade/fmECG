@@ -14,7 +14,7 @@ class UserController {
   // for patient
   static Future<void> getDoctorAssigned(int patientId) async {
     try {
-      final url = APIConstant.apiUrlProduction + 'patient/$patientId/doctor';
+      final url = APIConstant().apiUrl + 'patient/$patientId/doctor';
       final response = await http.get(Uri.parse(url));
       final responseBody = jsonDecode(response.body);
       if (responseBody["status"] == "success") {
