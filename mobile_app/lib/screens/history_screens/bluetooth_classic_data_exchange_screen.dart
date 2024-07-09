@@ -73,24 +73,11 @@ class _ChatPage extends State<ChatPage> {
         setState(() => isWritingData = true);
         await FilesManagement.handleSaveDataToFileV2(fileSum, dataToFile);
         setState(() => isWritingData = false);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Material(child: PickFiles(txtPath: fileSum.path))));
 
-        OverlayEntry overlayLoadingWidget = Utils.setOverlayLoadingWithHeavyTask();
-        try {
-          Overlay.of(context).insert(overlayLoadingWidget);
-          final Map? dataReceived = await platform.invokeMethod("transfer_txt_path_to_python", {'txt_path': fileSum.path});
-          if (dataReceived == null) {
-            overlayLoadingWidget.remove();
-            return Utils.showDialogWarningError(context, false, "Lỗi khi xử lý dữ liệu với Python");
-          }
-
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Material(child: ChartsResultPythonScreen(data: dataReceived))));
-        } catch (e) {
-          overlayLoadingWidget.remove();
-          Utils.showDialogWarningError(context, false, "Lỗi khi xử lý dữ liệu với Python");
-        }
 
       });
     }).catchError((error) {
@@ -101,7 +88,6 @@ class _ChatPage extends State<ChatPage> {
 
   @override
   void dispose() {
-    // Avoid memory leak (`setState` after dispose) and disconnect
     if (isConnected) {
       isDisconnecting = true;
       connection?.dispose();

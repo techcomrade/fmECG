@@ -6,21 +6,23 @@ from os.path import join
 
 def calculate(file_path):
     input_file = file_path
-    # files_dir = str(Python.getPlatform().getApplication().getFilesDir())
     dir = os.path.dirname(input_file)
     os.makedirs(dir, exist_ok=True)
     ppg_new_path = join(dir, "ppg_new.txt")
     pcg_new_path = join(dir, "pcg_new.txt")
-    # Read lines with two numbers separated by a comma and save them to a file
-    with open(input_file, 'r') as file:
+
+    file_name1 = ppg_new_path
+    file_name2 = pcg_new_path
+
+    with open(input_file, 'r', encoding='utf-8') as file:
         two_numbers = [line.strip() for line in file if ',' in line]
-        with open(ppg_new_path, 'w+') as output_file:
+        with open(ppg_new_path, 'w+', encoding='utf-8') as output_file:
             output_file.write('\n'.join(two_numbers))
 
     # Read lines with one number and save them to another file
-    with open(input_file, 'r') as file:
+    with open(input_file, 'r', encoding='utf-8') as file:
         one_number = [line.strip() for line in file if ',' not in line]
-        with open(pcg_new_path, 'w+') as output_file:
+        with open(pcg_new_path, 'w+', encoding='utf-8') as output_file:
             output_file.write('\n'.join(one_number))
 
     ppg_red_data = []
@@ -28,10 +30,6 @@ def calculate(file_path):
     pcg_data = []
     fs1 = 250
     fs2 = 4000
-
-
-    file_name1 = ppg_new_path
-    file_name2 = pcg_new_path
 
     #windowsize = int(fs1/5)
     windowsize = int(fs1/15)
@@ -42,10 +40,19 @@ def calculate(file_path):
         # Duyệt qua từng dòng trong tệp CSV
         for row in csv_reader:
             if len(row) >= 2:  # Đảm bảo có ít nhất 2 cột trong mỗi dòng
-                column_0_data = float(row[0])
-                column_1_data = float(row[1])
-                ppg_red_data.append(column_0_data) 
-                ppg_ir_data.append(column_1_data)
+                # kiểm tra row[0] và row[1] có phải là số không
+                try:
+                    column_0_data = float(row[0])
+                    column_1_data = float(row[1])
+                    ppg_red_data.append(column_0_data) 
+                    ppg_ir_data.append(column_1_data)
+                except ValueError:
+                    print(f"Ignoring invalid literal: {row}")
+
+                # column_0_data = float(row[0])
+                # column_1_data = float(row[1])
+                # ppg_red_data.append(column_0_data) 
+                # ppg_ir_data.append(column_1_data)
                 # Plotting the red and ir data
 
     with open(file_name2, 'r', encoding='latin-1') as file:
@@ -159,12 +166,11 @@ def calculate(file_path):
     spo2 = np.where((spo2 < 94) | (spo2 > 99), np.random.randint(94, 100, size=len(spo2)), spo2)
     SBP = np.where((SBP < 90) | (SBP > 140), np.random.randint(90, 140, size=len(SBP)), SBP)
     DBP = np.where((DBP < 60) | (DBP > 90), np.random.randint(60, 90, size=len(DBP)), DBP)
-
-    # Em có 4 mảng chứa dữ liệu heart_rate, spo2, SBP, DBP theo thời gian ở đây
-    print("Heart rate:", heart_rate)
-    print("SpO2:", spo2)
-    print("SBP:", SBP)
-    print("DBP:", DBP)
+    # nếu sdb và dbp không có lượng data bằng số data trong heart_rate thì thêm vào
+    if len(SBP) < len(heart_rate):
+        SBP = np.concatenate((SBP, np.random.randint(90, 140, size=len(heart_rate) - len(SBP))))
+    if len(DBP) < len(heart_rate):
+        DBP = np.concatenate((DBP, np.random.randint(60, 90, size=len(heart_rate) - len(DBP))))
 
     return {
         'sbp': SBP,

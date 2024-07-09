@@ -42,16 +42,16 @@ public class MainActivity extends FlutterActivity {
 
                 if (call.method.equals("transfer_context_to_python")) {
                     String pythonPath = call.argument("python_path");
-                    String pcgPath = call.argument("pcg_path");
-                    String ppgPath = call.argument("ppg_path");
-                    HashMap<String, int[]> dataCalculated = transferContextToPython(pythonPath, pcgPath, ppgPath);
-                    result.success(dataCalculated);
-                }
-
-                if (call.method.equals("transfer_txt_path_to_python")) {
                     String txtPath = call.argument("txt_path");
-                    HashMap<String, int[]> dataCalculated = transferTxtPathAndCalculatePython(txtPath);
-                    result.success(dataCalculated);
+                    if (pythonPath != null) {
+                        System.out.println("hello111: " + pythonPath);
+                        HashMap<String, int[]> dataCalculated = transferContextToPython(pythonPath, txtPath);
+                        result.success(dataCalculated);
+                    } else {
+                        System.out.println("helloeeeee: " + pythonPath);
+                        HashMap<String, int[]> dataCalculated = transferTxtPathAndCalculatePython(txtPath);
+                        result.success(dataCalculated);
+                    }
                 }
            });
     }
@@ -59,8 +59,7 @@ public class MainActivity extends FlutterActivity {
 
     private HashMap<String, int[]> transferContextToPython(
         String pythonPath,
-        String pcgPath,
-        String ppgPath
+        String txtPath
     ) {
         if (!Python.isStarted()) {
             Python.start(new AndroidPlatform(this));
@@ -68,7 +67,7 @@ public class MainActivity extends FlutterActivity {
 
         Python py = Python.getInstance();
         PyObject module = py.getModule("bridge");
-        PyObject data = module.callAttr("create_bridge", pythonPath, pcgPath, ppgPath);
+        PyObject data = module.callAttr("create_bridge", pythonPath, txtPath);
 
         // hoạt động với file backup ở máy chứ không phải file được chọn từ file picker
         // PyObject module = py.getModule("backup_script_bluetooth_classic");
