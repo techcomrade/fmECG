@@ -8,7 +8,8 @@ app:
 dev:
 	docker compose rm -sf && \
 	docker compose --profile "*" -f docker-compose-dev.yml up --build --detach && \
-	docker image prune -f
+	docker image prune -f && \
+	docker exec -it chat-fmecg iex -S mix phx.server
 
 log:
 	docker compose logs -f --tail=10
