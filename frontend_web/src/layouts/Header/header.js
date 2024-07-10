@@ -19,10 +19,48 @@ import { getRoutesByRole } from "../route";
 import "./header.css";
 import { NavLink } from "react-router-dom";
 import { BellFilled } from "@ant-design/icons";
-import { SettingFilled, SearchOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  SettingFilled,
+  UserOutlined,
+  TranslationOutlined,
+} from "@ant-design/icons";
+import { useTranslation } from 'react-i18next';
+
 import { useLocation } from "react-router-dom";
 
-function Header() {
+const LanguageComponent = () => {
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    window.location.reload()
+  };
+  const items = [
+    {
+      label: <a onClick={()=>changeLanguage('en')}>Tiếng Anh</a>,
+      key: "1",
+    },
+    {
+      label: <a  onClick={()=>changeLanguage('vi')}>Tiếng Việt</a>,
+      key: "2",
+    },
+  ];
+  return (
+    <div className="header-icon-box">
+      <Dropdown
+        menu={{
+          items,
+        }}
+        trigger={["click"]}
+      >
+        <TranslationOutlined />
+      </Dropdown>
+    </div>
+  );
+};
+
+const Header = () => {
+  const { t, i18n } = useTranslation();
+
   const handleLogOut = async () => {
     const redirect_url = getLocalStorage("redirect_api");
     const cookies = document.cookie.split(";");
@@ -78,10 +116,11 @@ function Header() {
         <Col span={24} md={12} className="header-breadcrumb">
           <Breadcrumb>
             <Breadcrumb.Item>
-              <NavLink to="/">Pages</NavLink>
+            {/* <NavLink to="/">Pages</NavLink> */}
+              <NavLink to="/">{t("page.breadcrumb.pages")}</NavLink>
             </Breadcrumb.Item>
             <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
-              {getLabelByKey(pathname) ?? "Trang chủ"}
+              {t(getLabelByKey(pathname) ?? "page.side-bar.home")}
             </Breadcrumb.Item>
           </Breadcrumb>
           <div className="ant-page-header-heading">
@@ -94,34 +133,31 @@ function Header() {
         <Col span={24} md={12} className="header-control">
           <div className="header-icon-box">
             <Dropdown
-            menu={{
-              items,
-            }}
-            trigger={["click"]}
-          >
+              menu={{
+                items,
+              }}
+              trigger={["click"]}
+            >
               <SettingFilled />
-              </Dropdown>
+            </Dropdown>
           </div>
+
           <div className="header-icon-box">
             <NavLink to="/" style={{ color: "#000" }}>
               <BellFilled />
             </NavLink>
           </div>
-          
-            <div onClick={(e) => e.preventDefault()}>
+
+          <div onClick={(e) => e.preventDefault()}>
             <NavLink to="/account" style={{ color: "#000" }}>
               <Avatar
                 size={"large"}
                 icon={<UserOutlined />}
                 className="user-avatar"
               />
-              </NavLink>
-            </div>
-          <Input
-            className="header-search"
-            placeholder="Type here..."
-            prefix={<SearchOutlined />}
-          />
+            </NavLink>
+          </div>
+          <LanguageComponent />
         </Col>
       </Row>
     </div>
