@@ -52,6 +52,7 @@ class _PickFilesState extends State<PickFiles> {
         overlayLoadingWidget.remove();
         return Utils.showDialogWarningError(context, false, "Lỗi khi xử lý dữ liệu với Python");
       }
+      overlayLoadingWidget.remove();
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => ChartsResultPythonScreen(data: dataReceived)));
     } catch (e, t) {
