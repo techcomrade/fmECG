@@ -10,3 +10,8 @@ RUN mix local.hex --force
 RUN mix archive.install --force hex phx_new ${PHOENIX_VERSION}
 RUN mix local.rebar --force
 RUN mix deps.get
+
+
+# another way to run iex -> cách này không thấy được api gọi/tách riêng phần show/db và iex
+# elixir --sname server_chat -S mix phx.server
+# make chatbash -> iex --sname console --remsh server_chat
