@@ -46,7 +46,7 @@ class _BluetoothClassicScreen extends State<BluetoothClassicScreen> {
       if ((await FlutterBluetoothSerial.instance.isEnabled) ?? false) {
         return false;
       }
-      await Future.delayed(Duration(milliseconds: 0xDD));
+      await Future.delayed(const Duration(milliseconds: 0xDD));
       return true;
     }).then((_) {
       // Update the address field
@@ -123,10 +123,11 @@ class _BluetoothClassicScreen extends State<BluetoothClassicScreen> {
               value: _bluetoothState.isEnabled,
               onChanged: (bool value) async {
                 // Do the request and update with the true value then
-                if (value)
+                if (value) {
                   await FlutterBluetoothSerial.instance.requestEnable();
-                else
+                } else {
                   await FlutterBluetoothSerial.instance.requestDisable();
+                }
               }),
           ListTile(
             title: const Text('Bluetooth status'),
@@ -147,8 +148,8 @@ class _BluetoothClassicScreen extends State<BluetoothClassicScreen> {
             subtitle: Text(_name),
             onLongPress: null,
           ),
-          Divider(),
-          ListTile(title: const Text('Paired devices')),
+          const Divider(),
+          const ListTile(title: Text('Paired devices')),
           if (bondedDevices.isNotEmpty)
           ListView(children: list, shrinkWrap: true,),
           ListTile(
@@ -166,7 +167,7 @@ class _BluetoothClassicScreen extends State<BluetoothClassicScreen> {
                     await Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) {
-                      return SelectBondedDevicePage(checkAvailability: false);
+                      return const SelectBondedDevicePage(checkAvailability: false);
                     },
                   ),
                 );
@@ -185,7 +186,7 @@ class _BluetoothClassicScreen extends State<BluetoothClassicScreen> {
               },
             ),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
             title: _discoverableTimeoutSecondsLeft == 0
                 ? const Text("Discoverable")
@@ -214,7 +215,7 @@ class _BluetoothClassicScreen extends State<BluetoothClassicScreen> {
                       _discoverableTimeoutTimer?.cancel();
                       _discoverableTimeoutSecondsLeft = timeout;
                       _discoverableTimeoutTimer =
-                          Timer.periodic(Duration(seconds: 1), (Timer timer) {
+                          Timer.periodic(const Duration(seconds: 1), (Timer timer) {
                         setState(() {
                           if (_discoverableTimeoutSecondsLeft < 0) {
                             FlutterBluetoothSerial.instance.isDiscoverable
@@ -253,7 +254,7 @@ class _BluetoothClassicScreen extends State<BluetoothClassicScreen> {
                       await Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return DiscoveryPage();
+                        return const DiscoveryPage();
                       },
                     ),
                   );
@@ -284,7 +285,7 @@ class BluetoothDeviceListEntry extends ListTile {
           onLongPress: onLongPress,
           enabled: enabled,
           leading:
-              Icon(Icons.devices), // @TODO . !BluetoothClass! class aware icon
+              const Icon(Icons.devices), // @TODO . !BluetoothClass! class aware icon
           title: Text(device.name ?? "Unknown device"),
           subtitle: Text(device.address.toString()),
           trailing: Row(
@@ -292,54 +293,54 @@ class BluetoothDeviceListEntry extends ListTile {
             children: <Widget>[
               rssi != null
                   ? Container(
-                      margin: EdgeInsets.all(8.0),
+                      margin: const EdgeInsets.all(8.0),
                       child: DefaultTextStyle(
                         style: _computeTextStyle(rssi),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Text(rssi.toString()),
-                            Text('dBm'),
+                            const Text('dBm'),
                           ],
                         ),
                       ),
                     )
-                  : Container(width: 0, height: 0),
+                  : const SizedBox(width: 0, height: 0),
               device.isConnected
-                  ? Icon(Icons.abc)
-                  : Container(width: 0, height: 0),
+                  ? const Icon(Icons.abc)
+                  : const SizedBox(width: 0, height: 0),
               device.isBonded
-                  ? Icon(Icons.link)
-                  : Container(width: 0, height: 0),
+                  ? const Icon(Icons.link)
+                  : const SizedBox(width: 0, height: 0),
             ],
           ),
         );
 
   static TextStyle _computeTextStyle(int rssi) {
-    /**/ if (rssi >= -35)
+    /**/ if (rssi >= -35) {
       return TextStyle(color: Colors.greenAccent[700]);
-    else if (rssi >= -45)
+    } else if (rssi >= -45) {
       return TextStyle(
           color: Color.lerp(
               Colors.greenAccent[700], Colors.lightGreen, -(rssi + 35) / 10));
-    else if (rssi >= -55)
+    } else if (rssi >= -55) {
       return TextStyle(
           color: Color.lerp(
               Colors.lightGreen, Colors.lime[600], -(rssi + 45) / 10));
-    else if (rssi >= -65)
+    } else if (rssi >= -65) {
       return TextStyle(
           color: Color.lerp(Colors.lime[600], Colors.amber, -(rssi + 55) / 10));
-    else if (rssi >= -75)
+    } else if (rssi >= -75) {
       return TextStyle(
           color: Color.lerp(
               Colors.amber, Colors.deepOrangeAccent, -(rssi + 65) / 10));
-    else if (rssi >= -85)
+    } else if (rssi >= -85) {
       return TextStyle(
           color: Color.lerp(
               Colors.deepOrangeAccent, Colors.redAccent, -(rssi + 75) / 10));
-    else
-      /*code symetry*/
-      return TextStyle(color: Colors.redAccent);
+    } else {
+      return const TextStyle(color: Colors.redAccent);
+    }
   }
 }
 
@@ -348,7 +349,7 @@ class SelectBondedDevicePage extends StatefulWidget {
   /// Then, if they are not avaliable, they would be disabled from the selection.
   final bool checkAvailability;
 
-  const SelectBondedDevicePage({this.checkAvailability = true});
+  const SelectBondedDevicePage({super.key, this.checkAvailability = true});
 
   @override
   _SelectBondedDevicePage createState() => _SelectBondedDevicePage();
@@ -365,7 +366,7 @@ class _DeviceWithAvailability {
   _DeviceAvailability availability;
   int? rssi;
 
-  _DeviceWithAvailability(this.device, this.availability, [this.rssi]);
+  _DeviceWithAvailability(this.device, this.availability);
 }
 
 class _SelectBondedDevicePage extends State<SelectBondedDevicePage> {
@@ -457,13 +458,13 @@ class _SelectBondedDevicePage extends State<SelectBondedDevicePage> {
         .toList();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select device'),
+        title: const Text('Select device'),
         actions: <Widget>[
           _isDiscovering
               ? FittedBox(
                   child: Container(
-                    margin: EdgeInsets.all(16.0),
-                    child: CircularProgressIndicator(
+                    margin: const EdgeInsets.all(16.0),
+                    child: const CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
                         Colors.white,
                       ),
@@ -471,7 +472,7 @@ class _SelectBondedDevicePage extends State<SelectBondedDevicePage> {
                   ),
                 )
               : IconButton(
-                  icon: Icon(Icons.replay),
+                  icon: const Icon(Icons.replay),
                   onPressed: _restartDiscovery,
                 )
         ],

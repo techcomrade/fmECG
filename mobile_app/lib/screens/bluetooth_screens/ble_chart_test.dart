@@ -198,7 +198,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
           title: Text(S.current.measurementPage),
         ),
         body: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: SingleChildScrollView(
             controller: _scrollController,
             physics: const ClampingScrollPhysics(),
@@ -299,7 +299,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                                       centerTitle: true,
                                     ),
                                     body: Container(
-                                      padding: EdgeInsets.all(20),
+                                      padding: const EdgeInsets.all(20),
                                       child: SingleChildScrollView( // Sử dụng SingleChildScrollView để có thể cuộn nếu nội dung quá dài
                                         child: Column(
                                           children: [
@@ -323,7 +323,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                                                 NumberCard(number: dbpNumber, text: S.current.diastolic, subText: "mmHg", color1: Colors.blue, percentage: dbpNumber/200),
                                               ],
                                             ),
-                                            SizedBox(height: 30), // Khoảng cách giữa hai hàng
+                                            const SizedBox(height: 30), // Khoảng cách giữa hai hàng
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                               children: [
@@ -331,8 +331,8 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                                                 NumberCard(number: deviationNumber, text: S.current.variability, subText: "bpm", color1: Colors.purple, percentage: deviationNumber/150),
                                               ],
                                             ),
-                                            SizedBox(height: 10),
-                                            BloodPressureLegendTable(),
+                                            const SizedBox(height: 10),
+                                            const BloodPressureLegendTable(),
                                           ],
                                           mainAxisAlignment: MainAxisAlignment.center,
                                         ),
@@ -354,10 +354,10 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                     children: [
                       Text("${S.current.dataProcessed}:"),
                       const SizedBox(height: 5),
-                      Text("SBP: ${_textSBP}"),
-                      Text("DBP: ${_textDBP}"),
-                      Text("Heart Rate: ${_textHeartRate}"),
-                      Text("Deviation: ${_textDeviation}"),
+                      Text("SBP: $_textSBP"),
+                      Text("DBP: $_textDBP"),
+                      Text("Heart Rate: $_textHeartRate"),
+                      Text("Deviation: $_textDeviation"),
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                   ),
@@ -393,7 +393,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
               _chartSeriesController = controller;
             },
             dataSource: chartDataChannel!,
-            color: Color.fromARGB(255, 42, 25, 228),
+            color: const Color.fromARGB(255, 42, 25, 228),
             xValueMapper: (_ChartData data, _) => data.time,
             yValueMapper: (_ChartData data, _) => data.value,
             animationDuration: 0,
@@ -424,7 +424,7 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
               _chartSeriesController2 = controller;
             },
             dataSource: chartDataChannel2!,
-            color: Color.fromARGB(255, 228, 25, 25),
+            color: const Color.fromARGB(255, 228, 25, 25),
             xValueMapper: (_ChartData data, _) => data.time,
             yValueMapper: (_ChartData data, _) => data.value,
             animationDuration: 0,
@@ -499,7 +499,7 @@ class NumberCard extends StatelessWidget {
   final Color color1;
   final double percentage;
 
-  NumberCard({
+  const NumberCard({super.key, 
     required this.number,
     required this.text,
     required this.subText,
@@ -513,7 +513,7 @@ class NumberCard extends StatelessWidget {
     double progressAngle = 2 * 3.14 * percentage;
     return Center(
       child: CustomPaint(
-        size: Size(130, 130), // Kích thước của CustomPaint
+        size: const Size(130, 130), // Kích thước của CustomPaint
         painter: CircleProgressPainter(
           progressAngle: progressAngle,
           progressColor: color1,
@@ -522,7 +522,7 @@ class NumberCard extends StatelessWidget {
         child: Container(
           width: 110.0,
           height: 110.0,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.white,
           ),
@@ -532,7 +532,7 @@ class NumberCard extends StatelessWidget {
               children: [
                 Text(
                   text,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 10.0,
                     color: Colors.black,
@@ -541,7 +541,7 @@ class NumberCard extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   '$number',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 19.0,
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -549,7 +549,7 @@ class NumberCard extends StatelessWidget {
                 ),
                 Text(
                   subText,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 10.0,
                     color: Colors.black,
@@ -607,7 +607,7 @@ class ImageCard extends StatelessWidget {
   final Function() functionScanBluetooth;
   final Function() temporaryNothing;
 
-  ImageCard({
+  const ImageCard({super.key, 
     required this.imageAsset,
     required this.functionScanBluetooth,
     required this.temporaryNothing,
@@ -629,17 +629,17 @@ class ImageCard extends StatelessWidget {
             height: 200.0,
             fit: BoxFit.cover,
           ),
-          SizedBox(height: 12.0),
+          const SizedBox(height: 12.0),
           ButtonBar(
             alignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
                 onPressed: functionScanBluetooth,
-                child: Text("Thực hiện đo"),
+                child: const Text("Thực hiện đo"),
               ),
               ElevatedButton(
                 onPressed: temporaryNothing,
-                child: Text("Thử đo"),
+                child: const Text("Thử đo"),
               ),
             ],
           ),
@@ -714,7 +714,7 @@ class BloodPressureIndicator extends StatelessWidget {
         ),
         Transform.translate(
           offset: Offset(screenWidth * indicatorPosition - 40 * indicatorPosition - 11.5, 25), // Giả sử icon có kích thước là 24x24 pixels
-          child: Icon(
+          child: const Icon(
             Icons.favorite,
             color: Colors.pink,
             size: 24, // Kích thước của icon
@@ -740,40 +740,42 @@ double calculateIndicatorPosition(int sbpNumber, int dbpNumber) {
 }
 
 class BloodPressureLegendTable extends StatelessWidget {
+  const BloodPressureLegendTable({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Tùy chỉnh cỡ chữ ở đây
-    TextStyle textStyle = TextStyle(fontSize: 10); // Giảm cỡ chữ xuống còn 14
+    TextStyle textStyle = const TextStyle(fontSize: 10); // Giảm cỡ chữ xuống còn 14
 
     return DataTable(
       columns: [
-        DataColumn(label: Text('')),
+        const DataColumn(label: Text('')),
         DataColumn(label: Text(S.current.status)),
-        DataColumn(label: Text('PPG/PCG')),
+        const DataColumn(label: Text('PPG/PCG')),
       ],
       rows: [
         DataRow(cells: [
-          DataCell(CircleAvatar(backgroundColor: Colors.purple)),
+          const DataCell(CircleAvatar(backgroundColor: Colors.purple)),
           DataCell(Text(S.current.extremelyHigh, style: textStyle)),
           DataCell(Text('> 180 ${S.current.or} > 120', style: textStyle)),
         ]),
         DataRow(cells: [
-          DataCell(CircleAvatar(backgroundColor: Colors.redAccent)),
+          const DataCell(CircleAvatar(backgroundColor: Colors.redAccent)),
           DataCell(Text("${S.current.hypertension} ${S.current.level.toLowerCase()} 2", style: textStyle)),
           DataCell(Text('>= 140 ${S.current.or} >= 90', style: textStyle)),
         ]),
         DataRow(cells: [
-          DataCell(CircleAvatar(backgroundColor: Colors.orange)),
+          const DataCell(CircleAvatar(backgroundColor: Colors.orange)),
           DataCell(Text("${S.current.hypertension} ${S.current.level.toLowerCase()} 1", style: textStyle)),
           DataCell(Text('>= 130 ${S.current.or} >= 80', style: textStyle)),
         ]),
         DataRow(cells: [
-          DataCell(CircleAvatar(backgroundColor: Colors.yellow)),
+          const DataCell(CircleAvatar(backgroundColor: Colors.yellow)),
           DataCell(Text(S.current.hypertension, style: textStyle)),
           DataCell(Text('>= 120', style: textStyle)),
         ]),
         DataRow(cells: [
-          DataCell(CircleAvatar(backgroundColor: Colors.green)),
+          const DataCell(CircleAvatar(backgroundColor: Colors.green)),
           DataCell(Text(S.current.normal, style: textStyle)),
           DataCell(Text('< 120', style: textStyle)),
         ]),

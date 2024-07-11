@@ -105,21 +105,21 @@ class Utils {
   static OverlayEntry setOverlayLoadingWithHeavyTask() {
     return OverlayEntry(
       builder: (contextBuilder) {
-        final bool isDark = false;
-        final Color backgroundColorDialog = isDark ? const Color(0xFF25282A) : const Color(0xFFF2F4F7);
-        final Color colorTitle = isDark ? const Color(0xFFF6F6F7) : const Color(0xFF101828);
+        const bool isDark = false;
+        const Color backgroundColorDialog = isDark ? Color(0xFF25282A) : Color(0xFFF2F4F7);
+        const Color colorTitle = isDark ? Color(0xFFF6F6F7) : Color(0xFF101828);
 
         return Dialog(
           backgroundColor: backgroundColorDialog,
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-          child: Container(
+          child: SizedBox(
             width: 210,
             height: 130,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(S.current.dataProcessingDes,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: colorTitle,
                     fontSize: 16,
                     fontFamily: 'Roboto',

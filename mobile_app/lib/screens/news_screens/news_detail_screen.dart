@@ -31,7 +31,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
       body: SingleChildScrollView(
           child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text("Content is not loaded")
+          child: const Text("Content is not loaded")
         )
       ),
     );

@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bluetooth_ecg/app.dart';
 import 'package:bluetooth_ecg/constants/api_constant.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
-import 'package:bluetooth_ecg/networks/socket_channel.dart';
 import 'package:bluetooth_ecg/providers/bluetooth_provider.dart';
 import 'package:bluetooth_ecg/providers/ecg_provider.dart';
 import 'package:bluetooth_ecg/providers/news_provider.dart';
@@ -18,7 +16,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'providers/auth_provider.dart';
-import 'package:http/http.dart' as http;
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

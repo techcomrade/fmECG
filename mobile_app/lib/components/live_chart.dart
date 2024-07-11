@@ -1,15 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:bluetooth_ecg/controllers/ecg_data_controller.dart';
 import 'package:bluetooth_ecg/controllers/ecg_record_controller.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
-import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class LiveChartSample extends StatefulWidget {
@@ -73,8 +70,8 @@ class _LiveChartSampleState extends State<LiveChartSample> {
     // }
 
     // final int userId = userDataDecoded["userId"] ?? 0;
-    final String deviceId = "2a3cec92-682a-4d4e-be35-aff01cc5011a";
-    final String userId = "4df9ace1-0229-4756-b850-51a83cb0bb6e";
+    const String deviceId = "2a3cec92-682a-4d4e-be35-aff01cc5011a";
+    const String userId = "4df9ace1-0229-4756-b850-51a83cb0bb6e";
     final String startTimeAsTimeStamp = widget.fileToSave.path.split("/").last.split('.').first;
     final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(int.parse(startTimeAsTimeStamp));
 

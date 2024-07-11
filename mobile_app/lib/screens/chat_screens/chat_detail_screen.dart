@@ -4,7 +4,6 @@ import 'package:bluetooth_ecg/constants/chat_message.dart';
 import 'package:bluetooth_ecg/constants/chat_user.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ChatDetailScreen extends StatefulWidget {
   final int indexSelect;
