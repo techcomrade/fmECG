@@ -2,9 +2,29 @@ defmodule ServerChatWeb.ConversationsController do
   use ServerChatWeb, :controller
 
   alias ServerChat.{Repo, Conversations, ConversationMembers, Utils.Helper}
+  import Ecto.Query
 
   def test(conn, _params) do
     json(conn, %{success: true, message: "hi pro"})
+  end
+
+  def get_all_conversation_by_user_id(conn, _params) do
+    user_id = conn.assigns.user.user_id
+
+    conversations_query = from cm in ConversationMembers,
+      join: c in Conversations, on: cm.conversation_id == c.id,
+      where: cm.user_id == ^user_id,
+      select: %{
+        conversation_id: c.id,
+        name: c.name,
+        type: c.type,
+        avatar_url: c.avatar_url,
+        user_id: cm.user_id
+      }
+
+    conversation_list = Repo.all(conversations_query)
+
+    json(conn, %{success: true, message: "Get all conversations by user ID successfully", data: conversation_list})
   end
 
   def create_conversation(conn, params) do
