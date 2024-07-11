@@ -1,9 +1,6 @@
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screens/bluetooth_classic_screen.dart';
-import 'package:bluetooth_ecg/screens/history_screens/chart_result_python_screen.dart';
-import 'package:bluetooth_ecg/screens/history_screens/history_screen.dart';
-import 'package:bluetooth_ecg/screens/history_screens/pick_files_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
 import 'package:bluetooth_ecg/screens/user_screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';

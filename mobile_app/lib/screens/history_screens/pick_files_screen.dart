@@ -66,7 +66,7 @@ class _PickFilesState extends State<PickFiles> {
   Widget build(BuildContext context) {
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
       child: SingleChildScrollView(
         child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

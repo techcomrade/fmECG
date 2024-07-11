@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bluetooth_ecg/screens/history_screens/chart_result_python_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screens/pick_files_screen.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
@@ -116,9 +115,9 @@ class _ChatPage extends State<ChatPage> {
                 (text) {
                   return text == '/shrug' ? '¯\\_(ツ)_/¯' : text;
                 }(_message.text.trim()),
-                style: TextStyle(color: Colors.white)),
-            padding: EdgeInsets.all(12.0),
-            margin: EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+                style: const TextStyle(color: Colors.white)),
+            padding: const EdgeInsets.all(12.0),
+            margin: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
             width: 222.0,
             decoration: BoxDecoration(
                 color:

@@ -1,7 +1,6 @@
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_bloc.dart';
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_event.dart';
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_state.dart';
-import 'package:bluetooth_ecg/features/authentication/view/login2_screen.dart';
 import 'package:bluetooth_ecg/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
