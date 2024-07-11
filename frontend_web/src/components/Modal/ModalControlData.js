@@ -1,7 +1,8 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { Modal, Col, Form, DatePicker, Input, Select } from "antd";
+import { Button, Space, Modal, Col, Form, DatePicker, Input, Select } from "antd";
+import { CloseOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import { checkDateTypeKey } from "../../utils/arrayUtils";
+import { checkDateTypeKey, checkListTypeKey } from "../../utils/arrayUtils";
 const { RangePicker } = DatePicker;
 
 const ModalComponent = (props, ref) => {
@@ -16,6 +17,7 @@ const ModalComponent = (props, ref) => {
       ...data,
       ...handleData(values)
     };
+    console.log(payload);
     const res = await props?.submitFunction(payload);
     if (!res?.error) {
       setIsOpen(false);
@@ -23,10 +25,10 @@ const ModalComponent = (props, ref) => {
   }
 
   useImperativeHandle(ref, () => ({
-    open: (data, colum) => {
+    open: (data, columns) => {
       setIsOpen(true);
       setData(data);
-      setColum(colum.filter(item => item.isEdit));
+      setColum(columns.filter(item => item.isEdit));
       form.setFieldsValue(data);
     },
   }));
@@ -50,6 +52,9 @@ const ModalComponent = (props, ref) => {
       if (checkDateTypeKey(key)) {
         dataSubmit[key] = data[key].valueOf();      
       }
+      if (checkListTypeKey(key)) {
+        dataSubmit[key] = data[key].list;      
+      }
     });
     return dataSubmit;
   };
@@ -67,6 +72,7 @@ const ModalComponent = (props, ref) => {
         setIsOpen(false);
         form.resetFields();
       }}
+      className={props.className}
     >
       <br />
       <Form
@@ -127,6 +133,44 @@ const ModalComponent = (props, ref) => {
                     }
                   }}
                 />
+              )}
+
+              {column.type === "list" && (
+                <Form.List name={[column.dataIndex, 'list']}>
+                    {(subFields, subOpt) => (
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          rowGap: 16,
+                        }}
+                      >
+                        {subFields.map((subField) => (
+                          <Space key={subField.key}>
+                            {column?.listLabel?.map(label => (
+                              <Form.Item noStyle name={[subField.name, label]} key={[subField.name, label]}>
+                                <Input placeholder={label} />
+                              </Form.Item>
+                            ))}
+                            {subFields.length > 1 ? (
+                              <MinusCircleOutlined
+                                className="dynamic-delete-button"
+                                onClick={() => subOpt.remove(subField.name)}
+                              />
+                            ) : null}
+                            {/* <CloseOutlined
+                              onClick={() => {
+                                ;
+                              }}
+                            /> */}
+                          </Space>
+                        ))}
+                        <Button type="dashed" onClick={() => subOpt.add()} block>
+                          + Thêm thông số
+                        </Button>
+                      </div>
+                    )}
+                  </Form.List>
               )}
             </Form.Item>
         ))}
