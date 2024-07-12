@@ -11,6 +11,7 @@ import { addKeyElement } from "../../utils/arrayUtils";
 import { Modal } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const { confirm } = Modal;
 
@@ -20,6 +21,7 @@ const DataTable = (props) => {
   const [deleteButton, setDeleteButton] = useState(false);
   const [chartButton, setChartButton] = useState(false);
   const [selectedState, setSelectedRowKeys] = useState([]);
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   // Get data
   useEffect(() => {
@@ -66,12 +68,12 @@ const DataTable = (props) => {
       <div className="list-btn-actions">
         {props.addButton && (
           <Button icon={<PlusOutlined />} onClick={() => props?.addFunction()}>
-            Tạo
+            {t("button.add")}
           </Button>
         )}
         {props.addDeviceButton ? (
           <Button icon={<MobileOutlined />} onClick={() => navigate("/device")}>
-            Thêm thiết bị
+            {t("button.add-device")}
           </Button>
         ) : (
           ""
@@ -83,7 +85,7 @@ const DataTable = (props) => {
             className="edit-btn"
             onClick={() => props?.editFunction(selectedState[0])}
           > 
-            Chỉnh sửa
+            {t("button.edit")}
           </Button>
         )}
         {props.deleteButton && (
@@ -93,7 +95,7 @@ const DataTable = (props) => {
             className="delete-btn"
             onClick={() => deleteFunction(selectedState[0])}
           >
-            Xóa
+            {t("button.delete")}
           </Button>
         )}
         {props?.customButton}
@@ -102,7 +104,7 @@ const DataTable = (props) => {
             disabled ={!chartButton}
             onClick={() => props?.openChart()}
           >
-            Đồ thị
+            {t("button.graph")}
           </Button>
         )}
       </div>

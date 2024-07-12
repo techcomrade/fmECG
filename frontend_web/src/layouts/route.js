@@ -25,31 +25,31 @@ import AITraining from "../pages/AITranningChat/chat";
 export const AdminRouterMappingGroup = {
   User: {
     key: "/user",
-    label: "Thông tin người dùng",
+    label: "page.side-bar.user-info",
     component: <UserTable />,
     icon: <UsergroupAddOutlined />,
   },
   Device: {
     key: "/device",
-    label: "Thông tin thiết bị",
+    label: "page.side-bar.device-info",
     component: <DeviceTable />,
     icon: <DesktopOutlined />,
   },
   Record: {
     key: "/record",
-    label: "Thông tin bản ghi",
+    label:  "page.side-bar.record-info",
     component: <RecordTable />,
     icon: <LineChartOutlined />,
   },
   AssignmentPatientDoctor: {
     key: "/pda",
-    label: "Phân công bác sĩ",
+    label: "page.side-bar.assignment-doctor",
     component: <PdaTable />,
     icon: <UserSwitchOutlined />,
   },
   Register: {
     key: "/registers",
-    label: "Xét duyệt tài khoản",
+    label: "page.side-bar.register-info",
     component: <RegisterTable />,
     icon: <UserAddOutlined />,
   },
@@ -64,19 +64,19 @@ export const AdminRouterMappingGroup = {
 export const doctorRouterMappingGroup = {
   User: {
     key: "/user",
-    label: "Quản lý bệnh nhân",
+    label: "Thông tin bệnh nhân",
     component: <UserTable />,
     icon: <UsergroupAddOutlined />,
   },
   Device: {
     key: "/device",
-    label: "Quản lý thiết bị",
+    label: "page.side-bar.record-info",
     component: <DeviceTable />,
     icon: <DesktopOutlined />,
   },
   Record: {
     key: "/record",
-    label: "Quản lý bản ghi",
+    label:  "page.side-bar.record-info",
     component: <RecordTable />,
     icon: <LineChartOutlined />,
   },
@@ -98,13 +98,13 @@ export const patientRouterMappingGroup = {
   },
   DeviceInformation: {
     key: "/device",
-    label: "Thông tin thiết bị",
+    label: "page.side-bar.device-info",
     component: <DeviceTable />,
     icon: <DesktopOutlined />,
   },
   RecordInformation: {
     key: "/record",
-    label: "Dữ liệu sức khoẻ",
+    label:  "page.side-bar.record-info",
     component: <RecordTable />,
     icon: <LineChartOutlined />,
   }

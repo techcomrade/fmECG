@@ -4,8 +4,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartsResultPythonScreen extends StatefulWidget {
   const ChartsResultPythonScreen({
-    Key? key,
+    Key? key, required this.data,
   }) : super(key: key);
+  final Map data;
 
   @override
   State<ChartsResultPythonScreen> createState() =>
@@ -39,106 +40,10 @@ class _ChartsResultPythonScreenState extends State<ChartsResultPythonScreen> {
 
   setChartData() {
     setState(() => isLoading = true);
-    sbpData = [
-      126,
-      114,
-      133,
-      118,
-      122,
-      137,
-      94,
-      134,
-      110,
-      106,
-      90,
-      97,
-      105,
-      130,
-    ];
-    dbpData = [
-      63,
-      75,
-      66,
-      60,
-      68,
-      87,
-      64,
-      79,
-      88,
-      77,
-      67,
-      75,
-      67,
-      63,
-      75,
-      61,
-      64,
-      88,
-      79,
-      87,
-      62,
-      68
-    ];
-    spo2Data = [
-      95,
-      94,
-      94,
-      97,
-      94,
-      97,
-      99,
-      98,
-      99,
-      96,
-      97,
-      99,
-      97,
-      99,
-      95,
-      98,
-      95,
-      99,
-      97,
-      98,
-      94,
-      96,
-      95,
-      94,
-      95,
-      99,
-      94,
-      95
-    ];
-    heartRateData = [
-      91,
-      89,
-      90,
-      96,
-      97,
-      96,
-      95,
-      96,
-      100,
-      99,
-      94,
-      92,
-      93,
-      93,
-      86,
-      88,
-      90,
-      88,
-      87,
-      93,
-      99,
-      87,
-      93,
-      95,
-      92,
-      88,
-      84,
-      90
-    ];
+    sbpData = widget.data["sbp"] ?? [];
+    dbpData = widget.data["dbp"] ?? [];
+    spo2Data = widget.data["spo2"] ?? [];
+    heartRateData = widget.data["heart_rate"] ?? [];
     setState(() => isLoading = false);
   }
 

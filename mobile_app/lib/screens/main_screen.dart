@@ -23,7 +23,8 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const ChartsResultPythonScreen(),
+    const BluetoothClassicScreen(),
+    // const ChartsResultPythonScreen(),
     const ChatScreen(),
     const UserProfileScreen()
   ];

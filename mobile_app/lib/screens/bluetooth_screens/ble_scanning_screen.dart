@@ -4,6 +4,7 @@ import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_chart_test.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
+import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -151,7 +152,7 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
   }
 
   _navigateToChart() async {
-    bool isAccessFiles = await _requestManageStorage();
+    final bool isAccessFiles = await Utils.requestManageStorage();
     _scanStream?.cancel();
     if (isAccessFiles) {
       FilesManagement.createDirectoryFirstTimeWithDevice();
@@ -165,15 +166,6 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
       ));
     } else {
       print('phone does not grant permission');
-    }
-  }
-
-  Future<bool> _requestManageStorage() async {
-    final PermissionStatus status = await Permission.manageExternalStorage.request();  
-    if (status == PermissionStatus.granted) {
-      return true;
-    } else {
-      return false;
     }
   }
 
