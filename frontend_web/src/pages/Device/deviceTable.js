@@ -14,7 +14,7 @@ import {
   updateDevice,
 } from "../../redux/reducer/deviceSlice";
 import { convertTimeToDate } from "../../utils/dateUtils";
-import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
+import { findElementById, checkDateTypeKey, checkListTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { httpGetData } from "../../api/common.api";
@@ -30,6 +30,7 @@ import {
   userRole,
 } from "../../constants";
 import { Tag } from "antd";
+import './deviceTable.scss'
 
 const DeviceTable = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,35 @@ const DeviceTable = () => {
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
   const drawerRef = useRef(null);
+  const listLabel = [
+    "detail_name",
+    "value",
+    "information",
+  ];
+
+  const initAddData = {
+    frequency: {
+      list: [{
+        detail_name: "",
+        value: "",
+        information: ""
+      }]
+    },
+    storage: {
+      list: [{
+        detail_name: "",
+        value: "",
+        information: ""
+      }]
+    },
+    connection: {
+      list: [{
+        detail_name: "",
+        value: "",
+        information: ""
+      }]
+    }
+  }
 
   const columns = [
     {
@@ -69,8 +99,16 @@ const DeviceTable = () => {
       dataIndex: "username",
       key: "username",
       type: "select",
+      isEdit: false,
+    },
+    {
+      title: "Tên người dùng",
+      dataIndex: "user_id",
+      key: "user_id",
+      type: "select",
       dataSelect: dropdownData,
       isEdit: true,
+      hidden: true,
     },
     {
       title: "Trạng thái",
@@ -87,6 +125,33 @@ const DeviceTable = () => {
           </Tag>
         );
       },
+    },
+    {
+      title: "Tần số thiết bị",
+      dataIndex: "frequency",
+      key: "frequency",
+      type: "list",
+      isEdit: true,
+      hidden: true,
+      listLabel: listLabel
+    },
+    {
+      title: "Lưu trữ dữ liệu",
+      dataIndex: "storage",
+      key: "storage",
+      type: "list",
+      isEdit: true,
+      hidden: true,
+      listLabel: listLabel
+    },
+    {
+      title: "Phương thức kết nối",
+      dataIndex: "connection",
+      key: "connection",
+      type: "list",
+      isEdit: true,
+      hidden: true,
+      listLabel: listLabel
     },
     {
       title: "Thông tin thiết bị",
@@ -179,6 +244,12 @@ const DeviceTable = () => {
         if (checkDateTypeKey(key)) {
           deviceData[key] = dayjs(data[key], "DD/MM/YYYY");
         }
+
+        if (checkListTypeKey(key)) {
+          deviceData[key] = {
+            list: data[key]
+          }
+        }
       });
     }
 
@@ -199,7 +270,7 @@ const DeviceTable = () => {
         editButton
         editFunction={handleEditFunction}
         addButton
-        addFunction={() => modalAddRef.current?.open({}, columns)}
+        addFunction={() => modalAddRef.current?.open(initAddData, columns)}
         deleteButton
         deleteFunction={handleDeleteFunction}
         name="Bảng quản lý thiết bị"
@@ -213,11 +284,13 @@ const DeviceTable = () => {
         ref={modalUpdateRef}
         title="Sửa thông tin thiết bị"
         submitFunction={(data) => handleSubmitEditUser(data)}
+        className="edit-device"
       />
       <ModalControlData
         ref={modalAddRef}
         title="Thêm thiết bị mới"
         submitFunction={(data) => handleSubmitAddFunction(data)}
+        className="add-device"
       />
       <DeviceDetail ref={drawerRef} />
     </>
