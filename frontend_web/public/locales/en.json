@@ -1,15 +1,82 @@
 {
-    "page.side-bar.home": "Home",
-    "page.side-bar.management": "Management",
-    "page.side-bar.user-info": "User Information",
-    "page.side-bar.device-info": "Device Information",
-    "page.side-bar.record-info": "Record Information",
-    "page.side-bar.assignment-doctor": "Assignment Patient To Doctor",
-    "page.side-bar.account-info": "Account Information",
-    "page.side-bar.register-info": "Register Information",
-    "page.side-bar.account-management": "Account Management",
-    "page.side-bar.setting": "Settings",
-    "page.breadcrumb.pages": "Pages"
-    
-
+    "page": {
+        "side-bar": {
+            "home": "Home",
+            "management": "Management",
+            "user-info": "User Information",
+            "device-info": "Device Information",
+            "record-info": "Record Information",
+            "assignment-doctor": "Assignment Patient To Doctor",
+            "account-info": "Account Information",
+            "register-info": "Register Information",
+            "account-management": "Account Management",
+            "setting": "Settings"
+        },
+        "breadcrumb": {
+            "pages": "Pages"
+        }
+    },
+    "column": {
+            "user-name": "User name",
+            "sex": "Sex",
+            "birth": "Birth",
+            "phone-number": "Phone Number",
+            "role": "Role",
+            "status": "Status",
+            "password": "Password",
+            "device-name": "Device Name",
+            "device-type": "Device Type",
+            "device-info": "Device Information",
+            "date-started": "Date Started",
+            "date-finished": "Date Finished",
+            "record-type": "Record Type",
+            "record-name": "Record Name",
+            "patient-name": "Patient Name",
+            "doctor-name": "Doctor Name"
+    },
+    "button": {
+        "delete": "Delete",
+        "edit": "Edit",
+        "add": "Add",
+        "graph": "Graph",
+        "cancel": "Cancel",
+        "save": "Save",
+        "add-device": "Add Device"
+    },
+    "modal": {
+        "record-graph": "Record Graph"
+    },
+    "homepage": {
+        "number-of-users-are-using": "Number of Users are Using",
+        "paragraph": "Total number of users including patients and doctors and the time they started using the system",
+        "number-of-new-recordings": "Number of new records"
+    },
+    "title": {
+        "user-info": "User Information",
+        "device-info": "Device Information",
+        "record-info": "Medical Record",
+        "assignment-doctor": "Doctor and Patient Assignment Management",
+        "register-info": "User Registration Information"
+    },
+    "status":{
+        "is-active":"Active",
+        "is-empty":"Empty",
+        "is-off": "Off"
+    },
+    "sex":{
+        "Male": "Male",
+        "Female": "Female"
+    },
+    "label":{
+        "device-info": "Device Information",
+        "sampling-frequency": "Sampling Frequency (Hz)",
+        "sensor": "Sensor",
+        "capacity": "Capacity",
+        "frequency": "Frequency",
+        "delay": "Delay",
+        "note": "Note",
+        "storage": "Data Storage",
+        "connection": "Connection Method",
+        "record-count": "Record Count"
+    }
 }
