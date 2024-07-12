@@ -87,11 +87,11 @@ class _ChartsResultPythonScreenState extends State<ChartsResultPythonScreen> {
   Widget _buildDefaultLineChart(String name, List result) {
     final String unit = getUnitByType(name);
     return SfCartesianChart(
-      margin: EdgeInsets.only(left: 5, right: 10, top: 5),
+      margin: const EdgeInsets.only(left: 5, right: 10, top: 5),
       plotAreaBorderWidth: 0,
       enableAxisAnimation: true,
       title: ChartTitle(
-          text: name, textStyle: TextStyle(fontWeight: FontWeight.w600)),
+          text: name, textStyle: const TextStyle(fontWeight: FontWeight.w600)),
       legend:
           Legend(isVisible: false, overflowMode: LegendItemOverflowMode.wrap),
       primaryXAxis: NumericAxis(

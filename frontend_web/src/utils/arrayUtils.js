@@ -18,6 +18,12 @@ export const checkDateTypeKey = (key) => {
     const dateKeyGroups = ["birth", "start_date", "start_time", "end_time","end_date"];
     return dateKeyGroups.includes(key);
 }
+
+export const checkListTypeKey = (key) => {
+    const dateKeyGroups = ["frequency", "storage", "connection"];
+    return dateKeyGroups.includes(key);
+}
+
 export const CheckKeyNeedDisplayTag = (key) => {
     const tyepKeyGroups = ["status","role","device_type"];
     return tyepKeyGroups.includes(key)
