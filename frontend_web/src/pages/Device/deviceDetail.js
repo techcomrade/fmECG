@@ -6,14 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDeviceById, loadStatus } from "../../redux/reducer/deviceSlice";
 import { Divider, Table } from "antd";
 import { convertDeviceStatusToString } from "../../constants";
-import { useTranslation } from "react-i18next";
 
 const DeviceDetailComponent = (props, ref) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [idSelect, setIdSelect] = useState("");
-  const { t } = useTranslation();
 
   const { deviceData, loadDeviceDataStatus } = useSelector(
     (state) => state.device
@@ -59,29 +57,29 @@ const DeviceDetailComponent = (props, ref) => {
   }, [loadDeviceDataStatus]);
 
   const labelsInfo = {
-    device_name: t("column.device-name"),
-    device_type: t("column.device-type"),
-    frequency: t("label.frequency"),
-    storage: t("label.storage"),
-    connection: t("label.connection"),
-    recordCount: t("label.record-count"),
-    status: t("column.status"),
-    start_date: t("column.date-started")
+    device_name: "Tên thiết bị",
+    device_type: "Loại thiết bị",
+    frequency: "Tần số",
+    storage: "Lưu trữ dữ liệu",
+    connection: "Phương thức kết nối",
+    recordCount: "Số bản ghi",
+    status: "Trạng thái",
+    start_date: "Ngày bắt đầu",
   };
 
   const frequencyColumns = [
     {
-      title: t("label.device-info"),
+      title: "Thông tin",
       dataIndex: "information",
       key: "information",
     },
     {
-      title: t("label.sampling-frequency"),
+      title: "Tần số lấy mẫu (Hz)",
       dataIndex: "value",
       key: "value",
     },
     {
-      title: t("label.sensor"),
+      title: "Cảm biến",
       dataIndex: "detail_name",
       key: "detail_name",
     },
@@ -89,17 +87,17 @@ const DeviceDetailComponent = (props, ref) => {
 
   const storageColumns = [
     {
-      title: t("label.device-info"),
+      title: "Thông tin",
       dataIndex: "information",
       key: "information",
     },
     {
-      title: t("label.capacity"),
+      title: "Dung lượng",
       dataIndex: "value",
       key: "value",
     },
     {
-      title: t("label.storage"),
+      title: "Lưu trữ",
       dataIndex: "detail_name",
       key: "detail_name",
     },
@@ -111,17 +109,13 @@ const DeviceDetailComponent = (props, ref) => {
       key: "value",
     },
     {
-      title: t("label.connection"),
+      title: "Kết nối",
       dataIndex: "detail_name",
       key: "detail_name",
     },
-    { 
-      title: t("label.delay"), 
-      dataIndex: "delay", 
-      key: "delay" 
-    },
+    { title: "Độ trễ", dataIndex: "delay", key: "delay" },
     {
-      title: t("label.note"),
+      title: "Thông tin",
       dataIndex: "information",
       key: "information",
     },

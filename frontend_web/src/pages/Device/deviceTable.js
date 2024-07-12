@@ -30,7 +30,6 @@ import {
   userRole,
 } from "../../constants";
 import { Tag } from "antd";
-import { useTranslation } from "react-i18next";
 
 const DeviceTable = () => {
   const dispatch = useDispatch();
@@ -41,18 +40,17 @@ const DeviceTable = () => {
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
   const drawerRef = useRef(null);
-  const { t } = useTranslation();
 
   const columns = [
     {
-      title: t("column.device-name"),
+      title: "Tên thiết bị",
       dataIndex: "device_name",
       key: "device_name",
       type: "text",
       isEdit: true,
     },
     {
-      title: t("column.device-type"),
+      title: "Loại thiết bị",
       dataIndex: "device_type",
       key: "device_type",
       type: "text",
@@ -67,7 +65,7 @@ const DeviceTable = () => {
       },
     },
     {
-      title: t("column.user-name"),
+      title: "Tên người dùng",
       dataIndex: "username",
       key: "username",
       type: "select",
@@ -75,7 +73,7 @@ const DeviceTable = () => {
       isEdit: true,
     },
     {
-      title: t("column.status"),
+      title: "Trạng thái",
       dataIndex: "status",
       key: "status",
       type: "select",
@@ -91,14 +89,14 @@ const DeviceTable = () => {
       },
     },
     {
-      title: t("column.device-info"),
+      title: "Thông tin thiết bị",
       dataIndex: "information",
       key: "information",
       type: "text",
       isEdit: true,
     },
     {
-      title: t("column.date-started"),
+      title: "Ngày bắt đầu",
       dataIndex: "start_date",
       key: "start_date",
       type: "date",

@@ -19,11 +19,10 @@ import { loadStatus } from "../../redux/reducer/recordSlice";
 import "./detail.scss";
 import { convertGenderToString, convertRoleToString } from "../../constants";
 import { context } from "../../utils/context";
-import { useTranslation } from "react-i18next";
 
 export default function Detail() {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+
   const [accountData, setData] = useState({});
   const dataState = useSelector((state) => state.user);
   useEffect(() => {
@@ -73,12 +72,12 @@ export default function Detail() {
         <Form layout="vertical">
           <Row>
             <Col span={10}>
-              <Form.Item label={t("column.user-name")}>
+              <Form.Item label="Họ và tên">
                 <Input value={accountData.username} name="name" />
               </Form.Item>
             </Col>
             <Col span={10} offset={2}>
-              <Form.Item label={t("column.sex")}>
+              <Form.Item label="Giới tính">
                 <Input
                   value={convertGenderToString(accountData.gender)}
                   name="gender"
@@ -88,12 +87,12 @@ export default function Detail() {
           </Row>
           <Row>
             <Col span={10}>
-              <Form.Item label={t("column.phone-number")}>
+              <Form.Item label="Số điện thoại">
                 <Input value={accountData.phone_number} name="name" />
               </Form.Item>
             </Col>
             <Col span={10} offset={2}>
-              <Form.Item label={t("column.birth")}>
+              <Form.Item label="Ngày sinh">
                 <DatePicker
                   format={"DD/MM/YYYY"}
                   name="ngày sinh"
@@ -105,12 +104,12 @@ export default function Detail() {
           </Row>
           <Row>
             <Col span={10}>
-              <Form.Item label="Email">
+              <Form.Item label="Số bản ghi">
                 <Input value={accountData.email} name="email" disabled/>
               </Form.Item>
             </Col>
             <Col span={10} offset={2}>
-              <Form.Item label={t("column.role")}>
+              <Form.Item label="Quyền truy cập">
                 <Input value={convertRoleToString(accountData.role)} name="role" disabled/>
               </Form.Item>
             </Col>
@@ -118,7 +117,7 @@ export default function Detail() {
           <Row>
             <Col span={10}>
               <Form.Item
-                label={t("column.password")}
+                label="Mật khẩu"
                 name="password"
                 rules={[
                   {
@@ -159,13 +158,13 @@ export default function Detail() {
            <Row className="btn-row">
             <Col span={10}>
               <Form.Item className="detail-btn">
-                <Button>{t("button.cancel")}</Button>
+                <Button>Hủy bỏ</Button>
                 <Button
                   type="primary"
                   className="account-submit-button"
                   // onClick={handleSubmitButton}
                 >
-                  {t("button.save")}
+                  Lưu
                 </Button>
               </Form.Item>
             </Col>

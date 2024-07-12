@@ -8,20 +8,18 @@ import {
   resetChartRecordDataStatus,
 } from "../../redux/reducer/recordSlice";
 import Loading from "../Loading/Loading";
-import { useTranslation } from "react-i18next";
 
 const ModalChart = ({ isOpen, setIsOpen, selectedDevice }) => {
   const [data, setData] = useState();
   const [isLoading, setIsloading] = useState(true);
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.record);
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (selectedDevice.length > 0) {
       dispatch(getDataRecordById(selectedDevice?.[0]));
     }
-  }, [selectedDevice, dispatch]);
+  }, [selectedDevice]);
 
   useEffect(() => {
     if (dataState.loadChartRecordDataStatus === loadStatus.Success) {
@@ -36,18 +34,19 @@ const ModalChart = ({ isOpen, setIsOpen, selectedDevice }) => {
   };
 
   return (
-    <Modal
-      title={t("modal-chart.record-graph")}
-      open={isOpen}
-      cancelText={t("modal-chart.cancel")}
-      onCancel={handleCancel}
-      width={1000}
-      centered
-      footer={null}
-    >
-      {isLoading ? <Loading /> : <LineChart rawData={data} />}
-    </Modal>
+    <>
+      <Modal
+        title="Đồ thị records"
+        open={isOpen}
+        cancelText="Quay lại"
+        onCancel={handleCancel}
+        width={1000}
+        centered
+        footer={null}
+      >
+        {isLoading ? <Loading /> : <LineChart rawData={data} />}
+      </Modal>
+    </>
   );
 };
-
 export default ModalChart;
