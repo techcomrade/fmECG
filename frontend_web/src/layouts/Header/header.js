@@ -36,7 +36,7 @@ const LanguageComponent = () => {
   };
   const items = [
     {
-      label: <a onClick={()=>changeLanguage('en')}>Tiếng Anh</a>,
+      label: <a onClick={()=>changeLanguage('en')}>English</a>,
       key: "1",
     },
     {

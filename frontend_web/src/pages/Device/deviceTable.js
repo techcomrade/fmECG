@@ -30,7 +30,11 @@ import {
   userRole,
 } from "../../constants";
 import { Tag } from "antd";
+
+import { useTranslation } from "react-i18next";
+
 import './deviceTable.scss'
+
 
 const DeviceTable = () => {
   const dispatch = useDispatch();
@@ -41,6 +45,9 @@ const DeviceTable = () => {
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
   const drawerRef = useRef(null);
+
+  const { t } = useTranslation();
+
   const listLabel = [
     "detail_name",
     "value",
@@ -71,16 +78,17 @@ const DeviceTable = () => {
     }
   }
 
+
   const columns = [
     {
-      title: "Tên thiết bị",
+      title: t("column.device-name"),
       dataIndex: "device_name",
       key: "device_name",
       type: "text",
       isEdit: true,
     },
     {
-      title: "Loại thiết bị",
+      title: t("column.device-type"),
       dataIndex: "device_type",
       key: "device_type",
       type: "text",
@@ -95,7 +103,7 @@ const DeviceTable = () => {
       },
     },
     {
-      title: "Tên người dùng",
+      title: t("column.user-name"),
       dataIndex: "username",
       key: "username",
       type: "select",
@@ -111,7 +119,7 @@ const DeviceTable = () => {
       hidden: true,
     },
     {
-      title: "Trạng thái",
+      title: t("column.status"),
       dataIndex: "status",
       key: "status",
       type: "select",
@@ -127,7 +135,9 @@ const DeviceTable = () => {
       },
     },
     {
-      title: "Tần số thiết bị",
+
+      title: t("column.device-info"),
+
       dataIndex: "frequency",
       key: "frequency",
       type: "list",
@@ -161,7 +171,7 @@ const DeviceTable = () => {
       isEdit: true,
     },
     {
-      title: "Ngày bắt đầu",
+      title: t("column.date-started"),
       dataIndex: "start_date",
       key: "start_date",
       type: "date",
