@@ -29,7 +29,6 @@ import { GENDER, ROLE } from "../../constants";
 import dayjs from "dayjs";
 import { UserDetail } from "./userDetail";
 import { context } from "../../utils/context";
-import { useTranslation } from "react-i18next";
 
 const UserTable = (props) => {
   const dispatch = useDispatch();
@@ -40,17 +39,16 @@ const UserTable = (props) => {
   const modalUpdateRef = useRef(null);
   const drawerRef = useRef(null);
 
-  const { t } = useTranslation();
   const columns = [
     {
-      title: t("column.user-name"),
+      title: "Họ và tên",
       dataIndex: "username",
       key: "username",
       type: "text",
       isEdit: true,
     },
     {
-      title: t("column.sex"),
+      title: "Giới tính",
       dataIndex: "gender",
       key: "gender",
       type: "select",
@@ -58,21 +56,21 @@ const UserTable = (props) => {
       isEdit: true,
     },
     {
-      title: t("column.birth"),
+      title: "Ngày sinh",
       dataIndex: "birth",
       key: "birth",
       type: "date",
       isEdit: true,
     },
     {
-      title: t("column.phone-number"),
+      title: "Số điện thoại",
       dataIndex: "phone_number",
       key: "phone_number",
       type: "text",
       isEdit: true,
     },
     {
-      title: t("column.role"),
+      title: "Tác vụ",
       dataIndex: "role",
       key: "role",
       type: "select",
@@ -80,7 +78,7 @@ const UserTable = (props) => {
       isEdit: true,
     },
     {
-      title: t("column.status"),
+      title: "Trạng thái",
       dataIndex: "status",
       key: "status",
       type: "select",
@@ -186,7 +184,7 @@ const UserTable = (props) => {
     } else if (context.role === userRole.patient) {
       return "Bác sĩ điều trị";
     } else {
-      return t("title.user-info");
+      return "Thông tin người dùng";
     }
   };
   return (

@@ -11,14 +11,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserById, loadStatus } from "../../redux/reducer/userSlice";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Divider } from "antd";
-import { useTranslation } from "react-i18next";
 
 const UserDetailComponent = (props, ref) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [idSelect, setIdSelect] = useState("");
-  const { t } = useTranslation();
 
   const { userData, loadUserDataStatus } = useSelector((state) => state.user);
 
@@ -56,8 +54,8 @@ const UserDetailComponent = (props, ref) => {
   }, [loadUserDataStatus]);
 
   const labelsInfo = {
-    username: t("column.user-name"),
-    gender: t("column.sex"),
+    username: "Họ và tên",
+    gender: "Giới tính",
     birth: "Ngày sinh",
     phone_number: "Số điện thoại",
     status: "Trạng thái",

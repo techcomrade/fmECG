@@ -25,31 +25,31 @@ import AITraining from "../pages/AITranningChat/chat";
 export const AdminRouterMappingGroup = {
   User: {
     key: "/user",
-    label: "page.side-bar.user-info",
+    label: "Thông tin người dùng",
     component: <UserTable />,
     icon: <UsergroupAddOutlined />,
   },
   Device: {
     key: "/device",
-    label: "page.side-bar.device-info",
+    label: "Thông tin thiết bị",
     component: <DeviceTable />,
     icon: <DesktopOutlined />,
   },
   Record: {
     key: "/record",
-    label:  "page.side-bar.record-info",
+    label: "Thông tin bản ghi",
     component: <RecordTable />,
     icon: <LineChartOutlined />,
   },
   AssignmentPatientDoctor: {
     key: "/pda",
-    label: "page.side-bar.assignment-doctor",
+    label: "Phân công bác sĩ",
     component: <PdaTable />,
     icon: <UserSwitchOutlined />,
   },
   Register: {
     key: "/registers",
-    label: "page.side-bar.register-info",
+    label: "Xét duyệt tài khoản",
     component: <RegisterTable />,
     icon: <UserAddOutlined />,
   },
@@ -64,19 +64,19 @@ export const AdminRouterMappingGroup = {
 export const doctorRouterMappingGroup = {
   User: {
     key: "/user",
-    label: "Thông tin bệnh nhân",
+    label: "Quản lý bệnh nhân",
     component: <UserTable />,
     icon: <UsergroupAddOutlined />,
   },
   Device: {
     key: "/device",
-    label: "page.side-bar.record-info",
+    label: "Quản lý thiết bị",
     component: <DeviceTable />,
     icon: <DesktopOutlined />,
   },
   Record: {
     key: "/record",
-    label:  "page.side-bar.record-info",
+    label: "Quản lý bản ghi",
     component: <RecordTable />,
     icon: <LineChartOutlined />,
   },
@@ -98,13 +98,13 @@ export const patientRouterMappingGroup = {
   },
   DeviceInformation: {
     key: "/device",
-    label: "page.side-bar.device-info",
+    label: "Thông tin thiết bị",
     component: <DeviceTable />,
     icon: <DesktopOutlined />,
   },
   RecordInformation: {
     key: "/record",
-    label:  "page.side-bar.record-info",
+    label: "Dữ liệu sức khoẻ",
     component: <RecordTable />,
     icon: <LineChartOutlined />,
   }

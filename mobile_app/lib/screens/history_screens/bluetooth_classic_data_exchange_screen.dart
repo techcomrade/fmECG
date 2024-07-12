@@ -1,13 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
+import 'dart:typed_data';
 
-import 'package:bluetooth_ecg/screens/history_screens/chart_result_python_screen.dart';
-import 'package:bluetooth_ecg/screens/history_screens/pick_files_screen.dart';
-import 'package:bluetooth_ecg/utils/files_management.dart';
-import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
 class ChatPage extends StatefulWidget {
@@ -27,28 +22,25 @@ class _Message {
 }
 
 class _ChatPage extends State<ChatPage> {
-  static const platform = MethodChannel("com.example.method_channel/java");
   static const clientID = 0;
   BluetoothConnection? connection;
 
   List<_Message> messages = List<_Message>.empty(growable: true);
   String _messageBuffer = '';
-  List dataToFile = [];
-  late File fileSum;
 
-  final TextEditingController textEditingController = TextEditingController();
+  final TextEditingController textEditingController =
+      TextEditingController();
   final ScrollController listScrollController = ScrollController();
 
   bool isConnecting = true;
   bool get isConnected => (connection?.isConnected ?? false);
 
   bool isDisconnecting = false;
-  bool isWritingData = false;
 
   @override
   void initState() {
     super.initState();
-    initSetupFile();
+
     BluetoothConnection.toAddress(widget.server.address).then((_connection) {
       print('Connected to the device');
       connection = _connection;
@@ -57,28 +49,21 @@ class _ChatPage extends State<ChatPage> {
         isDisconnecting = false;
       });
 
-      connection!.input!.listen(_onDataReceived).onDone(() async {
+      connection!.input!.listen(_onDataReceived).onDone(() {
         // Example: Detect which side closed the connection
         // There should be `isDisconnecting` flag to show are we are (locally)
         // in middle of disconnecting process, should be set before calling
         // `dispose`, `finish` or `close`, which all causes to disconnect.
         // If we except the disconnection, `onDone` should be fired as result.
         // If we didn't except this (no flag set), it means closing by remote.
-
-        // if (isDisconnecting) {
-        //   print('Disconnecting locally!');
-        // } else {
-        //   print('Disconnected remotely!');
-        // }
-        setState(() => isWritingData = true);
-        await FilesManagement.handleSaveDataToFileV2(fileSum, dataToFile);
-        setState(() => isWritingData = false);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Material(child: PickFiles(txtPath: fileSum.path))));
-
-
+        if (isDisconnecting) {
+          print('Disconnecting locally!');
+        } else {
+          print('Disconnected remotely!');
+        }
+        if (this.mounted) {
+          setState(() {});
+        }
       });
     }).catchError((error) {
       print('Cannot connect, exception occured');
@@ -88,6 +73,7 @@ class _ChatPage extends State<ChatPage> {
 
   @override
   void dispose() {
+    // Avoid memory leak (`setState` after dispose) and disconnect
     if (isConnected) {
       isDisconnecting = true;
       connection?.dispose();
@@ -95,15 +81,6 @@ class _ChatPage extends State<ChatPage> {
     }
 
     super.dispose();
-  }
-
-  initSetupFile() async {
-    final bool hasAccessFiles = await Utils.requestManageStorage();
-    if (!hasAccessFiles) {
-      return Utils.showDialogWarningError(context, true, "Vui lòng cấp quyền truy cập file cho App!");
-    }
-    await FilesManagement.createDirectoryFirstTimeWithDevice();
-    fileSum = await FilesManagement.setUpFileSaveTxt();
   }
 
   @override
@@ -162,9 +139,7 @@ class _ChatPage extends State<ChatPage> {
                             ? 'Wait until connected...'
                             : isConnected
                                 ? 'Type your message...'
-                                : isWritingData
-                                    ? "Writing data to files..."
-                                    : "Done. Disconnected.",
+                                : 'Chat got disconnected',
                         hintStyle: const TextStyle(color: Colors.grey),
                       ),
                       enabled: isConnected,
@@ -174,9 +149,9 @@ class _ChatPage extends State<ChatPage> {
                 Container(
                   margin: const EdgeInsets.all(8.0),
                   child: IconButton(
-                      icon: const Icon(Icons.bluetooth_disabled_sharp),
+                      icon: const Icon(Icons.send),
                       onPressed: isConnected
-                          ? () => connection?.finish()
+                          ? () => _sendMessage(textEditingController.text)
                           : null),
                 ),
               ],
@@ -189,12 +164,13 @@ class _ChatPage extends State<ChatPage> {
 
   void _onDataReceived(Uint8List data) {
     // Allocate buffer for parsed data
+    print('gndfjgdf:$data');
     int backspacesCounter = 0;
-    for (var byte in data) {
+    data.forEach((byte) {
       if (byte == 8 || byte == 127) {
         backspacesCounter++;
       }
-    }
+    });
     Uint8List buffer = Uint8List(data.length - backspacesCounter);
     int bufferIndex = buffer.length;
 
@@ -212,8 +188,9 @@ class _ChatPage extends State<ChatPage> {
       }
     }
 
+    // Create message if there is new line character
     String dataString = String.fromCharCodes(buffer);
-    dataToFile.add(dataString);
+    print('dataString:$dataString');
     int index = buffer.indexOf(13);
     if (~index != 0) {
       setState(() {
@@ -234,20 +211,13 @@ class _ChatPage extends State<ChatPage> {
               0, _messageBuffer.length - backspacesCounter)
           : _messageBuffer + dataString);
     }
-
-    Future.delayed(const Duration(milliseconds: 333)).then((_) {
-      listScrollController.animateTo(
-          listScrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 333),
-          curve: Curves.easeOut);
-    });
   }
 
   void _sendMessage(String text) async {
     text = text.trim();
     textEditingController.clear();
 
-    if (text.isNotEmpty) {
+    if (text.length > 0) {
       try {
         connection!.output.add(Uint8List.fromList(utf8.encode(text + "\r\n")));
         await connection!.output.allSent;
@@ -256,10 +226,10 @@ class _ChatPage extends State<ChatPage> {
           messages.add(_Message(clientID, text));
         });
 
-        Future.delayed(const Duration(milliseconds: 333)).then((_) {
+        Future.delayed(Duration(milliseconds: 333)).then((_) {
           listScrollController.animateTo(
               listScrollController.position.maxScrollExtent,
-              duration: const Duration(milliseconds: 333),
+              duration: Duration(milliseconds: 333),
               curve: Curves.easeOut);
         });
       } catch (e) {

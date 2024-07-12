@@ -42,16 +42,10 @@ public class MainActivity extends FlutterActivity {
 
                 if (call.method.equals("transfer_context_to_python")) {
                     String pythonPath = call.argument("python_path");
-                    String txtPath = call.argument("txt_path");
-                    if (pythonPath != null) {
-                        System.out.println("hello111: " + pythonPath);
-                        HashMap<String, int[]> dataCalculated = transferContextToPython(pythonPath, txtPath);
-                        result.success(dataCalculated);
-                    } else {
-                        System.out.println("helloeeeee: " + pythonPath);
-                        HashMap<String, int[]> dataCalculated = transferTxtPathAndCalculatePython(txtPath);
-                        result.success(dataCalculated);
-                    }
+                    String pcgPath = call.argument("pcg_path");
+                    String ppgPath = call.argument("ppg_path");
+                    HashMap<String, int[]> dataCalculated = transferContextToPython(pythonPath, pcgPath, ppgPath);
+                    result.success(dataCalculated);
                 }
            });
     }
@@ -59,7 +53,8 @@ public class MainActivity extends FlutterActivity {
 
     private HashMap<String, int[]> transferContextToPython(
         String pythonPath,
-        String txtPath
+        String pcgPath,
+        String ppgPath
     ) {
         if (!Python.isStarted()) {
             Python.start(new AndroidPlatform(this));
@@ -67,35 +62,14 @@ public class MainActivity extends FlutterActivity {
 
         Python py = Python.getInstance();
         PyObject module = py.getModule("bridge");
-        PyObject data = module.callAttr("create_bridge", pythonPath, txtPath);
+        PyObject data = module.callAttr("create_bridge", pythonPath, pcgPath, ppgPath);
 
         // hoạt động với file backup ở máy chứ không phải file được chọn từ file picker
         // PyObject module = py.getModule("backup_script_bluetooth_classic");
         // PyObject data = module.callAttr("calculate", pcgPath, ppgPath);
 
         Set<PyObject> pyKeySet = data.callAttr("keys").asSet();
-        HashMap<String, int[]> map = new HashMap<>();
-
-        for (PyObject pyKey:pyKeySet) {
-            String key = pyKey.toString();
-            map.put(key, data.callAttr("get",key).toJava(int[].class));
-        }
-        return map;
-    }
-
-    private HashMap<String, int[]> transferTxtPathAndCalculatePython(
-        String txtPath
-    ) {
-        if (!Python.isStarted()) {
-            Python.start(new AndroidPlatform(this));
-        }
-
-        Python py = Python.getInstance();
-        // hoạt động với file backup ở máy chứ không phải file được chọn từ file picker
-        PyObject module = py.getModule("main_script_bluetooth_classic");
-        PyObject data = module.callAttr("calculate", txtPath);
-
-        Set<PyObject> pyKeySet = data.callAttr("keys").asSet();
+        System.out.println("hehehe" + data);
         HashMap<String, int[]> map = new HashMap<>();
 
         for (PyObject pyKey:pyKeySet) {

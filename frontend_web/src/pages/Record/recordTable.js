@@ -30,7 +30,6 @@ import { RecordDetail } from "./recordDetail";
 import FilterRecord from "./filterRecord";
 import { context } from "../../utils/context";
 import { userRole } from "../../constants";
-import { useTranslation } from "react-i18next";
 
 const RecordTable = () => {
   const dispatch = useDispatch();
@@ -44,17 +43,16 @@ const RecordTable = () => {
   const modalUpdateRef = useRef(null);
   const user_id = getLocalStorage("user");
   const drawerRef = useRef(null);
-  const { t } = useTranslation();
 
   const columns = [
     {
-      title: t("column.user-name"),
+      title: "Tên người dùng",
       dataIndex: "username",
       key: "username",
       isEdit: false,
     },
     {
-      title: t("column.user-name"),
+      title: "Tên người dùng",
       dataIndex: "user_id",
       key: "user_id",
       type: "select",
@@ -63,13 +61,13 @@ const RecordTable = () => {
       hidden: true,
     },
     {
-      title: t("column.device-name"),
+      title: "Tên thiết bị",
       dataIndex: "device_name",
       key: "device_name",
       isEdit: false,
     },
     {
-      title: t("column.device-name"),
+      title: "Tên thiết bị",
       dataIndex: "device_id",
       key: "device_id",
       type: "select",
@@ -78,28 +76,28 @@ const RecordTable = () => {
       hidden: true,
     },
     {
-      title: t("column.record-type"),
+      title: "Loại bản ghi",
       dataIndex: "record_type",
       key: "record_type",
       type: "text",
       isEdit: true,
     },
     {
-      title: t("column.record-name"),
+      title: "Tên bản ghi",
       dataIndex: "record_name",
       key: "record_name",
       type: "text",
       isEdit: false,
     },
     {
-      title: t("column.date-started"),
+      title: "Thời gian bắt đầu",
       dataIndex: "start_time",
       key: "start_time",
       type: "time",
       isEdit: true,
     },
     {
-      title: t("column.date-finished"),
+      title: "Thời gian kết thúc",
       dataIndex: "end_time",
       key: "end_time",
       type: "time",
@@ -111,7 +109,7 @@ const RecordTable = () => {
     if (context.role === userRole.doctor) {
       dispatch(getRecordByDoctorId(context.user_id));
     } else if (context.role === userRole.patient) {
-      // console.log("ha,lsdio");
+      console.log("ha,lsdio");
       dispatch(getRecordByUser(context.user_id));
     } else {
       dispatch(getRecord());
