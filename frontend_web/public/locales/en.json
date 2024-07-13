@@ -23,6 +23,7 @@
             "phone-number": "Phone Number",
             "role": "Role",
             "status": "Status",
+            "note": "Note",
             "password": "Password",
             "device-name": "Device Name",
             "device-type": "Device Type",
@@ -41,7 +42,9 @@
         "graph": "Graph",
         "cancel": "Cancel",
         "save": "Save",
-        "add-device": "Add Device"
+        "add-device": "Add Device",
+        "search": "Search",
+        "refresh": "Refresh"
     },
     "modal": {
         "record-graph": "Record Graph"
@@ -77,6 +80,10 @@
         "note": "Note",
         "storage": "Data Storage",
         "connection": "Connection Method",
-        "record-count": "Record Count"
+        "record-count": "Record Count",
+        "doctor": "Doctor",
+        "patient": "Patient",
+        "device": "Device",
+        "record": "Record"
     }
 }

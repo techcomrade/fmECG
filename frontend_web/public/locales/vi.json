@@ -24,6 +24,7 @@
         "role": "Vai Trò",
         "password": "Mật khẩu",
         "status": "Trạng Thái",
+        "note": "Ghi chú",
         "device-name": "Tên Thiết Bị",
         "device-type": "Loại Thiết Bị",
         "device-info": "Thông Tin Thiết Bị",
@@ -41,7 +42,9 @@
         "graph": "Đồ thị",
         "cancel": "Hủy bỏ",
         "save": "Lưu",
-        "add-device": "Thêm thiết bị"
+        "add-device": "Thêm thiết bị",
+        "search": "Tìm kiếm",
+        "refresh": "Làm mới"
     },
     "modal": {
         "record-graph": "Đồ thị records"
@@ -53,7 +56,7 @@
     },
     "title":{
         "user-info": "Thông tin người dùng",
-        "device-info":"Thông Tin Thiết Bị",
+        "device-info":"Thông tin thiết bị",
         "record-info": "Dữ liệu y tế",
         "assignment-doctor": "Bảng quản lý phân công bác sĩ, bệnh nhân",
         "register-info": "Thông tin người dùng đăng ký"
@@ -77,6 +80,10 @@
         "note": "Ghi chú",
         "storage": "Lưu trữ dữ liệu",
         "connection": "Phương thức kết nối",
-        "record-count": "Số lượng bản ghi"
+        "record-count": "Số lượng bản ghi",
+        "doctor": "Bác sĩ",
+        "patient": "Bệnh nhân",
+        "device": "Thiết bị",
+        "record": "Bản ghi"
     }
 }

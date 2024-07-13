@@ -1,11 +1,11 @@
 export const GENDER = [
   {
     value: 0,
-    label: "Nam",
+    label: "Male",
   },
   {
     value: 1,
-    label: "Nữ",
+    label: "Female",
   },
 ];
 
@@ -16,11 +16,11 @@ export const ROLE = [
   },
   {
     value: 1,
-    label: "Bác sĩ",
+    label: "Doctor",
   },
   {
     value: 2,
-    label: "Bệnh nhân",
+    label: "Patient",
   },
 ];
 
@@ -59,19 +59,19 @@ export const DeviceStatus = [
 export const convertGenderToString = (gender) => {
   switch (gender) {
     case 0:
-      return "Nam";
+      return "Male";
     case 1:
-      return "Nữ";
+      return "Female";
     default:
-      return "Không rõ";
+      return "Unknown";
   }
 };
 
 export const convertStringToGender = (gender) => {
   switch (gender) {
-    case "Nam":
+    case "Male":
       return 0;
-    case "Nữ":
+    case "Female":
       return 1;
     default:
       return 2;
@@ -83,9 +83,9 @@ export const convertRoleToString = (role) => {
     case 0:
       return "Admin";
     case 1:
-      return "Bác sĩ";
+      return "Doctor";
     default:
-      return "Bệnh nhân";
+      return "Patient";
   }
 };
 
@@ -93,9 +93,9 @@ export const convertStringToRole = (gender) => {
   switch (gender) {
     case "Admin":
       return userRole.admin;
-    case "Bác sĩ":
+    case "Doctor":
       return userRole.doctor;
-    case "Bệnh nhân":
+    case "Patient":
       return userRole.patient;
     default:
       return 4;
@@ -105,24 +105,24 @@ export const convertStringToRole = (gender) => {
 export const convertStatusToString = (status) => {
   switch (status) {
     case 0:
-      return "Đang hoạt đông";
+      return "active";
     case 1:
-      return "Đã nghỉ";
+      return "offline";
     default:
-      return "Không xác định";
+      return "unknown";
   }
 };
 
 export const convertDeviceStatusToString = (status) => {
   switch (status) {
     case 0:
-      return "Đang hoạt đông";
+      return "active";
     case 1:
-      return "Đang trống";
+      return "empty";
     case 2:
-      return "Đang bảo trì";
+      return "maintained";
     default:
-      return "Không xác định";
+      return "unknown";
   }
 };
 

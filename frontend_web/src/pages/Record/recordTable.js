@@ -249,7 +249,7 @@ const RecordTable = () => {
         editFunction={handleEditFunction}
         deleteButton
         deleteFunction={handleDeleteFunction}
-        name="Dữ liệu y tế"
+        name={t("title.record-info")}
         data={dataTable}
         column={columns}
         updateSelectedData={setSelectedData}
