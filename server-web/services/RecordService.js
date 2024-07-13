@@ -89,6 +89,10 @@ class RecordService extends CommonService {
     );
   }
 
+  async filterRecord(username, deviceName, startTime, endTime) {
+    return await RecordRepository.filterRecord(username, deviceName, startTime, endTime);
+  }
+
   async updateRecordById(record, id) {
     return await RecordRepository.updateById(record, id);
   }
@@ -114,16 +118,20 @@ class RecordService extends CommonService {
   async readFileRecord(path) {
     return await FileService.readFile(path);
   }
+
   async deleteFile(path) {
     return await FileService.deleteFile(path);
   }
+
   async getFilePathById(id) {
     const recordData = await RecordRepository.getRecordById(id);
     return recordData[0].dataValues.data_rec_url ?? "";
   }
+
   async getRecordByDoctorId(id) {
     return await RecordRepository.getRecordByDoctorId(id);
   }
+  
   async getDataRecord(filepath, deviceId) {
     try {
       const device_freq = await DeviceDetailsService.getByDeviceId(deviceId);
