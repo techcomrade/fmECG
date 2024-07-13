@@ -16,7 +16,7 @@ export const getRecord = createAsyncThunk(
   "/record",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await httpGetData("/record");
+      const response = await httpGetData("/record", params);
       return response;
     } catch (error) {
       return rejectWithValue(

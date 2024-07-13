@@ -3,18 +3,24 @@ import { useState } from "react";
 import { UpCircleOutlined, DownCircleOutlined } from "@ant-design/icons";
 import './record.scss';
 import { useTranslation  } from "react-i18next";
+import dayjs from "dayjs";
 
-const FilterRecord = () => {
+const FilterRecord = (props) => {
   const [form] = Form.useForm();
   const [isCollapse, setIsCollapse] = useState(true);
   const {t} = useTranslation();
   const handleOnFinish = (values) => {
     const payload = {
       ...values,
-      start_time: values.start_time?.valueOf(),
-      end_time: values.end_time?.valueOf()
+      start_time: values.start_time?.startOf('day').valueOf(),
+      end_time: values.end_time?.endOf('day').valueOf()
     }
-    console.log(payload);
+    props.filterFunction(payload);
+  }
+
+  const handleReset = () => {
+    form.resetFields();
+    props.filterFunction();
   }
 
   return (
@@ -70,13 +76,17 @@ const FilterRecord = () => {
                 allowClear
                 format="DD/MM/YYYY"
                 placeholder={"Select date"}
+                disabledDate={(day) => {
+                  const startDate = form.getFieldValue('start_time');
+                  return day && day < dayjs(startDate);
+                }}
               />
             </Form.Item>
           </Form>
           <div className="filter-button">
             <Button
               className="button refresh"
-              onClick={() => form.resetFields()}
+              onClick={handleReset}
             >
               {t("button.refresh")}
             </Button>

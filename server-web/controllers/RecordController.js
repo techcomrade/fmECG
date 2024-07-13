@@ -26,6 +26,13 @@ class RecordController {
       req.query.start_time,
       req.query.end_time
     );
+    const length = filter.length;
+    for (let i = 0; i < length; i++) {
+      filter[i] = {
+        ...filter[i],
+        record_name: filter[i].data_rec_url.split("/").pop(),
+      };
+    }
     if (filter.length !== 0)
       return res.status(200).json({
         message: "Filter record successful!",

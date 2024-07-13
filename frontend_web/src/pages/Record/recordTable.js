@@ -231,6 +231,7 @@ const RecordTable = () => {
     setIsModalOpen(false);
     dispatch(resetCheckRecordStatus());
   };
+
   const renderMessageDownload = useCallback(() => {
    
     switch (dataState.loadCheckRecordStatus) {
@@ -242,6 +243,11 @@ const RecordTable = () => {
         return "Không tìm thấy bản ghi";
     }
   },[dataState.loadCheckRecordStatus]);
+
+  const handleFilter = (payload) => {
+    dispatch(getRecord(payload));
+  }
+
   return (
     <>
       <DataTable
@@ -258,7 +264,7 @@ const RecordTable = () => {
         openChart={() => setOpenChart(true)}
         customButton={renderDownloadButton()}
         handleOpenDrawer={(id) => drawerRef.current?.open(id)}
-        customData={<FilterRecord />}
+        customData={<FilterRecord filterFunction={(payload) => handleFilter(payload)}/>}
       />
 
       <ModalControlData
