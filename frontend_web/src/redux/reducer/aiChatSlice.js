@@ -22,7 +22,19 @@ export const sendMessage = createAsyncThunk(
     }
   }
 );
-
+export const TrainingData = createAsyncThunk(
+  "/send-message",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await httpPostData('/chat/conversation', {user_id: params});
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || error?.response || error
+      );
+    }
+  }
+);
 const statisticSlice = createSlice({
   name: "ai-chat",
   initialState: {

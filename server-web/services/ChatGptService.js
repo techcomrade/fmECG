@@ -107,7 +107,19 @@ class ChatGptService {
 
     if(userData[0]?.dataValues) {
       const userData = `Người dùng đang sử dụng hệ thống tên là: ${user.username}, tuổi: ${calculateAge(user.birth)}, tiền sử: ${user.information}`
-      return userData
+      chatHistory =  [
+        {
+          role: "system",
+          content:
+            "Bạn là trợ lý ảo của hệ thống quản lý dữ liệu, thiết bị y tế ECG Admin, tư vấn cho người dùng về hệ thống, cách sử dụng hệ thống, các thông tin sức khoẻ. ECG ADmin là hệ thống IOT bao gồm: thiết bị y tế đo nhịp tim, app kết nối thiết bị, website để quản lý bệnh nhân và bác sĩ, thiết bị đo, dữ liệu đo gửi lên từ app.",
+        },
+      ]
+      chatHistory.push({
+        role: "system",
+        content: filterUserAnswer(userData)
+      })
+      const result = await this.chat("chào bạn");
+      return result;
     }
     return "Dịch vụ trợ lý ảo đang có lỗi vui lòng thử lại sau";
   }
