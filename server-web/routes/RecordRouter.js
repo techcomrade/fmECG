@@ -73,7 +73,6 @@ router.get(
   RecordMiddleware.checkEndTimeInterval,
   RecordController.getRecordByEndTimeInterval
 );
-router.get("/filter-record", commonMiddleware.validationToken, RecordController.filterRecord)
 router.get("/download/:id", RecordController.downloadRecordFile);
 router.get("/check-file/:id", commonMiddleware.validationToken, RecordController.checkRecordFile);
 router.post("/upload-file", commonMiddleware.validationToken, UploadController.setUploadToDisk, RecordController.uploadFileRecord, (req, res) => {
