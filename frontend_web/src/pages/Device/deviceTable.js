@@ -283,7 +283,7 @@ const DeviceTable = () => {
         addFunction={() => modalAddRef.current?.open(initAddData, columns)}
         deleteButton
         deleteFunction={handleDeleteFunction}
-        name="Bảng quản lý thiết bị"
+        name={t("title.device-info")}
         data={dataTable}
         column={columns}
         updateSelectedData={setSelectedData}

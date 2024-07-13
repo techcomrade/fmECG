@@ -29,6 +29,7 @@ import { showNotiSuccess } from "../../components/Notification";
 import { GENDER, ROLE } from "../../constants";
 import dayjs from "dayjs";
 import { UserAddOutlined, DeleteOutlined, UserDeleteOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 const { confirm } = Modal;
 
 const RegisterTable = (props) => {
@@ -39,10 +40,11 @@ const RegisterTable = (props) => {
 
   const modalUpdateRef = useRef(null);
   const drawerRef = useRef(null);
+  const { t } = useTranslation();
 
   const columns = [
     {
-      title: "Họ và tên",
+      title: t("column.user-name"),
       dataIndex: "username",
       key: "username",
       type: "text",
@@ -56,7 +58,7 @@ const RegisterTable = (props) => {
       isEdit: true,
     },
     {
-      title: "Giới tính",
+      title: t("column.sex"),
       dataIndex: "gender",
       key: "gender",
       type: "select",
@@ -64,21 +66,21 @@ const RegisterTable = (props) => {
       isEdit: true,
     },
     {
-      title: "Ngày sinh",
+      title: t("column.birth"),
       dataIndex: "birth",
       key: "birth",
       type: "date",
       isEdit: true,
     },
     {
-      title: "Số điện thoại",
+      title: t("column.phone-number"),
       dataIndex: "phone_number",
       key: "phone_number",
       type: "text",
       isEdit: true,
     },
     {
-      title: "Tác vụ",
+      title: t("column.role"),
       dataIndex: "role",
       key: "role",
       type: "select",
@@ -86,7 +88,7 @@ const RegisterTable = (props) => {
       isEdit: true,
     },
     {
-      title: "Trạng thái",
+      title: t("column.status"),
       dataIndex: "status",
       key: "status",
       type: "select",
@@ -105,7 +107,7 @@ const RegisterTable = (props) => {
       },
     },
     {
-      title: "Thông tin",
+      title: t("column.note"),
       dataIndex: "information",
       key: "information",
       type: "text",
@@ -238,7 +240,7 @@ const RegisterTable = (props) => {
     <>
       <DataTable
         column={columns}
-        name={"Thông tin người dùng đăng kí"}
+        name={t("title.register-info")}
         data={dataTable}
         loading={dataState.loadDataStatus === loadStatus.Loading}
         customButton={renderButton()}
