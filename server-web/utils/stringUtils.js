@@ -21,7 +21,7 @@ const filterActionWeb = (answer) => {
   if (answer?.includes(text)) {
     for (const item of actionWebType) {
       if (answer?.includes(item.text)) {
-        console.log("test done");
+
         return item;
       }
     }

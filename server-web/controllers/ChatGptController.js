@@ -40,10 +40,10 @@ class ChatGptController {
     console.log(`[P]:::Create ai conversation: ${user_id}`);
     const result = await ChatGptService.createAssistantConversation(user_id);
     return result ?  res.status(200).json({
-        message: result,
+      metadata: "Dữ liệu của bạn đã được tích hợp thành công",
       })
     : res.status(500).json({
-        message: result,
+        message: "Có lỗi vui lòng thử lại sau",
       });
   }
 }

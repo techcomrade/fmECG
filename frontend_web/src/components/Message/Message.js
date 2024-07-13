@@ -19,7 +19,7 @@ const Message = ({data}) => {
             </div>
             }
             <div className="messageContent">
-                <p dangerouslySetInnerHTML={{ __html: ` ${data.message.replace(/\n/g, '<br>')}` }}/>
+                <p dangerouslySetInnerHTML={{ __html: ` ${data.message?.replace(/\n/g, '<br>')}` }}/>
                 {data.img && <img src={data.img} alt=""/>}
             </div>
         </div>
