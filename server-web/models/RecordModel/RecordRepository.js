@@ -162,11 +162,11 @@ class RecordRepository {
       replacements.deviceName = `%${deviceName}%`;
     }
     if (startTime) {
-      query += " AND re.start_time = :startTime";
+      query += " AND re.start_time >= :startTime";
       replacements.startTime = startTime;
     }
     if (endTime) {
-      query += " AND re.end_time = :endTime";
+      query += " AND re.end_time <= :endTime";
       replacements.endTime = endTime;
     }
     return await sequelize.query(query, {
