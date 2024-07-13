@@ -62,6 +62,7 @@
           "redirect_api",
           decodeURIComponent(getCookie("redirect_api"))
         );
+        localStorage.setItem("acceptTrainingData","false")
         cookieData = {
           access_token: localStorage.getItem("access_token"),
           refresh_token: localStorage.getItem("refresh_token"),

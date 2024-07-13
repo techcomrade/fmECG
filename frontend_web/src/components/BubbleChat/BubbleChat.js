@@ -7,7 +7,7 @@ import {
   FileImageOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import Message from "../Message/Message";
 import { useNavigate } from "react-router-dom";
 
@@ -162,6 +162,10 @@ const processMessageActionWeb = (messages) => {
           </div>
         </div>
       </div>
+      <Modal>
+        
+      </Modal>
+
     </>
   );
 };
