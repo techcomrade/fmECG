@@ -20,7 +20,7 @@ import {
 import { userRole } from "../constants";
 import { context } from "../utils/context";
 import Chat from "../pages/Chat/chat";
-import AITraining from "../pages/AITranningChat/chat";
+// import AITraining from "../pages/AITranningChat/chat";
 
 export const AdminRouterMappingGroup = {
   User: {
@@ -53,12 +53,12 @@ export const AdminRouterMappingGroup = {
     component: <RegisterTable />,
     icon: <UserAddOutlined />,
   },
-  Chat: {
-    key: "/training",
-    label: "Training AI",
-    component:<AITraining />,
-    icon: <OpenAIOutlined />,
-  }
+  // Chat: {
+  //   key: "/training",
+  //   label: "Training AI",
+  //   component:<AITraining />,
+  //   icon: <OpenAIOutlined />,
+  // }
 };
 
 export const doctorRouterMappingGroup = {
