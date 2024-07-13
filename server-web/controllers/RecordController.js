@@ -4,18 +4,40 @@ const DeviceDetailsService = require("../services/DeviceDetailsService");
 const fs = require("fs");
 class RecordController {
   async getAll(req, res, next) {
-    console.log(`[P]:::Get all records: `);
-    const records = await RecordService.getAll();
-    const length = records.length;
-    for (let i = 0; i < length; i++) {
-      records[i] = {
-        ...records[i],
-        record_name: records[i].data_rec_url.split("/").pop(),
-      };
+    if (
+      !req.query.username &&
+      !req.query.device_name &&
+      !req.query.start_time &&
+      !req.query.end_time
+    ) {
+      console.log(`[P]:::Get all records: `);
+      const records = await RecordService.getAll();
+      const length = records.length;
+      for (let i = 0; i < length; i++) {
+        records[i] = {
+          ...records[i],
+          record_name: records[i].data_rec_url.split("/").pop(),
+        };
+      }
+      return res.status(200).json({
+        message: "Get all records successful!",
+        metadata: records,
+      });
     }
-    return res.status(200).json({
-      message: "Get all records successful!",
-      metadata: records,
+    console.log(`[P]:::Filter record: `);
+    const filter = await RecordService.filterRecord(
+      req.query.username,
+      req.query.device_name,
+      req.query.start_time,
+      req.query.end_time
+    );
+    if (filter.length !== 0)
+      return res.status(200).json({
+        message: "Filter record successful!",
+        metadata: filter,
+      });
+    return res.status(404).json({
+      message: "Record not found!",
     });
   }
 
@@ -202,6 +224,7 @@ class RecordController {
         });
       });
   }
+
   async deleteFileRecord(req, res) {
     console.log(`[P]:::Delete file record: `, req.params.id);
     let record = await RecordService.getRecordById(req.params.id);
@@ -229,6 +252,7 @@ class RecordController {
         });
       });
   }
+
   async downloadRecordFile(req, res) {
     console.log(`[P]:::Download file record: `, req.params.id);
     const filepath = await RecordService.getFilePathById(req.params.id);
@@ -240,6 +264,7 @@ class RecordController {
       });
     }
   }
+
   async checkRecordFile(req, res) {
     console.log(`[P]:::Check file record: `, req.params.id);
     const filepath = await RecordService.getFilePathById(req.params.id);
@@ -253,6 +278,7 @@ class RecordController {
       });
     }
   }
+
   async getDataRecordFile(req, res) {
     console.log(`[P]:::Get data from record file: `, req.params.id);
     const record = await RecordService.getRecordById(req.params.id);
@@ -280,6 +306,7 @@ class RecordController {
       message: "Record file not found",
     });
   }
+
   async getRecordByDoctorId(req, res) {
     console.log(`[P]:::Get record by doctor id: `, req.params.id);
     const recordByUser = await RecordService.getRecordByDoctorId(req.params.id);
