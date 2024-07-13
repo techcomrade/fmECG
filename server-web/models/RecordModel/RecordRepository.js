@@ -158,8 +158,8 @@ class RecordRepository {
       replacements.username = `%${username}%`;
     }
     if (deviceName) {
-      query += " AND de.device_name = :deviceName";
-      replacements.deviceName = deviceName;
+      query += " AND de.device_name LIKE :deviceName";
+      replacements.deviceName = `%${deviceName}%`;
     }
     if (startTime) {
       query += " AND re.start_time = :startTime";
