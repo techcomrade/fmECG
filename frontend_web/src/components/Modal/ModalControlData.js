@@ -114,7 +114,7 @@ const ModalComponent = (props, ref) => {
                   disabledDate={(day) => {
                     if (column.dataIndex === 'end_date') {
                       const startDate = form.getFieldValue('start_date');
-                      return day && day < dayjs(startDate).endOf('day');
+                      return day && day < dayjs(startDate).startOf('day');
                     }
                   }}
                 />
@@ -129,7 +129,7 @@ const ModalComponent = (props, ref) => {
                   disabledDate={(day) => {
                     if (column.dataIndex === 'end_time') {
                       const startDate = form.getFieldValue('start_time');
-                      return day && day < dayjs(startDate).endOf('day');
+                      return day && day < dayjs(startDate).startOf('day');
                     }
                   }}
                 />

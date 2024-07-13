@@ -6,7 +6,7 @@ export const axiosMethod = {
   PUT: 'PUT',
   DELETE: 'DELETE'
 };
-export const axiosRequest = (url, method, data) => {
+export const axiosRequest = (url, method, data, params) => {
   const axiosConfig = {
     url,
     method,
@@ -21,5 +21,7 @@ export const axiosRequest = (url, method, data) => {
     axiosConfig.headers['X-XSRF-TOKEN'] = token;
   }
   if(data) axiosConfig.data = data;
+  if(params) axiosConfig.params = params;
+
   return axios(axiosConfig);
 };

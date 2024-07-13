@@ -17,9 +17,9 @@ export const httpPostData = (url, data) => {
     })
 }
 
-export const httpGetData = (url) => {
+export const httpGetData = (url, params) => {
     return new Promise((resolve, reject) => {
-        axiosRequest(API_URL + url, axiosMethod.GET)
+        axiosRequest(API_URL + url, axiosMethod.GET, null, params)
         .then((response) => {
             resolve(response.data)
         })
