@@ -4,12 +4,7 @@ const DeviceDetailsService = require("../services/DeviceDetailsService");
 const fs = require("fs");
 class RecordController {
   async getAll(req, res, next) {
-    if (
-      !req.query.username &&
-      !req.query.device_name &&
-      !req.query.start_time &&
-      !req.query.end_time
-    ) {
+    if (Object.keys(req.query).length === 0) {
       console.log(`[P]:::Get all records: `);
       const records = await RecordService.getAll();
       const length = records.length;
