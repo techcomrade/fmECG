@@ -44,15 +44,15 @@ const FilterRecord = (props) => {
           >
             <Form.Item
               label={t("column.user-name")}
-              name={"user_id"}
-              key={"user_id"}
+              name={"username"}
+              key={"username"}
             >
               <Input allowClear/>
             </Form.Item>
             <Form.Item
               label={t("column.device-name")}
-              name={"device_id"}
-              key={"device_id"}
+              name={"device_name"}
+              key={"device_name"}
             >
               <Input allowClear />
             </Form.Item>
