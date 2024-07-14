@@ -190,8 +190,9 @@ const BubbleChat = () => {
             <button
               onClick={() => toogleChat()}
               className="chat-icon"
-              style={{ backgroundColor: "#a4caff", color: "#fff" }}
+              style={{ backgroundColor: "#a4caff" }}
             >
+              <span>ECG-AI</span> 
               <MessageOutlined />
             </button>
           </div>
