@@ -12,7 +12,7 @@ router.delete("/:id", commonMiddleware.validationToken, DeviceController.delete)
 
 router.post(
   "/create",
-  commonMiddleware.validationToken,
+  //commonMiddleware.validationToken,
   DeviceMiddleware.validateCreateData,
   DeviceController.add
 );
