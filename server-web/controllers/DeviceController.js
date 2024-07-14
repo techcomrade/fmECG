@@ -99,10 +99,14 @@ class DeviceController {
       });
     }
     await DeviceService.updateById(device, id)
-      .then(() => {
+      .then((checked) => {
+        if(checked)
         return res.status(200).json({
           message: "update device successfully",
         });
+        else return res.status(500).json({
+          message: "error server update device"
+        })
       })
       .catch((err) => {
         console.log(err);

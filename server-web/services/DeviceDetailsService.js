@@ -30,24 +30,8 @@ class DeviceDetailsService extends CommonService {
     return DeviceDetailsRepository.deleteById(id);
   }
 
-  async add(device_detail, checked) {
-    if(!checked) {
-     
+  async add(deviceFreq) {
       return DeviceDetailsRepository.add(deviceFreq);
-    }
-    let device_freq = device_detail.frequency;
-    device_freq.detail_type = 1;
-    let device_conn = device_detail.connection;
-    device_conn.detail_type = 2;
-    let device_storage = device_detail.storage;
-    device_storage.detail_type = 3;
-    
-    return await this.transaction(async (t) => {
-      await DeviceDetailsRepository.add(device_freq, t);
-      await DeviceDetailsRepository.add(device_conn, t);
-      await DeviceDetailsRepository.add(device_storage, t);
-    })
-    
   }
 
   async getById(id) {

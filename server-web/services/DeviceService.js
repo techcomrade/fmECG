@@ -1,6 +1,7 @@
 const CommonService = require("./CommonService");
 const DeviceModel = require("../models/DeviceModel/DeviceRepository");
 const DeviceDetailsService = require("../services/DeviceDetailsService");
+const DeviceDetailsRepository = require("../models/DeviceDetailsModel/DeviceDetailsRepository");
 const UserRepository = require("../models/UserModel/UserRepository");
 const { v4: uuidv4 } = require("uuid");
 const Joi = require("joi");
@@ -14,13 +15,29 @@ class DeviceService extends CommonService {
       storage: {},
       connection: {},
     };
-    device_detail.frequency = device.frequency[0];
-    device_detail.storage = device.storage[0];
-    device_detail.connection = device.connection[0];
+    device_detail.frequency = 
+    {
+      ...device.frequency[0],
+      device_id: device.id,
+      detail_type: 1,
+    }
 
+    device_detail.storage = {
+      ...device.storage[0],
+      device_id: device.id,
+      detail_type: 3,
+    }
+
+    device_detail.connection = {
+      ...device.connection[0],
+      device_id: device.id,
+      detail_type: 2,
+    }
     return await this.transaction(async (t) => {
       await DeviceModel.add(device, t);
-      await DeviceDetailsService.add(device_detail, true);
+      await DeviceDetailsRepository.add(device_detail.frequency, t);
+      await DeviceDetailsRepository.add(device_detail.connection, t);
+      await DeviceDetailsRepository.add(device_detail.storage, t);
     });
   }
 
@@ -29,8 +46,46 @@ class DeviceService extends CommonService {
   }
 
   async updateById(device, id) {
-    device.updated_at = Date.now();
-    return await DeviceModel.updateById(device, id);
+    let device_detail = {
+      frequency: {},
+      storage: {},
+      connection: {},
+    };
+    device_detail.frequency = device.frequency[0];
+    device_detail.storage = device.storage[0];
+    device_detail.connection = device.connection[0];
+    try {
+      let Device = await DeviceDetailsService.getByDeviceId(id);
+      //console.log(Device[0]);
+      if (!Device) return false;
+      return await this.transaction(async (t) => {
+        await DeviceModel.updateById(device, id, t);
+        for (let i = 0; i < 3; i++) {
+          if (Device[i].dataValues.detail_type == 1) {
+            console.log(Device[0]);
+            await DeviceDetailsService.updateById(
+              device_detail.frequency,
+              Device[i].dataValues.id,
+              t
+            );
+          } else if (Device[i].dataValues.detail_type == 2) {
+            await DeviceDetailsService.updateById(
+              device_detail.connection,
+              Device[i].dataValues.id,
+              t
+            );
+          } else
+            await DeviceDetailsService.updateById(
+              device_detail.storage,
+              Device[i].dataValues.id,
+              t
+            );
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
   }
 
   async getAllData() {
@@ -57,7 +112,7 @@ class DeviceService extends CommonService {
     const frequency_validate = Joi.object({
       detail_name: Joi.string().required(),
       value: Joi.number().integer().required(),
-      information: Joi.string()
+      information: Joi.string(),
     });
     const storage_validate = Joi.object({
       detail_name: Joi.string().required(),
@@ -68,7 +123,7 @@ class DeviceService extends CommonService {
       detail_name: Joi.string().required(),
       value: Joi.number().integer().required(),
       information: Joi.string(),
-    })
+    });
     const schema = Joi.object({
       id: checkId ? Joi.string().required() : Joi.string().allow(" "),
       user_id: Joi.string().required(),
