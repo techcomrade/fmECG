@@ -30,6 +30,7 @@ import { GENDER, ROLE } from "../../constants";
 import dayjs from "dayjs";
 import { UserAddOutlined, DeleteOutlined, UserDeleteOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import { RegisterDetail } from "./registerDetail";
 const { confirm } = Modal;
 
 const RegisterTable = (props) => {
@@ -111,7 +112,7 @@ const RegisterTable = (props) => {
       dataIndex: "information",
       key: "information",
       type: "text",
-      isEdit: true,
+      hidden: true,
     },
   ];
 
@@ -236,6 +237,11 @@ const RegisterTable = (props) => {
     </>
   );
 
+  const handleOpenDrawer = (id) => {
+    const data = dataTable.filter(item => item.id === id);
+    drawerRef.current?.open(data[0]);
+  }
+
   return (
     <>
       <DataTable
@@ -245,15 +251,14 @@ const RegisterTable = (props) => {
         loading={dataState.loadDataStatus === loadStatus.Loading}
         customButton={renderButton()}
         updateSelectedData={setSelectedData}
-
-        //   handleOpenDrawer={(id) => drawerRef.current?.open(id)}
+        handleOpenDrawer={handleOpenDrawer}
       />
       {/* <ModalControlData
         ref={modalUpdateRef}
         title= {getTitleTable()}
         submitFunction={(data) => handleSubmitEditUser(data)}
       /> */}
-      {/* <UserDetail ref={drawerRef} /> */}
+      <RegisterDetail ref={drawerRef} />
     </>
   );
 };
