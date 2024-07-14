@@ -25,7 +25,7 @@ class DeviceModel {
     });
   }
 
-  async add(device) {
+  async add(device, t) {
     return await DeviceDTO.create({
       id: device.id,
       user_id: device.user_id,
@@ -34,7 +34,11 @@ class DeviceModel {
       device_type: device.device_type,
       start_date: device.start_date
 
-    });
+    },
+     t && {
+      transaction: t,
+     }
+  );
   }
 
   async deleteById(id, t) {

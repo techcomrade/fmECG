@@ -2,6 +2,7 @@ const DeviceDetailsDTO = require("./DeviceDetailsDTO");
 const { Sequelize, QueryTypes } = require("sequelize");
 const sequelize = require("../../config/sequelize");
 
+const { v4: uuidv4 } = require("uuid");
 class DeviceDetailsModel {
   async getAllData() {
     const devices = await DeviceDetailsDTO.findAll({
@@ -38,15 +39,23 @@ class DeviceDetailsModel {
     });
   }
 
-  async add(DeviceDetails) {
+  async add(DeviceDetails, t) {
+    console.log(DeviceDetails);
+    DeviceDetails.id = uuidv4();
+    DeviceDetails.created_at = Date.now();
     return await DeviceDetailsDTO.create({
       id: DeviceDetails.id,
       device_id: DeviceDetails.device_id,
       detail_name: DeviceDetails.detail_name,
       information: DeviceDetails.information ?? "",
       value: DeviceDetails.value,
+      detail_type: DeviceDetails.detail_type,
       created_at: DeviceDetails.created_at,
-    });
+    }, 
+    t && {
+      transaction: t
+    }
+  );
   }
 
   async getByDeviceId(deviceId) {
