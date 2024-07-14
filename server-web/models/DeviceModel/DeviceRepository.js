@@ -26,6 +26,7 @@ class DeviceModel {
   }
 
   async add(device, t) {
+    device.updated_at = Date.now();
     return await DeviceDTO.create({
       id: device.id,
       user_id: device.user_id,
@@ -78,7 +79,7 @@ class DeviceModel {
     });
   }
 
-  async updateById(device, id) {
+  async updateById(device, id, t) {
     device.updated_at = Date.now();
     return await DeviceDTO.update(
       {
@@ -93,6 +94,9 @@ class DeviceModel {
         where: {
           id: id,
         },
+      },
+      t && {
+        transaction: t
       }
     );
   }

@@ -96,7 +96,7 @@ class DeviceDetailsModel {
     );
   }
 
-  async updateById(deviceFreq, id) {
+  async updateById(deviceFreq, id, t) {
     return await DeviceDetailsDTO.update(
       {
         device_id: deviceFreq.device_id,
@@ -109,6 +109,9 @@ class DeviceDetailsModel {
         where: {
           id: id,
         },
+      },
+      t && {
+        transaction: t,
       }
     );
   }
