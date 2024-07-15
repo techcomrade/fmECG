@@ -5,14 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Utils {
-  static BuildContext? globalContext;
-
-  static getGlobalContext() {
-    return globalContext;
-  }
+  static BuildContext? _globalContext;
+  static BuildContext? get globalContext => _globalContext;
 
   static setGlobalContext(context) {
-    globalContext = context;
+    _globalContext = context;
   }
 
   static getRandomString(int length) {

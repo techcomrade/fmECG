@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "${S.current.welcomeSentence}\nHanh Nguyen",
+                      "${S.current.welcomeSentence}\nFinnick",
                       style: TextStyle(
                           color: ColorConstant.black900,
                           fontWeight: FontWeight.bold,

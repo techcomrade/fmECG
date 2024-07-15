@@ -1,23 +1,25 @@
 import 'package:bloc/bloc.dart';
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_event.dart';
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_state.dart';
+import 'package:bluetooth_ecg/features/authentication/repository/authentication_repo.dart';
 import 'package:bluetooth_ecg/features/authentication/repository/shared_pref_repo.dart';
 
-class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
-  AuthenticationBloc() : super(AuthenticationInitial()) {
+class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
+  AuthenticationBloc({required this.authRepository}) : super(AuthenticationInitial()) {
     on<LogInRequest>(_onLoginRequest);
     on<LogoutRequest>(_onLogoutRequest);
     on<CheckAutoLogin>(_onCheckAutoLogin);
-    on<LoadingUser>(_onLoadingUser);
   }
-
+  final AuthRepository authRepository;
   void _onLoginRequest(LogInRequest event, Emitter emit) async {
     try {
-      // final dataFetched =
-      //     await NetworkRepo.postRequest(event.email, event.password);
-      // final user = UserModel.fromJson(dataFetched["user"]);
-      SharedPreprerencesRepo.saveInfor(event.email);
+      final Map? response = await authRepository.loginUser(event.email, event.password);
+      if (response == null) {
+        emit(AuthenticationFail());
+        return;
+      }
+      final Map dataUser = response["metadata"];
+      SharedPreprerencesRepo.setDataUser(dataUser);
       emit(AuthenticationSuccess());
     } catch (e) {
       emit(AuthenticationFail());
@@ -27,38 +29,16 @@ class AuthenticationBloc
   void _onLogoutRequest(LogoutRequest event, Emitter emitter) {}
   void _onCheckAutoLogin(CheckAutoLogin event, Emitter emit) async {
     try {
-      final loggedIn = await SharedPreprerencesRepo.autoLogin();
-      if (loggedIn) {
-        //final data = await NetworkRepo.getRequest();
-        print(await SharedPreprerencesRepo.getInfo());
+      final bool hasLoggedIn = await SharedPreprerencesRepo.checkAutoLogin();
+      if (hasLoggedIn) {
+        print("heheheh:${ await SharedPreprerencesRepo.getDataUser()}");
 
         emit(AuthenticationSuccess());
       } else {
         emit(AuthenticationInitial());
       }
     } catch (e) {
-      // network error, v.v
-      emit(AuthenticationFail());
-    }
-  }
-
-  void _onLoadingUser(LoadingUser event, Emitter emit) async {
-    try {
-      final loggedIn = await SharedPreprerencesRepo.autoLogin();
-      if (loggedIn) {
-        emit(AuthenticationLoading());
-      } else {
-        emit(AuthenticationInitial());
-      }
-    } catch (e) {
-      // network error, v.v
       emit(AuthenticationFail());
     }
   }
 }
-
-
-
-// initial -> home 
-// login
-

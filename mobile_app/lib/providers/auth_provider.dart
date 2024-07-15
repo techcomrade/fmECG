@@ -13,8 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum ThemeType { dark, light }
 
-UserProvider userProvider =
-    Provider.of<UserProvider>(Utils.globalContext!, listen: false);
+UserProvider userProvider = Provider.of<UserProvider>(Utils.globalContext!, listen: false);
 
 class AuthProvider extends ChangeNotifier {
   String _token = "";
@@ -115,38 +114,6 @@ class AuthProvider extends ChangeNotifier {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     _locale = preferences.getString('locale') ?? "en";
     return _locale;
-  }
-
-  Future<void> loginUser(String email, String password) async {
-    // call API with email and password
-    // String url = APIConstant.apiUrlProduction + 'login';
-    // final bodyEncoded = jsonEncode({"email": email, "password": password});
-    try {
-      // final response = await http.post(Uri.parse(url),
-      //     headers: APIConstant.headers, body: bodyEncoded);
-      // final responseData = jsonDecode(response.body);
-
-      // if (responseData["status"] == "success") {
-      //   // do something with data
-      //   _token = responseData["token"];
-      //   _roleId = responseData["user"]["role"];
-      //   _userId = responseData["user"]["user_id"];
-      //   userProvider.setDataUser(responseData["user"]);
-
-      //   // firebase token sẽ đi theo thiết bị di động không phải theo phiên đăng nhập
-      //   _firebaseToken = await FmECGFirebaseMessage().getDeviceToken();
-      //   _checkAndSaveFirebaseToken();
-      //   setDataLogin();
-
-      //   notifyListeners();
-      // }
-
-      _email = email;
-      setDataLogin();
-      notifyListeners();
-    } catch (err) {
-      debugPrint('error from login: $err');
-    }
   }
 
   void _checkAndSaveFirebaseToken() async {

@@ -7,19 +7,26 @@ class APIConstant {
 
   String apiUrl = "";
   String socketUrl = "";
-    Map<String, String> headers = <String, String> {
+  Map<String, String> headers = <String, String>{
     'Content-Type': 'application/json;charset=UTF-8'
   };
 
   getMode() {
     if (kDebugMode || kProfileMode) {
-      apiUrl = "http://192.168.0.9/api";
-      socketUrl = 'ws://192.168.0.9:80/socket/websocket';
+      // const String hostNormal = "192.168.1.200";
+      const String hostNormal = "192.168.0.9";
+      // const String hostNormal = "192.168.1.200";
+      apiUrl = "http://$hostNormal/api";
+      socketUrl = 'ws://$hostNormal:80/socket/websocket';
     } else {}
   }
 
   void addValueHeader(Map<String, String> item) {
     headers.addAll(item);
+  }
+
+  Map<String, String> getHeadersWithAuth(String token) {
+    return {...headers, 'Authorization': 'Bearer $token'};
   }
 }
 

@@ -1,8 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
+import 'package:bluetooth_ecg/certs/secrets.dart';
 import 'package:bluetooth_ecg/constants/chat_message.dart';
 import 'package:bluetooth_ecg/constants/chat_user.dart';
 import 'package:bluetooth_ecg/constants/color_constant.dart';
+import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/material.dart';
 
 class ChatDetailScreen extends StatefulWidget {
@@ -18,11 +18,88 @@ class ChatDetailScreen extends StatefulWidget {
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
   final TextEditingController controller = TextEditingController();
+  final ScrollController scrollController = ScrollController();
+  final List<OpenAIChatCompletionChoiceMessageModel> _userMessages = [];
+  String textGen = "";
+  bool isCreateNewMessage = true;
+  @override
+  void initState() {
+    super.initState();
+    OpenAI.apiKey = Secrets.chatGPTToken;
+  }
 
   @override
   void dispose() {
     controller.dispose();
+    scrollController.dispose();
     super.dispose();
+  }
+
+  _createUserMessageOpenAI(String prompt) {
+    final OpenAIChatCompletionChoiceMessageModel message = OpenAIChatCompletionChoiceMessageModel(
+      content: [
+        OpenAIChatCompletionChoiceMessageContentItemModel.text(prompt)
+      ],
+      role: OpenAIChatMessageRole.user,
+    );
+    return message;
+  }
+
+  _completeChat(String prompt) {
+    final OpenAIChatCompletionChoiceMessageModel newMessage = _createUserMessageOpenAI(prompt);
+    _userMessages.add(newMessage);
+
+    Stream<OpenAIStreamChatCompletionModel> chatStream = OpenAI.instance.chat.createStream(
+      model: "gpt-3.5-turbo",
+      messages: _userMessages,
+      seed: 279,
+      n: 1,
+    );
+
+    chatStream.listen(_listenOpenAIChat,
+      onError: (error) {
+        print(error);
+        setState(() => isCreateNewMessage = true);
+      },
+      cancelOnError: false,
+      onDone: () {
+        setState(() => isCreateNewMessage = true);
+        textGen = "";
+        _scrollToBottom();
+      },
+    );
+  }
+
+  _listenOpenAIChat(OpenAIStreamChatCompletionModel streamData) {
+      final List<OpenAIChatCompletionChoiceMessageContentItemModel?>? content = streamData.choices.first.delta.content;
+      if (content == null || content.isEmpty) return;
+      final String type = content.first!.type;
+      final String? textCompletion = content.first!.text;
+      if (type != "text" || textCompletion == null) return;
+      textGen += textCompletion;
+
+      setState(() {
+        if (isCreateNewMessage) {
+          ChatMessage.listMessage.add(
+            ChatMessage(
+                messageContent: textGen,
+                messageType: "receiver"),
+          );
+          isCreateNewMessage = false;
+        } else {
+          final lastMessage = ChatMessage.listMessage.last;
+          lastMessage.messageContent = textGen;
+        }
+      });
+
+    }
+
+  _scrollToBottom() {
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent + 60,
+      duration: const Duration(milliseconds: 50),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -31,7 +108,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
-        // backgroundColor: Colors.white,
         flexibleSpace: SafeArea(
           child: Container(
             padding: const EdgeInsets.only(right: 16),
@@ -95,10 +171,11 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           children: [
             Expanded(
               child: ListView.builder(
+                controller: scrollController,
                 itemCount: ChatMessage.listMessage.length,
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                physics: const NeverScrollableScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Container(
                     padding: const EdgeInsets.only(
@@ -159,26 +236,33 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                         decoration: const InputDecoration(
                             hintText: "Nhập tin nhắn...",
                             hintStyle: TextStyle(color: Colors.black54),
-                            border: InputBorder.none),
+                            border: InputBorder.none
+                        ),
+                        onChanged: (value) => setState(() {}),
                       ),
                     ),
                     const SizedBox(
                       width: 15,
                     ),
                     IconButton(
-                      onPressed: () {
+                      onPressed: controller.text.isEmpty ? null : () {
+                        final String text = controller.text;
+                        _completeChat(text);
                         setState(() {
                           ChatMessage.listMessage.add(
                             ChatMessage(
-                                messageContent: controller.text,
+                                messageContent: text,
                                 messageType: "sender"),
                           );
                         });
                         controller.clear();
+                        Future.delayed(const Duration(milliseconds: 200), () {
+                          _scrollToBottom();
+                        });
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.send,
-                        color: Colors.blue,
+                        color: controller.text.isEmpty ? Colors.grey : Colors.blue,
                         size: 23,
                       ),
                     ),
