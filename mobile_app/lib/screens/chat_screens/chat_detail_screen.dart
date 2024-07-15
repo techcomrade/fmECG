@@ -77,7 +77,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       final String? textCompletion = content.first!.text;
       if (type != "text" || textCompletion == null) return;
       textGen += textCompletion;
-      print('gndjgnfdk:$textGen');
 
       setState(() {
         if (isCreateNewMessage) {
