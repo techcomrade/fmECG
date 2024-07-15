@@ -1,3 +1,4 @@
+import 'package:bluetooth_ecg/certs/secrets.dart';
 import 'package:flutter/foundation.dart';
 
 class APIConstant {
@@ -14,11 +15,16 @@ class APIConstant {
   getMode() {
     if (kDebugMode || kProfileMode) {
       // const String hostNormal = "192.168.1.200";
-      const String hostNormal = "192.168.0.9";
+      const String hostNormal = Secrets.apiUrlProduction;
       // const String hostNormal = "192.168.1.200";
       apiUrl = "http://$hostNormal/api";
       socketUrl = 'ws://$hostNormal:80/socket/websocket';
-    } else {}
+    } else {
+      const String hostNormal = Secrets.apiUrlProduction;
+      // const String hostNormal = "192.168.1.200";
+      apiUrl = "http://$hostNormal/api";
+      socketUrl = 'ws://$hostNormal:80/socket/websocket';
+    }
   }
 
   void addValueHeader(Map<String, String> item) {

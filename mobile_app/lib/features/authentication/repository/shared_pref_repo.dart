@@ -12,7 +12,7 @@ class SharedPreprerencesRepo {
 
   static Future<bool> checkAutoLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    
+
     final String? data = prefs.getString(keyData);
     final bool hasLoggedIn = data != "" && data != null;
     return hasLoggedIn;

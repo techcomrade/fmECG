@@ -154,56 +154,11 @@ class AuthProvider extends ChangeNotifier {
       if (responseData["status"] == "success") {
         // do something with data
         _token = "";
-        removeDataLogin();
         notifyListeners();
       }
     } catch (err) {
-      debugPrint('error from register: $err');
+      debugPrint('error from logout: $err');
     }
   }
 
-  void setDataLogin() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    // final userData = json.encode(
-    //   {
-    //     'token': _token,
-    //     'userId': _userId,
-    //     'roleId': _roleId,
-    //     'firebaseToken': _firebaseToken
-    //   },
-    // );
-    // preferences.setString('userData', _email);
-    preferences.setString('userName', _email);
-  }
-
-  void removeDataLogin() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    //preferences.remove("userData");
-    preferences.remove("userName");
-  }
-
-  Future<bool> checkAutoLogin() async {
-    final preferences = await SharedPreferences.getInstance();
-    // if (!preferences.containsKey('userData')) {
-    //   return false;
-    // }
-    if (!preferences.containsKey('userName')) {
-      return false;
-    }
-
-    // final userDataDecoded =
-    //     json.decode((preferences.getString('userData') ?? ""));
-    // _token = userDataDecoded['token'].toString();
-    // _userId = userDataDecoded['userId'];
-    // _roleId = userDataDecoded['roleId'];
-    // _firebaseToken = userDataDecoded['firebaseToken'];
-    //final _emailUser = preferences.getString('userData');
-    final _emailUser = preferences.getString('userName');
-    notifyListeners();
-    if (_emailUser != "") {
-      return true;
-    } else {
-      return false;
-    }
-  }
 }
