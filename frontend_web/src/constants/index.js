@@ -1,11 +1,11 @@
 export const GENDER = [
   {
     value: 0,
-    label: "Male",
+    label: "Nam",
   },
   {
     value: 1,
-    label: "Female",
+    label: "Nữ",
   },
 ];
 
@@ -16,11 +16,11 @@ export const ROLE = [
   },
   {
     value: 1,
-    label: "Doctor",
+    label: "Bác sĩ",
   },
   {
     value: 2,
-    label: "Patient",
+    label: "Bệnh nhân",
   },
 ];
 
@@ -59,9 +59,9 @@ export const DeviceStatus = [
 export const convertGenderToString = (gender) => {
   switch (gender) {
     case 0:
-      return "Male";
+      return "Nam";
     case 1:
-      return "Female";
+      return "Nữ";
     default:
       return "Unknown";
   }
@@ -69,9 +69,9 @@ export const convertGenderToString = (gender) => {
 
 export const convertStringToGender = (gender) => {
   switch (gender) {
-    case "Male":
+    case "Nam":
       return 0;
-    case "Female":
+    case "Nữ":
       return 1;
     default:
       return 2;
@@ -83,9 +83,9 @@ export const convertRoleToString = (role) => {
     case 0:
       return "Admin";
     case 1:
-      return "Doctor";
+      return "Bác sĩ";
     default:
-      return "Patient";
+      return "Bệnh nhân";
   }
 };
 
@@ -114,15 +114,12 @@ export const convertStatusToString = (status) => {
 };
 
 export const convertDeviceStatusToString = (status) => {
+  console.log(status);
   switch (status) {
     case 0:
-      return "active";
-    case 1:
-      return "empty";
-    case 2:
-      return "maintained";
+      return "Hoạt động";
     default:
-      return "unknown";
+      return "Hoạt động";
   }
 };
 
@@ -132,10 +129,8 @@ export const convertDeviceStatusColor = (status) => {
       return "geekblue";
     case 1:
       return "green";
-    case 2:
-      return "volcano";
     default:
-      return "red";
+      return "green";
   }
 };
 
