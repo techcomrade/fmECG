@@ -26,7 +26,25 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     }
   }
 
-  void _onLogoutRequest(LogoutRequest event, Emitter emitter) {}
+  void _onLogoutRequest(LogoutRequest event, Emitter emit) async {
+    try {
+      SharedPreprerencesRepo.removeDataUser();
+      emit(AuthenticationFail());
+      // final Map? response = await authRepository.logoutUser();
+      // if (response == null) {
+      //   emit(AuthenticationFail());
+      //   return;
+      // }
+      // final bool isSuccess = response["success"] ?? false;
+      // if (isSuccess) {
+      //   print('gndfjgdf:$response');
+      //   SharedPreprerencesRepo.removeDataUser();
+      //   emit(AuthenticationSuccess());
+      // }
+    } catch (e) {
+      emit(AuthenticationFail());
+    }
+  }
   void _onCheckAutoLogin(CheckAutoLogin event, Emitter emit) async {
     try {
       final bool hasLoggedIn = await SharedPreprerencesRepo.checkAutoLogin();
