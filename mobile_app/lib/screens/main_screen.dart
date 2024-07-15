@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screens/bluetooth_classic_screen.dart';
@@ -76,6 +77,7 @@ class _MainScreenState extends State<MainScreen> {
       resizeToAvoidBottomInset: true,
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
         currentIndex: _currentIndex,
         onTap: (int index) {
           setState(() {
@@ -84,19 +86,22 @@ class _MainScreenState extends State<MainScreen> {
         },
         items: [
           BottomNavigationBarItem(
-            backgroundColor: Colors.blue,
+            backgroundColor: ColorConstant.primary,
             icon: PhosphorIcon(PhosphorIcons.regular.house),
             label: S.current.home,
           ),
           BottomNavigationBarItem(
+            backgroundColor: ColorConstant.primary,
             icon: PhosphorIcon(PhosphorIcons.regular.chartLine),
             label: S.current.history,
           ),
           BottomNavigationBarItem(
+            backgroundColor: ColorConstant.primary,
             icon: PhosphorIcon(PhosphorIcons.regular.chatCircle),
             label: S.current.chat,
           ),
           BottomNavigationBarItem(
+            backgroundColor: ColorConstant.primary,
             icon: PhosphorIcon(PhosphorIcons.regular.userCircle),
             label: S.current.profile,
           ),

@@ -76,6 +76,7 @@ dependencies:
   flutter_bluetooth_serial: ^0.4.0
   fluttertoast: 8.2.5
   connectivity_plus: ^6.0.3
+  dart_openai: ^5.1.0
 # dependency_overrides:
 #   # language
 #   intl: ^0.18.0
