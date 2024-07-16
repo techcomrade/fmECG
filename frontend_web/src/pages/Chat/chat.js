@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FileImageOutlined } from "@ant-design/icons";
 import "./chat.scss";
 
 const AITraining = () => {
+  const [text,setText] = useState("")
   const [message, setMessage] = useState([
     {
       id: 0,
@@ -27,6 +28,18 @@ const AITraining = () => {
       message: "Vâng cảm ơn bác sĩ rất nhiều ạ",
     },
   ]);
+
+  const handleSend = useCallback(()=>{
+    setMessage((prev) => [
+      ...prev,
+      {
+        id: prev.length + 1,
+        actor: "user",
+        message: text
+      }
+    ])
+    setText("");
+  },[text])
   return (
     <div className="chat-container">
       <div className="sidebar">
@@ -130,8 +143,8 @@ const AITraining = () => {
           <input
             type="text"
             placeholder="Type something..."
-            //   onChange={(e) => setText(e.target.value)}
-            //   value={text}
+              onChange={(e) => setText(e.target.value)}
+              value={text}
           />
           <div className="send">
             <input
@@ -145,7 +158,7 @@ const AITraining = () => {
               <FileImageOutlined />
             </label>
             <button
-            // onClick={handleSend}
+            onClick={handleSend}
             >
               Gửi
             </button>
