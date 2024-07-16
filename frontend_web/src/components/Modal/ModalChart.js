@@ -37,7 +37,7 @@ const ModalChart = ({ isOpen, setIsOpen, selectedDevice }) => {
 
   return (
     <Modal
-      title={t("modal-chart.record-graph")}
+      title={t("modal.record-graph")}
       open={isOpen}
       cancelText={t("modal-chart.cancel")}
       onCancel={handleCancel}
