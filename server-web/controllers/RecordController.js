@@ -290,7 +290,7 @@ class RecordController {
       });
     }
 
-    const filepath = await RecordService.getFilePathById(req.params.id);
+    const filepath = record[0].dataValues.data_rec_url;
     if (!fs.existsSync(filepath)) {
       return res.status(404).json({
         message: "record file not found",

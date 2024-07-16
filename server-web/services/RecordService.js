@@ -150,11 +150,11 @@ class RecordService extends CommonService {
         });
       });
       let arrayValue = {
+        ECG: { frequency: null, data: [] },
         PPG: { frequency: null, data: [] },
         PCG: { frequency: null, data: [] },
-        heartRate: { frequency: null, data: [] },
       };
-      let fieldNames = ["PPG", "PCG", "heartRate"];
+      let fieldNames = ["ECG", "PPG", "PCG"];
       for (let i = 6; i < 9; i++) {
         let field = fieldNames[i - 6];
         arrayValue[field].frequency = device_freq_value;
