@@ -8,7 +8,7 @@ function EChart() {
   const { t, i18n } = useTranslation();
   const items = [
     {
-      Title: "5",
+      Title: "7",
       user: "Bệnh nhân",
     },
     {

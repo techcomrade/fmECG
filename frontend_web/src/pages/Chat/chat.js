@@ -67,7 +67,7 @@ const AITraining = () => {
             <div className="userChatInfo">
               <span>
                 {/* {chat[1].userInfo.displayName} */}
-                Bác sĩ Dũng
+                Nam
               </span>
               <p>
                 {/* {chat[1].lastMessage?.text} */}
@@ -79,7 +79,7 @@ const AITraining = () => {
       </div>
       <div className="chat">
         <div className="chatInfo">
-          <span>Bác sĩ Dũng</span>
+          <span>Nam</span>
         </div>
         <div className="messages">
          
