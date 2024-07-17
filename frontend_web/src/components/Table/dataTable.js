@@ -63,7 +63,7 @@ const DataTable = (props) => {
 
   return (
     <>
-      <h2>{props.name} test devops</h2>
+      <h2>{props.name}</h2>
       {props?.customData}
       <div className="list-btn-actions">
         {props.addButton && (
