@@ -59,8 +59,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text("User Profile"),
           backgroundColor: ColorConstant.primary, // Màu sắc của AppBar
@@ -119,8 +118,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 // Custom InfoCard widget with Title
