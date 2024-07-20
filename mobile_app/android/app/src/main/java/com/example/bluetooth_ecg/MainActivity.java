@@ -1,4 +1,4 @@
-package com.example.bluetooth_ecg;
+package vn.hust.electrospic;
 
 import io.flutter.embedding.android.FlutterActivity;
 
