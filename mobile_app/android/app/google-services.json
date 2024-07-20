@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1074974396611:android:3356230f7a7d862fc2d276",
         "android_client_info": {
-          "package_name": "com.example.bluetooth_ecg"
+          "package_name": "vn.hust.electrospic"
         }
       },
       "oauth_client": [

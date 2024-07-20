@@ -12,11 +12,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: BlocProvider(
-        create: (context) => AuthenticationBloc(authRepository: AuthRepository()),
-        child: const BlocNavigate(),
-      ),
+    return BlocProvider(
+      create: (context) => AuthenticationBloc(authRepository: AuthRepository()),
+      child: const BlocNavigate(),
     );
   }
 }
@@ -31,8 +29,7 @@ class BlocNavigate extends StatefulWidget {
 class _BlocNavigateState extends State<BlocNavigate> {
   @override
   void initState() {
-    context.read<AuthenticationBloc>()
-      ..add(CheckAutoLogin());
+    context.read<AuthenticationBloc>().add(CheckAutoLogin());
     super.initState();
   }
 
