@@ -1,5 +1,7 @@
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_bloc.dart';
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_event.dart';
+import 'package:bluetooth_ecg/models/user_model.dart';
+import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -59,6 +61,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final User? user = Provider.of<UserProvider>(context, listen: true).user;
+    if (user == null) return const SizedBox();
     return Scaffold(
         appBar: AppBar(
           title: const Text("User Profile"),
@@ -78,9 +82,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
                 ),
                 const SizedBox(height: 5),
-                const Text(
-                  'Viet Hoang',
-                  style: TextStyle(
+                Text(
+                  user.fullName,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
