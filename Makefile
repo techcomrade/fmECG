@@ -8,7 +8,8 @@ app:
 dev:
 	docker compose rm -sf && \
 	docker compose --profile "*" -f docker-compose-dev.yml up --build --detach && \
-	docker image prune -f
+	docker image prune -f && \
+	docker exec -it chat-fmecg iex -S mix phx.server
 
 log:
 	docker compose logs -f --tail=10
@@ -37,4 +38,6 @@ chatdev:
 	docker compose -f docker-compose-back-end.yml up --build --detach && \
 	docker exec -it chat-fmecg iex -S mix phx.server
 
-
+# another way to run iex -> cách này không thấy được api gọi => tách riêng phần show/db và iex	
+# elixir --sname server_chat -S mix phx.server	
+# make chatbash -> iex --sname console --remsh server_chat

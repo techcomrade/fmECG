@@ -2,21 +2,26 @@ import ReactApexChart from "react-apexcharts";
 import { Row, Col, Typography } from "antd";
 import eChart from "./configs/eChart";
 import './chart.scss'
+import { useTranslation } from "react-i18next";
 function EChart() {
   const { Title, Paragraph } = Typography;
-
+  const { t, i18n } = useTranslation();
   const items = [
     {
-      Title: "12",
-      user: "Users",
+      Title: "7",
+      user: "Bệnh nhân",
     },
     {
-      Title: "1m",
-      user: "Clicks",
+      Title: "2",
+      user: "Bác sĩ",
     },
     {
       Title: "3",
-      user: "Devices",
+      user: "Thiết bị",
+    },
+    {
+      Title: "10",
+      user: "Bản ghi",
     },
   ];
 
@@ -33,12 +38,12 @@ function EChart() {
         />
       </div>
       <div className="chart-vistior">
-        <Title level={5}>Số lượng người dùng đang hoạt động</Title>
+        <Title level={5}>{t("homepage.number-of-users-are-using")}</Title>
         {/* <Paragraph className="lastweek">
           than last week <span className="bnb2">+30%</span>
         </Paragraph> */}
         <Paragraph className="lastweek">
-          Tổng hợp số lượng người dùng bao gồm bệnh nhân và bác sĩ và thời gian bắt đầu sủ dụng hệ thống
+            {t("homepage.paragraph")}
         </Paragraph>
         <Row gutter>
           {items.map((v, index) => (

@@ -13,8 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum ThemeType { dark, light }
 
-UserProvider userProvider =
-    Provider.of<UserProvider>(Utils.globalContext!, listen: false);
+UserProvider userProvider = Provider.of<UserProvider>(Utils.globalContext!, listen: false);
 
 class AuthProvider extends ChangeNotifier {
   String _token = "";
@@ -117,38 +116,6 @@ class AuthProvider extends ChangeNotifier {
     return _locale;
   }
 
-  Future<void> loginUser(String email, String password) async {
-    // call API with email and password
-    // String url = APIConstant.apiUrlProduction + 'login';
-    // final bodyEncoded = jsonEncode({"email": email, "password": password});
-    try {
-      // final response = await http.post(Uri.parse(url),
-      //     headers: APIConstant.headers, body: bodyEncoded);
-      // final responseData = jsonDecode(response.body);
-
-      // if (responseData["status"] == "success") {
-      //   // do something with data
-      //   _token = responseData["token"];
-      //   _roleId = responseData["user"]["role"];
-      //   _userId = responseData["user"]["user_id"];
-      //   userProvider.setDataUser(responseData["user"]);
-
-      //   // firebase token sẽ đi theo thiết bị di động không phải theo phiên đăng nhập
-      //   _firebaseToken = await FmECGFirebaseMessage().getDeviceToken();
-      //   _checkAndSaveFirebaseToken();
-      //   setDataLogin();
-
-      //   notifyListeners();
-      // }
-
-      _email = email;
-      setDataLogin();
-      notifyListeners();
-    } catch (err) {
-      debugPrint('error from login: $err');
-    }
-  }
-
   void _checkAndSaveFirebaseToken() async {
     bool isFirebaseTokenExisted =
         await FmECGFirebaseMessage().checkFirebaseTokenExist(_firebaseToken);
@@ -187,56 +154,11 @@ class AuthProvider extends ChangeNotifier {
       if (responseData["status"] == "success") {
         // do something with data
         _token = "";
-        removeDataLogin();
         notifyListeners();
       }
     } catch (err) {
-      debugPrint('error from register: $err');
+      debugPrint('error from logout: $err');
     }
   }
 
-  void setDataLogin() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    // final userData = json.encode(
-    //   {
-    //     'token': _token,
-    //     'userId': _userId,
-    //     'roleId': _roleId,
-    //     'firebaseToken': _firebaseToken
-    //   },
-    // );
-    // preferences.setString('userData', _email);
-    preferences.setString('userName', _email);
-  }
-
-  void removeDataLogin() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    //preferences.remove("userData");
-    preferences.remove("userName");
-  }
-
-  Future<bool> checkAutoLogin() async {
-    final preferences = await SharedPreferences.getInstance();
-    // if (!preferences.containsKey('userData')) {
-    //   return false;
-    // }
-    if (!preferences.containsKey('userName')) {
-      return false;
-    }
-
-    // final userDataDecoded =
-    //     json.decode((preferences.getString('userData') ?? ""));
-    // _token = userDataDecoded['token'].toString();
-    // _userId = userDataDecoded['userId'];
-    // _roleId = userDataDecoded['roleId'];
-    // _firebaseToken = userDataDecoded['firebaseToken'];
-    //final _emailUser = preferences.getString('userData');
-    final _emailUser = preferences.getString('userName');
-    notifyListeners();
-    if (_emailUser != "") {
-      return true;
-    } else {
-      return false;
-    }
-  }
 }

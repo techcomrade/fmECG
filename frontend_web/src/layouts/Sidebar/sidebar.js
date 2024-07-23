@@ -7,7 +7,7 @@ import logo from "../../assets/logo.png";
 import { useLocation } from "react-router-dom";
 import { UserOutlined, HomeOutlined, SettingOutlined } from "@ant-design/icons";
 import "./sidebar.scss";
-
+import { useTranslation } from 'react-i18next';
 const { Sider } = Layout;
 
 const Sidebar = () => {
@@ -21,7 +21,8 @@ const Sidebar = () => {
   useEffect(() => {
     setSelectedKey(pathname);
   }, [pathname]);
-  
+  const { t, i18n } = useTranslation();
+
   return (
     <Sider width={200} style={{ background: colorBgContainer }} >
       <div className="brand">
@@ -38,10 +39,10 @@ const Sidebar = () => {
           <span className="menu-item-box-icon">
             <HomeOutlined />
           </span>
-          <span>Trang chủ</span>
+          <span>{t("page.side-bar.home")}</span>
         </Menu.Item>
         <Menu.Item className="menu-item-header" key="6">
-          Quản lý
+          {t("page.side-bar.management")}
         </Menu.Item>
         {menulist.map((item) => {
           return (
@@ -51,12 +52,12 @@ const Sidebar = () => {
               onClick={() => navigate(item.key)}
             >
               <span className="menu-item-box-icon">{item.icon}</span>
-              <span>{item.label}</span>
+              <span>{t(item.label)}</span>
             </Menu.Item>
           );
         })}
         <Menu.Item className="menu-item-header" key="5">
-          Tài Khoản
+         {t("page.side-bar.account-management")}
         </Menu.Item>
         <Menu.Item
           className="menu-item"
@@ -66,7 +67,7 @@ const Sidebar = () => {
           <span className="menu-item-box-icon">
             <UserOutlined />
           </span>
-          <span>Thông tin tài khoản</span>
+          <span>{t("page.side-bar.account-info")}</span>
         </Menu.Item>
         <Menu.Item
           className="menu-item"
@@ -76,7 +77,7 @@ const Sidebar = () => {
           <span className="menu-item-box-icon">
           <SettingOutlined />
           </span>
-          <span>Cài đặt</span>
+          <span>{t("page.side-bar.setting")}</span>
         </Menu.Item>
       </Menu>
     </Sider>

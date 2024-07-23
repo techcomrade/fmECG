@@ -33,24 +33,23 @@ class DeviceController {
         message: "no user found",
       });
     }
-    await DeviceService.add(device)
-      .then((checked) => {
-        if (checked)
-          return res.status(200).json({
-            message: "add device successfully",
-          });
+    try {
+      let checkAddDevice = await DeviceService.add(device);
+      if (!checkAddDevice) {
         return res.status(500).json({
           message: "err server add failed",
         });
-      })
-      .catch((err) => {
-        console.log(err);
-        return res.status(400).json({
-          message: "add device failed",
-        });
+      }
+      return res.status(200).json({
+        message: "Add device successfully"
       });
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({
+        message: "add device failed",
+      });
+    }
   }
-
   async delete(req, res) {
     console.log(`[P]:::Delete device data`, req.params.id);
     const device_id = req.params.id;
@@ -100,10 +99,14 @@ class DeviceController {
       });
     }
     await DeviceService.updateById(device, id)
-      .then(() => {
+      .then((checked) => {
+        if(checked)
         return res.status(200).json({
           message: "update device successfully",
         });
+        else return res.status(500).json({
+          message: "error server update device"
+        })
       })
       .catch((err) => {
         console.log(err);

@@ -16,6 +16,7 @@ import { convertTimeToDate } from "../../utils/dateUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { httpGetData } from "../../api/common.api";
+import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 
 const PdaTable = () => {
@@ -23,6 +24,7 @@ const PdaTable = () => {
   const dataState = useSelector((state) => state.pda);
   const [dataTable, setData] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
+  const { t } = useTranslation();
 
   const [dropdownDoctorData, setDropDoctorData] = useState([]);
   const [dropdownPatientData, setDropPatientData] = useState([]);
@@ -32,7 +34,7 @@ const PdaTable = () => {
 
   const columns = [
     {
-      title: "Tên bệnh nhân",
+      title: t("column.patient-name"),
       dataIndex: "patient_name",
       key: "patient_name",
       type: "select",
@@ -40,7 +42,7 @@ const PdaTable = () => {
       isEdit: true,
     },
     {
-      title: "Tên bác sĩ",
+      title: t("column.doctor-name"),
       dataIndex: "doctor_name",
       key: "doctor_name",
       type: "select",
@@ -48,14 +50,14 @@ const PdaTable = () => {
       isEdit: true,
     },
     {
-      title: "Ngày bắt đầu",
+      title: t("column.date-started"),
       dataIndex: "start_date",
       key: "start_date",
       type: "date",
       isEdit: true,
     },
     {
-      title: "Ngày kết thúc",
+      title:  t("column.date-finished"),
       dataIndex: "end_date",
       key: "end_date",
       type: "date",
@@ -166,7 +168,7 @@ const PdaTable = () => {
         deleteButton
         deleteFunction = {handleDeleteFunction}
         updateSelectedData={setSelectedData}
-        name="Bảng quản lý phân công bác sĩ - bệnh nhân"
+        name={t("title.assignment-doctor")}
         data={dataTable}
         column={columns}
         loading={dataState.loadDataStatus === loadStatus.Loading}

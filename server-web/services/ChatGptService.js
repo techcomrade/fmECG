@@ -5,11 +5,13 @@ const {
   filterActionWeb,
   clearCache,
 } = require("../utils/stringUtils");
+const {calculateAge} = require('../utils/processTime');
+const UserService = require("./UserService");
 var chatHistory = [
   {
     role: "system",
     content:
-      "Bạn là trợ lý ảo của hệ thống quản lý dữ liệu, thiết bị y tế ECG AI, bạn có nhiệm vụ tư vấn cho người dùng về hệ thống và hướng dẫn người dùng sử dụng hệ thống",
+      "Bạn là trợ lý ảo của hệ thống quản lý dữ liệu, thiết bị y tế ECG Admin, tư vấn cho người dùng về hệ thống, cách sử dụng hệ thống, các thông tin sức khoẻ. ECG ADmin là hệ thống IOT bao gồm: thiết bị y tế đo nhịp tim, app kết nối thiết bị, website để quản lý bệnh nhân và bác sĩ, thiết bị đo, dữ liệu đo gửi lên từ app.",
   },
 ];
 class ChatGptService {
@@ -46,7 +48,16 @@ class ChatGptService {
   async history(user_id) {
     return chatHistory;
   }
-
+  async training(message) {
+    if (message) {
+      chatHistory?.push({
+        role: "system",
+        content: message,
+      });
+      return true;
+    }
+    return false;
+  }
   async creatAssistant() {
     const assistant = await openai.beta.assistants.create({
       name: "ECG AI",
@@ -89,6 +100,28 @@ class ChatGptService {
 
     console.log(response);
   }
-  
+
+  async createAssistantConversation (user_id) {
+    const userData = await UserService.getUserById(user_id);
+    const user = userData[0]?.dataValues;
+
+    if(userData[0]?.dataValues) {
+      const userData = `Người dùng đang sử dụng hệ thống tên là: ${user.username}, tuổi: ${calculateAge(user.birth)}, tiền sử: ${user.information}`
+      chatHistory =  [
+        {
+          role: "system",
+          content:
+            "Bạn là trợ lý ảo của hệ thống quản lý dữ liệu, thiết bị y tế ECG Admin, tư vấn cho người dùng về hệ thống, cách sử dụng hệ thống, các thông tin sức khoẻ. ECG ADmin là hệ thống IOT bao gồm: thiết bị y tế đo nhịp tim, app kết nối thiết bị, website để quản lý bệnh nhân và bác sĩ, thiết bị đo, dữ liệu đo gửi lên từ app.",
+        },
+      ]
+      chatHistory.push({
+        role: "system",
+        content: filterUserAnswer(userData)
+      })
+      const result = await this.chat("chào bạn");
+      return result;
+    }
+    return "Dịch vụ trợ lý ảo đang có lỗi vui lòng thử lại sau";
+  }
 }
 module.exports = new ChatGptService();

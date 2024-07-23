@@ -63,7 +63,7 @@ export const convertGenderToString = (gender) => {
     case 1:
       return "Nữ";
     default:
-      return "Không rõ";
+      return "Unknown";
   }
 };
 
@@ -93,9 +93,9 @@ export const convertStringToRole = (gender) => {
   switch (gender) {
     case "Admin":
       return userRole.admin;
-    case "Bác sĩ":
+    case "Doctor":
       return userRole.doctor;
-    case "Bệnh nhân":
+    case "Patient":
       return userRole.patient;
     default:
       return 4;
@@ -105,24 +105,21 @@ export const convertStringToRole = (gender) => {
 export const convertStatusToString = (status) => {
   switch (status) {
     case 0:
-      return "Đang hoạt đông";
+      return "active";
     case 1:
-      return "Đã nghỉ";
+      return "offline";
     default:
-      return "Không xác định";
+      return "unknown";
   }
 };
 
 export const convertDeviceStatusToString = (status) => {
+  console.log(status);
   switch (status) {
     case 0:
-      return "Đang hoạt đông";
-    case 1:
-      return "Đang trống";
-    case 2:
-      return "Đang bảo trì";
+      return "Hoạt động";
     default:
-      return "Không xác định";
+      return "Hoạt động";
   }
 };
 
@@ -132,10 +129,8 @@ export const convertDeviceStatusColor = (status) => {
       return "geekblue";
     case 1:
       return "green";
-    case 2:
-      return "volcano";
     default:
-      return "red";
+      return "green";
   }
 };
 

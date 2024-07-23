@@ -31,9 +31,7 @@ class DeviceDetailsService extends CommonService {
   }
 
   async add(deviceFreq) {
-    deviceFreq.id = uuidv4();
-    deviceFreq.created_at = Date.now();
-    return DeviceDetailsRepository.add(deviceFreq);
+      return DeviceDetailsRepository.add(deviceFreq);
   }
 
   async getById(id) {

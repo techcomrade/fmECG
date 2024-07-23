@@ -148,5 +148,31 @@ class RecordRepository {
       }
     );
   }
+
+  async filterRecord(username, deviceName, startTime, endTime) {
+    let query =
+      "SELECT re.*, de.device_name, u.username FROM fmecg.records as re LEFT JOIN fmecg.devices as de ON re.device_id = de.id LEFT JOIN fmecg.users as u ON re.user_id = u.id WHERE 1=1";
+    let replacements = {};
+    if (username) {
+      query += " AND u.username LIKE :username";
+      replacements.username = `%${username}%`;
+    }
+    if (deviceName) {
+      query += " AND de.device_name LIKE :deviceName";
+      replacements.deviceName = `%${deviceName}%`;
+    }
+    if (startTime) {
+      query += " AND re.start_time >= :startTime";
+      replacements.startTime = startTime;
+    }
+    if (endTime) {
+      query += " AND re.end_time <= :endTime";
+      replacements.endTime = endTime;
+    }
+    return await sequelize.query(query, {
+      replacements: replacements,
+      type: QueryTypes.SELECT,
+    });
+  }
 }
 module.exports = new RecordRepository();

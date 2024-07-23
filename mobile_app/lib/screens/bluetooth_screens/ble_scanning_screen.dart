@@ -4,9 +4,9 @@ import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_chart_test.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
+import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 Uuid uartUUID = Uuid.parse("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
 Uuid uartRX   = Uuid.parse("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
@@ -151,7 +151,7 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
   }
 
   _navigateToChart() async {
-    bool isAccessFiles = await _requestManageStorage();
+    final bool isAccessFiles = await Utils.requestManageStorage();
     _scanStream?.cancel();
     if (isAccessFiles) {
       FilesManagement.createDirectoryFirstTimeWithDevice();
@@ -165,15 +165,6 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
       ));
     } else {
       print('phone does not grant permission');
-    }
-  }
-
-  Future<bool> _requestManageStorage() async {
-    final PermissionStatus status = await Permission.manageExternalStorage.request();  
-    if (status == PermissionStatus.granted) {
-      return true;
-    } else {
-      return false;
     }
   }
 
@@ -235,13 +226,13 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
                     ),
                     child: isDeviceConnected ? Text(
                       S.current.connected,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
                     ): Text(
                       S.current.connect,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
@@ -265,7 +256,7 @@ class _BleScanningAndConnectingScreenState extends State<BleScanningAndConnectin
                       ),
                       child: Text(
                         S.current.measure,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                         ),

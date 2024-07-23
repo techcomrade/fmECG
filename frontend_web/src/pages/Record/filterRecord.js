@@ -2,23 +2,30 @@ import { Button, Card, DatePicker, Form, Input } from "antd";
 import { useState } from "react";
 import { UpCircleOutlined, DownCircleOutlined } from "@ant-design/icons";
 import './record.scss';
+import { useTranslation  } from "react-i18next";
+import dayjs from "dayjs";
 
-const FilterRecord = () => {
+const FilterRecord = (props) => {
   const [form] = Form.useForm();
   const [isCollapse, setIsCollapse] = useState(true);
-
+  const {t} = useTranslation();
   const handleOnFinish = (values) => {
     const payload = {
       ...values,
-      start_time: values.start_time?.valueOf(),
-      end_time: values.end_time?.valueOf()
+      start_time: values.start_time?.startOf('day').valueOf(),
+      end_time: values.end_time?.endOf('day').valueOf()
     }
-    console.log(payload);
+    props.filterFunction(payload);
+  }
+
+  const handleReset = () => {
+    form.resetFields();
+    props.filterFunction();
   }
 
   return (
     <Card 
-      title="Tìm kiếm" 
+      title={t("button.search")}
       bordered={false}
       extra={
         <span className="collapse-icon" onClick={() => setIsCollapse(!isCollapse)}>
@@ -36,21 +43,21 @@ const FilterRecord = () => {
             onFinish={handleOnFinish}
           >
             <Form.Item
-              label={"Tên người dùng"}
-              name={"user_id"}
-              key={"user_id"}
+              label={t("column.user-name")}
+              name={"username"}
+              key={"username"}
             >
               <Input allowClear/>
             </Form.Item>
             <Form.Item
-              label={"Tên thiết bị"}
-              name={"device_id"}
-              key={"device_id"}
+              label={t("column.device-name")}
+              name={"device_name"}
+              key={"device_name"}
             >
               <Input allowClear />
             </Form.Item>
             <Form.Item
-              label={"Thời gian bắt đầu"}
+              label={t("column.date-started")}
               name={"start_time"}
               key={"start_time"}
             >
@@ -61,7 +68,7 @@ const FilterRecord = () => {
               />
             </Form.Item>
             <Form.Item
-              label={"Thời gian kết thúc"}
+              label={t("column.date-finished")}
               name={"end_time"}
               key={"end_time"}
             >
@@ -69,18 +76,22 @@ const FilterRecord = () => {
                 allowClear
                 format="DD/MM/YYYY"
                 placeholder={"Select date"}
+                disabledDate={(day) => {
+                  const startDate = form.getFieldValue('start_time');
+                  return day && day < dayjs(startDate);
+                }}
               />
             </Form.Item>
           </Form>
           <div className="filter-button">
             <Button
               className="button refresh"
-              onClick={() => form.resetFields()}
+              onClick={handleReset}
             >
-              Làm mới
+              {t("button.refresh")}
             </Button>
             <Button className="button search" onClick={() => form.submit()}>
-              Tìm kiếm
+            {t("button.search")}
             </Button>
           </div>
         </div>

@@ -89,6 +89,10 @@ class RecordService extends CommonService {
     );
   }
 
+  async filterRecord(username, deviceName, startTime, endTime) {
+    return await RecordRepository.filterRecord(username, deviceName, startTime, endTime);
+  }
+
   async updateRecordById(record, id) {
     return await RecordRepository.updateById(record, id);
   }
@@ -114,16 +118,20 @@ class RecordService extends CommonService {
   async readFileRecord(path) {
     return await FileService.readFile(path);
   }
+
   async deleteFile(path) {
     return await FileService.deleteFile(path);
   }
+
   async getFilePathById(id) {
     const recordData = await RecordRepository.getRecordById(id);
     return recordData[0].dataValues.data_rec_url ?? "";
   }
+
   async getRecordByDoctorId(id) {
     return await RecordRepository.getRecordByDoctorId(id);
   }
+  
   async getDataRecord(filepath, deviceId) {
     try {
       const device_freq = await DeviceDetailsService.getByDeviceId(deviceId);
@@ -142,11 +150,11 @@ class RecordService extends CommonService {
         });
       });
       let arrayValue = {
+        ECG: { frequency: null, data: [] },
         PPG: { frequency: null, data: [] },
         PCG: { frequency: null, data: [] },
-        heartRate: { frequency: null, data: [] },
       };
-      let fieldNames = ["PPG", "PCG", "heartRate"];
+      let fieldNames = ["ECG", "PPG", "PCG"];
       for (let i = 6; i < 9; i++) {
         let field = fieldNames[i - 6];
         arrayValue[field].frequency = device_freq_value;

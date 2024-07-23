@@ -2,16 +2,14 @@ import 'dart:math';
 
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Utils {
-  static BuildContext? globalContext;
-
-  static getGlobalContext() {
-    return globalContext;
-  }
+  static BuildContext? _globalContext;
+  static BuildContext? get globalContext => _globalContext;
 
   static setGlobalContext(context) {
-    globalContext = context;
+    _globalContext = context;
   }
 
   static getRandomString(int length) {
@@ -46,6 +44,15 @@ class Utils {
     //   return -1;
     // }
     return 1;
+  }
+
+  static Future<bool> requestManageStorage() async {
+    final PermissionStatus status = await Permission.manageExternalStorage.request();  
+    if (status == PermissionStatus.granted) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   static Future<dynamic> showDialogWarningError(BuildContext context, bool isDark, String warningContent) {
@@ -95,21 +102,21 @@ class Utils {
   static OverlayEntry setOverlayLoadingWithHeavyTask() {
     return OverlayEntry(
       builder: (contextBuilder) {
-        final bool isDark = false;
-        final Color backgroundColorDialog = isDark ? const Color(0xFF25282A) : const Color(0xFFF2F4F7);
-        final Color colorTitle = isDark ? const Color(0xFFF6F6F7) : const Color(0xFF101828);
+        const bool isDark = false;
+        const Color backgroundColorDialog = isDark ? Color(0xFF25282A) : Color(0xFFF2F4F7);
+        const Color colorTitle = isDark ? Color(0xFFF6F6F7) : Color(0xFF101828);
 
         return Dialog(
           backgroundColor: backgroundColorDialog,
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-          child: Container(
+          child: SizedBox(
             width: 210,
             height: 130,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(S.current.dataProcessingDes,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: colorTitle,
                     fontSize: 16,
                     fontFamily: 'Roboto',

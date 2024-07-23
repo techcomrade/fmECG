@@ -2,10 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import DataTable from "../../components/Table/dataTable";
 import { useEffect, useRef, useState } from "react";
 import {
+  acceptedRegister,
   getCheckRegister,
   loadStatus,
+  rejectedRegister,
+  resetAcceptStatus,
+  resetRejectStatus,
 } from "../../redux/reducer/registerSlice";
 import { Tag } from "antd";
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import { convertTimeToDate } from "../../utils/dateUtils";
 import {
   UserStatus,
@@ -17,14 +22,16 @@ import {
   convertStringToRole,
   userRole,
 } from "../../constants";
-import { Button } from "antd";
-
+import { Button, Modal } from "antd";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { findElementById, checkDateTypeKey } from "../../utils/arrayUtils";
 import { showNotiSuccess } from "../../components/Notification";
 import { GENDER, ROLE } from "../../constants";
 import dayjs from "dayjs";
 import { UserAddOutlined, DeleteOutlined, UserDeleteOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
+import { RegisterDetail } from "./registerDetail";
+const { confirm } = Modal;
 
 const RegisterTable = (props) => {
   const dispatch = useDispatch();
@@ -34,10 +41,11 @@ const RegisterTable = (props) => {
 
   const modalUpdateRef = useRef(null);
   const drawerRef = useRef(null);
+  const { t } = useTranslation();
 
   const columns = [
     {
-      title: "Họ và tên",
+      title: t("column.user-name"),
       dataIndex: "username",
       key: "username",
       type: "text",
@@ -51,7 +59,7 @@ const RegisterTable = (props) => {
       isEdit: true,
     },
     {
-      title: "Giới tính",
+      title: t("column.sex"),
       dataIndex: "gender",
       key: "gender",
       type: "select",
@@ -59,21 +67,21 @@ const RegisterTable = (props) => {
       isEdit: true,
     },
     {
-      title: "Ngày sinh",
+      title: t("column.birth"),
       dataIndex: "birth",
       key: "birth",
       type: "date",
       isEdit: true,
     },
     {
-      title: "Số điện thoại",
+      title: t("column.phone-number"),
       dataIndex: "phone_number",
       key: "phone_number",
       type: "text",
       isEdit: true,
     },
     {
-      title: "Tác vụ",
+      title: t("column.role"),
       dataIndex: "role",
       key: "role",
       type: "select",
@@ -81,7 +89,7 @@ const RegisterTable = (props) => {
       isEdit: true,
     },
     {
-      title: "Trạng thái",
+      title: t("column.status"),
       dataIndex: "status",
       key: "status",
       type: "select",
@@ -100,11 +108,11 @@ const RegisterTable = (props) => {
       },
     },
     {
-      title: "Thông tin",
+      title: t("column.note"),
       dataIndex: "information",
       key: "information",
       type: "text",
-      isEdit: true,
+      hidden: true,
     },
   ];
 
@@ -150,21 +158,47 @@ const RegisterTable = (props) => {
   useEffect(() => {
     if (dataState.loadDataStatus === loadStatus.Success) {
       const rawData = dataState.data.metadata;
-      console.log(rawData);
       const data = rawData.map((element) => handleData(element, "render"));
       setDataTable(data);
     }
   }, [dataState.loadDataStatus]);
+
+  useEffect(() => {
+    if (dataState.loadAcceptStatus === loadStatus.Success) {
+      showNotiSuccess("Tài khoản đã được phê duyệt vào hệ thống");
+      dispatch(resetAcceptStatus());
+      dispatch(getCheckRegister());
+    }
+  }, [dataState.loadAcceptStatus]);
+
+  useEffect(() => {
+    if (dataState.loadRejectStatus === loadStatus.Success) {
+      showNotiSuccess("Tài khoản đã bị từ chối thành công");
+      dispatch(resetRejectStatus());
+      dispatch(getCheckRegister());
+    }
+  }, [dataState.loadRejectStatus]);
+
   const renderButton = () => (
     <>
       <Button
         icon={<UserAddOutlined />}
         disabled={selectedData.length !== 1}
         className="edit-btn"
-        // onClick={() => {
-        //   dispatch(checkRecordFile(selectedData[0]));
-        //   setIsModalOpen(true);
-        // }}
+        onClick={() => {
+          confirm({
+            title: "Phê duyệt tài khoản",
+            icon: <ExclamationCircleFilled />,
+            content: "Bạn có chắc chắn muốn phê duyệt tài khoản này không",
+            okText: "Đồng ý",
+            okType: "primary",
+            cancelText: "Không",
+            async onOk() {
+              dispatch(acceptedRegister({ id: selectedData[0] }));
+            },
+            onCancel() {},
+          });
+        }}
       >
         Chấp nhận
       </Button>
@@ -172,10 +206,20 @@ const RegisterTable = (props) => {
         icon={<UserDeleteOutlined />}
         disabled={selectedData.length !== 1}
         className="edit-btn"
-        // onClick={() => {
-        //   dispatch(checkRecordFile(selectedData[0]));
-        //   setIsModalOpen(true);
-        // }}
+        onClick={() => {
+          confirm({
+            title: "Từ chối tài khoản",
+            icon: <ExclamationCircleFilled />,
+            content: "Bạn có chắc chắn muốn từ chối tài khoản này không",
+            okText: "Đồng ý",
+            okType: "danger",
+            cancelText: "Không",
+            async onOk() {
+              dispatch(rejectedRegister({ id: selectedData[0] }));
+            },
+            onCancel() {},
+          });
+        }}
       >
         Từ chối
       </Button>
@@ -193,24 +237,28 @@ const RegisterTable = (props) => {
     </>
   );
 
+  const handleOpenDrawer = (id) => {
+    const data = dataTable.filter(item => item.id === id);
+    drawerRef.current?.open(data[0]);
+  }
+
   return (
     <>
       <DataTable
         column={columns}
-        name={"Thông tin người dùng đăng kí"}
+        name={t("title.register-info")}
         data={dataTable}
         loading={dataState.loadDataStatus === loadStatus.Loading}
         customButton={renderButton()}
         updateSelectedData={setSelectedData}
-
-        //   handleOpenDrawer={(id) => drawerRef.current?.open(id)}
+        handleOpenDrawer={handleOpenDrawer}
       />
       {/* <ModalControlData
         ref={modalUpdateRef}
         title= {getTitleTable()}
         submitFunction={(data) => handleSubmitEditUser(data)}
       /> */}
-      {/* <UserDetail ref={drawerRef} /> */}
+      <RegisterDetail ref={drawerRef} />
     </>
   );
 };

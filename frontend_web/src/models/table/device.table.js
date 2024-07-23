@@ -1,10 +1,11 @@
 import { createDevice, deleteDevice, getDevice, updateDevice, resetLoadDataStatus, resetCreateDataStatus, resetUpdateDataStatus, resetDeleteDataStatus, } from "../../redux/reducer/deviceSlice";
-
+import { useTranslation } from "react-i18next";
 class DeviceData {
     getColumnShow() {
+        // const { t } = useTranslation();
       const columns = [
         {
-            title: 'Tên thiết bị',
+            title: "Tên thiết bị",
             dataIndex: 'device_name',
             key: 'device_name',
             type: 'text',

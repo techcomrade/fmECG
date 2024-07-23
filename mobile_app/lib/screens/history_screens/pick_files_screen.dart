@@ -1,11 +1,13 @@
-import 'dart:io';
 
+import 'package:bluetooth_ecg/screens/history_screens/chart_result_python_screen.dart';
+import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class PickFiles extends StatefulWidget {
-  const PickFiles({super.key});
+  const PickFiles({super.key, required this.txtPath});
+  final String txtPath;
 
   @override
   State<PickFiles> createState() => _PickFilesState();
@@ -13,107 +15,97 @@ class PickFiles extends StatefulWidget {
 
 class _PickFilesState extends State<PickFiles> {
   static const platform = MethodChannel("com.example.method_channel/java");
-  List<String?> pickedFilesPath = [];
-  String pythonModulePath = "";
-  List<String?> txtFilePaths = [];
+  String? pythonModulePath;
+  String errorLog = "";
 
-  void chooseFilePaths() async {
-    final FilePickerResult? result =
-        await FilePicker.platform.pickFiles(allowMultiple: true);
-    final bool canAddPath = result != null && !result.paths.contains(null);
-    if (canAddPath) {
-      setState(() {
-        pickedFilesPath = result.paths;
-      });
-    }
+  @override
+  void initState() {
+    super.initState();
   }
 
   void choosePythonModulePath() async {
-    final FilePickerResult? result = await FilePicker.platform
-        .pickFiles();
-    final bool canAddPath =
-        result != null && !result.paths.contains(null) && result.isSinglePick && result.files.first.extension == "py";
+    final FilePickerResult? result = await FilePicker.platform.pickFiles();
+    final bool canAddPath = result != null &&
+        !result.paths.contains(null) &&
+        result.isSinglePick &&
+        result.files.first.extension == "py";
     if (canAddPath) {
-      print('sdgndjkd:${result.files.first.extension}');
       setState(() {
         pythonModulePath = result.paths.first!;
       });
     }
   }
 
-  void chooseTxtFilePaths() async {
-    final FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['txt', 'csv'],
-        allowMultiple: true);
-    final bool canAddPath = result != null && !result.paths.contains(null);
-    if (canAddPath) {
-      setState(() {
-        txtFilePaths = result.paths;
-      });
-    }
-  }
-
   void sendDataToNativePython() async {
-    final bool cannotSend = pythonModulePath == "" || txtFilePaths.contains(null) || txtFilePaths.length != 2;
+    final bool cannotSend = widget.txtPath == "";
     if (cannotSend) return;
-    // TODO: Show error in here
-    final Map pathContext = {
-      'python_path': pythonModulePath,
-      'pcg_path': txtFilePaths[0],
-      'ppg_path': txtFilePaths[1]
-    };
-    final Map? dataProcessed = await platform.invokeMethod('transfer_context_to_python', pathContext);
-    print('gnjgdf:$dataProcessed');
+
+    OverlayEntry overlayLoadingWidget = Utils.setOverlayLoadingWithHeavyTask();
+    try {
+      Overlay.of(context).insert(overlayLoadingWidget);
+      final Map pathContext = {
+        'python_path': pythonModulePath,
+        'txt_path': widget.txtPath
+      };
+      final Map? dataReceived = await platform.invokeMethod("transfer_context_to_python", pathContext);
+      if (dataReceived == null) {
+        overlayLoadingWidget.remove();
+        return Utils.showDialogWarningError(context, false, "Lỗi khi xử lý dữ liệu với Python");
+      }
+      overlayLoadingWidget.remove();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ChartsResultPythonScreen(data: dataReceived)));
+    } catch (e, t) {
+      overlayLoadingWidget.remove();
+      Utils.showDialogWarningError(context, false, "Lỗi khi xử lý dữ liệu với Python");
+      setState(() => errorLog = "$e $t");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final String txtPath = txtFilePaths.join(", ");
 
-    return Center(
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+      child: SingleChildScrollView(
         child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        InkWell(
-          onTap: choosePythonModulePath,
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: Colors.blue,
-            ),
-            child: Text("Get path Python"),
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text("$pythonModulePath"),
-        const SizedBox(height: 10),
-        InkWell(
-          onTap: chooseTxtFilePaths,
-          child: Container(
-              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("Nếu người dùng không chọn python từ file, default python file sẽ được chọn tự động", textAlign: TextAlign.center),
+          const SizedBox(height: 10),
+          InkWell(
+            onTap: choosePythonModulePath,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
                 color: Colors.blue,
               ),
-              child: Text("Get path txt file")),
-        ),
-        const SizedBox(height: 4),
-        Text("$txtPath"),
-        const SizedBox(height: 20,),
-        InkWell(
-          onTap: sendDataToNativePython,
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: Colors.blue,
+              child: const Text("Get Python file path"),
             ),
-            child: Text("Send to Python Native")
           ),
-        )
-      ],
-    ));
+          const SizedBox(height: 4),
+        
+          Text("Python file path: ${pythonModulePath ?? "default"}"),
+          const SizedBox(height: 10),
+          Text("Txt file path: ${widget.txtPath}"),
+          const SizedBox( height: 20,),
+          InkWell(
+            onTap: sendDataToNativePython,
+            child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: Colors.blue,
+                ),
+                child: const Text("Send to Python Native")),
+          ),
+          const SizedBox( height: 20,),
+          if (errorLog.isNotEmpty)
+          Text("ERROR: $errorLog")
+        ],
+            ),
+      ),
+    );
   }
 }

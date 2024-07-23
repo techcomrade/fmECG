@@ -28,7 +28,7 @@ class SocketChannel {
 
       _listenConnection();
       _joinTopicSocketChannel();
-      _startHeartbeat();   
+      _startHeartbeat();
     } catch (e, t) {
       print('connect socket error: $e $t');
     }

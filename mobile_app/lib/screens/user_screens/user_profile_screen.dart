@@ -1,4 +1,9 @@
+import 'package:bluetooth_ecg/features/authentication/bloc/authentication_bloc.dart';
+import 'package:bluetooth_ecg/features/authentication/bloc/authentication_event.dart';
+import 'package:bluetooth_ecg/models/user_model.dart';
+import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/color_constant.dart';
 
@@ -56,8 +61,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    // final User? user = Provider.of<UserProvider>(context, listen: true).user;
+    // if (user == null) return const SizedBox();
+    return Scaffold(
         appBar: AppBar(
           title: const Text("User Profile"),
           backgroundColor: ColorConstant.primary, // Màu sắc của AppBar
@@ -76,9 +82,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
                 ),
                 const SizedBox(height: 5),
-                const Text(
-                  'Viet Hoang',
-                  style: TextStyle(
+                Text(
+                  "Thai Dong",
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
@@ -109,12 +115,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 _buildListTile(title: 'My Doctors', icon: Icons.local_hospital, iconColor: Colors.red, onTap: () {}),
                 _buildListTile(title: 'EHR Files', icon: Icons.folder, iconColor: Colors.green, onTap: () {}),
                 _buildListTile(title: 'Wallet', icon: Icons.account_balance_wallet, iconColor: Colors.purple, onTap: () {}),
+                _buildListTile(title: 'Log out', icon: Icons.logout, iconColor: Colors.redAccent, onTap: () {
+                  context.read<AuthenticationBloc>().add(LogoutRequest());
+                }),
               ],
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 // Custom InfoCard widget with Title

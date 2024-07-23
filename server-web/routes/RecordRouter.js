@@ -9,7 +9,7 @@ const {
   commonMiddleware,
   roleGroup,
 } = require("../middlewares/CommonMiddleware");
-router.get("", commonMiddleware.validationToken, RecordController.getAll);
+router.get("", RecordController.getAll);
 router.post(
   "",
   // commonMiddleware.validationToken,

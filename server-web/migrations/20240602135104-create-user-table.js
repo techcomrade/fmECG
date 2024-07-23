@@ -35,7 +35,7 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
-        information: Sequelize.STRING,
+        information:  Sequelize.TEXT('long'),
         role: {
           type: Sequelize.INTEGER,
           allowNull: false,

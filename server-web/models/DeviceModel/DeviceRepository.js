@@ -25,7 +25,8 @@ class DeviceModel {
     });
   }
 
-  async add(device) {
+  async add(device, t) {
+    device.updated_at = Date.now();
     return await DeviceDTO.create({
       id: device.id,
       user_id: device.user_id,
@@ -34,7 +35,11 @@ class DeviceModel {
       device_type: device.device_type,
       start_date: device.start_date
 
-    });
+    },
+     t && {
+      transaction: t,
+     }
+  );
   }
 
   async deleteById(id, t) {
@@ -74,7 +79,7 @@ class DeviceModel {
     });
   }
 
-  async updateById(device, id) {
+  async updateById(device, id, t) {
     device.updated_at = Date.now();
     return await DeviceDTO.update(
       {
@@ -89,6 +94,9 @@ class DeviceModel {
         where: {
           id: id,
         },
+      },
+      t && {
+        transaction: t
       }
     );
   }

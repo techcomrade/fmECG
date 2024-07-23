@@ -21,6 +21,10 @@ const DeviceDetails = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
+    detail_type: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
     information: {
       type: Sequelize.STRING,
     },

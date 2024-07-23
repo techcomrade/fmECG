@@ -16,11 +16,10 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    socketChannel.on("new_message_conversation", (data, ref, joinRef) { 
+    socketChannel.on("new_message_conversation", (data, ref, joinRef) {
       print('dataaaa:$data');
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -76,8 +75,6 @@ class _ChatScreenState extends State<ChatScreen> {
               Expanded(
                 child: ListView.builder(
                     itemCount: ChatUsers.chatUsers.length,
-                    //shrinkWrap: true,
-
                     padding: const EdgeInsets.only(top: 16),
                     itemBuilder: (context, index) {
                       return ConversationList(
@@ -128,10 +125,10 @@ class _ConversationListState extends State<ConversationList> {
           isRead = true;
         });
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    ChatDetailScreen(indexSelect: widget.index)));
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+              ChatDetailScreen(indexSelect: widget.index)));
       },
       child: Container(
         padding:

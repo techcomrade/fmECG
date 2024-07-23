@@ -6,12 +6,14 @@ import { getStatistic, loadStatus } from "../../redux/reducer/statisticSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Echart from "../../components/chart/EChart";
 import LineChart from "../../components/chart/LineChart";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state.statistic);
   const [dropdownData, setDropData] = useState([]);
   const { Title } = Typography;
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(getStatistic(dataState));
@@ -86,7 +88,7 @@ const Home = () => {
   ];
   const count = [
     {
-      today: "Bác sĩ",
+      today: t("label.doctor"),
       title: "2",
       persent: "+20%",
       icon: profile,
@@ -94,20 +96,20 @@ const Home = () => {
     },
     
     {
-      today: "Bệnh nhân",
+      today: t("label.patient"),
       title: "7",
       persent: "+10%",
       icon: profile,
       bnb: "bnb2",
     },
     {
-      today: "Thiết bị",
+      today: t("label.device"),
       title: "3",
       persent: "",
       icon: heart,
       bnb: "redtext",
     },{
-      today: "Bản ghi",
+      today: t("label.record"),
       title: "5",
       persent: "+10%",
       icon: cart,
