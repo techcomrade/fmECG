@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_event.dart';
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_state.dart';
 import 'package:bluetooth_ecg/features/authentication/repository/authentication_repo.dart';
 import 'package:bluetooth_ecg/features/authentication/repository/shared_pref_repo.dart';
+import 'package:bluetooth_ecg/providers/user_provider.dart';
+import 'package:bluetooth_ecg/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc({required this.authRepository}) : super(AuthenticationInitial()) {
@@ -20,6 +25,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       }
       final Map dataUser = response["metadata"];
       SharedPreprerencesRepo.setDataUser(dataUser);
+      Provider.of<UserProvider>(Utils.globalContext!, listen: false).setDataUser(dataUser);
       emit(AuthenticationSuccess());
     } catch (e) {
       emit(AuthenticationFail());
@@ -30,32 +36,25 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     try {
       SharedPreprerencesRepo.removeDataUser();
       emit(AuthenticationFail());
-      // final Map? response = await authRepository.logoutUser();
-      // if (response == null) {
-      //   emit(AuthenticationFail());
-      //   return;
-      // }
-      // final bool isSuccess = response["success"] ?? false;
-      // if (isSuccess) {
-      //   print('gndfjgdf:$response');
-      //   SharedPreprerencesRepo.removeDataUser();
-      //   emit(AuthenticationSuccess());
-      // }
     } catch (e) {
       emit(AuthenticationFail());
     }
   }
   void _onCheckAutoLogin(CheckAutoLogin event, Emitter emit) async {
     try {
-      final bool hasLoggedIn = await SharedPreprerencesRepo.checkAutoLogin();
-      if (hasLoggedIn) {
-        print("heheheh:${ await SharedPreprerencesRepo.getDataUser()}");
-
-        emit(AuthenticationSuccess());
-      } else {
-        emit(AuthenticationInitial());
-      }
-    } catch (e) {
+      // server is down so skip login
+      emit(AuthenticationSuccess());
+      // final bool hasLoggedIn = await SharedPreprerencesRepo.checkAutoLogin();
+      // if (hasLoggedIn) {
+      //   final String dataLoginString = await SharedPreprerencesRepo.getDataUser();
+      //   final Map dataLoginDecoded = jsonDecode(dataLoginString);
+      //   Provider.of<UserProvider>(Utils.globalContext!, listen: false).setDataUser(dataLoginDecoded);
+      //   emit(AuthenticationSuccess());
+      // } else {
+      //   emit(AuthenticationInitial());
+      // }
+    } catch (e, t) {
+      print('dgndfgj:$e $t');
       emit(AuthenticationFail());
     }
   }

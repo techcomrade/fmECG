@@ -5,10 +5,11 @@ class User {
   final String fullName;
   final String email;
   final String? phoneNumber;
-  final DateTime? birth;
+  final int? birth;
   final String? avatarUrl;
-  final int? gender;
+  final Gender gender;
   final int role;
+  final String accessToken;
 
   User({
     required this.id,
@@ -18,22 +19,24 @@ class User {
     required this.email,
     required this.phoneNumber,
     this.birth,
-    this.gender,
+    this.gender = Gender.other,
     this.avatarUrl,
     required this.role,
+    required this.accessToken
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["user_id"],
+  factory User.fromJson(Map json) => User(
+    id: json["id"],
     accountId: json["account_id"],
     username: json["username"],
     fullName: json["username"],
-    email: json["email"],
+    email: json["email"] ?? "",
     phoneNumber: json["phone_number"],
-    birth: DateTime.tryParse(json["birth"]),
+    birth: json["birth"],
     avatarUrl: json["image"],
-    gender: json["gender"],
+    gender: _getGenderBasedOnInt(json["gender"]),
     role: json["role"],
+    accessToken: json["access_token"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -47,5 +50,18 @@ class User {
     "gender": gender,
     "avatar_url": avatarUrl,
     "role": role,
+    "access_token": accessToken
   };
+}
+
+enum Gender {
+  male, female, other
+}
+
+Gender _getGenderBasedOnInt(int? gender) {
+  switch (gender) {
+      case 1: return Gender.male;  
+      case 2: return Gender.female;  
+      default: return Gender.other;
+    }
 }
