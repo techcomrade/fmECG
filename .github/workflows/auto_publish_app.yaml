@@ -29,7 +29,7 @@ jobs:
 
       - name: Create Flutter secrets
         id: flutter_secrets
-        uses: timheuer/base64-to-file@v1.0.3
+        uses: timheuer/base64-to-file@v1.2
         with:
           fileName: secrets.dart
           fileDir: ./lib/certs/
