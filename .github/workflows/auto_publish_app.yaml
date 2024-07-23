@@ -1,4 +1,4 @@
-name: Auto build publish app to closed testing Play Console
+name: Auto build and publish app to Play Console
 on: workflow_dispatch
 
 permissions:
@@ -33,7 +33,7 @@ jobs:
         with:
           fileName: secrets.dart
           encodedString: ${{ secrets.FLUTTER_SECRETS }}
-      - name: Move to current directory
+      - name: Move secrets to current directory
         run: |
           mkdir lib/certs
           mv ${{ steps.flutter_secrets.outputs.filePath}} lib/certs/
