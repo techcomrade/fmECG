@@ -14,11 +14,6 @@ jobs:
     steps:
       - name: Checkout Github repo
         uses: actions/checkout@v4
-      - name: Test flow
-        run: |
-          cd lib
-          ls
-          exit 1
       - name: Handle Android keystore
         id: android_keystore
         uses: timheuer/base64-to-file@v1.2
@@ -40,6 +35,7 @@ jobs:
           encodedString: ${{ secrets.FLUTTER_SECRETS }}
       - name: Move to current directory
         run: |
+          mkdir lib/certs
           mv ${{ steps.flutter_secrets.outputs.filePath}} lib/certs/
           cd lib/certs
           ls
