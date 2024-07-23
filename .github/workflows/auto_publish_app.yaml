@@ -22,15 +22,14 @@ jobs:
           encodedString: ${{ secrets.SIGNING_KEY }}
       - name: Create key.properties
         run: |
-          touch android/key.properties
           echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
           echo "storePassword=${{ secrets.KEY_STORE_PASSWORD }}" >> android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
       - uses: actions/setup-java@v3
         with:
-          distribution: 'zulu'
-          java-version: "11.0"
+          distribution: 'corretto'
+          java-version: "17.0"
           cache: gradle
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
