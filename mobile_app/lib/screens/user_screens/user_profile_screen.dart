@@ -61,8 +61,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = Provider.of<UserProvider>(context, listen: true).user;
-    if (user == null) return const SizedBox();
+    // final User? user = Provider.of<UserProvider>(context, listen: true).user;
+    // if (user == null) return const SizedBox();
     return Scaffold(
         appBar: AppBar(
           title: const Text("User Profile"),
@@ -83,7 +83,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  user.fullName,
+                  "Thai Dong",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,

@@ -3,7 +3,7 @@
 build apk: 
 `
 flutter build apk --no-shrink --no-tree-shake-icons
-flutter build app bundle --no-tree-shake-icons
+flutter build appbundle --no-tree-shake-icons
 `
 
 **NOTE**

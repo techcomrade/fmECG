@@ -42,15 +42,17 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   }
   void _onCheckAutoLogin(CheckAutoLogin event, Emitter emit) async {
     try {
-      final bool hasLoggedIn = await SharedPreprerencesRepo.checkAutoLogin();
-      if (hasLoggedIn) {
-        final String dataLoginString = await SharedPreprerencesRepo.getDataUser();
-        final Map dataLoginDecoded = jsonDecode(dataLoginString);
-        Provider.of<UserProvider>(Utils.globalContext!, listen: false).setDataUser(dataLoginDecoded);
-        emit(AuthenticationSuccess());
-      } else {
-        emit(AuthenticationInitial());
-      }
+      // server is down so skip login
+      emit(AuthenticationSuccess());
+      // final bool hasLoggedIn = await SharedPreprerencesRepo.checkAutoLogin();
+      // if (hasLoggedIn) {
+      //   final String dataLoginString = await SharedPreprerencesRepo.getDataUser();
+      //   final Map dataLoginDecoded = jsonDecode(dataLoginString);
+      //   Provider.of<UserProvider>(Utils.globalContext!, listen: false).setDataUser(dataLoginDecoded);
+      //   emit(AuthenticationSuccess());
+      // } else {
+      //   emit(AuthenticationInitial());
+      // }
     } catch (e, t) {
       print('dgndfgj:$e $t');
       emit(AuthenticationFail());
