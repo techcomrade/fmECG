@@ -65,7 +65,7 @@ jobs:
       - name: Publish to Play Console
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJsonPlainText: ${{ steps.auth.outputs.credentials_file_path }}
+          serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
           packageName: vn.hust.electrospic
           releaseFiles: mobile_app/build/app/outputs/bundle/release/app-release.aab
           track: alpha
