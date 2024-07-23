@@ -19,6 +19,7 @@ jobs:
           encodedString: ${{ secrets.SIGNING_KEY }}
       - name: Create key.properties
         run: |
+          touch android/key.properties
           echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
           echo "storePassword=${{ secrets.KEY_STORE_PASSWORD }}" >> android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
