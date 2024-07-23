@@ -34,9 +34,10 @@ jobs:
           fileName: secrets.dart
           encodedString: ${{ secrets.FLUTTER_SECRETS }}
       - name: Move to current directory
-        run:
-          mv ${{ steps.flutter_secrets.outputs.filePath}} /lib/certs/
-          echo ${{ steps.flutter_secrets.outputs.filePath}}
+        run: |
+          mv ${{ steps.flutter_secrets.outputs.filePath}} lib/certs/
+          cd lib/certs
+          ls
 
       - uses: actions/setup-java@v3
         with:
