@@ -37,8 +37,6 @@ jobs:
         run: |
           mkdir lib/certs
           mv ${{ steps.flutter_secrets.outputs.filePath}} lib/certs/
-          cd lib/certs
-          ls
 
       - uses: actions/setup-java@v3
         with:
@@ -69,6 +67,6 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{ steps.auth.outputs.credentials_file_path }}
           packageName: vn.hust.electrospic
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: alpha
           status: completed
