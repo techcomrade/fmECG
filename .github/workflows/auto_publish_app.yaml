@@ -41,10 +41,8 @@ jobs:
       - name: Build release
         run: flutter build appbundle --no-tree-shake-icons
 
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - id: auth
+      - name: Authen
+        id: auth
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_ID_PROVIDER }}
