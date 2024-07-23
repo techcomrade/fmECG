@@ -32,10 +32,10 @@ jobs:
         uses: timheuer/base64-to-file@v1.2
         with:
           fileName: secrets.dart
-          fileDir: /lib/certs/
           encodedString: ${{ secrets.FLUTTER_SECRETS }}
-      - name: hihihi
+      - name: Move to current directory
         run:
+          mv ${{ steps.flutter_secrets.outputs.filePath}} /lib/certs/
           echo ${{ steps.flutter_secrets.outputs.filePath}}
 
       - uses: actions/setup-java@v3
