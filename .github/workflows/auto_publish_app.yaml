@@ -28,7 +28,7 @@ jobs:
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
 
       - name: Create Flutter secrets
-        id: android_keystore
+        id: flutter_secrets
         uses: timheuer/base64-to-file@v1.0.3
         with:
           fileName: secrets.dart
