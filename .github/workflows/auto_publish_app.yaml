@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Handle Android keystore
         id: android_keystore
-        uses: timheuer/base64-to-file@v1.0.3
+        uses: timheuer/base64-to-file@v1.2
         with:
           fileName: upload-keystore.jks
           encodedString: ${{ secrets.SIGNING_KEY }}
@@ -32,8 +32,11 @@ jobs:
         uses: timheuer/base64-to-file@v1.2
         with:
           fileName: secrets.dart
-          fileDir: ./lib/certs/
+          fileDir: /lib/certs/
           encodedString: ${{ secrets.FLUTTER_SECRETS }}
+      - name: hihihi
+        run:
+          echo ${{ steps.flutter_secrets.outputs.filePath}}
 
       - uses: actions/setup-java@v3
         with:
