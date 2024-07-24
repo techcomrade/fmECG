@@ -23,7 +23,7 @@ class RegisterController {
       });
     }
   }
-  
+
   async createRegister(req, res, next) {
     console.log(`[P]:::Create user: `, req.body);
     return res.status(200).json({
@@ -33,7 +33,7 @@ class RegisterController {
   }
 
   async uploadImage(req, res, next) {
-    console.log(`[U]:::Upload image register`, req.file);
+    console.log(`[U]:::Upload image register:`, req.file);
     const buffer = req.file.buffer;
     const fileName = req.file.originalName;
     const link = await FileService.uploadDrive(buffer, fileName);
@@ -41,12 +41,25 @@ class RegisterController {
       return res.status(500).json({
         message: "Upload image failed",
       });
-    } else req.body.image = link;
-    next();
+    }
+    JSON.stringify(req.body);
+    const result = await RegisterService.uploadImageByEmail(
+      req.body.email,
+      link
+    );
+    if (result) {
+      return res.status(200).json({
+        message: "Upload image successfully",
+      });
+    } else {
+      return res.status(404).json({
+        message: "Error when upload image!",
+      });
+    }
   }
 
   async updateRegister(req, res, next) {
-    console.log(`[U]:::Uplaod image update`, req.body);
+    console.log(`[U]:::Update register:`, req.body);
     const result = await RegisterService.updateById(req.body);
     if (result) {
       return res.status(200).json({
