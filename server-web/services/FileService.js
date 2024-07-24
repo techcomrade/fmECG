@@ -1,10 +1,12 @@
-require('dotenv').config();
+require("dotenv").config();
 const multer = require("multer");
 const maxSize = 4 * 1024 * 1024;
 const fs = require("fs");
 const credentials = require("../certs/google_credentials.json");
 const { google } = require("googleapis");
+
 const streamifier = require('streamifier');
+
 
 class FileUploader {
   constructor() {
@@ -46,9 +48,9 @@ class FileUploader {
         file.mimetype === "text/plain" ||
         file.mimetype === "audio/wav"
       ) {
-            cb(null, true);
+        cb(null, true);
       } else {
-            req.uploadFileError = true;
+        req.uploadFileError = true;
         cb(null, false);
       }
     };
@@ -105,7 +107,7 @@ class FileUploader {
 
   async uploadDrive(buffer, fileName) {
     const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
-    
+
     const auth = new google.auth.GoogleAuth({
       credentials: credentials,
       scopes: SCOPES,
@@ -116,7 +118,9 @@ class FileUploader {
     };
     try {
       const media = {
+
         mimeType: 'image/jpeg' || 'image/png',
+
         body: streamifier.createReadStream(buffer),
       };
       const file = await drive.files.create({

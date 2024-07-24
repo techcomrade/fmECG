@@ -1,0 +1,74 @@
+name: Auto build publish app to closed testing Play Console
+on: workflow_dispatch
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./mobile_app
+    steps:
+      - name: Checkout Github repo
+        uses: actions/checkout@v4
+      - name: Handle Android keystore
+        id: android_keystore
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: upload-keystore.jks
+          encodedString: ${{ secrets.SIGNING_KEY }}
+      - name: Create key.properties
+        run: |
+          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
+          echo "storePassword=${{ secrets.KEY_STORE_PASSWORD }}" >> android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+
+      - name: Create Flutter secrets
+        id: flutter_secrets
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: secrets.dart
+          encodedString: ${{ secrets.FLUTTER_SECRETS }}
+      - name: Move to current directory
+        run: |
+          mkdir lib/certs
+          mv ${{ steps.flutter_secrets.outputs.filePath}} lib/certs/
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+          cache: gradle
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.16.9
+          cache: true
+      - run: flutter --version
+
+      - name: Pub get
+        run: flutter pub get
+      - name: Build release
+        run: flutter build appbundle --no-tree-shake-icons
+
+      # - name: Authen
+      #   id: auth
+      #   uses: google-github-actions/auth@v2
+      #   with:
+      #     workload_identity_provider: ${{ secrets.WORKLOAD_ID_PROVIDER }}
+      #     service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
+      - name: Publish to Play Console
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_SERVICES_ACCOUNT_JSON }}
+          # serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
+          # serviceAccountJsonT: ${{ steps.auth.outputs.credentials_file_path }}
+          packageName: vn.hust.electrospic
+          releaseFiles: mobile_app/build/app/outputs/bundle/release/app-release.aab
+          track: alpha
+          status: completed
