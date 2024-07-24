@@ -609,7 +609,7 @@ select {
       };
 
       //sign up
-      var signupUrl ="http://127.0.0.1:3000/api/auth/register";
+      var signupUrl = "http://127.0.0.1:3000/api/auth/register";
       var uploadImg = "http://127.0.0.1:3000/api/register/upload-img"
       const signupFunction = async () => {
         const username = document.querySelector("#sign-up-username").value;
@@ -626,55 +626,70 @@ select {
         const gender = document.querySelector("#sign-up-gender").value;
         const information = document.querySelector("#sign-up-info").value;
 
-        const file = document.querySelector("#sign-up-img").files[0];
-        const image = new FormData();
-        image.append('file', file);
+        const image = document.querySelector("#sign-up-img").files[0];
+        let upload = new FormData();
+        upload.append('file', image);
+        upload.append('email', email);
         if(confirmPassword && confirmPassword === password) {
           try {
-            // const signupResult = await fetch(signupUrl, {
-            //   method: "POST",
-            //   mode: "cors", 
-            //   cache: "no-cache", 
-            //   credentials: "same-origin", 
-            //   headers: {
-            //     "Content-Type": "application/json",
-            //   },
-            //   redirect: "follow",
-            //   referrerPolicy: "no-referrer",
-            //   body: JSON.stringify({
-            //     username: username,
-            //     email: email,
-            //     password: password,
-            //     role: role,
-            //     gender: gender,
-            //     birth: birth,
-            //     phone_number: phone_number,
-            //     image: "",
-            //     status: 1,
-            //     information: information,
-            //   }),
-            // });
-
-            const uploadResult = await fetch(uploadImg, {
+            const signupResult = await fetch(signupUrl, {
               method: "POST",
               mode: "cors", 
               cache: "no-cache", 
               credentials: "same-origin", 
+              headers: {
+                "Content-Type": "application/json",
+              },
               redirect: "follow",
               referrerPolicy: "no-referrer",
-              body: image
+              body: JSON.stringify({
+                username: username,
+                email: email,
+                password: password,
+                role: role,
+                gender: gender,
+                birth: birth,
+                phone_number: phone_number,
+                image: "",
+                status: 1,
+                information: information,
+              }),
             });
-            if ( uploadResult.ok) {
-              window.alert("Sign up successful!");
-              window.location.reload();
+            if (signupResult.ok) {
+              console.log(image)
+              if (image == undefined) {
+                window.alert("Sign up successful!");
+                window.location.reload();
+              }
+              if (image != undefined && (image.type == 'image/jpeg' || image.type == 'image/png')) {
+                const uploadResult = await fetch(uploadImg, {
+                  method: "POST",
+                  mode: "cors",
+                  cache: "no-cache",
+                  credentials: "same-origin",
+                  redirect: "follow",
+                  referrerPolicy: "no-referrer",
+                  body: upload,
+                });
+                if (uploadResult.ok) {
+                  window.alert("Sign up successful!");
+                  window.location.reload();
+                } else {
+                  let data = await signupResult.json();
+                  console.log(data.message);
+                  window.alert(data.message);
+                }
+              }
+              if (image != undefined && image.type != 'image/jpeg' && image.type != 'image/png') {
+                window.alert("Wrong image format, please try again");
+              }
             } else {
-              let data = await uploadResult.json();
+              let data = await signupResult.json();
               console.log(data.message);
               window.alert(data.message);
             }       
           } catch(err) {
-            let data = await uploadResult.json();
-            console.log(data.message);
+            console.log(err);
             window.alert("Error when sign up!");
           }
         }
