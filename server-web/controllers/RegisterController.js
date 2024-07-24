@@ -33,7 +33,7 @@ class RegisterController {
   }
 
   async uploadImage(req, res, next) {
-    console.log(`[U]:::Uplaod image register`, req.file);
+    console.log(`[U]:::Upload image register`, req.file);
     const buffer = req.file.buffer;
     const fileName = req.file.originalName;
     const link = await FileService.uploadDrive(buffer, fileName);

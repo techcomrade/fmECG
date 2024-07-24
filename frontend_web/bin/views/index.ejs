@@ -430,6 +430,11 @@ select {
                 <label for="info-label">Thông tin người dùng</label>
                 <input type="text" placeholder="Thông tin người dùng" id="sign-up-info" class="sign-up-input" required />
               </div>
+              <div class="input-group">
+                <i class="bx bx-img"></i>
+                <label for="img-label">Chọn ảnh đại diện </label>
+                <input type="file" id="sign-up-img" class="sign-up-input" name="file" required />
+              </div>
               <button onclick="signupFunction()" >Đăng ký</button>
               <p class="align-center">
                 <span> Bạn đã có tài khoản? </span>
@@ -605,6 +610,7 @@ select {
 
       //sign up
       var signupUrl ="http://127.0.0.1:3000/api/auth/register";
+      var uploadImg = "http://127.0.0.1:3000/api/register/upload-img"
       const signupFunction = async () => {
         const username = document.querySelector("#sign-up-username").value;
         const email = document.querySelector("#sign-up-email").value;
@@ -619,41 +625,55 @@ select {
 
         const gender = document.querySelector("#sign-up-gender").value;
         const information = document.querySelector("#sign-up-info").value;
+
+        const file = document.querySelector("#sign-up-img").files[0];
+        const image = new FormData();
+        image.append('file', file);
         if(confirmPassword && confirmPassword === password) {
           try {
-            const signupResult = await fetch(signupUrl, {
+            // const signupResult = await fetch(signupUrl, {
+            //   method: "POST",
+            //   mode: "cors", 
+            //   cache: "no-cache", 
+            //   credentials: "same-origin", 
+            //   headers: {
+            //     "Content-Type": "application/json",
+            //   },
+            //   redirect: "follow",
+            //   referrerPolicy: "no-referrer",
+            //   body: JSON.stringify({
+            //     username: username,
+            //     email: email,
+            //     password: password,
+            //     role: role,
+            //     gender: gender,
+            //     birth: birth,
+            //     phone_number: phone_number,
+            //     image: "",
+            //     status: 1,
+            //     information: information,
+            //   }),
+            // });
+
+            const uploadResult = await fetch(uploadImg, {
               method: "POST",
               mode: "cors", 
               cache: "no-cache", 
               credentials: "same-origin", 
-              headers: {
-                "Content-Type": "application/json",
-              },
               redirect: "follow",
               referrerPolicy: "no-referrer",
-              body: JSON.stringify({
-                username: username,
-                email: email,
-                password: password,
-                role: role,
-                gender: gender,
-                birth: birth,
-                phone_number: phone_number,
-                image: "",
-                status: 1,
-                information: information,
-              }),
+              body: image
             });
-            if (signupResult.ok) {
+            if ( uploadResult.ok) {
               window.alert("Sign up successful!");
               window.location.reload();
             } else {
-              let data = await signupResult.json();
+              let data = await uploadResult.json();
               console.log(data.message);
               window.alert(data.message);
             }       
           } catch(err) {
-            let data = await signupResult.json();
+            let data = await uploadResult.json();
             console.log(data.message);
             window.alert("Error when sign up!");
           }
