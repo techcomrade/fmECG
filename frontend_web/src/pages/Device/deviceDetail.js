@@ -21,7 +21,7 @@ const DeviceDetailComponent = (props, ref) => {
   const handleConnectionData = (data) => {
     if (data) {
       return data.map((item, index) => {
-        return { ...item, delay: index % 2 == 0 ? "2ms" : "1ms" };
+        return { ...item, delay: index % 2 === 0 ? "2ms" : "1ms" };
       });
     }
   };
@@ -61,9 +61,9 @@ const DeviceDetailComponent = (props, ref) => {
   const labelsInfo = {
     device_name: t("column.device-name"),
     device_type: t("column.device-type"),
-    frequency: t("label.frequency"),
-    storage: t("label.storage"),
-    connection: t("label.connection"),
+    frequency: t("column.frequency"),
+    storage: t("column.storage"),
+    connection: t("column.connection"),
     recordCount: t("label.record-count"),
     status: t("column.status"),
     start_date: t("column.date-started")
@@ -99,7 +99,7 @@ const DeviceDetailComponent = (props, ref) => {
       key: "value",
     },
     {
-      title: t("label.storage"),
+      title: t("column.storage"),
       dataIndex: "detail_name",
       key: "detail_name",
     },
@@ -111,7 +111,7 @@ const DeviceDetailComponent = (props, ref) => {
       key: "value",
     },
     {
-      title: t("label.connection"),
+      title: t("column.connection"),
       dataIndex: "detail_name",
       key: "detail_name",
     },

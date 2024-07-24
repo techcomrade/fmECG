@@ -137,6 +137,7 @@ const deviceSlice = createSlice({
       state.loadDeleteDataStatus = loadStatus.None;
     },
     resetDeviceDataStatus: (state, action) => {
+      state.deviceData = [];
       state.loadDeviceDataStatus = loadStatus.None;
     },
   },

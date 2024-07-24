@@ -3,6 +3,7 @@ import { Button, Space, Modal, Col, Form, DatePicker, Input, Select } from "antd
 import { CloseOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { checkDateTypeKey, checkListTypeKey } from "../../utils/arrayUtils";
+import { useTranslation } from "react-i18next";
 const { RangePicker } = DatePicker;
 
 const ModalComponent = (props, ref) => {
@@ -11,6 +12,7 @@ const ModalComponent = (props, ref) => {
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(props.isOpen);
   const [column, setColum] = useState([]);
+  const { t } = useTranslation();
 
   const handleSubmit = async (values) => {
     const payload = {
@@ -149,7 +151,7 @@ const ModalComponent = (props, ref) => {
                           <Space key={subField.key}>
                             {column?.listLabel?.map(label => (
                               <Form.Item noStyle name={[subField.name, label]} key={[subField.name, label]}>
-                                <Input placeholder={label} />
+                                <Input placeholder={t("label." + column.dataIndex + "." +  label)}/>
                               </Form.Item>
                             ))}
                             {subFields.length > 1 ? (
