@@ -4,7 +4,9 @@ const maxSize = 4 * 1024 * 1024;
 const fs = require("fs");
 const credentials = require("../certs/google_credentials.json");
 const { google } = require("googleapis");
-const streamifier = require("streamifier");
+
+const streamifier = require('streamifier');
+
 
 class FileUploader {
   constructor() {
@@ -116,7 +118,9 @@ class FileUploader {
     };
     try {
       const media = {
-        mimeType: "image/jpeg" || "image/png", 
+
+        mimeType: 'image/jpeg' || 'image/png',
+
         body: streamifier.createReadStream(buffer),
       };
       const file = await drive.files.create({
