@@ -61,19 +61,23 @@ jobs:
       - name: Build release
         run: flutter build appbundle --no-tree-shake-icons
 
+      - name: Test cache folder
+        run: |
+          cd $HOME/.cache/chaquopy
+          ls -a
       # - name: Authen
       #   id: auth
       #   uses: google-github-actions/auth@v2
       #   with:
       #     workload_identity_provider: ${{ secrets.WORKLOAD_ID_PROVIDER }}
       #     service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
-      - name: Publish to Play Console
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_SERVICES_ACCOUNT_JSON }}
-          # serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
-          # serviceAccountJsonT: ${{ steps.auth.outputs.credentials_file_path }}
-          packageName: vn.hust.electrospic
-          releaseFiles: mobile_app/build/app/outputs/bundle/release/app-release.aab
-          track: alpha
-          status: completed
+      # - name: Publish to Play Console
+      #   uses: r0adkll/upload-google-play@v1
+      #   with:
+      #     serviceAccountJsonPlainText: ${{ secrets.GOOGLE_SERVICES_ACCOUNT_JSON }}
+      #     # serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
+      #     # serviceAccountJsonT: ${{ steps.auth.outputs.credentials_file_path }}
+      #     packageName: vn.hust.electrospic
+      #     releaseFiles: mobile_app/build/app/outputs/bundle/release/app-release.aab
+      #     track: alpha
+      #     status: completed
