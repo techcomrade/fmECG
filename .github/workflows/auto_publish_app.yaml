@@ -1,4 +1,4 @@
-name: Auto build publish app to closed testing Play Console
+name: Auto build and publish app to Play Console
 on: workflow_dispatch
 
 permissions:
