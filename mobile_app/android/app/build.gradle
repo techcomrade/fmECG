@@ -58,12 +58,8 @@ android {
         }
         python {
             pip {
-                install 'numpy'
-                install 'pandas'
-                install 'scipy'
-                install 'heartpy'
+                install("-r", "requirements.txt")
             }
-
         }
     }
 
