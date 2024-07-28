@@ -97,7 +97,8 @@ export const getDeviceByDoctorId = createAsyncThunk(
     }
   }
 );
-export const getDevicesById = createAsyncThunk(
+
+export const getDeviceByUserId = createAsyncThunk(
   "/devices/id",
   async (params, { rejectWithValue }) => {
     try {
@@ -137,7 +138,7 @@ const deviceSlice = createSlice({
       state.loadDeleteDataStatus = loadStatus.None;
     },
     resetDeviceDataStatus: (state, action) => {
-      state.deviceData = [];
+      state.deviceData = {};
       state.loadDeviceDataStatus = loadStatus.None;
     },
   },
@@ -165,14 +166,14 @@ const deviceSlice = createSlice({
         state.data = [];
         state.loadDataStatus = loadStatus.Failed;
       })
-      .addCase(getDevicesById.pending, (state, action) => {
+      .addCase(getDeviceByUserId.pending, (state, action) => {
         state.loadDataStatus = loadStatus.Loading;
       })
-      .addCase(getDevicesById.fulfilled, (state, action) => {
+      .addCase(getDeviceByUserId.fulfilled, (state, action) => {
         state.data = action.payload;
         state.loadDataStatus = loadStatus.Success;
       })
-      .addCase(getDevicesById.rejected, (state, action) => {
+      .addCase(getDeviceByUserId.rejected, (state, action) => {
         state.data = [];
         state.loadDataStatus = loadStatus.Failed;
       })

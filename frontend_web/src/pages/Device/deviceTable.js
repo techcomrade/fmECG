@@ -7,7 +7,7 @@ import {
   getDevice,
   getDeviceByDoctorId,
   getDeviceById,
-  getDevicesById,
+  getDeviceByUserId,
   loadStatus,
   resetCreateDataStatus,
   resetDeleteDataStatus,
@@ -185,7 +185,7 @@ const DeviceTable = () => {
     if (context.role === userRole.doctor) {
       dispatch(getDeviceByDoctorId(context.user_id));
     } else if (context.role === userRole.patient) {
-      dispatch(getDevicesById(context.user_id));
+      dispatch(getDeviceByUserId(context.user_id));
     } else {
       dispatch(getDevice());
     }
@@ -204,14 +204,6 @@ const DeviceTable = () => {
       setData(data);
     }
   }, [dataState.loadDataStatus]);
-
-  useEffect(() => {
-    if (dataState.loadDeviceDataStatus === loadStatus.Success) {
-      const rawData = dataState.deviceData.metadata;
-      setDeviceData(rawData);
-      dispatch(resetDeviceDataStatus());
-    }
-  }, [dataState.loadDeviceDataStatus]);
 
   useEffect(() => {
     if (dataState.loadUpdateDataStatus === loadStatus.Success) {
@@ -241,14 +233,15 @@ const DeviceTable = () => {
     dispatch(deleteDevice( id ));
   };
 
-  const handleEditFunction = () => {
-    dispatch(getDeviceById(selectedData[0]));
-    const dataModal = handleData(deviceData, "form");
+  const handleEditFunction = async () => {
+    const data = await httpGetData(`/device/id/${selectedData[0]}`);
+    console.log(data);
+    const dataModal = handleData(data.metadata, "form");
     modalUpdateRef.current?.open(dataModal, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    const { doctor_id, frequency, ...payload } = { ...data };
+    const { recordCount, ...payload } = { ...data };
     return dispatch(updateDevice(payload));
   };
 

@@ -33,7 +33,10 @@
         "record-type": "Loại Bản Ghi",
         "record-name": "Tên Bản Ghi",
         "patient-name": "Tên Bệnh Nhân",
-        "doctor-name": "Tên Bác Sĩ"
+        "doctor-name": "Tên Bác Sĩ",
+        "storage": "Lưu trữ thiết bị",
+        "frequency": "Tần số thiết bị",
+        "connection": "Phương thức kết nối"
     },
     "button": {
         "delete": "Xóa",
@@ -75,15 +78,27 @@
         "sampling-frequency": "Tần số lấy mẫu (Hz)",
         "sensor": "Cảm biến",
         "capacity": "Dung lượng",
-        "frequency":"Tần số",
         "delay": "Độ trễ",
         "note": "Ghi chú",
-        "storage": "Lưu trữ dữ liệu",
-        "connection": "Phương thức kết nối",
         "record-count": "Số lượng bản ghi",
         "doctor": "Bác sĩ",
         "patient": "Bệnh nhân",
         "device": "Thiết bị",
-        "record": "Bản ghi"
+        "record": "Bản ghi",
+        "storage": {
+            "detail_name": "Lưu trữ trong",
+            "value": "Dung lượng",
+            "information": "Thông tin"
+        },
+        "connection": {
+            "detail_name": "Phương thức",
+            "value": "Tần số",
+            "information": "Ghi chú"
+        },
+        "frequency": {
+            "detail_name": "Cảm biến",
+            "value": "Tần số lấy mẫu",
+            "information": "Thông tin"
+        }
     }
 }
