@@ -48,6 +48,7 @@ class DeviceDetailsModel {
       device_id: DeviceDetails.device_id,
       detail_name: DeviceDetails.detail_name,
       information: DeviceDetails.information ?? "",
+      status: DeviceDetails.status ?? "0",
       value: DeviceDetails.value,
       detail_type: DeviceDetails.detail_type,
       created_at: DeviceDetails.created_at,
@@ -103,6 +104,7 @@ class DeviceDetailsModel {
         detail_name: deviceFreq.detail_name,
         information: deviceFreq.information,
         value: deviceFreq.value,
+        status: deviceFreq.status,
         updated_at: deviceFreq.updated_at,
       },
       {
