@@ -114,7 +114,6 @@ export const convertStatusToString = (status) => {
 };
 
 export const convertDeviceStatusToString = (status) => {
-  console.log(status);
   switch (status) {
     case 0:
       return "Hoạt động";
