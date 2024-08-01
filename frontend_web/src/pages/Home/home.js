@@ -14,6 +14,8 @@ const Home = () => {
   const [dropdownData, setDropData] = useState([]);
   const { Title } = Typography;
   const { t } = useTranslation();
+  const [count, setCount] = useState([]);
+
 
   useEffect(() => {
     dispatch(getStatistic(dataState));
@@ -24,6 +26,54 @@ const Home = () => {
       setDropData(dataState.data);
     }
   }, [dataState.loadDataStatus]);
+
+  // console.log(dataState.data.countNewRecordInMonth);
+
+  //Get data
+  // useEffect(() => {
+  //   if (dataState.loadDataStatus === loadStatus.Success){
+  //     const rawData = dataState.data;
+  //   }
+  // })
+
+  useEffect(() => {
+    if (dataState.loadDataStatus === loadStatus.Success) {
+      setDropData(dataState.data);
+  
+      const updatedCount = [
+        {
+          today: t("label.doctor"),
+          title: dataState.data.doctors,
+          persent: "+20%",
+          icon: profile,
+          bnb: "bnb2",
+        },
+        {
+          today: t("label.patient"),
+          title: dataState.data.patients,
+          persent: "+10%",
+          icon: profile,
+          bnb: "bnb2",
+        },
+        {
+          today: t("label.device"),
+          title: dataState.data.device_count,
+          persent: "",
+          icon: heart,
+          bnb: "redtext",
+        },
+        {
+          today: t("label.record"),
+          title: dataState.data.record_count,
+          persent: "+10%",
+          icon: cart,
+          bnb: "bnb2",
+        },
+      ];
+      setCount(updatedCount);
+    }
+  }, [dataState.loadDataStatus, dataState.data, t]);
+  
 
   const profile = [
     <svg
@@ -86,36 +136,35 @@ const Home = () => {
       ></path>
     </svg>,
   ];
-  const count = [
-    {
-      today: t("label.doctor"),
-      title: "2",
-      persent: "+20%",
-      icon: profile,
-      bnb: "bnb2",
-    },
+  //   {
+  //     today: t("label.doctor"),
+  //     title: "2",
+  //     persent: "+20%",
+  //     icon: profile,
+  //     bnb: "bnb2",
+  //   },
     
-    {
-      today: t("label.patient"),
-      title: "7",
-      persent: "+10%",
-      icon: profile,
-      bnb: "bnb2",
-    },
-    {
-      today: t("label.device"),
-      title: "3",
-      persent: "",
-      icon: heart,
-      bnb: "redtext",
-    },{
-      today: t("label.record"),
-      title: "5",
-      persent: "+10%",
-      icon: cart,
-      bnb: "bnb2",
-    },
-  ];
+  //   {
+  //     today: t("label.patient"),
+  //     title: "7",
+  //     persent: "+10%",
+  //     icon: profile,
+  //     bnb: "bnb2",
+  //   },
+  //   {
+  //     today: t("label.device"),
+  //     title: "3",
+  //     persent: "",
+  //     icon: heart,
+  //     bnb: "redtext",
+  //   },{
+  //     today: t("label.record"),
+  //     title: "5",
+  //     persent: "+10%",
+  //     icon: cart,
+  //     bnb: "bnb2",
+  //   },
+  // ];
 
   return (
     <>

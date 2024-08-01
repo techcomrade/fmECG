@@ -139,6 +139,13 @@ class RecordRepository {
     return await RecordDTO.count();
   }
 
+  async countNewRecordInMonth(){
+    const [result, metadata] = await sequelize.query(
+      "SELECT EXTRACT(MONTH FROM FROM_UNIXTIME(start_time / 1000)) AS month, COUNT(*) AS record_count FROM records GROUP BY month ORDER BY month"
+    )
+    return result;
+  }
+
   async getRecordByDoctorId(doctor_id) {
     return await sequelize.query(
       "SELECT re.*, de.device_name, u.username FROM fmecg.records as re LEFT JOIN fmecg.patient_doctor_assignment pda ON re.user_id = pda.patient_id LEFT JOIN fmecg.devices as de ON re.user_id = de.user_id LEFT JOIN fmecg.users AS u ON u.id = re.user_id  WHERE pda.doctor_id = :doctor",
