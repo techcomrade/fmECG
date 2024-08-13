@@ -1,11 +1,13 @@
 const TokenDTO = require("./TokenDTO");
+const Redis = require("ioredis");
+const redis = new Redis(6381); 
 
 class TokenRepository {
   async getAllData() {
     return await TokenDTO.findAll();
   }
   async add(token) {
-    return await TokenDTO.create({
+    await TokenDTO.create({
       id: token.id,
       account_id: token.account_id,
       access_token: token.access_token,
@@ -13,6 +15,10 @@ class TokenRepository {
       created_at: token.created_at,
       updated_at: Number(new Date())
     });
+
+    await redis.set(`refresh_token:${token.account_id}`, token.refresh_token);
+
+    return true;
   }
   async deleteByAccountId(id) {
     return await TokenDTO.destroy({
