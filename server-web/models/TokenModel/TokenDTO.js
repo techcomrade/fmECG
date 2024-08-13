@@ -13,7 +13,7 @@ const Token = sequelize.define("tokens", {
     type: Sequelize.STRING,
     allowNull: false,
     references: {
-      model: Account,
+      model: Account, 
       key: "id",
     },
   },

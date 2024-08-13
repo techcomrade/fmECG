@@ -1,39 +1,94 @@
-import ReactApexChart from "react-apexcharts";
-import { Typography } from "antd";
-import { MinusOutlined } from "@ant-design/icons";
-import lineChart from "./configs/lineChart";
-import "./chart.scss";
-import { useTranslation } from "react-i18next";
+// LineChart.js
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getStatistic, loadStatus } from '../../redux/reducer/statisticSlice';
+import ReactApexChart from 'react-apexcharts';
+import { Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 function LineChart() {
-  const { Title, Paragraph } = Typography;
-  const { t, i18n } = useTranslation();
+  const dispatch = useDispatch();
+  const { data, loadDataStatus } = useSelector((state) => state.statistic);
+  const { Title } = Typography;
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    dispatch(getStatistic());
+  }, [dispatch]);
+
+  const lineChart = {
+    series: [
+      {
+        name: 'Record Count',
+        data: data.countNewRecordInMonth?.map((record) => record.record_count) || [],
+      },
+    ],
+    options: {
+      chart: {
+        width: '100%',
+        height: 350,
+        type: 'area',
+        toolbar: {
+          show: false,
+        },
+      },
+      legend: {
+        show: false,
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: 'smooth',
+      },
+      yaxis: {
+        labels: {
+          style: {
+            fontSize: '14px',
+            fontWeight: 600,
+            colors: ['#8c8c8c'],
+          },
+        },
+      },
+      xaxis: {
+        labels: {
+          style: {
+            fontSize: '14px',
+            fontWeight: 600,
+            colors: ['#8c8c8c'],
+          },
+        },
+        categories: data.countNewRecordInMonth?.map((record) => `Month ${record.month}`) || [],
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val;
+          },
+        },
+      },
+    },
+  };
 
   return (
     <>
       <div className="linechart">
         <div>
-          <Title level={5}>{t("homepage.number-of-new-recordings")}</Title>
-          {/* <Paragraph className="lastweek">
-            than last week <span className="bnb2">+20%</span>
-          </Paragraph> */}
+          <Title level={5}>{t('homepage.number-of-new-recordings')}</Title>
         </div>
-        {/* <div className="sales">
-          <ul>
-            <li>{<MinusOutlined />} Traffic</li>
-            <li>{<MinusOutlined />} Sales</li>
-          </ul>
-        </div> */}
       </div>
-
-      <ReactApexChart
-        className="full-width"
-        options={lineChart.options}
-        series={lineChart.series}
-        type="area"
-        height={350}
-        width={"600px"}
-      />
+      {loadDataStatus === loadStatus.Loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ReactApexChart
+          className="full-width"
+          options={lineChart.options}
+          series={lineChart.series}
+          type="area"
+          height={350}
+          width={'600px'}
+        />
+      )}
     </>
   );
 }
