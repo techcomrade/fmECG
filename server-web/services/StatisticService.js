@@ -8,11 +8,13 @@ class StatisticService extends CommonService {
         const device = await DeviceRepository.count();
         const user = await UserRepository.count();
         const record = await RecordRepository.count();
+        const countNewRecordInMonth = await RecordRepository.countNewRecordInMonth();
 
         return {
             device_count: device,
             user_count: user,
             record_count: record,
+            countNewRecordInMonth: countNewRecordInMonth
         }
     }
 };

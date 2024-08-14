@@ -54,6 +54,8 @@ class AuthenService extends CommonService {
       return false;
     }
   }
+
+  
   async checkEmail(email) {
     const emails = await AccountRepository.getAccountByEmail(email);
     return emails === null;

@@ -2,7 +2,7 @@ const lineChart = {
   series: [
     {
       name: "Websites",
-      data: [ 0, 1, 3, 3, 4, 2],
+      data: [ 0, 1, 3, 3, 4, 15],
       offsetY: 0,
     },
   ],

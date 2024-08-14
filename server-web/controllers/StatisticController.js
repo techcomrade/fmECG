@@ -5,7 +5,7 @@ class StatisticController{
         console.log(`[P]:::Count total: `);
         const total = await StatisticService.getStatistics();
         return res.status(200).json({
-          message: "Count user successful!",
+          message: "Count successful!",
           metadata: total,
         });       
     }

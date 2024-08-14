@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelize");
 const Account = require("../AccountModel/AccountDTO");
 
+
 const Token = sequelize.define("tokens", {
   id: {
     type: Sequelize.STRING,
@@ -12,7 +13,7 @@ const Token = sequelize.define("tokens", {
     type: Sequelize.STRING,
     allowNull: false,
     references: {
-      model: Account,
+      model: Account, 
       key: "id",
     },
   },
