@@ -82,5 +82,18 @@ class RegisterModel {
   async count() {
     return await RegisterDTO.count();
   }
+
+  async uploadImageByEmail(email, image) {
+    return await RegisterDTO.update(
+      {
+        image: image,
+      },
+      {
+        where: {
+          email: email,
+        },
+      }
+    );
+  }
 }
 module.exports = new RegisterModel();

@@ -64,6 +64,6 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
-          cd /home/finnick/fmECG_docker
+          cd /home/finnick/fmECG
           git pull origin development
           make app

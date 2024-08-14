@@ -81,7 +81,7 @@ class UserController {
   async uploadImage(req, res, next) {
     console.log(`[D]:::Upload image by id: `, req.body);
     const buffer = req.file.buffer;
-    const fileName = req.file.originalName;
+    const fileName = req.file.originalname;
     const link = await FileService.uploadDrive(buffer, fileName);
     if (!link) {
       return res.status(400).json({
@@ -92,6 +92,7 @@ class UserController {
     if (result) {
       return res.status(200).json({
         message: "Upload image successfully",
+        metadata: link,
       });
     } else {
       return res.status(404).json({

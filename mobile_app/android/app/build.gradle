@@ -30,8 +30,8 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 // START: FlutterFire Configuration
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.android.application' 
-apply plugin: 'com.chaquo.python' 
+apply plugin: 'com.android.application'
+apply plugin: 'com.chaquo.python'
 // END: FlutterFire Configuration
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
@@ -53,16 +53,13 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         ndk {
-          abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+          // use it if run on windows?
+          abiFilters "arm64-v8a"
         }
         python {
             pip {
-                install 'numpy'
-                install 'pandas'
-                install 'scipy'
-                install 'heartpy'
+                install("-r", "requirements.txt")
             }
-
         }
     }
 

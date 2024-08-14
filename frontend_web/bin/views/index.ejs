@@ -430,6 +430,11 @@ select {
                 <label for="info-label">Thông tin người dùng</label>
                 <input type="text" placeholder="Thông tin người dùng" id="sign-up-info" class="sign-up-input" required />
               </div>
+              <div class="input-group">
+                <i class="bx bx-img"></i>
+                <label for="img-label">Chọn ảnh đại diện </label>
+                <input type="file" id="sign-up-img" class="sign-up-input" name="file" required />
+              </div>
               <button onclick="signupFunction()" >Đăng ký</button>
               <p class="align-center">
                 <span> Bạn đã có tài khoản? </span>
@@ -604,7 +609,8 @@ select {
       };
 
       //sign up
-      var signupUrl ="http://127.0.0.1:3000/api/auth/register";
+      var signupUrl = "http://127.0.0.1:3000/api/auth/register";
+      var uploadImg = "http://127.0.0.1:3000/api/register/upload-img"
       const signupFunction = async () => {
         const username = document.querySelector("#sign-up-username").value;
         const email = document.querySelector("#sign-up-email").value;
@@ -619,6 +625,11 @@ select {
 
         const gender = document.querySelector("#sign-up-gender").value;
         const information = document.querySelector("#sign-up-info").value;
+
+        const image = document.querySelector("#sign-up-img").files[0];
+        let upload = new FormData();
+        upload.append('file', image);
+        upload.append('email', email);
         if(confirmPassword && confirmPassword === password) {
           try {
             const signupResult = await fetch(signupUrl, {
@@ -645,16 +656,40 @@ select {
               }),
             });
             if (signupResult.ok) {
-              window.alert("Sign up successful!");
-              window.location.reload();
+              console.log(image)
+              if (image == undefined) {
+                window.alert("Sign up successful!");
+                window.location.reload();
+              }
+              if (image != undefined && (image.type == 'image/jpeg' || image.type == 'image/png')) {
+                const uploadResult = await fetch(uploadImg, {
+                  method: "POST",
+                  mode: "cors",
+                  cache: "no-cache",
+                  credentials: "same-origin",
+                  redirect: "follow",
+                  referrerPolicy: "no-referrer",
+                  body: upload,
+                });
+                if (uploadResult.ok) {
+                  window.alert("Sign up successful!");
+                  window.location.reload();
+                } else {
+                  let data = await signupResult.json();
+                  console.log(data.message);
+                  window.alert(data.message);
+                }
+              }
+              if (image != undefined && image.type != 'image/jpeg' && image.type != 'image/png') {
+                window.alert("Wrong image format, please try again");
+              }
             } else {
               let data = await signupResult.json();
               console.log(data.message);
               window.alert(data.message);
             }       
           } catch(err) {
-            let data = await signupResult.json();
-            console.log(data.message);
+            console.log(err);
             window.alert("Error when sign up!");
           }
         }

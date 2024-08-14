@@ -1,0 +1,40 @@
+
+name: Test GCloud
+on: workflow_dispatch
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./mobile_app
+    steps:
+      - name: Checkout Github repo
+        uses: actions/checkout@v4
+
+      - name: Authen
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: fmecg-firebase-chat
+          workload_identity_provider: ${{ secrets.WORKLOAD_ID_PROVIDER }}
+      - name: Print
+        run: |
+          echo ${{ steps.auth.outputs.credentials_file_path }}
+          echo ${{ steps.auth.outputs.project_id }}
+          echo ${{ steps.auth.outputs.auth_token }}
+          echo ${{ steps.auth.outputs.access_token }}
+      # - name: Publish to Play Console
+      #   uses: r0adkll/upload-google-play@v1
+      #   with:
+      #     serviceAccountJsonPlainText: ${{ secrets.GOOGLE_SERVICES_ACCOUNT_JSON }}
+      #     # serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
+      #     # serviceAccountJsonT: ${{ steps.auth.outputs.credentials_file_path }}
+      #     packageName: vn.hust.electrospic
+      #     releaseFiles: mobile_app/build/app/outputs/bundle/release/app-release.aab
+      #     track: alpha
+      #     status: completed

@@ -50,6 +50,10 @@ class RegisterService extends CommonService {
   async updateById(user) {
     return await RegisterModel.updateById(user);
   }
+
+  async uploadImageByEmail(email, image) {
+    return await RegisterModel.uploadImageByEmail(email, image);
+  }
 }
 
 module.exports = new RegisterService();

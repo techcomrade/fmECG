@@ -6,10 +6,12 @@ import {
   deleteDevice,
   getDevice,
   getDeviceByDoctorId,
-  getDevicesById,
+  getDeviceById,
+  getDeviceByUserId,
   loadStatus,
   resetCreateDataStatus,
   resetDeleteDataStatus,
+  resetDeviceDataStatus,
   resetUpdateDataStatus,
   updateDevice,
 } from "../../redux/reducer/deviceSlice";
@@ -41,6 +43,7 @@ const DeviceTable = () => {
   const dataState = useSelector((state) => state.device);
   const [selectedData, setSelectedData] = useState([]);
   const [dataTable, setData] = useState([]);
+  const [deviceData, setDeviceData] = useState([]);
   const [dropdownData, setDropData] = useState([]);
   const modalUpdateRef = useRef(null);
   const modalAddRef = useRef(null);
@@ -110,7 +113,7 @@ const DeviceTable = () => {
       isEdit: false,
     },
     {
-      title: "Tên người dùng",
+      title: t("column.user-name"),
       dataIndex: "user_id",
       key: "user_id",
       type: "select",
@@ -136,8 +139,7 @@ const DeviceTable = () => {
     },
     {
 
-      title: t("column.device-info"),
-
+      title: t("column.frequency"),
       dataIndex: "frequency",
       key: "frequency",
       type: "list",
@@ -146,7 +148,7 @@ const DeviceTable = () => {
       listLabel: listLabel
     },
     {
-      title: "Lưu trữ dữ liệu",
+      title: t("column.storage"),
       dataIndex: "storage",
       key: "storage",
       type: "list",
@@ -155,7 +157,7 @@ const DeviceTable = () => {
       listLabel: listLabel
     },
     {
-      title: "Phương thức kết nối",
+      title: t("column.connection"),
       dataIndex: "connection",
       key: "connection",
       type: "list",
@@ -164,7 +166,7 @@ const DeviceTable = () => {
       listLabel: listLabel
     },
     {
-      title: "Thông tin thiết bị",
+      title: t("column.device-info"),
       dataIndex: "information",
       key: "information",
       type: "text",
@@ -183,7 +185,7 @@ const DeviceTable = () => {
     if (context.role === userRole.doctor) {
       dispatch(getDeviceByDoctorId(context.user_id));
     } else if (context.role === userRole.patient) {
-      dispatch(getDevicesById(context.user_id));
+      dispatch(getDeviceByUserId(context.user_id));
     } else {
       dispatch(getDevice());
     }
@@ -231,14 +233,15 @@ const DeviceTable = () => {
     dispatch(deleteDevice( id ));
   };
 
-  const handleEditFunction = () => {
-    const rowData = findElementById(dataTable, selectedData[0]);
-    const dataModal = handleData(rowData, "form");
+  const handleEditFunction = async () => {
+    const data = await httpGetData(`/device/id/${selectedData[0]}`);
+    console.log(data);
+    const dataModal = handleData(data.metadata, "form");
     modalUpdateRef.current?.open(dataModal, columns);
   };
 
   const handleSubmitEditUser = (data) => {
-    const { doctor_id, frequency, ...payload } = { ...data };
+    const { recordCount, ...payload } = { ...data };
     return dispatch(updateDevice(payload));
   };
 
@@ -252,7 +255,7 @@ const DeviceTable = () => {
     if (type === "form") {
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
-          deviceData[key] = dayjs(data[key], "DD/MM/YYYY");
+          deviceData[key] = dayjs(data[key]);
         }
 
         if (checkListTypeKey(key)) {

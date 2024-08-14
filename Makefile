@@ -38,4 +38,6 @@ chatdev:
 	docker compose -f docker-compose-back-end.yml up --build --detach && \
 	docker exec -it chat-fmecg iex -S mix phx.server
 
-
+# another way to run iex -> cách này không thấy được api gọi => tách riêng phần show/db và iex	
+# elixir --sname server_chat -S mix phx.server	
+# make chatbash -> iex --sname console --remsh server_chat
