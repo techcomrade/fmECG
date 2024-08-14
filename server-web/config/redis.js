@@ -15,7 +15,6 @@ async function connectRedis() {
     try {
         await client.connect();
         console.log('Redis connected');
-
         const pong = await client.ping();
         console.log(pong);
     } catch (err) {
