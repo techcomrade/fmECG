@@ -16,7 +16,7 @@ class TokenRepository {
       updated_at: Number(new Date())
     });
 
-    await redis.set(`refresh_token:${token.account_id}`, token.refresh_token);
+    // await redis.set(`refresh_token:${token.account_id}`, token.refresh_token);
 
     return true;
   }
