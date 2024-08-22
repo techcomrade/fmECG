@@ -9,16 +9,22 @@ const roleGroup = {
 
 class CommonMiddleware {
   validationToken(req, res, next) {
-    if (!req.headers["authorization"]) {
-      return res.status(400).json({
-        message: "Lack of token",
-      });
-    }
     const authHeader = req.headers["authorization"];
+    if (!authHeader) return res.status(401).json({ message: "Unauthorized" });
+
     const token = authHeader.split(" ")[1];
+    if (!token) return res.status(401).json({ message: "Unauthorized" });
+
     const decodeToken = TokenService.decodeToken(token);
-    if (!decodeToken)
-    {  return res.status(500).json({ message: "Failed to verify token" });}
+    if (!decodeToken) {
+      const decodedRefreshToken = TokenService.decodeToken(req.body.refresh_token);
+      if(!decodedRefreshToken) return res.status(401).json({ message: "Unauthorized" });
+
+      const newAccessToken = TokenService.refreshToken(req.body.refresh_token, 0.5);
+
+      res.setHeader("authorization", `Bearer ${newAccessToken}`);
+    }
+
     res.locals.role = decodeToken.role;
     next();
   }

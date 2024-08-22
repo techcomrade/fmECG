@@ -28,7 +28,7 @@ class AuthenService extends CommonService {
           id: accountInfo.dataValues.id,
           role: accountInfo.dataValues.role
         }
-        const access_token = TokenService.renderToken(userInfo, expiredTime);
+        const access_token = TokenService.renderToken(userInfo, 0.5);
         const refresh_token = TokenService.renderToken(
           userInfo,
           120
@@ -105,5 +105,7 @@ class AuthenService extends CommonService {
     });
     return schema.validate(account);
   }
+
+
 }
 module.exports = new AuthenService();

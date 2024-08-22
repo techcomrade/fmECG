@@ -12,6 +12,7 @@ class AuthenMiddleware {
       });
     }
   }
+
   validateAccount(req, res, next) {
     const validation = AuthenService.validateAccount(req.body);
     if (!validation?.error) next();
