@@ -13,8 +13,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         references: {
-          model: 'accounts',
-          key: 'id',
+          model: "accounts",
+          key: "id",
         },
       },
       access_token: {
@@ -23,6 +23,10 @@ module.exports = {
       },
       refresh_token: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      expires_at: {
+        type: Sequelize.BIGINT,
         allowNull: false,
       },
       created_at: {
