@@ -1,5 +1,5 @@
 let requests;
-// const client = require("../config/redis");
+
 const TokenService = require("../services/TokenService");
 const roleGroup = {
   admin: 0,
@@ -7,22 +7,24 @@ const roleGroup = {
   patient: 3,
 };
 
+const redis = require('../config/redis.config');
+
 class CommonMiddleware {
-  validationToken(req, res, next) {
+  async validationToken(req, res, next) {
     const authHeader = req.headers["authorization"];
     if (!authHeader) return res.status(401).json({ message: "Unauthorized" });
 
     const token = authHeader.split(" ")[1];
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
-    const decodeToken = TokenService.decodeToken(token);
+    const decodeToken = await TokenService.decodeToken(token);
     if (!decodeToken) {
-      const decodedRefreshToken = TokenService.decodeToken(req.body.refresh_token);
+      const decodedRefreshToken = await TokenService.decodeToken(req.body.refresh_token);
       if(!decodedRefreshToken) return res.status(401).json({ message: "Unauthorized" });
 
-      const newAccessToken = TokenService.refreshToken(req.body.refresh_token, 0.5);
-
-      res.setHeader("authorization", `Bearer ${newAccessToken}`);
+      const newAccessToken = await TokenService.refreshToken(req.body.refresh_token, 0.5);
+      console.log(token.account_id);
+      await res.setHeader("authorization", `Bearer ${newAccessToken}`); 
     }
 
     res.locals.role = decodeToken.role;

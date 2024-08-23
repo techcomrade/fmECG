@@ -11,6 +11,7 @@ const { v4: uuidv4 } = require("uuid");
 
 class AuthenService extends CommonService {
   async login(account) {
+    await TokenService.autoDeleteExpiredTokens();
     const expiredTime = 120 * 1800;
     try {
       const accountData = await AccountRepository.getAccountByEmail(
@@ -28,10 +29,10 @@ class AuthenService extends CommonService {
           id: accountInfo.dataValues.id,
           role: accountInfo.dataValues.role
         }
-        const access_token = TokenService.renderToken(userInfo, 0.5);
+        const access_token = TokenService.renderToken(userInfo, 0.1);
         const refresh_token = TokenService.renderToken(
           userInfo,
-          120
+          12
         );
         var token = {
           id: uuidv4(),
@@ -55,7 +56,6 @@ class AuthenService extends CommonService {
     }
   }
 
-  
   async checkEmail(email) {
     const emails = await AccountRepository.getAccountByEmail(email);
     return emails === null;
@@ -106,6 +106,8 @@ class AuthenService extends CommonService {
     return schema.validate(account);
   }
 
-
+  async logOut() {
+    
+  }
 }
 module.exports = new AuthenService();

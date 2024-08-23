@@ -6,6 +6,7 @@ class TokenRepository {
   async getAllData() {
     return await TokenDTO.findAll();
   }
+
   async add(token) {
     await TokenDTO.create({
       id: token.id,
@@ -16,10 +17,11 @@ class TokenRepository {
       updated_at: Number(new Date())
     });
 
-    await redis.set(`refresh_token:${token.account_id}`, token.refresh_token);
-
+    await redis.hset(`token_user_${token.account_id}`, "access_token", token.access_token);
+    await redis.hset(`token_user_${token.account_id}`, "refresh_token", token.refresh_token);
     return true;
   }
+
   async deleteByAccountId(id) {
     return await TokenDTO.destroy({
       where: {
