@@ -5,6 +5,11 @@ class AuthenController {
   async login(req, res) {
     const account = req.body;
     const loginResult = await AuthenService.login(account);
+    if (loginResult && loginResult.status === 400) {
+      return res.status(400).json({
+        message: loginResult.message,
+      });
+    }
     return loginResult
       ? res.status(200).json({
           message: "login successfully",
@@ -47,6 +52,19 @@ class AuthenController {
         console.log(err);
         return res.status(400).json("Get accounts failed");
       });
+  }
+
+  async logout(req, res) {
+    const account = req.body;
+    try {
+      await AuthenService.logout(account);
+      return res.status(200).json({ message: "Logout successful" });
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(400)
+        .json({ message: "Logout failed", error: err.message });
+    }
   }
 }
 
