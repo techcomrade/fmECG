@@ -25,5 +25,9 @@ const Token = sequelize.define("tokens", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  expires_at: {
+    type: Sequelize.BIGINT,
+    allowNull: false
+  }
 });
 module.exports = Token;
