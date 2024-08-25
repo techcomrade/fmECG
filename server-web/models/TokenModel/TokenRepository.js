@@ -17,8 +17,10 @@ class TokenRepository {
       updated_at: Number(new Date())
     });
 
+
     await redis.hset(`token_user_${token.account_id}`, "access_token", token.access_token);
     await redis.hset(`token_user_${token.account_id}`, "refresh_token", token.refresh_token);
+
     return true;
   }
 
