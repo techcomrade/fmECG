@@ -39,5 +39,13 @@ class TokenRepository {
       transaction: t,
     });
   }
+
+  async findByToken(token) {
+    return await TokenDTO.findOne({
+      where: {
+        refresh_token: token,
+      }
+    })
+  }
 }
 module.exports = new TokenRepository();

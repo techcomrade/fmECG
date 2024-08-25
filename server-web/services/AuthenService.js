@@ -35,24 +35,6 @@ class AuthenService extends CommonService {
           role: accountInfo.dataValues.role,
         };
 
-        const existingToken = await redis.hget(
-          `token_user_${accountData.dataValues.id}`,"access_token"
-        );
-        if (existingToken) {
-          const decodedToken = TokenService.decodeToken(existingToken);
-          if (
-            decodedToken &&
-            decodedToken.exp > Math.floor(Date.now() / 1000)
-          ) {
-            return {
-              status: 400,
-              message: "Account is already in use.",
-            };
-          }
-        }
-
-        // console.log(userInfo);
-
         const access_token = TokenService.renderToken(userInfo, 0.1);
         const refresh_token = TokenService.renderToken(userInfo, 10);
         var token = {

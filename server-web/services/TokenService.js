@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const redis = require("../config/redis.config");
 const TokenRepository = require("../models/TokenModel/TokenRepository");
+const { refreshToken } = require("../controllers/AuthenController");
+const { v4: uuidv4 } = require("uuid");
 require("dotenv").config();
 
 class TokenService {
@@ -28,7 +30,21 @@ class TokenService {
 
   async refreshToken(refresh_token, expiredTime) {
     try {
+      // Kiểm tra refresh_token có tồn tại và hợp lệ không
+      const storedToken = await TokenRepository.findByToken(refresh_token);
+      if (!storedToken) {
+        console.log("Invalid refresh token.");
+        return false;
+      }
+
+      // Giải mã refresh_token
       const decoded = await jwt.verify(refresh_token, process.env.JWT_SECRET);
+      if (!decoded) {
+        console.log("Unauthorized refresh token.");
+        return false;
+      }
+
+      // Tạo Access Token mới
       const newAccessToken = this.renderToken(
         {
           account_id: decoded.account_id,
@@ -37,6 +53,29 @@ class TokenService {
         },
         process.env.JWT_SECRET
       );
+
+      // Cập nhật token mới trong cơ sở dữ liệu và Redis
+      var token = {
+        id: uuidv4(),
+        account_id: decoded.account_id,
+        access_token: newAccessToken,
+        refresh_token: refresh_token,
+        created_at: Number(new Date()),
+      };
+
+      // Xóa token cũ trước khi thêm token mới để tránh race condition
+      await TokenRepository.deleteByAccountId(decoded.account_id);
+
+      // Thêm token mới vào cơ sở dữ liệu
+      await TokenRepository.add(token);
+
+      // Cập nhật Access Token mới trong Redis
+      await redis.hset(
+        `token_user_${decoded.account_id}`,
+        "access_token",
+        newAccessToken
+      );
+
       return newAccessToken;
     } catch (err) {
       console.log("Refresh token verification failed:", err.message);

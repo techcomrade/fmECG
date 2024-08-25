@@ -7,7 +7,7 @@ const roleGroup = {
   patient: 3,
 };
 
-const redis = require('../config/redis.config');
+const redis = require("../config/redis.config");
 
 class CommonMiddleware {
   async validationToken(req, res, next) {
@@ -19,12 +19,7 @@ class CommonMiddleware {
 
     const decodeToken = await TokenService.decodeToken(token);
     if (!decodeToken) {
-      const decodedRefreshToken = await TokenService.decodeToken(req.body.refresh_token);
-      if(!decodedRefreshToken) return res.status(401).json({ message: "Unauthorized" });
-      console.log(decodedRefreshToken);
-      const newAccessToken = await TokenService.refreshToken(req.body.refresh_token, 0.5);
-      await res.setHeader("authorization", `Bearer ${newAccessToken}`); 
-      await redis.hset(`token_user_${decodedRefreshToken.account_id}`, "access_token", newAccessToken);
+      return res.status(401).json({ message: "Token is invalid or expired" });
     }
 
     res.locals.role = decodeToken.role;

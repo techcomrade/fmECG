@@ -1,5 +1,6 @@
 const AuthenService = require("../services/AuthenService");
 const RegisterService = require("../services/RegisterService");
+const TokenService = require("../services/TokenService");
 
 class AuthenController {
   async login(req, res) {
@@ -64,6 +65,27 @@ class AuthenController {
       return res
         .status(400)
         .json({ message: "Logout failed", error: err.message });
+    }
+  }
+
+  async refreshToken(req, res) {
+    const refresh_token = req.body.refresh_token;
+    if (!refresh_token) {
+      return res.status(401).json({ message: "Unauthorized." });
+    }
+
+    try{
+      const access_token = await TokenService.refreshToken(refresh_token);
+      if (!access_token) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      return res.status(200).json({ 
+        message:'Refresh token successfully',
+        access_token: access_token
+      });
+    } 
+    catch (err) {
+      return res.status(401).json({ message: "Failed to refresh token." });
     }
   }
 }
