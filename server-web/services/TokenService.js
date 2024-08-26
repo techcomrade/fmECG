@@ -96,6 +96,19 @@ class TokenService {
     }
   }
 
-  async autoDeleteToken(refresh_token) {}
+  async autoDeleteExpiredToken() {
+    try{
+      const tokens = await TokenRepository.getAllData();
+      for (const token of tokens) {
+        const decoded = this.decodeToken(token.refresh_token);
+        if (!decoded) {
+          await TokenRepository.deleteByToken(token.refresh_token);
+        }
+      }
+    }catch(error){
+      console.error(error);
+      return false;
+    }
+  }
 }
 module.exports = new TokenService();

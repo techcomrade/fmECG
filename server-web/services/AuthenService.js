@@ -12,6 +12,18 @@ const RedisService = require("./RedisService");
 
 class AuthenService extends CommonService {
   async login(account) {
+    try{
+      await RedisService.autoDeleteExpiredToken();
+    }catch(error){
+      console.log(error);
+    }
+
+    try{
+      await TokenService.autoDeleteExpiredToken();
+    }catch(error){
+      console.log(error);
+    }
+    
     const expiredTime = 120 * 1800;
     try {
       const accountData = await AccountRepository.getAccountByEmail(

@@ -43,5 +43,13 @@ class TokenRepository {
       }
     })
   }
+
+  async deleteByToken(token) {
+    return await TokenDTO.destroy({
+      where: {
+        refresh_token: token,
+      }
+    })
+  }
 }
 module.exports = new TokenRepository();
