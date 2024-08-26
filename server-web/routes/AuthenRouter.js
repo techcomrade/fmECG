@@ -11,5 +11,6 @@ router.get("/", AuthenController.getAllData);
 router.post("/login", AuthenMiddleware.validateAccount, AuthenController.login);
 router.post("/register", AuthenMiddleware.validateUser, AuthenController.register);
 
+router.post("/refresh", AuthenController.refreshToken);
 
 module.exports = router;

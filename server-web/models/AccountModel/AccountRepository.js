@@ -4,6 +4,7 @@ class AccountRepository {
   async getAllData() {
     return await AccountDTO.findAll();
   }
+  
   async add(account, t) {
     return await AccountDTO.create(
       {
