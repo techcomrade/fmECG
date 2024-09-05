@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const TokenRepository = require("../models/TokenModel/TokenRepository");
 const { v4: uuidv4 } = require("uuid");
-const redis = require('../config/redis');
+// const redis = require('../config/redis');
 
 class TokenService {
   renderToken(account, expiredTime) {
@@ -27,63 +27,63 @@ class TokenService {
     }
   }
 
-  async refreshToken(refresh_token, expiredTime) {
-    try {
-      const isValidToken = this.decodeToken(refresh_token);
-      if (!isValidToken) {
-        return false;
-      }
+  // async refreshToken(refresh_token, expiredTime) {
+  //   try {
+  //     const isValidToken = this.decodeToken(refresh_token);
+  //     if (!isValidToken) {
+  //       return false;
+  //     }
   
-      const storedToken = await redis.exists(refresh_token);
-      if (!storedToken) {
-        storedToken = await TokenRepository.findByToken(refresh_token);
-        if (!storedToken) {
-          console.log("Invalid refresh token.");
-          return false;
-        }
-      }
+  //     const storedToken = await redis.exists(refresh_token);
+  //     if (!storedToken) {
+  //       storedToken = await TokenRepository.findByToken(refresh_token);
+  //       if (!storedToken) {
+  //         console.log("Invalid refresh token.");
+  //         return false;
+  //       }
+  //     }
   
-      const decoded = jwt.verify(refresh_token, process.env.JWT_SECRET);
-      if (!decoded) {
-        console.log("Invalid refresh token.");
-        return false;
-      }
+  //     const decoded = jwt.verify(refresh_token, process.env.JWT_SECRET);
+  //     if (!decoded) {
+  //       console.log("Invalid refresh token.");
+  //       return false;
+  //     }
   
-      const newAccessToken = this.renderToken(
-        {
-          account_id: decoded.account_id,
-          role: decoded.role,
-          exp: Math.floor(Date.now() / 1000) + expiredTime * 60,
-        },
-        process.env.JWT_SECRET
-      );
+  //     const newAccessToken = this.renderToken(
+  //       {
+  //         account_id: decoded.account_id,
+  //         role: decoded.role,
+  //         exp: Math.floor(Date.now() / 1000) + expiredTime * 60,
+  //       },
+  //       process.env.JWT_SECRET
+  //     );
   
-      var token = {
-        id: uuidv4(),
-        account_id: decoded.account_id,
-        access_token: newAccessToken,
-        refresh_token: refresh_token,
-        expires_at: Number(new Date()) + expiredTime * 1000, // Chú ý đơn vị thời gian
-      };
+  //     var token = {
+  //       id: uuidv4(),
+  //       account_id: decoded.account_id,
+  //       access_token: newAccessToken,
+  //       refresh_token: refresh_token,
+  //       expires_at: Number(new Date()) + expiredTime * 1000, // Chú ý đơn vị thời gian
+  //     };
   
-      try {
-        await this.updateTokenToDb(token);
-      }catch(err) {
-        console.log(err);
-      }
+  //     try {
+  //       await this.updateTokenToDb(token);
+  //     }catch(err) {
+  //       console.log(err);
+  //     }
       
-      try{
-        await RedisService.updateTokenToRedis(token);
-      }catch(err) {
-        console.log(err);
-      }
+  //     try{
+  //       await RedisService.updateTokenToRedis(token);
+  //     }catch(err) {
+  //       console.log(err);
+  //     }
   
-      return newAccessToken;
-    } catch (err) {
-      console.error(err);
-      return false;
-    }
-  }
+  //     return newAccessToken;
+  //   } catch (err) {
+  //     console.error(err);
+  //     return false;
+  //   }
+  // }
 
   async updateTokenToDb(token) {
     try {
