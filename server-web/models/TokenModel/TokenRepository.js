@@ -1,6 +1,6 @@
 const TokenDTO = require("./TokenDTO");
-const Redis = require("ioredis");
-const redis = new Redis(6381); 
+// const Redis = require("ioredis");
+// const redis = new Redis(6381); 
 
 class TokenRepository {
   async getAllData() {

@@ -8,7 +8,7 @@ const TokenService = require('./TokenService');
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
 const { v4: uuidv4 } = require("uuid");
-const RedisService = require("./RedisService");
+// const RedisService = require("./RedisService");
 
 class AuthenService extends CommonService {
   async login(account) {
@@ -63,11 +63,11 @@ class AuthenService extends CommonService {
           console.log(error);
         }
 
-        try{
-          await RedisService.addTokenToRedis(token);
-        }catch(error){
-          console.log(error);
-        }
+        // try{
+        //   await RedisService.addTokenToRedis(token);
+        // }catch(error){
+        //   console.log(error);
+        // }
         
         return {...accountInfo.dataValues,
         access_token: access_token,
