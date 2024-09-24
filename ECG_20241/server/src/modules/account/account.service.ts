@@ -31,7 +31,7 @@ export class AccountService {
     async findByEmail(email: string): Promise<AccountModel>{
             const account = await this.accountRepository.findByEmail(email);
             if(!account){
-                throw new NotFoundException('Email not found')
+                return null;
             }
             else return account;
     }
