@@ -1,7 +1,6 @@
 import { Controller, Get, Body, Post,  UseGuards } from '@nestjs/common';
 import { AccountModel } from '../account/model/account.model';
 import { AuthenService } from './authen.service';
-import { UserModel } from '../user/model/user.model';
  
 @Controller("auth")
 export class AuthenController{

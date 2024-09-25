@@ -19,6 +19,28 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        username: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        gender: {
+          type: Sequelize.INTEGER,
+        },
+        birth: {
+          type: Sequelize.DATE,
+          allowNull: true,
+        },
+        phone_number: Sequelize.STRING,
+        image: Sequelize.STRING,
+        status: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
+        information:  Sequelize.TEXT('long'),
+        role: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
         createdAt: {
           type: Sequelize.DATE
         },

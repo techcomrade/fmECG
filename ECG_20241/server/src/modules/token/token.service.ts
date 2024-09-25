@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AccountModel } from '../account/model/account.model';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from '../user/user.service';
 import * as dotenv from 'dotenv';
 import { TokenRepository } from './model/token.repository';
 import { TokenModel } from './model/token.model';
@@ -13,15 +12,13 @@ export class TokenService {
     constructor(
         private jwtService: JwtService,
         private tokenRepository: TokenRepository,
-        // private userService: UserService
     ){}
     
     async renderToken(account: AccountModel, expiredTime: number): Promise<any> {
         try{
-            // const user = await this.userService.findByEmail(account.email);
             return this.jwtService.sign({
                 account_id: account.id,
-                // role: user.role                                                                                                                                                                                             
+                role: account.role                                                                                                                                                                                             
             },{
                 secret: process.env.JWT_SECRET,
                 expiresIn: expiredTime

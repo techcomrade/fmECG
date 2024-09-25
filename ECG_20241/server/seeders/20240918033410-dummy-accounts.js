@@ -9,6 +9,12 @@ module.exports = {
         email: "codung3@gmail.com",
         password:
           "$2b$10$Ik0hw6bg4EVB1zmcNLs.suAsvW6oi8jEY7R/xw2.dP7xZoedvUwSO",
+        status: 1,
+        username: "dung",
+        gender: 1,
+        phone_number: "0774333060",
+        information: "GOOD",
+        role: 1,
       },
     ]);
   },

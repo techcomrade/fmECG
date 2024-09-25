@@ -2,9 +2,7 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { AccountModel } from '../account/model/account.model';
 import { AccountService } from '../account/account.service';
-import { UserModel } from '../user/model/user.model';
 import { TokenModel } from '../token/model/token.model';
-import { UserService } from '../user/user.service';
 import { TokenService } from '../token/token.service';
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
@@ -13,7 +11,6 @@ const bcrypt = require('bcrypt');
 export class AuthenService {
     constructor(
         private accountService: AccountService,
-        private userService: UserService,
         private tokenService: TokenService
     ) { }
 
@@ -21,12 +18,7 @@ export class AuthenService {
             const account = AccountModel.build({
                 id: uuidv4(),
                 email: data.email,
-                password: await bcrypt.hash(data.password, 10)
-            });
-
-            const user = UserModel.build({
-                id: uuidv4(),
-                account_id: account.id,
+                password: await bcrypt.hash(data.password, 10),
                 status: 1,
                 username: data.username,
                 gender: data.gender,
@@ -36,13 +28,11 @@ export class AuthenService {
             });
 
             await this.accountService.add(account);
-            await this.userService.add(user);
 
             return {
                 metaData: {
                     message: "Register success",
                     account: account,
-                    user: user
                 }
             }
     }

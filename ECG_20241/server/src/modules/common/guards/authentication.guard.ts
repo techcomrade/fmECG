@@ -16,12 +16,14 @@ export class AuthenticationGuard implements CanActivate {
 
         try {
             const payload = await this.tokenService.verifyToken(token);
+            if (!payload) throw new Error;
             request['account'] = payload;
-            console.log(request);
         }
         catch(error){
             throw new UnauthorizedException('Cannot activate')
         }
+
+        return true;
     }
 
     private extractTokenFromRequest(request: Request): string | undefined {

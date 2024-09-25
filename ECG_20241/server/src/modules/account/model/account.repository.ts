@@ -19,7 +19,14 @@ export class AccountRepository {
             return await this.accountModel.create({
                 id: account.id,
                 email: account.email,
-                password: account.password
+                password: account.password,
+                username: account.username,
+                gender: account.gender,
+                birth: account.birth,
+                phone_number: account.phone_number,
+                status: account.status,
+                information: account.information,
+                role: account.role,
             })
         }
         catch (error){
