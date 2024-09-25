@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { AccountModel } from './account.model';
-
+const { v4: uuidv4 } = require('uuid');
 
 @Injectable()
 export class AccountRepository {
@@ -24,7 +24,7 @@ export class AccountRepository {
                 gender: account.gender,
                 birth: account.birth,
                 phone_number: account.phone_number,
-                status: account.status,
+                status: 1,
                 information: account.information,
                 role: account.role,
             })

@@ -4,6 +4,7 @@ import { AccountModel } from '../account/model/account.model';
 import { AccountService } from '../account/account.service';
 import { TokenModel } from '../token/model/token.model';
 import { TokenService } from '../token/token.service';
+import { AuthenDTO } from './model/dto/authen.dto';
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 
@@ -14,50 +15,42 @@ export class AuthenService {
         private tokenService: TokenService
     ) { }
 
-    async register(data: any): Promise<{ metaData: any }> {
-            const account = AccountModel.build({
-                id: uuidv4(),
-                email: data.email,
-                password: await bcrypt.hash(data.password, 10),
-                status: 1,
-                username: data.username,
-                gender: data.gender,
-                phone_number: data.phone_number,
-                information: data.information,
-                role: data.role,
-            });
+    async register(account: AccountModel): Promise<{ metaData: any }> {
+        account.id = uuidv4();
+        account.password = await bcrypt.hash(account.password, 10)
+        await this.accountService.add(account);
 
-            await this.accountService.add(account);
-
-            return {
-                metaData: {
-                    message: "Register success",
-                    account: account,
-                }
+        return {
+            metaData: {
+                message: "Register success",
+                account: account,
             }
+        }
     }
 
-    async login(account: AccountModel): Promise<TokenModel> {
-        const profile = await this.accountService.findByEmail(account.email);
-        if (profile) {
-            const comparePassword = await bcrypt.compare(account.password, profile.password);
+    async login(authenDTO: AuthenDTO): Promise<TokenModel> {
+        const account = await this.accountService.findByEmail(authenDTO.email);
+        console.log(account)
+        if (account) {
+            const comparePassword = await bcrypt.compare(authenDTO.password, account.password);
             if (!comparePassword) {
                 throw new UnauthorizedException({
                     message: "Password or email is incorrect"
                 });
             }
         }
-        
+
         const accessToken = await this.tokenService.renderToken(account, 100);
         const refreshToken = await this.tokenService.renderToken(account, 200);
 
         const token = TokenModel.build({
             id: uuidv4(),
-            account_id: profile.id,
+            account_id: account.id,
             access_token: accessToken,
             refresh_token: refreshToken,
             expires_at: Date.now()
         })
+
         await this.tokenService.addToDb(token);
         return token;
     }

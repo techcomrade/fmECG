@@ -15,6 +15,7 @@ export class TokenService {
     ){}
     
     async renderToken(account: AccountModel, expiredTime: number): Promise<any> {
+        console.log(account);
         try{
             return this.jwtService.sign({
                 account_id: account.id,
