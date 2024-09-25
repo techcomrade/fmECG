@@ -1,5 +1,4 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
-import { Observable } from 'rxjs';
 import { Request } from 'express';
 import { TokenService } from '../../token/token.service';
 
@@ -10,6 +9,7 @@ export class AuthenticationGuard implements CanActivate {
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean | any> {
+        console.log(1)
         const request = context.switchToHttp().getRequest();
         const token = this.extractTokenFromRequest(request);
         if(!token) throw new UnauthorizedException('Invalid access');

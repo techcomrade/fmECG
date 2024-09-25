@@ -16,6 +16,7 @@ export class AuthenService {
     ) { }
 
     async register(account: AccountModel): Promise<{ metaData: any }> {
+
         account.id = uuidv4();
         account.password = await bcrypt.hash(account.password, 10)
         await this.accountService.add(account);
@@ -30,14 +31,15 @@ export class AuthenService {
 
     async login(authenDTO: AuthenDTO): Promise<TokenModel> {
         const account = await this.accountService.findByEmail(authenDTO.email);
-        console.log(account)
-        if (account) {
-            const comparePassword = await bcrypt.compare(authenDTO.password, account.password);
-            if (!comparePassword) {
-                throw new UnauthorizedException({
-                    message: "Password or email is incorrect"
-                });
-            }
+        if (!account) {
+            throw new NotFoundException("Account not found")
+        }
+
+        const comparePassword = await bcrypt.compare(authenDTO.password, account.password);
+        if (!comparePassword) {
+            throw new UnauthorizedException({
+                message: "Password or email is incorrect"
+            });
         }
 
         const accessToken = await this.tokenService.renderToken(account, 100);

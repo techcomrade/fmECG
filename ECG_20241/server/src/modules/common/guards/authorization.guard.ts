@@ -1,35 +1,21 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
-import { Request } from 'express';
-import { TokenService } from '../../token/token.service';
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
-    constructor(
-        private tokenService: TokenService
-    ) {}
+  constructor(private reflector: Reflector) {}
 
-    async canActivate(context: ExecutionContext): Promise<boolean | any> {
-        const request = context.switchToHttp().getRequest();
-        const token = this.extractTokenFromRequest(request);
-        if(!token) throw new UnauthorizedException('Invalid access');
-
-        try {
-            const payload = await this.tokenService.verifyToken(token);
-            request['account'] = payload;
-            console.log(request);
-        }
-        catch(error){
-            throw new UnauthorizedException('Cannot activate')
-        }
+  canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+    console.log(2)
+    const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    if (!roles) {
+      return true;
     }
+    
+    const request = context.switchToHttp().getRequest();
+    const account = request.account;
 
-    private extractTokenFromRequest(request: Request): string | undefined {
-        const authorizationHeader = request.headers['authorization'];
-        if(!authorizationHeader){
-            throw new UnauthorizedException('Invalid access')
-        }
-        const [type, token] = authorizationHeader.split(' ');
-        return type === 'Bearer' ? token : undefined;
-    }
+    return roles.includes(account.role); 
+  }
 }
