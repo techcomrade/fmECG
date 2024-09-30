@@ -1,14 +1,11 @@
-import React, { useEffect, useRef } from "react";
-import { Context } from "utils/context";
 import { v4 as uuidv4 } from "uuid";
 
 
 export const newGuid = (): string => uuidv4();
 
 export const deepClone = <T>(obj: T): T => {
-  if (typeof obj !== "object") return;
-  if (obj === null) return;
-  let newObj: A = obj instanceof Array ? [] : {};
+  if (typeof obj !== "object" || obj === null) return obj;
+  let newObj: any = obj instanceof Array ? [] : {};
   for (let key in obj) {
     if (obj[key] instanceof Date) {
       newObj[key] = obj[key];
