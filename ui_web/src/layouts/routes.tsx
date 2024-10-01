@@ -7,12 +7,13 @@ interface IProps {
 
 export const Routes = (props: IProps) => {
     const isConsentBackUrl = () => {
-        const params = ["code=", "id_token=", "error="];
-        const checkSearch =
-          location.search.startsWith("?") && params.some((i) => location.search.includes(i));
-        const checkHash =
-          location.hash.startsWith("#") && params.some((i) => location.hash.includes(i));
-        return checkHash || checkSearch;
+        // const params = ["code=", "id_token=", "error="];
+        // const checkSearch =
+        //   location.search.startsWith("?") && params.some((i) => location.search.includes(i));
+        // const checkHash =
+        //   location.hash.startsWith("#") && params.some((i) => location.hash.includes(i));
+        // return checkHash || checkSearch;
+        return false
       };
 
     return (

@@ -8,10 +8,7 @@ export class ErrorBoundary extends React.Component<IProps, {}> {
     super(props);
   }
 
-  static getDerivedStateFromError(error: any) {
-    // Update state so the next render will show the fallback UI.
-    location.href = location.origin + "/#" + routeMapping.ErrorPage.url;
-  }
+
 
   public render() {
     return this.props.children;
