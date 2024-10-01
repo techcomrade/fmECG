@@ -9,13 +9,21 @@ import "./header.scss";
 import { NavLink } from "react-router-dom";
 import { BellFilled } from "@ant-design/icons";
 import {
-    SettingFilled,
-    UserOutlined,
-    TranslationOutlined,
-  } from "@ant-design/icons";
+  SettingFilled,
+  UserOutlined,
+  TranslationOutlined,
+} from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 export const HeaderBar = () => {
   const { pathname } = useLocation();
+
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
+
   const items = [
     {
       label: (
@@ -37,65 +45,60 @@ export const HeaderBar = () => {
       key: "1",
     },
     {
-      label: (
-        <a style={{ display: "flex" }} >
-          Sign out
-        </a>
-      ),
+      label: <a style={{ display: "flex" }}>Sign out</a>,
       key: "2",
     },
   ];
 
-    return  <div className="header-container">
-    <Row gutter={[24, 0]}>
-      <Col span={24} md={12} className="header-breadcrumb">
-        <Breadcrumb>
-          <Breadcrumb.Item>
-          {/* <NavLink to="/">Pages</NavLink> */}
-            <NavLink to="/"></NavLink>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item >
-            {/* {t(getLabelByKey(pathname) ?? "page.side-bar.home")} */}
-          </Breadcrumb.Item>
-        </Breadcrumb>
-        <div className="ant-page-header-heading">
-          <span
-            className="ant-page-header-heading-title"
-            style={{ textTransform: "capitalize" }}
-          ></span>
-        </div>
-      </Col>
-      <Col span={24} md={12} className="header-control">
-        <div className="header-icon-box">
-          <Dropdown
-            menu={{
-              items,
-            }}
-            trigger={["click"]}
-          >
-            <SettingFilled />
-          </Dropdown>
-        </div>
+  return (
+    <div className="header-container">
+      <Row gutter={[24, 0]}>
+        <Col span={24} md={12} className="header-breadcrumb">
+          <Breadcrumb>
+            <Breadcrumb.Item>
+              {/* <NavLink to="/">Pages</NavLink> */}
+              <NavLink to="/"></NavLink>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              {/* {t(getLabelByKey(pathname) ?? "page.side-bar.home")} */}
+            </Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="ant-page-header-heading">
+            <span
+              className="ant-page-header-heading-title"
+              style={{ textTransform: "capitalize" }}
+            ></span>
+          </div>
+        </Col>
+        <Col span={24} md={12} className="header-control">
+          <div className="header-icon-box">
+            <Dropdown
+              menu={{
+                items,
+              }}
+              trigger={["click"]}
+            >
+              <SettingFilled />
+            </Dropdown>
+          </div>
 
-        <div className="header-icon-box">
-          <NavLink to="/" style={{ color: "#000" }}>
-            <BellFilled />
-          </NavLink>
-        </div>
+          <div className="header-icon-box">
+            <NavLink to="/" style={{ color: "#000" }}>
+              <BellFilled />
+            </NavLink>
+          </div>
 
-        <div onClick={(e) => e.preventDefault()}>
-          <NavLink to="/account" style={{ color: "#000" }}>
-            <Avatar
-              size={"large"}
-              icon={<UserOutlined />}
-              className="user-avatar"
-            />
-          </NavLink>
-        </div>
-      </Col>
-    </Row>
-  </div>
-} 
-
-
-
+          <div onClick={(e) => e.preventDefault()}>
+            <NavLink to="/account" style={{ color: "#000" }}>
+              <Avatar
+                size={"large"}
+                icon={<UserOutlined />}
+                className="user-avatar"
+              />
+            </NavLink>
+          </div>
+        </Col>
+      </Row>
+    </div>
+  );
+};

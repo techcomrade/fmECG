@@ -1,1 +1,3 @@
-export const loginFailed = () => "falied"
+import "./loginFailed.scss"
+
+export const LoginFailed = () => <>LoginFailed</>
