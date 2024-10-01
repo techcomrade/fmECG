@@ -2,7 +2,7 @@
 export interface IRouteItem {
     key: string;
     i18nKey?: string;
-    url?: string;
+    url: string;
     iconName?: string;
     parentKeys?: string[],
     specificBeadTextKey?: string
@@ -19,6 +19,14 @@ export const routeMapping: { [key: string]: IRouteItem} = {
     ErrorPage: {
       key: "error",
       url: "/error"
+    },
+    LoginFailed: {
+      key: "login-failed",
+      url: "/login-failed"
+    },
+    Login: {
+      key: "login",
+      url: "/login"
     }
 }
 
