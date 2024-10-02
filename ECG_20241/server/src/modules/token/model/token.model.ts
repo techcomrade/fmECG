@@ -1,5 +1,5 @@
 import { Column, Model, Table, PrimaryKey, DataType, ForeignKey } from 'sequelize-typescript';
-import { AccountModel } from '../../account/model/account.model';
+import { UserModel } from '../../user/model/user.model';
 
 @Table({ tableName: 'tokens' })
 export class TokenModel extends Model<TokenModel> {
@@ -10,12 +10,12 @@ export class TokenModel extends Model<TokenModel> {
   })
   id: string;
 
-  @ForeignKey(() => AccountModel)
+  @ForeignKey(() => UserModel)
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
   })
-  account_id: string;
+  user_id: string;
 
   @Column({
     type: DataType.STRING(255), 

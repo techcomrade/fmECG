@@ -14,7 +14,7 @@ export class TokenRepository {
         try {
             return await this.tokenModel.create({
                 id: token.id,
-                account_id: token.account_id,
+                user_id: token.user_id,
                 access_token: token.access_token,
                 refresh_token: token.refresh_token,
                 expires_at: token.expires_at

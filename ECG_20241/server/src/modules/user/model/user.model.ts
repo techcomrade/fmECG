@@ -1,7 +1,7 @@
 import { Column, Model, Table, PrimaryKey, DataType } from 'sequelize-typescript';
 
-@Table({ tableName: 'accounts' })
-export class AccountModel extends Model<AccountModel> {
+@Table({ tableName: 'users' })
+export class UserModel extends Model<UserModel> {
 
   @PrimaryKey
   @Column({
@@ -72,4 +72,15 @@ export class AccountModel extends Model<AccountModel> {
     allowNull: false,
   })
   role: number;
+
+  @Column({
+    type: DataType.DATE
+  })
+  createdAt: Date;
+
+  @Column({
+    type: DataType.DATE
+  })
+  updatedAt: Date;
+  
 }
