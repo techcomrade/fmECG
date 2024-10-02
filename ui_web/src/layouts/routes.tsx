@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Navigate, Route, Routes as ReactRouterRoutes } from "react-router-dom";
 import { Home } from "../pages/home";
+import { User } from "../pages/user";
 import { routeMapping } from "./routes.type";
-import { LoginFailed } from "../pages/loginFailed";
 interface IProps {}
 
 export const Routes = (props: IProps) => {
@@ -19,8 +19,8 @@ export const Routes = (props: IProps) => {
   return (
     <ReactRouterRoutes>
       <Route path={routeMapping.ErrorPage.url} />
-      <Route path={routeMapping.LoginFailed.url} element={<LoginFailed />} />
       <Route path={routeMapping.Home.url} element={<Home />} />
+      <Route path={routeMapping.User.url} element={<User />} />
       {!isConsentBackUrl() && (
         <Route
           path="*"

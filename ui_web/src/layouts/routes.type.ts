@@ -16,6 +16,10 @@ export const routeMapping: { [key: string]: IRouteItem} = {
         key: "home",
         url: "/home"
     },
+    User: {
+        key: "user",
+        url: "/user"
+    },
     ErrorPage: {
       key: "error",
       url: "/error"
