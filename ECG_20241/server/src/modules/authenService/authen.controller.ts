@@ -1,5 +1,5 @@
 import { Controller, Get, Body, Post,  UseGuards } from '@nestjs/common';
-import { AccountModel } from '../account/model/account.model';
+import { UserModel } from '../user/model/user.model';
 import { AuthenService } from './authen.service';
  
 @Controller("auth")
@@ -15,7 +15,7 @@ export class AuthenController{
     }
 
     @Post('login')
-    async login(@Body() account: AccountModel){
-        return await this.authenService.login(account);
+    async login(@Body() user: UserModel){
+        return await this.authenService.login(user);
     }
 }

@@ -1,8 +1,8 @@
 import { AuthorizationGuard } from './modules/common/guards/authorization.guard';
 import { Module} from "@nestjs/common"
-import { AccountModule } from "./modules/account/account.module";
+import { UserModule } from "./modules/user/user.module";
 import { SequelizeModule } from "@nestjs/sequelize";
-import { AuthenModule } from "./modules/authen/authen.module";
+import { AuthenModule } from "./modules/authenService/authen.module";
 import { APP_GUARD } from "@nestjs/core";
 
 
@@ -18,7 +18,7 @@ import { APP_GUARD } from "@nestjs/core";
             autoLoadModels: true,
             synchronize: true,
           }),
-        AccountModule,
+        UserModule,
         AuthenModule
     ],
 })

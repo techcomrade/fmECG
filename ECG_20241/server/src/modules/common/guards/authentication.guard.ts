@@ -17,7 +17,7 @@ export class AuthenticationGuard implements CanActivate {
         try {
             const payload = await this.tokenService.verifyToken(token);
             if (!payload) throw new Error;
-            request['account'] = payload;
+            request['user'] = payload;
         }
         catch(error){
             throw new UnauthorizedException('Cannot activate')

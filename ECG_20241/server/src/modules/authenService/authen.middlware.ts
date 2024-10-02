@@ -2,13 +2,13 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
-import { AuthenDTO } from './model/dto/authen.dto';
+import { AuthenRequest } from './model/dto/authen.request';
 
 @Injectable()
 export class AuthenMiddleware implements NestMiddleware {
     async use(req: Request, res: Response, next: NextFunction) {
         try {
-            const registerDTO = await plainToInstance(AuthenDTO, req.body);
+            const registerDTO = await plainToInstance(AuthenRequest, req.body);
             const checkError = await validate(registerDTO);
             if (checkError.length > 0) {
                 const error = checkError.map(item => Object.values(item.constraints)).join(". ");

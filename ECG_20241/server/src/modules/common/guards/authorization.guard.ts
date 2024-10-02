@@ -14,8 +14,8 @@ export class AuthorizationGuard implements CanActivate {
     }
     
     const request = context.switchToHttp().getRequest();
-    const account = request.account;
+    const user = request.user;
 
-    return roles.includes(account.role); 
+    return roles.includes(user.role); 
   }
 }
