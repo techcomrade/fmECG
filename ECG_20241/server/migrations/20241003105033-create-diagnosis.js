@@ -9,6 +9,14 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
+      patient_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      doctor_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       schedule_id: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -17,11 +25,7 @@ module.exports = {
           key: "id",
         },
       },
-      diagnosis_info: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      notes: {
+      information: {
         type: Sequelize.TEXT,
       },
       createdAt: {

@@ -3,43 +3,43 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("records", {
+    await queryInterface.createTable("schedules", {
       id: {
         type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true,
       },
-      user_id: {
+      patient_id: {
         type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: "users",
           key: "id",
-        }
+        },
       },
-      device_id: {
-        type: Sequelize.STRING,
+      schedule_start_time: {
+        type: Sequelize.BIGINT,
+        allowNull: false,
+      },
+      schedule_end_time: {
+        type: Sequelize.BIGINT,
+        allowNull: false,
+      },
+      schedule_type_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "devices",
+          model: "schedule_type",
           key: "id",
         },
       },
-      record_type: {
+      status_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-      },
-      start_time: {
-        type: Sequelize.BIGINT,
-        allowNull: false,
-      },
-      end_time: {
-        type: Sequelize.BIGINT,
-        allowNull: false,
-      },
-      data_record_url: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        references: {
+          model: "schedule_status",
+          key: "id",
+        },
       },
       createdAt: {
         type: Sequelize.BIGINT,
@@ -51,6 +51,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("records");
+    await queryInterface.dropTable("schedules");
   },
 };
