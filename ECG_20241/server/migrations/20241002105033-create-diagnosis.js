@@ -3,31 +3,26 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("tokens", {
+    await queryInterface.createTable("diagnosis", {
       id: {
         type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true,
       },
-      account_id: {
+      schedule_id: {
         type: Sequelize.STRING,
         allowNull: false,
         references: {
-          model: "users",
+          model: "schedules",
           key: "id",
         },
       },
-      access_token: {
-        type: Sequelize.STRING,
+      diagnosis_info: {
+        type: Sequelize.TEXT,
         allowNull: false,
       },
-      refresh_token: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      expires_at: {
-        type: Sequelize.BIGINT,
-        allowNull: false,
+      notes: {
+        type: Sequelize.TEXT,
       },
       createdAt: {
         type: Sequelize.BIGINT,
@@ -39,6 +34,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("tokens");
+    await queryInterface.dropTable("diagnosis");
   },
 };
