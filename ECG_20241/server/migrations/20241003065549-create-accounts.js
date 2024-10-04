@@ -18,6 +18,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      createdAt: {
+        type: Sequelize.BIGINT,
+      },
+      updatedAt: {
+        type: Sequelize.BIGINT,
+      },
     });
   },
 

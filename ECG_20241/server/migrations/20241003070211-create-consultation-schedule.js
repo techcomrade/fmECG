@@ -25,6 +25,12 @@ module.exports = {
           key: "id",
         },
       },
+      createdAt: {
+        type: Sequelize.BIGINT,
+      },
+      updatedAt: {
+        type: Sequelize.BIGINT,
+      },
     });
   },
 
