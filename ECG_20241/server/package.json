@@ -19,7 +19,7 @@
     "db:seed.rollback.all": "npx sequelize-cli db:seed:undo:all",
     "db:reset": "node create-db",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "api:gen": "nswag openapi2tsclient /input:http://localhost:3000/api-json /output:src/api/api-generated.ts"
+    "api:gen": "nswag openapi2tsclient /input:http://localhost:3000/api-json /output:api/api-generated.ts"
   },
   "keywords": [],
   "author": "",
