@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TokenService } from './token.service';
 import { JwtService } from '@nestjs/jwt';
 import { TokenRepository } from './model/token.repository';
-import { TokenModel } from './model/token.model';
+import { TokenModel } from '../../entities/token.model';
 import { SequelizeModule } from '@nestjs/sequelize';
 
 @Module({

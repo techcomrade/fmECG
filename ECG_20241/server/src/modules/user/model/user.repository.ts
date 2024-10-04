@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { UserModel } from './user.model';
+import { UserModel } from '../../../entities/user.model';
 const { v4: uuidv4 } = require('uuid');
 
 @Injectable()

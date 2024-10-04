@@ -1,4 +1,4 @@
-import { UserModel } from './model/user.model';
+import { UserModel } from '../../entities/user.model';
 import { UserRepository } from './model/user.repository';
 import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
 

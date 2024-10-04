@@ -1,5 +1,5 @@
 import { Controller, Get, Body, Post,  UseGuards } from '@nestjs/common';
-import { UserModel } from '../user/model/user.model';
+import { UserModel } from '../../entities/user.model';
 import { AuthenService } from './authen.service';
 import { AuthenRequest } from './model/dto/authen.request';
 import { ApiResponse, ApiBody } from "@nestjs/swagger";
