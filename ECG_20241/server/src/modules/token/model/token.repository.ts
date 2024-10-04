@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { TokenModel } from './token.model';
+import { TokenModel } from '../../../entities/token.model';
 
 
 @Injectable()

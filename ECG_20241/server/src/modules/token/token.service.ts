@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UserModel } from '../user/model/user.model';
+import { UserModel } from '../../entities/user.model';
 import { JwtService } from '@nestjs/jwt';
 import * as dotenv from 'dotenv';
 import { TokenRepository } from './model/token.repository';
-import { TokenModel } from './model/token.model';
+import { TokenModel } from '../../entities/token.model';
 
 dotenv.config();
 

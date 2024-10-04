@@ -1,4 +1,4 @@
-import { UserModel } from './model/user.model';
+import { UserModel } from '../../entities/user.model';
 import { UserRepository } from './model/user.repository';
 import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
 
@@ -12,7 +12,7 @@ export class UserService {
         return this.userRepository.findAll();
     }
 
-    async add(user: UserModel) {
+    async add(user: UserModel): Promise<Boolean> {
         const existingData = await this.findByEmail(user.email);
         if (existingData) {
             throw new ConflictException('Email already in use');

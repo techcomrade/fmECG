@@ -1,8 +1,8 @@
 
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { UserModel } from '../user/model/user.model';
+import { UserModel } from '../../entities/user.model';
 import { UserService } from '../user/user.service';
-import { TokenModel } from '../token/model/token.model';
+import { TokenModel } from '../../entities/token.model';
 import { TokenService } from '../token/token.service';
 import { AuthenRequest } from './model/dto/authen.request';
 const { v4: uuidv4 } = require('uuid');
