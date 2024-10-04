@@ -13,7 +13,7 @@ import { DeviceModule } from "./modules/device/device.module";
       host: "localhost",
       port: 3306,
       username: "root",
-      password: "codung2909.",
+      password: "trantuan123",
       database: "identity",
       autoLoadModels: true,
       synchronize: true,
