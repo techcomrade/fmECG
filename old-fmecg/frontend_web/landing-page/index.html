@@ -37,7 +37,7 @@
         <div class="header-area ">
             <div id="sticky-header" class="main-header-area">
                 <div class="container">
-                    <div class="row align-items-center">
+                    <div class="row align-items-center justify-content-between">
                         <div class="col-xl-3 col-lg-2">
                             <div class="logo">
                                 <a href="index.html">
@@ -50,23 +50,16 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a href="#welcome">Giới thiệu</a></li>
-                                        <li><a href="#service">Chức năng </a></li>
-                                        <li><a href="#response">Phản hồi </a></li>
-                                        <li><a href="#application">Ứng dụng</a></li>
+                                        <li><a href="#">Dự án <i class="ti-angle-down"></i></a>
+                                            <ul class="submenu">
+                                                <li><a href="#">fmECG</a></li>
+                                                <li><a href="#">abc</a></li>
+                                            </ul>
+                                        </li>
                                         <li><a href="#contact">Liên hệ</a></li>
                                     </ul>
                                 </nav>
                             </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
-                            <div class="Appointment">
-                                <div class="book_btn d-none d-lg-block">
-                                    <a class="popup-with-form" href="#test-form">Đăng ký</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
                         </div>
                     </div>
                 </div>
@@ -96,8 +89,8 @@
     </div>
     <!-- slider_area_end -->
 
-    <!-- welcome_docmed_area_start -->
-    <div class="welcome_docmed_area" id="welcome">
+    <!-- welcome_project_start -->
+    <div class="welcome_project" id="welcome">
         <div class="container">
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
@@ -111,10 +104,10 @@
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6">
-                    <div class="welcome_docmed_info">
-                        <h2>Chào mừng tới fmECG</h2>
+                    <div class="welcome_project_info">
+                        <h2>Dự án fmECG</h2>
                         <h3>Dự án quản lý dữ liệu điện tim </h3>
-                        <p>Chúng tôi cung cấp giải pháp quản lý, theo dõi, hiển thị dữ liệu dữ liệu điện tim thông qua ứng dụng di động và website</p>
+                        <p>Dự án fmECG nhằm phát triển một hệ thống thông minh giúp thu thập, xử lý, và quản lý dữ liệu điện tim từ bệnh nhân. Hệ thống này sẽ hỗ trợ người dùng trong việc theo dõi sức khỏe hàng ngày, cung cấp cho bác sĩ và bệnh viện công cụ hữu ích trong việc quản lý và chẩn đoán. Đặc biệt, dữ liệu từ bệnh nhân sẽ được lưu trữ và bảo mật, đảm bảo tính liên tục và khả năng truy cập cho các chuyên gia y tế khi cần thiết.</p>
                         <ul>
                             <li> <i class="flaticon-right"></i> Giao diện bắt mắt, dễ sử dụng </li>
                             <li> <i class="flaticon-right"></i> Hiển thị dữ liệu trực quan</li>
@@ -126,8 +119,8 @@
             </div>
         </div>
     </div>
-    <!-- welcome_docmed_area_end -->
-    <!-- service_area_start -->
+
+    <!-- Service -->
     <div class="service_area" id="service">
         <div class="container p-0">
             <div class="row no-gutters">
@@ -136,8 +129,8 @@
                         <div class="icon">
                             <i class="flaticon-electrocardiogram"></i>
                         </div>
-                        <h3>Hiển thị và phân tích dữ liệu</h3>
-                        <p>Hệ thống hiển thị dữ liệu y tế theo dạng bảng biểu và đồ thị. </p>
+                        <h3>Thu thập và xử lý dữ liệu điện tim</h3>
+                        <p>Dữ liệu được lấy từ các thiết bị điện tim đeo tay hoặc đặt gần bệnh nhân và truyền qua Bluetooth về ứng dụng di động. </p>
                     </div>
                 </div>
                 <div class="col-xl-4 col-md-4">
@@ -145,8 +138,8 @@
                         <div class="icon">
                             <i class="flaticon-emergency-call"></i>
                         </div>
-                        <h3>Ghi lại và lưu trữ dữ liệu</h3>
-                        <p>Hệ thống hỗ trợ lưu dữ liệu mà người dùng đo được từ thiết bị trên cả ứng dụng và trên server của hệ thống.</p>
+                        <h3>Quản lý và lưu trữ dữ liệu</h3>
+                        <p>Dữ liệu được lưu trữ trên hệ thống máy chủ, có thể truy xuất dễ dàng thông qua ứng dụng web dành cho bệnh nhân và bác sĩ. Hệ thống đảm bảo tính bảo mật và quyền riêng tư của bệnh nhân.</p>
                     </div>
                 </div>
                 <div class="col-xl-4 col-md-4">
@@ -154,114 +147,224 @@
                         <div class="icon">
                             <i class="flaticon-first-aid-kit"></i>
                         </div>
-                        <h3>Trao đổi thông tin và chia sẻ</h3>
-                        <p> Hệ thống giúp người dùng có thể trao đổi trực tiếp với bác sĩ và trợ lý ảo, chia sẻ kết quả đo điện tim.</p>
+                        <h3>Hiển thị dữ liệu một cách trực quan</h3>
+                        <p>Dữ liệu được chuyển đổi thành các bảng biểu và đồ thị, giúp bệnh nhân và bác sĩ dễ dàng phân tích và theo dõi tình trạng sức khỏe.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- service_area_end -->
-    <!-- testmonial_area_start -->
-    <div class="testmonial_area" id="response">
-        <div class="testmonial_active owl-carousel">
-            <div class="single-testmonial testmonial_bg_1 overlay2">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-10 offset-xl-1">
-                            <div class="testmonial_info text-center">
-                                <div class="quote">
-                                    <i class="flaticon-straight-quotes"></i>
-                                </div>
-                                <p>Donec imperdiet congue orci consequat mattis. Donec rutrum porttitor <br>
-                                    sollicitudin. Pellentesque id dolor tempor sapien feugiat ultrices nec sed neque.
-                                    <br>
-                                    Fusce ac mattis nulla. Morbi eget ornare dui. </p>
-                                <div class="testmonial_author">
-                                    <h4>Asana Korim</h4>
-                                </div>
-                            </div>
-                        </div>
+
+    <div class="process">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-xl-6 col-lg-6">
+                    <div class="process_info">
+                        <h2>Quy trình hoạt động</h2>
+                        <h5>1. Thiết bị</h5> 
+                        <p>Bệnh nhân đeo thiết bị điện tim có khả năng thu thập dữ liệu sinh học.</p>
+                        <h5>2. App di động</h5>
+                        <p>Thiết bị điện tim kết nối với ứng dụng qua Bluetooth, dữ liệu được gửi từ thiết bị tới app</p>
+                        <h5>3. Server</h5>
+                        <p>App di động đồng bộ dữ liệu với server, nơi dữ liệu được lưu trữ an toàn và phân tích.</p>
+                        <h5>4. Web admin</h5> 
+                        <p>Bác sĩ hoặc bệnh viện có thể truy cập dữ liệu từ máy chủ thông qua ứng dụng web, với giao diện trực quan hiển thị thông tin dưới dạng bảng biểu và đồ thị.</p>
                     </div>
                 </div>
-            </div>
-            <div class="single-testmonial testmonial_bg_2 overlay2">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-10 offset-xl-1">
-                            <div class="testmonial_info text-center">
-                                <div class="quote">
-                                    <i class="flaticon-straight-quotes"></i>
-                                </div>
-                                <p>Donec imperdiet congue orci consequat mattis. Donec rutrum porttitor <br>
-                                    sollicitudin. Pellentesque id dolor tempor sapien feugiat ultrices nec sed neque.
-                                    <br>
-                                    Fusce ac mattis nulla. Morbi eget ornare dui. </p>
-                                <div class="testmonial_author">
-                                    <h4>Asana Korim</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="single-testmonial testmonial_bg_1 overlay2">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-10 offset-xl-1">
-                            <div class="testmonial_info text-center">
-                                <div class="quote">
-                                    <i class="flaticon-straight-quotes"></i>
-                                </div>
-                                <p>Donec imperdiet congue orci consequat mattis. Donec rutrum porttitor <br>
-                                    sollicitudin. Pellentesque id dolor tempor sapien feugiat ultrices nec sed neque.
-                                    <br>
-                                    Fusce ac mattis nulla. Morbi eget ornare dui. </p>
-                                <div class="testmonial_author">
-                                    <h4>Asana Korim</h4>
-                                </div>
-                            </div>
-                        </div>
+                <div class="col-xl-6 col-lg-6 d-flex align-items-center justify-content-center">
+                    <div class="process_img">
+                        <img src="img/about/1.png" alt="">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- testmonial_area_end -->
 
-
-    <!-- Emergency_contact start -->
-    <div class="Emergency_contact" id="application">
+    <!-- function_area start -->
+    <div class="function_area" id="application">
         <div class="conatiner-fluid p-0">
             <div class="row no-gutters">
                 <div class="col-xl-6">
-                    <div class="single_emergency d-flex align-items-center justify-content-center emergency_bg_1 overlay_skyblue">
+                    <div class="single_function d-flex align-items-center justify-content-center emergency_bg_1 overlay_skyblue">
                         <div class="info">
-                            <h3>Website admin</h3>
-                            <p>Quản lý hệ thống thông tin, dữ liệu người dùng, thiết bị y tế.</p>
-                        </div>
-                        <div class="info_button">
-                            <a href="#" class="boxed-btn3-white">Đăng ký</a>
+                            <h3>Ứng dụng di động </h3>
+                            <p>Nhận dữ liệu từ thiết bị điện tim qua kết nối Bluetooth.</p>
+                            <p>Hiển thị dữ liệu điện tim cho người dùng trên giao diện trực quan.</p>
+                            <p>Đồng bộ dữ liệu với máy chủ để lưu trữ và phân tích lâu dài.</p>
+                            <p>Cảnh báo và nhắc nhở người dùng trong các trường hợp kết quả điện tim không ổn định.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-6">
-                    <div class="single_emergency d-flex align-items-center justify-content-center emergency_bg_2 overlay_skyblue">
+                    <div class="single_function d-flex align-items-center justify-content-center emergency_bg_2 overlay_skyblue">
                         <div class="info">
-                            <h3>Ứng dụng di động</h3>
-                            <p>Theo dõi thông tin, dữ liệu y tế. Kết nối bluetooth với thiết bị thu thập dữ liệu đo đạc.</p>
-                        </div>
-                        <div class="info_button">
-                            <a href="#" class="boxed-btn3-white">App di động</a>
+                            <h3>Ứng dụng web (web admin)</h3>
+                            <p>Dành cho bác sĩ, bệnh viện và bệnh nhân để theo dõi tình trạng sức khỏe.</p>
+                            <p>Hiển thị dữ liệu điện tim dưới dạng bảng biểu, đồ thị, cung cấp các công cụ phân tích chi tiết.</p>
+                            <p>Quản lý hồ sơ bệnh nhân, bác sĩ và quyền truy cập dữ liệu.</p>
+                            <p>Chức năng báo cáo và xuất dữ liệu cho các nghiên cứu lâm sàng hoặc y tế.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Emergency_contact end -->
 
-<!-- footer start -->
+    <!-- Techonlogy -->
+    <div class="technology_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="section_title text-center mb-55">
+                        <h3>Công nghệ sử dụng</h3>
+                        <p>Hệ thống fmECG được phát triển dựa trên các công nghệ hiện đại, đảm bảo hiệu suất và bảo mật cao</p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center align-content-stretch">
+                <div class="col-lg-6 col-xl-4 col-md-6 mb-4">
+                    <div class="single_technology">
+                        <div class="technology_content">
+                            <h3>Ứng dụng di động (app)</h3>
+                            <p>Sử dụng Flutter, một framework đa nền tảng, giúp phát triển nhanh chóng cho cả Android và iOS</p>
+                        </div>
+                        <div class="technology_thumb">
+                            <img src="img/fmECG/flutter.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4 col-md-6 mb-4">
+                    <div class="single_technology">
+                        <div class="technology_content">
+                            <h3><a href="#">Ứng dụng web (web admin):</a></h3>
+                            <p>Xây dựng trên ReactJS để tạo giao diện người dùng mượt mà và NodeJS cho backend, xử lý các tác vụ liên quan đến dữ liệu và kết nối với máy chủ</p>
+                        </div>
+                        <div class="technology_thumb">
+                            <img src="img/fmECG/React.webp" alt="">
+                            <img src="img/fmECG/nodejs.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4 col-md-6 mb-4">
+                    <div class="single_technology">
+                        <div class="technology_content">
+                            <h3><a href="#">Máy chủ (server)</a></h3>
+                            <p>Server sẽ lưu trữ dữ liệu, xử lý yêu cầu và quản lý dữ liệu từ app và web. Các công nghệ cloud như AWS hoặc Google Cloud có thể được sử dụng để đảm bảo tính sẵn sàng và mở rộng dễ dàng.</p>
+                        </div>
+                        <div class="technology_thumb">
+                            <img src="img/fmECG/aws.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4 col-md-6 mb-4">
+                    <div class="single_technology">
+                        <div class="technology_content">
+                            <h3><a href="#">Cơ sở dữ liệu</a></h3>
+                            <p>Sử dụng các hệ quản trị cơ sở dữ liệu như MongoDB hoặc PostgreSQL để lưu trữ hồ sơ bệnh nhân và dữ liệu điện tim.</p>
+                        </div>
+                        <div class="technology_thumb">
+                            <img src="img/fmECG/mongodb.png" alt="">
+                            <img src="img/fmECG/postgresql.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- advice_area_start  -->
+    <div class="advice_area">
+        <div class="advice_tabs_area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <ul class="nav" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                            aria-selected="true">Lợi ích với bệnh nhân</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                            aria-selected="false">Lợi ích với bác sĩ và quản trị viên</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="container">
+            <div class="border_bottom">
+                    <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                
+                                    <div class="row align-items-center">
+                                            <div class="col-xl-6 col-md-6">
+                                                <div class="advice_info">
+                                                    <div class="icon">
+                                                        <i class="flaticon-first-aid-kit"></i>
+                                                    </div>
+                                                    <h3>Leading edge care for Your family</h3>
+                                                    <p>- Bệnh nhân có thể dễ dàng theo dõi tình trạng sức khỏe của mình mọi lúc, mọi nơi thông qua app.</p>
+                                                    <p>- Cảnh báo và thông báo kịp thời khi phát hiện vấn đề bất thường về nhịp tim.</p>
+                                                    <p>- Giúp bệnh nhân duy trì liên lạc với bác sĩ trong các tình huống cần thiết.</p>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-md-6">
+                                                <div class="advice_thumb">
+                                                    <img src="img/about/business.png" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="row align-items-center">
+                                            <div class="col-xl-6 col-md-6">
+                                                <div class="advice_thumb">
+                                                    <img src="img/about/business.png" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-md-6">
+                                                <div class="advice_info">
+                                                    <div class="icon">
+                                                        <i class="flaticon-first-aid-kit"></i>
+                                                    </div>
+                                                    <h3>Leading edge care for Your family</h3>
+                                                    <p>Cung cấp công cụ theo dõi và quản lý bệnh nhân một cách khoa học và chính xác.</p>
+                                                    <p>Hỗ trợ đưa ra quyết định lâm sàng nhanh chóng và chính xác thông qua dữ liệu lịch sử của bệnh nhân.</p>
+                                                    <p>Hệ thống quản lý hồ sơ bệnh nhân dễ dàng, giúp tiết kiệm thời gian và nâng cao hiệu quả công việc.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                    <div class="row align-items-center">
+                                            <div class="col-xl-6 col-md-6">
+                                                <div class="advice_info">
+                                                    <div class="icon">
+                                                        <i class="flaticon-first-aid-kit"></i>
+                                                    </div>
+                                                    <h3>Leading edge care for Your family</h3>
+                                                    <p>Esteem spirit temper too say adieus who direct esteem.
+                                                        It esteems luckily picture placing drawing. Apartments frequently or motionless on
+                                                        reasonable projecting expression.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-md-6">
+                                                <div class="advice_thumb">
+                                                    <img src="img/about/business.png" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                          </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer" id="contact">
             <div class="footer_top">
                 <div class="container">
@@ -276,7 +379,7 @@
                                 <p>
                                         Hệ thống quản lý và theo dõi dữ liệu điện tim.
                                 </p>
-                                <div class="socail_links">
+                                <div class="social_links">
                                     <ul>
                                         <li>
                                             <a href="#">
@@ -345,56 +448,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 </div>
             </div>
         </footer>
-<!-- footer end  -->
-    <!-- link that opens popup -->
-
-    <!-- form itself end-->
-    <form id="test-form" class="white-popup-block mfp-hide">
-        <div class="popup_box ">
-            <div class="popup_inner">
-                <h3>Make an Appointment</h3>
-                <form action="#">
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <input id="datepicker" placeholder="Pick date">
-                        </div>
-                        <div class="col-xl-6">
-                            <input id="datepicker2" placeholder="Suitable time">
-                        </div>
-                        <div class="col-xl-6">
-                            <select class="form-select wide" id="default-select" class="">
-                                <option data-display="Select Department">Department</option>
-                                <option value="1">Eye Care</option>
-                                <option value="2">Physical Therapy</option>
-                                <option value="3">Dental Care</option>
-                            </select>
-                        </div>
-                        <div class="col-xl-6">
-                            <select class="form-select wide" id="default-select" class="">
-                                <option data-display="Doctors">Doctors</option>
-                                <option value="1">Mirazul Alom</option>
-                                <option value="2">Monzul Alom</option>
-                                <option value="3">Azizul Isalm</option>
-                            </select>
-                        </div>
-                        <div class="col-xl-6">
-                            <input type="text"  placeholder="Name">
-                        </div>
-                        <div class="col-xl-6">
-                            <input type="text"  placeholder="Phone no.">
-                        </div>
-                        <div class="col-xl-12">
-                            <input type="email"  placeholder="Email">
-                        </div>
-                        <div class="col-xl-12">
-                            <button type="submit" class="boxed-btn3">Confirm</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </form>
-    <!-- form itself end -->
 
     <!-- JS here -->
     <script src="js/vendor/modernizr-3.5.0.min.js"></script>
