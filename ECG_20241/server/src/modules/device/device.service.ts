@@ -2,9 +2,10 @@
 // import { DeviceRepository } from "./model/device.repository";
 // import { Injectable } from "@nestjs/common";
 // import { Device } from './interfaces/device.interface';
+// import { DeviceServiceI } from "./interfaces/device.service.interface";
 
 // @Injectable()
-// export class DeviceService {
+// export class DeviceService implements DeviceServiceI{
 //   constructor(private deviceRepository: DeviceRepository) {}
 
 //   async getAllData(): Promise<Device[]> {
@@ -33,5 +34,9 @@
 
 //   async deleteById(id: string) {
 //     return this.deviceRepository.deleteById(id);
+//   }
+
+//   special(): Promise<void> {
+//     throw new Error("Method not implemented.");
 //   }
 // }
