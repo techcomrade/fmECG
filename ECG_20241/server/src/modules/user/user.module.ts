@@ -1,4 +1,4 @@
-import { UserRepository } from './model/user.repository';
+import { UserRepository } from './user.repository';
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
 import { SequelizeModule } from '@nestjs/sequelize';

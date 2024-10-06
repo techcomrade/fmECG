@@ -5,10 +5,13 @@ import {
   PrimaryKey,
   HasMany,
   DataType,
+  ForeignKey,
+  BelongsTo
 } from "sequelize-typescript";
 import { DeviceScheduleModel } from "./device_schedule.model"
 import { DiagnosisModel } from "./diagnosis.model"
 import { RecurringScheduleModel } from "./recurring_schedule.model"
+import { ScheduleStatusModel } from "./schedule_status.model";
 
 @Table({ tableName: "schedules" })
 export class SchedulesModel extends Model<SchedulesModel> {
@@ -43,11 +46,15 @@ export class SchedulesModel extends Model<SchedulesModel> {
   })
   schedule_type_id: number;
 
+  @ForeignKey(() => ScheduleStatusModel)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
   status_id: number;
+
+  @BelongsTo(() => ScheduleStatusModel)
+  schedule_status: ScheduleStatusModel;
 
   @Column({
     type: DataType.DATE,
