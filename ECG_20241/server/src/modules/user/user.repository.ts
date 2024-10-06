@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { UserModel } from '../../../entities/user.model';
+import { UserModel } from '../../entities/user.model';
 const { v4: uuidv4 } = require('uuid');
 
 @Injectable()
@@ -24,9 +24,9 @@ export class UserRepository {
                 gender: User.gender,
                 birth: User.birth,
                 phone_number: User.phone_number,
-                status: 1,
+                status_id: 1,
                 information: User.information,
-                role: User.role,
+                role_id: User.role_id,
             })
         }
         catch (error){
