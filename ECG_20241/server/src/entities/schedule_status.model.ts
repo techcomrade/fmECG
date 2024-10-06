@@ -17,13 +17,13 @@ export class ScheduleStatusModel extends Model<ScheduleStatusModel> {
   status_description: string;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: true,
   })
   createdAt: number;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: true,
   })
   updatedAt: number;

@@ -17,13 +17,13 @@ export class DeviceTypeModel extends Model<DeviceTypeModel> {
   type_name: string;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: true,
   })
   createdAt: number;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: true,
   })
   updatedAt: number;
