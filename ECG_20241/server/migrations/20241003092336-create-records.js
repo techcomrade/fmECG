@@ -34,10 +34,10 @@ module.exports = {
         allowNull: false,
       },
       createdAt: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DATE,
       },
       updatedAt: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DATE,
       },
     });
   },

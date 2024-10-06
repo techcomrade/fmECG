@@ -62,13 +62,13 @@ export class DeviceModel extends Model<DeviceModel> {
   status: DeviceStatusModel;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: true,
   })
   createdAt: number;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: true,
   })
   updatedAt: number;
