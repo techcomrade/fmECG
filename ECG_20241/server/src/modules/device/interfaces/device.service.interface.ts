@@ -2,5 +2,5 @@
 
 export interface DeviceServiceI {
     special(): Promise<void>;
-    
+
 }

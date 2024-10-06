@@ -37,6 +37,7 @@
 //   }
 
 //   special(): Promise<void> {
+//   const example = 0; 
 //     throw new Error("Method not implemented.");
 //   }
 // }
