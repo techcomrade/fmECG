@@ -12,20 +12,20 @@ export class UserModel extends Model<UserModel> {
   })
   id: string;
 
-  @Column({
-    type: DataType.STRING(255),
-    allowNull: false,
-    validate: {
-        isEmail: true,
-    },
-  })
-  email: string;
+  // @Column({
+  //   type: DataType.STRING(255),
+  //   allowNull: false,
+  //   validate: {
+  //       isEmail: true,
+  //   },
+  // })
+  // email: string;
 
-  @Column({
-    type: DataType.STRING(255),
-    allowNull: false,
-  })
-  password: string;
+  // @Column({
+  //   type: DataType.STRING(255),
+  //   allowNull: false,
+  // })
+  // password: string;
 
   @Column({
     type: DataType.STRING(255),
@@ -65,7 +65,7 @@ export class UserModel extends Model<UserModel> {
   status_id: number;
 
   @BelongsTo(() => UserStatusModel)
-  user_status: UserRoleModel;
+  user_status: UserStatusModel;
 
   @Column({
     type: DataType.TEXT,
