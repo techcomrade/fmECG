@@ -1,14 +1,21 @@
-import { Column, Model, Table, PrimaryKey, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import { UserRoleModel } from './user_role.model';
-import { UserStatusModel } from './user_status.model';
+import {
+  Column,
+  Model,
+  Table,
+  PrimaryKey,
+  DataType,
+  ForeignKey,
+  BelongsTo,
+} from "sequelize-typescript";
+import { UserRoleModel } from "./user_role.model";
+import { UserStatusModel } from "./user_status.model";
 
-@Table({ tableName: 'users' })
+@Table({ tableName: "users" })
 export class UserModel extends Model<UserModel> {
-
   @PrimaryKey
   @Column({
     type: DataType.STRING(255),
-    allowNull: false
+    allowNull: false,
   })
   id: string;
 
@@ -57,22 +64,6 @@ export class UserModel extends Model<UserModel> {
   })
   image: string;
 
-  @ForeignKey(() => UserStatusModel)
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  status_id: number;
-
-  @BelongsTo(() => UserStatusModel)
-  user_status: UserStatusModel;
-
-  @Column({
-    type: DataType.TEXT,
-    allowNull: true,
-  })
-  information: string;
-
   @ForeignKey(() => UserRoleModel)
   @Column({
     type: DataType.INTEGER,
@@ -80,16 +71,32 @@ export class UserModel extends Model<UserModel> {
   })
   role_id: number;
 
-  @BelongsTo(() => UserRoleModel)
-  user_role: UserRoleModel;
+  @ForeignKey(() => UserStatusModel)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  status_id: number;
 
   @Column({
-    type: DataType.DATE
+    type: DataType.TEXT,
+    allowNull: true,
+  })
+  information: string;
+
+  @Column({
+    type: DataType.DATE,
   })
   createdAt: Date;
 
   @Column({
-    type: DataType.DATE
+    type: DataType.DATE,
   })
   updatedAt: Date;
+
+  @BelongsTo(() => UserRoleModel)
+  user_role: UserRoleModel;
+
+  @BelongsTo(() => UserStatusModel)
+  user_status: UserStatusModel;
 }

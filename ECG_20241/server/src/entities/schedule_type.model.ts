@@ -1,8 +1,14 @@
-import { Column, Model, Table, PrimaryKey, DataType } from 'sequelize-typescript';
-
-@Table({ tableName: 'schedule_type' })
+import {
+  Column,
+  Model,
+  Table,
+  PrimaryKey,
+  DataType,
+  HasMany,
+} from "sequelize-typescript";
+import { SchedulesModel } from "./schedules.model";
+@Table({ tableName: "schedule_type" })
 export class ScheduleTypeModel extends Model<ScheduleTypeModel> {
-
   @PrimaryKey
   @Column({
     type: DataType.INTEGER,
@@ -17,14 +23,17 @@ export class ScheduleTypeModel extends Model<ScheduleTypeModel> {
   type_name: string;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: true,
   })
-  createdAt: number;
+  createdAt: Date;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: true,
   })
-  updatedAt: number;
+  updatedAt: Date;
+
+  @HasMany(() => SchedulesModel)
+  schedules: SchedulesModel[];
 }

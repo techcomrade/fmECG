@@ -6,12 +6,13 @@ import {
   HasMany,
   DataType,
   ForeignKey,
-  BelongsTo
+  BelongsTo,
 } from "sequelize-typescript";
-import { DeviceScheduleModel } from "./device_schedule.model"
-import { DiagnosisModel } from "./diagnosis.model"
-import { RecurringScheduleModel } from "./recurring_schedule.model"
+import { DeviceScheduleModel } from "./device_schedule.model";
+import { DiagnosisModel } from "./diagnosis.model";
+import { RecurringScheduleModel } from "./recurring_schedule.model";
 import { ScheduleStatusModel } from "./schedule_status.model";
+import { ConsultationScheduleModel } from "./consultation_schedule.model";
 
 @Table({ tableName: "schedules" })
 export class SchedulesModel extends Model<SchedulesModel> {
@@ -58,7 +59,7 @@ export class SchedulesModel extends Model<SchedulesModel> {
 
   @Column({
     type: DataType.DATE,
-  }) 
+  })
   createdAt: Date;
 
   @Column({
@@ -74,4 +75,7 @@ export class SchedulesModel extends Model<SchedulesModel> {
 
   @HasMany(() => RecurringScheduleModel)
   recurring_schedules: RecurringScheduleModel[];
+
+  @HasMany(() => ConsultationScheduleModel)
+  consultation_schedules: ConsultationScheduleModel[];
 }
