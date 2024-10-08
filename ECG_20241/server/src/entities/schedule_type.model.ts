@@ -1,30 +1,30 @@
-import { Column, Model, Table, PrimaryKey, DataType } from 'sequelize-typescript';
+// import { Column, Model, Table, PrimaryKey, DataType } from 'sequelize-typescript';
 
-@Table({ tableName: 'schedule_type' })
-export class ScheduleTypeModel extends Model<ScheduleTypeModel> {
+// @Table({ tableName: 'schedule_type' })
+// export class ScheduleTypeModel extends Model<ScheduleTypeModel> {
 
-  @PrimaryKey
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  id: number;
+//   @PrimaryKey
+//   @Column({
+//     type: DataType.INTEGER,
+//     allowNull: false,
+//   })
+//   id: number;
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  type_name: string;
+//   @Column({
+//     type: DataType.STRING,
+//     allowNull: false,
+//   })
+//   type_name: string;
 
-  @Column({
-    type: DataType.DATE,
-    allowNull: true,
-  })
-  createdAt: number;
+//   @Column({
+//     type: DataType.DATE,
+//     allowNull: true,
+//   })
+//   createdAt: Date;
 
-  @Column({
-    type: DataType.DATE,
-    allowNull: true,
-  })
-  updatedAt: number;
-}
+//   @Column({
+//     type: DataType.DATE,
+//     allowNull: true,
+//   })
+//   updatedAt: Date;
+// }

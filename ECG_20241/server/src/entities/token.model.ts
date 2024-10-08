@@ -39,11 +39,11 @@ export class TokenModel extends Model<TokenModel> {
     type: DataType.DATE,
     allowNull: true,
   })
-  createdAt: number;
+  createdAt: Date;
 
   @Column({
     type: DataType.DATE,
     allowNull: true,
   })
-  updatedAt: number;
+  updatedAt: Date;
 }
