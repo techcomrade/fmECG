@@ -18,14 +18,16 @@ export class UserRepository {
         try {
             return await this.userModel.create({
                 id: User.id,
-                email: User.email,
-                password: User.password,
+                // email: User.email,
+                // password: User.password,
                 username: User.username,
                 gender: User.gender,
                 birth: User.birth,
                 phone_number: User.phone_number,
                 // status_id: 1,
-                information: User.information,
+
+                // information: User.information,
+
                 // role_id: User.role_id,
             })
         }
@@ -35,7 +37,7 @@ export class UserRepository {
         }
     }
 
-    async findByEmail(email: string): Promise<UserModel>{
-        return await this.userModel.findOne({ where: { email: email } });
-    }
+    // async findByEmail(email: string): Promise<UserModel>{
+    //     return await this.userModel.findOne({ where: { email: email } });
+    // }
 }

@@ -7,7 +7,6 @@ export class UserRoleModel extends Model<UserRoleModel> {
   @PrimaryKey
   @Column({
     type: DataType.INTEGER,
-    autoIncrement: true,
     allowNull: false,
   })
   id: number;

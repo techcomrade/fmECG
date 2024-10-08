@@ -7,7 +7,6 @@ export class UserStatusModel extends Model<UserStatusModel> {
   @PrimaryKey
   @Column({
     type: DataType.INTEGER,
-    autoIncrement: true,
     allowNull: false,
   })
   id: number;

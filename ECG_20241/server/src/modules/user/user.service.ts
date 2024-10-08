@@ -13,7 +13,7 @@ export class UserService {
     }
 
     async add(user: UserModel): Promise<Boolean> {
-        const existingData = await this.findByEmail(user.email);
+        const existingData = 0;
         if (existingData) {
             throw new ConflictException('Email already in use');
         }
@@ -28,7 +28,7 @@ export class UserService {
         }
     }
 
-    async findByEmail(email: string): Promise<UserModel | any> {
-        return await this.userRepository.findByEmail(email);
-    }
+    // async findByEmail(email: string): Promise<UserModel | any> {
+    //     return await this.userRepository.findByEmail(email);
+    // }
 }
