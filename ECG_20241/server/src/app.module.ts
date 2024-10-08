@@ -4,7 +4,7 @@ import { UserModule } from "./modules/user/user.module";
 import { SequelizeModule } from "@nestjs/sequelize";
 // import { AuthenModule } from "./modules/authenService/authen.module";
 import { APP_GUARD } from "@nestjs/core";
-// import { DeviceModule } from "./modules/device/device.module";
+import { DeviceModule } from "./modules/device/device.module";
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { APP_GUARD } from "@nestjs/core";
     }),
     UserModule,
     // AuthenModule,
-    // DeviceModule,
+    DeviceModule,
   ],
 })
 export class AppModule {}

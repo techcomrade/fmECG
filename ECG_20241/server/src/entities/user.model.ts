@@ -19,21 +19,6 @@ export class UserModel extends Model<UserModel> {
   })
   id: string;
 
-  // @Column({
-  //   type: DataType.STRING(255),
-  //   allowNull: false,
-  //   validate: {
-  //       isEmail: true,
-  //   },
-  // })
-  // email: string;
-
-  // @Column({
-  //   type: DataType.STRING(255),
-  //   allowNull: false,
-  // })
-  // password: string;
-
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
@@ -86,11 +71,13 @@ export class UserModel extends Model<UserModel> {
 
   @Column({
     type: DataType.DATE,
+    defaultValue: DataType.NOW,
   })
   createdAt: Date;
 
   @Column({
     type: DataType.DATE,
+    defaultValue: DataType.NOW,
   })
   updatedAt: Date;
 
