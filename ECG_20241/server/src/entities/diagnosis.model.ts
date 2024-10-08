@@ -3,11 +3,14 @@ import {
   Model,
   Table,
   PrimaryKey,
+  ForeignKey,
+  BelongsTo,
   DataType,
 } from "sequelize-typescript";
+import { SchedulesModel } from "./schedules.model";
 
-@Table({ tableName: "devices" })
-export class DeviceModel extends Model<DeviceModel> {
+@Table({ tableName: "diagnosis" })
+export class DiagnosisModel extends Model<DiagnosisModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING(255),
@@ -17,50 +20,39 @@ export class DeviceModel extends Model<DeviceModel> {
 
   @Column({
     type: DataType.STRING(255),
+    allowNull: false,
   })
-  user_id: string;
-
-  @Column({
-    type: DataType.STRING(255),
-  })
-  doctor_id: string;
+  patient_id: string;
 
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
   })
-  device_name: string;
+  doctor_id: string;
+
+  @ForeignKey(() => SchedulesModel)
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: false,
+  })
+  schedule_id: string;
 
   @Column({
     type: DataType.TEXT,
+    allowNull: true,
   })
   information: string;
 
   @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
+    type: DataType.DATE,
   })
-  device_type: number;
+  createdAt: Date;
 
   @Column({
-    type: DataType.BIGINT,
-    allowNull: false,
+    type: DataType.DATE,
   })
-  start_date: number;
+  updatedAt: Date;
 
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  status: number;
-
-  @Column({
-    type: DataType.BIGINT
-  })
-  createdAt: number;
-
-  @Column({
-    type: DataType.BIGINT
-  })
-  updatedAt: number;
+  @BelongsTo(() => SchedulesModel)
+  schedule: SchedulesModel;
 }

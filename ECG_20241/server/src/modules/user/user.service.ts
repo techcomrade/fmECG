@@ -1,5 +1,5 @@
-import { UserModel } from './model/user.model';
-import { UserRepository } from './model/user.repository';
+import { UserModel } from '../../entities/user.model';
+import { UserRepository } from './user.repository';
 import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
 
 @Injectable()

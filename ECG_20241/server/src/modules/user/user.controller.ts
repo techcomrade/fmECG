@@ -1,7 +1,7 @@
 import { AuthenticationGuard } from '../common/guards/authentication.guard';
 import { Controller, Get, Post, Body,  UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserModel } from './model/user.model';
+import { UserModel } from '../../entities/user.model';
 import { Roles } from '../common/roles/role.decorator';
 import { Role } from '../common/roles/role.enum';
 import { AuthorizationGuard } from '../common/guards/authorization.guard';
@@ -19,9 +19,9 @@ export class UserController {
         return await this.userService.findAll();
     }
 
-    @Post('register')
-    async add(@Body() User: UserModel){
-        return await this.userService.add(User);
-    }
+    // @Post('register')
+    // async add(@Body() User: UserModel){
+    //     return await this.userService.add(User);
+    // }
 
 }

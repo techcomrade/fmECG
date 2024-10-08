@@ -1,5 +1,5 @@
 import { Column, Model, Table, PrimaryKey, DataType, ForeignKey } from 'sequelize-typescript';
-import { UserModel } from '../../user/model/user.model';
+import { UserModel } from './user.model';
 
 @Table({ tableName: 'tokens' })
 export class TokenModel extends Model<TokenModel> {
@@ -34,4 +34,16 @@ export class TokenModel extends Model<TokenModel> {
     allowNull: false 
   })
   expires_at: number
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  createdAt: Date;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  updatedAt: Date;
 }

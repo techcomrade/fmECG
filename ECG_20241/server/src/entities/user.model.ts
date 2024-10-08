@@ -1,27 +1,29 @@
-import { Column, Model, Table, PrimaryKey, DataType } from 'sequelize-typescript';
+import { Column, Model, Table, PrimaryKey, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { UserRoleModel } from './user_role.model';
+import { UserStatusModel } from './user_status.model';
 
 @Table({ tableName: 'users' })
 export class UserModel extends Model<UserModel> {
 
   @PrimaryKey
   @Column({
-    type: DataType.STRING(255), 
+    type: DataType.STRING(255),
     allowNull: false
   })
   id: string;
 
   @Column({
-    type: DataType.STRING(255), 
-    allowNull: false, 
+    type: DataType.STRING(255),
+    allowNull: false,
     validate: {
-        isEmail: true, 
+        isEmail: true,
     },
   })
   email: string;
 
   @Column({
     type: DataType.STRING(255),
-    allowNull: false, 
+    allowNull: false,
   })
   password: string;
 
@@ -55,23 +57,25 @@ export class UserModel extends Model<UserModel> {
   })
   image: string;
 
+  @ForeignKey(() => UserRoleModel)
   @Column({
     type: DataType.INTEGER,
-    allowNull: true,
+    allowNull: false,
   })
-  status: number;
+  role_id: number;
+
+  @ForeignKey(() => UserStatusModel)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  status_id: number;
 
   @Column({
     type: DataType.TEXT,
     allowNull: true,
   })
   information: string;
-
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  role: number;
 
   @Column({
     type: DataType.DATE
@@ -82,5 +86,10 @@ export class UserModel extends Model<UserModel> {
     type: DataType.DATE
   })
   updatedAt: Date;
+
+  @BelongsTo(() => UserRoleModel)
+  user_role: UserRoleModel;
   
+  @BelongsTo(() => UserStatusModel)
+  user_status: UserStatusModel;
 }
