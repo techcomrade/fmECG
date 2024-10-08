@@ -57,6 +57,13 @@ export class UserModel extends Model<UserModel> {
   })
   image: string;
 
+  @ForeignKey(() => UserRoleModel)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  role_id: number;
+
   @ForeignKey(() => UserStatusModel)
   @Column({
     type: DataType.INTEGER,
@@ -73,16 +80,6 @@ export class UserModel extends Model<UserModel> {
   })
   information: string;
 
-  @ForeignKey(() => UserRoleModel)
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  role_id: number;
-
-  @BelongsTo(() => UserRoleModel)
-  user_role: UserRoleModel;
-
   @Column({
     type: DataType.DATE
   })
@@ -92,4 +89,10 @@ export class UserModel extends Model<UserModel> {
     type: DataType.DATE
   })
   updatedAt: Date;
+
+  @BelongsTo(() => UserRoleModel)
+  user_role: UserRoleModel;
+  
+  @BelongsTo(() => UserStatusModel)
+  user_status: UserStatusModel;
 }

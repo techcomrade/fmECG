@@ -42,9 +42,6 @@ export class DeviceModel extends Model<DeviceModel> {
   })
   device_type_id: number;
 
-  @BelongsTo(() => DeviceTypeModel)
-  device_type: DeviceTypeModel;
-
   @Column({
     type: DataType.BIGINT,
     allowNull: false,
@@ -58,18 +55,21 @@ export class DeviceModel extends Model<DeviceModel> {
   })
   status_id: number;
 
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  createdAt: Date;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  updatedAt: Date;
+
   @BelongsTo(() => DeviceStatusModel)
   status: DeviceStatusModel;
 
-  @Column({
-    type: DataType.DATE,
-    allowNull: true,
-  })
-  createdAt: number;
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: true,
-  })
-  updatedAt: number;
+  @BelongsTo(() => DeviceTypeModel)
+  device_type: DeviceTypeModel;
 }

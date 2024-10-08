@@ -25,7 +25,9 @@ export class UserRepository {
                 birth: User.birth,
                 phone_number: User.phone_number,
                 // status_id: 1,
+
                 // information: User.information,
+
                 // role_id: User.role_id,
             })
         }
