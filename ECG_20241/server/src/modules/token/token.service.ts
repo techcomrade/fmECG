@@ -18,7 +18,7 @@ export class TokenService {
         try{
             return this.jwtService.sign({
                 User_id: user.id,
-                role: user.role                                                                                                                                                                                             
+                // role: user.role                                                                                                                                                                                             
             },{
                 secret: process.env.JWT_SECRET,
                 expiresIn: expiredTime
