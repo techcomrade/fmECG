@@ -50,14 +50,14 @@ export class DeviceModel extends Model<DeviceModel> {
 
   @Column({
     type: DataType.BIGINT,
-    allowNull: false,
+    allowNull: true,
   })
   start_date: number;
 
   @ForeignKey(() => DeviceStatusModel)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
+    allowNull: true,
   })
   status_id: number;
 

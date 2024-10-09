@@ -19,9 +19,9 @@ export class UserController {
         return await this.userService.findAll();
     }
 
-    // @Post('register')
-    // async add(@Body() User: UserModel){
-    //     return await this.userService.add(User);
-    // }
+    @Post('')
+    async add(@Body() User: UserModel){
+        return await this.userService.add(User);
+    }
 
 }
