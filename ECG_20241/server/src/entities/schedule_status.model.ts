@@ -1,4 +1,5 @@
-import { Column, Model, Table, PrimaryKey, DataType } from 'sequelize-typescript';
+import { Column, Model, Table, PrimaryKey, DataType, HasMany } from 'sequelize-typescript';
+import { ScheduleModel } from './schedule.model';
 
 @Table({ tableName: 'schedule_status' })
 export class ScheduleStatusModel extends Model<ScheduleStatusModel> {
@@ -17,14 +18,17 @@ export class ScheduleStatusModel extends Model<ScheduleStatusModel> {
   status_description: string;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: true,
   })
-  createdAt: number;
+  createdAt: Date;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: true,
   })
-  updatedAt: number;
+  updatedAt: Date;
+
+  @HasMany(() => ScheduleModel)
+  schedules: ScheduleModel[];
 }

@@ -6,7 +6,7 @@ import {
   DataType,
   HasMany,
 } from "sequelize-typescript";
-import { SchedulesModel } from "./schedules.model";
+import { ScheduleModel } from "./schedule.model";
 @Table({ tableName: "schedule_type" })
 export class ScheduleTypeModel extends Model<ScheduleTypeModel> {
   @PrimaryKey
@@ -34,6 +34,6 @@ export class ScheduleTypeModel extends Model<ScheduleTypeModel> {
   })
   updatedAt: Date;
 
-  @HasMany(() => SchedulesModel)
-  schedules: SchedulesModel[];
+  @HasMany(() => ScheduleModel)
+  schedules: ScheduleModel[];
 }

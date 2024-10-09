@@ -1,4 +1,5 @@
-import { Column, Model, Table, PrimaryKey, DataType } from 'sequelize-typescript';
+import { Column, Model, Table, PrimaryKey, DataType, HasMany } from 'sequelize-typescript';
+import { DeviceModel } from './device.model';
 
 @Table({ tableName: 'device_type' })
 export class DeviceTypeModel extends Model<DeviceTypeModel> {
@@ -17,14 +18,15 @@ export class DeviceTypeModel extends Model<DeviceTypeModel> {
   type_name: string;
 
   @Column({
-    type: DataType.BIGINT,
-    allowNull: true,
+    type: DataType.DATE,
   })
-  createdAt: number;
+  createdAt: Date;
 
   @Column({
-    type: DataType.BIGINT,
-    allowNull: true,
+    type: DataType.DATE,
   })
-  updatedAt: number;
+  updatedAt: Date;
+  
+  @HasMany(() => DeviceModel)
+  devices: DeviceModel[];
 }

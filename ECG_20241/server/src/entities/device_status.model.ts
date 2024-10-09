@@ -1,8 +1,15 @@
-import { Column, Model, Table, PrimaryKey, DataType } from 'sequelize-typescript';
+import {
+  Column,
+  Model,
+  Table,
+  PrimaryKey,
+  DataType,
+  HasMany,
+} from "sequelize-typescript";
+import { DeviceModel } from "./device.model";
 
-@Table({ tableName: 'device_status' })
+@Table({ tableName: "device_status" })
 export class DeviceStatusModel extends Model<DeviceStatusModel> {
-
   @PrimaryKey
   @Column({
     type: DataType.INTEGER,
@@ -18,13 +25,14 @@ export class DeviceStatusModel extends Model<DeviceStatusModel> {
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
   })
-  createdAt: number;
+  createdAt: Date;
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
   })
-  updatedAt: number;
+  updatedAt: Date;
+
+  @HasMany(() => DeviceModel)
+  devices: DeviceModel[];
 }
