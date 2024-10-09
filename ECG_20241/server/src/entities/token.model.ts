@@ -1,13 +1,6 @@
-import {
-  Column,
-  Model,
-  Table,
-  PrimaryKey,
-  DataType,
-  ForeignKey,
-  BelongsTo,
-} from "sequelize-typescript";
-// import { AccountModel } from "./account.model";
+import { Column, Model, Table, PrimaryKey, DataType, ForeignKey } from 'sequelize-typescript';
+import { UserModel } from './user.model';
+import { AccountModel } from './account.model';
 
 @Table({ tableName: "tokens" })
 export class TokenModel extends Model<TokenModel> {
@@ -17,7 +10,7 @@ export class TokenModel extends Model<TokenModel> {
   })
   id: string;
 
-  //@ForeignKey(() => AccountModel)
+  @ForeignKey(() => AccountModel)
   @Column({
     type: DataType.STRING(255),
     allowNull: false,

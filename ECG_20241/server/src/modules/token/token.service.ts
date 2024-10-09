@@ -14,23 +14,23 @@ export class TokenService {
         private tokenRepository: TokenRepository,
     ){}
     
-    async renderToken(user: UserModel, expiredTime: number): Promise<any> {
-        try{
-            return this.jwtService.sign({
-                User_id: user.id,
+    // async renderToken(user: UserModel, expiredTime: number): Promise<any> {
+    //     try{
+    //         return this.jwtService.sign({
+    //             User_id: user.id,
 
-                // role: user.role_id                                                                                                                                                                                            
+    //             // role: user.role_id                                                                                                                                                                                            
 
-            },{
-                secret: process.env.JWT_SECRET,
-                expiresIn: expiredTime
-            })
-        }
-        catch(error){
-            console.log("token.service.renderToken failed ", error)
-            return null;
-        }
-    }
+    //         },{
+    //             secret: process.env.JWT_SECRET,
+    //             expiresIn: expiredTime
+    //         })
+    //     }
+    //     catch(error){
+    //         console.log("token.service.renderToken failed ", error)
+    //         return null;
+    //     }
+    // }
 
     async verifyToken(token: string): Promise<any> {
         try {

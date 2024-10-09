@@ -14,15 +14,20 @@ export class DeviceRepository {
   }
 
   async add(device: DeviceModel) {
-    return await this.deviceModel.create({
-      id: device.id,
-      doctor_id: device.doctor_id,
-      device_name: device.device_name,
-      information: device.information ?? "",
-      // device_type: device.device_type,
-      start_date: device.start_date,
-      // status: device.status,
-    });
+    try {
+      return await this.deviceModel.create({
+        id: device.id,
+        doctor_id: device.doctor_id,
+        device_name: device.device_name,
+        information: device.information ?? "",
+        device_type: device.device_type,
+        start_date: device.start_date,
+        // status: device.status,
+      });
+    }
+    catch (error) {
+      console.error(error);
+    }
   }
 
   async updateById(device: DeviceModel, id: string) {
@@ -31,9 +36,9 @@ export class DeviceRepository {
         doctor_id: device.doctor_id,
         device_name: device.device_name,
         information: device.information,
-        // device_type: device.device_type,
+        device_type_id: device.device_type_id,
         start_date: device.start_date,
-        // status: device.status,
+        status_id: device.status_id,
       },
       {
         where: {

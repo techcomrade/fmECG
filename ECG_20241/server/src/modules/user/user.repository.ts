@@ -14,21 +14,19 @@ export class UserRepository {
         return await this.userModel.findAll();
     }
 
-    async add(User: UserModel) {
+    async add(user: UserModel) {
         try {
             return await this.userModel.create({
-                id: User.id,
-                // email: User.email,
-                // password: User.password,
-                username: User.username,
-                gender: User.gender,
-                birth: User.birth,
-                phone_number: User.phone_number,
-                // status_id: 1,
-
-                // information: User.information,
-
-                // role_id: User.role_id,
+                id: user.id,
+                account_id: user.account_id,
+                username: user.username,
+                gender: user.gender,
+                birth: user.birth,
+                phone_number: user.phone_number,
+                image: user.image,
+                role_id: user.role_id,
+                status_id: user.status_id,
+                information: user.information
             })
         }
         catch (error){
