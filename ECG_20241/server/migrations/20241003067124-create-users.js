@@ -17,6 +17,7 @@ module.exports = {
           model: "accounts",
           key: "id",
         },
+        unique: true,
       },
       username: {
         type: Sequelize.STRING,
@@ -49,10 +50,10 @@ module.exports = {
         },
       },
       createdAt: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DATE,
       },
       updatedAt: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DATE,
       },
     });
   },

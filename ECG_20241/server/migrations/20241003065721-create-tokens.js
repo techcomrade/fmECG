@@ -16,6 +16,7 @@ module.exports = {
           model: "accounts",
           key: "id",
         },
+        unique: true,
       },
       access_token: {
         type: Sequelize.STRING,
@@ -30,10 +31,10 @@ module.exports = {
         allowNull: false,
       },
       createdAt: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DATE,
       },
       updatedAt: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DATE,
       },
     });
   },

@@ -9,14 +9,6 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      patient_id: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      doctor_id: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       schedule_id: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -29,10 +21,10 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       createdAt: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DATE,
       },
       updatedAt: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DATE,
       },
     });
   },
