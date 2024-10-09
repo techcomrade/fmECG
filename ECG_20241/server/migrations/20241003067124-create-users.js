@@ -17,6 +17,7 @@ module.exports = {
           model: "accounts",
           key: "id",
         },
+        unique: true,
       },
       username: {
         type: Sequelize.STRING,

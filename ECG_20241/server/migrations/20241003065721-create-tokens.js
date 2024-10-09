@@ -16,6 +16,7 @@ module.exports = {
           model: "accounts",
           key: "id",
         },
+        unique: true,
       },
       access_token: {
         type: Sequelize.STRING,

@@ -9,14 +9,6 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      patient_id: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      doctor_id: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       schedule_id: {
         type: Sequelize.STRING,
         allowNull: false,

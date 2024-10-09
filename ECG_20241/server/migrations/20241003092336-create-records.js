@@ -21,6 +21,15 @@ module.exports = {
           key: "id",
         },
       },
+      schedule_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        references: {
+          model: "schedules",
+          key: "id",
+        },
+        unique: true,
+      },
       start_time: {
         type: Sequelize.BIGINT,
         allowNull: false,
