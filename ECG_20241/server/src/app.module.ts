@@ -6,6 +6,7 @@ import { SequelizeModule } from "@nestjs/sequelize";
 import { APP_GUARD } from "@nestjs/core";
 import { DeviceModule } from "./modules/device/device.module";
 import { AccountModule } from "./modules/account/account.module";
+import { ScheduleModule } from "./modules/schedule/schedule.module";
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { AccountModule } from "./modules/account/account.module";
       host: "localhost",
       port: 3306,
       username: "root",
-      password: "duong1705",
+      password: "codung2909.",
       database: "identity",
       autoLoadModels: true,
       synchronize: true,
@@ -23,7 +24,8 @@ import { AccountModule } from "./modules/account/account.module";
     UserModule,
     // AuthenModule,
     DeviceModule,
-    AccountModule
+    AccountModule,
+    ScheduleModule
   ],
 })
 export class AppModule {}

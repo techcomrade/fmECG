@@ -91,8 +91,8 @@ export class UserModel extends Model<UserModel> {
   })
   updatedAt: Date;
 
-  // @BelongsTo(() => AccountModel)
-  // account: AccountModel;
+  @BelongsTo(() => AccountModel)
+  account: AccountModel;
 
   @BelongsTo(() => UserRoleModel)
   user_role: UserRoleModel;
@@ -100,12 +100,12 @@ export class UserModel extends Model<UserModel> {
   @BelongsTo(() => UserStatusModel)
   user_status: UserStatusModel;
 
-  @HasMany(() => DeviceModel)
-  device: DeviceModel;
+  // @HasMany(() => DeviceModel)
+  // device: DeviceModel;
 
-  @HasMany(() => ScheduleModel)
-  schedule: ScheduleModel;
+  // @HasMany(() => ScheduleModel)
+  // schedule: ScheduleModel;
 
-  @HasMany(() => ConsultationScheduleModel)
-  consultation_schedule: ConsultationScheduleModel;
+  // @HasMany(() => ConsultationScheduleModel)
+  // consultation_schedule: ConsultationScheduleModel;
 }
