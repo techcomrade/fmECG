@@ -22,7 +22,7 @@ export class DeviceRepository {
         information: device.information ?? "",
         device_type: device.device_type,
         start_date: device.start_date,
-        status: device.status,
+        // status: device.status,
       });
     }
     catch (error) {
