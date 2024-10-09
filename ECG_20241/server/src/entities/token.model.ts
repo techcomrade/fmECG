@@ -1,49 +1,57 @@
-import { Column, Model, Table, PrimaryKey, DataType, ForeignKey } from 'sequelize-typescript';
-import { UserModel } from './user.model';
+import {
+  Column,
+  Model,
+  Table,
+  PrimaryKey,
+  DataType,
+  ForeignKey,
+  BelongsTo,
+} from "sequelize-typescript";
+// import { AccountModel } from "./account.model";
 
-@Table({ tableName: 'tokens' })
+@Table({ tableName: "tokens" })
 export class TokenModel extends Model<TokenModel> {
-
   @PrimaryKey
   @Column({
-    type: DataType.STRING(255), 
+    type: DataType.STRING(255),
   })
   id: string;
 
-  @ForeignKey(() => UserModel)
+  //@ForeignKey(() => AccountModel)
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
   })
-  user_id: string;
+  account_id: string;
 
   @Column({
-    type: DataType.STRING(255), 
-    allowNull: false, 
+    type: DataType.STRING(255),
+    allowNull: false,
   })
   access_token: string;
 
   @Column({
-    type: DataType.STRING(255), 
-    allowNull: false, 
+    type: DataType.STRING(255),
+    allowNull: false,
   })
   refresh_token: string;
 
   @Column({
     type: DataType.BIGINT,
-    allowNull: false 
+    allowNull: false,
   })
-  expires_at: number
+  expires_at: number;
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
   })
   createdAt: Date;
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
   })
   updatedAt: Date;
+
+  // @BelongsTo(() => AccountModel)
+  // account: AccountModel;
 }

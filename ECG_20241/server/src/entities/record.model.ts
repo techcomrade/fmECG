@@ -6,11 +6,14 @@ import {
   DataType,
   BelongsTo,
   ForeignKey,
+  HasOne,
 } from "sequelize-typescript";
-import { DeviceModel } from "./device.model";
 import { UserModel } from "./user.model";
+import { DeviceModel } from "./device.model";
+import { ScheduleModel } from "./schedule.model";
+import { RecordDiagnosisModel } from "./record_diagnosis.model";
 
-@Table({ tableName: "record" })
+@Table({ tableName: "records" })
 export class RecordModel extends Model<RecordModel> {
   @PrimaryKey
   @Column({
@@ -33,6 +36,13 @@ export class RecordModel extends Model<RecordModel> {
   })
   device_id: string;
 
+  @ForeignKey(() => ScheduleModel)
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  schedule_id: string;
+
   @Column({
     type: DataType.BIGINT,
     allowNull: false,
@@ -53,13 +63,11 @@ export class RecordModel extends Model<RecordModel> {
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
   })
   createdAt: Date;
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
   })
   updatedAt: Date;
 
@@ -68,4 +76,10 @@ export class RecordModel extends Model<RecordModel> {
 
   @BelongsTo(() => DeviceModel)
   device: DeviceModel;
+  
+  @BelongsTo(() => ScheduleModel)
+  schedule: ScheduleModel;
+
+  @HasOne(() => RecordDiagnosisModel)
+  record_diagnosis: RecordDiagnosisModel;
 }

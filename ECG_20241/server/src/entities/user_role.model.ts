@@ -1,9 +1,15 @@
-import { Column, Model, Table, PrimaryKey, DataType, HasMany } from 'sequelize-typescript';
-import { UserModel } from './user.model';
+import {
+  Column,
+  Model,
+  Table,
+  PrimaryKey,
+  DataType,
+  HasMany,
+} from "sequelize-typescript";
+import { UserModel } from "./user.model";
 
-@Table({ tableName: 'user_role' })
+@Table({ tableName: "user_role" })
 export class UserRoleModel extends Model<UserRoleModel> {
-
   @PrimaryKey
   @Column({
     type: DataType.INTEGER,

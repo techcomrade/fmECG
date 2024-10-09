@@ -1,9 +1,15 @@
-import { Column, Model, Table, PrimaryKey, DataType, HasMany } from 'sequelize-typescript';
-import { UserModel } from './user.model';
+import {
+  Column,
+  Model,
+  Table,
+  PrimaryKey,
+  DataType,
+  HasMany,
+} from "sequelize-typescript";
+import { UserModel } from "./user.model";
 
-@Table({ tableName: 'user_status' })
+@Table({ tableName: "user_status" })
 export class UserStatusModel extends Model<UserStatusModel> {
-
   @PrimaryKey
   @Column({
     type: DataType.INTEGER,
@@ -30,5 +36,5 @@ export class UserStatusModel extends Model<UserStatusModel> {
   updatedAt: Date;
 
   @HasMany(() => UserModel)
-  user: UserModel[];
+  users: UserModel[];
 }

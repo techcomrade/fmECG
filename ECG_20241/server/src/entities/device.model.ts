@@ -1,11 +1,22 @@
-import { Column, Model, Table, PrimaryKey, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import { UserModel } from './user.model';
-import { DeviceTypeModel } from './device_type.model'; 
-import { DeviceStatusModel } from './device_status.model';
+import {
+  Column,
+  Model,
+  Table,
+  PrimaryKey,
+  DataType,
+  ForeignKey,
+  BelongsTo,
+  HasMany,
+} from "sequelize-typescript";
+import { UserModel } from "./user.model";
+import { DeviceTypeModel } from "./device_type.model";
+import { DeviceStatusModel } from "./device_status.model";
+import { DeviceDetailModel } from "./device_detail.model";
+import { DeviceScheduleModel } from "./device_schedule.model";
+import { RecordModel } from "./record.model";
 
-@Table({ tableName: 'devices' })
+@Table({ tableName: "devices" })
 export class DeviceModel extends Model<DeviceModel> {
-
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -20,9 +31,6 @@ export class DeviceModel extends Model<DeviceModel> {
   })
   doctor_id: string;
 
-  @BelongsTo(() => UserModel)
-  doctor: UserModel;
-
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -31,14 +39,12 @@ export class DeviceModel extends Model<DeviceModel> {
 
   @Column({
     type: DataType.TEXT,
-    allowNull: true,
   })
   information: string;
 
   @ForeignKey(() => DeviceTypeModel)
   @Column({
     type: DataType.INTEGER,
-    allowNull: true,
   })
   device_type_id: number;
 
@@ -57,19 +63,29 @@ export class DeviceModel extends Model<DeviceModel> {
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
   })
   createdAt: Date;
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
   })
   updatedAt: Date;
 
+  @BelongsTo(() => UserModel)
+  doctor: UserModel;
+
   @BelongsTo(() => DeviceStatusModel)
-  status: DeviceStatusModel;
+  device_status: DeviceStatusModel;
 
   @BelongsTo(() => DeviceTypeModel)
   device_type: DeviceTypeModel;
+
+  @HasMany(() => DeviceDetailModel)
+  device_details: DeviceDetailModel[];
+
+  @HasMany(() => DeviceScheduleModel)
+  device_schedules: DeviceScheduleModel[];
+
+  @HasMany(() => RecordModel)
+  records: RecordModel[];
 }
