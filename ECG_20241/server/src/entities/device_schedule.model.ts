@@ -7,7 +7,8 @@ import {
   BelongsTo,
   DataType,
 } from "sequelize-typescript";
-import { SchedulesModel } from "./schedules.model";
+import { ScheduleModel } from "./schedule.model";
+import { DeviceModel } from "./device.model";
 
 @Table({ tableName: "device_schedule" })
 export class DeviceScheduleModel extends Model<DeviceScheduleModel> {
@@ -18,13 +19,14 @@ export class DeviceScheduleModel extends Model<DeviceScheduleModel> {
   })
   id: string;
 
-  @ForeignKey(() => SchedulesModel)
+  @ForeignKey(() => ScheduleModel)
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
   })
   schedule_id: string;
 
+  @ForeignKey(() => DeviceModel)
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
@@ -41,6 +43,9 @@ export class DeviceScheduleModel extends Model<DeviceScheduleModel> {
   })
   updatedAt: Date;
 
-  @BelongsTo(() => SchedulesModel)
-  schedule: SchedulesModel;
+  @BelongsTo(() => DeviceModel)
+  device: DeviceModel;
+
+  @BelongsTo(() => ScheduleModel)
+  schedule: ScheduleModel;
 }

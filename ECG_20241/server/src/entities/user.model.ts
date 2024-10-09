@@ -6,9 +6,14 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from "sequelize-typescript";
 import { UserRoleModel } from "./user_role.model";
 import { UserStatusModel } from "./user_status.model";
+//import { AccountModel } from "./account.model";
+import { DeviceModel } from "./device.model";
+import { ScheduleModel } from "./schedule.model";
+import { ConsultationScheduleModel } from "./consultation_schedule.model";
 
 @Table({ tableName: "users" })
 export class UserModel extends Model<UserModel> {
@@ -18,6 +23,14 @@ export class UserModel extends Model<UserModel> {
     allowNull: false,
   })
   id: string;
+
+  //@ForeignKey(() => AccountModel)
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: false,
+    unique: true,
+  })
+  account_id: string;
 
   @Column({
     type: DataType.STRING(255),
@@ -71,19 +84,29 @@ export class UserModel extends Model<UserModel> {
 
   @Column({
     type: DataType.DATE,
-    defaultValue: DataType.NOW,
   })
   createdAt: Date;
 
   @Column({
     type: DataType.DATE,
-    defaultValue: DataType.NOW,
   })
   updatedAt: Date;
+
+  // @BelongsTo(() => AccountModel)
+  // account: AccountModel;
 
   @BelongsTo(() => UserRoleModel)
   user_role: UserRoleModel;
 
   @BelongsTo(() => UserStatusModel)
   user_status: UserStatusModel;
+
+  @HasMany(() => DeviceModel)
+  device: DeviceModel;
+
+  @HasMany(() => ScheduleModel)
+  schedule: ScheduleModel;
+
+  @HasMany(() => ConsultationScheduleModel)
+  consultation_schedule: ConsultationScheduleModel;
 }

@@ -10,7 +10,7 @@ import {
 import { DeviceModel } from "./device.model";
 
 @Table({ tableName: "device_details" })
-export class DeviceDetailsModel extends Model<DeviceDetailsModel> {
+export class DeviceDetailModel extends Model<DeviceDetailModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -39,19 +39,16 @@ export class DeviceDetailsModel extends Model<DeviceDetailsModel> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: true,
   })
   information: string;
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
   })
   createdAt: Date;
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
   })
   updatedAt: Date;
 

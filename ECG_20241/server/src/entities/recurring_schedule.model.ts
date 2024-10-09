@@ -7,7 +7,7 @@ import {
   BelongsTo,
   DataType,
 } from "sequelize-typescript";
-import { SchedulesModel } from "./schedules.model";
+import { ScheduleModel } from "./schedule.model";
 import { RecurrenceTypeModel } from "./recurrence_type.model"
 
 @Table({ tableName: "recurring_schedule" })
@@ -19,7 +19,7 @@ export class RecurringScheduleModel extends Model<RecurringScheduleModel> {
   })
   id: string;
 
-  @ForeignKey(() => SchedulesModel)
+  @ForeignKey(() => ScheduleModel)
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
@@ -49,8 +49,8 @@ export class RecurringScheduleModel extends Model<RecurringScheduleModel> {
   })
   updatedAt: Date;
 
-  @BelongsTo(() => SchedulesModel)
-  schedule: SchedulesModel;
+  @BelongsTo(() => ScheduleModel)
+  schedule: ScheduleModel;
 
   @BelongsTo(() => RecurrenceTypeModel)
   recurrence_type: RecurrenceTypeModel;

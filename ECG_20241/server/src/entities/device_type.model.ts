@@ -19,13 +19,11 @@ export class DeviceTypeModel extends Model<DeviceTypeModel> {
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
   })
   createdAt: Date;
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
   })
   updatedAt: Date;
   
