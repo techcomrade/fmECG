@@ -34,4 +34,16 @@ export class TokenModel extends Model<TokenModel> {
     allowNull: false 
   })
   expires_at: number
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  createdAt: Date;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  updatedAt: Date;
 }

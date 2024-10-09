@@ -1,37 +1,42 @@
-import { DeviceModel } from "./model/device.model";
-import { DeviceRepository } from "./model/device.repository";
+import { DeviceModel } from "../../entities/device.model";
+import { DeviceRepository } from "./device.repository";
 import { Injectable } from "@nestjs/common";
-import { Device } from './interfaces/device.interface';
+import { DeviceServiceI } from "./interfaces/device.service.interface";
 
 @Injectable()
-export class DeviceService {
+export class DeviceService implements DeviceServiceI{
   constructor(private deviceRepository: DeviceRepository) {}
 
-  async getAllData(): Promise<Device[]> {
+  async getAllData(): Promise<DeviceModel[]> {
     return this.deviceRepository.getAllData();
   }
 
-  async add(device: Device) {
+  async add(device: DeviceModel) {
     return this.deviceRepository.add(device);
   }
 
-  async updateById(device: Device, id: string) {
+  async updateById(device: DeviceModel, id: string) {
     return this.deviceRepository.updateById(device, id);
   }
 
-  async getById(id: string): Promise<Device> {
+  async getById(id: string): Promise<DeviceModel> {
     return this.deviceRepository.getById(id);
   }
 
-  async getByUserId(user_id: string): Promise<Device[]> {
-    return this.deviceRepository.getByUserId(user_id);
+  async getByUserId(doctor_id: string): Promise<DeviceModel[]> {
+    return this.deviceRepository.getByUserId(doctor_id);
   }
 
-  async getByDoctorId(doctor_id: string): Promise<Device[]> {
+  async getByDoctorId(doctor_id: string): Promise<DeviceModel[]> {
     return this.deviceRepository.getByDoctorId(doctor_id);
   }
 
   async deleteById(id: string) {
     return this.deviceRepository.deleteById(id);
+  }
+
+  special(): Promise<void> {
+  const example = 0; 
+    throw new Error("Method not implemented.");
   }
 }

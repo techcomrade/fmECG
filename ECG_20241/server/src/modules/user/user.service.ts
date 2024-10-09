@@ -1,5 +1,5 @@
 import { UserModel } from '../../entities/user.model';
-import { UserRepository } from './model/user.repository';
+import { UserRepository } from './user.repository';
 import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class UserService {
     }
 
     async add(user: UserModel): Promise<Boolean> {
-        const existingData = await this.findByEmail(user.email);
+        const existingData = 0;
         if (existingData) {
             throw new ConflictException('Email already in use');
         }
@@ -28,7 +28,7 @@ export class UserService {
         }
     }
 
-    async findByEmail(email: string): Promise<UserModel | any> {
-        return await this.userRepository.findByEmail(email);
-    }
+    // async findByEmail(email: string): Promise<UserModel | any> {
+    //     return await this.userRepository.findByEmail(email);
+    // }
 }

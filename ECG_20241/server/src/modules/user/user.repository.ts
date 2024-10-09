@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { UserModel } from '../../../entities/user.model';
+import { UserModel } from '../../entities/user.model';
 const { v4: uuidv4 } = require('uuid');
 
 @Injectable()
@@ -18,15 +18,17 @@ export class UserRepository {
         try {
             return await this.userModel.create({
                 id: User.id,
-                email: User.email,
-                password: User.password,
+                // email: User.email,
+                // password: User.password,
                 username: User.username,
                 gender: User.gender,
                 birth: User.birth,
                 phone_number: User.phone_number,
-                status: 1,
-                information: User.information,
-                role: User.role,
+                // status_id: 1,
+
+                // information: User.information,
+
+                // role_id: User.role_id,
             })
         }
         catch (error){
@@ -35,7 +37,7 @@ export class UserRepository {
         }
     }
 
-    async findByEmail(email: string): Promise<UserModel>{
-        return await this.userModel.findOne({ where: { email: email } });
-    }
+    // async findByEmail(email: string): Promise<UserModel>{
+    //     return await this.userModel.findOne({ where: { email: email } });
+    // }
 }
