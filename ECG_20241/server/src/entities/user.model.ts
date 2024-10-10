@@ -104,12 +104,12 @@ export class UserModel extends Model<UserModel> {
   @HasMany(() => DeviceModel)
   devices: DeviceModel[];
 
-  // @HasMany(() => RecordModel)
-  // records: RecordModel[];
+  @HasMany(() => RecordModel)
+  records: RecordModel[];
 
-  // @HasMany(() => ScheduleModel)
-  // schedules: ScheduleModel[];
+  @HasMany(() => ScheduleModel)
+  schedules: ScheduleModel[];
 
-  // @HasMany(() => ConsultationScheduleModel)
-  // consultation_schedules: ConsultationScheduleModel[];
+  @HasMany(() => ConsultationScheduleModel)
+  consultation_schedules: ConsultationScheduleModel[];
 }

@@ -80,12 +80,12 @@ export class DeviceModel extends Model<DeviceModel> {
   @BelongsTo(() => DeviceTypeModel)
   device_type: DeviceTypeModel;
 
-  // @HasMany(() => DeviceDetailModel)
-  // device_details: DeviceDetailModel[];
+  @HasMany(() => DeviceDetailModel)
+  device_details: DeviceDetailModel[];
 
-  // @HasMany(() => DeviceScheduleModel)
-  // device_schedules: DeviceScheduleModel[];
+  @HasMany(() => DeviceScheduleModel)
+  device_schedules: DeviceScheduleModel[];
 
-  // @HasMany(() => RecordModel)
-  // records: RecordModel[];
+  @HasMany(() => RecordModel)
+  records: RecordModel[];
 }
