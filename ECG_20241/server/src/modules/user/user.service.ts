@@ -1,4 +1,5 @@
 import { UserModel } from "../../entities/user.model";
+import { UserServiceInterface } from "./interfaces/user.service.interface";
 import { UserRepository } from "./user.repository";
 import {
   Injectable,
@@ -7,8 +8,9 @@ import {
 } from "@nestjs/common";
 
 @Injectable()
-export class UserService {
+export class UserService implements UserServiceInterface{
   constructor(private userRepository: UserRepository) {}
+
 
   async findAll(): Promise<UserModel[]> {
     return this.userRepository.findAll();
