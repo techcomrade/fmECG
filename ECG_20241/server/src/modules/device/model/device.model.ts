@@ -43,7 +43,7 @@ export class DeviceModel extends Model<DeviceModel> {
   device_type: number;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: false,
   })
   start_date: number;
@@ -55,12 +55,12 @@ export class DeviceModel extends Model<DeviceModel> {
   status: number;
 
   @Column({
-    type: DataType.BIGINT
+    type: DataType.DATE
   })
-  createdAt: number;
+  createdAt: Date;
 
   @Column({
-    type: DataType.BIGINT
+    type: DataType.DATE
   })
-  updatedAt: number;
+  updatedAt: Date;
 }

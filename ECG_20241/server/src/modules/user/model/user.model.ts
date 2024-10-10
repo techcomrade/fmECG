@@ -38,7 +38,7 @@ export class UserModel extends Model<UserModel> {
   gender: number;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: true,
   })
   birth: number;

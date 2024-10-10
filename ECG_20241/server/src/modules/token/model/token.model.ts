@@ -30,7 +30,7 @@ export class TokenModel extends Model<TokenModel> {
   refresh_token: string;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.DATE,
     allowNull: false 
   })
   expires_at: number
