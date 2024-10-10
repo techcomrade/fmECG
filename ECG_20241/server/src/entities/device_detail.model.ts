@@ -3,35 +3,44 @@ import {
   Model,
   Table,
   PrimaryKey,
-  ForeignKey,
-  BelongsTo,
   DataType,
+  BelongsTo,
+  ForeignKey,
 } from "sequelize-typescript";
-import { ScheduleModel } from "./schedule.model";
 import { DeviceModel } from "./device.model";
 
-@Table({ tableName: "device_schedule" })
-export class DeviceScheduleModel extends Model<DeviceScheduleModel> {
+@Table({ tableName: "device_details" })
+export class DeviceDetailModel extends Model<DeviceDetailModel> {
   @PrimaryKey
   @Column({
-    type: DataType.STRING(255),
+    type: DataType.STRING,
     allowNull: false,
   })
   id: string;
 
-  @ForeignKey(() => ScheduleModel)
-  @Column({
-    type: DataType.STRING(255),
-    allowNull: false,
-  })
-  schedule_id: string;
-
   @ForeignKey(() => DeviceModel)
   @Column({
-    type: DataType.STRING(255),
+    type: DataType.STRING,
     allowNull: false,
   })
   device_id: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  detail_name: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  value: string;
+
+  @Column({
+    type: DataType.STRING,
+  })
+  information: string;
 
   @Column({
     type: DataType.DATE,
@@ -45,7 +54,4 @@ export class DeviceScheduleModel extends Model<DeviceScheduleModel> {
 
   @BelongsTo(() => DeviceModel)
   device: DeviceModel;
-
-  @BelongsTo(() => ScheduleModel)
-  schedule: ScheduleModel;
 }

@@ -3,32 +3,35 @@ import {
   Model,
   Table,
   PrimaryKey,
+  DataType,
   ForeignKey,
   BelongsTo,
-  DataType,
 } from "sequelize-typescript";
 import { ScheduleModel } from "./schedule.model";
+import { UserModel } from "./user.model";
 
-@Table({ tableName: "diagnosis" })
-export class DiagnosisModel extends Model<DiagnosisModel> {
+@Table({ tableName: "consultation_schedule" })
+export class ConsultationScheduleModel extends Model<ConsultationScheduleModel> {
   @PrimaryKey
   @Column({
-    type: DataType.STRING(255),
+    type: DataType.INTEGER,
     allowNull: false,
   })
-  id: string;
+  id: number;
 
   @ForeignKey(() => ScheduleModel)
   @Column({
-    type: DataType.STRING(255),
+    type: DataType.STRING,
     allowNull: false,
   })
   schedule_id: string;
 
+  @ForeignKey(() => UserModel)
   @Column({
-    type: DataType.TEXT,
+    type: DataType.STRING,
+    allowNull: false,
   })
-  information: string;
+  doctor_id: string;
 
   @Column({
     type: DataType.DATE,
@@ -42,4 +45,7 @@ export class DiagnosisModel extends Model<DiagnosisModel> {
 
   @BelongsTo(() => ScheduleModel)
   schedule: ScheduleModel;
+
+  @BelongsTo(() => UserModel)
+  user: UserModel;
 }

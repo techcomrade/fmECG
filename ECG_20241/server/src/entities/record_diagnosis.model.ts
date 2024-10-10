@@ -7,10 +7,10 @@ import {
   BelongsTo,
   DataType,
 } from "sequelize-typescript";
-import { ScheduleModel } from "./schedule.model";
+import { RecordModel } from "./record.model";
 
-@Table({ tableName: "diagnosis" })
-export class DiagnosisModel extends Model<DiagnosisModel> {
+@Table({ tableName: "record_diagnosis" })
+export class RecordDiagnosisModel extends Model<RecordDiagnosisModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING(255),
@@ -18,15 +18,16 @@ export class DiagnosisModel extends Model<DiagnosisModel> {
   })
   id: string;
 
-  @ForeignKey(() => ScheduleModel)
+  @ForeignKey(() => RecordModel)
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
   })
-  schedule_id: string;
+  record_id: string;
 
   @Column({
     type: DataType.TEXT,
+    allowNull: true,
   })
   information: string;
 
@@ -40,6 +41,6 @@ export class DiagnosisModel extends Model<DiagnosisModel> {
   })
   updatedAt: Date;
 
-  @BelongsTo(() => ScheduleModel)
-  schedule: ScheduleModel;
+  @BelongsTo(() => RecordModel)
+  record: RecordModel;
 }
