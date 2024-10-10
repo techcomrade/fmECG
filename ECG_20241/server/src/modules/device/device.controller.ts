@@ -13,7 +13,7 @@ import {
 } from "@nestjs/common";
 import { Response } from "express";
 import { DeviceService } from "./device.service";
-import { DeviceModel } from "./model/device.model";
+import { DeviceModel } from "../../entities/device.model";
 
 @Controller("device")
 export class DeviceController {

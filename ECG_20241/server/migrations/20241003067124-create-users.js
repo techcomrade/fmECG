@@ -12,11 +12,11 @@ module.exports = {
       account_id: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
         references: {
           model: "accounts",
           key: "id",
         },
+        unique: true,
       },
       username: {
         type: Sequelize.STRING,
@@ -26,11 +26,14 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       birth: {
-        type: Sequelize.DATE,
-        allowNull: true,
+        type: Sequelize.BIGINT,
       },
-      phone_number: Sequelize.STRING,
-      image: Sequelize.STRING,
+      phone_number: {
+        type: Sequelize.STRING,
+      },
+      image: {
+        type: Sequelize.STRING,
+      },
       status_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -39,7 +42,9 @@ module.exports = {
           key: "id",
         },
       },
-      information: Sequelize.TEXT("long"),
+      information: {
+        type: Sequelize.TEXT,
+      },
       role_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -49,10 +54,10 @@ module.exports = {
         },
       },
       createdAt: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DATE,
       },
       updatedAt: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DATE,
       },
     });
   },

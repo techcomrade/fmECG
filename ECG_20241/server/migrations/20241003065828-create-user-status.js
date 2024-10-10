@@ -3,27 +3,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("consultation_schedule", {
+    await queryInterface.createTable("user_status", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
       },
-      schedule_id: {
+      status_description: {
         type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: "schedules",
-          key: "id",
-        },
-      },
-      doctor_id: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        references: {
-          model: "users",
-          key: "id",
-        },
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -35,6 +23,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("consultation_schedule");
+    await queryInterface.dropTable("user_status");
   },
 };
