@@ -7,6 +7,7 @@ import {
   ForeignKey,
   BelongsTo,
 } from "sequelize-typescript";
+import { UserModel } from "./user.model";
 import { AccountModel } from "./account.model";
 
 @Table({ tableName: "tokens" })
@@ -52,6 +53,6 @@ export class TokenModel extends Model<TokenModel> {
   })
   updatedAt: Date;
 
-  // @BelongsTo(() => AccountModel)
-  // account: AccountModel;
+  @BelongsTo(() => AccountModel)
+  account: AccountModel;
 }

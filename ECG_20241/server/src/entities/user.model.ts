@@ -96,5 +96,20 @@ export class UserModel extends Model<UserModel> {
   status: UserStatusModel;
 
   @BelongsTo(() => UserRoleModel)
-  role: UserRoleModel;
+  user_role: UserRoleModel;
+
+  @BelongsTo(() => UserStatusModel)
+  user_status: UserStatusModel;
+
+  @HasMany(() => DeviceModel)
+  devices: DeviceModel[];
+
+  @HasMany(() => RecordModel)
+  records: RecordModel[];
+
+  @HasMany(() => ScheduleModel)
+  schedules: ScheduleModel[];
+
+  @HasMany(() => ConsultationScheduleModel)
+  consultation_schedules: ConsultationScheduleModel[];
 }
