@@ -39,7 +39,7 @@ export class AccountModel extends Model<AccountModel> {
   updatedAt: Date;
 
   @HasOne(() => TokenModel)
-  tokens: TokenModel;
+  token: TokenModel;
 
   @HasOne(() => UserModel)
   user: UserModel;

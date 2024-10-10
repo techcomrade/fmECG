@@ -14,6 +14,7 @@ import { AccountModel } from "./account.model";
 import { DeviceModel } from "./device.model";
 import { ScheduleModel } from "./schedule.model";
 import { ConsultationScheduleModel } from "./consultation_schedule.model";
+import { RecordModel } from "./record.model";
 
 @Table({ tableName: "users" })
 export class UserModel extends Model<UserModel> {
@@ -100,12 +101,15 @@ export class UserModel extends Model<UserModel> {
   @BelongsTo(() => UserStatusModel)
   user_status: UserStatusModel;
 
-  // @HasMany(() => DeviceModel)
-  // device: DeviceModel;
+  @HasMany(() => DeviceModel)
+  devices: DeviceModel[];
+
+  // @HasMany(() => RecordModel)
+  // records: RecordModel[];
 
   // @HasMany(() => ScheduleModel)
-  // schedule: ScheduleModel;
+  // schedules: ScheduleModel[];
 
   // @HasMany(() => ConsultationScheduleModel)
-  // consultation_schedule: ConsultationScheduleModel;
+  // consultation_schedules: ConsultationScheduleModel[];
 }
