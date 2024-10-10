@@ -1,4 +1,5 @@
 import { UserModel } from "../../entities/user.model";
+import { UserServiceInterface } from "./interfaces/user.service.interface";
 import { UserRepository } from "./user.repository";
 import {
   Injectable,
@@ -7,8 +8,9 @@ import {
 } from "@nestjs/common";
 
 @Injectable()
-export class UserService {
+export class UserService implements UserServiceInterface{
   constructor(private userRepository: UserRepository) {}
+
 
   async findAll(): Promise<UserModel[]> {
     return this.userRepository.findAll();
@@ -28,7 +30,13 @@ export class UserService {
     }
   }
 
-  // async findByEmail(email: string): Promise<UserModel | any> {
-  //     return await this.userRepository.findByEmail(email);
-  // }
+  async findByUserName(username: string): Promise<any> {
+      try{
+        return await this.userRepository.findByUserName(username);
+      }
+      catch (error) {
+        console.log("User.service.findByUserName failed", error);
+        return false;
+      }
+  }
 }
