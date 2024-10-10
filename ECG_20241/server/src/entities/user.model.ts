@@ -14,6 +14,7 @@ import { AccountModel } from "./account.model";
 import { DeviceModel } from "./device.model";
 import { ScheduleModel } from "./schedule.model";
 import { ConsultationScheduleModel } from "./consultation_schedule.model";
+import { RecordModel } from "./record.model";
 
 @Table({ tableName: "users" })
 export class UserModel extends Model<UserModel> {
