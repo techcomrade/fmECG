@@ -33,7 +33,7 @@ module.exports = {
       },
       start_date: {
         type: Sequelize.BIGINT,
-        allowNull: false,
+        allowNull: true,
       },
       status_id: {
         type: Sequelize.INTEGER,

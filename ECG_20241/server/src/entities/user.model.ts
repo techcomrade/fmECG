@@ -10,7 +10,7 @@ import {
 } from "sequelize-typescript";
 import { UserRoleModel } from "./user_role.model";
 import { UserStatusModel } from "./user_status.model";
-//import { AccountModel } from "./account.model";
+import { AccountModel } from "./account.model";
 import { DeviceModel } from "./device.model";
 import { ScheduleModel } from "./schedule.model";
 import { ConsultationScheduleModel } from "./consultation_schedule.model";
@@ -24,11 +24,10 @@ export class UserModel extends Model<UserModel> {
   })
   id: string;
 
-  //@ForeignKey(() => AccountModel)
+  @ForeignKey(() => AccountModel)
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
-    unique: true,
   })
   account_id: string;
 
@@ -84,6 +83,7 @@ export class UserModel extends Model<UserModel> {
 
   @Column({
     type: DataType.DATE,
+    
   })
   createdAt: Date;
 
@@ -92,21 +92,9 @@ export class UserModel extends Model<UserModel> {
   })
   updatedAt: Date;
 
-  @BelongsTo(() => AccountModel)
-  account: AccountModel;
+  @BelongsTo(() => UserStatusModel)
+  status: UserStatusModel;
 
   @BelongsTo(() => UserRoleModel)
-  user_role: UserRoleModel;
-
-  @BelongsTo(() => UserStatusModel)
-  user_status: UserStatusModel;
-
-  // @HasMany(() => DeviceModel)
-  // device: DeviceModel;
-
-  // @HasMany(() => ScheduleModel)
-  // schedule: ScheduleModel;
-
-  // @HasMany(() => ConsultationScheduleModel)
-  // consultation_schedule: ConsultationScheduleModel;
+  role: UserRoleModel;
 }

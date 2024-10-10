@@ -7,7 +7,7 @@ import {
   ForeignKey,
   BelongsTo,
 } from "sequelize-typescript";
-// import { AccountModel } from "./account.model";
+import { AccountModel } from "./account.model";
 
 @Table({ tableName: "tokens" })
 export class TokenModel extends Model<TokenModel> {
@@ -17,7 +17,7 @@ export class TokenModel extends Model<TokenModel> {
   })
   id: string;
 
-  //@ForeignKey(() => AccountModel)
+  @ForeignKey(() => AccountModel)
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
