@@ -3,6 +3,10 @@ import { AppService } from './app.service';
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ServicesModule } from './modules/services/services.module';
+import { AuthenticationsModule } from './modules/authentications/authentications.module';
+import { AuthenticationModule } from './module/authentication/authentication.module';
+import { ServiceModule } from './module/service/service.module';
 
 @Module({
   imports: [
@@ -24,6 +28,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         synchronize: true, // Đồng bộ hóa model với cơ sở dữ liệu
       }),
     }),
+    ServicesModule,
+    AuthenticationsModule,
+    AuthenticationModule,
+    ServiceModule,
   ],
   controllers: [AppController],
   providers: [AppService],

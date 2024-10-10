@@ -17,11 +17,15 @@ export class ServiceModel extends Model<ServiceModel> {
 
   @Column({
     type: DataType.STRING(500),
+    allowNull: false,
+    unique: true,
   })
   public_key: string;
 
   @Column({
     type: DataType.STRING(255),
+    allowNull: false,
+    unique: true,
   })
   service_name: string;
 

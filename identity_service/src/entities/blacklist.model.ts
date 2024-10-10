@@ -4,7 +4,10 @@ import {
   Table,
   PrimaryKey,
   DataType,
+  ForeignKey,
+  BelongsTo,
 } from 'sequelize-typescript';
+import { ServiceModel } from './service.model';
 
 @Table({ tableName: 'blacklist' })
 export class BlacklistModel extends Model<BlacklistModel> {
@@ -15,15 +18,13 @@ export class BlacklistModel extends Model<BlacklistModel> {
   })
   id: string;
 
+  @ForeignKey(() => ServiceModel)
   @Column({
     type: DataType.STRING(255),
   })
   service_id: string;
-
-  @Column({
-    type: DataType.STRING(255),
-  })
-  public_key: string;
+  @BelongsTo(() => ServiceModel)
+  service: ServiceModel;
 
   @Column({
     type: DataType.INTEGER,

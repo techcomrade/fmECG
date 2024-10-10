@@ -17,6 +17,7 @@ export class AccountModel extends Model<AccountModel> {
 
   @Column({
     type: DataType.STRING(255),
+    unique: true,
   })
   email: string;
 
