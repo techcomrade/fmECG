@@ -14,15 +14,15 @@ module.exports = {
         allowNull: false,
       },
       createdAt: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DATE,
       },
       updatedAt: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DATE,
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("user_status");
+    await queryInterface.dropTable("user_role");
   },
 };
