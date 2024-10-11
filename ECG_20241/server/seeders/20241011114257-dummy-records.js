@@ -15,6 +15,17 @@ module.exports = {
         createdAt: "2024-10-09T15:48:48.000",
         updatedAt: "2024-10-09T15:48:48.000",
       },
+      {
+        id: "2",
+        user_id: "4",
+        device_id: "3",
+        schedule_id: "2",
+        start_time: 1727794800,
+        end_time: 1727794800,
+        data_rec_url: "http://example.com/records",
+        createdAt: "2024-10-09T15:48:48.000",
+        updatedAt: "2024-10-09T15:48:48.000",
+      },
     ]);
   },
 
