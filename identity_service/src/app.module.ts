@@ -7,6 +7,7 @@ import { ServicesModule } from './modules/services/services.module';
 import { AuthenticationsModule } from './modules/authentications/authentications.module';
 import { AuthenticationModule } from './module/authentication/authentication.module';
 import { ServiceModule } from './module/service/service.module';
+import { MicroserviceModule } from './module/microservice/microservice.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { ServiceModule } from './module/service/service.module';
     AuthenticationsModule,
     AuthenticationModule,
     ServiceModule,
+    MicroserviceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
