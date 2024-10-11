@@ -32,6 +32,13 @@ module.exports = {
         createdAt: "2024-10-10T03:52:29.000",
         updatedAt: "2024-10-10T03:52:29.000",
       },
+      {
+        id: "5",
+        email: "huyquangpham@gmail.com",
+        password: "123",
+        createdAt: "2024-10-10T03:52:29.000",
+        updatedAt: "2024-10-10T03:52:29.000",
+      },
     ]);
   },
 
