@@ -5,6 +5,10 @@ import { ScheduleModel } from "../../entities/schedule.model";
 import { UserModel } from "../../entities/user.model";
 import { DeviceModel } from "../../entities/device.model";
 import { RecordDiagnosisModel } from "../../entities/record_diagnosis.model";
+import { DeviceModule } from "../device/device.module";
+import { RecordController } from "./record.controller";
+import { RecordService } from "./record.service";
+import { RecordRepository } from "./record.repository"
 
 @Module({
   imports: [
@@ -15,9 +19,10 @@ import { RecordDiagnosisModel } from "../../entities/record_diagnosis.model";
       ScheduleModel,
       RecordDiagnosisModel,
     ]),
+    DeviceModule,
   ],
-  controllers: [],
-  providers: [],
-  exports: [],
+  controllers: [RecordController],
+  providers: [RecordRepository, RecordService],
+  exports: [RecordService],
 })
-export class DeviceModule {}
+export class RecordModule {}

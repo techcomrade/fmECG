@@ -7,6 +7,7 @@ import { APP_GUARD } from "@nestjs/core";
 import { DeviceModule } from "./modules/device/device.module";
 import { AccountModule } from "./modules/account/account.module";
 import { ScheduleModule } from "./modules/schedule/schedule.module";
+import { RecordModule } from "./modules/record/record.module";
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { ScheduleModule } from "./modules/schedule/schedule.module";
       host: "localhost",
       port: 3306,
       username: "root",
-      password: "codung2909.",
+      password: "duong1705",
       database: "identity",
       autoLoadModels: true,
       synchronize: true,
@@ -24,8 +25,9 @@ import { ScheduleModule } from "./modules/schedule/schedule.module";
     UserModule,
     // AuthenModule,
     DeviceModule,
+    RecordModule,
     AccountModule,
-    ScheduleModule
+    ScheduleModule,
   ],
 })
 export class AppModule {}
