@@ -8,16 +8,17 @@ import { DeviceModule } from "./modules/device/device.module";
 import { AccountModule } from "./modules/account/account.module";
 import { ScheduleModule } from "./modules/schedule/schedule.module";
 import { RecordModule } from "./modules/record/record.module";
+require("dotenv").config();
 
 @Module({
   imports: [
     SequelizeModule.forRoot({
       dialect: "mysql",
-      host: "localhost",
+      host: process.env.DB_HOST,
       port: 3306,
-      username: "root",
-      password: "duong1705",
-      database: "identity",
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       autoLoadModels: true,
       synchronize: true,
       logging: console.log,
