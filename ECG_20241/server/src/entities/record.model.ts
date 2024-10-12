@@ -27,7 +27,7 @@ export class RecordModel extends Model<RecordModel> {
     type: DataType.STRING,
     allowNull: false,
   })
-  use_id: string;
+  patient_id: string;
 
   @ForeignKey(() => DeviceModel)
   @Column({
@@ -47,13 +47,13 @@ export class RecordModel extends Model<RecordModel> {
     type: DataType.BIGINT,
     allowNull: false,
   })
-  startTime: bigint;
+  start_time: bigint;
 
   @Column({
     type: DataType.BIGINT,
     allowNull: false,
   })
-  endTime: bigint;
+  end_time: bigint;
 
   @Column({
     type: DataType.STRING,
