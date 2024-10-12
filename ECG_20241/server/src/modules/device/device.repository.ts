@@ -24,7 +24,8 @@ export class DeviceRepository {
         start_date: device.start_date,
         // status: device.status,
       });
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
     }
   }
