@@ -6,7 +6,7 @@ module.exports = {
     await queryInterface.bulkInsert("records", [
       {
         id: "1",
-        user_id: "4",
+        patient_id: "4",
         device_id: "2",
         schedule_id: "1",
         start_time: 1727794800,
@@ -17,7 +17,7 @@ module.exports = {
       },
       {
         id: "2",
-        user_id: "4",
+        patient_id: "4",
         device_id: "3",
         schedule_id: "2",
         start_time: 1727794800,
