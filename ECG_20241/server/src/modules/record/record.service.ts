@@ -31,9 +31,7 @@ export class RecordService {
       device_name
     );
     for (const device of devices) {
-      let records = await this.recordRepository.getRecordByDeviceId(
-        device.dataValues.id
-      );
+      let records = await this.recordRepository.getRecordByDeviceId(device.id);
       const recordsWithDeviceName = records.map((record: any) => {
         return {
           ...record.dataValues,
