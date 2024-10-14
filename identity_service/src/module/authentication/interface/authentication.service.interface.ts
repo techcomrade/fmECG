@@ -1,5 +1,6 @@
 export interface IAuthenticationSerivce {
   userRegister: () => boolean;
   userLogin: () => string;
-  refreshToken
+  refreshToken: () => string;
+  validateToken: () => string;
 }
