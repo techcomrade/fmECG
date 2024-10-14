@@ -25,6 +25,6 @@ import { DeviceDetailModel } from "../../entities/device_detail.model";
   ],
   controllers: [DeviceController],
   providers: [DeviceService, DeviceRepository],
-  exports: [DeviceService],
+  exports: [DeviceService, DeviceRepository],
 })
 export class DeviceModule {}

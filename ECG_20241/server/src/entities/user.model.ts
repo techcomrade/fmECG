@@ -28,9 +28,9 @@ export class UserModel extends Model<UserModel> {
   @ForeignKey(() => AccountModel)
   @Column({
     type: DataType.STRING(255),
-    allowNull: false
+    allowNull: false,
   })
-  account_id: number;
+  account_id: string;
 
   @Column({
     type: DataType.STRING(255),
@@ -84,6 +84,7 @@ export class UserModel extends Model<UserModel> {
 
   @Column({
     type: DataType.DATE,
+    
   })
   createdAt: Date;
 
@@ -92,8 +93,8 @@ export class UserModel extends Model<UserModel> {
   })
   updatedAt: Date;
 
-  @BelongsTo(() => AccountModel)
-  account: AccountModel;
+  @BelongsTo(() => UserStatusModel)
+  status: UserStatusModel;
 
   @BelongsTo(() => UserRoleModel)
   user_role: UserRoleModel;

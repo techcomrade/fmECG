@@ -14,3 +14,20 @@ fmECG Project is a biomedical system for measuring electrogram data using Flutte
 - [Commit code using Git Tortoise](https://github.com/techcomrade/fmECG/wiki/%5BTools%5D-S%E1%BB%AD-d%E1%BB%A5ng-Git-Totories-khi-commit-code)
 - [Auto deployment flow with Github Actions and Docker](https://github.com/techcomrade/fmECG/wiki/%5BWorkflow%5D-Auto-deploy-system-with-Docker-and-Github-Actions)
 - [Database migrations with Sequelize](https://github.com/techcomrade/fmECG/wiki/%5BWorkflow%5D-Database-Migrations)
+
+## 📒 Luồng viết code
+- Tạo model trong folder entities map 1:1 với thực thể trong database
+- Trong modules tạo các folder tương ứng với các thực thể
+    + repository : thực hiện các câu query
+    + service : xử lý logic
+    + module : import và export các lớp (service, repository, controller). Chú ý export module và import module cần thiết 
+    + controller : nhận các request từ frontend 
+
+## 📒 Run migration and seed data
+- checkout sang nhánh 'development' hoặc 'ECG_20241' 
+- git pull để kéo code mới nhất về
+- npm install : cài đặt các thư viện cần thiết
+- Chỉnh sửa password tương ứng với mysql workbench trên máy
+- npm run db:reset
+- npm run db:migrate
+- npm run db:seed

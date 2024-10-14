@@ -9,10 +9,6 @@ export class DeviceRepository {
     private deviceModel: typeof DeviceModel
   ) {}
 
-  async getAllData(): Promise<DeviceModel[]> {
-    return await this.deviceModel.findAll();
-  }
-
   async add(device: DeviceModel) {
     try {
       return await this.deviceModel.create({
@@ -24,27 +20,14 @@ export class DeviceRepository {
         start_date: device.start_date,
         // status: device.status,
       });
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
     }
   }
 
-  async updateById(device: DeviceModel, id: string) {
-    return await this.deviceModel.update(
-      {
-        doctor_id: device.doctor_id,
-        device_name: device.device_name,
-        information: device.information,
-        device_type_id: device.device_type_id,
-        start_date: device.start_date,
-        status_id: device.status_id,
-      },
-      {
-        where: {
-          id: id,
-        },
-      }
-    );
+  async getAllData(): Promise<DeviceModel[]> {
+    return await this.deviceModel.findAll();
   }
 
   async getById(id: string): Promise<DeviceModel> {
@@ -71,6 +54,32 @@ export class DeviceRepository {
     });
   }
 
+  async getDeviceByDeviceName(device_name: string): Promise<DeviceModel[]> {
+    return await this.deviceModel.findAll({
+      where: {
+        device_name: device_name,
+      },
+    });
+  }
+
+  async updateById(device: DeviceModel, id: string) {
+    return await this.deviceModel.update(
+      {
+        doctor_id: device.doctor_id,
+        device_name: device.device_name,
+        information: device.information,
+        device_type_id: device.device_type_id,
+        start_date: device.start_date,
+        status_id: device.status_id,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+  }
+  
   async deleteById(id: string) {
     return await this.deviceModel.destroy({
       where: {

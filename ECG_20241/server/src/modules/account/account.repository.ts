@@ -11,7 +11,13 @@ export class AccountRepository {
     ){}
 
     async findAll(): Promise<AccountModel[]> {
-        return await this.accountModel.findAll();
+        try {
+            return await this.accountModel.findAll();
+        }
+        catch (err) {
+            console.log("account.repository.add failed", err);
+            return null;
+        }
     }
 
     async add(account: AccountModel) {
@@ -28,7 +34,17 @@ export class AccountRepository {
         }
     }
 
-    // async findByEmail(email: string): Promise<accountModel>{
-    //     return await this.accountModel.findOne({ where: { email: email } });
-    // }
+    async findByEmail(email: string): Promise<AccountModel>{
+        return await this.accountModel.findOne({ where: { email: email } });
+    }
+
+    async delete(email: string): Promise<any>{
+        try {
+            return await this.accountModel.destroy({ where: { email: email } });
+        }
+        catch (error){
+            console.log("account.repository.delete failed", error);
+            return false;
+        }
+    }
 }

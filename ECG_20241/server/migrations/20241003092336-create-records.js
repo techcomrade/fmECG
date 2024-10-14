@@ -9,7 +9,7 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      user_id: {
+      patient_id: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -27,8 +27,7 @@ module.exports = {
         references: {
           model: "schedules",
           key: "id",
-        },
-        unique: true,
+        }
       },
       start_time: {
         type: Sequelize.BIGINT,
