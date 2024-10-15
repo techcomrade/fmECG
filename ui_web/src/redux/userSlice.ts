@@ -1,26 +1,46 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { UserModel } from "../api/api-generated";
+import { ApiLoadingStatus } from "../utils/loadingStatus";
+import { createAsyncThunkWrap } from "./handler";
+import { Service } from "../api";
 
-export class UserModel{
-    id!: String;
-    name!: String;
+interface IUserState {
+  data: UserModel[];
+  dataLoadingStatus: ApiLoadingStatus;
 }
 
-interface UserState {
-    model: UserModel;
-}
+const initialState: IUserState = {
+  data: [],
+  dataLoadingStatus: ApiLoadingStatus.None,
+};
 
-const initialState: UserState = {
-    model: new UserModel()
-}
+export const getAllUsers = createAsyncThunkWrap("/users", async () => {
+  return await Service.userService.findAll();
+});
 
 export const userSlice = createSlice({
-    name: "user",
-    initialState,
-    reducers: {
-        test: (state) => {
-            console.log(state);
-        }
-    }
-})
+  name: "user",
+  initialState,
+  reducers: {
+    resetDataLoadingStatus: (state) => {
+      state.dataLoadingStatus = ApiLoadingStatus.None;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllUsers.pending, (state, action) => {
+        state.dataLoadingStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.dataLoadingStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
+        state.data = [];
+        state.dataLoadingStatus = ApiLoadingStatus.Failed;
+      });
+  },
+});
 
+export const { resetDataLoadingStatus } = userSlice.actions;
 export default userSlice.reducer;
