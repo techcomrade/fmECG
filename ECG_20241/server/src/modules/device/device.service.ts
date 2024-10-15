@@ -31,6 +31,14 @@ export class DeviceService {
     return this.deviceRepository.getByDoctorId(doctor_id);
   }
 
+  async getByDeviceTypeId(device_type_id: string): Promise<DeviceResponse> {
+    return this.deviceRepository.getByDeviceType(device_type_id);
+  }
+
+  async getByDeviceName(name: string): Promise<DeviceResponse[]> {
+    return this.deviceRepository.getDeviceByDeviceName(name);
+  }
+
   async deleteById(id: string) {
     return this.deviceRepository.deleteById(id);
   }

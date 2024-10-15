@@ -13,7 +13,7 @@ import {
 } from "@nestjs/common";
 import { Response } from "express";
 import { DeviceService } from "./device.service";
-import { DeviceModel } from "../../entities/device.model"
+import { DeviceModel } from "../../entities/device.model";
 
 @Controller("device")
 export class DeviceController {
@@ -26,10 +26,35 @@ export class DeviceController {
     if (!devices.length) {
       throw new NotFoundException("No device found, please try again");
     }
-    return res.status(HttpStatus.OK).json({
-      message: "Devices found",
-      metadata: devices,
-    });
+    return res.status(HttpStatus.OK).json(devices);
+  }
+
+  @Get("type/:device_type_id")
+  async getDeviceByType(
+    @Res() res: Response,
+    @Param("device_type_id") device_type_id: string
+  ) {
+    console.log("[P}::: Get device by device type id");
+    let device = await this.deviceService.getByDeviceTypeId(device_type_id);
+    if (!device) {
+      throw new NotFoundException("No device found, please check another type");
+    }
+    return res.status(HttpStatus.OK).json(device);
+  }
+
+  @Get("/:device_name")
+  async getDeviceByName(
+    @Res() res: Response,
+    @Param("device_name") device_name: string
+  ) {
+    console.log("[P]::: Get device by device name");
+    let devices = await this.deviceService.getByDeviceName(device_name);
+    if (!devices.length) {
+      throw new NotFoundException(
+        "No devices found, please check another name"
+      );
+    }
+    return res.status(HttpStatus.OK).json(devices);
   }
 
   @Post("create")
