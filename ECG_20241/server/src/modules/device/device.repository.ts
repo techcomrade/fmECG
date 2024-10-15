@@ -1,6 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { DeviceModel } from "../../entities/device.model";
+import { DeviceRequest } from "./dto/device.request";
+import { DeviceResponse } from "./dto/device.response";
 
 @Injectable()
 export class DeviceRepository {
@@ -9,35 +11,64 @@ export class DeviceRepository {
     private deviceModel: typeof DeviceModel
   ) {}
 
-  async getAllData(): Promise<DeviceModel[]> {
-    return await this.deviceModel.findAll();
-  }
-
-  async add(device: DeviceModel) {
+  async add(device: DeviceRequest) {
     try {
       return await this.deviceModel.create({
         id: device.id,
         doctor_id: device.doctor_id,
         device_name: device.device_name,
         information: device.information ?? "",
-        device_type: device.device_type,
-        start_date: device.start_date,
-        // status: device.status,
+        device_type_id: device.device_type_id,
+        status_id: device.status_id,
       });
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
   }
 
-  async updateById(device: DeviceModel, id: string) {
+  async getAllData(): Promise<DeviceResponse[]> {
+    return await this.deviceModel.findAll();
+  }
+
+  async getById(id: string): Promise<DeviceResponse> {
+    return await this.deviceModel.findOne({
+      where: {
+        id: id,
+      },
+    });
+  }
+
+  async getByUserId(doctor_id: string): Promise<DeviceResponse[]> {
+    return await this.deviceModel.findAll({
+      where: {
+        doctor_id: doctor_id,
+      },
+    });
+  }
+
+  async getByDoctorId(doctor_id: string): Promise<DeviceResponse[]> {
+    return await this.deviceModel.findAll({
+      where: {
+        doctor_id: doctor_id,
+      },
+    });
+  }
+
+  async getDeviceByDeviceName(device_name: string): Promise<DeviceResponse[]> {
+    return await this.deviceModel.findAll({
+      where: {
+        device_name: device_name,
+      },
+    });
+  }
+
+  async updateById(device: DeviceRequest, id: string) {
     return await this.deviceModel.update(
       {
         doctor_id: device.doctor_id,
         device_name: device.device_name,
         information: device.information,
         device_type_id: device.device_type_id,
-        start_date: device.start_date,
         status_id: device.status_id,
       },
       {
@@ -46,30 +77,6 @@ export class DeviceRepository {
         },
       }
     );
-  }
-
-  async getById(id: string): Promise<DeviceModel> {
-    return await this.deviceModel.findOne({
-      where: {
-        id: id,
-      },
-    });
-  }
-
-  async getByUserId(doctor_id: string): Promise<DeviceModel[]> {
-    return await this.deviceModel.findAll({
-      where: {
-        doctor_id: doctor_id,
-      },
-    });
-  }
-
-  async getByDoctorId(doctor_id: string): Promise<DeviceModel[]> {
-    return await this.deviceModel.findAll({
-      where: {
-        doctor_id: doctor_id,
-      },
-    });
   }
 
   async deleteById(id: string) {
