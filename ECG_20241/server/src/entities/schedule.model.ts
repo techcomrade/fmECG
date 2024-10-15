@@ -37,13 +37,13 @@ export class ScheduleModel extends Model<ScheduleModel> {
     type: DataType.BIGINT,
     allowNull: false,
   })
-  schedule_start_time: number;
+  schedule_start_time: bigint;
 
   @Column({
     type: DataType.BIGINT,
     allowNull: false,
   })
-  schedule_end_time: number;
+  schedule_end_time: bigint;
 
   @ForeignKey(() => ScheduleTypeModel)
   @Column({
