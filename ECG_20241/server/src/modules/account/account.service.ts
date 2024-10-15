@@ -4,16 +4,16 @@ import { Injectable, ConflictException, UnauthorizedException, NotFoundException
 import { AccountServiceInterface } from './interfaces/account.service.interface';
 
 @Injectable()
-export class AccountService implements AccountServiceInterface{
+export class AccountService implements AccountServiceInterface {
     constructor(
         private accountRepository: AccountRepository
     ) { }
 
     async findAll(): Promise<AccountModel[]> {
-        try{
+        try {
             return this.accountRepository.findAll();
         }
-        catch(err){
+        catch (err) {
             console.error(err);
             return null;
         }
