@@ -12,13 +12,12 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { ColumnsType } from "antd/es/table";
-import { UserResponse } from "../../api/api-generated";
-import { addKeyElement } from "../../utils/arrayUtils"
+import { addKeyElement } from "../../utils/arrayUtils";
 
 const { confirm } = Modal;
 
 interface Props {
-  data: UserResponse[];
+  data: any[];
   name: string;
   loading: boolean;
   column: ColumnsType<any>;
