@@ -17,6 +17,7 @@ export class UserController {
 
   // @UseGuards(AuthenticationGuard, AuthorizationGuard)
   // @Roles(Role.Admin)
+  
   @Get('')
   @ApiResponse({ status: 200, type: [UserResponse], description: "successful" })
   async getAllUsers(@Res() res: Response) {
