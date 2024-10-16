@@ -8,6 +8,8 @@ import { AuthenticationModule } from './module/authentication/authentication.mod
 
 import { MicroserviceModule } from './module/microservice/microservice.module';
 
+import { RsaKeyModule } from './module/rsa_key/rsa_key.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -30,6 +32,8 @@ import { MicroserviceModule } from './module/microservice/microservice.module';
     }),
     AuthenticationModule,
     MicroserviceModule,
+    RsaKeyModule,
+    RsaKeyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
