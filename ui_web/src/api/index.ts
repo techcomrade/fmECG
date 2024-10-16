@@ -22,10 +22,16 @@ const userClient = new ApiClientFactory.UserControllerClient(api_url, {
   fetch: authorizedFetchFunction,
 });
 
+const deviceClient = new ApiClientFactory.DeviceControllerClient(api_url, {
+  fetch: authorizedFetchFunction,
+});
+
 interface IService {
   userService: ApiClientFactory.UserControllerClient;
+  deviceService: ApiClientFactory.DeviceControllerClient;
 }
 
 export const Service: IService = {
   userService: userClient,
+  deviceService: deviceClient,
 };
