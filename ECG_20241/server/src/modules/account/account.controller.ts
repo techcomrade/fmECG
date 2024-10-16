@@ -6,6 +6,8 @@ import { AccountModel } from '../../entities/account.model';
 import { Roles } from '../common/roles/role.decorator';
 import { Role } from '../common/roles/role.enum';
 import { AuthorizationGuard } from '../common/guards/authorization.guard';
+import { ApiResponse } from '@nestjs/swagger';
+import { AccountResponse } from './dto/account.response';
 
 @Controller("accounts")
 export class AccountController {
@@ -15,7 +17,8 @@ export class AccountController {
 
     // @UseGuards(AuthenticationGuard, AuthorizationGuard)
     // @Roles(Role.Admin)
-    @Get('all')
+    @Get('')
+    @ApiResponse({ status: 200, type: [AccountResponse], description: "successful"})
     async findAll(@Res() res: Response) {
         console.log(`[P]:::Get all accounts `);
         try {
@@ -38,6 +41,7 @@ export class AccountController {
     }
 
     @Get('details')
+    @ApiResponse({ status: 200, type: [AccountResponse], description: "successful"})
     async findByEmail(@Res() res: Response, @Query('email') email: string) {
         console.log(`[P]:::Get account by email`, email);
         if (!email) {
