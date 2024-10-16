@@ -8,7 +8,7 @@ export class AccountRepository {
     constructor(
         @InjectModel(AccountModel)
         private accountModel: typeof AccountModel
-    ){}
+    ) { }
 
     async findAll(): Promise<AccountModel[]> {
         try {
@@ -28,21 +28,21 @@ export class AccountRepository {
                 password: account.password
             })
         }
-        catch (error){
+        catch (error) {
             console.log("account.repository.add failed", error);
             return false;
         }
     }
 
-    async findByEmail(email: string): Promise<AccountModel>{
+    async findByEmail(email: string): Promise<AccountModel> {
         return await this.accountModel.findOne({ where: { email: email } });
     }
 
-    async delete(email: string): Promise<any>{
+    async delete(email: string): Promise<any> {
         try {
             return await this.accountModel.destroy({ where: { email: email } });
         }
-        catch (error){
+        catch (error) {
             console.log("account.repository.delete failed", error);
             return false;
         }
