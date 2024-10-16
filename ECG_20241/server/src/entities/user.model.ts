@@ -48,7 +48,7 @@ export class UserModel extends Model<UserModel> {
     type: DataType.BIGINT,
     allowNull: true,
   })
-  birth: number;
+  birth: bigint;
 
   @Column({
     type: DataType.STRING(255),
