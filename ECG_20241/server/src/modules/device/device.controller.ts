@@ -16,6 +16,7 @@ import { DeviceService } from "./device.service";
 import { DeviceModel } from "../../entities/device.model";
 import { ApiResponse } from "@nestjs/swagger";
 import { DeviceResponse } from "./dto/device.response";
+import { plainToInstance } from "class-transformer";
 
 @Controller("device")
 export class DeviceController {
@@ -33,7 +34,8 @@ export class DeviceController {
     if (!devices.length) {
       throw new NotFoundException("No device found, please try again");
     }
-    return res.status(HttpStatus.OK).json(devices);
+    let result = plainToInstance(DeviceResponse, devices);
+    return res.status(HttpStatus.OK).json(result);
   }
 
   @Get("type/:device_type_id")
@@ -51,7 +53,8 @@ export class DeviceController {
     if (!device) {
       throw new NotFoundException("No device found, please check another type");
     }
-    return res.status(HttpStatus.OK).json(device);
+    let result = plainToInstance(DeviceResponse, device);
+    return res.status(HttpStatus.OK).json(result);
   }
 
   @Get("/:device_name")
@@ -71,7 +74,8 @@ export class DeviceController {
         "No devices found, please check another name"
       );
     }
-    return res.status(HttpStatus.OK).json(devices);
+    let result = plainToInstance(DeviceResponse, devices);
+    return res.status(HttpStatus.OK).json(result);
   }
 
   @Post("create")
