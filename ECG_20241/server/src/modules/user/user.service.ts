@@ -1,5 +1,9 @@
 import { UserModel } from "../../entities/user.model";
+import { UserRequest } from "./dto/user.request";
+import { UserServiceInterface } from "./interfaces/user.service.interface";
 import { UserRepository } from "./user.repository";
+const { v4: uuidv4 } = require("uuid");
+
 import {
   Injectable,
   ConflictException,
@@ -8,27 +12,33 @@ import {
 
 @Injectable()
 export class UserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository
+  ) { }
+
 
   async findAll(): Promise<UserModel[]> {
     return this.userRepository.findAll();
   }
 
-  async add(user: UserModel): Promise<Boolean> {
-    const existingData = 0;
-    if (existingData) {
-      throw new ConflictException("Email already in use");
-    } else {
-      try {
-        await this.userRepository.add(user);
-      } catch (error) {
-        console.log("User.service.add failed", error);
-        return false;
-      }
-    }
+  async add(user: UserRequest) {
+    user.id = uuidv4();
+    return await this.userRepository.add(user);
   }
 
-  // async findByEmail(email: string): Promise<UserModel | any> {
-  //     return await this.userRepository.findByEmail(email);
-  // }
+  async findByUserName(username: string): Promise<any> {
+    return await this.userRepository.findByUserName(username);
+  }
+
+  async findUserById(id: string): Promise<any> {
+    return await this.userRepository.findUserById(id);
+  }
+
+  async updateUserById(user: UserRequest, id: string) {
+    return await this.userRepository.updateUserById(user, id);
+  }
+
+  async deleteUserById(id: string) {
+    return await this.userRepository.deleteUserById(id);
+  }
 }
