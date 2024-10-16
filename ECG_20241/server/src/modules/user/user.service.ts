@@ -1,5 +1,5 @@
-import { UserModel } from "../../entities/user.model";
 import { UserRequest } from "./dto/user.request";
+import { UserResponse } from "./dto/user.response";
 import { UserServiceInterface } from "./interfaces/user.service.interface";
 import { UserRepository } from "./user.repository";
 const { v4: uuidv4 } = require("uuid");
@@ -12,12 +12,9 @@ import {
 
 @Injectable()
 export class UserService {
-  constructor(
-    private userRepository: UserRepository
-  ) { }
+  constructor(private userRepository: UserRepository) {}
 
-
-  async findAll(): Promise<UserModel[]> {
+  async findAll(): Promise<UserResponse[]> {
     return this.userRepository.findAll();
   }
 
@@ -30,7 +27,7 @@ export class UserService {
     return await this.userRepository.findByUserName(username);
   }
 
-  async findUserById(id: string): Promise<any> {
+  async findUserById(id: string): Promise<UserResponse> {
     return await this.userRepository.findUserById(id);
   }
 

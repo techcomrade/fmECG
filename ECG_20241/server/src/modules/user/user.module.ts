@@ -27,6 +27,6 @@ import { ConsultationScheduleModel } from "../../entities/consultation_schedule.
   ],
   controllers: [UserController],
   providers: [UserService, UserRepository],
-  exports: [UserService],
+  exports: [UserService, UserRepository],
 })
 export class UserModule { }
