@@ -75,6 +75,11 @@ export class DeviceController {
   }
 
   @Post("create")
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+    description: "successful",
+  })
   async add(@Body() device: DeviceModel, @Res() res: Response) {
     console.log(`[P]:::Add device data`, device);
     try {
@@ -88,6 +93,11 @@ export class DeviceController {
   }
 
   @Post("id/:device_id")
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+    description: "successful",
+  })
   async update(
     @Res() res: Response,
     @Body() device: DeviceModel,
@@ -112,6 +122,11 @@ export class DeviceController {
   }
 
   @Delete(":device_id")
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+    description: "successful",
+  })
   async delete(@Res() res: Response, @Param("device_id") device_id: string) {
     console.log(`[P]:::Delete device by id`, device_id);
     let checkExistDevice = await this.deviceService.getById(device_id);
