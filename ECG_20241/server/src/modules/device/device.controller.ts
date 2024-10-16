@@ -14,12 +14,19 @@ import {
 import { Response } from "express";
 import { DeviceService } from "./device.service";
 import { DeviceModel } from "../../entities/device.model";
+import { ApiResponse } from "@nestjs/swagger";
+import { DeviceResponse } from "./dto/device.response";
 
 @Controller("device")
 export class DeviceController {
   constructor(private deviceService: DeviceService) {}
 
   @Get("")
+  @ApiResponse({
+    status: 200,
+    type: [DeviceResponse],
+    description: "successful",
+  })
   async getAllData(@Res() res: Response) {
     console.log(`[P]:::Get all devices data`);
     let devices = await this.deviceService.getAllData();
@@ -30,6 +37,11 @@ export class DeviceController {
   }
 
   @Get("type/:device_type_id")
+  @ApiResponse({
+    status: 200,
+    type: [DeviceResponse],
+    description: "successful",
+  })
   async getDeviceByType(
     @Res() res: Response,
     @Param("device_type_id") device_type_id: string
@@ -43,6 +55,11 @@ export class DeviceController {
   }
 
   @Get("/:device_name")
+  @ApiResponse({
+    status: 200,
+    type: [DeviceResponse],
+    description: "successful",
+  })
   async getDeviceByName(
     @Res() res: Response,
     @Param("device_name") device_name: string
