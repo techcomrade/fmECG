@@ -83,7 +83,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "Thai Donggg",
+                  "Thai Dongg",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
