@@ -4,14 +4,16 @@ import {
   Table,
   PrimaryKey,
   DataType,
+  Default,
 } from 'sequelize-typescript';
-
+import { v4 as uuidv4 } from 'uuid';
 @Table({ tableName: 'account' })
 export class AccountModel extends Model<AccountModel> {
   @PrimaryKey
+  @Default(uuidv4)
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    defaultValue: () => uuidv4(),
   })
   id: string;
 
@@ -28,17 +30,20 @@ export class AccountModel extends Model<AccountModel> {
 
   @Column({
     type: DataType.INTEGER,
+    defaultValue: 0,
     allowNull: false,
   })
   status: number;
 
   @Column({
     type: DataType.BOOLEAN,
+    defaultValue: 0,
   })
   verify: boolean;
 
   @Column({
     type: DataType.INTEGER,
+    defaultValue: 0,
     allowNull: false,
   })
   role: number;

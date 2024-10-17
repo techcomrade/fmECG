@@ -1,4 +1,4 @@
 export class PayloadModel {
   accountId: string;
-  role: number;
+  role?: number;
 }

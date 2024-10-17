@@ -6,15 +6,18 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  Default,
 } from 'sequelize-typescript';
 import { ServiceModel } from './service.model';
+import { v4 as uuidv4 } from 'uuid';
 
 @Table({ tableName: 'blacklist' })
 export class BlacklistModel extends Model<BlacklistModel> {
   @PrimaryKey
+  @Default(uuidv4)
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    defaultValue: () => uuidv4(),
   })
   id: string;
 

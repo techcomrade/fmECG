@@ -4,8 +4,8 @@ import * as fs from 'fs';
 
 @Injectable()
 export class RsaKeyService implements OnModuleInit {
-  readonly privateKeyPath: string = 'key/private-key.json';
-  readonly publicKeyPath: string = 'key/public-key.json';
+  readonly privateKeyPath: string = 'key/private-key.pem';
+  readonly publicKeyPath: string = 'key/public-key.pem';
   onModuleInit() {
     console.log('Module has been initialized. Generating RSA keys...');
     this.checkAndGenerateRSAKeyPair();
@@ -43,14 +43,8 @@ export class RsaKeyService implements OnModuleInit {
           format: 'pem',
         },
       });
-      fs.writeFileSync(
-        this.privateKeyPath,
-        JSON.stringify(privateKey.toString(), null, 1),
-      );
-      fs.writeFileSync(
-        this.publicKeyPath,
-        JSON.stringify(publicKey.toString(), null, 1),
-      );
+      fs.writeFileSync(this.privateKeyPath, privateKey);
+      fs.writeFileSync(this.publicKeyPath, publicKey);
     } catch (err) {
       console.log(err);
     }

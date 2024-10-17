@@ -6,15 +6,18 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  Default,
 } from 'sequelize-typescript';
 import { AccountModel } from './account.model';
+import { v4 as uuidv4 } from 'uuid';
 
 @Table({ tableName: 'token' })
 export class TokenModel extends Model<TokenModel> {
   @PrimaryKey
+  @Default(uuidv4)
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    defaultValue: () => uuidv4(),
   })
   id: string;
 

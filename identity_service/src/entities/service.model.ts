@@ -4,14 +4,17 @@ import {
   Table,
   PrimaryKey,
   DataType,
+  Default,
 } from 'sequelize-typescript';
+import { v4 as uuidv4 } from 'uuid';
 
 @Table({ tableName: 'service' })
 export class ServiceModel extends Model<ServiceModel> {
   @PrimaryKey
+  @Default(uuidv4)
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    defaultValue: () => uuidv4(),
   })
   id: string;
 
