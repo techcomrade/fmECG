@@ -66,7 +66,6 @@ export class RsaKeyService implements OnModuleInit {
           type: 'pkcs1',
         });
       }
-      console.log('true key');
       return true;
     } catch (err) {
       console.log(`Invalid key: ${err.message}`);

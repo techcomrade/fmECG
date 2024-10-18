@@ -3,6 +3,7 @@ import { TokenRepository } from './token.repository';
 import * as fs from 'fs';
 import * as jwt from 'jsonwebtoken';
 import { PayloadModel } from './dto/payload.model';
+import { TokensResponseModel } from './dto/tokens.response.model';
 
 @Injectable()
 export class TokenService {
@@ -21,7 +22,7 @@ export class TokenService {
     return token;
   }
   public decodeToken(token: string): any {
-    jwt.verify(
+    const decoded = jwt.verify(
       token,
       this.publicKey,
       { algorithms: ['RS256'] },
@@ -30,11 +31,18 @@ export class TokenService {
           console.error('Token is invalid or expired:', err.message);
           return null;
         } else {
-          console.log('Token is valid:', decoded);
           return decoded;
         }
       },
     );
-    return false;
+    return decoded;
+  }
+  public async refreshToken(token: string): Promise<TokensResponseModel> {
+    const decoded = this.decodeToken(token);
+    if (!decoded) return null;
+    const refreshTokens = await this.tokenRepository.getTokenByAccountId(
+      decoded?.account_id,
+    );
+    if (refreshTokens) return null;
   }
 }

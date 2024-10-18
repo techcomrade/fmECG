@@ -13,6 +13,7 @@ import { TokenModel } from './entities/token.model';
 import { BlacklistModel } from './entities/blacklist.model';
 import { WhiteListModel } from './entities/whitelist.model';
 import { ServiceModel } from './entities/service.model';
+import { BlacklistModule } from './module/blacklist/blacklist.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { ServiceModel } from './entities/service.model';
     RsaKeyModule,
     TokenModule,
     AuthenticationModule,
+    BlacklistModule,
   ],
   controllers: [AppController],
   providers: [AppService],

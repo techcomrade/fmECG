@@ -8,8 +8,8 @@ import {
   BelongsTo,
   Default,
 } from 'sequelize-typescript';
-import { ServiceModel } from './service.model';
 import { v4 as uuidv4 } from 'uuid';
+import { AccountModel } from './account.model';
 
 @Table({ tableName: 'blacklist' })
 export class BlacklistModel extends Model<BlacklistModel> {
@@ -21,13 +21,13 @@ export class BlacklistModel extends Model<BlacklistModel> {
   })
   id: string;
 
-  @ForeignKey(() => ServiceModel)
+  @ForeignKey(() => AccountModel)
   @Column({
     type: DataType.STRING(255),
   })
-  service_id: string;
-  @BelongsTo(() => ServiceModel)
-  service: ServiceModel;
+  account_id: string;
+  @BelongsTo(() => AccountModel)
+  account: AccountModel;
 
   @Column({
     type: DataType.INTEGER,

@@ -7,13 +7,15 @@ import {
   NotFoundException,
   Get,
   Headers,
+  Param,
+  BadRequestException,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthenticationService } from './authentication.service';
 import { LoginRequest } from './dto/login.request.model';
 import { plainToInstance } from 'class-transformer';
-import { LoginResponse } from './dto/login.response.model';
+import { TokensResponseModel } from '../token/dto/tokens.response.model';
 
 @ApiTags('Authentication Controllers')
 @Controller('auth')
@@ -21,16 +23,16 @@ export class AuthenticationController {
   constructor(private readonly authService: AuthenticationService) {}
   @Post('register')
   async register(@Res() res: Response) {
-    const user = this.authService.register();
+    const user = await this.authService.register();
     return res.status(HttpStatus.OK).json(user);
   }
   @Post('login')
-  async login(@Body() record: LoginRequest, @Res() res: Response) {
-    const loginResult = await this.authService.login(record);
+  async login(@Body() login: LoginRequest, @Res() res: Response) {
+    const loginResult = await this.authService.login(login);
     if (!loginResult) {
       throw new NotFoundException('Login failed');
     }
-    const result = plainToInstance(LoginResponse, loginResult);
+    const result = plainToInstance(TokensResponseModel, loginResult);
     return res.status(HttpStatus.OK).json(result);
   }
   @Get('validate-token')
@@ -52,5 +54,20 @@ export class AuthenticationController {
       throw new NotFoundException('Invalid token');
     }
     return res.status(HttpStatus.OK).json(result);
+  }
+  @Post('refresh-token')
+  async refreshToken(
+    @Param('refresh_token') refresh_token: string,
+    @Res() res: Response,
+  ) {
+    if (!refresh_token) {
+      throw new NotFoundException('No refresh_token provied');
+    }
+    const refreshTokenResult =
+      await this.authService.refreshToken(refresh_token);
+    if (!refreshTokenResult) {
+      throw new BadRequestException('Failed to refresh token');
+    }
+    return res.status(HttpStatus.OK).json(refreshTokenResult);
   }
 }

@@ -39,14 +39,14 @@ export class TokenModel extends Model<TokenModel> {
     type: DataType.DATE,
     allowNull: true, // Có thể cho phép null nếu cần
   })
-  expiredAt: Date;
+  expired_at: Date;
 
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: false,
     allowNull: false,
   })
-  isExpired: boolean;
+  is_expired: boolean;
 
   @Column({
     type: DataType.DATE,
