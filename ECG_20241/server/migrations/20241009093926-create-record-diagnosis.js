@@ -11,12 +11,13 @@ module.exports = {
       },
       record_id: {
         type: Sequelize.STRING,
-        allowNull: false,
         references: {
           model: "records",
           key: "id",
         },
         unique: true,
+        onDelete: "CASCADE", 
+        onUpdate: "SET NULL",
       },
       information: {
         type: Sequelize.TEXT,

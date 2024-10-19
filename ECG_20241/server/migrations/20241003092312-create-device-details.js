@@ -11,11 +11,12 @@ module.exports = {
       },
       device_id: {
         type: Sequelize.STRING,
-        allowNull: false,
         references: {
           model: "devices",
           key: "id",
         },
+        onDelete: "CASCADE", 
+        onUpdate: "SET NULL",
       },
       detail_name: {
         type: Sequelize.STRING,

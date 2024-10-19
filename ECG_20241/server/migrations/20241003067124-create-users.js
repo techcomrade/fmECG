@@ -17,6 +17,7 @@ module.exports = {
           key: "id",
         },
         unique: true,
+        onDelete: "CASCADE", 
       },
       username: {
         type: Sequelize.STRING,

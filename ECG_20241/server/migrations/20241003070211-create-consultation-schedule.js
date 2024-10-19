@@ -11,19 +11,21 @@ module.exports = {
       },
       schedule_id: {
         type: Sequelize.STRING,
-        allowNull: false,
         references: {
           model: "schedules",
           key: "id",
         },
+        onDelete: "CASCADE", 
+        onUpdate: "SET NULL",
       },
       doctor_id: {
         type: Sequelize.STRING,
-        allowNull: false,
         references: {
           model: "users",
           key: "id",
         },
+        onDelete: "CASCADE", 
+        onUpdate: "SET NULL",
       },
       createdAt: {
         type: Sequelize.DATE,

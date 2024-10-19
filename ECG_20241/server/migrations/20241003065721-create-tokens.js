@@ -11,12 +11,13 @@ module.exports = {
       },
       account_id: {
         type: Sequelize.STRING,
-        allowNull: false,
         references: {
           model: "accounts",
           key: "id",
         },
         unique: true,
+        onDelete: "CASCADE", 
+        onUpdate: "SET NULL",
       },
       access_token: {
         type: Sequelize.STRING,
