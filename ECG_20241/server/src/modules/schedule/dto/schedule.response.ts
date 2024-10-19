@@ -10,10 +10,10 @@ export class ScheduleResponse {
   patient_id: string;
 
   @Expose()
-  schedule_start_time: number;
+  schedule_start_time: bigint;
 
   @Expose()
-  schedule_end_time: number;
+  schedule_end_time: bigint;
 
   @Expose()
   schedule_type_id: number;

@@ -15,7 +15,7 @@ export class DeviceService {
     let result = [];
     let devices = await this.deviceRepository.getAllData();
     for (const device of devices) {
-      let user = await this.userRepository.findUserById(device.doctor_id);
+      let user = await this.userRepository.getUserById(device.doctor_id);
       const deviceWithDoctorName = {
         ...(<any>device).dataValues,
         doctor_name: user.username,

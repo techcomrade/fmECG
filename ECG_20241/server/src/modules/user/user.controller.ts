@@ -41,7 +41,7 @@ export class UserController {
   async getAllUsers(@Res() res: Response) {
     console.log(`[P]:::Get all users`);
     try {
-      let users = await this.userService.findAllUsers();
+      let users = await this.userService.getAllUsers();
       if (!users.length) {
         throw new NotFoundException("No user found, please try again");
       }
@@ -49,7 +49,8 @@ export class UserController {
       return res.json(result);
     }
     catch (error) {
-
+      console.log(error);
+      throw new InternalServerErrorException("Error when get all users");
     }
   }
 
@@ -78,7 +79,7 @@ export class UserController {
     type: [UserResponse],
     description: "successful"
   })
-  async findByUserName(
+  async getUserByUserName(
     @Res() res: Response,
     @Query("username") username: string
   ) {
@@ -87,7 +88,7 @@ export class UserController {
       throw new BadRequestException("username is required");
     }
     try {
-      const users = await this.userService.findUserByUserName(username);
+      const users = await this.userService.getUserByUserName(username);
       return res.json(users);
     } catch (err) {
       throw new NotFoundException("No user found, please try again");
@@ -102,7 +103,7 @@ export class UserController {
   })
   async updateUserById(@Res() res: Response, @Body() user: UserRequest) {
     console.log(`[P]:::Update user by id`, user.id);
-    let checkExistUser = await this.userService.findUserById(user.id);
+    let checkExistUser = await this.userService.getUserById(user.id);
     if (checkExistUser == null) {
       throw new NotFoundException("No user found to update, please try again");
     }
@@ -113,7 +114,7 @@ export class UserController {
       });
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException("Error when update record");
+      throw new InternalServerErrorException("Error when update user");
     }
   }
 
@@ -125,7 +126,7 @@ export class UserController {
   })
   async deleteUserById(@Res() res: Response, @Query("id") id: string) {
     console.log(`[P]:::Delete user by id`, id);
-    let checkExistUser = await this.userService.findUserById(id);
+    let checkExistUser = await this.userService.getUserById(id);
     if (checkExistUser == null) {
       throw new NotFoundException("No user found to delete, please try again");
     }

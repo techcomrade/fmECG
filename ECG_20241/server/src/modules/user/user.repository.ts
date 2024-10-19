@@ -12,7 +12,7 @@ export class UserRepository {
     private userModel: typeof UserModel
   ) { }
 
-  async findAllUsers(): Promise<UserResponse[]> {
+  async getAllUsers(): Promise<UserResponse[]> {
     return await this.userModel.findAll();
   }
 
@@ -23,7 +23,7 @@ export class UserRepository {
         account_id: user.account_id,
         username: user.username,
         gender: user.gender,
-        birth: user.birth,  
+        birth: user.birth,
         phone_number: user.phone_number,
         status_id: user.status_id,
         information: user.information,
@@ -35,13 +35,13 @@ export class UserRepository {
     }
   }
 
-  async findUserByUserName(username: string): Promise<UserResponse[]> {
+  async getUserByUserName(username: string): Promise<UserResponse[]> {
     return await this.userModel.findAll({
       where: { username: username },
     });
   }
 
-  async findUserById(id: string): Promise<UserResponse> {
+  async getUserById(id: string): Promise<UserResponse> {
     return await this.userModel.findOne({ where: { id: id } });
   }
 
