@@ -10,9 +10,9 @@ export class UserRepository {
   constructor(
     @InjectModel(UserModel)
     private userModel: typeof UserModel
-  ) {}
+  ) { }
 
-  async findAll(): Promise<UserResponse[]> {
+  async findAllUsers(): Promise<UserResponse[]> {
     return await this.userModel.findAll();
   }
 
@@ -23,7 +23,7 @@ export class UserRepository {
         account_id: user.account_id,
         username: user.username,
         gender: user.gender,
-        birth: user.birth,
+        birth: user.birth,  
         phone_number: user.phone_number,
         status_id: user.status_id,
         information: user.information,
@@ -35,8 +35,8 @@ export class UserRepository {
     }
   }
 
-  async findByUserName(username: string): Promise<any> {
-    return await this.userModel.findAndCountAll({
+  async findUserByUserName(username: string): Promise<UserResponse[]> {
+    return await this.userModel.findAll({
       where: { username: username },
     });
   }

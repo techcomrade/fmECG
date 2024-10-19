@@ -27,21 +27,30 @@ import { plainToInstance } from "class-transformer";
 
 @Controller("users")
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   // @UseGuards(AuthenticationGuard, AuthorizationGuard)
   // @Roles(Role.Admin)
 
   @Get("")
-  @ApiResponse({ status: 200, type: [UserResponse], description: "Successful" })
+  @ApiResponse({
+    status: 200,
+    type: [UserResponse],
+    description: "Successful"
+  })
   async getAllUsers(@Res() res: Response) {
     console.log(`[P]:::Get all users`);
-    let users = await this.userService.findAll();
-    if (!users.length) {
-      throw new NotFoundException("No user found, please try again");
+    try {
+      let users = await this.userService.findAllUsers();
+      if (!users.length) {
+        throw new NotFoundException("No user found, please try again");
+      }
+      let result = plainToInstance(UserResponse, users);
+      return res.json(result);
     }
-    let result = plainToInstance(UserResponse, users);
-    return res.json(result);
+    catch (error) {
+
+    }
   }
 
   @Post("")
@@ -64,7 +73,11 @@ export class UserController {
   }
 
   @Get("details")
-  @ApiResponse({ status: 200, type: [UserResponse], description: "successful" })
+  @ApiResponse({
+    status: 200,
+    type: [UserResponse],
+    description: "successful"
+  })
   async findByUserName(
     @Res() res: Response,
     @Query("username") username: string
@@ -74,7 +87,7 @@ export class UserController {
       throw new BadRequestException("username is required");
     }
     try {
-      const users = await this.userService.findByUserName(username);
+      const users = await this.userService.findUserByUserName(username);
       return res.json(users);
     } catch (err) {
       throw new NotFoundException("No user found, please try again");
