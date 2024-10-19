@@ -22,7 +22,8 @@ export class RecurringScheduleModel extends Model<RecurringScheduleModel> {
   @ForeignKey(() => ScheduleModel)
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    onDelete: "CASCADE", 
+    onUpdate: "SET NULL",
   })
   schedule_id: string;
 

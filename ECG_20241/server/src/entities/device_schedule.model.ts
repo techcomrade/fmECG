@@ -22,14 +22,16 @@ export class DeviceScheduleModel extends Model<DeviceScheduleModel> {
   @ForeignKey(() => ScheduleModel)
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    onDelete: "CASCADE", 
+    onUpdate: "SET NULL",
   })
   schedule_id: string;
 
   @ForeignKey(() => DeviceModel)
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    onDelete: "CASCADE", 
+    onUpdate: "SET NULL",
   })
   device_id: string;
 

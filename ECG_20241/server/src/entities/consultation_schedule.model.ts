@@ -30,6 +30,8 @@ export class ConsultationScheduleModel extends Model<ConsultationScheduleModel> 
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    onDelete: "CASCADE",
+    onUpdate: "SET NULL",
   })
   doctor_id: string;
 

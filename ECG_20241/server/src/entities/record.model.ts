@@ -25,21 +25,24 @@ export class RecordModel extends Model<RecordModel> {
   @ForeignKey(() => UserModel)
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    onDelete: "CASCADE", 
+    onUpdate: "SET NULL",
   })
   patient_id: string;
 
   @ForeignKey(() => DeviceModel)
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    onDelete: "CASCADE", 
+    onUpdate: "SET NULL",
   })
   device_id: string;
 
   @ForeignKey(() => ScheduleModel)
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    onDelete: "CASCADE", 
+    onUpdate: "SET NULL",
   })
   schedule_id: string;
 
