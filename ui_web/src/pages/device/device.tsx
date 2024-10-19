@@ -1,48 +1,33 @@
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import DataTable from "../../components/Table/dataTable";
-import { getAllUsers, resetDataLoadingStatus } from "../../redux/userSlice";
+import { getAllDevices, resetDataLoadingStatus } from "../../redux/deviceSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
-import { convertGenderToString } from "../../constraints"
 
-export const User = () => {
+export const Device = () => {
   const dispatch = useAppDispatch();
-  const dataState = useAppSelector(state => state.user);
+  const dataState = useAppSelector(state => state.device);
   const [dataTable, setDataTable] = React.useState<any[]>([]);
 
   const columns = [
     {
-      title: "Tên người dùng",
-      dataIndex: "username",
-      key: "username",
+      title: "Tên thiết bị",
+      dataIndex: "device_name",
+      key: "device_name",
       type: "text",
       isEdit: true,
     },
     {
-      title: "Giới tính",
-      dataIndex: "gender",
-      key: "gender",
-      type: "text",
-      isEdit: true,
-    },
-    {
-      title: "Ngày sinh",
-      dataIndex: "birth",
+      title: "Loại thiết bị",
+      dataIndex: "device_type_id",
       key: "birth",
       type: "date",
       isEdit: true,
     },
     {
-      title: "Số điện thoại",
-      dataIndex: "phone_number",
-      key: "phone_number",
-      type: "text",
-      isEdit: true,
-    },
-    {
-      title: "Chức vụ",
-      dataIndex: "role_id",
-      key: "role_id",
+      title: "Bác sĩ phụ trách",
+      dataIndex: "doctor_name",
+      key: "doctor_name",
       type: "text",
       isEdit: true,
     },
@@ -54,6 +39,13 @@ export const User = () => {
       isEdit: true,
     },
     {
+      title: "Ngày bắt đầu sử dụng",
+      dataIndex: "start_date",
+      key: "start_date",
+      type: "date",
+      isEdit: true,
+    },
+    {
       title: "Thông tin",
       dataIndex: "information",
       key: "information",
@@ -62,17 +54,13 @@ export const User = () => {
     }
   ];
   React.useEffect(() => {
-    dispatch(getAllUsers());
+    dispatch(getAllDevices());
   }, []);
 
   // Get data
   React.useEffect(() => {
     if (dataState.dataLoadingStatus === ApiLoadingStatus.Success) {
-      const data = dataState.data.map((user: any) => ({
-        ...user,
-        gender: convertGenderToString(user.gender),
-      }));
-      setDataTable(data);
+      setDataTable(dataState.data);
     }
   }, [dataState.dataLoadingStatus]);
 
@@ -83,7 +71,7 @@ export const User = () => {
         editButton
         deleteButton
         column={columns}
-        name="Thông tin người dùng"
+        name="Thông tin thiết bị"
         data={dataTable}
         loading={dataState.dataLoadingStatus === ApiLoadingStatus.Loading}
       />

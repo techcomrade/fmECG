@@ -9,6 +9,9 @@ export class DeviceResponse {
   doctor_id: string;
 
   @Expose()
+  doctor_name?: string;
+
+  @Expose()
   device_name: string;
 
   @Expose()

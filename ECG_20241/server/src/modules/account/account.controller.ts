@@ -18,7 +18,7 @@ export class AccountController {
     // @UseGuards(AuthenticationGuard, AuthorizationGuard)
     // @Roles(Role.Admin)
     @Get('')
-    @ApiResponse({ status: 200, type: [AccountResponse], description: "successful"})
+    @ApiResponse({ status: 200, type: [AccountResponse], description: "successful" })
     async findAll(@Res() res: Response) {
         console.log(`[P]:::Get all accounts `);
         try {
@@ -26,7 +26,7 @@ export class AccountController {
             return res.status(HttpStatus.OK).json({
                 message: 'Account found',
                 metadata: accounts
-            }); 
+            });
         }
         catch (err) {
             throw new NotFoundException(
@@ -41,7 +41,7 @@ export class AccountController {
     }
 
     @Get('details')
-    @ApiResponse({ status: 200, type: [AccountResponse], description: "successful"})
+    @ApiResponse({ status: 200, type: [AccountResponse], description: "successful" })
     async findByEmail(@Res() res: Response, @Query('email') email: string) {
         console.log(`[P]:::Get account by email`, email);
         if (!email) {

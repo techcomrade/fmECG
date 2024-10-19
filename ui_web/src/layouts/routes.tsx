@@ -2,8 +2,9 @@ import * as React from "react";
 import { Navigate, Route, Routes as ReactRouterRoutes } from "react-router-dom";
 import { Home } from "../pages/home";
 import { User } from "../pages/user";
+import { Device } from "../pages/device";
 import { routeMapping } from "./routes.type";
-interface IProps {}
+interface IProps { }
 
 export const Routes = (props: IProps) => {
   const isConsentBackUrl = () => {
@@ -21,6 +22,7 @@ export const Routes = (props: IProps) => {
       <Route path={routeMapping.ErrorPage.url} />
       <Route path={routeMapping.Home.url} element={<Home />} />
       <Route path={routeMapping.User.url} element={<User />} />
+      <Route path={routeMapping.Device.url} element={<Device />} />
       {!isConsentBackUrl() && (
         <Route
           path="*"

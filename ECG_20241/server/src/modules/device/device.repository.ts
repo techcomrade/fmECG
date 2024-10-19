@@ -86,4 +86,12 @@ export class DeviceRepository {
       },
     });
   }
+
+  async getByDeviceType(id: string) {
+    return await this.deviceModel.findOne({
+      where: {
+        device_type_id: id,
+      },
+    });
+  }
 }

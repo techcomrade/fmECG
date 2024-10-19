@@ -12,28 +12,29 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { ColumnsType } from "antd/es/table";
+import { addKeyElement } from "../../utils/arrayUtils";
 
 const { confirm } = Modal;
 
 interface Props {
-  data: [];
+  data: any[];
   name: string;
   loading: boolean;
   column: ColumnsType<any>;
   addButton: boolean;
-  addFunction: () => void;
+  addFunction?: () => void;
   addDeviceButton?: boolean;
   editButton: boolean;
-  editFunction: (id: any) => void;
+  editFunction?: (id: any) => void;
   deleteButton: boolean;
-  deleteFunction: (id: any) => void;
+  deleteFunction?: (id: any) => void;
   chartButton?: boolean;
   openChart?: () => void;
   customButton?: React.ReactNode;
   customData?: React.ReactNode;
   hasCheckBox?: "checkbox" | "radio";
-  updateSelectedData: (selectedRowKeys: any[]) => void;
-  handleOpenDrawer: (id: any) => void;
+  updateSelectedData?: (selectedRowKeys: any[]) => void;
+  handleOpenDrawer?: (id: any) => void;
 }
 
 const DataTable = (props: Props) => {
@@ -48,7 +49,7 @@ const DataTable = (props: Props) => {
   useEffect(() => {
     const rawData = props.data;
     if (rawData) {
-      //setTableData(addKeyElement(rawData));
+      setTableData(addKeyElement(rawData));
     }
   }, [props.data]);
 
@@ -61,7 +62,7 @@ const DataTable = (props: Props) => {
       if (props.editButton) setEditButtton(selectedRowKeys.length === 1);
       if (props.deleteButton) setDeleteButton(selectedRowKeys.length === 1);
       if (props.chartButton) setChartButton(selectedRowKeys.length === 1);
-      props.updateSelectedData(selectedRowKeys);
+      props.updateSelectedData?.(selectedRowKeys);
     },
   };
 
@@ -76,19 +77,19 @@ const DataTable = (props: Props) => {
       cancelText: "Không",
       async onOk() {
         console.log(id);
-        props.deleteFunction(id);
+        props.deleteFunction?.(id);
       },
-      onCancel() {},
+      onCancel() { },
     });
   };
 
   return (
     <>
-      <h2>{props.name} test devops</h2>
+      <h2>{props.name}</h2>
       {props?.customData}
       <div className="list-btn-actions">
         {props.addButton && (
-          <Button icon={<PlusOutlined />} onClick={() => props.addFunction()}>
+          <Button icon={<PlusOutlined />} onClick={() => props.addFunction?.()}>
             {t("button.add")}
           </Button>
         )}
@@ -104,7 +105,7 @@ const DataTable = (props: Props) => {
             icon={<EditOutlined />}
             disabled={!editButton}
             className="edit-btn"
-            onClick={() => props.editFunction(selectedState[0])}
+            onClick={() => props.editFunction?.(selectedState[0])}
           >
             {t("button.edit")}
           </Button>
@@ -137,7 +138,7 @@ const DataTable = (props: Props) => {
         dataSource={tableData}
         onRow={(record, rowIndex) => {
           return {
-            onClick: () => props.handleOpenDrawer(record?.id), // click row
+            onClick: () => props.handleOpenDrawer?.(record?.id), // click row
           };
         }}
       />
