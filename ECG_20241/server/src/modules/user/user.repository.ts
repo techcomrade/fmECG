@@ -23,20 +23,7 @@ export class UserRepository {
   // }
 
   async getAllUsers(): Promise<UserResponse[]> {
-    let users = await this.userModel.findAll({
-      include: [
-        {
-          model: this.userRoleModel,
-          attributes: ['role_name'],  
-        },
-        {
-          model: this.userStatusModel,
-          attributes: ['status_description'], 
-        },
-      ],
-    });
-  
-    return Promise.all(users.map(user => this.convertUserModelToUserResponse(user)));
+    return await this.userModel.findAll();
   }
 
   async add(user: UserRequest) {
@@ -59,39 +46,15 @@ export class UserRepository {
   }
 
   async getUserByUserName(username: string): Promise<UserResponse[]> {
-    let users = await this.userModel.findAll({
+    return await this.userModel.findAll({
       where: { username: username },
-      include: [
-        {
-          model: this.userRoleModel,
-          attributes: ['role_name'],  
-        },
-        {
-          model: this.userStatusModel,
-          attributes: ['status_description'], 
-        },
-      ],
     });
-
-    return Promise.all(users.map(user => this.convertUserModelToUserResponse(user)));
   }
 
   async getUserById(id: string): Promise<UserResponse> {
-    let user = await this.userModel.findOne({ 
+    return await this.userModel.findOne({ 
       where: { id: id },
-      include: [
-        {
-          model: this.userRoleModel,
-          attributes: ['role_name'],  
-        },
-        {
-          model: this.userStatusModel,
-          attributes: ['status_description'], 
-        },
-      ], 
     });
-
-    return this.convertUserModelToUserResponse(user);
   }
 
   async updateUserById(user: UserRequest, id: string) {
@@ -125,19 +88,5 @@ export class UserRepository {
         id: id,
       },
     });
-  }
-
-  private async convertUserModelToUserResponse(userModel: UserModel): Promise<UserResponse> {
-    return {
-      id: userModel.id,
-      account_id: userModel.account_id,
-      username: userModel.username,
-      gender: userModel.gender,
-      birth: userModel.birth,
-      phone_number: userModel.phone_number,
-      information: userModel.information,
-      status: userModel.user_status?.status_description,
-      role: userModel.user_role?.role_name,
-    };
   }
 }
