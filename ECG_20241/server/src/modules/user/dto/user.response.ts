@@ -23,12 +23,18 @@ export class UserResponse {
   @Expose()
   image?: string;
 
+  // @Expose()
+  // status_id: number;
+
   @Expose()
-  status_id: number;
+  status: string;
 
   @Expose()
   information?: string;
 
+  // @Expose()
+  // role_id: number;
+
   @Expose()
-  role_id: number;
+  role: string;
 }

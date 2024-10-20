@@ -93,9 +93,6 @@ export class UserModel extends Model<UserModel> {
   })
   updatedAt: Date;
 
-  @BelongsTo(() => UserStatusModel)
-  status: UserStatusModel;
-
   @BelongsTo(() => UserRoleModel)
   user_role: UserRoleModel;
 

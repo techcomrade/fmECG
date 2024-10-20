@@ -1,5 +1,5 @@
+import { UserService } from './../user/user.service';
 import { DeviceRepository } from "./device.repository";
-import { UserRepository } from "../../modules/user/user.repository";
 import { Injectable } from "@nestjs/common";
 import { DeviceRequest } from "./dto/device.request";
 import { DeviceResponse } from "./dto/device.response";
@@ -8,14 +8,14 @@ import { DeviceResponse } from "./dto/device.response";
 export class DeviceService {
   constructor(
     private deviceRepository: DeviceRepository,
-    private userRepository: UserRepository
+    private userService: UserService
   ) {}
 
   async getAllData(): Promise<DeviceResponse[]> {
     let result = [];
     let devices = await this.deviceRepository.getAllData();
     for (const device of devices) {
-      let user = await this.userRepository.getUserById(device.doctor_id);
+      let user = await this.userService.getUserById(device.doctor_id);
       const deviceWithDoctorName = {
         ...(<any>device).dataValues,
         doctor_name: user.username,
