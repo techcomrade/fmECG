@@ -1,25 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserResponse } from "../api/api-generated";
+import { DeviceResponse } from "../api/api-generated";
 import { ApiLoadingStatus } from "../utils/loadingStatus";
 import { createAsyncThunkWrap } from "./handler";
 import { Service } from "../api";
 
-interface IUserState {
-  data: UserResponse[];
+interface IDeviceState {
+  data: DeviceResponse[];
   dataLoadingStatus: ApiLoadingStatus;
 }
 
-const initialState: IUserState = {
+const initialState: IDeviceState = {
   data: [],
   dataLoadingStatus: ApiLoadingStatus.None,
 };
 
-export const getAllUsers = createAsyncThunkWrap("/users", async () => {
-  return await Service.userService.getAllUsers();
+export const getAllDevices = createAsyncThunkWrap("/devices", async () => {
+  return await Service.deviceService.getAllData();
 });
 
-export const userSlice = createSlice({
-  name: "user",
+export const deviceSlice = createSlice({
+  name: "device",
   initialState,
   reducers: {
     resetDataLoadingStatus: (state) => {
@@ -28,19 +28,19 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllUsers.pending, (state, action) => {
+      .addCase(getAllDevices.pending, (state, action) => {
         state.dataLoadingStatus = ApiLoadingStatus.Loading;
       })
-      .addCase(getAllUsers.fulfilled, (state, action) => {
+      .addCase(getAllDevices.fulfilled, (state, action) => {
         state.data = action.payload;
         state.dataLoadingStatus = ApiLoadingStatus.Success;
       })
-      .addCase(getAllUsers.rejected, (state, action) => {
+      .addCase(getAllDevices.rejected, (state, action) => {
         state.data = [];
         state.dataLoadingStatus = ApiLoadingStatus.Failed;
       });
   },
 });
 
-export const { resetDataLoadingStatus } = userSlice.actions;
-export default userSlice.reducer;
+export const { resetDataLoadingStatus } = deviceSlice.actions;
+export default deviceSlice.reducer;

@@ -29,4 +29,4 @@ import { ConsultationScheduleModel } from "../../entities/consultation_schedule.
   providers: [UserService, UserRepository],
   exports: [UserService],
 })
-export class UserModule { }
+export class UserModule {}

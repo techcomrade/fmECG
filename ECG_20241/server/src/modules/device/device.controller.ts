@@ -35,7 +35,7 @@ export class DeviceController {
       throw new NotFoundException("No device found, please try again");
     }
     let result = plainToInstance(DeviceResponse, devices);
-    return res.status(HttpStatus.OK).json(result);
+    return res.json(result);
   }
 
   @Get("type/:device_type_id")
@@ -80,7 +80,7 @@ export class DeviceController {
 
   @Post("create")
   @ApiResponse({
-    status: 200,
+    status: 201,
     type: Boolean,
     description: "successful",
   })
@@ -88,7 +88,7 @@ export class DeviceController {
     console.log(`[P]:::Add device data`, device);
     try {
       await this.deviceService.add(device);
-      return res.status(HttpStatus.OK).json({
+      return res.json({
         message: "Device created successfully",
       });
     } catch (error) {
@@ -116,7 +116,7 @@ export class DeviceController {
     }
     try {
       await this.deviceService.updateById(device, device_id);
-      return res.status(HttpStatus.OK).json({
+      return res.json({
         message: "Device updated successfully",
       });
     } catch (error) {
@@ -141,7 +141,7 @@ export class DeviceController {
     }
     try {
       await this.deviceService.deleteById(device_id);
-      return res.status(HttpStatus.OK).json({
+      return res.json({
         message: "Device deleted successfully",
       });
     } catch (error) {

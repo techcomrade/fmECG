@@ -10,6 +10,7 @@ import { DeviceStatusModel } from "../../entities/device_status.model";
 import { DeviceTypeModel } from "../../entities/device_type.model";
 import { DeviceScheduleModel } from "../../entities/device_schedule.model";
 import { DeviceDetailModel } from "../../entities/device_detail.model";
+import { UserModule } from "../../modules/user/user.module";
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { DeviceDetailModel } from "../../entities/device_detail.model";
       RecordDiagnosisModel,
       DeviceDetailModel,
     ]),
+    UserModule,
   ],
   controllers: [DeviceController],
   providers: [DeviceService, DeviceRepository],
