@@ -2,6 +2,7 @@ import { AccountModel } from '../../entities/account.model';
 import { AccountRepository } from './account.repository';
 import { Injectable, ConflictException, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { AccountServiceInterface } from './interfaces/account.service.interface';
+const { v4: uuidv4 } = require("uuid");
 
 @Injectable()
 export class AccountService implements AccountServiceInterface {
@@ -19,14 +20,15 @@ export class AccountService implements AccountServiceInterface {
         }
     }
 
-    async add(Account: AccountModel): Promise<any> {
+    async add(account: AccountModel): Promise<any> {
         const existingData = 0;
         if (existingData) {
             throw new ConflictException('Email already in use');
         }
         else {
             try {
-                return await this.accountRepository.add(Account);
+                account.id = uuidv4();
+                return await this.accountRepository.add(account);
             }
             catch (error) {
                 console.log("Account.service.add failed", error);
