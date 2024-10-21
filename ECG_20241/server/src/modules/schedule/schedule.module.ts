@@ -13,8 +13,9 @@ import { DeviceScheduleModel } from "../../entities/device_schedule.model";
 import { ScheduleController } from "./schedule.controller";
 import { ScheduleService } from "./schedule.service";
 import { ScheduleRepository } from "./schedule.repository";
-import { UserService } from "../user/user.service";
+
 import { UserModule } from "../user/user.module";
+import { ConsultationScheduleModule } from "../consultation_schedule/consultation_schedule.module";
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { UserModule } from "../user/user.module";
       RecordModel,
       DeviceScheduleModel,
     ]),
-    UserModule
+    UserModule,
+    ConsultationScheduleModule
   ],
   controllers: [ScheduleController],
   providers: [ScheduleService, ScheduleRepository],
