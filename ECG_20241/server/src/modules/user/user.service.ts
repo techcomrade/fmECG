@@ -12,10 +12,10 @@ import {
 
 @Injectable()
 export class UserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository) { }
 
-  async findAll(): Promise<UserResponse[]> {
-    return this.userRepository.findAll();
+  async getAllUsers(): Promise<UserResponse[]> {
+    return this.userRepository.getAllUsers();
   }
 
   async add(user: UserRequest) {
@@ -23,12 +23,12 @@ export class UserService {
     return await this.userRepository.add(user);
   }
 
-  async findByUserName(username: string): Promise<any> {
-    return await this.userRepository.findByUserName(username);
+  async getUserByUserName(username: string): Promise<any> {
+    return await this.userRepository.getUserByUserName(username);
   }
 
-  async findUserById(id: string): Promise<UserResponse> {
-    return await this.userRepository.findUserById(id);
+  async getUserById(id: string): Promise<UserResponse> {
+    return await this.userRepository.getUserById(id);
   }
 
   async updateUserById(user: UserRequest, id: string) {
