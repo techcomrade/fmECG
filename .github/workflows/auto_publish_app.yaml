@@ -1,4 +1,4 @@
-name: Auto build publish app to closed testing Play Console
+name: Auto build and publish app to Play Console
 on: workflow_dispatch
 
 permissions:
@@ -43,6 +43,7 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
           cache: gradle
+
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -50,6 +51,14 @@ jobs:
           flutter-version: 3.16.9
           cache: true
       - run: flutter --version
+
+      - name: Setup cache Chaquopy
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/chaquopy/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
       - name: Pub get
         run: flutter pub get
@@ -67,7 +76,6 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_SERVICES_ACCOUNT_JSON }}
           # serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
-          # serviceAccountJsonT: ${{ steps.auth.outputs.credentials_file_path }}
           packageName: vn.hust.electrospic
           releaseFiles: mobile_app/build/app/outputs/bundle/release/app-release.aab
           track: alpha
