@@ -3,16 +3,26 @@ import { InjectModel } from "@nestjs/sequelize";
 import { UserModel } from "../../entities/user.model";
 import { UserRequest } from "./dto/user.request";
 import { UserResponse } from "./dto/user.response";
+import { UserRoleModel } from "../../entities/user_role.model";
+import { UserStatusModel } from "../../entities/user_status.model";
 const { v4: uuidv4 } = require("uuid");
 
 @Injectable()
 export class UserRepository {
   constructor(
     @InjectModel(UserModel)
-    private userModel: typeof UserModel
-  ) {}
+    private userModel: typeof UserModel,
+    @InjectModel(UserRoleModel)
+    private userRoleModel: typeof UserRoleModel,
+    @InjectModel(UserStatusModel)
+    private userStatusModel: typeof UserStatusModel
+  ) { }
 
-  async findAll(): Promise<UserResponse[]> {
+  // async getAllUsers(): Promise<UserResponse[]> {
+  //   return await this.userModel.findAll();
+  // }
+
+  async getAllUsers(): Promise<UserResponse[]> {
     return await this.userModel.findAll();
   }
 
@@ -35,14 +45,16 @@ export class UserRepository {
     }
   }
 
-  async findByUserName(username: string): Promise<any> {
-    return await this.userModel.findAndCountAll({
+  async getUserByUserName(username: string): Promise<UserResponse[]> {
+    return await this.userModel.findAll({
       where: { username: username },
     });
   }
 
-  async findUserById(id: string): Promise<UserResponse> {
-    return await this.userModel.findOne({ where: { id: id } });
+  async getUserById(id: string): Promise<UserResponse> {
+    return await this.userModel.findOne({ 
+      where: { id: id },
+    });
   }
 
   async updateUserById(user: UserRequest, id: string) {

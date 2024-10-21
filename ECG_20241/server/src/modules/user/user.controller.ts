@@ -27,21 +27,31 @@ import { plainToInstance } from "class-transformer";
 
 @Controller("users")
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   // @UseGuards(AuthenticationGuard, AuthorizationGuard)
   // @Roles(Role.Admin)
 
   @Get("")
-  @ApiResponse({ status: 200, type: [UserResponse], description: "Successful" })
+  @ApiResponse({
+    status: 200,
+    type: [UserResponse],
+    description: "Successful"
+  })
   async getAllUsers(@Res() res: Response) {
     console.log(`[P]:::Get all users`);
-    let users = await this.userService.findAll();
-    if (!users.length) {
-      throw new NotFoundException("No user found, please try again");
+    try {
+      let users = await this.userService.getAllUsers();
+      if (!users.length) {
+        throw new NotFoundException("No user found, please try again");
+      }
+      let result = plainToInstance(UserResponse, users);
+      return res.json(result);
     }
-    let result = plainToInstance(UserResponse, users);
-    return res.json(result);
+    catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException("Error when get all users");
+    }
   }
 
   @Post("")
@@ -64,8 +74,12 @@ export class UserController {
   }
 
   @Get("details")
-  @ApiResponse({ status: 200, type: [UserResponse], description: "successful" })
-  async findByUserName(
+  @ApiResponse({
+    status: 200,
+    type: [UserResponse],
+    description: "successful"
+  })
+  async getUserByUserName(
     @Res() res: Response,
     @Query("username") username: string
   ) {
@@ -74,7 +88,7 @@ export class UserController {
       throw new BadRequestException("username is required");
     }
     try {
-      const users = await this.userService.findByUserName(username);
+      const users = await this.userService.getUserByUserName(username);
       return res.json(users);
     } catch (err) {
       throw new NotFoundException("No user found, please try again");
@@ -89,7 +103,7 @@ export class UserController {
   })
   async updateUserById(@Res() res: Response, @Body() user: UserRequest) {
     console.log(`[P]:::Update user by id`, user.id);
-    let checkExistUser = await this.userService.findUserById(user.id);
+    let checkExistUser = await this.userService.getUserById(user.id);
     if (checkExistUser == null) {
       throw new NotFoundException("No user found to update, please try again");
     }
@@ -100,7 +114,7 @@ export class UserController {
       });
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException("Error when update record");
+      throw new InternalServerErrorException("Error when update user");
     }
   }
 
@@ -112,7 +126,7 @@ export class UserController {
   })
   async deleteUserById(@Res() res: Response, @Query("id") id: string) {
     console.log(`[P]:::Delete user by id`, id);
-    let checkExistUser = await this.userService.findUserById(id);
+    let checkExistUser = await this.userService.getUserById(id);
     if (checkExistUser == null) {
       throw new NotFoundException("No user found to delete, please try again");
     }
