@@ -13,6 +13,7 @@ import {
   Delete,
   Put,
   InternalServerErrorException,
+  Param,
 } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { UserModel } from "../../entities/user.model";
@@ -54,9 +55,31 @@ export class UserController {
     }
   }
 
-  @Post("")
+  @Get(":id")
   @ApiResponse({
     status: 200,
+    type: UserResponse,
+    description: "Successful"
+  })
+  async getUserById(@Res() res: Response, @Param("id") id: string) {
+    console.log(`[P]:::Get user by id: `, id);
+    try {
+      let user = await this.userService.getUserById(id);
+      if (!user) {
+        throw new NotFoundException("No user found, please try again");
+      }
+      let result = plainToInstance(UserResponse, user);
+      return res.json(result);
+    }
+    catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException("Error when get user by id");
+    }
+  }
+
+  @Post("")
+  @ApiResponse({
+    status: 201,
     type: Boolean,
     description: "Successful",
   })
@@ -73,7 +96,7 @@ export class UserController {
     }
   }
 
-  @Get("details")
+  @Get("username/:username")
   @ApiResponse({
     status: 200,
     type: [UserResponse],
@@ -81,7 +104,7 @@ export class UserController {
   })
   async getUserByUserName(
     @Res() res: Response,
-    @Query("username") username: string
+    @Param("username") username: string
   ) {
     console.log(`[P]:::Find user by username: `, username);
     if (!username) {
