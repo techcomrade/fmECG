@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PayloadModel } from '../token/dto/payload.model';
 import * as bcrypt from 'bcrypt';
 import { LoginRequest } from './dto/login.request.model';
@@ -6,34 +10,53 @@ import { TokensResponseModel } from '../token/dto/tokens.response.model';
 import { TokenService } from '../token/token.service';
 import { AccountRepository } from './authentication.respository';
 import { CreateAccountModel } from './dto/account.create.model';
+import { BlacklistService } from '../blacklist/blacklist.service';
+import { AccountRegisterModel } from './dto/account.register.model';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly tokenService: TokenService,
     private readonly accountRepository: AccountRepository,
+    private readonly blacklistService: BlacklistService,
   ) {}
-  public async register() {
-    const data: CreateAccountModel = {
-      email: 'test',
-      password: 'test',
+  public async register(accountInfo: AccountRegisterModel) {
+    const user = await this.accountRepository.getByEmail(accountInfo.email);
+    if (user) {
+      throw new BadRequestException('Email is existed');
+    }
+    const accountData: CreateAccountModel = {
+      email: accountInfo.email,
+      password: await this.hashPassword(accountInfo.password),
     };
-    const addAccount = await this.accountRepository.add(data);
+    const addAccount = await this.accountRepository.add(accountData);
     return addAccount;
   }
   public async login(loginRequest: LoginRequest): Promise<TokensResponseModel> {
     const user = await this.accountRepository.getByEmail(loginRequest.email);
-    if (user) {
-      const payload: PayloadModel = {
-        accountId: user.id,
-      };
-      const result: TokensResponseModel = {
-        access_token: this.tokenService.renderToken(payload, '5m'),
-        refresh_token: this.tokenService.renderToken(payload, '5m'),
-      };
-      return result;
+    if (!user) {
+      throw new NotFoundException('email not founded');
     }
-    return null;
+    const blackAccount =
+      await this.blacklistService.checkBlacklistAccountByAccountId(user.id);
+    if (blackAccount) {
+      throw new BadRequestException('This account is blocked');
+    }
+    const comparePasswords = this.comparePasswords(
+      loginRequest.password,
+      user.password,
+    );
+    if (!comparePasswords) {
+      throw new BadRequestException('Password wrong');
+    }
+    const payload: PayloadModel = {
+      accountId: user.id,
+    };
+    const result: TokensResponseModel = {
+      access_token: this.tokenService.renderToken(payload, '15m'),
+      refresh_token: this.tokenService.renderToken(payload, '5d'),
+    };
+    return result;
   }
   public async refreshToken(
     refresh_token: string,

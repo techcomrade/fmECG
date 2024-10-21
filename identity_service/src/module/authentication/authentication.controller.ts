@@ -16,15 +16,19 @@ import { AuthenticationService } from './authentication.service';
 import { LoginRequest } from './dto/login.request.model';
 import { plainToInstance } from 'class-transformer';
 import { TokensResponseModel } from '../token/dto/tokens.response.model';
+import { AccountRegisterModel } from './dto/account.register.model';
 
 @ApiTags('Authentication Controllers')
 @Controller('auth')
 export class AuthenticationController {
   constructor(private readonly authService: AuthenticationService) {}
   @Post('register')
-  async register(@Res() res: Response) {
-    const user = await this.authService.register();
-    return res.status(HttpStatus.OK).json(user);
+  async register(@Body() register: AccountRegisterModel, @Res() res: Response) {
+    const user = await this.authService.register(register);
+    if (!user) {
+      throw new NotFoundException('Register failed');
+    }
+    return res.status(HttpStatus.OK).json('login successfully');
   }
   @Post('login')
   async login(@Body() login: LoginRequest, @Res() res: Response) {
@@ -41,7 +45,6 @@ export class AuthenticationController {
     @Headers('Authorization') authHeader: string,
     @Res() res: Response,
   ) {
-    console.log(authHeader);
     if (!authHeader) {
       throw new NotFoundException('No token provided dsfdsf');
     }

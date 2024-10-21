@@ -29,13 +29,6 @@ export class AccountModel extends Model<AccountModel> {
   password: string;
 
   @Column({
-    type: DataType.INTEGER,
-    defaultValue: 0,
-    allowNull: false,
-  })
-  status: number;
-
-  @Column({
     type: DataType.BOOLEAN,
     defaultValue: 0,
   })

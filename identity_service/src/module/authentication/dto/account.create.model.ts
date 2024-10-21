@@ -19,7 +19,4 @@ export class CreateAccountModel {
   @IsOptional()
   @IsBoolean()
   verify?: boolean;
-  @IsOptional()
-  @IsNumber()
-  status?: number;
 }

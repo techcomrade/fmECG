@@ -26,7 +26,6 @@ export class AccountRepository {
       {
         email: account.email,
         password: account.password,
-        status: account?.status ?? 0,
         verify: account?.verify ?? false,
         role: account?.role ?? 0,
       },

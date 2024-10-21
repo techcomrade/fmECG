@@ -1,4 +1,3 @@
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
@@ -46,7 +45,6 @@ import { BlacklistModule } from './module/blacklist/blacklist.module';
     AuthenticationModule,
     BlacklistModule,
   ],
-  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

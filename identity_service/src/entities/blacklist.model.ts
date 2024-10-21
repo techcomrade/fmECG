@@ -24,6 +24,7 @@ export class BlacklistModel extends Model<BlacklistModel> {
   @ForeignKey(() => AccountModel)
   @Column({
     type: DataType.STRING(255),
+    unique: true,
   })
   account_id: string;
   @BelongsTo(() => AccountModel)
@@ -32,6 +33,7 @@ export class BlacklistModel extends Model<BlacklistModel> {
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    defaultValue: 0,
   })
   status: number;
 

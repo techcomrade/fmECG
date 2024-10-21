@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-const port = process.env.APP_PORT || 3000;
+const port = process.env.APP_PORT || 3001;
 const host = process.env.APP_HOST || 'localhost';
 
 async function bootstrap() {
