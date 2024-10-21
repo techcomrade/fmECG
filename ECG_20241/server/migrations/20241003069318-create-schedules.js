@@ -11,11 +11,12 @@ module.exports = {
       },
       patient_id: {
         type: Sequelize.STRING,
-        allowNull: false,
         references: {
           model: "users",
           key: "id",
         },
+        onDelete: "CASCADE", 
+        onUpdate: "SET NULL",
       },
       schedule_start_time: {
         type: Sequelize.BIGINT,

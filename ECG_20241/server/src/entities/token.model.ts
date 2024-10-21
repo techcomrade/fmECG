@@ -21,7 +21,8 @@ export class TokenModel extends Model<TokenModel> {
   @ForeignKey(() => AccountModel)
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    onDelete: "CASCADE",
+    onUpdate: "SET NULL",
   })
   account_id: string;
 

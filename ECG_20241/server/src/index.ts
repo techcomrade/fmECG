@@ -11,7 +11,7 @@ async function bootstrap() {
 
   const corsOptions: CorsOptions = {
     origin: "http://localhost:3002",
-    methods: "GET, POST, DELETE",
+    methods: "GET, POST, DELETE, PUT",
     credentials: true,
   };
   app.enableCors(corsOptions);

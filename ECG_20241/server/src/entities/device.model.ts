@@ -27,7 +27,8 @@ export class DeviceModel extends Model<DeviceModel> {
   @ForeignKey(() => UserModel)
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    onDelete: "CASCADE", 
+    onUpdate: "SET NULL",
   })
   doctor_id: string;
 

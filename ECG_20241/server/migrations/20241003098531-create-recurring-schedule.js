@@ -11,11 +11,12 @@ module.exports = {
       },
       schedule_id: {
         type: Sequelize.STRING,
-        allowNull: false,
         references: {
           model: "schedules",
           key: "id",
         },
+        onDelete: "CASCADE", 
+        onUpdate: "SET NULL",
       },
       recurrence_type_id: {
         type: Sequelize.INTEGER,

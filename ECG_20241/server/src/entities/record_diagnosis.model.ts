@@ -21,7 +21,8 @@ export class RecordDiagnosisModel extends Model<RecordDiagnosisModel> {
   @ForeignKey(() => RecordModel)
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    onDelete: "CASCADE", 
+    onUpdate: "SET NULL",
   })
   record_id: string;
 

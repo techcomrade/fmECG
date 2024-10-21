@@ -18,14 +18,10 @@ export class UserRepository {
     private userStatusModel: typeof UserStatusModel
   ) { }
 
-  // async getAllUsers(): Promise<UserResponse[]> {
-  //   return await this.userModel.findAll();
-  // }
-
   async getAllUsers(): Promise<UserResponse[]> {
     return await this.userModel.findAll();
   }
-
+  
   async add(user: UserRequest) {
     try {
       return await this.userModel.create({

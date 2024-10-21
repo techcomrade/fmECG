@@ -21,7 +21,8 @@ export class DiagnosisModel extends Model<DiagnosisModel> {
   @ForeignKey(() => ScheduleModel)
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    onDelete: "CASCADE", 
+    onUpdate: "SET NULL",
   })
   schedule_id: string;
 

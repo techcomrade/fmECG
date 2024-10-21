@@ -11,11 +11,12 @@ module.exports = {
       },
       doctor_id: {
         type: Sequelize.STRING,
-        allowNull: false,
         references: {
           model: "users",
           key: "id",
         },
+        onDelete: "CASCADE", 
+        onUpdate: "SET NULL",
       },
       device_name: {
         type: Sequelize.STRING,
@@ -26,6 +27,7 @@ module.exports = {
       },
       device_type_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: "device_type",
           key: "id",
@@ -33,7 +35,6 @@ module.exports = {
       },
       start_date: {
         type: Sequelize.BIGINT,
-        allowNull: true,
       },
       status_id: {
         type: Sequelize.INTEGER,
