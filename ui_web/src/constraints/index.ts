@@ -30,3 +30,40 @@ export const convertStringToGender = (gender: string) => {
       return 2;
   }
 };
+
+export const role = [
+  {
+    value: 1,
+    label: "Admin",
+  },
+  {
+    value: 2,
+    label: "Bác sĩ",
+  },
+  {
+    value: 3,
+    label: "Bệnh nhân",
+  },
+];
+
+export const convertRoleToString = (role: number) => {
+  switch (role) {
+    case 1:
+      return "Admin";
+    case 2:
+      return "Bác sĩ";
+    default:
+      return "Bệnh nhân";
+  }
+};
+
+export const convertStringToRole = (role: string) => {
+  switch (role) {
+    case "Admin":
+      return 1;
+    case "Doctor":
+      return 2;
+    default:
+      return 3;
+  }
+};

@@ -5,3 +5,7 @@ export const addKeyElement = (arr: any) => {
   }));
   return newArr;
 };
+
+export const findElementById = (arr: any, value: string) => {
+  return arr.find((obj: any) => obj.id === value);
+};
