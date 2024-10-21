@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { DeviceResponse } from "../api/api-generated";
-import { ApiLoadingStatus } from "../utils/loadingStatus";
-import { createAsyncThunkWrap } from "./handler";
-import { Service } from "../api";
+import { DeviceResponse } from "../../api/api-generated";
+import { ApiLoadingStatus } from "../../utils/loadingStatus";
+import { createAsyncThunkWrap } from "../handler";
+import { Service } from "../../api";
 
 interface IDeviceState {
   data: DeviceResponse[];

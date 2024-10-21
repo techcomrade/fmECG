@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import DataTable from "../../components/Table/dataTable";
-import { getAllDevices, resetDataLoadingStatus } from "../../redux/deviceSlice";
+import { getAllDevices, resetDataLoadingStatus } from "../../redux/reducer/deviceSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 
 export const Device = () => {
