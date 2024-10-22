@@ -68,6 +68,39 @@ export const convertStringToRole = (role: string) => {
   }
 };
 
+export const userStatus = [
+  {
+    value: 1,
+    label: "Đang hoạt động",
+  },
+  {
+    value: 2,
+    label: "Đã nghỉ",
+  },
+];
+
+export const convertUserStatusToString = (status: number) => {
+  switch (status) {
+    case 1:
+      return "Đang hoạt động";
+    case 2:
+      return "Đã nghỉ";
+    default:
+      return "Không xác định";
+  }
+};
+
+export const convertStringToUserStatus = (status: string) => {
+  switch (status) {
+    case "Đang hoạt động":
+      return 1;
+    case "Đã nghỉ":
+      return 2;
+    default:
+      return 3;
+  }
+};
+
 export const deviceType = [
   {
     value: 1,
