@@ -22,4 +22,7 @@ export class DeviceResponse {
 
   @Expose()
   status_id: number;
+
+  @Expose()
+  start_date: number;
 }

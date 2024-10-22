@@ -44,4 +44,10 @@ export class DeviceRequest {
   })
   @IsNotEmpty()
   status_id: number;
+  
+  @ApiProperty({
+    description: "Start date of the device",
+    example: 1,
+  })
+  start_date: number;
 }

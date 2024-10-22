@@ -1,8 +1,9 @@
-import { UserService } from './../user/user.service';
+import { UserService } from "./../user/user.service";
 import { DeviceRepository } from "./device.repository";
 import { Injectable } from "@nestjs/common";
 import { DeviceRequest } from "./dto/device.request";
 import { DeviceResponse } from "./dto/device.response";
+const { v4: uuidv4 } = require("uuid");
 
 @Injectable()
 export class DeviceService {
@@ -26,6 +27,8 @@ export class DeviceService {
   }
 
   async add(device: DeviceRequest) {
+    device.id = uuidv4();
+    device.start_date = Date.now();
     return this.deviceRepository.add(device);
   }
 
@@ -34,7 +37,12 @@ export class DeviceService {
   }
 
   async getById(id: string): Promise<DeviceResponse> {
-    return this.deviceRepository.getById(id);
+    let device = await this.deviceRepository.getById(id);
+    let user = await this.userService.getUserById(device.doctor_id);
+    return {
+      ...(<any>device).dataValues,
+      doctor_name: user.username,
+    };
   }
 
   async getByUserId(user_id: string): Promise<DeviceResponse[]> {

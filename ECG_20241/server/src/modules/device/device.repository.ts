@@ -20,6 +20,7 @@ export class DeviceRepository {
         information: device.information ?? "",
         device_type_id: device.device_type_id,
         status_id: device.status_id,
+        start_date: device.start_date,
       });
     } catch (error) {
       console.error(error);
@@ -70,6 +71,7 @@ export class DeviceRepository {
         information: device.information,
         device_type_id: device.device_type_id,
         status_id: device.status_id,
+        start_date: device.start_date,
       },
       {
         where: {
