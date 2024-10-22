@@ -1,4 +1,5 @@
-import { Expose, Exclude } from "class-transformer";
+import { Expose, Exclude, Type } from "class-transformer";
+import { DeviceDetailResponse } from "../../device_details/dto/device_detail.response";
 
 @Exclude()
 export class DeviceResponse {
@@ -25,4 +26,16 @@ export class DeviceResponse {
 
   @Expose()
   start_date: number;
+
+  @Expose()
+  @Type(() => DeviceDetailResponse)
+  frequency?: DeviceDetailResponse;
+
+  @Expose()
+  @Type(() => DeviceDetailResponse)
+  connection?: DeviceDetailResponse;
+
+  @Expose()
+  @Type(() => DeviceDetailResponse)
+  storage?: DeviceDetailResponse;
 }
