@@ -20,7 +20,7 @@ import {
   role,
   convertRoleToString,
   convertStringToRole,
-} from "../../constraints";
+} from "../../constants";
 import dayjs from "dayjs";
 
 type UserDetailType = {

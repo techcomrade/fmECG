@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Modal, Form, DatePicker, Input, Select } from "antd";
 import { checkDateTypeKey, convertTimeToDate } from "../../utils/dateUtils";
-import { convertGenderToString } from "../../constraints"
+import { convertGenderToString } from "../../constants"
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 

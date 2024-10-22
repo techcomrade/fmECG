@@ -6,7 +6,7 @@ import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Divider } from "antd";
 import { useTranslation } from "react-i18next";
-import { convertGenderToString, convertRoleToString } from "../../constraints";
+import { convertGenderToString, convertRoleToString } from "../../constants";
 import { convertTimeToDate } from "../../utils/dateUtils";
 
 const UserDetailComponent = (props: any, ref: any) => {
