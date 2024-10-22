@@ -16,12 +16,18 @@ export class UserRepository {
     private userRoleModel: typeof UserRoleModel,
     @InjectModel(UserStatusModel)
     private userStatusModel: typeof UserStatusModel
-  ) { }
+  ) {}
 
   async getAllUsers(): Promise<UserResponse[]> {
     return await this.userModel.findAll();
   }
-  
+
+  async getAllDoctors(): Promise<UserResponse[]> {
+    return await this.userModel.findAll({
+      where: { role_id: 2 },
+    });
+  }
+
   async add(user: UserRequest) {
     try {
       return await this.userModel.create({
@@ -48,7 +54,7 @@ export class UserRepository {
   }
 
   async getUserById(id: string): Promise<UserResponse> {
-    return await this.userModel.findOne({ 
+    return await this.userModel.findOne({
       where: { id: id },
     });
   }

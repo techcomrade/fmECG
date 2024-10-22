@@ -55,6 +55,28 @@ export class UserController {
     }
   }
 
+  @Get("/doctors")
+  @ApiResponse({
+    status: 200,
+    type: [UserResponse],
+    description: "Successful"
+  })
+  async getAllDoctors(@Res() res: Response) {
+    console.log(`[P]:::Get all doctors`);
+    try {
+      let users = await this.userService.getAllDoctors();
+      if (!users.length) {
+        throw new NotFoundException("No user found, please try again");
+      }
+      let result = plainToInstance(UserResponse, users);
+      return res.json(result);
+    }
+    catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException("Error when get all doctors");
+    }
+  }
+
   @Get(":id")
   @ApiResponse({
     status: 200,
