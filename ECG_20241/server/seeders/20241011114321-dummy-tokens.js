@@ -5,8 +5,8 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("tokens", [
       {
-        id: "1",
-        account_id: "1",
+        id: "ae4f7c10-5e36-4f9d-a02b-0a76f4d612e3",
+        account_id: "ae4f7c10-5e36-4f9d-a02b-0a76f4d612e3",
         access_token: "abc",
         refresh_token: "cde",
         expires_at: 1727794800,
