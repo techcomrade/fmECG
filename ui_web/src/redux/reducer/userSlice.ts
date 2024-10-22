@@ -6,9 +6,10 @@ import { Service } from "../../api";
 
 interface IUserState {
   data: UserResponse[];
+  doctorData: UserResponse[];
   userData: UserResponse;
   loadDataStatus: ApiLoadingStatus;
-  loadRolesDataStatus: ApiLoadingStatus;
+  loadDoctorDataStatus: ApiLoadingStatus;
   loadGetUserByIdStatus: ApiLoadingStatus;
   loadUpdateDataStatus: ApiLoadingStatus;
   loadDeleteDataStatus: ApiLoadingStatus;
@@ -16,9 +17,10 @@ interface IUserState {
 
 const initialState: IUserState = {
   data: [],
+  doctorData: [],
   userData: {} as UserResponse,
   loadDataStatus: ApiLoadingStatus.None,
-  loadRolesDataStatus: ApiLoadingStatus.None,
+  loadDoctorDataStatus: ApiLoadingStatus.None,
   loadGetUserByIdStatus: ApiLoadingStatus.None,
   loadUpdateDataStatus: ApiLoadingStatus.None,
   loadDeleteDataStatus: ApiLoadingStatus.None,
@@ -26,6 +28,10 @@ const initialState: IUserState = {
 
 export const getAllUsers = createAsyncThunkWrap("/user", async () => {
   return await Service.userService.getAllUsers();
+});
+
+export const getAllDoctors = createAsyncThunkWrap("/doctor", async () => {
+  return await Service.userService.getAllDoctors();
 });
 
 export const getUserById = createAsyncThunkWrap(
@@ -77,6 +83,17 @@ export const userSlice = createSlice({
       .addCase(getAllUsers.rejected, (state, action) => {
         state.data = [];
         state.loadDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getAllDoctors.pending, (state, action) => {
+        state.loadDoctorDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getAllDoctors.fulfilled, (state, action) => {
+        state.doctorData = action.payload;
+        state.loadDoctorDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getAllDoctors.rejected, (state, action) => {
+        state.doctorData = [];
+        state.loadDoctorDataStatus = ApiLoadingStatus.Failed;
       })
       .addCase(getUserById.pending, (state, action) => {
         state.loadGetUserByIdStatus = ApiLoadingStatus.Loading;

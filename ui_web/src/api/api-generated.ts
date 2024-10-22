@@ -191,6 +191,50 @@ export class UserControllerClient {
     /**
      * @return Successful
      */
+    getAllDoctors(): Promise<UserResponse[]> {
+        let url_ = this.baseUrl + "/users/doctors";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetAllDoctors(_response);
+        });
+    }
+
+    protected processGetAllDoctors(response: Response): Promise<UserResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UserResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<UserResponse[]>(null as any);
+    }
+
+    /**
+     * @return Successful
+     */
     getUserById(id: string): Promise<UserResponse> {
         let url_ = this.baseUrl + "/users/{id}";
         if (id === undefined || id === null)
@@ -333,6 +377,46 @@ export class DeviceControllerClient {
     /**
      * @return successful
      */
+    getDeviceById(id: string): Promise<DeviceResponse> {
+        let url_ = this.baseUrl + "/device/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetDeviceById(_response);
+        });
+    }
+
+    protected processGetDeviceById(response: Response): Promise<DeviceResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DeviceResponse.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<DeviceResponse>(null as any);
+    }
+
+    /**
+     * @return successful
+     */
     getDeviceByType(device_type_id: string): Promise<DeviceResponse[]> {
         let url_ = this.baseUrl + "/device/type/{device_type_id}";
         if (device_type_id === undefined || device_type_id === null)
@@ -427,7 +511,7 @@ export class DeviceControllerClient {
     /**
      * @return successful
      */
-    add(body: DeviceModel): Promise<boolean> {
+    add(body: DeviceRequest): Promise<boolean> {
         let url_ = this.baseUrl + "/device/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -469,18 +553,15 @@ export class DeviceControllerClient {
     /**
      * @return successful
      */
-    update(device_id: string, body: DeviceModel): Promise<boolean> {
-        let url_ = this.baseUrl + "/device/id/{device_id}";
-        if (device_id === undefined || device_id === null)
-            throw new Error("The parameter 'device_id' must be defined.");
-        url_ = url_.replace("{device_id}", encodeURIComponent("" + device_id));
+    updateDeviceById(body: DeviceRequest): Promise<boolean> {
+        let url_ = this.baseUrl + "/device/update";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
 
         let options_: RequestInit = {
             body: content_,
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
@@ -488,11 +569,11 @@ export class DeviceControllerClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUpdate(_response);
+            return this.processUpdateDeviceById(_response);
         });
     }
 
-    protected processUpdate(response: Response): Promise<boolean> {
+    protected processUpdateDeviceById(response: Response): Promise<boolean> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -514,7 +595,7 @@ export class DeviceControllerClient {
     /**
      * @return successful
      */
-    delete(device_id: string): Promise<boolean> {
+    deleteDeviceById(device_id: string): Promise<boolean> {
         let url_ = this.baseUrl + "/device/{device_id}";
         if (device_id === undefined || device_id === null)
             throw new Error("The parameter 'device_id' must be defined.");
@@ -529,11 +610,11 @@ export class DeviceControllerClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDelete(_response);
+            return this.processDeleteDeviceById(_response);
         });
     }
 
-    protected processDelete(response: Response): Promise<boolean> {
+    protected processDeleteDeviceById(response: Response): Promise<boolean> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1420,11 +1501,23 @@ export interface IDeviceResponse {
     [key: string]: any;
 }
 
-export class DeviceModel implements IDeviceModel {
+export class DeviceRequest implements IDeviceRequest {
+    /** The unique identifier for the device */
+    id!: string;
+    /** The unique identifier for the user */
+    doctor_id!: string;
+    /** The unique identifier for the device */
+    device_name!: string;
+    /** The unique identifier for the device */
+    information!: string;
+    /** The unique identifier for the device type */
+    device_type_id!: number;
+    /** The unique identifier for the device status */
+    status_id!: number;
 
     [key: string]: any;
 
-    constructor(data?: IDeviceModel) {
+    constructor(data?: IDeviceRequest) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1439,12 +1532,18 @@ export class DeviceModel implements IDeviceModel {
                 if (_data.hasOwnProperty(property))
                     this[property] = _data[property];
             }
+            this.id = _data["id"];
+            this.doctor_id = _data["doctor_id"];
+            this.device_name = _data["device_name"];
+            this.information = _data["information"];
+            this.device_type_id = _data["device_type_id"];
+            this.status_id = _data["status_id"];
         }
     }
 
-    static fromJS(data: any): DeviceModel {
+    static fromJS(data: any): DeviceRequest {
         data = typeof data === 'object' ? data : {};
-        let result = new DeviceModel();
+        let result = new DeviceRequest();
         result.init(data);
         return result;
     }
@@ -1455,11 +1554,29 @@ export class DeviceModel implements IDeviceModel {
             if (this.hasOwnProperty(property))
                 data[property] = this[property];
         }
+        data["id"] = this.id;
+        data["doctor_id"] = this.doctor_id;
+        data["device_name"] = this.device_name;
+        data["information"] = this.information;
+        data["device_type_id"] = this.device_type_id;
+        data["status_id"] = this.status_id;
         return data;
     }
 }
 
-export interface IDeviceModel {
+export interface IDeviceRequest {
+    /** The unique identifier for the device */
+    id: string;
+    /** The unique identifier for the user */
+    doctor_id: string;
+    /** The unique identifier for the device */
+    device_name: string;
+    /** The unique identifier for the device */
+    information: string;
+    /** The unique identifier for the device type */
+    device_type_id: number;
+    /** The unique identifier for the device status */
+    status_id: number;
 
     [key: string]: any;
 }
