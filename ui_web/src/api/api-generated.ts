@@ -1514,6 +1514,8 @@ export class DeviceRequest implements IDeviceRequest {
     device_type_id!: number;
     /** The unique identifier for the device status */
     status_id!: number;
+    /** Start date of the device */
+    start_date!: number;
 
     [key: string]: any;
 
@@ -1538,6 +1540,7 @@ export class DeviceRequest implements IDeviceRequest {
             this.information = _data["information"];
             this.device_type_id = _data["device_type_id"];
             this.status_id = _data["status_id"];
+            this.start_date = _data["start_date"];
         }
     }
 
@@ -1560,6 +1563,7 @@ export class DeviceRequest implements IDeviceRequest {
         data["information"] = this.information;
         data["device_type_id"] = this.device_type_id;
         data["status_id"] = this.status_id;
+        data["start_date"] = this.start_date;
         return data;
     }
 }
@@ -1577,6 +1581,8 @@ export interface IDeviceRequest {
     device_type_id: number;
     /** The unique identifier for the device status */
     status_id: number;
+    /** Start date of the device */
+    start_date: number;
 
     [key: string]: any;
 }

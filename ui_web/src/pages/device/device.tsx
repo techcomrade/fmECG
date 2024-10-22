@@ -185,7 +185,6 @@ export const Device = () => {
   };
 
   const handleSubmitAddFunction = (data: any) => {
-    console.log("Payload được gửi:", data);
     return dispatch(addDevice(data));
   };
 

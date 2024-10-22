@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { DrawerSide } from "../../components/Drawer/Drawer";
 import { getDeviceById } from "../../redux/reducer/deviceSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Divider } from "antd";
+import { DesktopOutlined } from "@ant-design/icons";
+import { Avatar, Divider, Table } from "antd";
 import { useTranslation } from "react-i18next";
 import { convertTimeToDate } from "../../utils/dateUtils";
 import {
@@ -34,7 +34,9 @@ const DeviceDetailComponent = (props: any, ref: any) => {
     if (dataState.loadGetDeviceByIdStatus === ApiLoadingStatus.Success) {
       const rawData = {
         ...dataState.deviceData,
-        device_type_id: convertDeviceTypeToString(dataState.deviceData.device_type_id),
+        device_type_id: convertDeviceTypeToString(
+          dataState.deviceData.device_type_id
+        ),
         status_id: convertDeviceStatusToString(dataState.deviceData.status_id),
         start_date: convertTimeToDate(dataState.deviceData.start_date),
       };
@@ -46,19 +48,100 @@ const DeviceDetailComponent = (props: any, ref: any) => {
     doctor_name: "Bác sĩ phụ trách",
     device_name: "Tên thiết bị",
     device_type_id: "Loại thiết bị",
-    information: "Thông tin",
     status_id: "Trạng thái",
-    start_date: "Ngày bắt đầu",
+    start_date: "Ngày bắt đầu sử dụng",
+    frequency: "Tần số",
+    storage: "Phương thức lưu trữ dữ liệu",
+    connection: "Phương thức kết nối",
   };
 
   const customData = (
     <>
-      <Avatar size={60} icon={<UserOutlined />} />
+      <Avatar size={60} icon={<DesktopOutlined />} />
       <p className="site-description-item-profile-p">Thông tin cụ thể</p>
-      <p className="site-description-item-profile-wrapper"></p>
+      <p className="site-description-item-profile-wrapper">
+        {data.information}
+      </p>
       <Divider />
     </>
   );
+
+  const frequencyColumns = [
+    {
+      title: "Loại tín hiệu",
+      dataIndex: "detail_name",
+      key: "detail_name",
+    },
+    {
+      title: "Tần số lấy mẫu (Hz)",
+      dataIndex: "value",
+      key: "value",
+    },
+    {
+      title: "Thông tin chi tiết",
+      dataIndex: "information",
+      key: "information",
+    },
+  ];
+
+  const storageColumns = [
+    {
+      title: "Loại lưu trữ",
+      dataIndex: "detail_name",
+      key: "detail_name",
+    },
+    {
+      title: "Dung lượng (MB)",
+      dataIndex: "value",
+      key: "value",
+    },
+    {
+      title: "Thông tin chi tiết",
+      dataIndex: "information",
+      key: "information",
+    },
+  ];
+
+  const connectionColumns = [
+    {
+      title: "Loại kết nối",
+      dataIndex: "detail_name",
+      key: "detail_name",
+    },
+    {
+      title: "Độ trễ",
+      dataIndex: "value",
+      key: "value",
+    },
+    {
+      title: "Thông tin chi tiết",
+      dataIndex: "information",
+      key: "information",
+    },
+  ];
+  const customDetail = {
+    frequency: (
+      <Table
+        columns={frequencyColumns}
+        dataSource={data.frequency}
+        pagination={false}
+      />
+    ),
+    storage: (
+      <Table
+        columns={storageColumns}
+        dataSource={data.storage}
+        pagination={false}
+      />
+    ),
+    connection: (
+      <Table
+        columns={connectionColumns}
+        dataSource={data.connection}
+        pagination={false}
+      />
+    ),
+  };
 
   return (
     <>
@@ -69,6 +152,7 @@ const DeviceDetailComponent = (props: any, ref: any) => {
         data={data}
         labels={labelsInfo}
         customData={customData}
+        customDetail={customDetail}
       />
     </>
   );

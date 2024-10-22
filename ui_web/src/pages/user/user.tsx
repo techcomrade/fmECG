@@ -87,13 +87,6 @@ export const User = () => {
       isEdit: true,
       dataSelect: userStatus,
     },
-    {
-      title: "Thông tin",
-      dataIndex: "information",
-      key: "information",
-      type: "text",
-      isEdit: true,
-    },
   ];
 
   const handleData = (data: any, type: string) => {
