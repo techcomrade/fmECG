@@ -7,7 +7,7 @@ module.exports = {
       {
         id: "1",
         patient_id: "4",
-        device_id: "2",
+        device_id: "2f9d99f0-4b5d-4e5e-9f93-2f9efb6a07c8",
         schedule_id: "1",
         start_time: 1727794800,
         end_time: 1727794800,
@@ -18,7 +18,7 @@ module.exports = {
       {
         id: "2",
         patient_id: "4",
-        device_id: "3",
+        device_id: "c5d4a567-e78a-4c56-b9d4-6f3c0b4ad7b8",
         schedule_id: "2",
         start_time: 1727794800,
         end_time: 1727794800,

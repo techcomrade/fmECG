@@ -33,6 +33,12 @@ export class DeviceDetailModel extends Model<DeviceDetailModel> {
   detail_name: string;
 
   @Column({
+    type: DataType.NUMBER,
+    allowNull: false,
+  })
+  detail_type: number;
+
+  @Column({
     type: DataType.STRING,
     allowNull: false,
   })
