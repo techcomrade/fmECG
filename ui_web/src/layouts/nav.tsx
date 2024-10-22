@@ -4,7 +4,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 // import { getRoutesByRole } from "../route";
 // import logo from "../../assets/logo.png";
 import { useLocation } from "react-router-dom";
-import { UserOutlined, HomeOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  UsergroupAddOutlined,
+  HomeOutlined,
+  DesktopOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
 import "./nav.scss";
 import { useTranslation } from "react-i18next";
 import logo from "../assets/logo.png";
@@ -23,7 +29,7 @@ export const Nav = () => {
   return (
     <Sider width={200} style={{ background: colorBgContainer }}>
       <div className="brand">
-        <img alt="ecg admin" src={logo}/>
+        <img alt="ecg admin" src={logo} />
       </div>
 
       <Menu
@@ -41,18 +47,29 @@ export const Nav = () => {
         <Menu.Item className="menu-item-header" key="6">
           {t("page.side-bar.management")}
         </Menu.Item>
-        {/* {menulist.map((item) => {
-        return (
-          <Menu.Item
-            key={item.key}
-            className="menu-item"
-            onClick={() => navigate(item.key)}
-          >
-            <span className="menu-item-box-icon">{item.icon}</span>
-            <span>{t(item.label)}</span>
-          </Menu.Item>
-        );
-      })} */}
+
+        <Menu.Item
+          key="/user"
+          className="menu-item"
+          onClick={() => navigate("/user")}
+        >
+          <span className="menu-item-box-icon">
+            <UsergroupAddOutlined />
+          </span>
+          <span>Thông tin người dùng</span>
+        </Menu.Item>
+
+        <Menu.Item
+          key="/device"
+          className="menu-item"
+          onClick={() => navigate("/device")}
+        >
+          <span className="menu-item-box-icon">
+            <DesktopOutlined />
+          </span>
+          <span>Thông tin thiết bị</span>
+        </Menu.Item>
+
         <Menu.Item className="menu-item-header" key="5">
           {t("page.side-bar.account-management")}
         </Menu.Item>
