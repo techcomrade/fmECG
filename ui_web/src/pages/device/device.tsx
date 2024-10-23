@@ -15,7 +15,7 @@ import {
 import { getAllDoctors } from "../../redux/reducer/userSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { convertTimeToDate, checkDateTypeKey } from "../../utils/dateUtils";
-import { findElementById } from "../../utils/arrayUtils";
+import { findElementById, checkListTypeKey } from "../../utils/arrayUtils";
 import {
   deviceType,
   convertDeviceTypeToString,
@@ -44,6 +44,8 @@ export const Device = () => {
   const drawerRef = React.useRef<DeviceDetailType>(null);
   const modalAddRef = React.useRef<AddEditDeviceType>(null);
   const modalUpdateRef = React.useRef<AddEditDeviceType>(null);
+
+  const listLabel = ["detail_name", "value", "information"];
 
   const columns = [
     {
@@ -96,6 +98,33 @@ export const Device = () => {
       isEdit: true,
     },
     {
+      title: "Tần số",
+      dataIndex: "frequency",
+      key: "frequency",
+      type: "list",
+      isEdit: true,
+      hidden: true,
+      listLabel: listLabel,
+    },
+    {
+      title: "Phương thức kết nối",
+      dataIndex: "connection",
+      key: "connection",
+      type: "list",
+      isEdit: true,
+      hidden: true,
+      listLabel: listLabel,
+    },
+    {
+      title: "Phương thức lưu trữ",
+      dataIndex: "storage",
+      key: "storage",
+      type: "list",
+      isEdit: true,
+      hidden: true,
+      listLabel: listLabel,
+    },
+    {
       title: "Ngày bắt đầu sử dụng",
       dataIndex: "start_date",
       key: "start_date",
@@ -116,6 +145,11 @@ export const Device = () => {
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
           deviceData[key] = dayjs(data[key], "DD/MM/YYYY");
+        }
+        if (checkListTypeKey(key)) {
+          deviceData[key] = {
+            list: data[key],
+          };
         }
       });
     }
@@ -185,7 +219,13 @@ export const Device = () => {
   };
 
   const handleSubmitAddFunction = (data: any) => {
-    return dispatch(addDevice(data));
+    const result = {
+      ...data,
+      frequency: data.frequency["list"],
+      connection: data.connection["list"],
+      storage: data.storage["list"],
+    };
+    return dispatch(addDevice(result));
   };
 
   const handleSubmitEditDevice = (data: any) => {
@@ -203,6 +243,33 @@ export const Device = () => {
     doctor_id: "",
     status_id: "",
     information: "",
+    frequency: {
+      list: [
+        {
+          detail_name: "",
+          value: "",
+          information: "",
+        },
+      ],
+    },
+    connection: {
+      list: [
+        {
+          detail_name: "",
+          value: "",
+          information: "",
+        },
+      ],
+    },
+    storage: {
+      list: [
+        {
+          detail_name: "",
+          value: "",
+          information: "",
+        },
+      ],
+    },
   };
 
   return (

@@ -9,3 +9,8 @@ export const addKeyElement = (arr: any) => {
 export const findElementById = (arr: any, value: string) => {
   return arr.find((obj: any) => obj.id === value);
 };
+
+export const checkListTypeKey = (key: string) => {
+  const dateKeyGroups = ["frequency", "storage", "connection"];
+  return dateKeyGroups.includes(key);
+}
