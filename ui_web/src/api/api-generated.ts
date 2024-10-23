@@ -634,6 +634,142 @@ export class DeviceControllerClient {
     }
 }
 
+export class DeviceDetailControllerClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @return successful
+     */
+    addDetail(body: DeviceDetailRequest): Promise<boolean> {
+        let url_ = this.baseUrl + "/device_detail";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processAddDetail(_response);
+        });
+    }
+
+    protected processAddDetail(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 201) {
+            return response.text().then((_responseText) => {
+            let result201: any = null;
+            let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result201 = resultData201 !== undefined ? resultData201 : <any>null;
+    
+            return result201;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
+    }
+
+    /**
+     * @return successful
+     */
+    updateDetailById(body: DeviceDetailRequest): Promise<boolean> {
+        let url_ = this.baseUrl + "/device_detail";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUpdateDetailById(_response);
+        });
+    }
+
+    protected processUpdateDetailById(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
+    }
+
+    /**
+     * @return successful
+     */
+    deleteDeviceDetailById(detail_id: string): Promise<boolean> {
+        let url_ = this.baseUrl + "/device_detail/{detail_id}";
+        if (detail_id === undefined || detail_id === null)
+            throw new Error("The parameter 'detail_id' must be defined.");
+        url_ = url_.replace("{detail_id}", encodeURIComponent("" + detail_id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDeleteDeviceDetailById(_response);
+        });
+    }
+
+    protected processDeleteDeviceDetailById(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
+    }
+}
+
 export class RecordControllerClient {
     private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
     private baseUrl: string;
@@ -1501,6 +1637,86 @@ export interface IDeviceResponse {
     [key: string]: any;
 }
 
+export class DeviceDetailRequest implements IDeviceDetailRequest {
+    /** The unique identifier for the device detail */
+    id!: string;
+    /** The unique identifier for the device */
+    device_id!: string;
+    /** The name of the detail */
+    detail_name!: string;
+    /** The type of the detail */
+    detail_type!: number;
+    /** The value of the detail */
+    value!: string;
+    /** The information of the detail */
+    information!: string;
+
+    [key: string]: any;
+
+    constructor(data?: IDeviceDetailRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.id = _data["id"];
+            this.device_id = _data["device_id"];
+            this.detail_name = _data["detail_name"];
+            this.detail_type = _data["detail_type"];
+            this.value = _data["value"];
+            this.information = _data["information"];
+        }
+    }
+
+    static fromJS(data: any): DeviceDetailRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new DeviceDetailRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["id"] = this.id;
+        data["device_id"] = this.device_id;
+        data["detail_name"] = this.detail_name;
+        data["detail_type"] = this.detail_type;
+        data["value"] = this.value;
+        data["information"] = this.information;
+        return data;
+    }
+}
+
+export interface IDeviceDetailRequest {
+    /** The unique identifier for the device detail */
+    id: string;
+    /** The unique identifier for the device */
+    device_id: string;
+    /** The name of the detail */
+    detail_name: string;
+    /** The type of the detail */
+    detail_type: number;
+    /** The value of the detail */
+    value: string;
+    /** The information of the detail */
+    information: string;
+
+    [key: string]: any;
+}
+
 export class DeviceRequest implements IDeviceRequest {
     /** The unique identifier for the device */
     id!: string;
@@ -1516,6 +1732,9 @@ export class DeviceRequest implements IDeviceRequest {
     status_id!: number;
     /** Start date of the device */
     start_date!: number;
+    frequency!: DeviceDetailRequest;
+    connection!: DeviceDetailRequest;
+    storage!: DeviceDetailRequest;
 
     [key: string]: any;
 
@@ -1525,6 +1744,11 @@ export class DeviceRequest implements IDeviceRequest {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
+        }
+        if (!data) {
+            this.frequency = new DeviceDetailRequest();
+            this.connection = new DeviceDetailRequest();
+            this.storage = new DeviceDetailRequest();
         }
     }
 
@@ -1541,6 +1765,9 @@ export class DeviceRequest implements IDeviceRequest {
             this.device_type_id = _data["device_type_id"];
             this.status_id = _data["status_id"];
             this.start_date = _data["start_date"];
+            this.frequency = _data["frequency"] ? DeviceDetailRequest.fromJS(_data["frequency"]) : new DeviceDetailRequest();
+            this.connection = _data["connection"] ? DeviceDetailRequest.fromJS(_data["connection"]) : new DeviceDetailRequest();
+            this.storage = _data["storage"] ? DeviceDetailRequest.fromJS(_data["storage"]) : new DeviceDetailRequest();
         }
     }
 
@@ -1564,6 +1791,9 @@ export class DeviceRequest implements IDeviceRequest {
         data["device_type_id"] = this.device_type_id;
         data["status_id"] = this.status_id;
         data["start_date"] = this.start_date;
+        data["frequency"] = this.frequency ? this.frequency.toJSON() : <any>undefined;
+        data["connection"] = this.connection ? this.connection.toJSON() : <any>undefined;
+        data["storage"] = this.storage ? this.storage.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -1583,6 +1813,9 @@ export interface IDeviceRequest {
     status_id: number;
     /** Start date of the device */
     start_date: number;
+    frequency: DeviceDetailRequest;
+    connection: DeviceDetailRequest;
+    storage: DeviceDetailRequest;
 
     [key: string]: any;
 }
