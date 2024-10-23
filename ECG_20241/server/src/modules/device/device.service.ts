@@ -19,9 +19,24 @@ export class DeviceService {
     let devices = await this.deviceRepository.getAllData();
     for (const device of devices) {
       let user = await this.userService.getUserById(device.doctor_id);
+      let frequency =
+        await this.deviceDetailService.getDetailByDeviceIdAndFreqType(
+          device.id
+        );
+      let storage =
+        await this.deviceDetailService.getDetailByDeviceIdAndStorageType(
+          device.id
+        );
+      let connection =
+        await this.deviceDetailService.getDetailByDeviceIdAndConnectionType(
+          device.id
+        );
       const deviceWithDoctorName = {
         ...(<any>device).dataValues,
         doctor_name: user.username,
+        frequency: frequency,
+        connection: connection,
+        storage: storage,
       };
       result.push(deviceWithDoctorName);
     }
@@ -56,14 +71,16 @@ export class DeviceService {
   async getById(id: string): Promise<DeviceResponse> {
     let device = await this.deviceRepository.getById(id);
     let user = await this.userService.getUserById(device.doctor_id);
-    let frequency = await this.deviceDetailService.getDetailByIdAndFreqType(
-      device.id
-    );
-    let storage = await this.deviceDetailService.getDetailByIdAndStorageType(
-      device.id
-    );
+    let frequency =
+      await this.deviceDetailService.getDetailByDeviceIdAndFreqType(device.id);
+    let storage =
+      await this.deviceDetailService.getDetailByDeviceIdAndStorageType(
+        device.id
+      );
     let connection =
-      await this.deviceDetailService.getDetailByIdAndConnectionType(device.id);
+      await this.deviceDetailService.getDetailByDeviceIdAndConnectionType(
+        device.id
+      );
     return {
       ...(<any>device).dataValues,
       doctor_name: user.username,
