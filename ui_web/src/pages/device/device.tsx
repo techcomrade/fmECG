@@ -11,11 +11,19 @@ import {
   resetLoadUpdateDataStatus,
   resetLoadDeleteDataStatus,
   addDevice,
+  deleteDeviceDetailById,
+  addDeviceDetail,
+  updateDeviceDetailById,
 } from "../../redux/reducer/deviceSlice";
 import { getAllDoctors } from "../../redux/reducer/userSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { convertTimeToDate, checkDateTypeKey } from "../../utils/dateUtils";
-import { findElementById, checkListTypeKey } from "../../utils/arrayUtils";
+import {
+  findElementById,
+  checkListTypeKey,
+  checkAddedDetail,
+  checkDeletedDetail,
+} from "../../utils/arrayUtils";
 import {
   deviceType,
   convertDeviceTypeToString,
@@ -25,6 +33,7 @@ import {
   convertStringToDeviceStatus,
 } from "../../constants";
 import dayjs from "dayjs";
+import { original } from "@reduxjs/toolkit";
 
 type DeviceDetailType = {
   open: (id: string) => void;
@@ -170,6 +179,41 @@ export const Device = () => {
     return deviceData;
   };
 
+  const handleDetailChanges = (
+    originalDetails: any[],
+    updatedDetails: any[],
+    deviceId: string,
+    detailType: number
+  ) => {
+    if (originalDetails.length > updatedDetails.length) {
+      const deletedDetails = checkDeletedDetail(
+        originalDetails,
+        updatedDetails
+      );
+      if (deletedDetails.length > 0) {
+        deletedDetails.forEach((deleted) => {
+          dispatch(deleteDeviceDetailById(deleted.id));
+        });
+      }
+    }
+    if (originalDetails.length < updatedDetails.length) {
+      const addedDetails = checkAddedDetail(originalDetails, updatedDetails);
+      if (addedDetails.length > 0) {
+        addedDetails.forEach((added) => {
+          added.detail_type = detailType;
+          added.device_id = deviceId;
+          dispatch(addDeviceDetail(added));
+        });
+      }
+    } else if (
+      JSON.stringify(originalDetails) !== JSON.stringify(updatedDetails)
+    ) {
+      updatedDetails.map((updated) =>
+        dispatch(updateDeviceDetailById(updated))
+      );
+    }
+  };
+
   React.useEffect(() => {
     dispatch(getAllDevices());
     dispatch(getAllDoctors());
@@ -229,8 +273,28 @@ export const Device = () => {
   };
 
   const handleSubmitEditDevice = (data: any) => {
-    const { ...payload } = data || {};
-    return dispatch(updateDeviceById(payload));
+    const { ...payload } = data;
+    const deviceData = findElementById(dataTable, selectedData[0]);
+    handleDetailChanges(
+      deviceData.frequency,
+      payload.frequency["list"],
+      deviceData.id,
+      1
+    );
+    handleDetailChanges(
+      deviceData.connection,
+      payload.connection["list"],
+      deviceData.id,
+      2
+    );
+    handleDetailChanges(
+      deviceData.storage,
+      payload.storage["list"],
+      deviceData.id,
+      3
+    );
+
+    dispatch(updateDeviceById(payload));
   };
 
   const handleDeleteFunction = (id: string) => {

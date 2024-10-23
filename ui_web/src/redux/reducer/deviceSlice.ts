@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { DeviceRequest, DeviceResponse } from "../../api/api-generated";
+import {
+  DeviceDetailRequest,
+  DeviceRequest,
+  DeviceResponse,
+} from "../../api/api-generated";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { createAsyncThunkWrap } from "../handler";
 import { Service } from "../../api";
@@ -10,8 +14,10 @@ interface IDeviceState {
   loadDataStatus: ApiLoadingStatus;
   loadGetDeviceByIdStatus: ApiLoadingStatus;
   loadAddDataStatus: ApiLoadingStatus;
+  loadAddDetailDataStatus: ApiLoadingStatus;
   loadUpdateDataStatus: ApiLoadingStatus;
   loadDeleteDataStatus: ApiLoadingStatus;
+  loadDeleteDetailDataStatus: ApiLoadingStatus;
 }
 
 const initialState: IDeviceState = {
@@ -20,8 +26,10 @@ const initialState: IDeviceState = {
   loadDataStatus: ApiLoadingStatus.None,
   loadGetDeviceByIdStatus: ApiLoadingStatus.None,
   loadAddDataStatus: ApiLoadingStatus.None,
+  loadAddDetailDataStatus: ApiLoadingStatus.None,
   loadUpdateDataStatus: ApiLoadingStatus.None,
   loadDeleteDataStatus: ApiLoadingStatus.None,
+  loadDeleteDetailDataStatus: ApiLoadingStatus.None,
 };
 
 export const getAllDevices = createAsyncThunkWrap("/devices", async () => {
@@ -41,18 +49,42 @@ export const addDevice = createAsyncThunkWrap(
     return await Service.deviceService.add(device);
   }
 );
+
+export const addDeviceDetail = createAsyncThunkWrap(
+  "/add-detail",
+  async (detail: DeviceDetailRequest) => {
+    return await Service.deviceDetailService.addDetail(detail);
+  }
+);
+
 export const updateDeviceById = createAsyncThunkWrap(
   "/update",
   async (device: DeviceRequest) => {
     return await Service.deviceService.updateDeviceById(device);
   }
 );
+
+export const updateDeviceDetailById = createAsyncThunkWrap(
+  "/add-detail",
+  async (detail: DeviceDetailRequest) => {
+    return await Service.deviceDetailService.updateDetailById(detail);
+  }
+);
+
 export const deleteDeviceById = createAsyncThunkWrap(
   "/delete",
   async (id: string) => {
     return await Service.deviceService.deleteDeviceById(id);
   }
 );
+
+export const deleteDeviceDetailById = createAsyncThunkWrap(
+  "/delete-detail",
+  async (id: string) => {
+    return await Service.deviceDetailService.deleteDeviceDetailById(id);
+  }
+);
+
 export const deviceSlice = createSlice({
   name: "device",
   initialState,
@@ -63,6 +95,9 @@ export const deviceSlice = createSlice({
     resetLoadAddDataStatus: (state) => {
       state.loadAddDataStatus = ApiLoadingStatus.None;
     },
+    resetLoadAddDetailDataStatus: (state) => {
+      state.loadAddDetailDataStatus = ApiLoadingStatus.None;
+    },
     resetLoadGetDeviceByIdStatus: (state) => {
       state.loadGetDeviceByIdStatus = ApiLoadingStatus.None;
     },
@@ -71,6 +106,9 @@ export const deviceSlice = createSlice({
     },
     resetLoadDeleteDataStatus: (state) => {
       state.loadDeleteDataStatus = ApiLoadingStatus.None;
+    },
+    resetLoadDeleteDetailDataStatus: (state) => {
+      state.loadDeleteDetailDataStatus = ApiLoadingStatus.None;
     },
   },
   extraReducers: (builder) => {
@@ -105,6 +143,15 @@ export const deviceSlice = createSlice({
       .addCase(addDevice.rejected, (state, action) => {
         state.loadAddDataStatus = ApiLoadingStatus.Failed;
       })
+      .addCase(addDeviceDetail.pending, (state, action) => {
+        state.loadAddDetailDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(addDeviceDetail.fulfilled, (state, action) => {
+        state.loadAddDetailDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(addDeviceDetail.rejected, (state, action) => {
+        state.loadAddDetailDataStatus = ApiLoadingStatus.Failed;
+      })
       .addCase(updateDeviceById.pending, (state, action) => {
         state.loadUpdateDataStatus = ApiLoadingStatus.Loading;
       })
@@ -122,6 +169,15 @@ export const deviceSlice = createSlice({
       })
       .addCase(deleteDeviceById.rejected, (state, action) => {
         state.loadDeleteDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(deleteDeviceDetailById.pending, (state, action) => {
+        state.loadDeleteDetailDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(deleteDeviceDetailById.fulfilled, (state, action) => {
+        state.loadDeleteDetailDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(deleteDeviceDetailById.rejected, (state, action) => {
+        state.loadDeleteDetailDataStatus = ApiLoadingStatus.Failed;
       });
   },
 });
@@ -129,8 +185,10 @@ export const deviceSlice = createSlice({
 export const {
   resetLoadDataStatus,
   resetLoadAddDataStatus,
+  resetLoadAddDetailDataStatus,
   resetLoadGetDeviceByIdStatus,
   resetLoadUpdateDataStatus,
   resetLoadDeleteDataStatus,
+  resetLoadDeleteDetailDataStatus,
 } = deviceSlice.actions;
 export default deviceSlice.reducer;

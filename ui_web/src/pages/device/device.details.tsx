@@ -1,7 +1,11 @@
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { DrawerSide } from "../../components/Drawer/Drawer";
-import { getDeviceById } from "../../redux/reducer/deviceSlice";
+import {
+  getDeviceById,
+  resetLoadAddDetailDataStatus,
+  resetLoadDeleteDetailDataStatus,
+} from "../../redux/reducer/deviceSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { DesktopOutlined } from "@ant-design/icons";
 import { Avatar, Divider, Table } from "antd";
@@ -31,6 +35,20 @@ const DeviceDetailComponent = (props: any, ref: any) => {
   }));
 
   React.useEffect(() => {
+    if (dataState.loadAddDetailDataStatus === ApiLoadingStatus.Success) {
+      dispatch(resetLoadAddDetailDataStatus());
+      dispatch(getDeviceById(idSelect));
+    }
+  }, [dataState.loadAddDetailDataStatus]);
+
+  React.useEffect(() => {
+    if (dataState.loadDeleteDetailDataStatus === ApiLoadingStatus.Success) {
+      dispatch(resetLoadDeleteDetailDataStatus());
+      dispatch(getDeviceById(idSelect));
+    }
+  }, [dataState.loadDeleteDetailDataStatus]);
+
+  React.useEffect(() => {
     if (dataState.loadGetDeviceByIdStatus === ApiLoadingStatus.Success) {
       const rawData = {
         ...dataState.deviceData,
@@ -51,8 +69,8 @@ const DeviceDetailComponent = (props: any, ref: any) => {
     status_id: "Trạng thái",
     start_date: "Ngày bắt đầu sử dụng",
     frequency: "Tần số",
-    storage: "Phương thức lưu trữ dữ liệu",
     connection: "Phương thức kết nối",
+    storage: "Phương thức lưu trữ dữ liệu",
   };
 
   const customData = (
