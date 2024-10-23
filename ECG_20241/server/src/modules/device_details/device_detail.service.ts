@@ -9,23 +9,31 @@ export class DeviceDetailService {
 
   async addDetail(deviceDetail: DeviceDetailRequest) {
     deviceDetail.id = uuidv4();
-    return await this.deviceDetailRepository.addDetail(deviceDetail);
+    await this.deviceDetailRepository.addDetail(deviceDetail);
   }
-  async getDetailByIdAndFreqType(device_id: string) {
+
+  async getDetailByDeviceIdAndFreqType(device_id: string) {
     return await this.deviceDetailRepository.getDetailByIdAndFreqType(
       device_id
     );
   }
 
-  async getDetailByIdAndConnectionType(device_id: string) {
+  async getDetailByDeviceIdAndConnectionType(device_id: string) {
     return await this.deviceDetailRepository.getDetailByIdAndConnectionType(
       device_id
     );
   }
 
-  async getDetailByIdAndStorageType(device_id: string) {
+  async getDetailByDeviceIdAndStorageType(device_id: string) {
     return await this.deviceDetailRepository.getDetailByIdAndStorageType(
       device_id
     );
+  }
+
+  async updateDetailById(deviceDetail: DeviceDetailRequest, id: string) {
+    return await this.deviceDetailRepository.updateDetailById(deviceDetail, id);
+  }
+  async deleteDetailById(id: string) {
+    return await this.deviceDetailRepository.deleteDetailById(id);
   }
 }

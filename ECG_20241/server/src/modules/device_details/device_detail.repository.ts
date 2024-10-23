@@ -21,6 +21,7 @@ export class DeviceDetailRepository {
       detail_type: deviceDetail.detail_type,
     });
   }
+
   async getDetailByDeviceId(
     device_id: string
   ): Promise<DeviceDetailResponse[]> {
@@ -56,5 +57,24 @@ export class DeviceDetailRepository {
         detail_type: 3,
       },
     });
+  }
+
+  async updateDetailById(deviceDetail: DeviceDetailRequest, id: string) {
+    return await this.deviceDetailModel.update(
+      {
+        detail_name: deviceDetail.detail_name,
+        information: deviceDetail.information,
+        value: deviceDetail.value,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+  }
+
+  async deleteDetailById(id: string) {
+    return await this.deviceDetailModel.destroy({ where: { id: id } });
   }
 }
