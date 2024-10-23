@@ -1,5 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsUUID } from "class-validator";
+import { Type } from "class-transformer";
+import { DeviceDetailRequest } from "../../device_details/dto/device_detail.request";
 
 export class DeviceRequest {
   @ApiProperty({
@@ -44,10 +46,22 @@ export class DeviceRequest {
   })
   @IsNotEmpty()
   status_id: number;
-  
+
   @ApiProperty({
     description: "Start date of the device",
     example: 1,
   })
   start_date: number;
+
+  @ApiProperty()
+  @Type(() => DeviceDetailRequest)
+  frequency?: DeviceDetailRequest;
+
+  @ApiProperty()
+  @Type(() => DeviceDetailRequest)
+  connection?: DeviceDetailRequest;
+
+  @ApiProperty()
+  @Type(() => DeviceDetailRequest)
+  storage?: DeviceDetailRequest;
 }

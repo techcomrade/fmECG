@@ -12,19 +12,15 @@ export class DeviceRepository {
   ) {}
 
   async add(device: DeviceRequest) {
-    try {
-      return await this.deviceModel.create({
-        id: device.id,
-        doctor_id: device.doctor_id,
-        device_name: device.device_name,
-        information: device.information ?? "",
-        device_type_id: device.device_type_id,
-        status_id: device.status_id,
-        start_date: device.start_date,
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    return await this.deviceModel.create({
+      id: device.id,
+      doctor_id: device.doctor_id,
+      device_name: device.device_name,
+      information: device.information ?? "",
+      device_type_id: device.device_type_id,
+      status_id: device.status_id,
+      start_date: device.start_date,
+    });
   }
 
   async getAllData(): Promise<DeviceResponse[]> {

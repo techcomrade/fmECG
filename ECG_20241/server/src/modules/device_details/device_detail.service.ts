@@ -8,6 +8,7 @@ export class DeviceDetailService {
   constructor(private deviceDetailRepository: DeviceDetailRepository) {}
 
   async addDetail(deviceDetail: DeviceDetailRequest) {
+    deviceDetail.id = uuidv4();
     return await this.deviceDetailRepository.addDetail(deviceDetail);
   }
   async getDetailByIdAndFreqType(device_id: string) {

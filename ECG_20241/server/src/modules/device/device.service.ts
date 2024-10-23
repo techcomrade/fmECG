@@ -31,11 +31,26 @@ export class DeviceService {
   async add(device: DeviceRequest) {
     device.id = uuidv4();
     device.start_date = Date.now();
-    return this.deviceRepository.add(device);
+    await this.deviceRepository.add(device);
+    for (const frequency of <any>device.frequency) {
+      frequency.detail_type = 1;
+      frequency.device_id = device.id;
+      await this.deviceDetailService.addDetail(frequency);
+    }
+    for (const connection of <any>device.connection) {
+      connection.detail_type = 2;
+      connection.device_id = device.id;
+      await this.deviceDetailService.addDetail(connection);
+    }
+    for (const storage of <any>device.storage) {
+      storage.detail_type = 3;
+      storage.device_id = device.id;
+      await this.deviceDetailService.addDetail(storage);
+    }
   }
 
   async updateById(device: DeviceRequest, id: string) {
-    return this.deviceRepository.updateById(device, id);
+    return await this.deviceRepository.updateById(device, id);
   }
 
   async getById(id: string): Promise<DeviceResponse> {
@@ -59,22 +74,22 @@ export class DeviceService {
   }
 
   async getByUserId(user_id: string): Promise<DeviceResponse[]> {
-    return this.deviceRepository.getByUserId(user_id);
+    return await this.deviceRepository.getByUserId(user_id);
   }
 
   async getByDoctorId(doctor_id: string): Promise<DeviceResponse[]> {
-    return this.deviceRepository.getByDoctorId(doctor_id);
+    return await this.deviceRepository.getByDoctorId(doctor_id);
   }
 
   async getByDeviceTypeId(device_type_id: string): Promise<DeviceResponse> {
-    return this.deviceRepository.getByDeviceType(device_type_id);
+    return await this.deviceRepository.getByDeviceType(device_type_id);
   }
 
   async getByDeviceName(name: string): Promise<DeviceResponse[]> {
-    return this.deviceRepository.getDeviceByDeviceName(name);
+    return await this.deviceRepository.getDeviceByDeviceName(name);
   }
 
   async deleteById(id: string) {
-    return this.deviceRepository.deleteById(id);
+    return await this.deviceRepository.deleteById(id);
   }
 }
