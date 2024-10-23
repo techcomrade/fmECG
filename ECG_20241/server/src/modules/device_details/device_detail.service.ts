@@ -1,10 +1,15 @@
 import { DeviceDetailRepository } from "./device_detail.repository";
 import { Injectable } from "@nestjs/common";
+import { DeviceDetailRequest } from "./dto/device_detail.request";
 const { v4: uuidv4 } = require("uuid");
 
 @Injectable()
 export class DeviceDetailService {
   constructor(private deviceDetailRepository: DeviceDetailRepository) {}
+
+  async addDetail(deviceDetail: DeviceDetailRequest) {
+    return await this.deviceDetailRepository.addDetail(deviceDetail);
+  }
   async getDetailByIdAndFreqType(device_id: string) {
     return await this.deviceDetailRepository.getDetailByIdAndFreqType(
       device_id
