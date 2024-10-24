@@ -12,6 +12,7 @@ import { AccountRepository } from './authentication.respository';
 import { CreateAccountModel } from './dto/account.create.model';
 import { BlacklistService } from '../blacklist/blacklist.service';
 import { AccountRegisterModel } from './dto/account.register.model';
+import { CreateTokenModel } from '../token/dto/token.create.model';
 
 @Injectable()
 export class AuthenticationService {
@@ -56,17 +57,28 @@ export class AuthenticationService {
       access_token: this.tokenService.renderToken(payload, '15m'),
       refresh_token: this.tokenService.renderToken(payload, '5d'),
     };
+    const token: CreateTokenModel = {
+      account_id: user.id,
+      refresh_token: result.refresh_token,
+    };
+    const addToken = this.tokenService.addToken(token);
+    if (!addToken) {
+      throw new NotFoundException('Saved Token Failed');
+    }
     return result;
   }
-  public async refreshToken(
-    refresh_token: string,
-  ): Promise<TokensResponseModel> {
+  public async refreshToken(refresh_token: string) {
     const refreshTokenResult = this.tokenService.refreshToken(refresh_token);
     return refreshTokenResult;
   }
   public async validateToken(token: string) {
     const decoded = this.tokenService.decodeToken(token);
     return decoded ?? null;
+  }
+  public async logout (token: string) {
+    const decoded = this.tokenService.decodeToken(token);
+    if(!decoded) return null;
+
   }
 
   private async hashPassword(password: string): Promise<string> {

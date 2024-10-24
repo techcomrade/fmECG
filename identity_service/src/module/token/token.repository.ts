@@ -23,7 +23,7 @@ export class TokenRepository {
       },
     });
   }
-  async getTokenByAccountId(account_id: string) {
+  async getTokenByAccountId(account_id: string): Promise<TokenModel[]> {
     return await this.tokenModel.findAll({
       where: {
         account_id: account_id,
@@ -46,6 +46,19 @@ export class TokenRepository {
         where: {
           expired_at: false,
           account_id: accountId,
+        },
+      },
+    );
+  }
+  async setExpiredTokenByRefreshToken(refreshToken: string) {
+    return await this.tokenModel.update(
+      {
+        is_expired: true,
+        expired_at: new Date(),
+      },
+      {
+        where: {
+          refresh_token: refreshToken,
         },
       },
     );

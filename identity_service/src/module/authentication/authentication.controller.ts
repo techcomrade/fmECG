@@ -28,7 +28,7 @@ export class AuthenticationController {
     if (!user) {
       throw new NotFoundException('Register failed');
     }
-    return res.status(HttpStatus.OK).json('login successfully');
+    return res.status(HttpStatus.OK).json('register successfully');
   }
   @Post('login')
   async login(@Body() login: LoginRequest, @Res() res: Response) {

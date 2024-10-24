@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as jwt from 'jsonwebtoken';
 import { PayloadModel } from './dto/payload.model';
 import { TokensResponseModel } from './dto/tokens.response.model';
+import { CreateTokenModel } from './dto/token.create.model';
 
 @Injectable()
 export class TokenService {
@@ -40,9 +41,21 @@ export class TokenService {
   public async refreshToken(token: string): Promise<TokensResponseModel> {
     const decoded = this.decodeToken(token);
     if (!decoded) return null;
-    const refreshTokens = await this.tokenRepository.getTokenByAccountId(
+    const refreshTokens = await this.tokenRepository.getExpiredTokenByAccountId(
       decoded?.account_id,
     );
-    if (refreshTokens) return null;
+    if (!refreshTokens) return null;
+  }
+  public async addToken(refreshToken: CreateTokenModel): Promise<boolean> {
+    refreshToken.isExpired = false;
+    const addTokenResult = this.tokenRepository.add(refreshToken);
+    if (!addTokenResult) return false;
+    return true;
+  }
+  public async setExpiredToken(refreshToken: string): Promise<boolean> {
+    const setExpiredToken =
+      this.tokenRepository.setExpiredTokenByAccountId(refreshToken);
+    if (!setExpiredToken) return false;
+    return true;
   }
 }
