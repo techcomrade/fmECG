@@ -33,14 +33,20 @@ const deviceDetailClient = new ApiClientFactory.DeviceDetailControllerClient(
   }
 );
 
+const recordClient = new ApiClientFactory.RecordControllerClient(api_url, {
+  fetch: authorizedFetchFunction,
+});
+
 interface IService {
   userService: ApiClientFactory.UserControllerClient;
   deviceService: ApiClientFactory.DeviceControllerClient;
   deviceDetailService: ApiClientFactory.DeviceDetailControllerClient;
+  recordService: ApiClientFactory.RecordControllerClient;
 }
 
 export const Service: IService = {
   userService: userClient,
   deviceService: deviceClient,
   deviceDetailService: deviceDetailClient,
+  recordService: recordClient,
 };

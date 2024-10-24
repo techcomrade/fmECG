@@ -23,6 +23,10 @@ export const routeMapping: { [key: string]: IRouteItem } = {
     key: "device",
     url: "/device",
   },
+  Record: {
+    key: "record",
+    url: "/record",
+  },
   ErrorPage: {
     key: "error",
     url: "/error",

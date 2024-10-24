@@ -31,7 +31,7 @@ type UserDetailType = {
 };
 
 type EditUserType = {
-  open: (data: any[], columns: any[]) => void;
+  open: (data: any[], columns: any[], layout: any) => void;
 };
 
 export const User = () => {
@@ -153,7 +153,7 @@ export const User = () => {
   const handleEditFunction = () => {
     const userData = findElementById(dataTable, selectedData[0]);
     const dataEdit = handleData(userData, "edit-form");
-    modalUpdateRef.current?.open(dataEdit, columns);
+    modalUpdateRef.current?.open(dataEdit, columns, "horizontal");
   };
 
   const handleSubmitEditUser = (data: any) => {
