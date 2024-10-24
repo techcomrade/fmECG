@@ -65,7 +65,7 @@ export const userSlice = createSlice({
       state.loadGetUserByIdStatus = ApiLoadingStatus.None;
     },
     resetLoadUpdateDataStatus: (state) => {
-      state.loadDeleteDataStatus = ApiLoadingStatus.None;
+      state.loadUpdateDataStatus = ApiLoadingStatus.None;
     },
     resetLoadDeleteDataStatus: (state) => {
       state.loadDeleteDataStatus = ApiLoadingStatus.None;

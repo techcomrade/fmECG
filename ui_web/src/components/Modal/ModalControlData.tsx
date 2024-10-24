@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 const ModalComponent = (props: any, ref: any) => {
   const [form] = Form.useForm();
   const [data, setData] = React.useState<any>([]);
+  const [layout, setLayout] = React.useState<any>("horizontal")
   const [isOpen, setIsOpen] = React.useState<boolean>(props.isOpen);
   const [column, setColumn] = React.useState<any[]>([]);
   const { t } = useTranslation();
@@ -35,9 +36,10 @@ const ModalComponent = (props: any, ref: any) => {
   };
 
   React.useImperativeHandle(ref, () => ({
-    open: (data: any, columns: any[]) => {
+    open: (data: any, columns: any[], layout: any) => {
       setIsOpen(true);
       setData(data);
+      setLayout(layout);
       setColumn(columns.filter((item) => item.isEdit));
       form.setFieldsValue(data);
     },
@@ -77,7 +79,7 @@ const ModalComponent = (props: any, ref: any) => {
       <br />
       <Form
         form={form}
-        layout="vertical"
+        layout={layout}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
       >

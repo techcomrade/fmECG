@@ -21,7 +21,7 @@ interface Props {
   name: string;
   loading: boolean;
   column: ColumnsType<any>;
-  addButton: boolean;
+  addButton?: boolean;
   addFunction?: () => void;
   addDeviceButton?: boolean;
   editButton: boolean;

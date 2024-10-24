@@ -40,7 +40,7 @@ type DeviceDetailType = {
 };
 
 type AddEditDeviceType = {
-  open: (data: any[], columns: any[]) => void;
+  open: (data: any[], columns: any[], layout: any) => void;
 };
 
 export const Device = () => {
@@ -259,7 +259,7 @@ export const Device = () => {
   const handleEditFunction = () => {
     const deviceData = findElementById(dataTable, selectedData[0]);
     const dataEdit = handleData(deviceData, "edit-form");
-    modalUpdateRef.current?.open(dataEdit, columns);
+    modalUpdateRef.current?.open(dataEdit, columns, "vertical");
   };
 
   const handleSubmitAddFunction = (data: any) => {
@@ -347,7 +347,7 @@ export const Device = () => {
         data={dataTable}
         loading={dataState.loadDataStatus === ApiLoadingStatus.Loading}
         updateSelectedData={setSelectedData}
-        addFunction={() => modalAddRef.current?.open(initData, columns)}
+        addFunction={() => modalAddRef.current?.open(initData, columns, "vertical")}
         editFunction={handleEditFunction}
         deleteFunction={handleDeleteFunction}
         handleOpenDrawer={(id) => drawerRef.current?.open(id)}
