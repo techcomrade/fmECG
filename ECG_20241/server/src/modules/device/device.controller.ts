@@ -10,13 +10,14 @@ import {
   Body,
   Param,
   Res,
+  Put,
 } from "@nestjs/common";
 import { Response } from "express";
 import { DeviceService } from "./device.service";
-import { DeviceModel } from "../../entities/device.model";
 import { ApiResponse } from "@nestjs/swagger";
 import { DeviceResponse } from "./dto/device.response";
 import { plainToInstance } from "class-transformer";
+import { DeviceRequest } from "./dto/device.request";
 
 @Controller("device")
 export class DeviceController {
@@ -35,6 +36,22 @@ export class DeviceController {
       throw new NotFoundException("No device found, please try again");
     }
     let result = plainToInstance(DeviceResponse, devices);
+    return res.json(result);
+  }
+
+  @Get(":id")
+  @ApiResponse({
+    status: 200,
+    type: DeviceResponse,
+    description: "successful",
+  })
+  async getDeviceById(@Res() res: Response, @Param("id") id: string) {
+    console.log(`[P]:::Get device by id:`, id);
+    let device = await this.deviceService.getById(id);
+    if (!device) {
+      throw new NotFoundException("No device found, please try again");
+    }
+    let result = plainToInstance(DeviceResponse, device);
     return res.json(result);
   }
 
@@ -84,7 +101,7 @@ export class DeviceController {
     type: Boolean,
     description: "successful",
   })
-  async add(@Body() device: DeviceModel, @Res() res: Response) {
+  async add(@Body() device: DeviceRequest, @Res() res: Response) {
     console.log(`[P]:::Add device data`, device);
     try {
       await this.deviceService.add(device);
@@ -96,26 +113,22 @@ export class DeviceController {
     }
   }
 
-  @Post("id/:device_id")
+  @Put("/update")
   @ApiResponse({
     status: 200,
     type: Boolean,
     description: "successful",
   })
-  async update(
-    @Res() res: Response,
-    @Body() device: DeviceModel,
-    @Param("device_id") device_id: string
-  ) {
-    console.log(`[P]:::Update device by id`, device_id);
-    let checkExistDevice = await this.deviceService.getById(device_id);
+  async updateDeviceById(@Res() res: Response, @Body() device: DeviceRequest) {
+    console.log(`[P]:::Update device by id`, device.id);
+    let checkExistDevice = await this.deviceService.getById(device.id);
     if (checkExistDevice == null) {
       throw new NotFoundException(
         "No device found to update, please try again"
       );
     }
     try {
-      await this.deviceService.updateById(device, device_id);
+      await this.deviceService.updateById(device, device.id);
       return res.json({
         message: "Device updated successfully",
       });
@@ -131,7 +144,10 @@ export class DeviceController {
     type: Boolean,
     description: "successful",
   })
-  async delete(@Res() res: Response, @Param("device_id") device_id: string) {
+  async deleteDeviceById(
+    @Res() res: Response,
+    @Param("device_id") device_id: string
+  ) {
     console.log(`[P]:::Delete device by id`, device_id);
     let checkExistDevice = await this.deviceService.getById(device_id);
     if (checkExistDevice == null) {

@@ -6,7 +6,11 @@ import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Divider } from "antd";
 import { useTranslation } from "react-i18next";
-import { convertGenderToString, convertRoleToString } from "../../constraints";
+import {
+  convertGenderToString,
+  convertRoleToString,
+  convertUserStatusToString,
+} from "../../constants";
 import { convertTimeToDate } from "../../utils/dateUtils";
 
 const UserDetailComponent = (props: any, ref: any) => {
@@ -33,9 +37,9 @@ const UserDetailComponent = (props: any, ref: any) => {
         ...dataState.userData,
         gender: convertGenderToString(dataState.userData.gender),
         birth: convertTimeToDate(dataState.userData.birth),
-        role_id: convertRoleToString(dataState.userData.role_id)
+        role_id: convertRoleToString(dataState.userData.role_id),
+        status_id: convertUserStatusToString(dataState.userData.status_id),
       };
-      console.log(rawData.role_id)
       setData(rawData);
     }
   }, [dataState.loadGetUserByIdStatus]);
@@ -45,9 +49,9 @@ const UserDetailComponent = (props: any, ref: any) => {
     gender: "Giới tính",
     birth: "Ngày sinh",
     phone_number: "Số điện thoại",
+    role_id: "Chức vụ",
     information: "Thông tin",
-    status: "Trạng thái",
-    role_id: "Tác vụ",
+    status_id: "Trạng thái",
   };
 
   const customData = (

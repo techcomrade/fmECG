@@ -20,7 +20,10 @@ import {
   role,
   convertRoleToString,
   convertStringToRole,
-} from "../../constraints";
+  userStatus,
+  convertUserStatusToString,
+  convertStringToUserStatus,
+} from "../../constants";
 import dayjs from "dayjs";
 
 type UserDetailType = {
@@ -80,15 +83,9 @@ export const User = () => {
       title: "Trạng thái",
       dataIndex: "status_id",
       key: "status_id",
-      type: "text",
+      type: "select",
       isEdit: true,
-    },
-    {
-      title: "Thông tin",
-      dataIndex: "information",
-      key: "information",
-      type: "text",
-      isEdit: true,
+      dataSelect: userStatus,
     },
   ];
 
@@ -100,6 +97,7 @@ export const User = () => {
         ...data,
         gender: convertStringToGender(data.gender),
         role_id: convertStringToRole(data.role_id),
+        status_id: convertStringToUserStatus(data.status_id),
       };
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
@@ -113,6 +111,7 @@ export const User = () => {
         ...data,
         gender: convertGenderToString(data.gender),
         role_id: convertRoleToString(data.role_id),
+        status_id: convertUserStatusToString(data.status_id),
       };
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
@@ -136,7 +135,7 @@ export const User = () => {
       setDataTable(data);
     }
   }, [dataState.loadDataStatus]);
-  
+
   React.useEffect(() => {
     if (dataState.loadUpdateDataStatus === ApiLoadingStatus.Success) {
       dispatch(resetLoadUpdateDataStatus());

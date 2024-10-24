@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Modal, Form, DatePicker, Input, Select } from "antd";
+import { Modal, Form, DatePicker, Input, Select, Space, Button } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 import { checkDateTypeKey, convertTimeToDate } from "../../utils/dateUtils";
-import { convertGenderToString } from "../../constraints"
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 
@@ -51,7 +51,11 @@ const ModalComponent = (props: any, ref: any) => {
     options
       ? options.map((option) => ({
           value: option.id || option.value,
-          label: option.label || option.device_name || option.username || option.role_name,
+          label:
+            option.label ||
+            option.device_name ||
+            option.username ||
+            option.role_name,
         }))
       : [];
 
@@ -73,6 +77,7 @@ const ModalComponent = (props: any, ref: any) => {
       <br />
       <Form
         form={form}
+        layout="vertical"
         validateMessages={validateMessages}
         onFinish={handleSubmit}
       >
@@ -128,6 +133,40 @@ const ModalComponent = (props: any, ref: any) => {
                   return false;
                 }}
               />
+            )}
+            {column.type === "list" && (
+              <Form.List name={[column.dataIndex, "list"]}>
+                {(subFields, subOpt) => (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      rowGap: 16,
+                    }}
+                  >
+                    {subFields.map((subField) => (
+                      <Space key={subField.key}>
+                        {column?.listLabel?.map((label: string) => (
+                          <Form.Item
+                            noStyle
+                            name={[subField.name, label]}
+                            key={`${subField.key}-${label}`}
+                          >
+                            <Input placeholder={label} />
+                          </Form.Item>
+                        ))}
+                        <CloseOutlined
+                          className="dynamic-delete-button"
+                          onClick={() => subOpt.remove(subField.name)}
+                        />
+                      </Space>
+                    ))}
+                    <Button type="dashed" onClick={() => subOpt.add()} block>
+                      + Thêm thông số
+                    </Button>
+                  </div>
+                )}
+              </Form.List>
             )}
           </Form.Item>
         ))}

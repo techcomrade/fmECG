@@ -6,13 +6,19 @@ module.exports = {
     await queryInterface.bulkInsert("device_type", [
       {
         id: 1,
-        type_name: "hard",
+        type_name: "Đo điện tim",
         createdAt: "2024-10-09T16:51:43.000",
         updatedAt: "2024-10-09T16:51:43.000",
       },
       {
         id: 2,
-        type_name: "soft",
+        type_name: "Đo chỉ số tim mạch",
+        createdAt: "2024-10-09T16:51:43.000",
+        updatedAt: "2024-10-09T16:51:43.000",
+      },
+      {
+        id: 3,
+        type_name: "Đo âm thanh",
         createdAt: "2024-10-09T16:51:43.000",
         updatedAt: "2024-10-09T16:51:43.000",
       },
