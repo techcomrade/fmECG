@@ -9,6 +9,9 @@ export class RecordResponse {
   patient_id: string;
 
   @Expose()
+  username?: string;
+
+  @Expose()
   device_id: string;
 
   @Expose()

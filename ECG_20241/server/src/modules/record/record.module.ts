@@ -9,6 +9,7 @@ import { DeviceModule } from "../device/device.module";
 import { RecordController } from "./record.controller";
 import { RecordService } from "./record.service";
 import { RecordRepository } from "./record.repository"
+import { UserModule } from "../user/user.module";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { RecordRepository } from "./record.repository"
       RecordDiagnosisModel,
     ]),
     DeviceModule,
+    UserModule,
   ],
   controllers: [RecordController],
   providers: [RecordRepository, RecordService],

@@ -3,13 +3,13 @@ import {
   Get,
   Post,
   Delete,
-  HttpStatus,
   NotFoundException,
   BadRequestException,
   InternalServerErrorException,
   Body,
   Param,
   Res,
+  Put,
 } from "@nestjs/common";
 import { Response } from "express";
 import { RecordService } from "./record.service";
@@ -57,6 +57,22 @@ export class RecordController {
     return res.json(result);
   }
 
+  @Get(":id")
+  @ApiResponse({
+    status: 200,
+    type: RecordResponse,
+    description: "Successful",
+  })
+  async getRecordById(@Res() res: Response, @Param("id") id: string) {
+    console.log(`[P]:::Get record by id: `, id);
+    let record = await this.recordService.getRecordById(id);
+    if (!record) {
+      throw new NotFoundException("No record found, please try again");
+    }
+    let result = plainToInstance(RecordResponse, record);
+    return res.json(result);
+  }
+
   @Get("device/:device_name")
   @ApiResponse({
     status: 200,
@@ -76,7 +92,7 @@ export class RecordController {
     return res.json(result);
   }
 
-  @Post("update")
+  @Put("")
   @ApiResponse({
     status: 200,
     type: Boolean,
