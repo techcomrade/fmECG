@@ -27,6 +27,10 @@ export const routeMapping: { [key: string]: IRouteItem } = {
     key: "record",
     url: "/record",
   },
+  Schedule: {
+    key: "schedule",
+    url: "/schedule",
+  },
   ErrorPage: {
     key: "error",
     url: "/error",
