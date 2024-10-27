@@ -13,6 +13,9 @@ export class ScheduleResponse {
   patient_name?: string;
 
   @Expose()
+  doctor_name?: string;
+
+  @Expose()
   schedule_start_time: bigint;
 
   @Expose()

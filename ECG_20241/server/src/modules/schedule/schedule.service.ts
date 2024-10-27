@@ -25,9 +25,15 @@ export class ScheduleService {
     const result = [];
     for (const schedule of schedules) {
       const user = await this.userService.getUserById(schedule.patient_id);
+      const consultation =
+        await this.consultationScheduleService.getConsultationScheduleByScheduleId(
+          schedule.id
+        );
+      const doctor = await this.userService.getUserById(consultation.doctor_id);
       result.push({
         ...(<any>schedule).dataValues,
         patient_name: user.username,
+        doctor_name: doctor.username,
       });
     }
     return result;
