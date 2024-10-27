@@ -15,14 +15,17 @@ const ScheduleModalComponent = (props: any) => {
     >
       {listData.length > 0 ? (
         listData.map(
-          (item: { type: string; time: any; patient: any }, index: any) => (
+          (item: { type: string; session: any }, index: any) => (
             <div key={index}>
               <Badge
                 status={item.type as BadgeProps["status"]}
-                text={item.time}
+                text={item.session}
               />
               <div className="event-details">
-                <div>{item.patient}</div>
+                {Object.entries(item).map(([key, value]) => {
+                  if (key !== "type" && key !== "time" && key !== "session")
+                    return <div>{value}</div>;
+                })}
               </div>
             </div>
           )

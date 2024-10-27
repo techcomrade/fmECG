@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { BadgeProps, CalendarProps } from "antd";
+import type { CalendarProps } from "antd";
 import { Badge, Calendar, ConfigProvider } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -27,10 +27,10 @@ export const Schedule: React.FC = () => {
       const rawData = dataState.data.map((schedule) => handleData(schedule));
       setData(rawData);
     }
-  }, [dataState.loadDataStatus, dataState.data]);
+  }, [dataState.loadDataStatus]);
 
   const handleData = (data: any) => {
-    let scheduleData = { ...data };
+    const scheduleData = { ...data };
     Object.keys(data).forEach((key) => {
       if (checkDateTypeKey(key)) {
         const dateObj = dayjs.unix(data[key]);
@@ -38,48 +38,64 @@ export const Schedule: React.FC = () => {
         scheduleData.date = dateObj.date();
         scheduleData.month = dateObj.month();
         scheduleData.year = dateObj.year();
+        scheduleData.time = Number(dateObj.format("HHmm"));
       }
     });
     return scheduleData;
   };
 
   const getListData = (value: Dayjs) => {
-    return data
-      .filter(
-        (item) =>
-          item.date === value.date() &&
-          item.month === value.month() &&
-          item.year === value.year()
-      )
-      .map((schedule) => ({
-        type: schedule.status_id === 1 ? "error" : "success",
-        time: `Thời gian ca khám: Từ ${dayjs(
-          schedule.schedule_start_time
-        ).format("HH:mm")} đến ${dayjs(schedule.schedule_end_time).format(
-          "HH:mm"
-        )}`,
-        patient: `Bệnh nhân: ${schedule.patient_name}`,
-      }));
-  };
-
-  const onDateSelect = (value: Dayjs) => {
-    setSelectedDate(value);
-    setIsOpen(true);
+    return value
+      ? data
+          .filter(
+            (item) =>
+              item.date === value.date() &&
+              item.month === value.month() &&
+              item.year === value.year()
+          )
+          .map((schedule) => ({
+            type: schedule.status_id === 1 ? "error" : "success",
+            session: `Thời gian ca khám: Từ ${dayjs(
+              schedule.schedule_start_time
+            ).format("HH:mm")} đến ${dayjs(schedule.schedule_end_time).format(
+              "HH:mm"
+            )}`,
+            time: Number(dayjs(schedule.schedule_start_time).format("HHmm")),
+            patient: `Bệnh nhân: ${schedule.patient_name}`,
+            doctor: `Bác sĩ: ${schedule.doctor_name}`,
+          }))
+      : [];
   };
 
   const dateCellRender = (value: Dayjs) => {
     const listData = getListData(value);
-    console.log(listData)
+    
+    if (listData.length === 0) {
+      return null;
+    }
+
+    const count = {
+      morning: 0,
+      afternoon: 0,
+      evening: 0,
+    };
+
+    listData.forEach((item) => {
+      const time = item.time;
+      if (time < 1200) {
+        count.morning++;
+      } else if (time >= 1200 && time < 1900) {
+        count.afternoon++;
+      } else {
+        count.evening++;
+      }
+    });
+
     return (
       <ul className="events">
-        {listData.map((item, index) => (
-          <li key={index}>
-            <Badge
-              status={item.type as BadgeProps["status"]}
-              text={item.patient}
-            />
-          </li>
-        ))}
+        <Badge color={"orange"} text={`Số ca sáng: ${count.morning}`} />
+        <Badge color={"green"} text={`Số ca chiều: ${count.afternoon}`} />
+        <Badge color={"purple"} text={`Số ca tối: ${count.evening}`} />
       </ul>
     );
   };
@@ -87,6 +103,11 @@ export const Schedule: React.FC = () => {
   const cellRender: CalendarProps<Dayjs>["cellRender"] = (current, info) => {
     if (info.type === "date") return dateCellRender(current);
     return info.originNode;
+  };
+
+  const onDateSelect = (value: Dayjs) => {
+    setSelectedDate(value);
+    setIsOpen(true);
   };
 
   return (
@@ -97,9 +118,7 @@ export const Schedule: React.FC = () => {
         isOpen={isOpen}
         selectedDate={selectedDate}
         data={data}
-        onClose={() => {
-          setIsOpen(false);
-        }}
+        onClose={() => setIsOpen(false)}
         getListData={getListData}
       />
     </ConfigProvider>
