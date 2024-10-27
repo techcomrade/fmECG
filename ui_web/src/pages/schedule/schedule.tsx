@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { checkDateTypeKey } from "../../utils/dateUtils";
 import { ScheduleModal } from "../../components/Modal/ScheduleModal";
+import { convertScheduleStatusToString, convertScheduleTypeToString } from "../../constants";
 
 export const Schedule: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -55,14 +56,16 @@ export const Schedule: React.FC = () => {
           )
           .map((schedule) => ({
             type: schedule.status_id === 1 ? "error" : "success",
-            session: `Thời gian ca khám: Từ ${dayjs(
+            session: `Thời gian: Từ ${dayjs(
               schedule.schedule_start_time
             ).format("HH:mm")} đến ${dayjs(schedule.schedule_end_time).format(
               "HH:mm"
             )}`,
             time: Number(dayjs(schedule.schedule_start_time).format("HHmm")),
-            patient: `Bệnh nhân: ${schedule.patient_name}`,
             doctor: `Bác sĩ: ${schedule.doctor_name}`,
+            patient: `Bệnh nhân: ${schedule.patient_name}`,
+            schedule_type: `Loại lịch hẹn: ${convertScheduleTypeToString(schedule.schedule_type_id)}`,
+            status: `Trạng thái lịch hẹn: ${convertScheduleStatusToString(schedule.status_id)}`
           }))
       : [];
   };
@@ -114,7 +117,7 @@ export const Schedule: React.FC = () => {
     <ConfigProvider locale={viVN}>
       <Calendar cellRender={cellRender} onSelect={onDateSelect} />
       <ScheduleModal
-        title={`Lịch khám ngày ${selectedDate?.format("DD-MM-YYYY")}`}
+        title={`Lịch hẹn ngày ${selectedDate?.format("DD-MM-YYYY")}`}
         isOpen={isOpen}
         selectedDate={selectedDate}
         data={data}
