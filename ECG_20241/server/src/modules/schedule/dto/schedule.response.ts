@@ -10,6 +10,9 @@ export class ScheduleResponse {
   patient_id: string;
 
   @Expose()
+  patient_name?: string;
+
+  @Expose()
   schedule_start_time: bigint;
 
   @Expose()
@@ -20,10 +23,4 @@ export class ScheduleResponse {
 
   @Expose()
   status_id: number;
-
-  @Expose()
-  createdAt: Date;
-
-  @Expose()
-  updatedAt: Date;
 }
