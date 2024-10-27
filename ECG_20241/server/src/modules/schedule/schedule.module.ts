@@ -3,8 +3,6 @@ import { SequelizeModule } from "@nestjs/sequelize";
 import { ScheduleModel } from "../../entities/schedule.model";
 import { ScheduleTypeModel } from "../../entities/schedule_type.model";
 import { ScheduleStatusModel } from "../../entities/schedule_status.model";
-import { RecurringScheduleModel } from "../../entities/recurring_schedule.model";
-import { RecurrenceTypeModel } from "../../entities/recurrence_type.model";
 import { ConsultationScheduleModel } from "../../entities/consultation_schedule.model";
 import { DiagnosisModel } from "../../entities/diagnosis.model";
 import { UserModel } from "../../entities/user.model";
@@ -23,8 +21,6 @@ import { ConsultationScheduleModule } from "../consultation_schedule/consultatio
       ScheduleModel,
       ScheduleTypeModel,
       ScheduleStatusModel,
-      RecurrenceTypeModel,
-      RecurringScheduleModel,
       ConsultationScheduleModel,
       DiagnosisModel,
       UserModel,
