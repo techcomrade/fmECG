@@ -14,7 +14,6 @@ import { DiagnosisModel } from "./diagnosis.model";
 import { RecordModel } from "./record.model";
 import { ScheduleTypeModel } from "./schedule_type.model";
 import { ScheduleStatusModel } from "./schedule_status.model";
-import { RecurringScheduleModel } from "./recurring_schedule.model";
 import { ConsultationScheduleModel } from "./consultation_schedule.model";
 
 @Table({ tableName: "schedules" })
@@ -87,9 +86,6 @@ export class ScheduleModel extends Model<ScheduleModel> {
 
   @HasMany(() => DiagnosisModel)
   diagnosis: DiagnosisModel[];
-
-  @HasMany(() => RecurringScheduleModel)
-  recurring_schedules: RecurringScheduleModel[];
 
   @HasMany(() => ConsultationScheduleModel)
   consultation_schedules: ConsultationScheduleModel[];
