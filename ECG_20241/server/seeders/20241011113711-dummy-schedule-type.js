@@ -6,19 +6,13 @@ module.exports = {
     await queryInterface.bulkInsert("schedule_type", [
       {
         id: 1,
-        type_name: "booked",
+        type_name: "Khám bệnh",
         createdAt: "2024-10-09T16:51:43.000",
         updatedAt: "2024-10-09T16:51:43.000",
       },
       {
         id: 2,
-        type_name: "pending",
-        createdAt: "2024-10-09T16:51:43.000",
-        updatedAt: "2024-10-09T16:51:43.000",
-      },
-      {
-        id: 3,
-        type_name: "canceled",
+        type_name: "Tư vấn thiết bị",
         createdAt: "2024-10-09T16:51:43.000",
         updatedAt: "2024-10-09T16:51:43.000",
       },
