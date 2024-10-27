@@ -32,9 +32,9 @@ module.exports = {
         schedule_type_id: 2,
         status_id: 1,
         createdAt: "2024-10-12T08:45:33.000",
-        updatedAt: "2024-10-12T08:45:33.000"
-    },
-    {
+        updatedAt: "2024-10-12T08:45:33.000",
+      },
+      {
         id: "6c28faba-d431-41db-a5a9-2dcb5fe2a241",
         patient_id: "ecb4b5a1-58f6-4b33-bc26-d8bca0c2f22e",
         schedule_start_time: 1727801000,
@@ -42,19 +42,19 @@ module.exports = {
         schedule_type_id: 1,
         status_id: 1,
         createdAt: "2024-10-12T09:10:12.000",
-        updatedAt: "2024-10-12T09:10:12.000"
-    },
-    {
+        updatedAt: "2024-10-12T09:10:12.000",
+      },
+      {
         id: "bfa4d42e-73b6-4c9b-9ae3-8fced0a2a876",
         patient_id: "d1c344b0-23a6-4c15-9b5b-927f55f22ae4",
         schedule_start_time: 1727805000,
         schedule_end_time: 1727805600,
-        schedule_type_id: 3,
+        schedule_type_id: 2,
         status_id: 1,
         createdAt: "2024-10-12T10:50:12.000",
-        updatedAt: "2024-10-12T10:50:12.000"
-    },
-    {
+        updatedAt: "2024-10-12T10:50:12.000",
+      },
+      {
         id: "d34f6b1a-87ad-4b64-abc5-3b22a7e5e79c",
         patient_id: "e0b5b67e-d69f-4ad8-b922-83cfc2d7ac2f",
         schedule_start_time: 1727810000,
@@ -62,9 +62,9 @@ module.exports = {
         schedule_type_id: 1,
         status_id: 1,
         createdAt: "2024-10-12T12:20:18.000",
-        updatedAt: "2024-10-12T12:20:18.000"
-    },
-    {
+        updatedAt: "2024-10-12T12:20:18.000",
+      },
+      {
         id: "ba5b9fd2-e94b-4bb9-96d6-4d742fe2394f",
         patient_id: "d1c344b0-23a6-4c15-9b5b-927f55f22ae4",
         schedule_start_time: 1727815000,
@@ -72,9 +72,8 @@ module.exports = {
         schedule_type_id: 2,
         status_id: 1,
         createdAt: "2024-10-12T14:15:45.000",
-        updatedAt: "2024-10-12T14:15:45.000"
-    }
-    
+        updatedAt: "2024-10-12T14:15:45.000",
+      },
     ]);
   },
 

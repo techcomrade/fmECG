@@ -15,7 +15,7 @@ module.exports = {
           model: "users",
           key: "id",
         },
-        onDelete: "CASCADE", 
+        onDelete: "CASCADE",
         onUpdate: "SET NULL",
       },
       available_time: {
@@ -32,6 +32,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("recurring_schedule");
+    await queryInterface.dropTable("availability_schedule");
   },
 };

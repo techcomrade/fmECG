@@ -7,6 +7,7 @@ import { ScheduleModel } from "../../entities/schedule.model";
 import { ConsultationScheduleRepository } from "./consultation_schedule.repository";
 import { UserModule } from "../user/user.module";
 import { ConsultationScheduleService } from "./consultation_schedule.service";
+import { ConsultationSchedulesController } from "./consultation_schedule.controller";
 
 @Module({
   imports: [
@@ -15,9 +16,10 @@ import { ConsultationScheduleService } from "./consultation_schedule.service";
       ScheduleModel,
       ConsultationScheduleModel,
     ]),
-    UserModule
+    UserModule,
+    // ScheduleModule
   ],
-  // controllers: [UserController],
+  controllers: [ConsultationSchedulesController],
   providers: [ConsultationScheduleRepository, ConsultationScheduleService],
   exports: [ConsultationScheduleService],
 })

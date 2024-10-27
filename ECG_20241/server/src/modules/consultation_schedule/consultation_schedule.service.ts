@@ -5,6 +5,7 @@ import {
 } from "@nestjs/common";
 import { ConsultationScheduleResponse } from "./dto/consultation_schedule.response";
 import { ConsultationScheduleRepository } from "./consultation_schedule.repository";
+import { ConsultationScheduleRequest } from "./dto/consultation_schedule.request";
 
 @Injectable()
 export class ConsultationScheduleService {
@@ -12,5 +13,9 @@ export class ConsultationScheduleService {
 
   async getConsultationScheduleByDoctorId(doctorId: string): Promise<ConsultationScheduleResponse[]>{
     return this.consultationScheduleRepository.getConsultationScheduleByDoctorId(doctorId);
+  }
+
+  async add(consultation: ConsultationScheduleRequest){
+    return this.consultationScheduleRepository.addConsultationSchedule(consultation);
   }
 }

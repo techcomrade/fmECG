@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert("recurring_schedule", [
+    await queryInterface.bulkInsert("availability_schedule", [
       {
         id: "1",
         user_id: "bc372cb1-2e6f-4727-b2ad-bd041bd9fbb5",
