@@ -1,4 +1,4 @@
-import { ConsultationScheduleResponse } from './dto/consultation_schedule.response';
+import { ConsultationScheduleResponse } from "./dto/consultation_schedule.response";
 import { ConflictException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { ConsultationScheduleModel } from "../../entities/consultation_schedule.model";
@@ -10,15 +10,25 @@ export class ConsultationScheduleRepository {
   constructor(
     @InjectModel(ConsultationScheduleModel)
     private consultationScheduleModel: typeof ConsultationScheduleModel
-  ) { }
+  ) {}
 
   async getAllConsultationSchedule(): Promise<ConsultationScheduleResponse[]> {
     return await this.consultationScheduleModel.findAll();
   }
 
-  async getConsultationScheduleByDoctorId(doctor_id: string): Promise<ConsultationScheduleResponse[]> {
-    return await this.consultationScheduleModel.findAll({ 
-        where: { doctor_id: doctor_id } 
+  async getConsultationScheduleByScheduleId(
+    schedule_id: string
+  ): Promise<ConsultationScheduleResponse> {
+    return await this.consultationScheduleModel.findOne({
+      where: { schedule_id: schedule_id },
+    });
+  }
+
+  async getConsultationScheduleByDoctorId(
+    doctor_id: string
+  ): Promise<ConsultationScheduleResponse[]> {
+    return await this.consultationScheduleModel.findAll({
+      where: { doctor_id: doctor_id },
     });
   }
 

@@ -37,11 +37,16 @@ const recordClient = new ApiClientFactory.RecordControllerClient(api_url, {
   fetch: authorizedFetchFunction,
 });
 
+const scheduleClient = new ApiClientFactory.ScheduleControllerClient(api_url, {
+  fetch: authorizedFetchFunction,
+});
+
 interface IService {
   userService: ApiClientFactory.UserControllerClient;
   deviceService: ApiClientFactory.DeviceControllerClient;
   deviceDetailService: ApiClientFactory.DeviceDetailControllerClient;
   recordService: ApiClientFactory.RecordControllerClient;
+  scheduleService: ApiClientFactory.ScheduleControllerClient;
 }
 
 export const Service: IService = {
@@ -49,4 +54,5 @@ export const Service: IService = {
   deviceService: deviceClient,
   deviceDetailService: deviceDetailClient,
   recordService: recordClient,
+  scheduleService: scheduleClient,
 };

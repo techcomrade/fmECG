@@ -6,10 +6,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import {
   UserOutlined,
-  UsergroupAddOutlined,
   HomeOutlined,
   DesktopOutlined,
   SettingOutlined,
+  ScheduleOutlined,
+  TeamOutlined,
+  LineChartOutlined,
 } from "@ant-design/icons";
 import "./nav.scss";
 import { useTranslation } from "react-i18next";
@@ -54,7 +56,7 @@ export const Nav = () => {
           onClick={() => navigate("/user")}
         >
           <span className="menu-item-box-icon">
-            <UsergroupAddOutlined />
+          <TeamOutlined />
           </span>
           <span>Thông tin người dùng</span>
         </Menu.Item>
@@ -68,6 +70,28 @@ export const Nav = () => {
             <DesktopOutlined />
           </span>
           <span>Thông tin thiết bị</span>
+        </Menu.Item>
+
+        <Menu.Item
+          key="/record"
+          className="menu-item"
+          onClick={() => navigate("/record")}
+        >
+          <span className="menu-item-box-icon">
+          <LineChartOutlined />
+          </span>
+          <span>Thông tin bản ghi</span>
+        </Menu.Item>
+
+        <Menu.Item
+          key="/schedule"
+          className="menu-item"
+          onClick={() => navigate("/schedule")}
+        >
+          <span className="menu-item-box-icon">
+            <ScheduleOutlined />
+          </span>
+          <span>Thông tin lịch khám</span>
         </Menu.Item>
 
         <Menu.Item className="menu-item-header" key="5">

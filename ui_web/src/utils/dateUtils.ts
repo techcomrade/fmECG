@@ -4,9 +4,11 @@ export const checkDateTypeKey = (key: string) => {
   const dateKeyGroups = [
     "birth",
     "start_date",
+    "end_date",
     "start_time",
     "end_time",
-    "end_date",
+    "schedule_start_time",
+    "schedule_end_time",
   ];
   return dateKeyGroups.includes(key);
 };

@@ -178,3 +178,25 @@ export const convertStringToDeviceStatus = (deviceStatus: string) => {
       return 3;
   }
 };
+
+export const convertScheduleTypeToString = (type: number) => {
+  switch (type) {
+    case 1:
+      return "Khám bệnh";
+    case 2:
+      return "Tư vấn thiết bị";
+    default:
+      return "Không xác định";
+  }
+};
+
+export const convertScheduleStatusToString = (status: number) => {
+  switch (status) {
+    case 1:
+      return "Được chấp nhận";
+    case 2:
+      return "Không được chấp nhận";
+    default:
+      return "Đang chờ";
+  }
+};

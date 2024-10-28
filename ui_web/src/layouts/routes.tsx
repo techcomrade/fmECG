@@ -5,6 +5,7 @@ import { User } from "../pages/user";
 import { Device } from "../pages/device";
 import { routeMapping } from "./routes.type";
 import { Record } from "../pages/record";
+import { Schedule } from "../pages/schedule";
 interface IProps {}
 
 export const Routes = (props: IProps) => {
@@ -25,6 +26,7 @@ export const Routes = (props: IProps) => {
       <Route path={routeMapping.User.url} element={<User />} />
       <Route path={routeMapping.Device.url} element={<Device />} />
       <Route path={routeMapping.Record.url} element={<Record />} />
+      <Route path={routeMapping.Schedule.url} element={<Schedule />} />
       {!isConsentBackUrl() && (
         <Route
           path="*"
