@@ -10,7 +10,11 @@ import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { checkDateTypeKey } from "../../utils/dateUtils";
 import { ScheduleModal } from "../../components/Modal/ScheduleModal";
-import { convertScheduleStatusToString, convertScheduleTypeToString } from "../../constants";
+import {
+  convertScheduleStatusToString,
+  convertScheduleTypeToString,
+} from "../../constants";
+import { SelectInfo } from "antd/es/calendar/generateCalendar";
 
 export const Schedule: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -64,15 +68,19 @@ export const Schedule: React.FC = () => {
             time: Number(dayjs(schedule.schedule_start_time).format("HHmm")),
             doctor: `Bác sĩ: ${schedule.doctor_name}`,
             patient: `Bệnh nhân: ${schedule.patient_name}`,
-            schedule_type: `Loại lịch hẹn: ${convertScheduleTypeToString(schedule.schedule_type_id)}`,
-            status: `Trạng thái lịch hẹn: ${convertScheduleStatusToString(schedule.status_id)}`
+            schedule_type: `Loại lịch hẹn: ${convertScheduleTypeToString(
+              schedule.schedule_type_id
+            )}`,
+            status: `Trạng thái lịch hẹn: ${convertScheduleStatusToString(
+              schedule.status_id
+            )}`,
           }))
       : [];
   };
 
   const dateCellRender = (value: Dayjs) => {
     const listData = getListData(value);
-    
+
     if (listData.length === 0) {
       return null;
     }
@@ -108,9 +116,11 @@ export const Schedule: React.FC = () => {
     return info.originNode;
   };
 
-  const onDateSelect = (value: Dayjs) => {
-    setSelectedDate(value);
-    setIsOpen(true);
+  const onDateSelect = (value: Dayjs, selectInfo: SelectInfo) => {
+    if (selectInfo.source === "date") {
+      setSelectedDate(value);
+      setIsOpen(true);
+    }
   };
 
   return (
