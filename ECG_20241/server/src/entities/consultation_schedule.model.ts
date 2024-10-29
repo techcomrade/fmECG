@@ -14,10 +14,10 @@ import { UserModel } from "./user.model";
 export class ConsultationScheduleModel extends Model<ConsultationScheduleModel> {
   @PrimaryKey
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.STRING,
     allowNull: false,
   })
-  id: number;
+  id: string;
 
   @ForeignKey(() => ScheduleModel)
   @Column({

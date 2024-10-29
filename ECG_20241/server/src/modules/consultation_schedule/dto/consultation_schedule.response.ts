@@ -3,7 +3,7 @@ import { Expose, Exclude } from "class-transformer";
 @Exclude()
 export class ConsultationScheduleResponse {
   @Expose()
-  id: number;
+  id: string;
 
   @Expose()
   schedule_id: string;
