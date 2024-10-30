@@ -1265,7 +1265,7 @@ export class ScheduleControllerClient {
     /**
      * @return Successful
      */
-    createSchedule(body: ScheduleRequest): Promise<boolean> {
+    createScheduleByDoctor(body: ScheduleRequest): Promise<boolean> {
         let url_ = this.baseUrl + "/schedules";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1281,20 +1281,20 @@ export class ScheduleControllerClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processCreateSchedule(_response);
+            return this.processCreateScheduleByDoctor(_response);
         });
     }
 
-    protected processCreateSchedule(response: Response): Promise<boolean> {
+    protected processCreateScheduleByDoctor(response: Response): Promise<boolean> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
+        if (status === 201) {
             return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            let result201: any = null;
+            let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result201 = resultData201 !== undefined ? resultData201 : <any>null;
     
-            return result200;
+            return result201;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -1482,6 +1482,59 @@ export class ScheduleControllerClient {
             });
         }
         return Promise.resolve<ScheduleResponse[]>(null as any);
+    }
+}
+
+export class DiagnosisControllerClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @return Successful
+     */
+    createDiagnosis(body: DiagnosisRequest): Promise<boolean> {
+        let url_ = this.baseUrl + "/diagnosis";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processCreateDiagnosis(_response);
+        });
+    }
+
+    protected processCreateDiagnosis(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 201) {
+            return response.text().then((_responseText) => {
+            let result201: any = null;
+            let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result201 = resultData201 !== undefined ? resultData201 : <any>null;
+    
+            return result201;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
     }
 }
 
@@ -2127,6 +2180,8 @@ export class ScheduleRequest implements IScheduleRequest {
     id!: string;
     /** Unique identifier for the patient */
     patient_id!: string;
+    /** Unique identifier for the account of the doctor */
+    account_id!: string;
     /** Start time of the schedule (in Unix timestamp format) */
     schedule_start_time!: number;
     /** End time of the schedule (in Unix timestamp format) */
@@ -2155,6 +2210,7 @@ export class ScheduleRequest implements IScheduleRequest {
             }
             this.id = _data["id"];
             this.patient_id = _data["patient_id"];
+            this.account_id = _data["account_id"];
             this.schedule_start_time = _data["schedule_start_time"];
             this.schedule_end_time = _data["schedule_end_time"];
             this.schedule_type_id = _data["schedule_type_id"];
@@ -2177,6 +2233,7 @@ export class ScheduleRequest implements IScheduleRequest {
         }
         data["id"] = this.id;
         data["patient_id"] = this.patient_id;
+        data["account_id"] = this.account_id;
         data["schedule_start_time"] = this.schedule_start_time;
         data["schedule_end_time"] = this.schedule_end_time;
         data["schedule_type_id"] = this.schedule_type_id;
@@ -2190,6 +2247,8 @@ export interface IScheduleRequest {
     id: string;
     /** Unique identifier for the patient */
     patient_id: string;
+    /** Unique identifier for the account of the doctor */
+    account_id: string;
     /** Start time of the schedule (in Unix timestamp format) */
     schedule_start_time: number;
     /** End time of the schedule (in Unix timestamp format) */
@@ -2198,6 +2257,68 @@ export interface IScheduleRequest {
     schedule_type_id: number;
     /** Status ID of the schedule */
     status_id: number;
+
+    [key: string]: any;
+}
+
+export class DiagnosisRequest implements IDiagnosisRequest {
+    /** Unique identifier for the diagnosis */
+    id!: string;
+    /** Foreign key reference to the schedule */
+    schedule_id!: string;
+    /** Information about the diagnosis */
+    information!: string;
+
+    [key: string]: any;
+
+    constructor(data?: IDiagnosisRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.id = _data["id"];
+            this.schedule_id = _data["schedule_id"];
+            this.information = _data["information"];
+        }
+    }
+
+    static fromJS(data: any): DiagnosisRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new DiagnosisRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["id"] = this.id;
+        data["schedule_id"] = this.schedule_id;
+        data["information"] = this.information;
+        return data;
+    }
+}
+
+export interface IDiagnosisRequest {
+    /** Unique identifier for the diagnosis */
+    id: string;
+    /** Foreign key reference to the schedule */
+    schedule_id: string;
+    /** Information about the diagnosis */
+    information: string;
 
     [key: string]: any;
 }
