@@ -30,7 +30,7 @@ export class AvailabilityScheduleModel extends Model<AvailabilityScheduleModel> 
         type: DataType.BIGINT,
         allowNull: false,
     })
-    available_time: bigint;
+    available_time: any;
 
     @Column({
         type: DataType.DATE,

@@ -14,7 +14,7 @@ module.exports = {
       {
         id: 2,
         schedule_id: "6c28faba-d431-41db-a5a9-2dcb5fe2a241",
-        doctor_id: "b067fcbc-c471-4898-a3f7-850b27d40796",
+        doctor_id: "b067fcbc-c471-4898-a3f7-850b27d40797",
         createdAt: "2024-10-09T15:48:48.000",
         updatedAt: "2024-10-09T15:48:48.000",
       },

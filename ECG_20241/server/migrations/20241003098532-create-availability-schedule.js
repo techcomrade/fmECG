@@ -18,8 +18,8 @@ module.exports = {
         onDelete: "CASCADE",
         onUpdate: "SET NULL",
       },
-      available_time: {
-        type: Sequelize.BIGINT,
+      available_times: {
+        type: Sequelize.JSON,
         allowNull: false,
       },
       createdAt: {
