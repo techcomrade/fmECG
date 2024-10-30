@@ -76,7 +76,7 @@ export const Schedule: React.FC = () => {
     Object.keys(data).forEach((key) => {
       if (checkDateTypeKey(key)) {
         const dateObj = dayjs.unix(data[key]);
-        scheduleData[key] = dateObj.format("HH:mm DD/MM/YYYY");
+        scheduleData[key] = dateObj.format("HH:mm MM/DD/YYYY");
         scheduleData.date = dateObj.date();
         scheduleData.month = dateObj.month();
         scheduleData.year = dateObj.year();
@@ -99,16 +99,16 @@ export const Schedule: React.FC = () => {
           .map((schedule) => ({
             type: schedule.status_id === 1 ? "error" : "success",
             schedule_id: schedule.id,
-            session: `Thời gian: Từ ${dayjs(
-              schedule.schedule_start_time,
-              "HH:mm DD/MM/YYYY"
-            ).format("HH:mm")} đến ${dayjs(
-              schedule.schedule_end_time,
-              "HH:mm DD/MM/YYYY"
-            ).format("HH:mm")}`,
-            time: Number(dayjs(schedule.schedule_start_time, "HH:mm DD/MM/YYYY").format("HHmm")),
+            session: `Thời gian khám: Từ ${dayjs(
+              schedule.schedule_start_time
+            ).format("HH:mm")} đến ${dayjs(schedule.schedule_end_time).format(
+              "HH:mm"
+            )}`,
+            start_time: dayjs(schedule.schedule_start_time).format("HH:mm"),
+            end_time: dayjs(schedule.schedule_end_time).format("HH:mm"),
+            time: Number(dayjs(schedule.schedule_start_time).format("HHmm")),
             doctor: `Bác sĩ: ${schedule.doctor_name}`,
-            patient: `Bệnh nhân: ${schedule.patient_name}`,
+            patient: schedule.patient_name,
             schedule_type: `Loại lịch hẹn: ${convertScheduleTypeToString(
               schedule.schedule_type_id
             )}`,
@@ -118,7 +118,7 @@ export const Schedule: React.FC = () => {
             patient_id: schedule.patient_id,
           }))
       : [];
-      return result.sort((a, b) => a.time - b.time);
+    return result.sort((a, b) => a.time - b.time);
   };
 
   const dateCellRender = (value: Dayjs) => {
@@ -203,9 +203,22 @@ export const Schedule: React.FC = () => {
           data={data}
           onClose={() => setIsOpen(false)}
           getListData={getListData}
-          openDiagnosis={(schedule_id: string, patient_id: string) =>
+          openDiagnosis={(
+            schedule_id: string,
+            patient_id: string,
+            patient: string,
+            start_time: string,
+            end_time: string
+          ) =>
             modalAddRef.current?.open(
-              { ...initData, schedule_id: schedule_id, patient_id: patient_id },
+              {
+                ...initData,
+                schedule_id: schedule_id,
+                patient_id: patient_id,
+                patient: patient,
+                start_time: start_time,
+                end_time: end_time,
+              },
               columns
             )
           }

@@ -17,7 +17,17 @@ const ScheduleModalComponent = (props: any) => {
       {listData.length > 0 ? (
         listData.map(
           (
-            item: { type: string; schedule_id: string, patient_id: string; session: any },
+            item: {
+              type: string;
+              schedule_id: string;
+              schedule_type: any;
+              patient_id: string;
+              patient: string;
+              session: any;
+              status: string;
+              start_time: string;
+              end_time: string;
+            },
             index: any
           ) => (
             <Card
@@ -30,7 +40,15 @@ const ScheduleModalComponent = (props: any) => {
                 <Tooltip title="Tạo chẩn đoán">
                   <EditOutlined
                     key="edit"
-                    onClick={() => props.openDiagnosis(item.schedule_id, item.patient_id)}
+                    onClick={() =>
+                      props.openDiagnosis(
+                        item.schedule_id,
+                        item.patient_id,
+                        item.patient,
+                        item.start_time,
+                        item.end_time
+                      )
+                    }
                   />
                 </Tooltip>,
               ]}
@@ -42,13 +60,13 @@ const ScheduleModalComponent = (props: any) => {
               <div className="event-details">
                 {Object.entries(item).map(([key, value]) => {
                   if (
-                    key !== "type" &&
-                    key !== "schedule_id" &&
-                    key !== "time" &&
-                    key !== "session" &&
-                    key !== "patient_id"
+                    key == "doctor" ||
+                    key == "schedule_type" ||
+                    key == "status"
                   )
                     return <div key={key}>{value}</div>;
+                  if (key == "patient")
+                    return <div key={key}>Bệnh nhân: {value}</div>;
                 })}
               </div>
             </Card>

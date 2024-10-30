@@ -40,7 +40,10 @@ const ModalComponent = (props: any, ref: any) => {
       ...handleData(values),
       schedule_id: data.schedule_id,
       patient_id: data.patient_id,
+      patient: data.patient,
       account_id: account_id,
+      start_time: data.start_time,
+      end_time: data.end_time,
     };
     console.log(payload);
     const res = await props?.submitFunction(payload);
@@ -88,6 +91,12 @@ const ModalComponent = (props: any, ref: any) => {
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 14 }}
       >
+        <Form.Item label="Bệnh nhân">
+          <div>{data.patient}</div>
+        </Form.Item>
+        <Form.Item label="Thời gian khám">
+          <div>Từ {data.start_time} đến {data.end_time}</div>
+        </Form.Item>
         {column.map((item: any) => {
           if (item.type === "text") {
             return (
