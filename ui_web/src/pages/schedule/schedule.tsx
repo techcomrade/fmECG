@@ -5,7 +5,11 @@ import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/vi";
 import viVN from "antd/lib/locale/vi_VN";
-import { getAllSchedules } from "../../redux/reducer/scheduleSlice";
+import {
+  createScheduleByDoctor,
+  getAllSchedules,
+  resetLoadCreateScheduleByDoctorStatus,
+} from "../../redux/reducer/scheduleSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { checkDateTypeKey } from "../../utils/dateUtils";
@@ -13,15 +17,48 @@ import { ScheduleModal } from "../../components/Modal/ScheduleModal";
 import {
   convertScheduleStatusToString,
   convertScheduleTypeToString,
+  scheduleType,
 } from "../../constants";
 import { SelectInfo } from "antd/es/calendar/generateCalendar";
+import { ModalDiagnosisData } from "../../components/Modal/ModalDiagnosisData";
+import { createDiagnosis } from "../../redux/reducer/diagnosisSlice";
+import { DiagnosisRequest } from "../../api";
 
+type AddDiagnosis = {
+  open: (data: any[], columns: any[]) => void;
+};
 export const Schedule: React.FC = () => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.schedule);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(null);
   const [data, setData] = React.useState<any[]>([]);
+  const modalAddRef = React.useRef<AddDiagnosis>(null);
+
+  const columns = [
+    {
+      title: "Thông tin chẩn đoán",
+      dataIndex: "information",
+      key: "information",
+      type: "text",
+      isEdit: true,
+    },
+    {
+      title: "Lịch tái khám",
+      dataIndex: "schedule_start_time",
+      key: "schedule_start_time",
+      type: "date",
+      isEdit: true,
+    },
+    {
+      title: "Loại lịch tái khám",
+      dataIndex: "schedule_type_id",
+      key: "schedule_type_id",
+      type: "select",
+      dataSelect: scheduleType,
+      isEdit: true,
+    },
+  ];
 
   React.useEffect(() => {
     dispatch(getAllSchedules());
@@ -60,6 +97,7 @@ export const Schedule: React.FC = () => {
           )
           .map((schedule) => ({
             type: schedule.status_id === 1 ? "error" : "success",
+            schedule_id: schedule.id,
             session: `Thời gian: Từ ${dayjs(
               schedule.schedule_start_time
             ).format("HH:mm")} đến ${dayjs(schedule.schedule_end_time).format(
@@ -74,6 +112,7 @@ export const Schedule: React.FC = () => {
             status: `Trạng thái lịch hẹn: ${convertScheduleStatusToString(
               schedule.status_id
             )}`,
+            patient_id: schedule.patient_id,
           }))
       : [];
   };
@@ -123,17 +162,56 @@ export const Schedule: React.FC = () => {
     }
   };
 
+  const handleSubmitAddFunction = (data: any) => {
+    dispatch(
+      createDiagnosis({
+        schedule_id: data.schedule_id,
+        information: data.information,
+      } as DiagnosisRequest)
+    );
+    if (data.schedule_start_time !== null)
+      dispatch(createScheduleByDoctor(data));
+  };
+
+  React.useEffect(() => {
+    if (
+      dataState.loadCreateScheduleByDoctorStatus === ApiLoadingStatus.Success
+    ) {
+      dispatch(resetLoadCreateScheduleByDoctorStatus());
+      dispatch(getAllSchedules());
+    }
+  }, [dataState.loadCreateScheduleByDoctorStatus]);
+
+  const initData: any = {
+    information: "",
+    schedule_start_time: "",
+    schedule_type: "",
+  };
+
   return (
-    <ConfigProvider locale={viVN}>
-      <Calendar cellRender={cellRender} onSelect={onDateSelect} />
-      <ScheduleModal
-        title={`Lịch hẹn ngày ${selectedDate?.format("DD-MM-YYYY")}`}
-        isOpen={isOpen}
-        selectedDate={selectedDate}
-        data={data}
-        onClose={() => setIsOpen(false)}
-        getListData={getListData}
-      />
-    </ConfigProvider>
+    <>
+      <ConfigProvider locale={viVN}>
+        <Calendar cellRender={cellRender} onSelect={onDateSelect} />
+        <ScheduleModal
+          title={`Lịch hẹn ngày ${selectedDate?.format("DD-MM-YYYY")}`}
+          isOpen={isOpen}
+          selectedDate={selectedDate}
+          data={data}
+          onClose={() => setIsOpen(false)}
+          getListData={getListData}
+          openDiagnosis={(schedule_id: string, patient_id: string) =>
+            modalAddRef.current?.open(
+              { ...initData, schedule_id: schedule_id, patient_id: patient_id },
+              columns
+            )
+          }
+        />
+      </ConfigProvider>
+      <ModalDiagnosisData
+        ref={modalAddRef}
+        title="Chẩn đoán của bác sĩ"
+        submitFunction={(data: any) => handleSubmitAddFunction(data)}
+      ></ModalDiagnosisData>
+    </>
   );
 };
