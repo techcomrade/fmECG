@@ -83,11 +83,12 @@ export const Schedule: React.FC = () => {
         scheduleData.time = Number(dateObj.format("HHmm"));
       }
     });
+
     return scheduleData;
   };
 
   const getListData = (value: Dayjs) => {
-    return value
+    const result = value
       ? data
           .filter(
             (item) =>
@@ -99,11 +100,13 @@ export const Schedule: React.FC = () => {
             type: schedule.status_id === 1 ? "error" : "success",
             schedule_id: schedule.id,
             session: `Thời gian: Từ ${dayjs(
-              schedule.schedule_start_time
-            ).format("HH:mm")} đến ${dayjs(schedule.schedule_end_time).format(
-              "HH:mm"
-            )}`,
-            time: Number(dayjs(schedule.schedule_start_time).format("HHmm")),
+              schedule.schedule_start_time,
+              "HH:mm DD/MM/YYYY"
+            ).format("HH:mm")} đến ${dayjs(
+              schedule.schedule_end_time,
+              "HH:mm DD/MM/YYYY"
+            ).format("HH:mm")}`,
+            time: Number(dayjs(schedule.schedule_start_time, "HH:mm DD/MM/YYYY").format("HHmm")),
             doctor: `Bác sĩ: ${schedule.doctor_name}`,
             patient: `Bệnh nhân: ${schedule.patient_name}`,
             schedule_type: `Loại lịch hẹn: ${convertScheduleTypeToString(
@@ -115,6 +118,7 @@ export const Schedule: React.FC = () => {
             patient_id: schedule.patient_id,
           }))
       : [];
+      return result.sort((a, b) => a.time - b.time);
   };
 
   const dateCellRender = (value: Dayjs) => {

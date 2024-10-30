@@ -88,13 +88,13 @@ const ModalComponent = (props: any, ref: any) => {
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 14 }}
       >
-        {column.map((column: any) => {
-          if (column.type === "text") {
+        {column.map((item: any) => {
+          if (item.type === "text") {
             return (
               <Form.Item
-                label={column.title}
-                name={column.dataIndex}
-                key={column.dataIndex}
+                label={item.title}
+                name={item.dataIndex}
+                key={item.dataIndex}
                 rules={[
                   {
                     required: true,
@@ -103,34 +103,34 @@ const ModalComponent = (props: any, ref: any) => {
                 ]}
               >
                 <Input.TextArea
-                  name={column.dataIndex}
+                  name={item.dataIndex}
                   placeholder="Thông tin chẩn đoán"
                 />
               </Form.Item>
             );
           }
-          if (column.type === "select") {
+          if (item.type === "select") {
             return (
               <Form.Item
-                label={column.title}
-                name={column.dataIndex}
-                key={column.dataIndex}
+                label={item.title}
+                name={item.dataIndex}
+                key={item.dataIndex}
               >
                 <Select
-                  options={mapOptions(column.dataSelect || [])}
+                  options={mapOptions(item.dataSelect || [])}
                   allowClear
-                  value={data[column.dataIndex]}
+                  value={data[item.dataIndex]}
                   placeholder="Loại lịch tái khám"
                 ></Select>
               </Form.Item>
             );
           }
-          if (column.type === "date") {
+          if (item.type === "date") {
             return (
               <Form.Item
-                label={column.title}
-                name={column.dataIndex}
-                key={column.dataIndex}
+                label={item.title}
+                name={item.dataIndex}
+                key={item.dataIndex}
               >
                 <Row gutter={10}>
                   <Col span={12}>
