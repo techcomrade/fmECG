@@ -125,17 +125,17 @@ export class ScheduleController {
 
   @Post("")
   @ApiResponse({
-    status: 200,
+    status: 201,
     type: Boolean,
     description: "Successful",
   })
-  async createSchedule(
+  async createScheduleByDoctor(
     @Body() schedule: ScheduleRequest,
     @Res() res: Response
   ) {
     console.log(`[P]:::Create schedule data`, schedule);
     try {
-      await this.scheduleService.createSchedule(schedule);
+      await this.scheduleService.createScheduleByDoctor(schedule);
       return res.json({
         message: "Schedule created successfully",
       });

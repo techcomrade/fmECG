@@ -5,7 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("consultation_schedule", {
       id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true,
       },

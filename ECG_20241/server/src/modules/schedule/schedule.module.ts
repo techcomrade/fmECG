@@ -14,6 +14,7 @@ import { ScheduleRepository } from "./schedule.repository";
 
 import { UserModule } from "../user/user.module";
 import { ConsultationScheduleModule } from "../consultation_schedule/consultation_schedule.module";
+import { DiagnosisModule } from "../diagnosis/diagnosis.module";
 
 @Module({
   imports: [
@@ -28,10 +29,11 @@ import { ConsultationScheduleModule } from "../consultation_schedule/consultatio
       DeviceScheduleModel,
     ]),
     UserModule,
-    ConsultationScheduleModule
+    ConsultationScheduleModule,
+    DiagnosisModule,
   ],
   controllers: [ScheduleController],
   providers: [ScheduleService, ScheduleRepository],
   exports: [ScheduleService],
 })
-export class ScheduleModule { }
+export class ScheduleModule {}

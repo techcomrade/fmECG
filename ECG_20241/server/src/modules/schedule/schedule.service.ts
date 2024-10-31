@@ -11,6 +11,7 @@ import { ScheduleResponse } from "./dto/schedule.response";
 import { ScheduleRequest } from "./dto/schedule.request";
 import { ConsultationScheduleService } from "../consultation_schedule/consultation_schedule.service";
 import { UserService } from "../user/user.service";
+import { ConsultationScheduleRequest } from "../consultation_schedule/dto/consultation_schedule.request";
 
 @Injectable()
 export class ScheduleService {
@@ -39,9 +40,17 @@ export class ScheduleService {
     return result;
   }
 
-  async createSchedule(schedule: ScheduleRequest): Promise<ScheduleResponse> {
+  async createScheduleByDoctor(schedule: ScheduleRequest) {
     schedule.id = uuidv4();
-    return await this.scheduleRepository.createSchedule(schedule);
+    const user = await this.userService.getUserByAccountId(schedule.account_id);
+    if ((<any>schedule.schedule_start_time).length === undefined) {
+      await this.scheduleRepository.createSchedule(schedule);
+      await this.consultationScheduleService.add(<ConsultationScheduleRequest>{
+        id: uuidv4(),
+        schedule_id: schedule.id,
+        doctor_id: user.id,
+      });
+    }
   }
 
   async getScheduleById(id: string): Promise<ScheduleResponse> {
