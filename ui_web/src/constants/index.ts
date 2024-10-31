@@ -200,3 +200,14 @@ export const convertScheduleStatusToString = (status: number) => {
       return "Đang chờ";
   }
 };
+
+export const scheduleType = [
+  {
+    value: 1,
+    label: "Khám bệnh",
+  },
+  {
+    value: 2,
+    label: "Tư vấn thiết bị",
+  },
+];

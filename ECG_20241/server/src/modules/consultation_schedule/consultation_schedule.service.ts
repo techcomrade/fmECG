@@ -26,7 +26,9 @@ export class ConsultationScheduleService {
     );
   }
 
-  async add(consultation: ConsultationScheduleRequest){
-    return this.consultationScheduleRepository.addConsultationSchedule(consultation);
+  async add(consultation: ConsultationScheduleRequest) {
+    return this.consultationScheduleRepository.addConsultationSchedule(
+      consultation
+    );
   }
 }

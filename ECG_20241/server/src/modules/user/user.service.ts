@@ -12,7 +12,7 @@ import {
 
 @Injectable()
 export class UserService {
-  constructor(private userRepository: UserRepository) { }
+  constructor(private userRepository: UserRepository) {}
 
   async getAllUsers(): Promise<UserResponse[]> {
     return this.userRepository.getAllUsers();
@@ -33,6 +33,10 @@ export class UserService {
 
   async getUserById(id: string): Promise<UserResponse> {
     return await this.userRepository.getUserById(id);
+  }
+
+  async getUserByAccountId(account_id: string): Promise<UserResponse> {
+    return await this.userRepository.getUserByAccountId(account_id);
   }
 
   async updateUserById(user: UserRequest, id: string) {

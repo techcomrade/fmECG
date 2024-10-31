@@ -59,6 +59,11 @@ export class UserRepository {
     });
   }
 
+  async getUserByAccountId(account_id: string): Promise<UserResponse> {
+    return await this.userModel.findOne({
+      where: { account_id: account_id },
+    });
+  }
   async updateUserById(user: UserRequest, id: string) {
     try {
       return await this.userModel.update(
