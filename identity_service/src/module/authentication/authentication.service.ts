@@ -75,10 +75,9 @@ export class AuthenticationService {
     const decoded = this.tokenService.decodeToken(token);
     return decoded ?? null;
   }
-  public async logout (token: string) {
+  public async logout(token: string) {
     const decoded = this.tokenService.decodeToken(token);
-    if(!decoded) return null;
-
+    if (!decoded) return null;
   }
 
   private async hashPassword(password: string): Promise<string> {
