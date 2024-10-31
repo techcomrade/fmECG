@@ -2,6 +2,8 @@ import { AccountModel } from '../../entities/account.model';
 import { AccountRepository } from './account.repository';
 import { Injectable, ConflictException, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { AccountServiceInterface } from './interfaces/account.service.interface';
+import { AccountRequest } from './dto/account.request';
+import { AccountResponse } from './dto/account.response';
 const { v4: uuidv4 } = require("uuid");
 
 @Injectable()
@@ -10,7 +12,7 @@ export class AccountService implements AccountServiceInterface {
         private accountRepository: AccountRepository
     ) { }
 
-    async findAll(): Promise<AccountModel[]> {
+    async findAll(): Promise<AccountResponse[]> {
         try {
             return this.accountRepository.findAll();
         }
@@ -20,7 +22,7 @@ export class AccountService implements AccountServiceInterface {
         }
     }
 
-    async add(account: AccountModel): Promise<any> {
+    async add(account: AccountRequest) {
         const existingData = 0;
         if (existingData) {
             throw new ConflictException('Email already in use');
@@ -37,11 +39,11 @@ export class AccountService implements AccountServiceInterface {
         }
     }
 
-    async findByEmail(email: string): Promise<AccountModel> {
+    async findByEmail(email: string): Promise<AccountResponse> {
         return await this.accountRepository.findByEmail(email);
     }
 
-    async deleteByEmail(email: string): Promise<any> {
+    async deleteByEmail(email: string){
         let account = await this.findByEmail(email);
         if (!account) {
             throw new NotFoundException('Email not found');

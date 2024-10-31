@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { AccountModel } from '../../entities/account.model';
+import { AccountRequest } from './dto/account.request';
+import { AccountResponse } from './dto/account.response';
 const { v4: uuidv4 } = require('uuid');
 
 @Injectable()
@@ -10,7 +12,7 @@ export class AccountRepository {
         private accountModel: typeof AccountModel
     ) { }
 
-    async findAll(): Promise<AccountModel[]> {
+    async findAll(): Promise<AccountResponse[]> {
         try {
             return await this.accountModel.findAll();
         }
@@ -20,7 +22,7 @@ export class AccountRepository {
         }
     }
 
-    async add(account: AccountModel) {
+    async add(account: AccountRequest) {
         try {
             return await this.accountModel.create({
                 id: account.id,
@@ -34,11 +36,11 @@ export class AccountRepository {
         }
     }
 
-    async findByEmail(email: string): Promise<AccountModel> {
+    async findByEmail(email: string): Promise<AccountResponse> {
         return await this.accountModel.findOne({ where: { email: email } });
     }
 
-    async delete(email: string): Promise<any> {
+    async delete(email: string) {
         try {
             return await this.accountModel.destroy({ where: { email: email } });
         }

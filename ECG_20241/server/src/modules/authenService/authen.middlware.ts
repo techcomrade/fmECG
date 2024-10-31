@@ -2,7 +2,7 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
-import { AuthenRequest } from './model/dto/authen.request';
+import { AuthenRequest } from './dto/authen.request';
 
 @Injectable()
 export class AuthenMiddleware implements NestMiddleware {

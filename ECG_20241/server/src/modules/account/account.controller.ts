@@ -8,6 +8,7 @@ import { Role } from '../common/roles/role.enum';
 import { AuthorizationGuard } from '../common/guards/authorization.guard';
 import { ApiResponse } from '@nestjs/swagger';
 import { AccountResponse } from './dto/account.response';
+import { AccountRequest } from './dto/account.request';
 
 @Controller("accounts")
 export class AccountController {
@@ -36,8 +37,8 @@ export class AccountController {
     }
 
     @Post('')
-    async add(@Body() Account: AccountModel) {
-        return await this.accountService.add(Account);
+    async add(@Body() account: AccountRequest) {
+        return await this.accountService.add(account);
     }
 
     @Get('details')
