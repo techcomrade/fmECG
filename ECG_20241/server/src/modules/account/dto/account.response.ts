@@ -9,6 +9,21 @@ export class AccountResponse {
   email: string;
 
   @Expose()
+  phone_number?: string;
+
+  @Expose()
+  image?: string;
+
+  @Expose()
+  status_id: number;
+
+  @Expose()
+  information?: string;
+
+  @Expose()
+  role_id: number;
+
+  @Expose()
   createdAt: Date;
 
   @Expose()
