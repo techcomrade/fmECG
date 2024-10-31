@@ -84,4 +84,26 @@ export class ScheduleService {
     }
     return scheduleList;
   }
+
+  async getScheduleByDoctorIdWithTime(
+    doctor_id: string,
+    startTime: number
+  ): Promise<ScheduleResponse[]> {
+    const consultationSchedules =
+      await this.consultationScheduleService.getConsultationScheduleByDoctorId(
+        doctor_id
+      );
+    const scheduleList = [];
+    const TWO_WEEKS_IN_SECONDS = 14 * 24 * 60 * 60;
+    for (const item of consultationSchedules) {
+      const id = item.schedule_id;
+      const schedule = await this.getScheduleById(id);
+      if (
+        schedule.schedule_start_time >= startTime &&
+        schedule.schedule_start_time <= startTime + TWO_WEEKS_IN_SECONDS
+      )
+        scheduleList.push(schedule);
+    }
+    return scheduleList;
+  }
 }

@@ -13,6 +13,7 @@ import {
   Delete,
   Put,
   InternalServerErrorException,
+  Param,
 } from "@nestjs/common";
 import { Roles } from "../common/roles/role.decorator";
 import { Role } from "../common/roles/role.enum";
@@ -195,6 +196,73 @@ export class ScheduleController {
       });
     } catch (error) {
       throw new InternalServerErrorException("Error when delete schedule");
+    }
+  }
+
+  @Get("/doctor/:id")
+  @ApiResponse({
+    status: 200,
+    type: [ScheduleResponse],
+    description: "Successfully",
+  })
+  async getAvailableScheduleByDoctorId(
+    @Res() res: Response,
+    @Param("id") id: string
+  ) {
+    console.log(`[P]:::Get available schedules of doctor by doctor id`, id);
+    const currentDate = new Date();
+    const timestamp = Math.floor(currentDate.getTime() / 1000);
+
+    console.log(timestamp);
+    try {
+      const scheduleList =
+        await this.scheduleService.getScheduleByDoctorIdWithTime(id, timestamp);
+      if (scheduleList.length <= 0)
+        return res.json({
+          message: "This doctor has no busy time",
+        });
+      const availableSchedule = [];
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      for (let i = 0; i < 14; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        const hours = [
+          8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15,
+          15.5, 16, 16.5, 17, 17.5,
+        ];
+
+        // const filterHours = hours.filter((hour) => {
+        //   const hourStart = new Date(date).setHours(
+        //     Math.floor(hour),
+        //     (hour % 1) * 60,
+        //     0,
+        //     0
+        //   );
+        //   return !scheduleList.some(
+        //     (schedule) => hourStart === schedule.schedule_start_time
+        //   );
+        // });
+
+        const dayOfWeek = date.getDay();
+        if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+          availableSchedule.push({
+            date,
+            hours: [
+              8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5,
+              15, 15.5, 16, 16.5, 17, 17.5,
+            ],
+          });
+        }
+      }
+      console.log(availableSchedule);
+      return res.json(scheduleList);
+    } catch (e) {
+      console.log(e);
+      throw new BadRequestException(
+        "Error when getting available schedules of doctor"
+      );
     }
   }
 }
