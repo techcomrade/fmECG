@@ -10,7 +10,7 @@ import { DeviceStatusModel } from "../../entities/device_status.model";
 import { DeviceTypeModel } from "../../entities/device_type.model";
 import { DeviceScheduleModel } from "../../entities/device_schedule.model";
 import { DeviceDetailModel } from "../../entities/device_detail.model";
-import { UserModule } from "../../modules/user/user.module";
+import { UserModule } from "../user/user.module";
 import { DeviceDetailModule } from "../device_details/device_detail.module";
 
 @Module({
@@ -25,7 +25,7 @@ import { DeviceDetailModule } from "../device_details/device_detail.module";
       DeviceDetailModel,
     ]),
     UserModule,
-    DeviceDetailModule
+    DeviceDetailModule,
   ],
   controllers: [DeviceController],
   providers: [DeviceService, DeviceRepository],

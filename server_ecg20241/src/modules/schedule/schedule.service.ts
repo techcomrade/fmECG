@@ -1,4 +1,3 @@
-import { ConsultationScheduleModel } from "./../../entities/consultation_schedule.model";
 const { v4: uuidv4 } = require("uuid");
 
 import {
