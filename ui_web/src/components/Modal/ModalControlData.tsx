@@ -17,7 +17,7 @@ const ModalComponent = (props: any, ref: any) => {
     let dataSubmit = { ...data };
     Object.keys(data).forEach((key) => {
       if (checkDateTypeKey(key)) {
-        dataSubmit[key] = data[key].valueOf();
+        dataSubmit[key] = dayjs(data[key]).valueOf() / 1000;
       }
     });
     return dataSubmit;
