@@ -6,7 +6,6 @@ interface IConfiguration {
   APP_PORT: number;
   DEFAULT_API_URL: string;
   SSO_URL: string;
-  SSO_REDIRECT_URL?: string;
   SUPPORTED_LANGUAGES?: string[];
 }
 export const config: IConfiguration = {

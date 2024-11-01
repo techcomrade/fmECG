@@ -1,5 +1,5 @@
 
-declare interface AppContext {
+export interface AppContext {
     env?: string;
     apiUrl?: string;
     clientId?: string; // identity to check concurrent login
@@ -8,5 +8,6 @@ declare interface AppContext {
     identity?: any;
     loginResult?: boolean;
     token?: string;
+    expiredTime?: Date;
     supportedLanguages?: string[];
   }

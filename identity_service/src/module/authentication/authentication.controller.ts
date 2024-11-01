@@ -39,14 +39,14 @@ export class AuthenticationController {
     const result = plainToInstance(TokensResponseModel, loginResult);
     return res.status(HttpStatus.OK).json(result);
   }
-  @Get('validate-token')
+  @Get('validate')
   @ApiBearerAuth() // Chỉ ra rằng API này yêu cầu Bearer token
   async validateToken(
     @Headers('Authorization') authHeader: string,
     @Res() res: Response,
   ) {
     if (!authHeader) {
-      throw new NotFoundException('No token provided dsfdsf');
+      throw new NotFoundException('No token provided');
     }
     const token = authHeader.split(' ')[1];
     if (!token) {
@@ -64,7 +64,7 @@ export class AuthenticationController {
     @Res() res: Response,
   ) {
     if (!refresh_token) {
-      throw new NotFoundException('No refresh_token provied');
+      throw new NotFoundException('No refresh_token provided');
     }
     const refreshTokenResult =
       await this.authService.refreshToken(refresh_token);

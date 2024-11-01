@@ -53,13 +53,18 @@ export class AuthenticationService {
     const payload: PayloadModel = {
       accountId: user.id,
     };
+    const now = new Date();
+    // 15 minute expired
+    const expiredTime = new Date(now.getTime() + 15 * 60 * 60 * 1000);
     const result: TokensResponseModel = {
       access_token: this.tokenService.renderToken(payload, '15m'),
       refresh_token: this.tokenService.renderToken(payload, '5d'),
+      expiredTime: expiredTime,
     };
     const token: CreateTokenModel = {
       account_id: user.id,
       refresh_token: result.refresh_token,
+      expiredAt: expiredTime,
     };
     const addToken = this.tokenService.addToken(token);
     if (!addToken) {
