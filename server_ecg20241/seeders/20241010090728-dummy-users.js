@@ -47,7 +47,7 @@ module.exports = {
         updatedAt: "2024-10-10T03:56:20.000",
       },
       {
-        id: "b067fcbc-c471-4898-a3f7-850b27d40796",
+        id: "b067fcbc-c471-4898-a3f7-850b27d40797",
         account_id: "9dc38d89-55d1-4d41-8bfb-c885bc6ff0be",
         username: "Trần Xuân Quyến",
         gender: 1,

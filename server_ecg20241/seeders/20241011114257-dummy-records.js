@@ -5,7 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("records", [
       {
-        id: "1",
+        id: "f86068c7-08ed-4dfc-b96d-e0e1c0ae09d1",
         patient_id: "4",
         device_id: "2f9d99f0-4b5d-4e5e-9f93-2f9efb6a07c8",
         schedule_id: "1",
