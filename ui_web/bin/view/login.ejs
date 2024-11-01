@@ -573,8 +573,8 @@ select {
       const loginFunction = async () => {
         const username = document.querySelector("#input-user-name").value;
         const password = document.querySelector("#input-password").value;
-        if (username && password) {
-          document.getElementById('myModal').style.display = 'grid';
+        // if (username && password) {
+         document.getElementById('myModal').style.display = 'grid';
           try {
             const loginResult = await fetch("/login", {
               method: "POST",
@@ -587,12 +587,27 @@ select {
               redirect: "follow",
               referrerPolicy: "no-referrer",
               body: JSON.stringify({
-                username: username,
+                email: username,
                 password: password,
               }),
-            });
+            })
+            // .then(response => {
+            //     if (response.ok) {
+            //         return response.text(); // If successful, get the HTML content
+            //     } else {
+            //         return response.text().then(text => { throw new Error(text); });
+            //     }
+            // }).then(html => {
+            //     // Replace the current page content with the HTML received from the server
+            //     document.open();
+            //     document.write(html);
+            //     document.close();
+            // }).catch(error => {
+            //     alert('Login failed: ' + error.message);
+            // });
+            
             if (loginResult.ok) {
-              window.location.href = "/";
+              window.location.href = '/'
             } else {
               document.getElementById('myModal').style.display = 'none';
               window.alert("wrong username or password");
@@ -602,9 +617,9 @@ select {
             document.getElementById('myModal').style.display = 'none';
             window.alert("error login");
           }
-        } else {
-          window.alert("input username and password");
-        }
+        // } else {
+        //   window.alert("input username and password");
+        // }
       };
 
       //sign up
