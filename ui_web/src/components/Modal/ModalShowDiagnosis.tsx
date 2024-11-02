@@ -51,29 +51,27 @@ const ModalComponent = (props: any, ref: any) => {
     <Modal
       title={props.title}
       open={isOpen}
-      okText="Đồng ý"
-      onOk={() => {
-        setData([]);
-        setIsOpen(false);
-      }}
-      cancelText="Hủy bỏ"
+      footer={null}
+      width={450}
       onCancel={() => {
         setData([]);
         setIsOpen(false);
       }}
       className={props.className}
     >
-      <br />
       <Form form={form} labelCol={{ span: 10 }} wrapperCol={{ span: 12 }}>
-        <Form.Item label="Bệnh nhân">
+        <Form.Item
+          label="Bệnh nhân"
+          style={{ marginBottom: "2px", marginTop: "12px" }}
+        >
           <div>{data.patient}</div>
         </Form.Item>
-        <Form.Item label="Thời gian khám">
+        <Form.Item label="Thời gian khám" style={{ marginBottom: "4px" }}>
           <div>
             Từ {data.start_time} đến {data.end_time}
           </div>
         </Form.Item>
-        <Form.Item label="Thông tin chẩn đoán">
+        <Form.Item label="Thông tin chẩn đoán" style={{ marginBottom: "2px" }}>
           <div>
             {Object.keys(diagnosis).length !== 0
               ? diagnosis.information
