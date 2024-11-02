@@ -27,6 +27,7 @@ import { ScheduleRequest } from "./dto/schedule.request";
 import { plainToInstance } from "class-transformer";
 import { UserService } from "../user/user.service";
 import { ConsultationScheduleService } from "../consultation_schedule/consultation_schedule.service";
+import { UserResponse } from "../user/dto/user.response";
 
 @Controller("schedules")
 export class ScheduleController {
@@ -260,7 +261,7 @@ export class ScheduleController {
       );
     }
   }
-  @Post("/create/schedule")
+  @Post("/get/schedule")
   @ApiResponse({
     status: 200,
     type: ScheduleResponse,
@@ -278,8 +279,9 @@ export class ScheduleController {
       const doctorArray = await this.userService.getDoctorAvailableWithSchedule(
         scheduleList
       );
+      let result = plainToInstance(UserResponse, doctorArray);
       return res.json({
-        doctorArray,
+        result,
       });
     } catch (e) {
       console.log(e);
