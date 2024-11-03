@@ -73,7 +73,7 @@ const ModalComponent = (props: any, ref: any) => {
   }));
 
   React.useEffect(() => {
-    dispatch(getDiagnosisByScheduleId(data.schedule_id));
+    if (data.schedule_id) dispatch(getDiagnosisByScheduleId(data.schedule_id));
   }, [data.schedule_id]);
 
   React.useEffect(() => {
