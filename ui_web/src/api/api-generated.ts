@@ -273,6 +273,46 @@ export class UserControllerClient {
     }
 
     /**
+     * @return Successful
+     */
+    getUserByAccountId(account_id: string): Promise<UserResponse> {
+        let url_ = this.baseUrl + "/users/account/{account_id}";
+        if (account_id === undefined || account_id === null)
+            throw new Error("The parameter 'account_id' must be defined.");
+        url_ = url_.replace("{account_id}", encodeURIComponent("" + account_id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetUserByAccountId(_response);
+        });
+    }
+
+    protected processGetUserByAccountId(response: Response): Promise<UserResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UserResponse.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<UserResponse>(null as any);
+    }
+
+    /**
      * @return successful
      */
     getUserByUserName(username: string): Promise<UserResponse[]> {
@@ -1483,6 +1523,128 @@ export class ScheduleControllerClient {
         }
         return Promise.resolve<ScheduleResponse[]>(null as any);
     }
+
+    /**
+     * @return Successfully
+     */
+    getAvailableScheduleByDoctorId(id: string): Promise<ScheduleResponse[]> {
+        let url_ = this.baseUrl + "/schedules/doctor/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetAvailableScheduleByDoctorId(_response);
+        });
+    }
+
+    protected processGetAvailableScheduleByDoctorId(response: Response): Promise<ScheduleResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ScheduleResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ScheduleResponse[]>(null as any);
+    }
+
+    /**
+     * @return Successfully
+     */
+    createScheduleByDoctorWithTime(): Promise<boolean> {
+        let url_ = this.baseUrl + "/schedules/create/doctor";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processCreateScheduleByDoctorWithTime(_response);
+        });
+    }
+
+    protected processCreateScheduleByDoctorWithTime(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
+    }
+
+    /**
+     * @return Successfully
+     */
+    createScheduleByScheduleTime(): Promise<ScheduleResponse> {
+        let url_ = this.baseUrl + "/schedules/get/schedule";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processCreateScheduleByScheduleTime(_response);
+        });
+    }
+
+    protected processCreateScheduleByScheduleTime(response: Response): Promise<ScheduleResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ScheduleResponse.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ScheduleResponse>(null as any);
+    }
 }
 
 export class DiagnosisControllerClient {
@@ -2218,6 +2380,8 @@ export interface IScheduleResponse {
 export class ScheduleRequest implements IScheduleRequest {
     /** Unique identifier for the schedule */
     id!: string;
+    /** Unique identifier for the doctor */
+    doctor_id!: string;
     /** Unique identifier for the patient */
     patient_id!: string;
     /** Unique identifier for the account of the doctor */
@@ -2249,6 +2413,7 @@ export class ScheduleRequest implements IScheduleRequest {
                     this[property] = _data[property];
             }
             this.id = _data["id"];
+            this.doctor_id = _data["doctor_id"];
             this.patient_id = _data["patient_id"];
             this.account_id = _data["account_id"];
             this.schedule_start_time = _data["schedule_start_time"];
@@ -2272,6 +2437,7 @@ export class ScheduleRequest implements IScheduleRequest {
                 data[property] = this[property];
         }
         data["id"] = this.id;
+        data["doctor_id"] = this.doctor_id;
         data["patient_id"] = this.patient_id;
         data["account_id"] = this.account_id;
         data["schedule_start_time"] = this.schedule_start_time;
@@ -2285,6 +2451,8 @@ export class ScheduleRequest implements IScheduleRequest {
 export interface IScheduleRequest {
     /** Unique identifier for the schedule */
     id: string;
+    /** Unique identifier for the doctor */
+    doctor_id: string;
     /** Unique identifier for the patient */
     patient_id: string;
     /** Unique identifier for the account of the doctor */
