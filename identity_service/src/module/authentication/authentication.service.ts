@@ -43,7 +43,7 @@ export class AuthenticationService {
     if (blackAccount) {
       throw new BadRequestException('This account is blocked');
     }
-    const comparePasswords = this.comparePasswords(
+    const comparePasswords = await this.comparePasswords(
       loginRequest.password,
       user.password,
     );
@@ -57,9 +57,9 @@ export class AuthenticationService {
     // 15 minute expired
     const expiredTime = new Date(now.getTime() + 15 * 60 * 60 * 1000);
     const result: TokensResponseModel = {
-      access_token: this.tokenService.renderToken(payload, '15m'),
-      refresh_token: this.tokenService.renderToken(payload, '5d'),
-      expiredTime: expiredTime,
+      access_token: this.tokenService.renderToken(payload, '1m'),
+      refresh_token: this.tokenService.renderToken(payload, '30d'),
+      expired_time: expiredTime,
     };
     const token: CreateTokenModel = {
       account_id: user.id,

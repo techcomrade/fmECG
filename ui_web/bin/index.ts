@@ -4,131 +4,119 @@ import path from "path";
 import { config } from "./config";
 import cors from "cors";
 import { AppContext } from "./declaration";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 const app = express();
 app.use(cors());
 // Middleware to parse JSON
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 const REFRESHTOKENCOOKIEKEY = "sso_refresh_token";
-
+const EXPIREDTIMECOOKIKEY = "expired_time";
 function getIndexHtml() {
   return fs
-    .readFileSync(path.resolve(__dirname, "../www/index.html"))
+    .readFileSync(path.resolve(__dirname, "../../www/index.html"))
     .toString();
 }
 
-var context = {}; 
-
+var expiredTime = 1000;
 app.get("/", (req, res) => {
-    const template = getIndexHtml();
-    const test = {
-      env: "sđfds",
-      test:"dfdjshkf"
-    }
-    const responseHtml = template
-      .replace(
-        "/\$sso-refresh-token\$/g",
-        `${config.APP_HOST}:${config.APP_PORT}/refreshtoken`
-      )
-      .replace('/\$sso-redirect-url\$/g', `${config.APP_HOST}:${config.APP_PORT}/identity`)
-      // .replace('$context$', JSON.stringify(JSON.stringify(context)))
-    res.send(responseHtml);
-  }
-);
+  var templateHtml = getIndexHtml();
+  var responseHtml = templateHtml
+    .replace(
+      "$sso-refresh-token$",
+      `http://${config.APP_HOST}:${config.APP_PORT}/refreshtoken`
+    )
+    .replace(
+      "$sso-redirect-url$",
+      `http://${config.APP_HOST}:${config.APP_PORT}/identity`
+    );
 
+  res.send(responseHtml);
+});
 
 app.get("/identity", (req: Request, res: Response) => {
-  res.render("login", { registerurl: "" });
+  let cookies: any = getAllCookies(req);
+  const expired_time = cookies[EXPIREDTIMECOOKIKEY];
+  if (expired_time) {
+    return res.redirect("/");
+  }
+  return res.render("login", { registerurl: "", ssourl: config.SSO_URL });
 });
 
-app.post("/login", async (req: Request, res: Response, next ) => {
-  try{
-  // const email = req.body.email;
-  // const password = req.body.password;
-  // if (!email || !password) {
-  //   res.status(500).json("email or password empty");
-  // }
+app.post("/", async (req: Request, res: Response, next) => {
+  try {
+    const { access_token, refresh_token, expired_time } = req.body;
+    const appContext: AppContext = {
+      env: config.NODE_ENV,
+      apiUrl: config.DEFAULT_API_URL,
+      ssoUrl: config.SSO_URL,
+      loginResult: true,
+      token: access_token,
+      expiredTime: expired_time,
+    };
+    expiredTime = expiredTime;
+    if (refresh_token) {
+      const date = new Date();
+      res.cookie(REFRESHTOKENCOOKIEKEY, refresh_token, {
+        maxAge: date.getTime() + 5 * 24 * 60 * 60 * 1000,
+        secure: true,
+        sameSite: "strict",
+        httpOnly: true,
+      });
+    }
+    if (expired_time) {
+      const date = new Date(expired_time);
 
-  // await fetch(config.SSO_URL, {
-  //   method: "POST",
-  //   mode: "cors",
-  //   cache: "no-cache",
-  //   credentials: "same-origin",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   redirect: "follow",
-  //   referrerPolicy: "no-referrer",
-  //   body: JSON.stringify({
-  //     email: email,
-  //     password: password,
-  //   }),
-  // })
-  //   .then((response) => {
-  //     if (!response.ok) {
-  //       return Promise.reject(`Error: ${response.status}`);
-  //     }
-  //     return response.json();
-  //   })
-  //   .then((data) => {
-    try{
-      const appContext: AppContext = {
-        env: config.NODE_ENV,
-        apiUrl: config.DEFAULT_API_URL,
-        ssoUrl: config.SSO_URL,
-        loginResult: true,
-        token: "dfdsfsdfsdf",
-        // expiredTime: data.expiredTime,
-      };
-      // if (data.refresh_token) {
-      //   const date = new Date();
-      //   res.cookie(REFRESHTOKENCOOKIEKEY, data.refresh_token, {
-      //     maxAge: date.getTime() + 5 * 24 * 60 * 60 * 1000,
-      //     secure: true,
-      //     sameSite: "strict",
-      //     httpOnly: true,
-      //   });
-      // }
-    
-      const template = getIndexHtml();
-      const responseHtml = template.replace(
-        '$context$',
-        JSON.stringify(appContext) // the purpose of the second "stringify" is to escape characters to avoid XXS issue
-      ).replace('/\$sso-redirect-url\$/g', `${config.APP_HOST}:${config.APP_PORT}/identity234`)
-      res.send(responseHtml);
+      res.cookie(EXPIREDTIMECOOKIKEY, expired_time, {
+        maxAge: date.getTime(),
+        secure: true,
+        sameSite: "strict",
+        httpOnly: false,
+      });
     }
-    catch (e) {
-      console.log(e);
-    }
-        // })
-        // .catch((error) => {
-        //   console.error("Error logging in:", error);
-        //   res.status(500).json("server error");
-        // });
-  }
-  catch( e){
+    const templateHtml = getIndexHtml();
+    var responseHtml = templateHtml.replace(
+      "$context$",
+      JSON.stringify(appContext) // the purpose of the second "stringify" is to escape characters to avoid XXS issue
+    );
+    res.send(responseHtml);
+  } catch (e) {
+    console.log("false");
     console.log(e);
-    next(e)
   }
-
 });
+
 app.use(
-  express.static(path.resolve(__dirname, "../www")),
+  express.static(path.resolve(__dirname, "../../www")),
   express.json({ limit: "500kb" }),
   express.urlencoded({ extended: true, limit: "500kb" })
 );
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "view"));
+app.set("views", path.join(__dirname, "../view"));
 app.post("/register", (req: Request, res: Response) => {
   res.send("register");
 });
-app.get("/refreshtoken", (req: Request, res: Response) => {
-  res.send("Hello, TypeScript with Express!");
+app.get("/logout", (req: Request, res: Response) => {
+  res.clearCookie(REFRESHTOKENCOOKIEKEY);
+  res.clearCookie(EXPIREDTIMECOOKIKEY);
+  expiredTime = 1000;
+  res.redirect("/identity");
 });
-
+const getAllCookies = (req: any): any => {
+  let cookies: any = {};
+  const cookiesArray = req.headers.cookie?.split(";");
+  cookiesArray?.forEach((cookie: any) => {
+    const [key, value] = cookie.trim().split("=");
+    cookies[key] = value;
+  });
+  return cookies;
+};
 app.get("/test", (req: Request, res: Response) => {
   res.send("Hello, TypeScript with Express!");
 });
-// app.use("*", (req, res) => res.redirect("/"));
+
+app.use("*", (req, res) => res.redirect("/"));
 // catch exception and log
 app.use((err: any, req: any, res: any, next: any) => {
   if (err.stack) {

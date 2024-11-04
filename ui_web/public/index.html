@@ -30,24 +30,29 @@
           redirectUrl: "$sso-redirect-url$",
         },
       };
-      console.log(baseEnv);
-
       var context;
-      // console.log(context);
-
       try {
         context = $context$;
-      console.log(context);
-
-      } catch (e) {
-        console.log("context failed", e);
-      }
+      } catch {}
       try {
         if (context) {
           localStorage[CONTEXT_NAME] = JSON.stringify(context);
+        } else if (localStorage[CONTEXT_NAME]) {
+          context = JSON.parse(localStorage[CONTEXT_NAME]);
+          if (context.expiredTime < Date.now()) {
+            localStorage.clear();
+            context = undefined;
+          }
         }
       } catch (e) {
-        console.log(e);
+        context = undefined;
+      }
+      if (!context) {
+        if (baseEnv.sso.redirectUrl.indexOf("$") < 0)
+          window.localStorage.clear();
+        window.location.href = baseEnv.sso.redirectUrl;
+      } else {
+        window.context = context;
       }
     </script>
   </head>
