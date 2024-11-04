@@ -1,5 +1,5 @@
-import { UserService } from "./../user/user.service";
-import { DeviceDetailService } from "./../device_details/device_detail.service";
+import { UserService } from "../user/user.service";
+import { DeviceDetailService } from "../device_details/device_detail.service";
 import { DeviceRepository } from "./device.repository";
 import { Injectable } from "@nestjs/common";
 import { DeviceRequest } from "./dto/device.request";
@@ -45,7 +45,6 @@ export class DeviceService {
 
   async add(device: DeviceRequest) {
     device.id = uuidv4();
-    device.start_date = Date.now();
     await this.deviceRepository.add(device);
     for (const frequency of <any>device.frequency) {
       frequency.detail_type = 1;

@@ -7,7 +7,7 @@ const host = process.env.APP_HOST || 'localhost';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.enableCors();
   const config = new DocumentBuilder()
     .setTitle('My API')
     .setDescription('API description')

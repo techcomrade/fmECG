@@ -23,7 +23,7 @@ const ScheduleModalComponent = (props: any) => {
               schedule_type: any;
               patient_id: string;
               patient: string;
-              session: any;
+              session_string: any;
               status: string;
               start_time: string;
               end_time: string;
@@ -35,7 +35,14 @@ const ScheduleModalComponent = (props: any) => {
               className="card-filter"
               actions={[
                 <Tooltip title="Xem chẩn đoán">
-                  <EyeOutlined key="show" />
+                  <EyeOutlined key="show" onClick={() =>
+                      props.showDiagnosis(
+                        item.schedule_id,
+                        item.patient,
+                        item.start_time,
+                        item.end_time
+                      )
+                    }/>
                 </Tooltip>,
                 <Tooltip title="Tạo chẩn đoán">
                   <EditOutlined
@@ -55,7 +62,7 @@ const ScheduleModalComponent = (props: any) => {
             >
               <Badge
                 status={item.type as BadgeProps["status"]}
-                text={item.session}
+                text={item.session_string}
               />
               <div className="event-details">
                 {Object.entries(item).map(([key, value]) => {
