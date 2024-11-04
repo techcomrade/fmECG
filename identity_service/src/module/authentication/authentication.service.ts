@@ -43,7 +43,7 @@ export class AuthenticationService {
     if (blackAccount) {
       throw new BadRequestException('This account is blocked');
     }
-    const comparePasswords = this.comparePasswords(
+    const comparePasswords = await this.comparePasswords(
       loginRequest.password,
       user.password,
     );
@@ -53,13 +53,18 @@ export class AuthenticationService {
     const payload: PayloadModel = {
       accountId: user.id,
     };
+    const now = new Date();
+    // 15 minute expired
+    const expiredTime = new Date(now.getTime() + 15 * 60 * 60 * 1000);
     const result: TokensResponseModel = {
-      access_token: this.tokenService.renderToken(payload, '15m'),
-      refresh_token: this.tokenService.renderToken(payload, '5d'),
+      access_token: this.tokenService.renderToken(payload, '1m'),
+      refresh_token: this.tokenService.renderToken(payload, '30d'),
+      expired_time: expiredTime,
     };
     const token: CreateTokenModel = {
       account_id: user.id,
       refresh_token: result.refresh_token,
+      expiredAt: expiredTime,
     };
     const addToken = this.tokenService.addToken(token);
     if (!addToken) {
@@ -75,10 +80,9 @@ export class AuthenticationService {
     const decoded = this.tokenService.decodeToken(token);
     return decoded ?? null;
   }
-  public async logout (token: string) {
+  public async logout(token: string) {
     const decoded = this.tokenService.decodeToken(token);
-    if(!decoded) return null;
-
+    if (!decoded) return null;
   }
 
   private async hashPassword(password: string): Promise<string> {
