@@ -15,7 +15,7 @@ import { ConsultationScheduleService } from "./consultation_schedule.service";
       ScheduleModel,
       ConsultationScheduleModel,
     ]),
-    UserModule,
+    // UserModule,
   ],
   providers: [ConsultationScheduleRepository, ConsultationScheduleService],
   exports: [ConsultationScheduleService],

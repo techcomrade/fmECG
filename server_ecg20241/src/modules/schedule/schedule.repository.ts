@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/sequelize";
 import { ScheduleModel } from "../../entities/schedule.model";
 import { ScheduleResponse } from "./dto/schedule.response";
 import { ScheduleRequest } from "./dto/schedule.request";
+import { stat } from "fs";
 const { v4: uuidv4 } = require("uuid");
 
 @Injectable()
@@ -40,6 +41,18 @@ export class ScheduleRepository {
       });
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async getScheduleByStartTime(startTime: number): Promise<ScheduleResponse[]> {
+    try {
+      return await this.scheduleModel.findAll({
+        where: {
+          schedule_start_time: startTime,
+        },
+      });
+    } catch (e) {
+      console.log(e);
     }
   }
 

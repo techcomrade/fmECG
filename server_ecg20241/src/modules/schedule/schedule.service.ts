@@ -53,6 +53,53 @@ export class ScheduleService {
     }
   }
 
+  async createSchedule(schedule: ScheduleRequest, doctor_id: string) {
+    schedule.id = uuidv4();
+    await this.scheduleRepository.createSchedule(schedule);
+    await this.consultationScheduleService.add(<ConsultationScheduleRequest>{
+      id: uuidv4(),
+      schedule_id: schedule.id,
+      doctor_id: doctor_id,
+    });
+  }
+
+  async getAvailableScheduleByDoctorId(scheduleList: ScheduleResponse[]) {
+    const availableSchedule = [];
+    const today = new Date();
+
+    for (let i = 1; i < 14; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      const hours = [
+        8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15,
+        15.5, 16, 16.5, 17, 17.5,
+      ];
+      const formattedDate = date.toISOString().split("T")[0];
+      const filterHours = hours.filter((hour) => {
+        const hourStart = BigInt(
+          new Date(date).setHours(Math.floor(hour), (hour % 1) * 60, 0, 0) /
+            1000
+        );
+        return !scheduleList.some((schedule) => {
+          const scheduleStartTimeBigInt = BigInt(schedule.schedule_start_time);
+          return hourStart === BigInt(scheduleStartTimeBigInt);
+        });
+      });
+      const dayOfWeek = date.getDay();
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+        availableSchedule.push({
+          date: formattedDate,
+          hours: filterHours,
+        });
+      }
+    }
+    return availableSchedule;
+  }
+
+  async getScheduleByStartTime(startTime: number): Promise<ScheduleResponse[]> {
+    return this.scheduleRepository.getScheduleByStartTime(startTime);
+  }
+
   async getScheduleById(id: string): Promise<ScheduleResponse> {
     return this.scheduleRepository.getScheduleById(id);
   }

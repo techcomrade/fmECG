@@ -1,18 +1,17 @@
 import { UserRequest } from "./dto/user.request";
 import { UserResponse } from "./dto/user.response";
-import { UserServiceInterface } from "./interfaces/user.service.interface";
 import { UserRepository } from "./user.repository";
 const { v4: uuidv4 } = require("uuid");
 
-import {
-  Injectable,
-  ConflictException,
-  UnauthorizedException,
-} from "@nestjs/common";
-
+import { Injectable } from "@nestjs/common";
+import { ScheduleResponse } from "../schedule/dto/schedule.response";
+import { ConsultationScheduleService } from "../consultation_schedule/consultation_schedule.service";
 @Injectable()
 export class UserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private consultationScheduleService: ConsultationScheduleService
+  ) {}
 
   async getAllUsers(): Promise<UserResponse[]> {
     return this.userRepository.getAllUsers();
@@ -45,5 +44,30 @@ export class UserService {
 
   async deleteUserById(id: string) {
     return await this.userRepository.deleteUserById(id);
+  }
+
+  async getDoctorAvailableWithSchedule(
+    scheduleList: ScheduleResponse[]
+  ): Promise<UserResponse[]> {
+    const doctorArray = await this.getAllDoctors();
+
+    const doctorAvailability: { [key: string]: boolean } = {};
+    for (const doctor of doctorArray) {
+      doctorAvailability[doctor.id] = true;
+    }
+
+    for (const schedule of scheduleList) {
+      const consultationSchedule =
+        await this.consultationScheduleService.getConsultationScheduleByScheduleId(
+          schedule.id
+        );
+      if (consultationSchedule?.doctor_id)
+        doctorAvailability[consultationSchedule?.doctor_id] = false;
+    }
+
+    const doctorAvailableArray = doctorArray.filter(
+      (doctor) => doctorAvailability[doctor.id]
+    );
+    return doctorAvailableArray;
   }
 }

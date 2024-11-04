@@ -11,6 +11,7 @@ import { AccountModel } from "../../entities/account.model";
 import { DeviceModel } from "../../entities/device.model";
 import { ScheduleModel } from "../../entities/schedule.model";
 import { ConsultationScheduleModel } from "../../entities/consultation_schedule.model";
+import { ConsultationScheduleModule } from "../consultation_schedule/consultation_schedule.module";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ConsultationScheduleModel } from "../../entities/consultation_schedule.
       DeviceModel,
       ConsultationScheduleModel,
     ]),
+    ConsultationScheduleModule,
     TokenModule,
   ],
   controllers: [UserController],
