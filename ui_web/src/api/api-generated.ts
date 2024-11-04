@@ -1536,6 +1536,46 @@ export class DiagnosisControllerClient {
         }
         return Promise.resolve<boolean>(null as any);
     }
+
+    /**
+     * @return successful
+     */
+    getDiagnosisByScheduleId(schedule_id: string): Promise<DiagnosisResponse> {
+        let url_ = this.baseUrl + "/diagnosis/schedule/{schedule_id}";
+        if (schedule_id === undefined || schedule_id === null)
+            throw new Error("The parameter 'schedule_id' must be defined.");
+        url_ = url_.replace("{schedule_id}", encodeURIComponent("" + schedule_id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetDiagnosisByScheduleId(_response);
+        });
+    }
+
+    protected processGetDiagnosisByScheduleId(response: Response): Promise<DiagnosisResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DiagnosisResponse.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<DiagnosisResponse>(null as any);
+    }
 }
 
 export class UserResponse implements IUserResponse {
@@ -2319,6 +2359,50 @@ export interface IDiagnosisRequest {
     schedule_id: string;
     /** Information about the diagnosis */
     information: string;
+
+    [key: string]: any;
+}
+
+export class DiagnosisResponse implements IDiagnosisResponse {
+
+    [key: string]: any;
+
+    constructor(data?: IDiagnosisResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+        }
+    }
+
+    static fromJS(data: any): DiagnosisResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new DiagnosisResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        return data;
+    }
+}
+
+export interface IDiagnosisResponse {
 
     [key: string]: any;
 }

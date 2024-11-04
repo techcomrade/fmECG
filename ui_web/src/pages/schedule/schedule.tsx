@@ -23,10 +23,16 @@ import { SelectInfo } from "antd/es/calendar/generateCalendar";
 import { ModalDiagnosisData } from "../../components/Modal/ModalDiagnosisData";
 import { createDiagnosis } from "../../redux/reducer/diagnosisSlice";
 import { DiagnosisRequest } from "../../api";
+import { ModalShowDiagnosis } from "../../components/Modal/ModalShowDiagnosis";
 
 type AddDiagnosis = {
   open: (data: any[], columns: any[]) => void;
 };
+
+type ShowDiagnosis = {
+  open: (data: any[]) => void;
+};
+
 export const Schedule: React.FC = () => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.schedule);
@@ -34,6 +40,7 @@ export const Schedule: React.FC = () => {
   const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(null);
   const [data, setData] = React.useState<any[]>([]);
   const modalAddRef = React.useRef<AddDiagnosis>(null);
+  const modalShowRef = React.useRef<ShowDiagnosis>(null);
 
   const columns = [
     {
@@ -83,7 +90,6 @@ export const Schedule: React.FC = () => {
         scheduleData.time = Number(dateObj.format("HHmm"));
       }
     });
-
     return scheduleData;
   };
 
@@ -99,7 +105,7 @@ export const Schedule: React.FC = () => {
           .map((schedule) => ({
             type: schedule.status_id === 1 ? "error" : "success",
             schedule_id: schedule.id,
-            session: `Thời gian khám: Từ ${dayjs(
+            session_string: `Thời gian khám: Từ ${dayjs(
               schedule.schedule_start_time
             ).format("HH:mm")} đến ${dayjs(schedule.schedule_end_time).format(
               "HH:mm"
@@ -186,12 +192,6 @@ export const Schedule: React.FC = () => {
     }
   }, [dataState.loadCreateScheduleByDoctorStatus]);
 
-  const initData: any = {
-    information: "",
-    schedule_start_time: "",
-    schedule_type: "",
-  };
-
   return (
     <>
       <ConfigProvider locale={viVN}>
@@ -203,6 +203,21 @@ export const Schedule: React.FC = () => {
           data={data}
           onClose={() => setIsOpen(false)}
           getListData={getListData}
+          showDiagnosis={(
+            schedule_id: string,
+            patient: string,
+            start_time: string,
+            end_time: string
+          ) =>
+            modalShowRef.current?.open(
+              {
+                schedule_id: schedule_id,
+                patient: patient,
+                start_time: start_time,
+                end_time: end_time,
+              } as any
+            )
+          }
           openDiagnosis={(
             schedule_id: string,
             patient_id: string,
@@ -212,13 +227,12 @@ export const Schedule: React.FC = () => {
           ) =>
             modalAddRef.current?.open(
               {
-                ...initData,
                 schedule_id: schedule_id,
                 patient_id: patient_id,
                 patient: patient,
                 start_time: start_time,
                 end_time: end_time,
-              },
+              } as any,
               columns
             )
           }
@@ -229,6 +243,10 @@ export const Schedule: React.FC = () => {
         title="Chẩn đoán của bác sĩ"
         submitFunction={(data: any) => handleSubmitAddFunction(data)}
       ></ModalDiagnosisData>
+      <ModalShowDiagnosis
+        ref={modalShowRef}
+        title="Xem chẩn đoán"
+      ></ModalShowDiagnosis>
     </>
   );
 };

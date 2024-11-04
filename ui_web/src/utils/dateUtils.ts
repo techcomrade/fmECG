@@ -14,9 +14,9 @@ export const checkDateTypeKey = (key: string) => {
 };
 
 export const convertTimeToDate = (time: number) => {
-  return new Date(time).toLocaleDateString("en-GB");
+  return dayjs.unix(time).format("DD/MM/YYYY");
 };
 
 export const convertTimeToDateTime = (time: number) => {
-  return dayjs(time).format('HH:mm DD/MM/YYYY');
+  return dayjs.unix(time).format('HH:mm DD/MM/YYYY');
 };

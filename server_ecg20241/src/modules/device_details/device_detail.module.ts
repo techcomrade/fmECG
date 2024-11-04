@@ -5,12 +5,9 @@ import { SequelizeModule } from "@nestjs/sequelize";
 import { DeviceDetailService } from "./device_detail.service";
 import { DeviceDetailModel } from "../../entities/device_detail.model";
 import { DeviceModel } from "../../entities/device.model";
-import { DeviceModule } from "../../modules/device/device.module";
 
 @Module({
-  imports: [
-    SequelizeModule.forFeature([DeviceDetailModel, DeviceModel]),
-  ],
+  imports: [SequelizeModule.forFeature([DeviceDetailModel, DeviceModel])],
   controllers: [DeviceDetailController],
   providers: [DeviceDetailService, DeviceDetailRepository],
   exports: [DeviceDetailService, DeviceDetailRepository],

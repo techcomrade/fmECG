@@ -11,6 +11,7 @@ module.exports = {
         information: "Thiết bị đo dữ liệu điện tim bà bầu",
         device_type_id: 1,
         status_id: 1,
+        start_date: 1728493200,
         createdAt: "2024-10-09T15:48:48.000",
         updatedAt: "2024-10-09T15:48:48.000",
       },
@@ -21,6 +22,7 @@ module.exports = {
         information: "Thiết bị đo dữ liệu điện tim bà bầu",
         device_type_id: 1,
         status_id: 1,
+        start_date: 1728493200,
         createdAt: "2024-10-09T15:48:48.000",
         updatedAt: "2024-10-09T15:48:48.000",
       },
@@ -31,6 +33,7 @@ module.exports = {
         information: "Thiết bị đo huyết áp tự động",
         device_type_id: 2,
         status_id: 1,
+        start_date: 1728493200,
         createdAt: "2024-10-10T10:20:45.000",
         updatedAt: "2024-10-10T10:20:45.000"
     },
@@ -41,6 +44,7 @@ module.exports = {
         information: "Thiết bị đo chỉ số đường huyết trong máu",
         device_type_id: 1,
         status_id: 1,
+        start_date: 1728493200,
         createdAt: "2024-10-10T11:30:12.000",
         updatedAt: "2024-10-10T11:30:12.000"
     },
@@ -51,6 +55,7 @@ module.exports = {
         information: "Thiết bị theo dõi nhịp tim",
         device_type_id: 1,
         status_id: 1,
+        start_date: 1728493200,
         createdAt: "2024-10-11T08:45:33.000",
         updatedAt: "2024-10-11T08:45:33.000"
     },
@@ -61,6 +66,7 @@ module.exports = {
         information: "Thiết bị đo nhiệt độ cơ thể chính xác",
         device_type_id: 2,
         status_id: 1,
+        start_date: 1728493200,
         createdAt: "2024-10-11T09:00:12.000",
         updatedAt: "2024-10-11T09:00:12.000"
     },
