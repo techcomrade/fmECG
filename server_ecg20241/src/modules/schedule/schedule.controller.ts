@@ -249,7 +249,7 @@ export class ScheduleController {
         return res.json({
           message: "Doctor not found",
         });
-      schedule.status_id = 1;
+      schedule.status_id = 2;
       await this.scheduleService.createSchedule(schedule, doctor_id);
       return res.json({
         message: "Schedule created successfully",

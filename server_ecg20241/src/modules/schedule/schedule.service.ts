@@ -41,13 +41,12 @@ export class ScheduleService {
 
   async createScheduleByDoctor(schedule: ScheduleRequest) {
     schedule.id = uuidv4();
-    const user = await this.userService.getUserByAccountId(schedule.account_id);
     if ((<any>schedule.schedule_start_time).length === undefined) {
       await this.scheduleRepository.createSchedule(schedule);
       await this.consultationScheduleService.add(<ConsultationScheduleRequest>{
         id: uuidv4(),
         schedule_id: schedule.id,
-        doctor_id: user.id,
+        doctor_id: schedule.doctor_id,
       });
     }
   }
