@@ -23,7 +23,12 @@ export const HeaderBar = () => {
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
   };
-
+  const logOut = () => {
+    console.log("he");
+    localStorage.removeItem("ui-context");
+    document.cookie = `expired_time=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    window.location.href = "/";
+  }
   const items = [
     {
       label: (
@@ -45,7 +50,7 @@ export const HeaderBar = () => {
       key: "1",
     },
     {
-      label: <a style={{ display: "flex" }}>Sign out</a>,
+      label: <a style={{ display: "flex" }} onClick={() => logOut()}>Sign out</a>,
       key: "2",
     },
   ];

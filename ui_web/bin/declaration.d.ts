@@ -1,8 +1,5 @@
-export const context = "context";
 
-export const Context: AppContext = window.context;
-
-export interface AppContext{
+export interface AppContext {
     env?: string;
     apiUrl?: string;
     clientId?: string; // identity to check concurrent login
@@ -13,4 +10,4 @@ export interface AppContext{
     token?: string;
     expiredTime?: Date;
     supportedLanguages?: string[];
-}
+  }
