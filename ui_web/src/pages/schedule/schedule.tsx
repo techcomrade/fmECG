@@ -22,8 +22,9 @@ import {
 import { SelectInfo } from "antd/es/calendar/generateCalendar";
 import { ModalDiagnosisData } from "../../components/Modal/ModalDiagnosisData";
 import { createDiagnosis } from "../../redux/reducer/diagnosisSlice";
-import { DiagnosisRequest } from "../../api";
+import { DiagnosisRequest, UserResponse } from "../../api";
 import { ModalShowDiagnosis } from "../../components/Modal/ModalShowDiagnosis";
+import { getUserByAccountId } from "../../redux/reducer/userSlice";
 
 type AddDiagnosis = {
   open: (data: any[], columns: any[]) => void;
@@ -35,10 +36,12 @@ type ShowDiagnosis = {
 
 export const Schedule: React.FC = () => {
   const dispatch = useAppDispatch();
+  const userState = useAppSelector((state) => state.user);
   const dataState = useAppSelector((state) => state.schedule);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(null);
   const [data, setData] = React.useState<any[]>([]);
+  const [user, setUser] = React.useState<UserResponse>({} as UserResponse);
   const modalAddRef = React.useRef<AddDiagnosis>(null);
   const modalShowRef = React.useRef<ShowDiagnosis>(null);
 
@@ -69,6 +72,8 @@ export const Schedule: React.FC = () => {
 
   React.useEffect(() => {
     dispatch(getAllSchedules());
+    const accountId = localStorage.getItem("account_id");
+    if (accountId) dispatch(getUserByAccountId(accountId));
   }, []);
 
   React.useEffect(() => {
@@ -77,6 +82,12 @@ export const Schedule: React.FC = () => {
       setData(rawData);
     }
   }, [dataState.loadDataStatus]);
+
+  React.useEffect(() => {
+    if (userState.loadGetUserByAccountIdStatus === ApiLoadingStatus.Success) {
+      setUser(userState.accountData);
+    }
+  }, [userState.loadGetUserByAccountIdStatus]);
 
   const handleData = (data: any) => {
     const scheduleData = { ...data };
@@ -209,14 +220,12 @@ export const Schedule: React.FC = () => {
             start_time: string,
             end_time: string
           ) =>
-            modalShowRef.current?.open(
-              {
-                schedule_id: schedule_id,
-                patient: patient,
-                start_time: start_time,
-                end_time: end_time,
-              } as any
-            )
+            modalShowRef.current?.open({
+              schedule_id: schedule_id,
+              patient: patient,
+              start_time: start_time,
+              end_time: end_time,
+            } as any)
           }
           openDiagnosis={(
             schedule_id: string,
@@ -227,6 +236,7 @@ export const Schedule: React.FC = () => {
           ) =>
             modalAddRef.current?.open(
               {
+                doctor_id: user.id,
                 schedule_id: schedule_id,
                 patient_id: patient_id,
                 patient: patient,

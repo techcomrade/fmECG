@@ -9,7 +9,7 @@ import {
   Col,
   Select,
 } from "antd";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { useTranslation } from "react-i18next";
 import "./schedule.scss";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
@@ -19,6 +19,10 @@ import {
   resetLoadGetDiagnosisByScheduleIdStatus,
 } from "../../redux/reducer/diagnosisSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
+import {
+  getAvailableScheduleByDoctorId,
+  resetLoadGetAvailableScheduleByDoctorId,
+} from "../../redux/reducer/scheduleSlice";
 
 const ModalComponent = (props: any, ref: any) => {
   const [form] = Form.useForm();
@@ -26,7 +30,10 @@ const ModalComponent = (props: any, ref: any) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(props.isOpen);
   const [column, setColumn] = React.useState<any[]>([]);
   const dispatch = useAppDispatch();
+  const scheduleState = useAppSelector((state) => state.schedule);
   const diagnosisState = useAppSelector((state) => state.diagnosis);
+  const [availableSchedule, setAvailableSchedule] = React.useState<any>([]);
+  const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(null);
   const [diagnosis, setDiagnosis] = React.useState<DiagnosisResponse>(
     {} as DiagnosisResponse
   );
@@ -46,13 +53,12 @@ const ModalComponent = (props: any, ref: any) => {
   };
 
   const handleSubmit = async (values: any) => {
-    const account_id = localStorage.getItem("account_id");
     const payload = {
       ...handleData(values),
+      doctor_id: data.doctor_id,
       schedule_id: data.schedule_id,
       patient_id: data.patient_id,
       patient: data.patient,
-      account_id: account_id,
       start_time: data.start_time,
       end_time: data.end_time,
     };
@@ -60,7 +66,60 @@ const ModalComponent = (props: any, ref: any) => {
     const res = await props?.submitFunction(payload);
     if (!res?.error) {
       setIsOpen(false);
+      form.resetFields();
+      dispatch(getDiagnosisByScheduleId(data.schedule_id));
+      dispatch(getAvailableScheduleByDoctorId(data.doctor_id));
     }
+  };
+
+  const disabledDate = (day: Dayjs): boolean => {
+    const availableDates = availableSchedule.map((schedule: any) =>
+      dayjs(schedule.date).startOf("day").format("YYYY-MM-DD")
+    );
+    const isAvailable = availableDates.includes(day.format("YYYY-MM-DD"));
+    return day < dayjs().startOf("day") || !isAvailable;
+  };
+
+  const getBusyHours = (selectedDate: Dayjs | null): number[] => {
+    if (!selectedDate) return [];
+    const selectedDateString = selectedDate.format("YYYY-MM-DD");
+    const day = availableSchedule.find(
+      (schedule: any) =>
+        dayjs(schedule.date).format("YYYY-MM-DD") === selectedDateString
+    );
+    const hours = [
+      8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15,
+      15.5, 16, 16.5, 17, 17.5,
+    ];
+    const busyHours = hours.filter(
+      (busyHour) => !day?.hours.includes(busyHour)
+    );
+    return day ? busyHours : [];
+  };
+
+  const disabledTime = () => {
+    const busyHours = getBusyHours(selectedDate);
+
+    return {
+      disabledHours: () => {
+        const fullyBusyHours = busyHours.filter(
+          (hour) => busyHours.includes(hour + 0.5) && hour % 1 === 0
+        );
+        for (let i = 0; i < 8; i++) fullyBusyHours.push(i);
+        for (let i = 18; i <= 24; i++) fullyBusyHours.push(i);
+        return fullyBusyHours;
+      },
+
+      disabledMinutes: (selectedHour: number) => {
+        const isBusyAtHour = busyHours.includes(selectedHour);
+        const isBusyAtHalfHour = busyHours.includes(selectedHour + 0.5);
+
+        const disabledMinutes = [];
+        if (isBusyAtHour) disabledMinutes.push(0);
+        if (isBusyAtHalfHour) disabledMinutes.push(30);
+        return disabledMinutes;
+      },
+    };
   };
 
   React.useImperativeHandle(ref, () => ({
@@ -68,7 +127,7 @@ const ModalComponent = (props: any, ref: any) => {
       setIsOpen(true);
       setData(data);
       setColumn(columns);
-      form.setFieldsValue(data);
+      dispatch(getAvailableScheduleByDoctorId(data.doctor_id));
     },
   }));
 
@@ -88,9 +147,23 @@ const ModalComponent = (props: any, ref: any) => {
       diagnosisState.loadGetDiagnosisByScheduleIdStatus ===
       ApiLoadingStatus.Failed
     ) {
+      dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis({} as DiagnosisResponse);
     }
-  }, [diagnosisState.loadGetDiagnosisByScheduleIdStatus]);
+  }, [
+    diagnosisState.loadGetDiagnosisByScheduleIdStatus,
+    Object.keys(diagnosisState.diagnosis),
+  ]);
+
+  React.useEffect(() => {
+    if (
+      scheduleState.loadGetAvailableScheduleByDoctorId ===
+      ApiLoadingStatus.Success
+    ) {
+      dispatch(resetLoadGetAvailableScheduleByDoctorId());
+      setAvailableSchedule(scheduleState.availableSchedule);
+    }
+  }, [scheduleState.loadGetAvailableScheduleByDoctorId]);
 
   const mapOptions: any = (options: any[]) =>
     options
@@ -183,9 +256,13 @@ const ModalComponent = (props: any, ref: any) => {
                           <DatePicker
                             format={"DD/MM/YYYY"}
                             placeholder="Ngày tái khám"
-                            disabledDate={(day) =>
-                              day && day < dayjs().startOf("day")
-                            }
+                            disabledDate={disabledDate}
+                            onChange={(date) => {
+                              setSelectedDate(date);
+                              form.setFieldsValue({
+                                schedule_start_time: date,
+                              });
+                            }}
                           />
                         </Form.Item>
                       </Col>
@@ -195,14 +272,7 @@ const ModalComponent = (props: any, ref: any) => {
                             format="HH:mm"
                             placeholder="Ca khám"
                             minuteStep={30}
-                            disabledTime={() => ({
-                              disabledHours: () => {
-                                const hours = [];
-                                for (let i = 0; i < 7; i++) hours.push(i);
-                                for (let i = 18; i <= 24; i++) hours.push(i);
-                                return hours;
-                              },
-                            })}
+                            disabledTime={disabledTime}
                           />
                         </Form.Item>
                       </Col>

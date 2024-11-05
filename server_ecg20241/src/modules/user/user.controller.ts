@@ -8,7 +8,6 @@ import {
   Query,
   Res,
   BadRequestException,
-  HttpStatus,
   NotFoundException,
   Delete,
   Put,
@@ -28,7 +27,7 @@ import { plainToInstance } from "class-transformer";
 
 @Controller("users")
 export class UserController {
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   // @UseGuards(AuthenticationGuard, AuthorizationGuard)
   // @Roles(Role.Admin)
@@ -37,7 +36,7 @@ export class UserController {
   @ApiResponse({
     status: 200,
     type: [UserResponse],
-    description: "Successful"
+    description: "Successful",
   })
   async getAllUsers(@Res() res: Response) {
     console.log(`[P]:::Get all users`);
@@ -48,8 +47,7 @@ export class UserController {
       }
       let result = plainToInstance(UserResponse, users);
       return res.json(result);
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       throw new InternalServerErrorException("Error when get all users");
     }
@@ -59,7 +57,7 @@ export class UserController {
   @ApiResponse({
     status: 200,
     type: [UserResponse],
-    description: "Successful"
+    description: "Successful",
   })
   async getAllDoctors(@Res() res: Response) {
     console.log(`[P]:::Get all doctors`);
@@ -70,8 +68,7 @@ export class UserController {
       }
       let result = plainToInstance(UserResponse, users);
       return res.json(result);
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       throw new InternalServerErrorException("Error when get all doctors");
     }
@@ -81,7 +78,7 @@ export class UserController {
   @ApiResponse({
     status: 200,
     type: UserResponse,
-    description: "Successful"
+    description: "Successful",
   })
   async getUserById(@Res() res: Response, @Param("id") id: string) {
     console.log(`[P]:::Get user by id: `, id);
@@ -92,10 +89,35 @@ export class UserController {
       }
       let result = plainToInstance(UserResponse, user);
       return res.json(result);
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       throw new InternalServerErrorException("Error when get user by id");
+    }
+  }
+
+  @Get("/account/:account_id")
+  @ApiResponse({
+    status: 200,
+    type: UserResponse,
+    description: "Successful",
+  })
+  async getUserByAccountId(
+    @Res() res: Response,
+    @Param("account_id") account_id: string
+  ) {
+    console.log(`[P]:::Get user by account id: `, account_id);
+    try {
+      let user = await this.userService.getUserByAccountId(account_id);
+      if (!user) {
+        throw new NotFoundException("No user found, please try again");
+      }
+      let result = plainToInstance(UserResponse, user);
+      return res.json(result);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException(
+        "Error when get user by account id"
+      );
     }
   }
 
@@ -122,7 +144,7 @@ export class UserController {
   @ApiResponse({
     status: 200,
     type: [UserResponse],
-    description: "successful"
+    description: "successful",
   })
   async getUserByUserName(
     @Res() res: Response,

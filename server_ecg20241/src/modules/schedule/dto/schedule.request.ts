@@ -1,10 +1,4 @@
-import {
-  IsNotEmpty,
-  IsString,
-  IsInt,
-  IsNumber,
-  IsUUID,
-} from "class-validator";
+import { IsNotEmpty, IsString, IsInt, IsNumber, IsUUID } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class ScheduleRequest {
@@ -15,6 +9,13 @@ export class ScheduleRequest {
   @IsNotEmpty()
   @IsUUID()
   id?: string;
+
+  @ApiProperty({
+    description: "Unique identifier for the doctor",
+    example: "abcd1234-ff2e-43b0-8f78-4dcc98128a16",
+  })
+  @IsUUID()
+  doctor_id?: string;
 
   @ApiProperty({
     description: "Unique identifier for the patient",

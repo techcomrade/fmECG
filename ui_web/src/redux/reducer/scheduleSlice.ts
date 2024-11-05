@@ -5,14 +5,18 @@ import { ScheduleRequest, ScheduleResponse, Service } from "../../api";
 
 interface IScheduleState {
   data: ScheduleResponse[];
+  availableSchedule: any;
   loadDataStatus: ApiLoadingStatus;
   loadCreateScheduleByDoctorStatus: ApiLoadingStatus;
+  loadGetAvailableScheduleByDoctorId: ApiLoadingStatus;
 }
 
 const initialState: IScheduleState = {
   data: [],
+  availableSchedule: [],
   loadDataStatus: ApiLoadingStatus.None,
   loadCreateScheduleByDoctorStatus: ApiLoadingStatus.None,
+  loadGetAvailableScheduleByDoctorId: ApiLoadingStatus.None,
 };
 
 export const getAllSchedules = createAsyncThunkWrap("/", async () => {
@@ -26,6 +30,15 @@ export const createScheduleByDoctor = createAsyncThunkWrap(
   }
 );
 
+export const getAvailableScheduleByDoctorId = createAsyncThunkWrap(
+  "/available-schedule",
+  async (doctor_id: string) => {
+    return await Service.scheduleService.getAvailableScheduleByDoctorId(
+      doctor_id
+    );
+  }
+);
+
 export const scheduleSlice = createSlice({
   name: "schedule",
   initialState,
@@ -35,6 +48,9 @@ export const scheduleSlice = createSlice({
     },
     resetLoadCreateScheduleByDoctorStatus: (state) => {
       state.loadCreateScheduleByDoctorStatus = ApiLoadingStatus.None;
+    },
+    resetLoadGetAvailableScheduleByDoctorId: (state) => {
+      state.loadGetAvailableScheduleByDoctorId = ApiLoadingStatus.None;
     },
   },
   extraReducers: (builder) => {
@@ -58,10 +74,24 @@ export const scheduleSlice = createSlice({
       })
       .addCase(createScheduleByDoctor.rejected, (state, action) => {
         state.loadCreateScheduleByDoctorStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getAvailableScheduleByDoctorId.pending, (state, action) => {
+        state.loadGetAvailableScheduleByDoctorId = ApiLoadingStatus.Loading;
+      })
+      .addCase(getAvailableScheduleByDoctorId.fulfilled, (state, action) => {
+        state.availableSchedule = action.payload;
+        state.loadGetAvailableScheduleByDoctorId = ApiLoadingStatus.Success;
+      })
+      .addCase(getAvailableScheduleByDoctorId.rejected, (state, action) => {
+        state.availableSchedule = [];
+        state.loadGetAvailableScheduleByDoctorId = ApiLoadingStatus.Failed;
       });
   },
 });
 
-export const { resetLoadDataStatus, resetLoadCreateScheduleByDoctorStatus } =
-  scheduleSlice.actions;
+export const {
+  resetLoadDataStatus,
+  resetLoadCreateScheduleByDoctorStatus,
+  resetLoadGetAvailableScheduleByDoctorId,
+} = scheduleSlice.actions;
 export default scheduleSlice.reducer;
