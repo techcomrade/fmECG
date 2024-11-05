@@ -9,6 +9,7 @@ import {
   Headers,
   Param,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
@@ -17,6 +18,7 @@ import { LoginRequest } from './dto/login.request.model';
 import { plainToInstance } from 'class-transformer';
 import { TokensResponseModel } from '../token/dto/tokens.response.model';
 import { AccountRegisterModel } from './dto/account.register.model';
+import { DecodeTokenRequest } from './dto/decode.request.model';
 
 @ApiTags('Authentication Controllers')
 @Controller('auth')
@@ -53,6 +55,17 @@ export class AuthenticationController {
       throw new NotFoundException('Invalid token format');
     }
     const result = await this.authService.validateToken(token);
+    if (!result) {
+      throw new NotFoundException('Invalid token');
+    }
+    return res.status(HttpStatus.OK).json(result);
+  }
+  @Post('decode')
+  async decodeToken(@Body() data: DecodeTokenRequest, @Res() res: Response) {
+    if (!data) {
+      throw new UnauthorizedException();
+    }
+    const result = await this.authService.validateToken(data.token);
     if (!result) {
       throw new NotFoundException('Invalid token');
     }

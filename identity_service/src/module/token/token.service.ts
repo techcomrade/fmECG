@@ -15,10 +15,11 @@ export class TokenService {
     this.publicKey = fs.readFileSync('key/public-key.pem');
   }
 
-  public renderToken(payload: PayloadModel, time: string): string {
+  public renderToken(payload: PayloadModel, expiredTime: number): string {
+    const expiredAt = Math.floor(expiredTime / 1000);
     const token = jwt.sign(payload, this.privateKey, {
       algorithm: 'RS256',
-      expiresIn: time,
+      expiresIn: expiredAt,
     });
     return token;
   }
