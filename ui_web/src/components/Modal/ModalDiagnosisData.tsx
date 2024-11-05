@@ -28,6 +28,7 @@ const ModalComponent = (props: any, ref: any) => {
   const [form] = Form.useForm();
   const [data, setData] = React.useState<any>([]);
   const [isOpen, setIsOpen] = React.useState<boolean>(props.isOpen);
+  const [isEnableAdd, setIsEnableAdd] = React.useState<boolean>(true);
   const [column, setColumn] = React.useState<any[]>([]);
   const dispatch = useAppDispatch();
   const scheduleState = useAppSelector((state) => state.schedule);
@@ -128,6 +129,9 @@ const ModalComponent = (props: any, ref: any) => {
       setData(data);
       setColumn(columns);
       dispatch(getAvailableScheduleByDoctorId(data.doctor_id));
+      if (data.selected_date.startOf("day").isAfter(dayjs().startOf("day")))
+        setIsEnableAdd(false);
+      else setIsEnableAdd(true);
     },
   }));
 
@@ -195,6 +199,7 @@ const ModalComponent = (props: any, ref: any) => {
             onFinish={handleSubmit}
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 14 }}
+            disabled={!isEnableAdd}
           >
             <Form.Item label="Bệnh nhân" style={{ marginBottom: "8px" }}>
               <div>{data.patient}</div>
