@@ -55,7 +55,7 @@ export class AuthenticationService {
     };
 
     // 15 minute expired
-    const expiredTime = 1 * 60 * 1000;
+    const expiredTime = 15 * 60 * 1000;
     // 30 day expired refresh token
     const expiredRefreshToken = 30 * 24 * 60 * 60 * 1000;
     const result: TokensResponseModel = {
