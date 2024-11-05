@@ -1,14 +1,13 @@
-import { AuthorizationGuard } from "./modules/common/guards/authorization.guard";
 import { Module } from "@nestjs/common";
 import { UserModule } from "./modules/user/user.module";
 import { SequelizeModule } from "@nestjs/sequelize";
-// import { AuthenModule } from "./modules/authenService/authen.module";
 import { APP_GUARD } from "@nestjs/core";
 import { DeviceModule } from "./modules/device/device.module";
 import { AccountModule } from "./modules/account/account.module";
 import { ScheduleModule } from "./modules/schedule/schedule.module";
 import { RecordModule } from "./modules/record/record.module";
 import { ConsultationScheduleModule } from "./modules/consultation_schedule/consultation_schedule.module";
+import { AuthenticationModule } from "./modules/authentication/authentication.module";
 require("dotenv").config();
 
 @Module({
@@ -25,12 +24,12 @@ require("dotenv").config();
       logging: console.log,
     }),
     UserModule,
-    // AuthenModule,
     DeviceModule,
     RecordModule,
     AccountModule,
     ConsultationScheduleModule,
     ScheduleModule,
+    AuthenticationModule,
   ],
 })
 export class AppModule {}

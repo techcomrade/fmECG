@@ -19,7 +19,6 @@ function getIndexHtml() {
     .toString();
 }
 
-var expiredTime = 1000;
 app.get("/", (req, res) => {
   var templateHtml = getIndexHtml();
   var responseHtml = templateHtml
@@ -38,7 +37,7 @@ app.get("/", (req, res) => {
 app.get("/identity", (req: Request, res: Response) => {
   let cookies: any = getAllCookies(req);
   const expired_time = cookies[EXPIREDTIMECOOKIKEY];
-  if (expired_time) {
+  if (expired_time || expired_time < Date.now()) {
     return res.redirect("/");
   }
   return res.render("login", { registerurl: "", ssourl: config.SSO_URL });
@@ -55,7 +54,6 @@ app.post("/", async (req: Request, res: Response, next) => {
       token: access_token,
       expiredTime: expired_time,
     };
-    expiredTime = expiredTime;
     if (refresh_token) {
       const date = new Date();
       res.cookie(REFRESHTOKENCOOKIEKEY, refresh_token, {
@@ -66,10 +64,8 @@ app.post("/", async (req: Request, res: Response, next) => {
       });
     }
     if (expired_time) {
-      const date = new Date(expired_time);
-
       res.cookie(EXPIREDTIMECOOKIKEY, expired_time, {
-        maxAge: date.getTime(),
+        maxAge: expired_time,
         secure: true,
         sameSite: "strict",
         httpOnly: false,
@@ -100,7 +96,6 @@ app.post("/register", (req: Request, res: Response) => {
 app.get("/logout", (req: Request, res: Response) => {
   res.clearCookie(REFRESHTOKENCOOKIEKEY);
   res.clearCookie(EXPIREDTIMECOOKIKEY);
-  expiredTime = 1000;
   res.redirect("/identity");
 });
 const getAllCookies = (req: any): any => {

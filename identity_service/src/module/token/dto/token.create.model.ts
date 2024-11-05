@@ -8,7 +8,7 @@ export class CreateTokenModel {
   refresh_token: string;
   @IsOptional()
   @IsDate()
-  expiredAt?: Date;
+  expiredAt?: number;
   @IsOptional()
   @IsDate()
   isExpired?: boolean;
