@@ -31,7 +31,6 @@ export class UserRepository {
   async add(user: UserRequest) {
     try {
       return await this.userModel.create({
-        id: user.id,
         account_id: user.account_id,
         username: user.username,
         gender: user.gender,

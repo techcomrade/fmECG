@@ -8,7 +8,7 @@ export class UserRequest {
   })
   @IsNotEmpty()
   @IsUUID()
-  id: string;
+  id?: string;
 
   @ApiProperty({
     description: 'Account ID associated with the user',

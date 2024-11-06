@@ -7,25 +7,27 @@ import {
   ForeignKey,
   BelongsTo,
   HasMany,
+  Default,
 } from "sequelize-typescript";
 import { UserRoleModel } from "./user_role.model";
 import { UserStatusModel } from "./user_status.model";
-import { AccountModel } from "./account.model";
+
 import { DeviceModel } from "./device.model";
 import { ScheduleModel } from "./schedule.model";
 import { ConsultationScheduleModel } from "./consultation_schedule.model";
 import { RecordModel } from "./record.model";
+import { v4 as uuidv4 } from "uuid";
 
 @Table({ tableName: "users" })
 export class UserModel extends Model<UserModel> {
   @PrimaryKey
+  @Default(uuidv4)
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    defaultValue: () => uuidv4(),
   })
   id: string;
 
-  @ForeignKey(() => AccountModel)
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
@@ -84,7 +86,6 @@ export class UserModel extends Model<UserModel> {
 
   @Column({
     type: DataType.DATE,
-    
   })
   createdAt: Date;
 
