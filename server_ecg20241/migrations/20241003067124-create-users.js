@@ -12,12 +12,7 @@ module.exports = {
       account_id: {
         type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: "accounts",
-          key: "id",
-        },
-        unique: true,
-        onDelete: "CASCADE", 
+        unique: true, 
       },
       username: {
         type: Sequelize.STRING,

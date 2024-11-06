@@ -5,8 +5,10 @@ import {
   PrimaryKey,
   DataType,
   Default,
+  HasMany,
 } from 'sequelize-typescript';
 import { v4 as uuidv4 } from 'uuid';
+import { TokenModel } from './token.model';
 @Table({ tableName: 'account' })
 export class AccountModel extends Model<AccountModel> {
   @PrimaryKey
@@ -53,4 +55,10 @@ export class AccountModel extends Model<AccountModel> {
     allowNull: false,
   })
   updatedAt: Date;
+
+  @HasMany(() => TokenModel, {
+    onDelete: 'CASCADE', // Thiết lập onDelete cascade ở đây
+    hooks: true,
+  })
+  token: TokenModel[];
 }

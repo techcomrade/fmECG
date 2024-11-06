@@ -1,4 +1,4 @@
-import { AuthenticationGuard } from "../common/guards/authentication.guard";
+import { AuthenticationGuard } from "../authentication/authentication.guard";
 import {
   Controller,
   Get,
@@ -15,17 +15,15 @@ import {
   Param,
 } from "@nestjs/common";
 import { UserService } from "./user.service";
-import { UserModel } from "../../entities/user.model";
-import { Roles } from "../common/roles/role.decorator";
-import { Role } from "../common/roles/role.enum";
-import { AuthorizationGuard } from "../common/guards/authorization.guard";
 import { Response } from "express";
 import { UserRequest } from "./dto/user.request";
-import { ApiResponse } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import { UserResponse } from "./dto/user.response";
 import { plainToInstance } from "class-transformer";
 
 @Controller("users")
+@ApiBearerAuth('access-token') // Reference the name from addBearerAuth()
+@UseGuards(AuthenticationGuard)
 export class UserController {
   constructor(private userService: UserService) {}
 

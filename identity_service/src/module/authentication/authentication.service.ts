@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import {
   BadRequestException,
   Injectable,
@@ -13,6 +14,10 @@ import { CreateAccountModel } from './dto/account.create.model';
 import { BlacklistService } from '../blacklist/blacklist.service';
 import { AccountRegisterModel } from './dto/account.register.model';
 import { CreateTokenModel } from '../token/dto/token.create.model';
+import { UseRegisterModel } from './dto/user.create.model';
+import { plainToClass } from 'class-transformer';
+import axios from 'axios';
+require('dotenv').config();
 
 @Injectable()
 export class AuthenticationService {
@@ -31,6 +36,34 @@ export class AuthenticationService {
       password: await this.hashPassword(accountInfo.password),
     };
     const addAccount = await this.accountRepository.add(accountData);
+
+    if (addAccount) {
+      const token = await this.login({
+        email: accountInfo.email,
+        password: accountInfo.password,
+      });
+      const userInfo = plainToClass(UseRegisterModel, accountInfo);
+      userInfo.account_id = addAccount.dataValues?.id;
+      try {
+        const response = await axios.post(
+          `${process.env.PORTAL_URL}/users`,
+          userInfo,
+          {
+            headers: {
+              Authorization: `Bearer ${token.access_token}`, // Add the token here
+            },
+          },
+        );
+        if (response.status === 200) {
+          return userInfo;
+        }
+        return null;
+      } catch (e) {
+        await this.accountRepository.deleteById(addAccount.dataValues?.id);
+        console.log(e);
+        return null;
+      }
+    }
     return addAccount;
   }
   public async login(loginRequest: LoginRequest): Promise<TokensResponseModel> {
