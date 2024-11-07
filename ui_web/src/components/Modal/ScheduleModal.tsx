@@ -49,6 +49,7 @@ const ScheduleModalComponent = (props: any) => {
                     key="edit"
                     onClick={() =>
                       props.openDiagnosis(
+                        props.selectedDate,
                         item.schedule_id,
                         item.patient_id,
                         item.patient,
