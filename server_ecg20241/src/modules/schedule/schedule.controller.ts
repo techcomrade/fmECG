@@ -1,4 +1,4 @@
-import { AuthenticationGuard } from "../common/guards/authentication.guard";
+import { AuthenticationGuard } from "../authentication/authentication.guard";
 import {
   Controller,
   Get,
@@ -15,12 +15,11 @@ import {
   InternalServerErrorException,
   Param,
 } from "@nestjs/common";
-import { Roles } from "../common/roles/role.decorator";
-import { Role } from "../common/roles/role.enum";
-import { AuthorizationGuard } from "../common/guards/authorization.guard";
+// import { Roles } from "../common/roles/role.decorator";
+// import { Role } from "../common/roles/role.enum";
+// import { AuthorizationGuard } from "../common/guards/authorization.guard";
 import { Response } from "express";
 import { ApiResponse } from "@nestjs/swagger";
-
 import { ScheduleResponse } from "./dto/schedule.response";
 import { ScheduleService } from "./schedule.service";
 import { ScheduleRequest } from "./dto/schedule.request";
@@ -34,7 +33,6 @@ export class ScheduleController {
   constructor(
     private scheduleService: ScheduleService,
     private userService: UserService,
-    private consultationScheduleService: ConsultationScheduleService
   ) {}
 
   // @UseGuards(AuthenticationGuard, AuthorizationGuard)
