@@ -648,7 +648,7 @@
       }, 200);
 
       //sign in
-      var registerUrl = `<%= registerurl %>`;
+
       var ssoUrl = `<%= ssourl %>`;
       console.log(ssoUrl);
       const loginFunction = async () => {
@@ -716,6 +716,7 @@
       };
 
       //sign up
+      var registerUrl = `<%= registerurl %>`;
       var signupUrl = "http://127.0.0.1:3000/api/auth/register";
       var uploadImg = "http://127.0.0.1:3000/api/register/upload-img";
       const signupFunction = async () => {

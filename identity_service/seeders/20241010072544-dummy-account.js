@@ -6,9 +6,11 @@ module.exports = {
     await queryInterface.bulkInsert('account', [
       {
         id: 'ae4f7c10-5e36-4f9d-a02b-0a76f4d612e3',
-        email: 'codung2909@gmail.com',
+        email: 'dung123@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
+        role: 1,
+        verify: false,
         createdAt: '2024-10-09T15:48:48.000',
         updatedAt: '2024-10-09T15:48:48.000',
       },
@@ -17,6 +19,8 @@ module.exports = {
         email: 'nguyenduong1705@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
+        role: 1,
+        verify: false,
         createdAt: '2024-10-09T16:07:09.000',
         updatedAt: '2024-10-09T16:07:09.000',
       },
@@ -25,6 +29,8 @@ module.exports = {
         email: 'trantuan7541@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
+        role: 2,
+        verify: false,
         createdAt: '2024-10-09T16:08:24.000',
         updatedAt: '2024-10-09T16:08:24.000',
       },
@@ -33,6 +39,8 @@ module.exports = {
         email: 'tranquyen@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
+        role: 1,
+        verify: false,
         createdAt: '2024-10-10T03:52:29.000',
         updatedAt: '2024-10-10T03:52:29.000',
       },
@@ -41,6 +49,8 @@ module.exports = {
         email: 'huyquangpham@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
+        role: 2,
+        verify: false,
         createdAt: '2024-10-10T03:52:29.000',
         updatedAt: '2024-10-10T03:52:29.000',
       },
@@ -49,6 +59,8 @@ module.exports = {
         email: 'lethuan2212@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
+        role: 3,
+        verify: false,
         createdAt: '2024-10-11T12:30:55.000',
         updatedAt: '2024-10-11T12:30:55.000',
       },
@@ -57,6 +69,8 @@ module.exports = {
         email: 'hoangnhung3108@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
+        role: 3,
+        verify: false,
         createdAt: '2024-10-12T09:15:32.000',
         updatedAt: '2024-10-12T09:15:32.000',
       },
@@ -65,6 +79,8 @@ module.exports = {
         email: 'nguyenbinh0507@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
+        role: 3,
+        verify: false,
         createdAt: '2024-10-12T13:45:22.000',
         updatedAt: '2024-10-12T13:45:22.000',
       },
@@ -73,6 +89,8 @@ module.exports = {
         email: 'phongtran2209@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
+        role: 3,
+        verify: false,
         createdAt: '2024-10-13T17:22:11.000',
         updatedAt: '2024-10-13T17:22:11.000',
       },
@@ -81,6 +99,8 @@ module.exports = {
         email: 'ngocquynh0410@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
+        role: 3,
+        verify: false,
         createdAt: '2024-10-14T08:50:40.000',
         updatedAt: '2024-10-14T08:50:40.000',
       },
@@ -88,6 +108,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('accounts', null, {});
+    await queryInterface.bulkDelete('account', null, {});
   },
 };

@@ -1,4 +1,3 @@
-import { AuthenticationGuard } from "../common/guards/authentication.guard";
 import {
   Controller,
   Get,
@@ -8,19 +7,14 @@ import {
   Query,
   Res,
   BadRequestException,
-  HttpStatus,
   NotFoundException,
   Delete,
   Put,
   InternalServerErrorException,
   Param,
 } from "@nestjs/common";
-import { Roles } from "../common/roles/role.decorator";
-import { Role } from "../common/roles/role.enum";
-import { AuthorizationGuard } from "../common/guards/authorization.guard";
 import { Response } from "express";
 import { ApiResponse } from "@nestjs/swagger";
-
 import { ScheduleResponse } from "./dto/schedule.response";
 import { ScheduleService } from "./schedule.service";
 import { ScheduleRequest } from "./dto/schedule.request";
