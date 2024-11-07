@@ -228,6 +228,7 @@ export const Schedule: React.FC = () => {
             } as any)
           }
           openDiagnosis={(
+            selected_date: Dayjs | null,
             schedule_id: string,
             patient_id: string,
             patient: string,
@@ -236,6 +237,7 @@ export const Schedule: React.FC = () => {
           ) =>
             modalAddRef.current?.open(
               {
+                selected_date: selected_date,
                 doctor_id: user.id,
                 schedule_id: schedule_id,
                 patient_id: patient_id,
