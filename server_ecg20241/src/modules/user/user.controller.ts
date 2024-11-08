@@ -13,6 +13,7 @@ import {
   Put,
   InternalServerErrorException,
   Param,
+  Req,
 } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { Response } from "express";
@@ -20,6 +21,7 @@ import { UserRequest } from "./dto/user.request";
 import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import { UserResponse } from "./dto/user.response";
 import { plainToInstance } from "class-transformer";
+import { UserGuardModel } from "../authentication/dto/user.guard.model";
 
 @Controller("users")
 @ApiBearerAuth('access-token') // Reference the name from addBearerAuth()
@@ -36,8 +38,10 @@ export class UserController {
     type: [UserResponse],
     description: "Successful",
   })
-  async getAllUsers(@Res() res: Response) {
+  async getAllUsers(@Req() req: Request & { user?: UserGuardModel },@Res() res: Response) {
     console.log(`[P]:::Get all users`);
+    const user = req.user
+    console.log("user: ", user);
     try {
       let users = await this.userService.getAllUsers();
       if (!users.length) {

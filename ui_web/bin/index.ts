@@ -40,7 +40,7 @@ app.get("/identity", (req: Request, res: Response) => {
   if (expired_time || expired_time < Date.now()) {
     return res.redirect("/");
   }
-  return res.render("login", { registerurl: "", ssourl: config.SSO_URL });
+  return res.render("login", { registerurl: `${config.SSO_URL}/register`, ssourl: `${config.SSO_URL}/login` });
 });
 
 app.post("/", async (req: Request, res: Response, next) => {
@@ -49,7 +49,7 @@ app.post("/", async (req: Request, res: Response, next) => {
     const appContext: AppContext = {
       env: config.NODE_ENV,
       apiUrl: config.DEFAULT_API_URL,
-      ssoUrl: config.SSO_URL,
+      ssoUrl: `${config.SSO_URL}/login`,
       loginResult: true,
       token: access_token,
       expiredTime: expired_time,

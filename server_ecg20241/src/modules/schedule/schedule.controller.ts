@@ -1,4 +1,3 @@
-import { AuthenticationGuard } from "../authentication/authentication.guard";
 import {
   Controller,
   Get,
@@ -8,16 +7,12 @@ import {
   Query,
   Res,
   BadRequestException,
-  HttpStatus,
   NotFoundException,
   Delete,
   Put,
   InternalServerErrorException,
   Param,
 } from "@nestjs/common";
-// import { Roles } from "../common/roles/role.decorator";
-// import { Role } from "../common/roles/role.enum";
-// import { AuthorizationGuard } from "../common/guards/authorization.guard";
 import { Response } from "express";
 import { ApiResponse } from "@nestjs/swagger";
 import { ScheduleResponse } from "./dto/schedule.response";
@@ -33,6 +28,7 @@ export class ScheduleController {
   constructor(
     private scheduleService: ScheduleService,
     private userService: UserService,
+    private consultationScheduleService: ConsultationScheduleService
   ) {}
 
   // @UseGuards(AuthenticationGuard, AuthorizationGuard)
