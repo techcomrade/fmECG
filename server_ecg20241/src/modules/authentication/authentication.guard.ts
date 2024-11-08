@@ -22,15 +22,16 @@ export class AuthenticationGuard implements CanActivate {
       const response = await axios.post(`${process.env.SSO_URL}/auth/decode`, {
         token: token,
       });
-
       if (response.data && response.status === 200) {
         const expiredTime = response.data?.exp * 1000;
-        const accountId = request.data?.accountId;
+        const accountId = response.data?.accountId;
+        const role = response.data?.role;
         this.tokenCache[token] = {
-          user: { accountId: accountId },
+          user: { accountId: accountId, role:role },
           expiration: expiredTime,
         };
-        request.accountId = accountId;
+        console.log(this.tokenCache[token]);
+        request.accountId = "123123123";
         return true;
       }
 

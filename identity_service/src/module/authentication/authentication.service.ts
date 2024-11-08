@@ -86,6 +86,7 @@ export class AuthenticationService {
     }
     const payload: PayloadModel = {
       accountId: user.id,
+      role: user.role,
     };
 
     // 15 minute expired
