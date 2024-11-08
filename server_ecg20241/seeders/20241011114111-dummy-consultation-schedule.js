@@ -25,6 +25,20 @@ module.exports = {
         createdAt: "2024-10-09T15:48:48.000",
         updatedAt: "2024-10-09T15:48:48.000",
       },
+      {
+        id: "6c28faba-d431-41db-a5a9-2dcb5fe2a219",
+        schedule_id: "6c28faba-d431-41db-a5a9-2dcb5fh2a211",
+        doctor_id: "b067fcbc-c471-4898-a3f7-850b27d40797",
+        createdAt: "2024-10-09T15:48:48.000",
+        updatedAt: "2024-10-09T15:48:48.000",
+      },
+      {
+        id: "9c28faba-d431-41db-a5a9-2dcb5fe2a219",
+        schedule_id: "7c28faba-d431-41db-a5a9-2dcb5fh2a211",
+        doctor_id: "b067fcbc-c471-4898-a3f7-850b27d40797",
+        createdAt: "2024-10-09T15:48:48.000",
+        updatedAt: "2024-10-09T15:48:48.000",
+      },
     ]);
   },
 
