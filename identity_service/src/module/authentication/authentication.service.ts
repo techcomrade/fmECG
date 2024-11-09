@@ -34,6 +34,7 @@ export class AuthenticationService {
     const accountData: CreateAccountModel = {
       email: accountInfo.email,
       password: await this.hashPassword(accountInfo.password),
+      role: accountInfo.role,
     };
     const addAccount = await this.accountRepository.add(accountData);
 

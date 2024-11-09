@@ -12,6 +12,7 @@ import {
   Put,
   InternalServerErrorException,
   Param,
+  Req,
 } from "@nestjs/common";
 import { Response } from "express";
 import { ApiResponse } from "@nestjs/swagger";
@@ -20,15 +21,14 @@ import { ScheduleService } from "./schedule.service";
 import { ScheduleRequest } from "./dto/schedule.request";
 import { plainToInstance } from "class-transformer";
 import { UserService } from "../user/user.service";
-import { ConsultationScheduleService } from "../consultation_schedule/consultation_schedule.service";
 import { UserResponse } from "../user/dto/user.response";
+import { UserGuardModel } from "../authentication/dto/user.guard.model";
 
 @Controller("schedules")
 export class ScheduleController {
   constructor(
     private scheduleService: ScheduleService,
-    private userService: UserService,
-    private consultationScheduleService: ConsultationScheduleService
+    private userService: UserService
   ) {}
 
   // @UseGuards(AuthenticationGuard, AuthorizationGuard)
@@ -125,12 +125,16 @@ export class ScheduleController {
     description: "Successful",
   })
   async createScheduleByDoctor(
+    @Req() req: Request & { user?: UserGuardModel },
     @Body() schedule: ScheduleRequest,
     @Res() res: Response
   ) {
     console.log(`[P]:::Create schedule data`, schedule);
     try {
-      await this.scheduleService.createScheduleByDoctor(schedule);
+      const doctor = await this.userService.getUserByAccountId(
+        req.user.accountId
+      );
+      await this.scheduleService.createSchedule(schedule, doctor.id);
       return res.json({
         message: "Schedule created successfully",
       });
@@ -201,17 +205,29 @@ export class ScheduleController {
     description: "Successfully",
   })
   async getAvailableScheduleByDoctorId(
+    @Req() req: Request & { user?: UserGuardModel },
     @Res() res: Response,
     @Param("id") id: string
   ) {
-    console.log(`[P]:::Get available schedules of doctor by doctor id`, id);
-    const currentDate = new Date();
-    const timestamp = Math.floor(currentDate.getTime() / 1000);
+    console.log(`[P]::: Get available schedules of doctor by doctor id`, id);
+    const timestamp = Math.floor(new Date().getTime() / 1000);
+
     try {
+      let doctorId: string;
+      if (id === "doctor") {
+        doctorId = (
+          await this.userService.getUserByAccountId(req.user.accountId)
+        ).id;
+      } else doctorId = id;
+
       const scheduleList =
-        await this.scheduleService.getScheduleByDoctorIdWithTime(id, timestamp);
+        await this.scheduleService.getScheduleByDoctorIdWithTime(
+          doctorId,
+          timestamp
+        );
       const availableSchedule =
         await this.scheduleService.getAvailableScheduleByDoctorId(scheduleList);
+
       return res.json(availableSchedule);
     } catch (e) {
       console.log(e);
@@ -227,13 +243,17 @@ export class ScheduleController {
     type: Boolean,
     description: "Successfully",
   })
-  async createScheduleByDoctorWithTime(
-    @Body() schedule: ScheduleRequest & { doctor_id: string },
+  async createScheduleWithSelectedDoctor(
+    @Req() req: Request & { user?: UserGuardModel },
+    @Body() schedule: ScheduleRequest,
     @Res() res: Response
   ) {
     const { doctor_id } = schedule;
+    const patient = await this.userService.getUserByAccountId(
+      req.user.accountId
+    );
     console.log(
-      `[P]:::Create schedule by doctor with time`,
+      `[P]:::Create schedule with selected doctor`,
       schedule,
       doctor_id
     );
@@ -244,6 +264,7 @@ export class ScheduleController {
           message: "Doctor not found",
         });
       schedule.status_id = 2;
+      schedule.patient_id = patient.id;
       await this.scheduleService.createSchedule(schedule, doctor_id);
       return res.json({
         message: "Schedule created successfully",
@@ -255,6 +276,7 @@ export class ScheduleController {
       );
     }
   }
+
   @Post("/get/schedule")
   @ApiResponse({
     status: 200,
