@@ -7,8 +7,10 @@ import "dayjs/locale/vi";
 import viVN from "antd/lib/locale/vi_VN";
 import {
   createScheduleByDoctor,
+  createScheduleWithSelectedDoctor,
   getAllSchedules,
   resetLoadCreateScheduleByDoctorStatus,
+  resetLoadCreateScheduleWithSelectedDoctor,
 } from "../../redux/reducer/scheduleSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
@@ -47,7 +49,6 @@ export const Schedule: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(null);
   const [data, setData] = React.useState<any[]>([]);
-  const [user, setUser] = React.useState<UserResponse>({} as UserResponse);
   const modalAddScheduleRef = React.useRef<AddSchedule>(null);
   const modalAddDiagnosisRef = React.useRef<AddDiagnosis>(null);
   const modalShowRef = React.useRef<ShowDiagnosis>(null);
@@ -89,12 +90,6 @@ export const Schedule: React.FC = () => {
       setData(rawData);
     }
   }, [dataState.loadDataStatus]);
-
-  React.useEffect(() => {
-    if (userState.loadGetUserByAccountIdStatus === ApiLoadingStatus.Success) {
-      setUser(userState.accountData);
-    }
-  }, [userState.loadGetUserByAccountIdStatus]);
 
   const handleData = (data: any) => {
     const scheduleData = { ...data };
@@ -191,6 +186,7 @@ export const Schedule: React.FC = () => {
   };
 
   const handleSubmitAddScheduleFunction = (data: any) => {
+    dispatch(createScheduleWithSelectedDoctor(data));
   };
 
   const handleSubmitAddDiagnosisFunction = (data: any) => {
@@ -200,7 +196,10 @@ export const Schedule: React.FC = () => {
         information: data.information,
       } as DiagnosisRequest)
     );
-    if (data.schedule_start_time !== null)
+    if (
+      data.schedule_start_time !== null &&
+      data.schedule_start_time !== undefined
+    )
       dispatch(createScheduleByDoctor(data));
   };
 
@@ -213,12 +212,22 @@ export const Schedule: React.FC = () => {
     }
   }, [dataState.loadCreateScheduleByDoctorStatus]);
 
+  React.useEffect(() => {
+    if (
+      dataState.loadCreateScheduleWithSelectedDoctor ===
+      ApiLoadingStatus.Success
+    ) {
+      dispatch(resetLoadCreateScheduleWithSelectedDoctor());
+      dispatch(getAllSchedules());
+    }
+  }, [dataState.loadCreateScheduleWithSelectedDoctor]);
+
   return (
     <>
       <Button
         icon={<PlusOutlined />}
         onClick={() => modalAddScheduleRef.current?.open({} as any)}
-        style={{ marginRight: '8px' }}
+        style={{ marginRight: "8px" }}
       >
         Đặt lịch khám theo bác sĩ
       </Button>
@@ -261,7 +270,6 @@ export const Schedule: React.FC = () => {
             modalAddDiagnosisRef.current?.open(
               {
                 selected_date: selected_date,
-                doctor_id: user.id,
                 schedule_id: schedule_id,
                 patient_id: patient_id,
                 patient: patient,

@@ -23,7 +23,11 @@ import {
   getAvailableScheduleByDoctorId,
   resetLoadGetAvailableScheduleByDoctorId,
 } from "../../redux/reducer/scheduleSlice";
-import { disabledDate, disabledTime, getBusyHours } from "../../utils/dateUtils";
+import {
+  disabledDate,
+  disabledTime,
+  getBusyHours,
+} from "../../utils/dateUtils";
 
 const ModalComponent = (props: any, ref: any) => {
   const [form] = Form.useForm();
@@ -79,7 +83,7 @@ const ModalComponent = (props: any, ref: any) => {
       setIsOpen(true);
       setData(data);
       setColumn(columns);
-      dispatch(getAvailableScheduleByDoctorId(data.doctor_id));
+      dispatch(getAvailableScheduleByDoctorId("doctor"));
       if (data.selected_date.startOf("day").isAfter(dayjs().startOf("day")))
         setIsEnableAdd(false);
       else setIsEnableAdd(true);
@@ -212,7 +216,9 @@ const ModalComponent = (props: any, ref: any) => {
                           <DatePicker
                             format={"DD/MM/YYYY"}
                             placeholder="Ngày tái khám"
-                            disabledDate={(day) => disabledDate(day, availableSchedule)}
+                            disabledDate={(day) =>
+                              disabledDate(day, availableSchedule)
+                            }
                             onChange={(date) => {
                               setSelectedDate(date);
                               form.setFieldsValue({
