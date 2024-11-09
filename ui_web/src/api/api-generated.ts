@@ -1077,177 +1077,6 @@ export class RecordControllerClient {
     }
 }
 
-export class AccountControllerClient {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : window as any;
-        this.baseUrl = baseUrl ?? "";
-    }
-
-    /**
-     * @return successful
-     */
-    findAll(): Promise<AccountResponse[]> {
-        let url_ = this.baseUrl + "/accounts";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processFindAll(_response);
-        });
-    }
-
-    protected processFindAll(response: Response): Promise<AccountResponse[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(AccountResponse.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<AccountResponse[]>(null as any);
-    }
-
-    add(body: AccountModel): Promise<void> {
-        let url_ = this.baseUrl + "/accounts";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_: RequestInit = {
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processAdd(_response);
-        });
-    }
-
-    protected processAdd(response: Response): Promise<void> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 201) {
-            return response.text().then((_responseText) => {
-            return;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<void>(null as any);
-    }
-
-    deleteAccount(email: string): Promise<void> {
-        let url_ = this.baseUrl + "/accounts?";
-        if (email === undefined || email === null)
-            throw new Error("The parameter 'email' must be defined and cannot be null.");
-        else
-            url_ += "email=" + encodeURIComponent("" + email) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "DELETE",
-            headers: {
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDeleteAccount(_response);
-        });
-    }
-
-    protected processDeleteAccount(response: Response): Promise<void> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            return;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<void>(null as any);
-    }
-
-    /**
-     * @return successful
-     */
-    findByEmail(email: string): Promise<AccountResponse[]> {
-        let url_ = this.baseUrl + "/accounts/details?";
-        if (email === undefined || email === null)
-            throw new Error("The parameter 'email' must be defined and cannot be null.");
-        else
-            url_ += "email=" + encodeURIComponent("" + email) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processFindByEmail(_response);
-        });
-    }
-
-    protected processFindByEmail(response: Response): Promise<AccountResponse[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(AccountResponse.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<AccountResponse[]>(null as any);
-    }
-}
-
 export class ScheduleControllerClient {
     private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
     private baseUrl: string;
@@ -1574,23 +1403,27 @@ export class ScheduleControllerClient {
     /**
      * @return Successfully
      */
-    createScheduleByDoctorWithTime(): Promise<boolean> {
+    createScheduleWithSelectedDoctor(body: ScheduleRequest): Promise<boolean> {
         let url_ = this.baseUrl + "/schedules/create/doctor";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(body);
+
         let options_: RequestInit = {
+            body: content_,
             method: "POST",
             headers: {
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processCreateScheduleByDoctorWithTime(_response);
+            return this.processCreateScheduleWithSelectedDoctor(_response);
         });
     }
 
-    protected processCreateScheduleByDoctorWithTime(response: Response): Promise<boolean> {
+    protected processCreateScheduleWithSelectedDoctor(response: Response): Promise<boolean> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -2245,94 +2078,6 @@ export interface IRecordResponse {
     [key: string]: any;
 }
 
-export class AccountResponse implements IAccountResponse {
-
-    [key: string]: any;
-
-    constructor(data?: IAccountResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            for (var property in _data) {
-                if (_data.hasOwnProperty(property))
-                    this[property] = _data[property];
-            }
-        }
-    }
-
-    static fromJS(data: any): AccountResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new AccountResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        for (var property in this) {
-            if (this.hasOwnProperty(property))
-                data[property] = this[property];
-        }
-        return data;
-    }
-}
-
-export interface IAccountResponse {
-
-    [key: string]: any;
-}
-
-export class AccountModel implements IAccountModel {
-
-    [key: string]: any;
-
-    constructor(data?: IAccountModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            for (var property in _data) {
-                if (_data.hasOwnProperty(property))
-                    this[property] = _data[property];
-            }
-        }
-    }
-
-    static fromJS(data: any): AccountModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new AccountModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        for (var property in this) {
-            if (this.hasOwnProperty(property))
-                data[property] = this[property];
-        }
-        return data;
-    }
-}
-
-export interface IAccountModel {
-
-    [key: string]: any;
-}
-
 export class ScheduleResponse implements IScheduleResponse {
 
     [key: string]: any;
@@ -2384,8 +2129,6 @@ export class ScheduleRequest implements IScheduleRequest {
     doctor_id!: string;
     /** Unique identifier for the patient */
     patient_id!: string;
-    /** Unique identifier for the account of the doctor */
-    account_id!: string;
     /** Start time of the schedule (in Unix timestamp format) */
     schedule_start_time!: number;
     /** End time of the schedule (in Unix timestamp format) */
@@ -2415,7 +2158,6 @@ export class ScheduleRequest implements IScheduleRequest {
             this.id = _data["id"];
             this.doctor_id = _data["doctor_id"];
             this.patient_id = _data["patient_id"];
-            this.account_id = _data["account_id"];
             this.schedule_start_time = _data["schedule_start_time"];
             this.schedule_end_time = _data["schedule_end_time"];
             this.schedule_type_id = _data["schedule_type_id"];
@@ -2439,7 +2181,6 @@ export class ScheduleRequest implements IScheduleRequest {
         data["id"] = this.id;
         data["doctor_id"] = this.doctor_id;
         data["patient_id"] = this.patient_id;
-        data["account_id"] = this.account_id;
         data["schedule_start_time"] = this.schedule_start_time;
         data["schedule_end_time"] = this.schedule_end_time;
         data["schedule_type_id"] = this.schedule_type_id;
@@ -2455,8 +2196,6 @@ export interface IScheduleRequest {
     doctor_id: string;
     /** Unique identifier for the patient */
     patient_id: string;
-    /** Unique identifier for the account of the doctor */
-    account_id: string;
     /** Start time of the schedule (in Unix timestamp format) */
     schedule_start_time: number;
     /** End time of the schedule (in Unix timestamp format) */
@@ -2604,4 +2343,4 @@ function throwException(message: string, status: number, response: string, heade
         throw result;
     else
         throw new ApiException(message, status, response, headers, null);
-}
+} 
