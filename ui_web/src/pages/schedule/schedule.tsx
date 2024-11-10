@@ -1,14 +1,16 @@
 import * as React from "react";
 import type { CalendarProps } from "antd";
-import { Badge, Calendar, ConfigProvider } from "antd";
+import { Badge, Button, Calendar, ConfigProvider } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/vi";
 import viVN from "antd/lib/locale/vi_VN";
 import {
   createScheduleByDoctor,
+  createScheduleWithSelectedDoctor,
   getAllSchedules,
   resetLoadCreateScheduleByDoctorStatus,
+  resetLoadCreateScheduleWithSelectedDoctor,
 } from "../../redux/reducer/scheduleSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
@@ -20,11 +22,17 @@ import {
   scheduleType,
 } from "../../constants";
 import { SelectInfo } from "antd/es/calendar/generateCalendar";
-import { ModalDiagnosisData } from "../../components/Modal/ModalDiagnosisData";
+import { ModalAddDiagnosis } from "../../components/Modal/ModalAddDiagnosis";
 import { createDiagnosis } from "../../redux/reducer/diagnosisSlice";
 import { DiagnosisRequest, UserResponse } from "../../api";
 import { ModalShowDiagnosis } from "../../components/Modal/ModalShowDiagnosis";
 import { getUserByAccountId } from "../../redux/reducer/userSlice";
+import { PlusOutlined } from "@ant-design/icons";
+import { ModalAddSchedule } from "../../components/Modal/ModalAddSchedule";
+
+type AddSchedule = {
+  open: (data: any[]) => void;
+};
 
 type AddDiagnosis = {
   open: (data: any[], columns: any[]) => void;
@@ -41,8 +49,8 @@ export const Schedule: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(null);
   const [data, setData] = React.useState<any[]>([]);
-  const [user, setUser] = React.useState<UserResponse>({} as UserResponse);
-  const modalAddRef = React.useRef<AddDiagnosis>(null);
+  const modalAddScheduleRef = React.useRef<AddSchedule>(null);
+  const modalAddDiagnosisRef = React.useRef<AddDiagnosis>(null);
   const modalShowRef = React.useRef<ShowDiagnosis>(null);
 
   const columns = [
@@ -82,12 +90,6 @@ export const Schedule: React.FC = () => {
       setData(rawData);
     }
   }, [dataState.loadDataStatus]);
-
-  React.useEffect(() => {
-    if (userState.loadGetUserByAccountIdStatus === ApiLoadingStatus.Success) {
-      setUser(userState.accountData);
-    }
-  }, [userState.loadGetUserByAccountIdStatus]);
 
   const handleData = (data: any) => {
     const scheduleData = { ...data };
@@ -183,14 +185,21 @@ export const Schedule: React.FC = () => {
     }
   };
 
-  const handleSubmitAddFunction = (data: any) => {
+  const handleSubmitAddScheduleFunction = (data: any) => {
+    dispatch(createScheduleWithSelectedDoctor(data));
+  };
+
+  const handleSubmitAddDiagnosisFunction = (data: any) => {
     dispatch(
       createDiagnosis({
         schedule_id: data.schedule_id,
         information: data.information,
       } as DiagnosisRequest)
     );
-    if (data.schedule_start_time !== null)
+    if (
+      data.schedule_start_time !== null &&
+      data.schedule_start_time !== undefined
+    )
       dispatch(createScheduleByDoctor(data));
   };
 
@@ -203,8 +212,31 @@ export const Schedule: React.FC = () => {
     }
   }, [dataState.loadCreateScheduleByDoctorStatus]);
 
+  React.useEffect(() => {
+    if (
+      dataState.loadCreateScheduleWithSelectedDoctor ===
+      ApiLoadingStatus.Success
+    ) {
+      dispatch(resetLoadCreateScheduleWithSelectedDoctor());
+      dispatch(getAllSchedules());
+    }
+  }, [dataState.loadCreateScheduleWithSelectedDoctor]);
+
   return (
     <>
+      <Button
+        icon={<PlusOutlined />}
+        onClick={() => modalAddScheduleRef.current?.open({} as any)}
+        style={{ marginRight: "8px" }}
+      >
+        Đặt lịch khám theo bác sĩ
+      </Button>
+      <Button
+        icon={<PlusOutlined />}
+        onClick={() => modalAddScheduleRef.current?.open({} as any)}
+      >
+        Đề xuất lịch khám
+      </Button>
       <ConfigProvider locale={viVN}>
         <Calendar cellRender={cellRender} onSelect={onDateSelect} />
         <ScheduleModal
@@ -235,10 +267,9 @@ export const Schedule: React.FC = () => {
             start_time: string,
             end_time: string
           ) =>
-            modalAddRef.current?.open(
+            modalAddDiagnosisRef.current?.open(
               {
                 selected_date: selected_date,
-                doctor_id: user.id,
                 schedule_id: schedule_id,
                 patient_id: patient_id,
                 patient: patient,
@@ -250,11 +281,16 @@ export const Schedule: React.FC = () => {
           }
         />
       </ConfigProvider>
-      <ModalDiagnosisData
-        ref={modalAddRef}
+      <ModalAddSchedule
+        ref={modalAddScheduleRef}
+        title="Đặt lịch khám"
+        submitFunction={(data: any) => handleSubmitAddScheduleFunction(data)}
+      ></ModalAddSchedule>
+      <ModalAddDiagnosis
+        ref={modalAddDiagnosisRef}
         title="Chẩn đoán của bác sĩ"
-        submitFunction={(data: any) => handleSubmitAddFunction(data)}
-      ></ModalDiagnosisData>
+        submitFunction={(data: any) => handleSubmitAddDiagnosisFunction(data)}
+      ></ModalAddDiagnosis>
       <ModalShowDiagnosis
         ref={modalShowRef}
         title="Xem chẩn đoán"

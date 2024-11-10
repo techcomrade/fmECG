@@ -39,18 +39,6 @@ export class ScheduleService {
     return result;
   }
 
-  async createScheduleByDoctor(schedule: ScheduleRequest) {
-    schedule.id = uuidv4();
-    if ((<any>schedule.schedule_start_time).length === undefined) {
-      await this.scheduleRepository.createSchedule(schedule);
-      await this.consultationScheduleService.add(<ConsultationScheduleRequest>{
-        id: uuidv4(),
-        schedule_id: schedule.id,
-        doctor_id: schedule.doctor_id,
-      });
-    }
-  }
-
   async createSchedule(schedule: ScheduleRequest, doctor_id: string) {
     schedule.id = uuidv4();
     await this.scheduleRepository.createSchedule(schedule);

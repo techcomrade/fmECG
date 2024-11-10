@@ -26,14 +26,6 @@ export class ScheduleRequest {
   patient_id: string;
 
   @ApiProperty({
-    description: "Unique identifier for the account of the doctor",
-    example: "f4289c39-ff2e-43b0-8f78-4dcc98128a16",
-  })
-  @IsNotEmpty()
-  @IsString()
-  account_id?: string;
-
-  @ApiProperty({
     description: "Start time of the schedule (in Unix timestamp format)",
     example: 1697011200,
   })
