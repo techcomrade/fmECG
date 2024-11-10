@@ -1,5 +1,4 @@
 
-
 export class UserGuardModel {
   accountId: string;
   role?: number;
