@@ -31,7 +31,7 @@ export class TokenModel extends Model<TokenModel> {
   account: AccountModel;
 
   @Column({
-    type: DataType.STRING(500),
+    type: DataType.STRING(1000),
   })
   refresh_token: string;
 
