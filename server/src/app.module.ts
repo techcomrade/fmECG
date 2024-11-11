@@ -6,7 +6,7 @@ import { DeviceModule } from "./modules/device/device.module";
 import { ScheduleModule } from "./modules/schedule/schedule.module";
 import { RecordModule } from "./modules/record/record.module";
 import { ConsultationScheduleModule } from "./modules/consultation_schedule/consultation_schedule.module";
-import { AuthenticationModule } from "./modules/authentication/authentication.module";
+// import { AuthenticationModule } from "./modules/authentication/authentication.module";
 require("dotenv").config();
 
 @Module({
@@ -27,7 +27,7 @@ require("dotenv").config();
     RecordModule,
     ConsultationScheduleModule,
     ScheduleModule,
-    AuthenticationModule,
+    // AuthenticationModule,
   ],
 })
 export class AppModule {}
