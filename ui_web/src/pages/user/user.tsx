@@ -34,7 +34,7 @@ type EditUserType = {
   open: (data: any[], columns: any[], layout: any) => void;
 };
 
-export const User = () => {
+export const User: React.FC = () => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.user);
   const [dataTable, setDataTable] = React.useState<any[]>([]);
