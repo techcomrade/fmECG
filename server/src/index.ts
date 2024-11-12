@@ -3,6 +3,7 @@ import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { CorsOptions } from "@nestjs/common/interfaces/external/cors-options.interface";
 import { AuthenticationGuard } from "./modules/authentication/authentication.guard";
+import { AuthorizationGuard } from "./modules/authentication/authorization.guard";
 
 const port = process.env.APP_PORT || 3000;
 const host = process.env.APP_HOST || "localhost";

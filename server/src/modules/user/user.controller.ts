@@ -22,16 +22,17 @@ import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import { UserResponse } from "./dto/user.response";
 import { plainToInstance } from "class-transformer";
 import { UserGuardModel } from "../authentication/dto/user.guard.model";
+import { Roles } from "../authentication/decorators/role.decorator";
+import { AuthorizationGuard } from "../authentication/authorization.guard";
+import { Role } from "../authentication/dto/role.enum";
 
 @Controller("users")
 @ApiBearerAuth('access-token') // Reference the name from addBearerAuth()
 @UseGuards(AuthenticationGuard)
+@UseGuards(AuthorizationGuard)
 export class UserController {
   constructor(private userService: UserService) {}
-
-  // @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  // @Roles(Role.Admin)
-
+  @Roles(Role.Admin)
   @Get("")
   @ApiResponse({
     status: 200,
