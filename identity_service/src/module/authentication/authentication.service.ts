@@ -101,6 +101,7 @@ export class AuthenticationService {
         expiredRefreshToken,
       ),
       expired_time: Date.now() + expiredTime,
+      role: user.role,
     };
     const token: CreateTokenModel = {
       account_id: user.id,
