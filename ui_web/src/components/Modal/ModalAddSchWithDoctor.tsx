@@ -221,4 +221,4 @@ const ModalComponent = (props: any, ref: any) => {
   );
 };
 
-export const ModalAddSchedule = React.forwardRef(ModalComponent);
+export const ModalAddSchWithDoctor = React.forwardRef(ModalComponent);

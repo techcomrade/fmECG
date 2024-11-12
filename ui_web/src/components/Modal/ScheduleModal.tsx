@@ -48,7 +48,7 @@ const ScheduleModalComponent = (props: any) => {
                   <EditOutlined
                     key="edit"
                     onClick={() =>
-                      props.openDiagnosis(
+                      props.addDiagnosis(
                         props.selectedDate,
                         item.schedule_id,
                         item.patient_id,
