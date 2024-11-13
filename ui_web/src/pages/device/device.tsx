@@ -43,7 +43,7 @@ type AddEditDeviceType = {
   open: (data: any[], columns: any[], layout: any) => void;
 };
 
-export const Device = () => {
+export const Device: React.FC = () => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.device);
   const doctorState = useAppSelector((state) => state.user);

@@ -9,7 +9,7 @@ module.exports = {
         email: 'dung123@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
-        role: 1,
+        role: 2,
         verify: false,
         createdAt: '2024-10-09T15:48:48.000',
         updatedAt: '2024-10-09T15:48:48.000',
@@ -19,7 +19,7 @@ module.exports = {
         email: 'nguyenduong1705@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
-        role: 1,
+        role: 2,
         verify: false,
         createdAt: '2024-10-09T16:07:09.000',
         updatedAt: '2024-10-09T16:07:09.000',
@@ -29,7 +29,7 @@ module.exports = {
         email: 'trantuan7541@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
-        role: 2,
+        role: 1,
         verify: false,
         createdAt: '2024-10-09T16:08:24.000',
         updatedAt: '2024-10-09T16:08:24.000',
@@ -39,7 +39,7 @@ module.exports = {
         email: 'tranquyen@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
-        role: 1,
+        role: 2,
         verify: false,
         createdAt: '2024-10-10T03:52:29.000',
         updatedAt: '2024-10-10T03:52:29.000',
@@ -49,7 +49,7 @@ module.exports = {
         email: 'huyquangpham@gmail.com',
         password:
           '$2b$10$O5wyQhDf48tIetzTHvPFJu9Ug1aZ/TUnaNcCRaZHbdbEv1UPLZfT2',
-        role: 2,
+        role: 3,
         verify: false,
         createdAt: '2024-10-10T03:52:29.000',
         updatedAt: '2024-10-10T03:52:29.000',

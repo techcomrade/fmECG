@@ -1,21 +1,12 @@
 import { Layout, theme, Menu } from "antd";
-import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-// import { getRoutesByRole } from "../route";
-// import logo from "../../assets/logo.png";
-import { useLocation } from "react-router-dom";
-import {
-  UserOutlined,
-  HomeOutlined,
-  DesktopOutlined,
-  SettingOutlined,
-  ScheduleOutlined,
-  TeamOutlined,
-  LineChartOutlined,
-} from "@ant-design/icons";
+import * as React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getRoutesByRole } from "./routes.type";
+import { UserOutlined, HomeOutlined, SettingOutlined } from "@ant-design/icons";
 import "./nav.scss";
 import { useTranslation } from "react-i18next";
 import logo from "../assets/logo.png";
+import { Context } from "../utils/context";
 
 const { Sider } = Layout;
 
@@ -26,12 +17,16 @@ export const Nav = () => {
 
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const [selectedKey, setSelectedKey] = useState(["/"]);
-
+  const [selectedKey, setSelectedKey] = React.useState<any>("/");
+  const { pathname } = useLocation();
+  React.useEffect(() => {
+    setSelectedKey(pathname);
+  }, [pathname]);
+  
   return (
     <Sider width={200} style={{ background: colorBgContainer }}>
       <div className="brand">
-        <img alt="ecg admin" src={logo} />
+        <img alt="ecg healthcare" src={logo} />
       </div>
 
       <Menu
@@ -50,50 +45,18 @@ export const Nav = () => {
           {t("page.side-bar.management")}
         </Menu.Item>
 
-        <Menu.Item
-          key="/user"
-          className="menu-item"
-          onClick={() => navigate("/user")}
-        >
-          <span className="menu-item-box-icon">
-          <TeamOutlined />
-          </span>
-          <span>Thông tin người dùng</span>
-        </Menu.Item>
-
-        <Menu.Item
-          key="/device"
-          className="menu-item"
-          onClick={() => navigate("/device")}
-        >
-          <span className="menu-item-box-icon">
-            <DesktopOutlined />
-          </span>
-          <span>Thông tin thiết bị</span>
-        </Menu.Item>
-
-        <Menu.Item
-          key="/record"
-          className="menu-item"
-          onClick={() => navigate("/record")}
-        >
-          <span className="menu-item-box-icon">
-          <LineChartOutlined />
-          </span>
-          <span>Thông tin bản ghi</span>
-        </Menu.Item>
-
-        <Menu.Item
-          key="/schedule"
-          className="menu-item"
-          onClick={() => navigate("/schedule")}
-        >
-          <span className="menu-item-box-icon">
-            <ScheduleOutlined />
-          </span>
-          <span>Thông tin lịch khám</span>
-        </Menu.Item>
-
+        {Object.values(getRoutesByRole(Context.role)).map((item: any) => (
+          <Menu.Item
+            key={item.key}
+            className="menu-item"
+            onClick={() => navigate(item.url)}
+          >
+            <span className="menu-item-box-icon">
+              <item.icon />
+            </span>
+            <span>{item.label}</span>
+          </Menu.Item>
+        ))}
         <Menu.Item className="menu-item-header" key="5">
           {t("page.side-bar.account-management")}
         </Menu.Item>

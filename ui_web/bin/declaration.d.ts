@@ -9,5 +9,6 @@ export interface AppContext {
     loginResult?: boolean;
     token?: string;
     expiredTime?: Date;
+    role?: string;
     supportedLanguages?: string[];
   }

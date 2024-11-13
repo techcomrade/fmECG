@@ -22,13 +22,12 @@ import {
   scheduleType,
 } from "../../constants";
 import { SelectInfo } from "antd/es/calendar/generateCalendar";
-import { ModalAddDiagnosis } from "../../components/Modal/ModalAddDiagnosis";
 import { createDiagnosis } from "../../redux/reducer/diagnosisSlice";
-import { DiagnosisRequest, UserResponse } from "../../api";
+import { DiagnosisRequest } from "../../api";
 import { ModalShowDiagnosis } from "../../components/Modal/ModalShowDiagnosis";
-import { getUserByAccountId } from "../../redux/reducer/userSlice";
 import { PlusOutlined } from "@ant-design/icons";
-import { ModalAddSchedule } from "../../components/Modal/ModalAddSchedule";
+import { ModalAddSchWithDoctor } from "../../components/Modal/ModalAddSchWithDoctor";
+import { ModalAddDiagnosis } from "../../components/Modal/ModalAddDiagnosis";
 
 type AddSchedule = {
   open: (data: any[]) => void;
@@ -44,12 +43,11 @@ type ShowDiagnosis = {
 
 export const Schedule: React.FC = () => {
   const dispatch = useAppDispatch();
-  const userState = useAppSelector((state) => state.user);
   const dataState = useAppSelector((state) => state.schedule);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(null);
   const [data, setData] = React.useState<any[]>([]);
-  const modalAddScheduleRef = React.useRef<AddSchedule>(null);
+  const modalAddSchWithDoctorRef = React.useRef<AddSchedule>(null);
   const modalAddDiagnosisRef = React.useRef<AddDiagnosis>(null);
   const modalShowRef = React.useRef<ShowDiagnosis>(null);
 
@@ -80,8 +78,6 @@ export const Schedule: React.FC = () => {
 
   React.useEffect(() => {
     dispatch(getAllSchedules());
-    const accountId = localStorage.getItem("account_id");
-    if (accountId) dispatch(getUserByAccountId(accountId));
   }, []);
 
   React.useEffect(() => {
@@ -185,7 +181,7 @@ export const Schedule: React.FC = () => {
     }
   };
 
-  const handleSubmitAddScheduleFunction = (data: any) => {
+  const handleSubmitAddSchWithDoctorFunction = (data: any) => {
     dispatch(createScheduleWithSelectedDoctor(data));
   };
 
@@ -226,14 +222,14 @@ export const Schedule: React.FC = () => {
     <>
       <Button
         icon={<PlusOutlined />}
-        onClick={() => modalAddScheduleRef.current?.open({} as any)}
+        onClick={() => modalAddSchWithDoctorRef.current?.open({} as any)}
         style={{ marginRight: "8px" }}
       >
         Đặt lịch khám theo bác sĩ
       </Button>
       <Button
         icon={<PlusOutlined />}
-        onClick={() => modalAddScheduleRef.current?.open({} as any)}
+        //onClick={() => modalAddSchWithTimeRef.current?.open({} as any)}
       >
         Đề xuất lịch khám
       </Button>
@@ -259,7 +255,7 @@ export const Schedule: React.FC = () => {
               end_time: end_time,
             } as any)
           }
-          openDiagnosis={(
+          addDiagnosis={(
             selected_date: Dayjs | null,
             schedule_id: string,
             patient_id: string,
@@ -281,11 +277,13 @@ export const Schedule: React.FC = () => {
           }
         />
       </ConfigProvider>
-      <ModalAddSchedule
-        ref={modalAddScheduleRef}
+      <ModalAddSchWithDoctor
+        ref={modalAddSchWithDoctorRef}
         title="Đặt lịch khám"
-        submitFunction={(data: any) => handleSubmitAddScheduleFunction(data)}
-      ></ModalAddSchedule>
+        submitFunction={(data: any) =>
+          handleSubmitAddSchWithDoctorFunction(data)
+        }
+      ></ModalAddSchWithDoctor>
       <ModalAddDiagnosis
         ref={modalAddDiagnosisRef}
         title="Chẩn đoán của bác sĩ"
