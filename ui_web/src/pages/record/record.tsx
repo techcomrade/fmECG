@@ -23,7 +23,7 @@ type EditRecordType = {
   open: (data: any[], columns: any[], layout: any) => void;
 };
 
-export const Record = () => {
+export const Record: React.FC = () => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.record);
   const [dataTable, setDataTable] = React.useState<any[]>([]);

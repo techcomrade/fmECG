@@ -31,6 +31,12 @@ export const convertStringToGender = (gender: string) => {
   }
 };
 
+export const userRole = {
+  admin: "1",
+  doctor: "2",
+  patient: "3",
+};
+
 export const role = [
   {
     value: 1,
