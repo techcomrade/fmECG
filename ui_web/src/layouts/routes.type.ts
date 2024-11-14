@@ -97,13 +97,6 @@ export const patientRouterMappingGroup = {
     component: User,
     icon: UserOutlined,
   },
-  DeviceInformation: {
-    key: "/device",
-    url: "/device",
-    label: "Thông tin thiết bị",
-    component: Device,
-    icon: DesktopOutlined,
-  },
   RecordInformation: {
     key: "/record",
     url: "/record",
