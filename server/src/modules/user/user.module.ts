@@ -1,5 +1,5 @@
 import { UserRepository } from "./user.repository";
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { UserController } from "./user.controller";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { UserService } from "./user.service";
@@ -10,6 +10,7 @@ import { DeviceModel } from "../../entities/device.model";
 import { ScheduleModel } from "../../entities/schedule.model";
 import { ConsultationScheduleModel } from "../../entities/consultation_schedule.model";
 import { ConsultationScheduleModule } from "../consultation_schedule/consultation_schedule.module";
+import { ScheduleModule } from "../schedule/schedule.module";
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ConsultationScheduleModule } from "../consultation_schedule/consultatio
       ConsultationScheduleModel,
     ]),
     ConsultationScheduleModule,
+    forwardRef(() => ScheduleModule),
   ],
   controllers: [UserController],
   providers: [UserService, UserRepository],

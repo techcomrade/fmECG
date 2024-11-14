@@ -3,14 +3,17 @@ import { UserResponse } from "./dto/user.response";
 import { UserRepository } from "./user.repository";
 const { v4: uuidv4 } = require("uuid");
 
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { ScheduleResponse } from "../schedule/dto/schedule.response";
 import { ConsultationScheduleService } from "../consultation_schedule/consultation_schedule.service";
+import { ScheduleService } from "../schedule/schedule.service";
 @Injectable()
 export class UserService {
   constructor(
     private userRepository: UserRepository,
-    private consultationScheduleService: ConsultationScheduleService
+    private consultationScheduleService: ConsultationScheduleService,
+    @Inject(forwardRef(() => ScheduleService))
+    private scheduleService: ScheduleService
   ) {}
 
   async getAllUsers(): Promise<UserResponse[]> {
@@ -35,6 +38,38 @@ export class UserService {
 
   async getUserByAccountId(account_id: string): Promise<UserResponse> {
     return await this.userRepository.getUserByAccountId(account_id);
+  }
+
+  async getPatientByDoctorId(doctor_id: string): Promise<UserResponse[]> {
+    const result = [];
+    const schedules = await this.scheduleService.getScheduleByDoctorId(
+      doctor_id
+    );
+    for (const schedule of schedules) {
+      const patient = await this.userRepository.getUserById(
+        schedule.patient_id
+      );
+      result.push((<any>patient).dataValues);
+    }
+    return result;
+  }
+
+  async getDoctorByPatientId(patient_id: string): Promise<UserResponse[]> {
+    const result = [];
+    const schedules = await this.scheduleService.getScheduleByPatientId(
+      patient_id
+    );
+    for (const schedule of schedules) {
+      const consultationSchedule =
+        await this.consultationScheduleService.getConsultationScheduleByScheduleId(
+          schedule.id
+        );
+      const doctor = await this.userRepository.getUserById(
+        consultationSchedule.doctor_id
+      );
+      result.push((<any>doctor).dataValues);
+    }
+    return result;
   }
 
   async updateUserById(user: UserRequest, id: string) {
