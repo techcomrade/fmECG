@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { ScheduleModel } from "../../entities/schedule.model";
 import { ScheduleTypeModel } from "../../entities/schedule_type.model";
@@ -28,7 +28,7 @@ import { DiagnosisModule } from "../diagnosis/diagnosis.module";
       RecordModel,
       DeviceScheduleModel,
     ]),
-    UserModule,
+    forwardRef(() => UserModule),
     ConsultationScheduleModule,
     DiagnosisModule,
   ],
