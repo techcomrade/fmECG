@@ -22,7 +22,7 @@ const initialState: IRecordState = {
   loadDeleteDataStatus: ApiLoadingStatus.None,
 };
 
-export const getAllRecord = createAsyncThunkWrap("/record", async () => {
+export const getAllRecord = createAsyncThunkWrap("/records", async () => {
   return await Service.recordService.getAllRecord();
 });
 
@@ -33,15 +33,29 @@ export const getRecordById = createAsyncThunkWrap(
   }
 );
 
+export const getRecordByDoctorId = createAsyncThunkWrap(
+  "/records/data/doctor-id",
+  async () => {
+    return await Service.recordService.getRecordByDoctorId();
+  }
+);
+
+export const getRecordByPatientId = createAsyncThunkWrap(
+  "/records/data/patient-id",
+  async () => {
+    return await Service.recordService.getRecordByPatientId();
+  }
+);
+
 export const updateRecordById = createAsyncThunkWrap(
-  "/update",
+  "/records/update",
   async (record: RecordRequest) => {
     return await Service.recordService.updateRecordById(record);
   }
 );
 
 export const deleteRecordById = createAsyncThunkWrap(
-  "/delete",
+  "/records/delete",
   async (id: string) => {
     return await Service.recordService.deleteRecordById(id);
   }
@@ -74,6 +88,28 @@ export const recordSlice = createSlice({
         state.loadDataStatus = ApiLoadingStatus.Success;
       })
       .addCase(getAllRecord.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getRecordByDoctorId.pending, (state, action) => {
+        state.loadDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getRecordByDoctorId.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getRecordByDoctorId.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getRecordByPatientId.pending, (state, action) => {
+        state.loadDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getRecordByPatientId.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getRecordByPatientId.rejected, (state, action) => {
         state.data = [];
         state.loadDataStatus = ApiLoadingStatus.Failed;
       })
