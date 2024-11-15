@@ -53,6 +53,14 @@ export class RecordRepository {
     });
   }
 
+  async getRecordByPatientId(patient_id: string): Promise<RecordResponse[]> {
+    return await this.recordModel.findAll({
+      where: {
+        patient_id: patient_id,
+      },
+    });
+  } 
+
   async getRecordByDeviceId(device_id: string): Promise<RecordResponse[]> {
     return await this.recordModel.findAll({
       where: {

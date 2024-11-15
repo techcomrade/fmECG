@@ -9,6 +9,8 @@ import {
   deleteUserById,
   resetLoadUpdateDataStatus,
   resetLoadDeleteDataStatus,
+  getPatientByDoctorId,
+  getDoctorByPatientId,
 } from "../../redux/reducer/userSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { findElementById } from "../../utils/arrayUtils";
@@ -23,8 +25,10 @@ import {
   userStatus,
   convertUserStatusToString,
   convertStringToUserStatus,
+  userRole,
 } from "../../constants";
 import dayjs from "dayjs";
+import { Context } from "../../utils/context";
 
 type UserDetailType = {
   open: (id: string) => void;
@@ -34,7 +38,7 @@ type EditUserType = {
   open: (data: any[], columns: any[], layout: any) => void;
 };
 
-export const User = () => {
+export const User: React.FC = () => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.user);
   const [dataTable, setDataTable] = React.useState<any[]>([]);
@@ -124,7 +128,15 @@ export const User = () => {
   };
 
   React.useEffect(() => {
-    dispatch(getAllUsers());
+    if (Context.role === userRole.admin) {
+      dispatch(getAllUsers());
+    }
+    if (Context.role === userRole.doctor) {
+      dispatch(getPatientByDoctorId());
+    }
+    if (Context.role === userRole.patient) {
+      dispatch(getDoctorByPatientId());
+    }
   }, []);
 
   // Get data
@@ -168,11 +180,18 @@ export const User = () => {
   return (
     <>
       <DataTable
-        addButton
-        editButton
-        deleteButton
+        role={Context.role === userRole.admin ? userRole.admin : undefined}
+        addButton={Context.role === userRole.admin}
+        editButton={Context.role === userRole.admin}
+        deleteButton={Context.role === userRole.admin}
         column={columns}
-        name="Thông tin người dùng"
+        name={
+          Context.role === userRole.patient
+            ? "Thông tin bác sĩ"
+            : Context.role === userRole.admin
+            ? "Thông tin người dùng"
+            : "Thông tin bệnh nhân"
+        }
         data={dataTable}
         loading={dataState.loadDataStatus === ApiLoadingStatus.Loading}
         updateSelectedData={setSelectedData}

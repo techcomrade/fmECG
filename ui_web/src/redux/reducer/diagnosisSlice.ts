@@ -16,14 +16,14 @@ const initialState: IScheduleState = {
 };
 
 export const createDiagnosis = createAsyncThunkWrap(
-  "/create",
+  "/diagnosis/create",
   async (diagnosis: DiagnosisRequest) => {
     return await Service.diagnosisService.createDiagnosis(diagnosis);
   }
 );
 
 export const getDiagnosisByScheduleId = createAsyncThunkWrap(
-  "/schedule",
+  "/diagnosis/schedule",
   async (schedule_id: string) => {
     return await Service.diagnosisService.getDiagnosisByScheduleId(schedule_id);
   }

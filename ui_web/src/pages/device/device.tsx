@@ -14,6 +14,7 @@ import {
   deleteDeviceDetailById,
   addDeviceDetail,
   updateDeviceDetailById,
+  getDeviceByDoctorId,
 } from "../../redux/reducer/deviceSlice";
 import { getAllDoctors } from "../../redux/reducer/userSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
@@ -31,9 +32,11 @@ import {
   deviceStatus,
   convertDeviceStatusToString,
   convertStringToDeviceStatus,
+  userRole,
 } from "../../constants";
 import dayjs from "dayjs";
 import { original } from "@reduxjs/toolkit";
+import { Context } from "../../utils/context";
 
 type DeviceDetailType = {
   open: (id: string) => void;
@@ -43,13 +46,14 @@ type AddEditDeviceType = {
   open: (data: any[], columns: any[], layout: any) => void;
 };
 
-export const Device = () => {
+export const Device: React.FC = () => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.device);
   const doctorState = useAppSelector((state) => state.user);
   const [dataTable, setDataTable] = React.useState<any[]>([]);
   const [doctorDropDown, setDoctorDropDown] = React.useState<any[]>([]);
   const [selectedData, setSelectedData] = React.useState<any[]>([]);
+  const [hidden, setHidden] = React.useState<boolean>(false);
   const drawerRef = React.useRef<DeviceDetailType>(null);
   const modalAddRef = React.useRef<AddEditDeviceType>(null);
   const modalUpdateRef = React.useRef<AddEditDeviceType>(null);
@@ -78,6 +82,7 @@ export const Device = () => {
       key: "doctor_name",
       type: "select",
       isEdit: false,
+      hidden: hidden,
     },
     {
       title: "Bác sĩ phụ trách",
@@ -215,8 +220,19 @@ export const Device = () => {
   };
 
   React.useEffect(() => {
-    dispatch(getAllDevices());
-    dispatch(getAllDoctors());
+    if (Context.role === userRole.admin) {
+      dispatch(getAllDevices());
+      dispatch(getAllDoctors());
+      setHidden(false);
+    }
+    if (Context.role === userRole.doctor) {
+      dispatch(getDeviceByDoctorId());
+      setHidden(true);
+    }
+    if (Context.role === userRole.patient) {
+      dispatch(getAllDoctors());
+      setHidden(false);
+    }
   }, []);
 
   // Get data
@@ -339,15 +355,18 @@ export const Device = () => {
   return (
     <>
       <DataTable
-        addButton
-        editButton
-        deleteButton
+        role={Context.role === userRole.admin ? userRole.admin : undefined}
+        addButton={Context.role === userRole.admin}
+        editButton={Context.role === userRole.admin}
+        deleteButton={Context.role === userRole.admin}
         column={columns}
         name="Thông tin thiết bị"
         data={dataTable}
         loading={dataState.loadDataStatus === ApiLoadingStatus.Loading}
         updateSelectedData={setSelectedData}
-        addFunction={() => modalAddRef.current?.open(initData, columns, "vertical")}
+        addFunction={() =>
+          modalAddRef.current?.open(initData, columns, "vertical")
+        }
         editFunction={handleEditFunction}
         deleteFunction={handleDeleteFunction}
         handleOpenDrawer={(id) => drawerRef.current?.open(id)}

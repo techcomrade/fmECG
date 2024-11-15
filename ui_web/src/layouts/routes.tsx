@@ -1,11 +1,8 @@
 import * as React from "react";
 import { Navigate, Route, Routes as ReactRouterRoutes } from "react-router-dom";
 import { Home } from "../pages/home";
-import { User } from "../pages/user";
-import { Device } from "../pages/device";
-import { routeMapping } from "./routes.type";
-import { Record } from "../pages/record";
-import { Schedule } from "../pages/schedule";
+import { getRoutesByRole } from "./routes.type";
+import { Context } from "../utils/context";
 interface IProps {}
 
 export const Routes = (props: IProps) => {
@@ -21,17 +18,17 @@ export const Routes = (props: IProps) => {
 
   return (
     <ReactRouterRoutes>
-      <Route path={routeMapping.ErrorPage.url} />
-      <Route path={routeMapping.Home.url} element={<Home />} />
-      <Route path={routeMapping.User.url} element={<User />} />
-      <Route path={routeMapping.Device.url} element={<Device />} />
-      <Route path={routeMapping.Record.url} element={<Record />} />
-      <Route path={routeMapping.Schedule.url} element={<Schedule />} />
-      {!isConsentBackUrl() && (
+      <Route path="/error" />
+      <Route path="/home" element={<Home />} />
+      {Object.values(getRoutesByRole(Context.role)).map((route: any) => (
         <Route
-          path="*"
-          element={<Navigate to={routeMapping.Home.url ?? ""} />}
+          key={route.key}
+          path={route.url}
+          element={route.component ? <route.component /> : null}
         />
+      ))}
+      {!isConsentBackUrl() && (
+        <Route path="*" element={<Navigate to={"/home"} />} />
       )}
     </ReactRouterRoutes>
   );

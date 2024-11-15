@@ -9,11 +9,15 @@ import {
   deleteRecordById,
   resetLoadDeleteDataStatus,
   resetLoadUpdateDataStatus,
+  getRecordByDoctorId,
+  getRecordByPatientId,
 } from "../../redux/reducer/recordSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { convertTimeToDateTime, checkDateTypeKey } from "../../utils/dateUtils";
 import { findElementById } from "../../utils/arrayUtils";
 import dayjs from "dayjs";
+import { Context } from "../../utils/context";
+import { userRole } from "../../constants";
 
 type RecordDetailType = {
   open: (id: string) => void;
@@ -23,7 +27,7 @@ type EditRecordType = {
   open: (data: any[], columns: any[], layout: any) => void;
 };
 
-export const Record = () => {
+export const Record: React.FC = () => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.record);
   const [dataTable, setDataTable] = React.useState<any[]>([]);
@@ -106,7 +110,15 @@ export const Record = () => {
   };
 
   React.useEffect(() => {
-    dispatch(getAllRecord());
+    if (Context.role === userRole.admin) {
+      dispatch(getAllRecord());
+    }
+    if (Context.role === userRole.doctor) {
+      dispatch(getRecordByDoctorId());
+    }
+    if (Context.role === userRole.patient) {
+      dispatch(getRecordByPatientId());
+    }
   }, []);
 
   // Get data
@@ -151,8 +163,9 @@ export const Record = () => {
   return (
     <>
       <DataTable
-        editButton
-        deleteButton
+        role={Context.role === userRole.doctor ? userRole.doctor : undefined}
+        editButton={Context.role === userRole.doctor}
+        deleteButton={Context.role === userRole.doctor}
         column={columns}
         name="Thông tin bản ghi"
         data={dataTable}

@@ -21,19 +21,33 @@ const initialState: IScheduleState = {
   loadGetAvailableScheduleByDoctorId: ApiLoadingStatus.None,
 };
 
-export const getAllSchedules = createAsyncThunkWrap("/", async () => {
+export const getAllSchedules = createAsyncThunkWrap("/schedules", async () => {
   return await Service.scheduleService.getAllSchedules();
 });
 
+export const getScheduleByDoctorId = createAsyncThunkWrap(
+  "/schedules/doctor-id",
+  async () => {
+    return await Service.scheduleService.getScheduleByDoctorId();
+  }
+);
+
+export const getScheduleByPatientId = createAsyncThunkWrap(
+  "/schedules/patient-id",
+  async () => {
+    return await Service.scheduleService.getScheduleByPatientId();
+  }
+);
+
 export const createScheduleByDoctor = createAsyncThunkWrap(
-  "/create",
+  "/schedules/create",
   async (schedule: ScheduleRequest) => {
     return await Service.scheduleService.createScheduleByDoctor(schedule);
   }
 );
 
 export const createScheduleWithSelectedDoctor = createAsyncThunkWrap(
-  "/create-doctor",
+  "/schedules/create-doctor",
   async (schedule: ScheduleRequest) => {
     return await Service.scheduleService.createScheduleWithSelectedDoctor(
       schedule
@@ -42,7 +56,7 @@ export const createScheduleWithSelectedDoctor = createAsyncThunkWrap(
 );
 
 export const getAvailableScheduleByDoctorId = createAsyncThunkWrap(
-  "/available-schedule",
+  "/schedules/available-schedule",
   async (doctor_id: string) => {
     return await Service.scheduleService.getAvailableScheduleByDoctorId(
       doctor_id
@@ -77,6 +91,28 @@ export const scheduleSlice = createSlice({
         state.loadDataStatus = ApiLoadingStatus.Success;
       })
       .addCase(getAllSchedules.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getScheduleByDoctorId.pending, (state, action) => {
+        state.loadDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getScheduleByDoctorId.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getScheduleByDoctorId.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getScheduleByPatientId.pending, (state, action) => {
+        state.loadDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getScheduleByPatientId.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getScheduleByPatientId.rejected, (state, action) => {
         state.data = [];
         state.loadDataStatus = ApiLoadingStatus.Failed;
       })

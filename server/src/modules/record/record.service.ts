@@ -34,6 +34,41 @@ export class RecordService {
     return result;
   }
 
+  async getRecordByPatientId(patient_id: string): Promise<RecordResponse[]> {
+    let result = [];
+    let records = await this.recordRepository.getRecordByPatientId(patient_id);
+    for (const record of records) {
+      let user = await this.userService.getUserById(record.patient_id);
+      let device = await this.deviceService.getById(record.device_id);
+      result.push({
+        ...(<any>record).dataValues,
+        username: user.username,
+        device_name: device.device_name,
+      });
+    }
+    return result;
+  }
+
+  async getRecordByDoctorId(doctor_id: string): Promise<RecordResponse[]> {
+    let result = [];
+    let devices = await this.deviceService.getByDoctorId(doctor_id);
+    for (const device of devices) {
+      let records = await this.recordRepository.getRecordByDeviceId(device.id);
+      if (records && records.length > 0) {
+        for (const record of records) {
+          let username = (await this.userService.getUserById(record.patient_id))
+            .username;
+          result.push({
+            ...(<any>record).dataValues,
+            username: username,
+            device_name: device.device_name,
+          });
+        }
+      }
+    }
+    return result;
+  }
+
   async getRecordById(id: string): Promise<RecordResponse> {
     let record = await this.recordRepository.getRecordById(id);
     let user = await this.userService.getUserById(record.patient_id);

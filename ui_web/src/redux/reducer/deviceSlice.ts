@@ -43,43 +43,50 @@ export const getDeviceById = createAsyncThunkWrap(
   }
 );
 
+export const getDeviceByDoctorId = createAsyncThunkWrap(
+  "/devices/data/doctor-id",
+  async () => {
+    return await Service.deviceService.getDeviceByDoctorId();
+  }
+);
+
 export const addDevice = createAsyncThunkWrap(
-  "/add",
+  "/devices/add",
   async (device: DeviceRequest) => {
     return await Service.deviceService.add(device);
   }
 );
 
 export const addDeviceDetail = createAsyncThunkWrap(
-  "/add-detail",
+  "/devices/add-detail",
   async (detail: DeviceDetailRequest) => {
     return await Service.deviceDetailService.addDetail(detail);
   }
 );
 
 export const updateDeviceById = createAsyncThunkWrap(
-  "/update",
+  "/devices/update",
   async (device: DeviceRequest) => {
     return await Service.deviceService.updateDeviceById(device);
   }
 );
 
 export const updateDeviceDetailById = createAsyncThunkWrap(
-  "/add-detail",
+  "/devices/add-detail",
   async (detail: DeviceDetailRequest) => {
     return await Service.deviceDetailService.updateDetailById(detail);
   }
 );
 
 export const deleteDeviceById = createAsyncThunkWrap(
-  "/delete",
+  "/devices/delete",
   async (id: string) => {
     return await Service.deviceService.deleteDeviceById(id);
   }
 );
 
 export const deleteDeviceDetailById = createAsyncThunkWrap(
-  "/delete-detail",
+  "/devices/delete-detail",
   async (id: string) => {
     return await Service.deviceDetailService.deleteDeviceDetailById(id);
   }
@@ -121,6 +128,17 @@ export const deviceSlice = createSlice({
         state.loadDataStatus = ApiLoadingStatus.Success;
       })
       .addCase(getAllDevices.rejected, (state, action) => {
+        state.deviceData = {} as DeviceResponse;
+        state.loadDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getDeviceByDoctorId.pending, (state, action) => {
+        state.loadDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getDeviceByDoctorId.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getDeviceByDoctorId.rejected, (state, action) => {
         state.deviceData = {} as DeviceResponse;
         state.loadDataStatus = ApiLoadingStatus.Failed;
       })

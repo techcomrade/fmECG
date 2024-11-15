@@ -27,7 +27,7 @@ import { AuthorizationGuard } from "../authentication/authorization.guard";
 import { Role } from "../authentication/dto/role.enum";
 
 @Controller("users")
-@ApiBearerAuth('access-token') // Reference the name from addBearerAuth()
+@ApiBearerAuth("access-token") // Reference the name from addBearerAuth()
 @UseGuards(AuthenticationGuard)
 @UseGuards(AuthorizationGuard)
 export class UserController {
@@ -39,9 +39,12 @@ export class UserController {
     type: [UserResponse],
     description: "Successful",
   })
-  async getAllUsers(@Req() req: Request & { user?: UserGuardModel },@Res() res: Response) {
+  async getAllUsers(
+    @Req() req: Request & { user?: UserGuardModel },
+    @Res() res: Response
+  ) {
     console.log(`[P]:::Get all users`);
-    const user = req.user
+    const user = req.user;
     console.log("user: ", user);
     try {
       let users = await this.userService.getAllUsers();
@@ -120,6 +123,64 @@ export class UserController {
       console.log(error);
       throw new InternalServerErrorException(
         "Error when get user by account id"
+      );
+    }
+  }
+
+  @Get("data/patient-data")
+  @ApiResponse({
+    status: 200,
+    type: [UserResponse],
+    description: "Successful",
+  })
+  async getPatientByDoctorId(
+    @Req() req: Request & { user?: UserGuardModel },
+    @Res() res: Response
+  ) {
+    const doctorId = (
+      await this.userService.getUserByAccountId(req.user.accountId)
+    ).id;
+    console.log(`[P]:::Get all users by doctor id: `, doctorId);
+    try {
+      let user = await this.userService.getPatientByDoctorId(doctorId);
+      if (!user) {
+        throw new NotFoundException("No user found, please try again");
+      }
+      let result = plainToInstance(UserResponse, user);
+      return res.json(result);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException(
+        "Error when get user by doctor id"
+      );
+    }
+  }
+
+  @Get("data/doctor-id")
+  @ApiResponse({
+    status: 200,
+    type: [UserResponse],
+    description: "Successful",
+  })
+  async getDoctorByPatientId(
+    @Req() req: Request & { user?: UserGuardModel },
+    @Res() res: Response
+  ) {
+    const patientId = (
+      await this.userService.getUserByAccountId(req.user.accountId)
+    ).id;
+    console.log(`[P]:::Get all doctors by patient id: `, patientId);
+    try {
+      let user = await this.userService.getDoctorByPatientId(patientId);
+      if (!user) {
+        throw new NotFoundException("No user found, please try again");
+      }
+      let result = plainToInstance(UserResponse, user);
+      return res.json(result);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException(
+        "Error when get user by patient id"
       );
     }
   }

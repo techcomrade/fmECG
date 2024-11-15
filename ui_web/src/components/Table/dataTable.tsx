@@ -17,6 +17,7 @@ import { addKeyElement } from "../../utils/arrayUtils";
 const { confirm } = Modal;
 
 interface Props {
+  role?: string;
   data: any[];
   name: string;
   loading: boolean;
@@ -79,7 +80,7 @@ const DataTable = (props: Props) => {
         console.log(id);
         props.deleteFunction?.(id);
       },
-      onCancel() { },
+      onCancel() {},
     });
   };
 
@@ -128,10 +129,14 @@ const DataTable = (props: Props) => {
         )}
       </div>
       <Table
-        rowSelection={{
-          type: props.hasCheckBox,
-          ...rowSelection,
-        }}
+        rowSelection={
+          props.role
+            ? {
+                type: props.hasCheckBox,
+                ...rowSelection,
+              }
+            : undefined
+        }
         loading={props.loading}
         bordered
         columns={props.column.filter((item) => !item.hidden)}
