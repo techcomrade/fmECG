@@ -30,11 +30,11 @@ const initialState: IUserState = {
   loadDeleteDataStatus: ApiLoadingStatus.None,
 };
 
-export const getAllUsers = createAsyncThunkWrap("/user", async () => {
+export const getAllUsers = createAsyncThunkWrap("/users", async () => {
   return await Service.userService.getAllUsers();
 });
 
-export const getAllDoctors = createAsyncThunkWrap("/doctor", async () => {
+export const getAllDoctors = createAsyncThunkWrap("users/doctors", async () => {
   return await Service.userService.getAllDoctors();
 });
 
@@ -52,14 +52,28 @@ export const getUserByAccountId = createAsyncThunkWrap(
   }
 );
 
+export const getPatientByDoctorId = createAsyncThunkWrap(
+  "/users/doctor-id",
+  async () => {
+    return await Service.userService.getPatientByDoctorId();
+  }
+);
+
+export const getDoctorByPatientId = createAsyncThunkWrap(
+  "/users/patient-id",
+  async () => {
+    return await Service.userService.getDoctorByPatientId();
+  }
+);
+
 export const updateUserById = createAsyncThunkWrap(
-  "/update",
+  "/users/update",
   async (user: UserRequest) => {
     return await Service.userService.updateUserById(user);
   }
 );
 export const deleteUserById = createAsyncThunkWrap(
-  "/delete",
+  "/users/delete",
   async (id: string) => {
     return await Service.userService.deleteUserById(id);
   }
@@ -108,6 +122,28 @@ export const userSlice = createSlice({
       .addCase(getAllDoctors.rejected, (state, action) => {
         state.doctorData = [];
         state.loadDoctorDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getPatientByDoctorId.pending, (state, action) => {
+        state.loadDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getPatientByDoctorId.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getPatientByDoctorId.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getDoctorByPatientId.pending, (state, action) => {
+        state.loadDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getDoctorByPatientId.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getDoctorByPatientId.rejected, (state, action) => {
+        state.data = [];
+        state.loadDataStatus = ApiLoadingStatus.Failed;
       })
       .addCase(getUserById.pending, (state, action) => {
         state.loadGetUserByIdStatus = ApiLoadingStatus.Loading;

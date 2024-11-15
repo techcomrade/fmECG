@@ -4,6 +4,8 @@ import {
   Injectable,
   ConflictException,
   UnauthorizedException,
+  forwardRef,
+  Inject,
 } from "@nestjs/common";
 import { ScheduleRepository } from "./schedule.repository";
 import { ScheduleResponse } from "./dto/schedule.response";
@@ -16,6 +18,7 @@ import { ConsultationScheduleRequest } from "../consultation_schedule/dto/consul
 export class ScheduleService {
   constructor(
     private scheduleRepository: ScheduleRepository,
+    @Inject(forwardRef(() => UserService))
     private userService: UserService,
     private consultationScheduleService: ConsultationScheduleService
   ) {}
@@ -101,19 +104,43 @@ export class ScheduleService {
   async getScheduleByPatientId(
     patient_id: string
   ): Promise<ScheduleResponse[]> {
-    return this.scheduleRepository.getScheduleByPatientId(patient_id);
+    const patient = await this.userService.getUserById(patient_id);
+    const schedules = await this.scheduleRepository.getScheduleByPatientId(
+      patient_id
+    );
+    const scheduleList = [];
+    for (const schedule of schedules) {
+      const consultation =
+        await this.consultationScheduleService.getConsultationScheduleByScheduleId(
+          schedule.id
+        );
+      const doctor = await this.userService.getUserById(consultation.doctor_id);
+      scheduleList.push({
+        ...(<any>schedule).dataValues,
+        patient_name: patient.username,
+        doctor_name: doctor.username,
+      });
+    }
+    return scheduleList;
   }
 
   async getScheduleByDoctorId(doctor_id: string): Promise<ScheduleResponse[]> {
+    const doctor = await this.userService.getUserById(doctor_id);
     const consultationSchedules =
       await this.consultationScheduleService.getConsultationScheduleByDoctorId(
         doctor_id
       );
     const scheduleList = [];
     for (const item of consultationSchedules) {
-      const id = item.schedule_id;
-      const schedule = await this.getScheduleById(id);
-      scheduleList.push(schedule);
+      const schedule = await this.scheduleRepository.getScheduleById(
+        item.schedule_id
+      );
+      const patient = await this.userService.getUserById(schedule.patient_id);
+      scheduleList.push({
+        ...(<any>schedule).dataValues,
+        patient_name: patient.username,
+        doctor_name: doctor.username,
+      });
     }
     return scheduleList;
   }

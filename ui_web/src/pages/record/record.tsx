@@ -9,11 +9,15 @@ import {
   deleteRecordById,
   resetLoadDeleteDataStatus,
   resetLoadUpdateDataStatus,
+  getRecordByDoctorId,
+  getRecordByPatientId,
 } from "../../redux/reducer/recordSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { convertTimeToDateTime, checkDateTypeKey } from "../../utils/dateUtils";
 import { findElementById } from "../../utils/arrayUtils";
 import dayjs from "dayjs";
+import { Context } from "../../utils/context";
+import { userRole } from "../../constants";
 
 type RecordDetailType = {
   open: (id: string) => void;
@@ -106,7 +110,15 @@ export const Record: React.FC = () => {
   };
 
   React.useEffect(() => {
-    dispatch(getAllRecord());
+    if (Context.role === userRole.admin) {
+      dispatch(getAllRecord());
+    }
+    if (Context.role === userRole.doctor) {
+      dispatch(getRecordByDoctorId());
+    }
+    if (Context.role === userRole.patient) {
+      dispatch(getRecordByPatientId());
+    }
   }, []);
 
   // Get data
@@ -151,8 +163,9 @@ export const Record: React.FC = () => {
   return (
     <>
       <DataTable
-        editButton
-        deleteButton
+        role={Context.role === userRole.doctor ? userRole.doctor : undefined}
+        editButton={Context.role === userRole.doctor}
+        deleteButton={Context.role === userRole.doctor}
         column={columns}
         name="Thông tin bản ghi"
         data={dataTable}

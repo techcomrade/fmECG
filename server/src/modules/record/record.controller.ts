@@ -10,6 +10,7 @@ import {
   Param,
   Res,
   Put,
+  Req,
 } from "@nestjs/common";
 import { Response } from "express";
 import { RecordService } from "./record.service";
@@ -17,10 +18,15 @@ import { RecordRequest } from "./dto/record.request";
 import { RecordResponse } from "./dto/record.response";
 import { plainToInstance } from "class-transformer";
 import { ApiResponse } from "@nestjs/swagger";
+import { UserGuardModel } from "../authentication/dto/user.guard.model";
+import { UserService } from "../user/user.service";
 
 @Controller("records")
 export class RecordController {
-  constructor(private recordService: RecordService) {}
+  constructor(
+    private recordService: RecordService,
+    private userService: UserService
+  ) {}
 
   @Post("")
   @ApiResponse({
@@ -66,6 +72,50 @@ export class RecordController {
   async getRecordById(@Res() res: Response, @Param("id") id: string) {
     console.log(`[P]:::Get record by id: `, id);
     let record = await this.recordService.getRecordById(id);
+    if (!record) {
+      throw new NotFoundException("No record found, please try again");
+    }
+    let result = plainToInstance(RecordResponse, record);
+    return res.json(result);
+  }
+
+  @Get("data/patient-id")
+  @ApiResponse({
+    status: 200,
+    type: [RecordResponse],
+    description: "Successful",
+  })
+  async getRecordByPatientId(
+    @Req() req: Request & { user?: UserGuardModel },
+    @Res() res: Response
+  ) {
+    const patientId = (
+      await this.userService.getUserByAccountId(req.user.accountId)
+    ).id;
+    console.log(`[P]:::Get record by patient id: `, patientId);
+    let record = await this.recordService.getRecordByPatientId(patientId);
+    if (!record) {
+      throw new NotFoundException("No record found, please try again");
+    }
+    let result = plainToInstance(RecordResponse, record);
+    return res.json(result);
+  }
+
+  @Get("data/doctor-id")
+  @ApiResponse({
+    status: 200,
+    type: [RecordResponse],
+    description: "Successful",
+  })
+  async getRecordByDoctorId(
+    @Req() req: Request & { user?: UserGuardModel },
+    @Res() res: Response
+  ) {
+    const doctorId = (
+      await this.userService.getUserByAccountId(req.user.accountId)
+    ).id;
+    console.log(`[P]:::Get record by doctor id: `, doctorId);
+    let record = await this.recordService.getRecordByDoctorId(doctorId);
     if (!record) {
       throw new NotFoundException("No record found, please try again");
     }

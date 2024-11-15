@@ -9,6 +9,8 @@ import {
   createScheduleByDoctor,
   createScheduleWithSelectedDoctor,
   getAllSchedules,
+  getScheduleByDoctorId,
+  getScheduleByPatientId,
   resetLoadCreateScheduleByDoctorStatus,
   resetLoadCreateScheduleWithSelectedDoctor,
 } from "../../redux/reducer/scheduleSlice";
@@ -20,6 +22,7 @@ import {
   convertScheduleStatusToString,
   convertScheduleTypeToString,
   scheduleType,
+  userRole,
 } from "../../constants";
 import { SelectInfo } from "antd/es/calendar/generateCalendar";
 import { createDiagnosis } from "../../redux/reducer/diagnosisSlice";
@@ -28,6 +31,7 @@ import { ModalShowDiagnosis } from "../../components/Modal/ModalShowDiagnosis";
 import { PlusOutlined } from "@ant-design/icons";
 import { ModalAddSchWithDoctor } from "../../components/Modal/ModalAddSchWithDoctor";
 import { ModalAddDiagnosis } from "../../components/Modal/ModalAddDiagnosis";
+import { Context } from "../../utils/context";
 
 type AddSchedule = {
   open: (data: any[]) => void;
@@ -77,7 +81,15 @@ export const Schedule: React.FC = () => {
   ];
 
   React.useEffect(() => {
-    dispatch(getAllSchedules());
+    if (Context.role === userRole.admin) {
+      dispatch(getAllSchedules());
+    }
+    if (Context.role === userRole.doctor) {
+      dispatch(getScheduleByDoctorId());
+    }
+    if (Context.role === userRole.patient) {
+      dispatch(getScheduleByPatientId());
+    }
   }, []);
 
   React.useEffect(() => {
@@ -122,7 +134,7 @@ export const Schedule: React.FC = () => {
             start_time: dayjs(schedule.schedule_start_time).format("HH:mm"),
             end_time: dayjs(schedule.schedule_end_time).format("HH:mm"),
             time: Number(dayjs(schedule.schedule_start_time).format("HHmm")),
-            doctor: `Bác sĩ: ${schedule.doctor_name}`,
+            doctor: schedule.doctor_name,
             patient: schedule.patient_name,
             schedule_type: `Loại lịch hẹn: ${convertScheduleTypeToString(
               schedule.schedule_type_id
@@ -220,19 +232,24 @@ export const Schedule: React.FC = () => {
 
   return (
     <>
-      <Button
-        icon={<PlusOutlined />}
-        onClick={() => modalAddSchWithDoctorRef.current?.open({} as any)}
-        style={{ marginRight: "8px" }}
-      >
-        Đặt lịch khám theo bác sĩ
-      </Button>
-      <Button
-        icon={<PlusOutlined />}
-        //onClick={() => modalAddSchWithTimeRef.current?.open({} as any)}
-      >
-        Đề xuất lịch khám
-      </Button>
+      {Context.role === userRole.patient && (
+        <>
+          {" "}
+          <Button
+            icon={<PlusOutlined />}
+            onClick={() => modalAddSchWithDoctorRef.current?.open({} as any)}
+            style={{ marginRight: "8px" }}
+          >
+            Đặt lịch khám theo bác sĩ
+          </Button>
+          <Button
+            icon={<PlusOutlined />}
+            //onClick={() => modalAddSchWithTimeRef.current?.open({} as any)}
+          >
+            Đề xuất lịch khám
+          </Button>{" "}
+        </>
+      )}
       <ConfigProvider locale={viVN}>
         <Calendar cellRender={cellRender} onSelect={onDateSelect} />
         <ScheduleModal
@@ -244,12 +261,14 @@ export const Schedule: React.FC = () => {
           getListData={getListData}
           showDiagnosis={(
             schedule_id: string,
+            doctor: string,
             patient: string,
             start_time: string,
             end_time: string
           ) =>
             modalShowRef.current?.open({
               schedule_id: schedule_id,
+              doctor: doctor,
               patient: patient,
               start_time: start_time,
               end_time: end_time,

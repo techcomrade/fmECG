@@ -9,6 +9,8 @@ import {
 } from "../../redux/reducer/diagnosisSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { DiagnosisResponse } from "../../api";
+import { Context } from "../../utils/context";
+import { userRole } from "../../constants";
 
 const ModalComponent = (props: any, ref: any) => {
   const [form] = Form.useForm();
@@ -25,6 +27,7 @@ const ModalComponent = (props: any, ref: any) => {
     open: (data: any) => {
       setIsOpen(true);
       setData(data);
+      console.log(data);
     },
   }));
 
@@ -60,12 +63,21 @@ const ModalComponent = (props: any, ref: any) => {
       className={props.className}
     >
       <Form form={form} labelCol={{ span: 10 }} wrapperCol={{ span: 12 }}>
-        <Form.Item
-          label="Bệnh nhân"
-          style={{ marginBottom: "2px", marginTop: "12px" }}
-        >
-          <div>{data.patient}</div>
-        </Form.Item>
+        {(Context.role === userRole.doctor ||
+          Context.role === userRole.admin) && (
+          <Form.Item
+            label="Bệnh nhân"
+            style={{ marginBottom: "2px", marginTop: "12px" }}
+          >
+            <div>{data.patient}</div>
+          </Form.Item>
+        )}
+        {(Context.role === userRole.patient ||
+          Context.role === userRole.admin) && (
+          <Form.Item label="Bác sĩ" style={{ marginBottom: "2px" }}>
+            <div>{data.doctor}</div>
+          </Form.Item>
+        )}
         <Form.Item label="Thời gian khám" style={{ marginBottom: "4px" }}>
           <div>
             Từ {data.start_time} đến {data.end_time}

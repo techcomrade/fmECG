@@ -3,8 +3,6 @@ import {
   Get,
   Post,
   Body,
-  UseGuards,
-  Query,
   Res,
   BadRequestException,
   NotFoundException,
@@ -54,24 +52,27 @@ export class ScheduleController {
     }
   }
 
-  @Get("patient")
+  @Get("patient-id")
   @ApiResponse({
     status: 200,
     type: [ScheduleResponse],
     description: "successful",
   })
   async getScheduleByPatientId(
+    @Req() req: Request & { user?: UserGuardModel },
     @Res() res: Response,
-    @Query("patient_id") patient_id: string
   ) {
-    console.log(`[P]:::Get schedule by patient id`, patient_id);
-    let checkExistPatient = await this.userService.getUserById(patient_id);
+    const patientId = (
+      await this.userService.getUserByAccountId(req.user.accountId)
+    ).id;
+    console.log(`[P]:::Get schedule by patient id`, patientId);
+    let checkExistPatient = await this.userService.getUserById(patientId);
     if (checkExistPatient == null) {
       throw new NotFoundException("No patient found, please try again");
     }
     try {
       let schedules = await this.scheduleService.getScheduleByPatientId(
-        patient_id
+        patientId
       );
       if (!schedules.length) {
         throw new NotFoundException("No schedule found, please try again");
@@ -86,24 +87,27 @@ export class ScheduleController {
     }
   }
 
-  @Get("doctor")
+  @Get("doctor-id")
   @ApiResponse({
     status: 200,
     type: [ScheduleResponse],
     description: "successful",
   })
   async getScheduleByDoctorId(
+    @Req() req: Request & { user?: UserGuardModel },
     @Res() res: Response,
-    @Query("doctor_id") doctor_id: string
   ) {
-    console.log(`[P]:::Get schedule by doctor_id id`, doctor_id);
-    let checkExistDoctor = await this.userService.getUserById(doctor_id);
+    const doctorId = (
+      await this.userService.getUserByAccountId(req.user.accountId)
+    ).id;
+    console.log(`[P]:::Get schedule by doctor_id id`, doctorId);
+    let checkExistDoctor = await this.userService.getUserById(doctorId);
     if (checkExistDoctor == null) {
       throw new NotFoundException("No doctor found, please try again");
     }
     try {
       let schedules = await this.scheduleService.getScheduleByDoctorId(
-        doctor_id
+        doctorId
       );
       if (!schedules.length) {
         throw new NotFoundException("No schedule found, please try again");
@@ -180,10 +184,11 @@ export class ScheduleController {
     type: Boolean,
     description: "Successful",
   })
-  async deleteScheduleById(@Res() res: Response, @Query("id") id: string) {
+  async deleteScheduleById(@Res() res: Response, @Param("id") id: string) {
     console.log(`[P]:::Delete schedule by id`, id);
     let checkExistSchedule = await this.scheduleService.getScheduleById(id);
     if (checkExistSchedule == null) {
+      22;
       throw new NotFoundException(
         "No schedule found to delete, please try again"
       );
@@ -198,7 +203,7 @@ export class ScheduleController {
     }
   }
 
-  @Get("/doctor/:id")
+  @Get("/available-schedule/:id")
   @ApiResponse({
     status: 200,
     type: [ScheduleResponse],
@@ -277,7 +282,7 @@ export class ScheduleController {
     }
   }
 
-  @Post("/get/schedule")
+  @Post("get/schedule")
   @ApiResponse({
     status: 200,
     type: ScheduleResponse,

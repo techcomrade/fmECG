@@ -11,6 +11,7 @@ import {
   Param,
   Res,
   Put,
+  Req,
 } from "@nestjs/common";
 import { Response } from "express";
 import { DeviceService } from "./device.service";
@@ -18,10 +19,15 @@ import { ApiResponse } from "@nestjs/swagger";
 import { DeviceResponse } from "./dto/device.response";
 import { plainToInstance } from "class-transformer";
 import { DeviceRequest } from "./dto/device.request";
+import { UserGuardModel } from "../authentication/dto/user.guard.model";
+import { UserService } from "../user/user.service";
 
 @Controller("device")
 export class DeviceController {
-  constructor(private deviceService: DeviceService) {}
+  constructor(
+    private deviceService: DeviceService,
+    private userService: UserService
+  ) {}
 
   @Get("")
   @ApiResponse({
@@ -74,7 +80,29 @@ export class DeviceController {
     return res.status(HttpStatus.OK).json(result);
   }
 
-  @Get("/:device_name")
+  @Get("data/doctor_id")
+  @ApiResponse({
+    status: 200,
+    type: [DeviceResponse],
+    description: "successful",
+  })
+  async getDeviceByDoctorId(
+    @Req() req: Request & { user?: UserGuardModel },
+    @Res() res: Response,
+  ) {
+    const doctorId = (
+      await this.userService.getUserByAccountId(req.user.accountId)
+    ).id;
+    console.log("[P]::: Get device by doctor id");
+    let devices = await this.deviceService.getByDoctorId(doctorId);
+    if (!devices.length) {
+      throw new NotFoundException("No devices found, please try again");
+    }
+    let result = plainToInstance(DeviceResponse, devices);
+    return res.json(result);
+  }
+
+  @Get(":device_name")
   @ApiResponse({
     status: 200,
     type: [DeviceResponse],
