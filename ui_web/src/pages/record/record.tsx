@@ -45,10 +45,19 @@ export const Record: React.FC = () => {
     },
     {
       title: "Tên bệnh nhân",
-      dataIndex: "username",
-      key: "username",
+      dataIndex: "patient",
+      key: "patient",
       type: "text",
       isEdit: false,
+      hidden: Context.role === userRole.patient,
+    },
+    {
+      title: "Tên bác sĩ",
+      dataIndex: "doctor",
+      key: "doctor",
+      type: "text",
+      isEdit: false,
+      hidden: Context.role === userRole.doctor,
     },
     {
       title: "Tên thiết bị",
