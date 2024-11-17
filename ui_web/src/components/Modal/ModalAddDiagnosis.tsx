@@ -28,6 +28,7 @@ import {
   disabledTime,
   getBusyHours,
 } from "../../utils/dateUtils";
+import { showNotiError } from "../notification";
 
 const ModalComponent = (props: any, ref: any) => {
   const [form] = Form.useForm();
@@ -104,8 +105,10 @@ const ModalComponent = (props: any, ref: any) => {
     }
     if (
       diagnosisState.loadGetDiagnosisByScheduleIdStatus ===
-      ApiLoadingStatus.Failed
+        ApiLoadingStatus.Failed &&
+      diagnosisState.errorMessage
     ) {
+      showNotiError(diagnosisState.errorMessage);
       dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis({} as DiagnosisResponse);
     }
@@ -121,6 +124,14 @@ const ModalComponent = (props: any, ref: any) => {
     ) {
       dispatch(resetLoadGetAvailableScheduleByDoctorId());
       setAvailableSchedule(scheduleState.availableSchedule);
+    }
+    if (
+      scheduleState.loadGetAvailableScheduleByDoctorId ===
+        ApiLoadingStatus.Failed &&
+      diagnosisState.errorMessage
+    ) {
+      showNotiError(diagnosisState.errorMessage);
+      dispatch(resetLoadGetAvailableScheduleByDoctorId());
     }
   }, [scheduleState.loadGetAvailableScheduleByDoctorId]);
 
