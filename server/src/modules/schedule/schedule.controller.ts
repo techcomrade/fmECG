@@ -60,7 +60,7 @@ export class ScheduleController {
   })
   async getScheduleByPatientId(
     @Req() req: Request & { user?: UserGuardModel },
-    @Res() res: Response,
+    @Res() res: Response
   ) {
     const patientId = (
       await this.userService.getUserByAccountId(req.user.accountId)
@@ -87,7 +87,7 @@ export class ScheduleController {
     }
   }
 
-  @Get("doctor-id")
+  @Get("doctor-id/:id")
   @ApiResponse({
     status: 200,
     type: [ScheduleResponse],
@@ -96,10 +96,12 @@ export class ScheduleController {
   async getScheduleByDoctorId(
     @Req() req: Request & { user?: UserGuardModel },
     @Res() res: Response,
+    @Param("id") id: string
   ) {
-    const doctorId = (
-      await this.userService.getUserByAccountId(req.user.accountId)
-    ).id;
+    const doctorId =
+      id === "doctor"
+        ? (await this.userService.getUserByAccountId(req.user.accountId)).id
+        : id;
     console.log(`[P]:::Get schedule by doctor_id id`, doctorId);
     let checkExistDoctor = await this.userService.getUserById(doctorId);
     if (checkExistDoctor == null) {

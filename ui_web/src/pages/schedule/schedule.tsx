@@ -25,13 +25,17 @@ import {
   userRole,
 } from "../../constants";
 import { SelectInfo } from "antd/es/calendar/generateCalendar";
-import { createDiagnosis } from "../../redux/reducer/diagnosisSlice";
+import {
+  createDiagnosis,
+  resetLoadCreateDiagnosisStatus,
+} from "../../redux/reducer/diagnosisSlice";
 import { DiagnosisRequest } from "../../api";
 import { ModalShowDiagnosis } from "../../components/Modal/ModalShowDiagnosis";
 import { PlusOutlined } from "@ant-design/icons";
 import { ModalAddSchWithDoctor } from "../../components/Modal/ModalAddSchWithDoctor";
 import { ModalAddDiagnosis } from "../../components/Modal/ModalAddDiagnosis";
 import { Context } from "../../utils/context";
+import { showNotiError, showNotiSuccess } from "../../components/notification";
 
 type AddSchedule = {
   open: (data: any[]) => void;
@@ -48,6 +52,7 @@ type ShowDiagnosis = {
 export const Schedule: React.FC = () => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.schedule);
+  const diagnosisState = useAppSelector((state) => state.diagnosis);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(null);
   const [data, setData] = React.useState<any[]>([]);
@@ -96,6 +101,13 @@ export const Schedule: React.FC = () => {
     if (dataState.loadDataStatus === ApiLoadingStatus.Success) {
       const rawData = dataState.data.map((schedule) => handleData(schedule));
       setData(rawData);
+    }
+    if (
+      dataState.loadDataStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      setData([]);
+      showNotiError(dataState.errorMessage);
     }
   }, [dataState.loadDataStatus]);
 
@@ -213,10 +225,34 @@ export const Schedule: React.FC = () => {
 
   React.useEffect(() => {
     if (
+      diagnosisState.loadCreateDiagnosisStatus === ApiLoadingStatus.Success
+    ) {
+      dispatch(resetLoadCreateDiagnosisStatus());
+      showNotiSuccess("Bạn đã tạo chẩn đoán thành công");
+    }
+    if (
+      diagnosisState.loadCreateDiagnosisStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      dispatch(resetLoadCreateDiagnosisStatus());
+      showNotiError(dataState.errorMessage);
+    }
+  }, [diagnosisState.loadCreateDiagnosisStatus]);
+
+  React.useEffect(() => {
+    if (
       dataState.loadCreateScheduleByDoctorStatus === ApiLoadingStatus.Success
     ) {
+      showNotiSuccess("Bạn đã tạo lịch tái khám thành công");
       dispatch(resetLoadCreateScheduleByDoctorStatus());
-      dispatch(getAllSchedules());
+      dispatch(getScheduleByDoctorId());
+    }
+    if (
+      dataState.loadCreateScheduleByDoctorStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      showNotiError(dataState.errorMessage);
+      dispatch(resetLoadCreateScheduleByDoctorStatus());
     }
   }, [dataState.loadCreateScheduleByDoctorStatus]);
 
@@ -225,8 +261,17 @@ export const Schedule: React.FC = () => {
       dataState.loadCreateScheduleWithSelectedDoctor ===
       ApiLoadingStatus.Success
     ) {
+      showNotiSuccess("Bạn đã tạo lịch khám thành công");
       dispatch(resetLoadCreateScheduleWithSelectedDoctor());
-      dispatch(getAllSchedules());
+      dispatch(getScheduleByPatientId());
+    }
+    if (
+      dataState.loadCreateScheduleWithSelectedDoctor ===
+        ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      showNotiError(dataState.errorMessage);
+      dispatch(resetLoadCreateScheduleWithSelectedDoctor());
     }
   }, [dataState.loadCreateScheduleWithSelectedDoctor]);
 
