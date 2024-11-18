@@ -674,8 +674,11 @@ export class ScheduleControllerClient {
     /**
      * @return successful
      */
-    getScheduleByDoctorId(): Promise<ScheduleResponse[]> {
-        let url_ = this.baseUrl + "/schedules/doctor-id";
+    getScheduleByDoctorId(id: string): Promise<ScheduleResponse[]> {
+        let url_ = this.baseUrl + "/schedules/doctor-id/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {

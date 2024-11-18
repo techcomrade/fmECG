@@ -12,6 +12,7 @@ import {
   convertUserStatusToString,
 } from "../../constants";
 import { convertTimeToDate } from "../../utils/dateUtils";
+import { showNotiError } from "../../components/notification";
 
 const UserDetailComponent = (props: any, ref: any) => {
   const dispatch = useAppDispatch();
@@ -42,6 +43,12 @@ const UserDetailComponent = (props: any, ref: any) => {
       };
       setData(rawData);
     }
+    if (
+      dataState.loadGetUserByIdStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      showNotiError(dataState.errorMessage);
+    }
   }, [dataState.loadGetUserByIdStatus]);
 
   const labelsInfo = {
@@ -66,7 +73,10 @@ const UserDetailComponent = (props: any, ref: any) => {
   return (
     <>
       <DrawerSide
-        closed={() => setIsOpen(false)}
+        closed={() => {
+          setIsOpen(false);
+          setData([]);
+        }}
         isOpen={isOpen}
         title="Thông tin người dùng"
         data={data}

@@ -10,6 +10,7 @@ interface IScheduleState {
   loadCreateScheduleByDoctorStatus: ApiLoadingStatus;
   loadCreateScheduleWithSelectedDoctor: ApiLoadingStatus;
   loadGetAvailableScheduleByDoctorId: ApiLoadingStatus;
+  errorMessage: string | undefined;
 }
 
 const initialState: IScheduleState = {
@@ -19,6 +20,7 @@ const initialState: IScheduleState = {
   loadCreateScheduleByDoctorStatus: ApiLoadingStatus.None,
   loadCreateScheduleWithSelectedDoctor: ApiLoadingStatus.None,
   loadGetAvailableScheduleByDoctorId: ApiLoadingStatus.None,
+  errorMessage: undefined,
 };
 
 export const getAllSchedules = createAsyncThunkWrap("/schedules", async () => {
@@ -28,7 +30,7 @@ export const getAllSchedules = createAsyncThunkWrap("/schedules", async () => {
 export const getScheduleByDoctorId = createAsyncThunkWrap(
   "/schedules/doctor-id",
   async () => {
-    return await Service.scheduleService.getScheduleByDoctorId();
+    return await Service.scheduleService.getScheduleByDoctorId("doctor");
   }
 );
 
@@ -92,6 +94,7 @@ export const scheduleSlice = createSlice({
       })
       .addCase(getAllSchedules.rejected, (state, action) => {
         state.data = [];
+        state.errorMessage = (<any>action.payload)?.message;
         state.loadDataStatus = ApiLoadingStatus.Failed;
       })
       .addCase(getScheduleByDoctorId.pending, (state, action) => {
@@ -103,6 +106,7 @@ export const scheduleSlice = createSlice({
       })
       .addCase(getScheduleByDoctorId.rejected, (state, action) => {
         state.data = [];
+        state.errorMessage = (<any>action.payload)?.message;
         state.loadDataStatus = ApiLoadingStatus.Failed;
       })
       .addCase(getScheduleByPatientId.pending, (state, action) => {
@@ -114,6 +118,7 @@ export const scheduleSlice = createSlice({
       })
       .addCase(getScheduleByPatientId.rejected, (state, action) => {
         state.data = [];
+        state.errorMessage = (<any>action.payload)?.message;
         state.loadDataStatus = ApiLoadingStatus.Failed;
       })
       .addCase(createScheduleByDoctor.pending, (state, action) => {
@@ -123,6 +128,7 @@ export const scheduleSlice = createSlice({
         state.loadCreateScheduleByDoctorStatus = ApiLoadingStatus.Success;
       })
       .addCase(createScheduleByDoctor.rejected, (state, action) => {
+        state.errorMessage = (<any>action.payload)?.message;
         state.loadCreateScheduleByDoctorStatus = ApiLoadingStatus.Failed;
       })
       .addCase(createScheduleWithSelectedDoctor.pending, (state, action) => {
@@ -132,6 +138,7 @@ export const scheduleSlice = createSlice({
         state.loadCreateScheduleWithSelectedDoctor = ApiLoadingStatus.Success;
       })
       .addCase(createScheduleWithSelectedDoctor.rejected, (state, action) => {
+        state.errorMessage = (<any>action.payload)?.message;
         state.loadCreateScheduleWithSelectedDoctor = ApiLoadingStatus.Failed;
       })
       .addCase(getAvailableScheduleByDoctorId.pending, (state, action) => {
@@ -143,6 +150,7 @@ export const scheduleSlice = createSlice({
       })
       .addCase(getAvailableScheduleByDoctorId.rejected, (state, action) => {
         state.availableSchedule = [];
+        state.errorMessage = (<any>action.payload)?.message;
         state.loadGetAvailableScheduleByDoctorId = ApiLoadingStatus.Failed;
       });
   },
