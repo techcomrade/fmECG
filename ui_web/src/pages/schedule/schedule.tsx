@@ -7,12 +7,12 @@ import "dayjs/locale/vi";
 import viVN from "antd/lib/locale/vi_VN";
 import {
   createScheduleByDoctor,
-  createScheduleWithSelectedDoctor,
+  createScheduleByPatient,
   getAllSchedules,
   getScheduleByDoctorId,
   getScheduleByPatientId,
   resetLoadCreateScheduleByDoctorStatus,
-  resetLoadCreateScheduleWithSelectedDoctor,
+  resetLoadCreateScheduleByPatientStatus,
 } from "../../redux/reducer/scheduleSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
@@ -35,6 +35,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { ModalAddSchWithDoctor } from "../../components/Modal/ModalAddSchWithDoctor";
 import { ModalAddDiagnosis } from "../../components/Modal/ModalAddDiagnosis";
 import { Context } from "../../utils/context";
+import { ModalAddSchWithTime } from "../../components/Modal/ModalAddSchWithTime";
 import { showNotiError, showNotiSuccess } from "../../components/notification";
 
 type AddSchedule = {
@@ -57,6 +58,7 @@ export const Schedule: React.FC = () => {
   const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(null);
   const [data, setData] = React.useState<any[]>([]);
   const modalAddSchWithDoctorRef = React.useRef<AddSchedule>(null);
+  const modalAddSchWithTimeRef = React.useRef<AddSchedule>(null);
   const modalAddDiagnosisRef = React.useRef<AddDiagnosis>(null);
   const modalShowRef = React.useRef<ShowDiagnosis>(null);
 
@@ -205,8 +207,8 @@ export const Schedule: React.FC = () => {
     }
   };
 
-  const handleSubmitAddSchWithDoctorFunction = (data: any) => {
-    dispatch(createScheduleWithSelectedDoctor(data));
+  const handleSubmitAddScheduleFunction = (data: any) => {
+    dispatch(createScheduleByPatient(data));
   };
 
   const handleSubmitAddDiagnosisFunction = (data: any) => {
@@ -224,9 +226,7 @@ export const Schedule: React.FC = () => {
   };
 
   React.useEffect(() => {
-    if (
-      diagnosisState.loadCreateDiagnosisStatus === ApiLoadingStatus.Success
-    ) {
+    if (diagnosisState.loadCreateDiagnosisStatus === ApiLoadingStatus.Success) {
       dispatch(resetLoadCreateDiagnosisStatus());
       showNotiSuccess("Bạn đã tạo chẩn đoán thành công");
     }
@@ -258,22 +258,21 @@ export const Schedule: React.FC = () => {
 
   React.useEffect(() => {
     if (
-      dataState.loadCreateScheduleWithSelectedDoctor ===
-      ApiLoadingStatus.Success
+      dataState.loadCreateScheduleByPatientStatus === ApiLoadingStatus.Success
     ) {
       showNotiSuccess("Bạn đã tạo lịch khám thành công");
-      dispatch(resetLoadCreateScheduleWithSelectedDoctor());
+      dispatch(resetLoadCreateScheduleByPatientStatus());
       dispatch(getScheduleByPatientId());
     }
     if (
-      dataState.loadCreateScheduleWithSelectedDoctor ===
+      dataState.loadCreateScheduleByPatientStatus ===
         ApiLoadingStatus.Failed &&
       dataState.errorMessage
     ) {
       showNotiError(dataState.errorMessage);
-      dispatch(resetLoadCreateScheduleWithSelectedDoctor());
+      dispatch(resetLoadCreateScheduleByPatientStatus());
     }
-  }, [dataState.loadCreateScheduleWithSelectedDoctor]);
+  }, [dataState.loadCreateScheduleByPatientStatus]);
 
   return (
     <>
@@ -289,7 +288,7 @@ export const Schedule: React.FC = () => {
           </Button>
           <Button
             icon={<PlusOutlined />}
-            //onClick={() => modalAddSchWithTimeRef.current?.open({} as any)}
+            onClick={() => modalAddSchWithTimeRef.current?.open({} as any)}
           >
             Đề xuất lịch khám
           </Button>{" "}
@@ -344,10 +343,13 @@ export const Schedule: React.FC = () => {
       <ModalAddSchWithDoctor
         ref={modalAddSchWithDoctorRef}
         title="Đặt lịch khám"
-        submitFunction={(data: any) =>
-          handleSubmitAddSchWithDoctorFunction(data)
-        }
+        submitFunction={(data: any) => handleSubmitAddScheduleFunction(data)}
       ></ModalAddSchWithDoctor>
+      <ModalAddSchWithTime
+        ref={modalAddSchWithTimeRef}
+        title="Đặt lịch khám"
+        submitFunction={(data: any) => handleSubmitAddScheduleFunction(data)}
+      ></ModalAddSchWithTime>
       <ModalAddDiagnosis
         ref={modalAddDiagnosisRef}
         title="Chẩn đoán của bác sĩ"
