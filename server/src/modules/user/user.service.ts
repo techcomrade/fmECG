@@ -80,7 +80,7 @@ export class UserService {
     return await this.userRepository.deleteUserById(id);
   }
 
-  async getDoctorAvailableWithSchedule(
+  async getAvailableDoctorByScheduleTime(
     scheduleList: ScheduleResponse[]
   ): Promise<UserResponse[]> {
     const doctorArray = await this.getAllDoctors();
