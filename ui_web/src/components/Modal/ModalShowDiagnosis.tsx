@@ -11,7 +11,6 @@ import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { DiagnosisResponse } from "../../api";
 import { Context } from "../../utils/context";
 import { userRole } from "../../constants";
-import { showNotiError } from "../notification";
 
 const ModalComponent = (props: any, ref: any) => {
   const [form] = Form.useForm();
@@ -28,7 +27,6 @@ const ModalComponent = (props: any, ref: any) => {
     open: (data: any) => {
       setIsOpen(true);
       setData(data);
-      console.log(data);
     },
   }));
 
@@ -43,14 +41,6 @@ const ModalComponent = (props: any, ref: any) => {
     ) {
       dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis(diagnosisState.diagnosis);
-    }
-    if (
-      diagnosisState.loadGetDiagnosisByScheduleIdStatus ===
-        ApiLoadingStatus.Failed &&
-      diagnosisState.errorMessage
-    ) {
-      showNotiError(diagnosisState.errorMessage);
-      setDiagnosis({} as DiagnosisResponse);
     }
   }, [diagnosisState.loadGetDiagnosisByScheduleIdStatus]);
 

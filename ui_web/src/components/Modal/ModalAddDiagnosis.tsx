@@ -103,15 +103,6 @@ const ModalComponent = (props: any, ref: any) => {
       dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis(diagnosisState.diagnosis);
     }
-    if (
-      diagnosisState.loadGetDiagnosisByScheduleIdStatus ===
-        ApiLoadingStatus.Failed &&
-      diagnosisState.errorMessage
-    ) {
-      showNotiError(diagnosisState.errorMessage);
-      dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
-      setDiagnosis({} as DiagnosisResponse);
-    }
   }, [
     diagnosisState.loadGetDiagnosisByScheduleIdStatus,
     Object.keys(diagnosisState.diagnosis),
@@ -128,9 +119,9 @@ const ModalComponent = (props: any, ref: any) => {
     if (
       scheduleState.loadGetAvailableScheduleByDoctorId ===
         ApiLoadingStatus.Failed &&
-      diagnosisState.errorMessage
+      scheduleState.errorMessage
     ) {
-      showNotiError(diagnosisState.errorMessage);
+      showNotiError(scheduleState.errorMessage);
       dispatch(resetLoadGetAvailableScheduleByDoctorId());
     }
   }, [scheduleState.loadGetAvailableScheduleByDoctorId]);
