@@ -1,25 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { createAsyncThunkWrap } from "../handler";
-import { ScheduleRequest, ScheduleResponse, Service } from "../../api";
+import {
+  ScheduleRequest,
+  ScheduleResponse,
+  Service,
+  UserResponse,
+} from "../../api";
 
 interface IScheduleState {
   data: ScheduleResponse[];
+  doctorState: UserResponse[];
   availableSchedule: any;
   loadDataStatus: ApiLoadingStatus;
   loadCreateScheduleByDoctorStatus: ApiLoadingStatus;
-  loadCreateScheduleWithSelectedDoctor: ApiLoadingStatus;
+  loadCreateScheduleByPatientStatus: ApiLoadingStatus;
   loadGetAvailableScheduleByDoctorId: ApiLoadingStatus;
+  loadGetAvailableDoctorByScheduleTime: ApiLoadingStatus;
   errorMessage: string | undefined;
 }
 
 const initialState: IScheduleState = {
   data: [],
+  doctorState: [],
   availableSchedule: [],
   loadDataStatus: ApiLoadingStatus.None,
   loadCreateScheduleByDoctorStatus: ApiLoadingStatus.None,
-  loadCreateScheduleWithSelectedDoctor: ApiLoadingStatus.None,
+  loadCreateScheduleByPatientStatus: ApiLoadingStatus.None,
   loadGetAvailableScheduleByDoctorId: ApiLoadingStatus.None,
+  loadGetAvailableDoctorByScheduleTime: ApiLoadingStatus.None,
   errorMessage: undefined,
 };
 
@@ -30,7 +39,7 @@ export const getAllSchedules = createAsyncThunkWrap("/schedules", async () => {
 export const getScheduleByDoctorId = createAsyncThunkWrap(
   "/schedules/doctor-id",
   async () => {
-    return await Service.scheduleService.getScheduleByDoctorId("doctor");
+    return await Service.scheduleService.getScheduleByDoctorId();
   }
 );
 
@@ -42,18 +51,16 @@ export const getScheduleByPatientId = createAsyncThunkWrap(
 );
 
 export const createScheduleByDoctor = createAsyncThunkWrap(
-  "/schedules/create",
+  "/schedules/create-doctor",
   async (schedule: ScheduleRequest) => {
     return await Service.scheduleService.createScheduleByDoctor(schedule);
   }
 );
 
-export const createScheduleWithSelectedDoctor = createAsyncThunkWrap(
-  "/schedules/create-doctor",
+export const createScheduleByPatient = createAsyncThunkWrap(
+  "/schedules/create-patient",
   async (schedule: ScheduleRequest) => {
-    return await Service.scheduleService.createScheduleWithSelectedDoctor(
-      schedule
-    );
+    return await Service.scheduleService.createScheduleByPatient(schedule);
   }
 );
 
@@ -62,6 +69,15 @@ export const getAvailableScheduleByDoctorId = createAsyncThunkWrap(
   async (doctor_id: string) => {
     return await Service.scheduleService.getAvailableScheduleByDoctorId(
       doctor_id
+    );
+  }
+);
+
+export const getAvailableDoctorByScheduleTime = createAsyncThunkWrap(
+  "/schedules/time/available-doctor",
+  async (schedule_time: number) => {
+    return await Service.scheduleService.getAvailableDoctorByScheduleTime(
+      schedule_time
     );
   }
 );
@@ -76,11 +92,14 @@ export const scheduleSlice = createSlice({
     resetLoadCreateScheduleByDoctorStatus: (state) => {
       state.loadCreateScheduleByDoctorStatus = ApiLoadingStatus.None;
     },
-    resetLoadCreateScheduleWithSelectedDoctor: (state) => {
-      state.loadCreateScheduleWithSelectedDoctor = ApiLoadingStatus.None;
+    resetLoadCreateScheduleByPatientStatus: (state) => {
+      state.loadCreateScheduleByPatientStatus = ApiLoadingStatus.None;
     },
     resetLoadGetAvailableScheduleByDoctorId: (state) => {
       state.loadGetAvailableScheduleByDoctorId = ApiLoadingStatus.None;
+    },
+    resetLoadGetAvailableDoctorByScheduleTime: (state) => {
+      state.loadGetAvailableDoctorByScheduleTime = ApiLoadingStatus.None;
     },
   },
   extraReducers: (builder) => {
@@ -125,21 +144,24 @@ export const scheduleSlice = createSlice({
         state.loadCreateScheduleByDoctorStatus = ApiLoadingStatus.Loading;
       })
       .addCase(createScheduleByDoctor.fulfilled, (state, action) => {
+        console.log(action)
         state.loadCreateScheduleByDoctorStatus = ApiLoadingStatus.Success;
       })
       .addCase(createScheduleByDoctor.rejected, (state, action) => {
         state.errorMessage = (<any>action.payload)?.message;
         state.loadCreateScheduleByDoctorStatus = ApiLoadingStatus.Failed;
       })
-      .addCase(createScheduleWithSelectedDoctor.pending, (state, action) => {
-        state.loadCreateScheduleWithSelectedDoctor = ApiLoadingStatus.Loading;
+      .addCase(createScheduleByPatient.pending, (state, action) => {
+        state.loadCreateScheduleByPatientStatus = ApiLoadingStatus.Loading;
       })
-      .addCase(createScheduleWithSelectedDoctor.fulfilled, (state, action) => {
-        state.loadCreateScheduleWithSelectedDoctor = ApiLoadingStatus.Success;
+      .addCase(createScheduleByPatient.fulfilled, (state, action) => {
+        console.log(action)
+        state.loadCreateScheduleByPatientStatus = ApiLoadingStatus.Success;
       })
-      .addCase(createScheduleWithSelectedDoctor.rejected, (state, action) => {
+      .addCase(createScheduleByPatient.rejected, (state, action) => {
+        console.log(action)
         state.errorMessage = (<any>action.payload)?.message;
-        state.loadCreateScheduleWithSelectedDoctor = ApiLoadingStatus.Failed;
+        state.loadCreateScheduleByPatientStatus = ApiLoadingStatus.Failed;
       })
       .addCase(getAvailableScheduleByDoctorId.pending, (state, action) => {
         state.loadGetAvailableScheduleByDoctorId = ApiLoadingStatus.Loading;
@@ -152,6 +174,18 @@ export const scheduleSlice = createSlice({
         state.availableSchedule = [];
         state.errorMessage = (<any>action.payload)?.message;
         state.loadGetAvailableScheduleByDoctorId = ApiLoadingStatus.Failed;
+      })
+      .addCase(getAvailableDoctorByScheduleTime.pending, (state, action) => {
+        state.loadGetAvailableDoctorByScheduleTime = ApiLoadingStatus.Loading;
+      })
+      .addCase(getAvailableDoctorByScheduleTime.fulfilled, (state, action) => {
+        state.doctorState = action.payload;
+        state.loadGetAvailableDoctorByScheduleTime = ApiLoadingStatus.Success;
+      })
+      .addCase(getAvailableDoctorByScheduleTime.rejected, (state, action) => {
+        state.doctorState = [];
+        state.errorMessage = (<any>action.payload)?.message;
+        state.loadGetAvailableDoctorByScheduleTime = ApiLoadingStatus.Failed;
       });
   },
 });
@@ -159,7 +193,8 @@ export const scheduleSlice = createSlice({
 export const {
   resetLoadDataStatus,
   resetLoadCreateScheduleByDoctorStatus,
-  resetLoadCreateScheduleWithSelectedDoctor,
+  resetLoadCreateScheduleByPatientStatus,
   resetLoadGetAvailableScheduleByDoctorId,
+  resetLoadGetAvailableDoctorByScheduleTime,
 } = scheduleSlice.actions;
 export default scheduleSlice.reducer;

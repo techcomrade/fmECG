@@ -674,11 +674,8 @@ export class ScheduleControllerClient {
     /**
      * @return successful
      */
-    getScheduleByDoctorId(id: string): Promise<ScheduleResponse[]> {
-        let url_ = this.baseUrl + "/schedules/doctor-id/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    getScheduleByDoctorId(): Promise<ScheduleResponse[]> {
+        let url_ = this.baseUrl + "/schedules/doctor-id";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
@@ -768,7 +765,7 @@ export class ScheduleControllerClient {
     /**
      * @return Successfully
      */
-    createScheduleWithSelectedDoctor(body: ScheduleRequest): Promise<boolean> {
+    createScheduleByPatient(body: ScheduleRequest): Promise<boolean> {
         let url_ = this.baseUrl + "/schedules/create/doctor";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -784,20 +781,20 @@ export class ScheduleControllerClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processCreateScheduleWithSelectedDoctor(_response);
+            return this.processCreateScheduleByPatient(_response);
         });
     }
 
-    protected processCreateScheduleWithSelectedDoctor(response: Response): Promise<boolean> {
+    protected processCreateScheduleByPatient(response: Response): Promise<boolean> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
+        if (status === 201) {
             return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            let result201: any = null;
+            let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result201 = resultData201 !== undefined ? resultData201 : <any>null;
     
-            return result200;
+            return result201;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -810,30 +807,40 @@ export class ScheduleControllerClient {
     /**
      * @return Successfully
      */
-    createScheduleByScheduleTime(): Promise<ScheduleResponse> {
-        let url_ = this.baseUrl + "/schedules/get/schedule";
+    getAvailableDoctorByScheduleTime(schedule_time: number): Promise<UserResponse[]> {
+        let url_ = this.baseUrl + "/schedules/time/available-doctor/{schedule_time}";
+        if (schedule_time === undefined || schedule_time === null)
+            throw new Error("The parameter 'schedule_time' must be defined.");
+        url_ = url_.replace("{schedule_time}", encodeURIComponent("" + schedule_time));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: "POST",
+            method: "GET",
             headers: {
                 "Accept": "application/json"
             }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processCreateScheduleByScheduleTime(_response);
+            return this.processGetAvailableDoctorByScheduleTime(_response);
         });
     }
 
-    protected processCreateScheduleByScheduleTime(response: Response): Promise<ScheduleResponse> {
+    protected processGetAvailableDoctorByScheduleTime(response: Response): Promise<UserResponse[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ScheduleResponse.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UserResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -841,7 +848,7 @@ export class ScheduleControllerClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<ScheduleResponse>(null as any);
+        return Promise.resolve<UserResponse[]>(null as any);
     }
 }
 
