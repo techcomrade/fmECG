@@ -21,6 +21,7 @@ import { plainToInstance } from "class-transformer";
 import { UserService } from "../user/user.service";
 import { UserResponse } from "../user/dto/user.response";
 import { UserGuardModel } from "../authentication/dto/user.guard.model";
+import { AcceptScheduleRequest } from "./dto/acceptSchedule.request";
 
 @Controller("schedules")
 export class ScheduleController {
@@ -148,6 +149,28 @@ export class ScheduleController {
     }
   }
 
+  @Put("accept-schedule")
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+    description: "Successful",
+  })
+  async acceptSchedule(
+    @Body() schedule: AcceptScheduleRequest,
+    @Res() res: Response
+  ) {
+    console.log("[P]:::Accept schedule by id", schedule.schedule_id);
+    try {
+      await this.scheduleService.acceptSchedule(schedule.schedule_id);
+      return res.json({
+        message: "Schedule accepted successfully",
+      });
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException("Error when accept schedule");
+    }
+  }
+
   @Put("")
   @ApiResponse({
     status: 200,
@@ -178,28 +201,21 @@ export class ScheduleController {
     }
   }
 
-  @Delete()
+  @Delete("reject-schedule/:id")
   @ApiResponse({
     status: 200,
     type: Boolean,
     description: "Successful",
   })
   async deleteScheduleById(@Res() res: Response, @Param("id") id: string) {
-    console.log("[P]:::Delete schedule by id", id);
-    let checkExistSchedule = await this.scheduleService.getScheduleById(id);
-    if (checkExistSchedule == null) {
-      22;
-      throw new NotFoundException(
-        "No schedule found to delete, please try again"
-      );
-    }
+    console.log("[P]:::Reject schedule:", id);
     try {
       await this.scheduleService.deleteScheduleById(id);
       return res.json({
-        message: "Schedule has been deleted successfully",
+        message: "Schedule has been rejected successfully",
       });
     } catch (error) {
-      throw new InternalServerErrorException("Error when delete schedule");
+      throw new InternalServerErrorException("Error when reject schedule");
     }
   }
 
