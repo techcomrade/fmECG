@@ -138,7 +138,7 @@ export const Schedule: React.FC = () => {
               item.year === value.year()
           )
           .map((schedule) => ({
-            type: schedule.status_id === 1 ? "error" : "success",
+            type: schedule.status_id,
             schedule_id: schedule.id,
             session_string: `Thời gian khám: Từ ${dayjs(
               schedule.schedule_start_time
@@ -265,8 +265,7 @@ export const Schedule: React.FC = () => {
       dispatch(getScheduleByPatientId());
     }
     if (
-      dataState.loadCreateScheduleByPatientStatus ===
-        ApiLoadingStatus.Failed &&
+      dataState.loadCreateScheduleByPatientStatus === ApiLoadingStatus.Failed &&
       dataState.errorMessage
     ) {
       showNotiError(dataState.errorMessage);

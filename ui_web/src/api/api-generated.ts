@@ -587,47 +587,6 @@ export class ScheduleControllerClient {
     }
 
     /**
-     * @return Successful
-     */
-    deleteScheduleById(id: string): Promise<boolean> {
-        let url_ = this.baseUrl + "/schedules";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "DELETE",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDeleteScheduleById(_response);
-        });
-    }
-
-    protected processDeleteScheduleById(response: Response): Promise<boolean> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<boolean>(null as any);
-    }
-
-    /**
      * @return successful
      */
     getScheduleByPatientId(): Promise<ScheduleResponse[]> {
@@ -713,6 +672,89 @@ export class ScheduleControllerClient {
             });
         }
         return Promise.resolve<ScheduleResponse[]>(null as any);
+    }
+
+    /**
+     * @return Successful
+     */
+    acceptSchedule(body: AcceptScheduleRequest): Promise<boolean> {
+        let url_ = this.baseUrl + "/schedules/accept-schedule";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processAcceptSchedule(_response);
+        });
+    }
+
+    protected processAcceptSchedule(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
+    }
+
+    /**
+     * @return Successful
+     */
+    deleteScheduleById(id: string): Promise<boolean> {
+        let url_ = this.baseUrl + "/schedules/reject-schedule/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDeleteScheduleById(_response);
+        });
+    }
+
+    protected processDeleteScheduleById(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
     }
 
     /**
@@ -2068,6 +2110,56 @@ export interface IScheduleRequest {
     schedule_type_id: number;
     /** Status ID of the schedule */
     status_id: number;
+
+    [key: string]: any;
+}
+
+export class AcceptScheduleRequest implements IAcceptScheduleRequest {
+    /** Unique identifier for the schedule */
+    schedule_id!: string;
+
+    [key: string]: any;
+
+    constructor(data?: IAcceptScheduleRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.schedule_id = _data["schedule_id"];
+        }
+    }
+
+    static fromJS(data: any): AcceptScheduleRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new AcceptScheduleRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["schedule_id"] = this.schedule_id;
+        return data;
+    }
+}
+
+export interface IAcceptScheduleRequest {
+    /** Unique identifier for the schedule */
+    schedule_id: string;
 
     [key: string]: any;
 }
