@@ -29,7 +29,7 @@ import {
   createDiagnosis,
   resetLoadCreateDiagnosisStatus,
 } from "../../redux/reducer/diagnosisSlice";
-import { DiagnosisRequest } from "../../api";
+import { DiagnosisRequest, NotificationRequest } from "../../api";
 import { ModalShowDiagnosis } from "../../components/Modal/ModalShowDiagnosis";
 import { PlusOutlined } from "@ant-design/icons";
 import { ModalAddSchWithDoctor } from "../../components/Modal/ModalAddSchWithDoctor";
@@ -37,6 +37,7 @@ import { ModalAddDiagnosis } from "../../components/Modal/ModalAddDiagnosis";
 import { Context } from "../../utils/context";
 import { ModalAddSchWithTime } from "../../components/Modal/ModalAddSchWithTime";
 import { showNotiError, showNotiSuccess } from "../../components/notification";
+import { createNotification } from "../../redux/reducer/notificationScheduleSlice";
 
 type AddSchedule = {
   open: (data: any[]) => void;
@@ -156,7 +157,12 @@ export const Schedule: React.FC = () => {
             status: `Trạng thái lịch hẹn: ${convertScheduleStatusToString(
               schedule.status_id
             )}`,
+            doctor_id: schedule.doctor_id,
             patient_id: schedule.patient_id,
+            schedule_start_time: dayjs(
+              schedule.schedule_start_time,
+              "HH:mm MM/DD/YYYY"
+            ).unix(),
           }))
       : [];
     return result.sort((a, b) => a.time - b.time);
@@ -209,6 +215,11 @@ export const Schedule: React.FC = () => {
 
   const handleSubmitAddScheduleFunction = (data: any) => {
     dispatch(createScheduleByPatient(data));
+    dispatch(
+      createNotification({
+        ...data,
+      } as NotificationRequest)
+    );
   };
 
   const handleSubmitAddDiagnosisFunction = (data: any) => {
@@ -221,8 +232,14 @@ export const Schedule: React.FC = () => {
     if (
       data.schedule_start_time !== null &&
       data.schedule_start_time !== undefined
-    )
+    ) {
       dispatch(createScheduleByDoctor(data));
+      dispatch(
+        createNotification({
+          ...data,
+        } as NotificationRequest)
+      );
+    }
   };
 
   React.useEffect(() => {
@@ -243,7 +260,7 @@ export const Schedule: React.FC = () => {
     if (
       dataState.loadCreateScheduleByDoctorStatus === ApiLoadingStatus.Success
     ) {
-      showNotiSuccess("Bạn đã tạo lịch tái khám thành công");
+      showNotiSuccess("Bạn đã tạo lịch hẹn thành công");
       dispatch(resetLoadCreateScheduleByDoctorStatus());
       dispatch(getScheduleByDoctorId());
     }
@@ -260,7 +277,7 @@ export const Schedule: React.FC = () => {
     if (
       dataState.loadCreateScheduleByPatientStatus === ApiLoadingStatus.Success
     ) {
-      showNotiSuccess("Bạn đã tạo lịch khám thành công");
+      showNotiSuccess("Bạn đã đặt lịch hẹn thành công");
       dispatch(resetLoadCreateScheduleByPatientStatus());
       dispatch(getScheduleByPatientId());
     }
@@ -289,7 +306,7 @@ export const Schedule: React.FC = () => {
             icon={<PlusOutlined />}
             onClick={() => modalAddSchWithTimeRef.current?.open({} as any)}
           >
-            Đề xuất lịch khám
+            Đặt lịch khám theo thời gian
           </Button>{" "}
         </>
       )}
@@ -341,12 +358,12 @@ export const Schedule: React.FC = () => {
       </ConfigProvider>
       <ModalAddSchWithDoctor
         ref={modalAddSchWithDoctorRef}
-        title="Đặt lịch khám"
+        title="Đặt lịch theo bác sĩ"
         submitFunction={(data: any) => handleSubmitAddScheduleFunction(data)}
       ></ModalAddSchWithDoctor>
       <ModalAddSchWithTime
         ref={modalAddSchWithTimeRef}
-        title="Đặt lịch khám"
+        title="Đặt lịch theo thời gian"
         submitFunction={(data: any) => handleSubmitAddScheduleFunction(data)}
       ></ModalAddSchWithTime>
       <ModalAddDiagnosis
