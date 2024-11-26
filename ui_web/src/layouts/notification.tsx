@@ -16,6 +16,8 @@ import { NotificationResponse, UpdateSeenStatusRequest } from "../api";
 import { Context } from "../utils/context";
 import { userRole } from "../constants";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 import { showNotiError } from "../components/notification";
 
 const { Text } = Typography;
@@ -26,6 +28,9 @@ export const Notification: React.FC = () => {
   const [notifications, setNotifications] = useState<NotificationResponse[]>(
     []
   );
+  const getRelativeTime = (createdAt: number): any => {
+    return dayjs(createdAt).fromNow();
+  };
 
   useEffect(() => {
     dispatch(getNotificationByUserId());
@@ -33,10 +38,9 @@ export const Notification: React.FC = () => {
 
   useEffect(() => {
     if (dataState.loadGetNotificationByUserId === ApiLoadingStatus.Success) {
-      console.log(dataState.notification);
       setNotifications(
         [...dataState.notification].sort(
-          (a, b) => a.schedule_start_time - b.schedule_start_time
+          (a, b) => dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix()
         )
       );
       dispatch(resetLoadGetNotificationByUserId());
@@ -164,6 +168,11 @@ export const Notification: React.FC = () => {
                     }}
                   >
                     {renderMessage(item)}
+                  </Text>
+                }
+                description={
+                  <Text style={{ fontSize: "12px", color: "#8c8c8c" }}>
+                    {getRelativeTime(item.createdAt)}
                   </Text>
                 }
               />
