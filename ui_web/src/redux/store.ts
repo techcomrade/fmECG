@@ -4,6 +4,7 @@ import deviceReducer from "./reducer/deviceSlice";
 import recordReducer from "./reducer/recordSlice";
 import scheduleReducer from "./reducer/scheduleSlice";
 import diagnosisReducer from "./reducer/diagnosisSlice";
+import notificationScheduleReducer from "./reducer/notificationScheduleSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     record: recordReducer,
     schedule: scheduleReducer,
     diagnosis: diagnosisReducer,
+    notificationSchedule: notificationScheduleReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

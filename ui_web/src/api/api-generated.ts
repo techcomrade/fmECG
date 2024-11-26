@@ -1836,6 +1836,230 @@ export class RecordControllerClient {
     }
 }
 
+export class NotificationControllerClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @return Successfully
+     */
+    getAllNotifications(): Promise<NotificationResponse[]> {
+        let url_ = this.baseUrl + "/notification";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetAllNotifications(_response);
+        });
+    }
+
+    protected processGetAllNotifications(response: Response): Promise<NotificationResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(NotificationResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<NotificationResponse[]>(null as any);
+    }
+
+    /**
+     * @return Successfully
+     */
+    createNotification(body: NotificationRequest): Promise<boolean> {
+        let url_ = this.baseUrl + "/notification";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processCreateNotification(_response);
+        });
+    }
+
+    protected processCreateNotification(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 201) {
+            return response.text().then((_responseText) => {
+            let result201: any = null;
+            let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result201 = resultData201 !== undefined ? resultData201 : <any>null;
+    
+            return result201;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
+    }
+
+    /**
+     * @return Successfully
+     */
+    getNotificationByUserId(): Promise<NotificationResponse[]> {
+        let url_ = this.baseUrl + "/notification/get";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetNotificationByUserId(_response);
+        });
+    }
+
+    protected processGetNotificationByUserId(response: Response): Promise<NotificationResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(NotificationResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<NotificationResponse[]>(null as any);
+    }
+
+    /**
+     * @return Successfully
+     */
+    updateSeenStatus(body: UpdateSeenStatusRequest): Promise<boolean> {
+        let url_ = this.baseUrl + "/notification/update-seen";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUpdateSeenStatus(_response);
+        });
+    }
+
+    protected processUpdateSeenStatus(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 201) {
+            return response.text().then((_responseText) => {
+            let result201: any = null;
+            let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result201 = resultData201 !== undefined ? resultData201 : <any>null;
+    
+            return result201;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
+    }
+
+    /**
+     * @return Successfully
+     */
+    deleteNotification(id: string): Promise<boolean> {
+        let url_ = this.baseUrl + "/notification/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDeleteNotification(_response);
+        });
+    }
+
+    protected processDeleteNotification(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 201) {
+            return response.text().then((_responseText) => {
+            let result201: any = null;
+            let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result201 = resultData201 !== undefined ? resultData201 : <any>null;
+    
+            return result201;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
+    }
+}
+
 export class UserResponse implements IUserResponse {
 
     [key: string]: any;
@@ -2623,6 +2847,186 @@ export class RecordResponse implements IRecordResponse {
 }
 
 export interface IRecordResponse {
+
+    [key: string]: any;
+}
+
+export class NotificationResponse implements INotificationResponse {
+
+    [key: string]: any;
+
+    constructor(data?: INotificationResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+        }
+    }
+
+    static fromJS(data: any): NotificationResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new NotificationResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        return data;
+    }
+}
+
+export interface INotificationResponse {
+
+    [key: string]: any;
+}
+
+export class NotificationRequest implements INotificationRequest {
+    /** The unique identifier for the schedule notification */
+    id!: string;
+    /** The unique identifier for the user with role doctor */
+    doctor_id!: string;
+    /** The unique identifier for the user with role patient */
+    patient_id!: string;
+    /** Start time of the schedule */
+    schedule_start_time!: number;
+    /** Check if the notification was seen before (true: seen, false: not seen) */
+    is_seen!: boolean;
+    /** Status of the schedule (1: accepted, 3: rejected) */
+    status!: number;
+    /** Type of the schedule (0: Send to Patient, 1: Send to Doctor) */
+    type!: number;
+
+    [key: string]: any;
+
+    constructor(data?: INotificationRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.id = _data["id"];
+            this.doctor_id = _data["doctor_id"];
+            this.patient_id = _data["patient_id"];
+            this.schedule_start_time = _data["schedule_start_time"];
+            this.is_seen = _data["is_seen"];
+            this.status = _data["status"];
+            this.type = _data["type"];
+        }
+    }
+
+    static fromJS(data: any): NotificationRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new NotificationRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["id"] = this.id;
+        data["doctor_id"] = this.doctor_id;
+        data["patient_id"] = this.patient_id;
+        data["schedule_start_time"] = this.schedule_start_time;
+        data["is_seen"] = this.is_seen;
+        data["status"] = this.status;
+        data["type"] = this.type;
+        return data;
+    }
+}
+
+export interface INotificationRequest {
+    /** The unique identifier for the schedule notification */
+    id: string;
+    /** The unique identifier for the user with role doctor */
+    doctor_id: string;
+    /** The unique identifier for the user with role patient */
+    patient_id: string;
+    /** Start time of the schedule */
+    schedule_start_time: number;
+    /** Check if the notification was seen before (true: seen, false: not seen) */
+    is_seen: boolean;
+    /** Status of the schedule (1: accepted, 3: rejected) */
+    status: number;
+    /** Type of the schedule (0: Send to Patient, 1: Send to Doctor) */
+    type: number;
+
+    [key: string]: any;
+}
+
+export class UpdateSeenStatusRequest implements IUpdateSeenStatusRequest {
+    /** The unique identifier for the schedule notification */
+    id!: string;
+
+    [key: string]: any;
+
+    constructor(data?: IUpdateSeenStatusRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): UpdateSeenStatusRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateSeenStatusRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IUpdateSeenStatusRequest {
+    /** The unique identifier for the schedule notification */
+    id: string;
 
     [key: string]: any;
 }
