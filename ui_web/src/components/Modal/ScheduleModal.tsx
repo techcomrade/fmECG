@@ -57,7 +57,7 @@ const ScheduleModalComponent = (props: any) => {
       dispatch(resetLoadRejectScheduleStatus());
     }
   }, [scheduleState.loadRejectScheduleStatus]);
-
+    
   React.useEffect(() => {
     if (notificationState.loadCreateNotification === ApiLoadingStatus.Success) {
       dispatch(resetLoadCreateNotification());
