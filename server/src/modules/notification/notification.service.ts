@@ -1,13 +1,14 @@
-import { Injectable } from "@nestjs/common";
-import { UserService } from "../../user/user.service";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
+import { UserService } from "../user/user.service";
 import { NotificationRepository } from "./notification.repository";
-import { NotificationRequest } from "../dto/notification.request";
-import { NotificationResponse } from "../dto/notification.response";
+import { NotificationRequest } from "./dto/notification.request";
+import { NotificationResponse } from "./dto/notification.response";
 const { v4: uuidv4 } = require("uuid");
 
 @Injectable()
 export class NotificationService {
   constructor(
+    @Inject(forwardRef(() => UserService))
     private userService: UserService,
     private notificationRepository: NotificationRepository
   ) {}
@@ -28,6 +29,11 @@ export class NotificationService {
       await this.notificationRepository.getNotificationByUserId(id);
     return await getNotificationList(notificationList, this.userService);
   }
+
+  async updateSeenStatus(id: string) {
+    return await this.notificationRepository.updateSeenStatus(id);
+  }
+
   async deleteNotification(id: string) {
     return await this.notificationRepository.deleteById(id);
   }
@@ -46,9 +52,9 @@ const getNotificationList = async (
         .getUserById(notification.doctor_id)
         .then((res) => res.username);
       return {
-        ...notification,
-        patient: patient_name,
-        doctor: doctor_name,
+        ...(<any>notification).dataValues,
+        patient_name: patient_name,
+        doctor_name: doctor_name,
       };
     })
   );

@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import { NotificationScheduleModel } from "../../../entities/notification_schedule.model";
-import { NotificationResponse } from "../dto/notification.response";
-import { NotificationRequest } from "../dto/notification.request";
+import { NotificationScheduleModel } from "../../entities/notification_schedule.model";
+import { NotificationResponse } from "./dto/notification.response";
+import { NotificationRequest } from "./dto/notification.request";
 import { Op } from "sequelize";
 
 @Injectable()
@@ -21,9 +21,9 @@ export class NotificationRepository {
       id: notification.id,
       patient_id: notification.patient_id,
       doctor_id: notification.doctor_id,
-      schedule_start_time: notification.scheduled_start_time,
+      schedule_start_time: notification.schedule_start_time,
       is_seen: notification.is_seen,
-      status: notification.status,
+      status: notification.status ?? 2,
       type: notification.type,
     });
   }
@@ -32,19 +32,6 @@ export class NotificationRepository {
     return await this.notificationModel.update(
       {
         is_seen: true,
-      },
-      {
-        where: {
-          id: id,
-        },
-      }
-    );
-  }
-
-  async updateStatus(id: string, status: number) {
-    return await this.notificationModel.update(
-      {
-        status: status,
       },
       {
         where: {
