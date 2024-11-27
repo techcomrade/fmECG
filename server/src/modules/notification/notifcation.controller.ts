@@ -1,46 +1,38 @@
 import {
   Controller,
-  UseGuards,
   Get,
   Req,
   Res,
   Body,
   Post,
-  Put,
   InternalServerErrorException,
+  Delete,
+  Param,
 } from "@nestjs/common";
-import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
-import { AuthenticationGuard } from "../../authentication/authentication.guard";
-import { AuthorizationGuard } from "../../authentication/authorization.guard";
+import { ApiResponse } from "@nestjs/swagger";
 import { NotificationService } from "./notification.service";
-import { Role } from "../../authentication/dto/role.enum";
-import { Roles } from "../../authentication/decorators/role.decorator";
 import { plainToInstance } from "class-transformer";
-import { NotificationResponse } from "../dto/notification.response";
+import { NotificationResponse } from "./dto/notification.response";
 import { Response } from "express";
-import { UserGuardModel } from "../../authentication/dto/user.guard.model";
-import { UserResponse } from "../../user/dto/user.response";
-import { UserService } from "../../user/user.service";
-import { NotificationRequest } from "../dto/notification.request";
+import { UserGuardModel } from "../authentication/dto/user.guard.model";
+import { UserService } from "../user/user.service";
+import { NotificationRequest } from "./dto/notification.request";
+import { UpdateSeenStatusRequest } from "./dto/updateSeenStatus.request";
 
 @Controller("notification")
-@ApiBearerAuth("access-token")
-@UseGuards(AuthenticationGuard)
-@UseGuards(AuthorizationGuard)
 export class NotificationController {
   constructor(
     private notificationService: NotificationService,
     private userService: UserService
   ) {}
 
-  @Roles(Role.Admin)
   @Get("")
   @ApiResponse({
     status: 200,
     type: [NotificationResponse],
     description: "Successfully",
   })
-  async getAllNotifications(@Req() req: Request, @Res() res: Response) {
+  async getAllNotifications(@Res() res: Response) {
     try {
       const notifications =
         await this.notificationService.getAllNotifications();
@@ -54,13 +46,13 @@ export class NotificationController {
     }
   }
 
-  @Get("/get")
+  @Get("get")
   @ApiResponse({
     status: 200,
     type: [NotificationResponse],
     description: "Successfully",
   })
-  async getPatientNotifications(
+  async getNotificationByUserId(
     @Req() req: Request & { user?: UserGuardModel },
     @Res() res: Response
   ) {
@@ -79,7 +71,7 @@ export class NotificationController {
       );
 
       const notificationResult = notificationList.filter((notification) =>
-        user.role_id === 3 ? notification.type === 1 : notification.type === 0
+        user.role_id === 3 ? notification.type === 0 : notification.type === 1
       );
 
       const result = plainToInstance(NotificationResponse, notificationResult);
@@ -103,14 +95,15 @@ export class NotificationController {
     @Body() notification: NotificationRequest,
     @Res() res: Response
   ) {
-    console.log("[P]:::Create notification data", notification);
     try {
       const user = await this.userService.getUserByAccountId(
         req.user.accountId
       );
       notification.is_seen = false;
       notification.type = user.role_id === 3 ? 1 : 0;
-
+      if (user.role_id === 2) notification.doctor_id = user.id;
+      if (user.role_id === 3) notification.patient_id = user.id;
+      console.log("[P]:::Create notification data", notification);
       await this.notificationService.add(notification);
       return res.json({
         message: "Notification added successfully",
@@ -118,6 +111,47 @@ export class NotificationController {
     } catch (e) {
       console.error(e);
       throw new InternalServerErrorException("Error when post notification");
+    }
+  }
+
+  @Post("update-seen")
+  @ApiResponse({
+    status: 201,
+    type: Boolean,
+    description: "Successfully",
+  })
+  async updateSeenStatus(
+    @Body() seenStatusRequest: UpdateSeenStatusRequest,
+    @Res() res: Response
+  ) {
+    console.log("[P]:::Update seen status: ", seenStatusRequest.id);
+    try {
+      await this.notificationService.updateSeenStatus(seenStatusRequest.id);
+      return res.json({
+        message: "Seen status updated successfully",
+      });
+    } catch (e) {
+      console.error(e);
+      throw new InternalServerErrorException("Error when update seen status");
+    }
+  }
+  
+  @Delete(":id")
+  @ApiResponse({
+    status: 201,
+    type: Boolean,
+    description: "Successfully",
+  })
+  async deleteNotification(@Res() res: Response, @Param("id") id: string) {
+    console.log("[P]:::Delete notification by id: ", id);
+    try {
+      await this.notificationService.deleteNotification(id);
+      return res.json({
+        message: "Notification deleted successfully",
+      });
+    } catch (e) {
+      console.error(e);
+      throw new InternalServerErrorException("Error when delete notification");
     }
   }
 }

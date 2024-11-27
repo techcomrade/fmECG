@@ -14,12 +14,19 @@ import {
 } from "../../redux/reducer/scheduleSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { showNotiError, showNotiSuccess } from "../notification";
-import { AcceptScheduleRequest } from "../../api";
+import { AcceptScheduleRequest, NotificationRequest } from "../../api";
+import {
+  createNotification,
+  resetLoadCreateNotification,
+} from "../../redux/reducer/notificationScheduleSlice";
 
 const ScheduleModalComponent = (props: any) => {
   const listData = props.getListData(props.selectedDate);
   const dispatch = useAppDispatch();
   const scheduleState = useAppSelector((state) => state.schedule);
+  const notificationState = useAppSelector(
+    (state) => state.notificationSchedule
+  );
 
   React.useEffect(() => {
     if (scheduleState.loadAcceptScheduleStatus === ApiLoadingStatus.Success) {
@@ -50,6 +57,19 @@ const ScheduleModalComponent = (props: any) => {
       dispatch(resetLoadRejectScheduleStatus());
     }
   }, [scheduleState.loadRejectScheduleStatus]);
+    
+  React.useEffect(() => {
+    if (notificationState.loadCreateNotification === ApiLoadingStatus.Success) {
+      dispatch(resetLoadCreateNotification());
+    }
+    if (
+      notificationState.loadCreateNotification === ApiLoadingStatus.Failed &&
+      notificationState.errorMessage
+    ) {
+      showNotiError(notificationState.errorMessage);
+      dispatch(resetLoadCreateNotification());
+    }
+  }, [notificationState.loadCreateNotification]);
 
   return (
     <Modal
@@ -65,11 +85,13 @@ const ScheduleModalComponent = (props: any) => {
               type: any;
               schedule_id: string;
               schedule_type: any;
+              doctor_id: string;
               patient_id: string;
               doctor: string;
               patient: string;
               session_string: any;
               status: string;
+              schedule_start_time: number;
               start_time: string;
               end_time: string;
             },
@@ -129,6 +151,14 @@ const ScheduleModalComponent = (props: any) => {
                                       dispatch(
                                         rejectSchedule(item.schedule_id)
                                       );
+                                      dispatch(
+                                        createNotification({
+                                          patient_id: item.patient_id,
+                                          schedule_start_time:
+                                            item.schedule_start_time,
+                                          status: 3,
+                                        } as NotificationRequest)
+                                      );
                                       Modal.destroyAll();
                                     }}
                                   >
@@ -142,6 +172,14 @@ const ScheduleModalComponent = (props: any) => {
                                         acceptSchedule({
                                           schedule_id: item.schedule_id,
                                         } as AcceptScheduleRequest)
+                                      );
+                                      dispatch(
+                                        createNotification({
+                                          patient_id: item.patient_id,
+                                          schedule_start_time:
+                                            item.schedule_start_time,
+                                          status: 1,
+                                        } as NotificationRequest)
                                       );
                                       Modal.destroyAll();
                                     }}

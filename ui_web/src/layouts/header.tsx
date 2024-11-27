@@ -1,19 +1,14 @@
 import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-
 import { Row, Col, Breadcrumb, Button, Input, Dropdown, Avatar } from "antd";
-// import { getLocalStorage } from "../../utils/storageUtils";
-// import { context } from "../../utils/context";
-// import { getRoutesByRole } from "../route";
 import "./header.scss";
 import { NavLink } from "react-router-dom";
-import { BellFilled } from "@ant-design/icons";
 import {
   SettingFilled,
   UserOutlined,
   TranslationOutlined,
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import { Notification } from "./notification";
 
 export const HeaderBar = () => {
   const { pathname } = useLocation();
@@ -28,7 +23,7 @@ export const HeaderBar = () => {
     localStorage.removeItem("ui-context");
     document.cookie = `expired_time=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     window.location.href = "/";
-  }
+  };
   const items = [
     {
       label: (
@@ -50,7 +45,11 @@ export const HeaderBar = () => {
       key: "1",
     },
     {
-      label: <a style={{ display: "flex" }} onClick={() => logOut()}>Sign out</a>,
+      label: (
+        <a style={{ display: "flex" }} onClick={() => logOut()}>
+          Sign out
+        </a>
+      ),
       key: "2",
     },
   ];
@@ -88,18 +87,12 @@ export const HeaderBar = () => {
           </div>
 
           <div className="header-icon-box">
-            <NavLink to="/" style={{ color: "#000" }}>
-              <BellFilled />
-            </NavLink>
+            <Notification />
           </div>
 
           <div onClick={(e) => e.preventDefault()}>
             <NavLink to="/account" style={{ color: "#000" }}>
-              <Avatar
-                size={"large"}
-                icon={<UserOutlined />}
-                className="user-avatar"
-              />
+              <Avatar icon={<UserOutlined />} className="user-avatar" />
             </NavLink>
           </div>
         </Col>

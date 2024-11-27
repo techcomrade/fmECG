@@ -8,8 +8,6 @@ import {
   Table,
 } from "sequelize-typescript";
 import { UserModel } from "./user.model";
-import { Col } from "sequelize/types/utils";
-import { all } from "axios";
 
 @Table({ tableName: "notifications_schedule" })
 export class NotificationScheduleModel extends Model<NotificationScheduleModel> {
@@ -23,6 +21,7 @@ export class NotificationScheduleModel extends Model<NotificationScheduleModel> 
   @ForeignKey(() => UserModel)
   @Column({
     type: DataType.STRING(255),
+    allowNull: false,
     onDelete: "CASCADE",
     onUpdate: "SET NULL",
   })
@@ -31,15 +30,11 @@ export class NotificationScheduleModel extends Model<NotificationScheduleModel> 
   @ForeignKey(() => UserModel)
   @Column({
     type: DataType.STRING(255),
+    allowNull: false,
     onDelete: "CASCADE",
     onUpdate: "SET NULL",
   })
   doctor_id: string;
-
-  @Column({
-    type: DataType.DATE,
-  })
-  created_at: Date;
 
   @Column({
     type: DataType.BIGINT,
@@ -65,6 +60,16 @@ export class NotificationScheduleModel extends Model<NotificationScheduleModel> 
   })
   type: number;
 
+  @Column({
+    type: DataType.DATE,
+  })
+  createdAt: Date;
+
+  @Column({
+    type: DataType.DATE,
+  })
+  updatedAt: Date;
+  
   @BelongsTo(() => UserModel)
   user: UserModel;
 }

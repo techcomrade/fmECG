@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsUUID } from "class-validator";
+import { IsNotEmpty, IsNumber, IsUUID } from "class-validator";
 
 export class NotificationRequest {
   @ApiProperty({
-    description: "The unique identifier for the device",
+    description: "The unique identifier for the schedule notification",
     example: "987e6543-a21b-23d5-f456-5566b87741233",
   })
   @IsNotEmpty()
@@ -31,7 +31,7 @@ export class NotificationRequest {
     example: "20241003092312",
   })
   @IsNotEmpty()
-  scheduled_start_time: bigint;
+  schedule_start_time: bigint;
 
   @ApiProperty({
     description:
@@ -42,7 +42,8 @@ export class NotificationRequest {
   is_seen: boolean;
 
   @ApiProperty({
-    description: "Status of the schedule (0: accepted, 1: rejected)",
+    description:
+      "Status of the schedule (1: accepted, 2:pending (if send to doctor) or successful follow-up schedule, 3: rejected)",
     example: 0,
   })
   @IsNotEmpty()

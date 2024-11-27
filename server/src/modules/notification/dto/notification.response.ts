@@ -9,7 +9,13 @@ export class NotificationResponse {
   patient_id: string;
 
   @Expose()
+  patient_name?: string;
+
+  @Expose()
   doctor_id: string;
+
+  @Expose()
+  doctor_name?: string;
 
   @Expose()
   schedule_start_time: bigint;
@@ -22,4 +28,7 @@ export class NotificationResponse {
 
   @Expose()
   status: number;
+
+  @Expose()
+  createdAt: Date;
 }
