@@ -58,7 +58,7 @@ export const adminRouterMappingGroup: { [key: string]: IRouteItem } = {
   },
 };
 
-export const doctorRouterMappingGroup = {
+export const doctorRouterMappingGroup: { [key: string]: IRouteItem } = {
   User: {
     key: "/user",
     url: "/user",
@@ -89,7 +89,7 @@ export const doctorRouterMappingGroup = {
   },
 };
 
-export const patientRouterMappingGroup = {
+export const patientRouterMappingGroup: { [key: string]: IRouteItem } = {
   DoctorInformation: {
     key: "/doctor",
     url: "/doctor",
