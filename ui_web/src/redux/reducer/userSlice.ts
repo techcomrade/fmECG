@@ -12,7 +12,6 @@ interface IUserState {
   loadDataStatus: ApiLoadingStatus;
   loadDoctorDataStatus: ApiLoadingStatus;
   loadGetUserByIdStatus: ApiLoadingStatus;
-  loadGetUserByAccountIdStatus: ApiLoadingStatus;
   loadUpdateDataStatus: ApiLoadingStatus;
   loadDeleteDataStatus: ApiLoadingStatus;
   errorMessage: string | undefined;
@@ -26,7 +25,6 @@ const initialState: IUserState = {
   loadDataStatus: ApiLoadingStatus.None,
   loadDoctorDataStatus: ApiLoadingStatus.None,
   loadGetUserByIdStatus: ApiLoadingStatus.None,
-  loadGetUserByAccountIdStatus: ApiLoadingStatus.None,
   loadUpdateDataStatus: ApiLoadingStatus.None,
   loadDeleteDataStatus: ApiLoadingStatus.None,
   errorMessage: undefined,
@@ -44,13 +42,6 @@ export const getUserById = createAsyncThunkWrap(
   "/users/id",
   async (id: string) => {
     return await Service.userService.getUserById(id);
-  }
-);
-
-export const getUserByAccountId = createAsyncThunkWrap(
-  "/users/account_id",
-  async (account_id: string) => {
-    return await Service.userService.getUserByAccountId(account_id);
   }
 );
 
@@ -90,9 +81,6 @@ export const userSlice = createSlice({
     },
     resetLoadGetUserByIdStatus: (state) => {
       state.loadGetUserByIdStatus = ApiLoadingStatus.None;
-    },
-    resetLoadGetUserByAccountIdStatus: (state) => {
-      state.loadGetUserByAccountIdStatus = ApiLoadingStatus.None;
     },
     resetLoadUpdateDataStatus: (state) => {
       state.loadUpdateDataStatus = ApiLoadingStatus.None;
@@ -163,18 +151,6 @@ export const userSlice = createSlice({
         state.errorMessage = (<any>action.payload)?.message;
         state.loadGetUserByIdStatus = ApiLoadingStatus.Failed;
       })
-      .addCase(getUserByAccountId.pending, (state, action) => {
-        state.loadGetUserByAccountIdStatus = ApiLoadingStatus.Loading;
-      })
-      .addCase(getUserByAccountId.fulfilled, (state, action) => {
-        state.accountData = action.payload;
-        state.loadGetUserByAccountIdStatus = ApiLoadingStatus.Success;
-      })
-      .addCase(getUserByAccountId.rejected, (state, action) => {
-        state.accountData = {} as UserResponse;
-        state.errorMessage = (<any>action.payload)?.message;
-        state.loadGetUserByAccountIdStatus = ApiLoadingStatus.Failed;
-      })
       .addCase(updateUserById.pending, (state, action) => {
         state.loadUpdateDataStatus = ApiLoadingStatus.Loading;
       })
@@ -201,7 +177,6 @@ export const userSlice = createSlice({
 export const {
   resetLoadDataStatus,
   resetLoadGetUserByIdStatus,
-  resetLoadGetUserByAccountIdStatus,
   resetLoadUpdateDataStatus,
   resetLoadDeleteDataStatus,
 } = userSlice.actions;

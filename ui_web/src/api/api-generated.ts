@@ -275,46 +275,6 @@ export class UserControllerClient {
     /**
      * @return Successful
      */
-    getUserByAccountId(account_id: string): Promise<UserResponse> {
-        let url_ = this.baseUrl + "/users/account/{account_id}";
-        if (account_id === undefined || account_id === null)
-            throw new Error("The parameter 'account_id' must be defined.");
-        url_ = url_.replace("{account_id}", encodeURIComponent("" + account_id));
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetUserByAccountId(_response);
-        });
-    }
-
-    protected processGetUserByAccountId(response: Response): Promise<UserResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UserResponse.fromJS(resultData200);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<UserResponse>(null as any);
-    }
-
-    /**
-     * @return Successful
-     */
     getPatientByDoctorId(): Promise<UserResponse[]> {
         let url_ = this.baseUrl + "/users/data/patient-data";
         url_ = url_.replace(/[?&]$/, "");
@@ -2906,7 +2866,7 @@ export class NotificationRequest implements INotificationRequest {
     schedule_start_time!: number;
     /** Check if the notification was seen before (true: seen, false: not seen) */
     is_seen!: boolean;
-    /** Status of the schedule (1: accepted, 3: rejected) */
+    /** Status of the schedule (1: accepted, 2:pending (if send to doctor) or successful follow-up schedule, 3: rejected) */
     status!: number;
     /** Type of the schedule (0: Send to Patient, 1: Send to Doctor) */
     type!: number;
@@ -2973,7 +2933,7 @@ export interface INotificationRequest {
     schedule_start_time: number;
     /** Check if the notification was seen before (true: seen, false: not seen) */
     is_seen: boolean;
-    /** Status of the schedule (1: accepted, 3: rejected) */
+    /** Status of the schedule (1: accepted, 2:pending (if send to doctor) or successful follow-up schedule, 3: rejected) */
     status: number;
     /** Type of the schedule (0: Send to Patient, 1: Send to Doctor) */
     type: number;
