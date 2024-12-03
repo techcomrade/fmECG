@@ -41,7 +41,7 @@ export class UserService {
   }
 
   async getPatientByDoctorId(doctor_id: string): Promise<UserResponse[]> {
-    const result = [];
+    const result: UserResponse[] = [];
     const schedules = await this.scheduleService.getScheduleByDoctorId(
       doctor_id
     );
@@ -49,13 +49,17 @@ export class UserService {
       const patient = await this.userRepository.getUserById(
         schedule.patient_id
       );
-      result.push((<any>patient).dataValues);
+      const patientData = (<any>patient).dataValues;
+
+      if (!result.some((item) => item.id === patientData.id)) {
+        result.push(patientData);
+      }
     }
     return result;
   }
 
   async getDoctorByPatientId(patient_id: string): Promise<UserResponse[]> {
-    const result = [];
+    const result: UserResponse[] = [];
     const schedules = await this.scheduleService.getScheduleByPatientId(
       patient_id
     );
@@ -67,7 +71,11 @@ export class UserService {
       const doctor = await this.userRepository.getUserById(
         consultationSchedule.doctor_id
       );
-      result.push((<any>doctor).dataValues);
+      const doctorData = (<any>doctor).dataValues;
+      
+      if (!result.some((item) => item.id === doctorData.id)) {
+        result.push(doctorData);
+      }
     }
     return result;
   }
