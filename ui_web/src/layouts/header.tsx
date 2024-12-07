@@ -120,7 +120,7 @@ export const HeaderBar = () => {
           </div>
 
           <div className="header-icon-box">
-            <MessageFilled />
+            <MessageFilled style={{ color: "#17a2b8" }} />
           </div>
 
           <div style={{ flex: 1, marginRight: "24px" }}>
