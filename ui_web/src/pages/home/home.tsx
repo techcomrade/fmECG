@@ -345,7 +345,7 @@ export const Home: React.FC = () => {
               >
                 <div className="number">
                   <Row align="middle" gutter={[20, 0]}>
-                    <Col xs={17}>
+                    <Col xs={17} style={{paddingLeft: '15px'}}>
                       <span>{c.today}</span>
                       <Title level={3}>
                         {c.title} <small className={c.bnb}>{c.persent}</small>
