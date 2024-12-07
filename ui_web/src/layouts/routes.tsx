@@ -30,7 +30,7 @@ export const Routes = (props: IProps) => {
         />
       ))}
       {!isConsentBackUrl() && (
-        <Route path="*" element={<Navigate to={"/"} />} />
+        <Route path="*" element={<Navigate to={"/home"} />} />
       )}
     </ReactRouterRoutes>
   );

@@ -17,8 +17,8 @@ import { Context } from "../utils/context";
 import { userRole } from "../constants";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-dayjs.extend(relativeTime);
 import { showNotiError } from "../components/notification";
+dayjs.extend(relativeTime);
 
 const { Text } = Typography;
 
@@ -198,8 +198,11 @@ export const Notification: React.FC = () => {
       </div>
       <Divider style={{ margin: "0" }} />
       <div style={{ textAlign: "center", padding: "12px" }}>
-        <Text style={{ color: "#8c8c8c", fontSize: "12px" }}>
-          Tất cả thông báo đã hiển thị
+        <Text
+          style={{ color: "#8c8c8c", fontSize: "12px", cursor: "pointer" }}
+          onClick={() => dispatch(getNotificationByUserId())}
+        >
+          Tải lại các thông báo
         </Text>
       </div>
     </Card>
@@ -221,8 +224,8 @@ export const Notification: React.FC = () => {
         <BellFilled
           style={{
             fontSize: "25px",
-            color: "#000",
             cursor: "pointer",
+            color: "#ffc107",
           }}
         />
       </Badge>

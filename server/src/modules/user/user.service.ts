@@ -24,6 +24,10 @@ export class UserService {
     return await this.userRepository.getAllDoctors();
   }
 
+  async countUsersPerMonth(): Promise<any> {
+    return await this.userRepository.countUsersPerMonth();
+  }
+
   async add(user: UserRequest) {
     return await this.userRepository.add(user);
   }
@@ -72,7 +76,7 @@ export class UserService {
         consultationSchedule.doctor_id
       );
       const doctorData = (<any>doctor).dataValues;
-      
+
       if (!result.some((item) => item.id === doctorData.id)) {
         result.push(doctorData);
       }
