@@ -8,6 +8,7 @@ import {
   InternalServerErrorException,
   Delete,
   Param,
+  UseGuards,
 } from "@nestjs/common";
 import { ApiResponse } from "@nestjs/swagger";
 import { NotificationService } from "./notification.service";
@@ -18,7 +19,13 @@ import { UserGuardModel } from "../authentication/dto/user.guard.model";
 import { UserService } from "../user/user.service";
 import { NotificationRequest } from "./dto/notification.request";
 import { UpdateSeenStatusRequest } from "./dto/updateSeenStatus.request";
+import { AuthenticationGuard } from "../authentication/authentication.guard";
+import { AuthorizationGuard } from "../authentication/authorization.guard";
+import { Role } from "../authentication/dto/role.enum";
+import { Roles } from "../authentication/decorators/role.decorator";
 
+@UseGuards(AuthenticationGuard)
+@UseGuards(AuthorizationGuard)
 @Controller("notification")
 export class NotificationController {
   constructor(
@@ -26,6 +33,7 @@ export class NotificationController {
     private userService: UserService
   ) {}
 
+  @Roles(Role.Admin)
   @Get("")
   @ApiResponse({
     status: 200,
@@ -46,6 +54,7 @@ export class NotificationController {
     }
   }
 
+  
   @Get("get")
   @ApiResponse({
     status: 200,

@@ -11,6 +11,7 @@ import {
   Res,
   Put,
   Req,
+  UseGuards,
 } from "@nestjs/common";
 import { Response } from "express";
 import { RecordService } from "./record.service";
@@ -20,7 +21,13 @@ import { plainToInstance } from "class-transformer";
 import { ApiResponse } from "@nestjs/swagger";
 import { UserGuardModel } from "../authentication/dto/user.guard.model";
 import { UserService } from "../user/user.service";
+import { AuthenticationGuard } from "../authentication/authentication.guard";
+import { AuthorizationGuard } from "../authentication/authorization.guard";
+import { Roles } from "../authentication/decorators/role.decorator";
+import { Role } from "../authentication/dto/role.enum";
 
+@UseGuards(AuthenticationGuard)
+@UseGuards(AuthorizationGuard)
 @Controller("records")
 export class RecordController {
   constructor(
@@ -28,6 +35,7 @@ export class RecordController {
     private userService: UserService
   ) {}
 
+  @Roles(Role.Admin, Role.Doctor)
   @Post("")
   @ApiResponse({
     status: 201,
@@ -47,6 +55,7 @@ export class RecordController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get("")
   @ApiResponse({
     status: 200,
@@ -63,6 +72,7 @@ export class RecordController {
     return res.json(result);
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get(":id")
   @ApiResponse({
     status: 200,
@@ -79,6 +89,7 @@ export class RecordController {
     return res.json(result);
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get("data/patient-id")
   @ApiResponse({
     status: 200,
@@ -101,6 +112,7 @@ export class RecordController {
     return res.json(result);
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get("data/doctor-id")
   @ApiResponse({
     status: 200,
@@ -123,6 +135,7 @@ export class RecordController {
     return res.json(result);
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get("device/:device_name")
   @ApiResponse({
     status: 200,
@@ -142,6 +155,7 @@ export class RecordController {
     return res.json(result);
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Put("")
   @ApiResponse({
     status: 200,
@@ -167,6 +181,7 @@ export class RecordController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Delete(":record_id")
   @ApiResponse({
     status: 200,

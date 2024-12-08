@@ -8,17 +8,25 @@ import {
   Res,
   Body,
   Put,
+  UseGuards,
 } from "@nestjs/common";
 import { Response } from "express";
 import { DeviceDetailService } from "./device_detail.service";
 import { ApiResponse } from "@nestjs/swagger";
 import { plainToInstance } from "class-transformer";
 import { DeviceDetailRequest } from "./dto/device_detail.request";
+import { AuthenticationGuard } from "../authentication/authentication.guard";
+import { AuthorizationGuard } from "../authentication/authorization.guard";
+import { Roles } from "../authentication/decorators/role.decorator";
+import { Role } from "../authentication/dto/role.enum";
 
+@UseGuards(AuthenticationGuard)
+@UseGuards(AuthorizationGuard)
 @Controller("device_detail")
 export class DeviceDetailController {
   constructor(private deviceDetailService: DeviceDetailService) {}
 
+  @Roles(Role.Admin, Role.Doctor)
   @Post("")
   @ApiResponse({
     status: 201,
@@ -38,6 +46,8 @@ export class DeviceDetailController {
     }
   }
 
+
+  @Roles(Role.Admin, Role.Doctor)
   @Put("")
   @ApiResponse({
     status: 200,
@@ -60,6 +70,7 @@ export class DeviceDetailController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Delete(":detail_id")
   @ApiResponse({
     status: 200,

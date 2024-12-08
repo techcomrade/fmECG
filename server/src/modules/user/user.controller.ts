@@ -25,14 +25,14 @@ import { UserGuardModel } from "../authentication/dto/user.guard.model";
 import { Roles } from "../authentication/decorators/role.decorator";
 import { AuthorizationGuard } from "../authentication/authorization.guard";
 import { Role } from "../authentication/dto/role.enum";
-
 @Controller("users")
 @ApiBearerAuth("access-token") // Reference the name from addBearerAuth()
 @UseGuards(AuthenticationGuard)
 @UseGuards(AuthorizationGuard)
 export class UserController {
   constructor(private userService: UserService) {}
-  @Roles(Role.Admin)
+  
+  @Roles(Role.Admin, Role.Doctor)
   @Get("")
   @ApiResponse({
     status: 200,
@@ -58,7 +58,7 @@ export class UserController {
       throw new InternalServerErrorException("Error when get all users");
     }
   }
-
+  
   @Get("/doctors")
   @ApiResponse({
     status: 200,

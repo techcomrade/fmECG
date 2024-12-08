@@ -11,11 +11,6 @@ const host = process.env.APP_HOST || "localhost";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // const corsOptions: CorsOptions = {
-  //   origin: "http://localhost:3002",
-  //   methods: "GET, POST, DELETE, PUT",
-  //   credentials: true,
-  // };
   app.enableCors();
 
   const config = new DocumentBuilder()
