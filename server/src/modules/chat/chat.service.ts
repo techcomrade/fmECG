@@ -17,6 +17,7 @@ export class ChatService {
 
   // Lấy tin nhắn giữa hai người dùng hoặc trong nhóm
   async loadMessages(messageRequest: MessageRequest): Promise<Chat[]> {
+    console.log(messageRequest.senderId);
     let senderId = messageRequest.senderId;
     let  receiverId = messageRequest.receiverId; 
     if (messageRequest.groupChatId != null) {

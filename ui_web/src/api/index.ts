@@ -86,6 +86,6 @@ export const Service: IService = {
   scheduleService: scheduleClient,
   diagnosisService: diagnosisClient,
   notificationScheduleService: notificationScheduleClient,
-  chatService: chatClient
+  chatService: chatClient,
   statisticService: statisticClient,
 };

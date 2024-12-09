@@ -1,14 +1,18 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Req } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { Chat } from './schema/message.schema';
 import { MessageRequest } from './dto/message.request';
 import { ApiResponse } from '@nestjs/swagger';
 import { ChatGateway } from './chat.gateway';
 import { Socket } from 'socket.io';
+import { UserGuardModel } from '../authentication/dto/user.guard.model';
+import { UserService } from '../user/user.service';
 
 @Controller('chat')
 export class ChatController {
-  constructor(private readonly chatGateWay: ChatGateway
+  constructor(
+    private readonly chatGateWay: ChatGateway,
+    private userService: UserService
   ) { }
 
   // Lấy tin nhắn
@@ -19,17 +23,17 @@ export class ChatController {
   })
   @Get('messages/:senderId/:receiverId/:groupChatId')
   async loadMessages(
-    @Param('senderId') senderId: string,
     @Param('receiverId') receiverId: string,
-    @Param('groupChatId') groupChatId: string
+    @Param('groupChatId') groupChatId: string,
+    @Req() req: Request & { user?: UserGuardModel },
   ) {
+    let senderId = (await this.userService.getUserByAccountId(req.user.accountId)).id;
+
     let messageRequest = {
       senderId: senderId,
       receiverId: receiverId,
       groupChatId: groupChatId
     } as MessageRequest;
-
-    console.log(messageRequest);
 
     return await this.chatGateWay.loadMessages(messageRequest, {} as Socket);
   }
@@ -42,9 +46,11 @@ export class ChatController {
   })
   @Post('send')
   async sendMessage(
-    @Body() messageRequest: MessageRequest
+    @Body() messageRequest: MessageRequest,
+    @Req() req: Request & { user?: UserGuardModel },
   ) {
-    console.log(messageRequest)
+    let senderId = (await this.userService.getUserByAccountId(req.user.accountId)).id;
+    messageRequest.senderId = senderId;
     return this.chatGateWay.handleMessage(messageRequest, {} as Socket)
   }
 }

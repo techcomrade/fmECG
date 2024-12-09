@@ -34,19 +34,22 @@ export const ChatMes: React.FC = () => {
       const messageData = {
         senderId: "1",
         message: newMessage,
+        groupChatId: "mina mina",
         timestamp: new Date().toLocaleString(),
       };
-
-      setNewMessage("");
-      
-      const messageRequest = new MessageRequest();
+  
+      setNewMessage("");  // Reset input message
+  
+      // Tạo đối tượng MessageRequest với dữ liệu messageData
+      const messageRequest = MessageRequest.fromJS(messageData);
+  
+      // Gửi messageRequest qua dispatch
       dispatch(sendMessageRedux(messageRequest));
     }
   };
 
   useEffect(() => {
     dispatch(loadMessages({
-      senderId: "1",
       receiverId: "23",
       groupChatId: "mina mina"
     }));
@@ -64,6 +67,14 @@ export const ChatMes: React.FC = () => {
       dispatch(resetSendMessageStatus());
     }
   }, [dataState.loadSendMessageStatus, dispatch]);
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Kiểm tra nếu phím được nhấn là Enter (keyCode 13)
+    if (e.key === 'Enter') {
+      e.preventDefault();  // Ngừng việc gửi form (nếu có)
+      sendMessage();  // Gửi tin nhắn
+    }
+  };
 
   return (
     <div className="chat-container">
@@ -92,9 +103,10 @@ export const ChatMes: React.FC = () => {
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
+          onKeyPress={handleKeyPress}
           placeholder="Type a message..."
         />
-        <button onClick={sendMessage}>Send</button>
+        <button onClick={sendMessage} onKeyDown={sendMessage}>Send</button>
       </div>
     </div>
   );

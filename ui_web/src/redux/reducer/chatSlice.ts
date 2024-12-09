@@ -28,15 +28,14 @@ const initialState: IChatState = {
 
 export const loadMessages = createAsyncThunkWrap(
     "/chat/messages",
-    async (messageRequest: { senderId: string, receiverId: string, groupChatId: string }) => {
-        return await Service.chatService.loadMessages(messageRequest.senderId, messageRequest.receiverId, messageRequest.groupChatId) // Pass the whole object
+    async (messageRequest: { receiverId: string, groupChatId: string }) => {
+        return await Service.chatService.loadMessages(messageRequest.receiverId, messageRequest.groupChatId)
     }
 );
 
 export const sendMessage = createAsyncThunkWrap(
     "/chat/send",
     async (messageRequest: MessageRequest) => {
-        console.log(messageRequest)
         return await Service.chatService.sendMessage(messageRequest)
     }
 );

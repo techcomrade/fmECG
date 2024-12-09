@@ -2081,11 +2081,8 @@ export class ChatControllerClient {
     /**
      * @return Successful
      */
-    loadMessages(senderId: string, receiverId: string, groupChatId: string): Promise<Chat[]> {
+    loadMessages(receiverId: string, groupChatId: string): Promise<Chat[]> {
         let url_ = this.baseUrl + "/chat/messages/{senderId}/{receiverId}/{groupChatId}";
-        if (senderId === undefined || senderId === null)
-            throw new Error("The parameter 'senderId' must be defined.");
-        url_ = url_.replace("{senderId}", encodeURIComponent("" + senderId));
         if (receiverId === undefined || receiverId === null)
             throw new Error("The parameter 'receiverId' must be defined.");
         url_ = url_.replace("{receiverId}", encodeURIComponent("" + receiverId));
