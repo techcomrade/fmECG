@@ -52,7 +52,12 @@ const diagnosisClient = new ApiClientFactory.DiagnosisControllerClient(
 const notificationScheduleClient =
   new ApiClientFactory.NotificationControllerClient(api_url, {
     fetch: authorizedFetchFunction,
-  });
+  }
+);
+
+const chatClient = new ApiClientFactory.ChatControllerClient(api_url, {
+  fetch: authorizedFetchFunction,
+});
 
 const statisticClient = new ApiClientFactory.StatisticControllerClient(
   api_url,
@@ -69,6 +74,7 @@ interface IService {
   scheduleService: ApiClientFactory.ScheduleControllerClient;
   diagnosisService: ApiClientFactory.DiagnosisControllerClient;
   notificationScheduleService: ApiClientFactory.NotificationControllerClient;
+  chatService: ApiClientFactory.ChatControllerClient;
   statisticService: ApiClientFactory.StatisticControllerClient;
 }
 
@@ -80,5 +86,6 @@ export const Service: IService = {
   scheduleService: scheduleClient,
   diagnosisService: diagnosisClient,
   notificationScheduleService: notificationScheduleClient,
+  chatService: chatClient,
   statisticService: statisticClient,
 };
