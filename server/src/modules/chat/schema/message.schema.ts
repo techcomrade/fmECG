@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema()
-export class Chat extends Document {
+export class MessageSchema extends Document {
   @Prop({ required: true })
   senderId: string;
 
@@ -15,8 +15,8 @@ export class Chat extends Document {
   @Prop({ required: true })
   message: string;
 
-  @Prop({ default: Date.now })
-  timestamp: Date;
+  @Prop({ default: () => Date.now() })
+  time: number;
 }
 
-export const ChatSchema = SchemaFactory.createForClass(Chat);
+export const ChatSchema = SchemaFactory.createForClass(MessageSchema);

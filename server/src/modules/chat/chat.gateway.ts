@@ -2,6 +2,7 @@ import { WebSocketGateway, WebSocketServer, SubscribeMessage, MessageBody } from
 import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { MessageRequest } from './dto/message.request';
+import { UserService } from '../user/user.service';
 
 @WebSocketGateway({
   cors: {
@@ -14,7 +15,10 @@ export class ChatGateway {
   @WebSocketServer()
   server: Server;
 
-  constructor(private readonly chatService: ChatService) {}
+  constructor(
+    private readonly chatService: ChatService,
+    private userService: UserService
+  ) {}
 
   // Người dùng tham gia phòng chat (có thể là chat nhóm)
   @SubscribeMessage('joinRoom')
@@ -33,6 +37,8 @@ export class ChatGateway {
   // Lấy tin nhắn giữa hai người dùng (chat cá nhân) hoặc nhóm
   @SubscribeMessage('getMessages')
   async loadMessages(@MessageBody() messageRequest: MessageRequest, client: Socket) {
-    return await this.chatService.loadMessages(messageRequest);
+    let messages = await this.chatService.loadMessages(messageRequest);
+    // console.log("gatewway" , messages)
+    return messages;
   }
 }

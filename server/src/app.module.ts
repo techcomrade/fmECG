@@ -35,7 +35,7 @@ require("dotenv").config();
     NotificationModule,
     StatisticModule,
     // AuthenticationModule,
-    ChatModule
+    ChatModule 
   ],
 })
 export class AppModule {}
