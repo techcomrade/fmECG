@@ -12,6 +12,7 @@ import {
   Res,
   Put,
   Req,
+  UseGuards,
 } from "@nestjs/common";
 import { Response } from "express";
 import { DeviceService } from "./device.service";
@@ -20,8 +21,12 @@ import { DeviceResponse } from "./dto/device.response";
 import { plainToInstance } from "class-transformer";
 import { DeviceRequest } from "./dto/device.request";
 import { UserGuardModel } from "../authentication/dto/user.guard.model";
-import { UserService } from "../user/user.service";
+import { UserService } from "../user/user.service"
+import { AuthorizationGuard } from "../authentication/authorization.guard";
+import { Roles } from "../authentication/decorators/role.decorator";
+import { Role } from "../authentication/dto/role.enum";
 
+@UseGuards(AuthorizationGuard)
 @Controller("device")
 export class DeviceController {
   constructor(
@@ -29,6 +34,7 @@ export class DeviceController {
     private userService: UserService
   ) {}
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get("")
   @ApiResponse({
     status: 200,
@@ -45,6 +51,7 @@ export class DeviceController {
     return res.json(result);
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get(":id")
   @ApiResponse({
     status: 200,
@@ -61,6 +68,7 @@ export class DeviceController {
     return res.json(result);
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get("type/:device_type_id")
   @ApiResponse({
     status: 200,
@@ -80,6 +88,7 @@ export class DeviceController {
     return res.status(HttpStatus.OK).json(result);
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get("data/doctor_id")
   @ApiResponse({
     status: 200,
@@ -102,6 +111,7 @@ export class DeviceController {
     return res.json(result);
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get(":device_name")
   @ApiResponse({
     status: 200,
@@ -123,6 +133,7 @@ export class DeviceController {
     return res.status(HttpStatus.OK).json(result);
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Post("create")
   @ApiResponse({
     status: 201,
@@ -141,6 +152,7 @@ export class DeviceController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Put("/update")
   @ApiResponse({
     status: 200,
@@ -166,6 +178,7 @@ export class DeviceController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Delete(":device_id")
   @ApiResponse({
     status: 200,

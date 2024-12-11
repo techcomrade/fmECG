@@ -1,4 +1,3 @@
-import { AuthenticationGuard } from "../authentication/authentication.guard";
 import {
   Controller,
   Get,
@@ -25,14 +24,13 @@ import { UserGuardModel } from "../authentication/dto/user.guard.model";
 import { Roles } from "../authentication/decorators/role.decorator";
 import { AuthorizationGuard } from "../authentication/authorization.guard";
 import { Role } from "../authentication/dto/role.enum";
-
 @Controller("users")
 @ApiBearerAuth("access-token") // Reference the name from addBearerAuth()
-@UseGuards(AuthenticationGuard)
 @UseGuards(AuthorizationGuard)
 export class UserController {
   constructor(private userService: UserService) {}
-  @Roles(Role.Admin)
+  
+  @Roles(Role.Admin, Role.Doctor)
   @Get("")
   @ApiResponse({
     status: 200,
@@ -59,6 +57,7 @@ export class UserController {
     }
   }
 
+  @Roles(Role.Admin)
   @Get("/doctors")
   @ApiResponse({
     status: 200,
@@ -80,6 +79,7 @@ export class UserController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get(":id")
   @ApiResponse({
     status: 200,
@@ -111,6 +111,7 @@ export class UserController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get("data/patient-data")
   @ApiResponse({
     status: 200,
@@ -141,6 +142,7 @@ export class UserController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get("data/doctor-id")
   @ApiResponse({
     status: 200,
@@ -170,6 +172,7 @@ export class UserController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Post("")
   @ApiResponse({
     status: 201,
@@ -189,6 +192,7 @@ export class UserController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get("username/:username")
   @ApiResponse({
     status: 200,
@@ -211,6 +215,7 @@ export class UserController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Put("")
   @ApiResponse({
     status: 200,
@@ -234,6 +239,7 @@ export class UserController {
     }
   }
 
+  @Roles(Role.Admin)
   @Delete("")
   @ApiResponse({
     status: 200,

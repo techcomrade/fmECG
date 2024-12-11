@@ -8,6 +8,7 @@ import {
   Param,
   NotFoundException,
   InternalServerErrorException,
+  UseGuards,
 } from "@nestjs/common";
 import { Response } from "express";
 import { ApiResponse } from "@nestjs/swagger";
@@ -15,11 +16,15 @@ import { DiagnosisService } from "./diagnosis.service";
 import { DiagnosisRequest } from "./dto/diagnosis.request";
 import { DiagnosisResponse } from "./dto/diagnosis.response";
 import { plainToInstance } from "class-transformer";
-
+import { AuthorizationGuard } from "../authentication/authorization.guard";
+import { Roles } from "../authentication/decorators/role.decorator";
+import { Role } from "../authentication/dto/role.enum";
+@UseGuards(AuthorizationGuard)
 @Controller("diagnosis")
 export class DiagnosisController {
   constructor(private diagnosisService: DiagnosisService) {}
 
+  @Roles(Role.Admin, Role.Doctor)
   @Post("")
   @ApiResponse({
     status: 201,
@@ -42,6 +47,7 @@ export class DiagnosisController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get("schedule/:schedule_id")
   @ApiResponse({
     status: 200,
