@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ApiLoadingStatus } from '../../utils/loadingStatus';
 import { createAsyncThunkWrap } from '../handler';
-import { Chat, MessageRequest, Service } from '../../api';
+import { MessageSchema, MessageRequest, Service } from '../../api';
 
 interface IMessage {
     user: string;
@@ -13,7 +13,7 @@ interface IMessage {
 }
 
 interface IChatState {
-    messages: Chat[];
+    messages: MessageSchema[];
     loadGetMessageStatus: ApiLoadingStatus;
     loadSendMessageStatus: ApiLoadingStatus;
     errorMessage: string | undefined;

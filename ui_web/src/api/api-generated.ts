@@ -2081,8 +2081,8 @@ export class ChatControllerClient {
     /**
      * @return Successful
      */
-    loadMessages(receiverId: string, groupChatId: string): Promise<Chat[]> {
-        let url_ = this.baseUrl + "/chat/messages/{senderId}/{receiverId}/{groupChatId}";
+    loadMessages(receiverId: string, groupChatId: string): Promise<MessageSchema[]> {
+        let url_ = this.baseUrl + "/chat/messages/{receiverId}/{groupChatId}";
         if (receiverId === undefined || receiverId === null)
             throw new Error("The parameter 'receiverId' must be defined.");
         url_ = url_.replace("{receiverId}", encodeURIComponent("" + receiverId));
@@ -2103,7 +2103,7 @@ export class ChatControllerClient {
         });
     }
 
-    protected processLoadMessages(response: Response): Promise<Chat[]> {
+    protected processLoadMessages(response: Response): Promise<MessageSchema[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -2113,7 +2113,7 @@ export class ChatControllerClient {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(Chat.fromJS(item));
+                    result200!.push(MessageSchema.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -2125,13 +2125,13 @@ export class ChatControllerClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<Chat[]>(null as any);
+        return Promise.resolve<MessageSchema[]>(null as any);
     }
 
     /**
      * @return Successful
      */
-    sendMessage(body: MessageRequest): Promise<Chat[]> {
+    sendMessage(body: MessageRequest): Promise<MessageSchema[]> {
         let url_ = this.baseUrl + "/chat/send";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2151,7 +2151,7 @@ export class ChatControllerClient {
         });
     }
 
-    protected processSendMessage(response: Response): Promise<Chat[]> {
+    protected processSendMessage(response: Response): Promise<MessageSchema[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -2161,7 +2161,7 @@ export class ChatControllerClient {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(Chat.fromJS(item));
+                    result200!.push(MessageSchema.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -2173,7 +2173,7 @@ export class ChatControllerClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<Chat[]>(null as any);
+        return Promise.resolve<MessageSchema[]>(null as any);
     }
 }
 
@@ -3192,11 +3192,11 @@ export interface IStatisticResponse {
     [key: string]: any;
 }
 
-export class Chat implements IChat {
+export class MessageSchema implements IMessageSchema {
 
     [key: string]: any;
 
-    constructor(data?: IChat) {
+    constructor(data?: IMessageSchema) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3214,9 +3214,9 @@ export class Chat implements IChat {
         }
     }
 
-    static fromJS(data: any): Chat {
+    static fromJS(data: any): MessageSchema {
         data = typeof data === 'object' ? data : {};
-        let result = new Chat();
+        let result = new MessageSchema();
         result.init(data);
         return result;
     }
@@ -3231,7 +3231,7 @@ export class Chat implements IChat {
     }
 }
 
-export interface IChat {
+export interface IMessageSchema {
 
     [key: string]: any;
 }
