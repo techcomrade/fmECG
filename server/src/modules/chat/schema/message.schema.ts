@@ -17,6 +17,6 @@ export class MessageSchema extends Document {
 
   @Prop({ default: () => Date.now() })
   time: number;
-}
+} 
 
 export const ChatSchema = SchemaFactory.createForClass(MessageSchema);

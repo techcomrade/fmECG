@@ -4,5 +4,5 @@ export class MessageResponse {
     receiverId: string;
     message: string;
     groupChatId: string;
-    time: number;
+    time: number; 
 }

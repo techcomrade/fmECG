@@ -20,7 +20,7 @@ export class ChatController {
     status: 200,
     type: [MessageSchema],
     description: "Successful",
-  })
+  }) 
   @Get('messages/:receiverId/:groupChatId')
   async loadMessages(
     @Param('receiverId') receiverId: string,

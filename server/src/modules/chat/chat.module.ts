@@ -16,4 +16,4 @@ import { UserModule } from '../user/user.module';
     exports: [ChatService],
 })
 
-export class ChatModule {}
+export class ChatModule {} 
