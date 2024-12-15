@@ -23,6 +23,14 @@ export class TokenRepository {
       },
     });
   }
+  async getExpiredTokenByToken(refresh_token: string) {
+    return await this.tokenModel.findOne({
+      where: {
+        refresh_token: refresh_token,
+        is_expired: true,
+      },
+    });
+  }
   async getTokenByAccountId(account_id: string): Promise<TokenModel[]> {
     return await this.tokenModel.findAll({
       where: {
