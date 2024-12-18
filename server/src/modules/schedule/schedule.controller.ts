@@ -30,8 +30,6 @@ export class ScheduleController {
     private userService: UserService
   ) {}
 
-  // @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  // @Roles(Role.Admin)
   @Get("")
   @ApiResponse({
     status: 200,
@@ -258,7 +256,7 @@ export class ScheduleController {
     }
   }
 
-  @Post("/create/doctor")
+  @Post("create/doctor")
   @ApiResponse({
     status: 201,
     type: Boolean,

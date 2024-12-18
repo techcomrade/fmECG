@@ -1,9 +1,8 @@
 import { ConsultationScheduleResponse } from "./dto/consultation_schedule.response";
-import { ConflictException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { ConsultationScheduleModel } from "../../entities/consultation_schedule.model";
 import { ConsultationScheduleRequest } from "./dto/consultation_schedule.request";
-const { v4: uuidv4 } = require("uuid");
 
 @Injectable()
 export class ConsultationScheduleRepository {
@@ -32,17 +31,24 @@ export class ConsultationScheduleRepository {
     });
   }
 
-  async addConsultationSchedule(consultation: ConsultationScheduleRequest) {
-    return await this.consultationScheduleModel.create({
-      id: consultation.id,
-      doctor_id: consultation.doctor_id,
-      schedule_id: consultation.schedule_id,
-    });
+  async addConsultationSchedule(
+    consultation: ConsultationScheduleRequest,
+    t?: any
+  ) {
+    return await this.consultationScheduleModel.create(
+      {
+        id: consultation.id,
+        doctor_id: consultation.doctor_id,
+        schedule_id: consultation.schedule_id,
+      },
+      t && { transaction: t }
+    );
   }
 
-  async deleteConsultationByScheduleId(schedule_id: string) {
+  async deleteConsultationByScheduleId(schedule_id: string, t?: any) {
     return await this.consultationScheduleModel.destroy({
       where: { schedule_id: schedule_id },
+      transaction: t,
     });
   }
 }

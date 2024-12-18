@@ -169,8 +169,10 @@ export const convertDeviceStatusToString = (deviceStatus: number) => {
       return "Đang trống";
     case 2:
       return "Đang hoạt động";
-    default:
+    case 3:
       return "Đang bảo trì";
+    default:
+      return "Không xác định";
   }
 };
 
@@ -180,8 +182,10 @@ export const convertStringToDeviceStatus = (deviceStatus: string) => {
       return 1;
     case "Đang hoạt động":
       return 2;
-    default:
+    case "Đang bảo trì":
       return 3;
+    default:
+      return 4;
   }
 };
 

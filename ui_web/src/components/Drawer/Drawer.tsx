@@ -32,7 +32,6 @@ const DrawerComponent = (props: Props) => {
           props?.closed();
           return setIsOpen(false);
         }}
-        width={600}
       >
         {props?.customData}
         <Descriptions column={1}>
