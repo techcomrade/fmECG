@@ -43,6 +43,7 @@ export const Record: React.FC = () => {
       key: "data_rec_url",
       type: "text",
       isEdit: false,
+      searchable: true,
     },
     {
       title: "Tên bệnh nhân",
@@ -51,6 +52,7 @@ export const Record: React.FC = () => {
       type: "text",
       isEdit: false,
       hidden: Context.role === userRole.patient,
+      searchable: true,
     },
     {
       title: "Tên bác sĩ",
@@ -59,6 +61,7 @@ export const Record: React.FC = () => {
       type: "text",
       isEdit: false,
       hidden: Context.role === userRole.doctor,
+      searchable: true,
     },
     {
       title: "Tên thiết bị",
@@ -66,6 +69,7 @@ export const Record: React.FC = () => {
       key: "device_name",
       type: "text",
       isEdit: false,
+      searchable: true,
     },
     {
       title: "ID lịch khám",
