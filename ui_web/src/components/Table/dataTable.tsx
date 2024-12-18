@@ -1,17 +1,17 @@
-import { Table, Button } from "antd";
-import { useEffect, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { Table, Button, Input, Space, Modal } from "antd";
 import {
+  SearchOutlined,
   PlusOutlined,
   EditOutlined,
   DeleteOutlined,
   MobileOutlined,
 } from "@ant-design/icons";
 import "./dataTable.scss";
-import { Modal } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
+import Highlighter from "react-highlight-words";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import type { ColumnsType } from "antd/es/table";
+import type { FilterDropdownProps } from "antd/es/table/interface";
 import { addKeyElement } from "../../utils/arrayUtils";
 
 const { confirm } = Modal;
@@ -21,7 +21,7 @@ interface Props {
   data: any[];
   name: string;
   loading: boolean;
-  column: ColumnsType<any>;
+  column: any[];
   addButton?: boolean;
   addFunction?: () => void;
   addDeviceButton?: boolean;
@@ -39,14 +39,16 @@ interface Props {
 }
 
 const DataTable = (props: Props) => {
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
   const [tableData, setTableData] = useState<any[]>([]);
   const [editButton, setEditButtton] = useState<boolean>(false);
   const [deleteButton, setDeleteButton] = useState<boolean>(false);
   const [chartButton, setChartButton] = useState<boolean>(false);
   const [selectedState, setSelectedRowKeys] = useState<any[]>([]);
-  const { t, i18n } = useTranslation();
+  const searchInput = useRef<any>(null);
   const navigate = useNavigate();
-  // Get data
+
   useEffect(() => {
     const rawData = props.data;
     if (rawData) {
@@ -54,20 +56,99 @@ const DataTable = (props: Props) => {
     }
   }, [props.data]);
 
-  // Select row
-  const rowSelection = {
-    selectedRowKeys: selectedState,
-    onChange: (selectedRowKeys: any[]) => {
-      setSelectedRowKeys(selectedRowKeys);
-      // Check hide or show edit and delete button
-      if (props.editButton) setEditButtton(selectedRowKeys.length === 1);
-      if (props.deleteButton) setDeleteButton(selectedRowKeys.length === 1);
-      if (props.chartButton) setChartButton(selectedRowKeys.length === 1);
-      props.updateSelectedData?.(selectedRowKeys);
-    },
+    const rowSelection = {
+      selectedRowKeys: selectedState,
+      onChange: (selectedRowKeys: any[]) => {
+        setSelectedRowKeys(selectedRowKeys);
+        if (props.editButton) setEditButtton(selectedRowKeys.length === 1);
+        if (props.deleteButton) setDeleteButton(selectedRowKeys.length === 1);
+        if (props.chartButton) setChartButton(selectedRowKeys.length === 1);
+        props.updateSelectedData?.(selectedRowKeys);
+      },
+    };
+  
+  const handleSearch = (
+    selectedKeys: string[],
+    confirm: () => void,
+    dataIndex: string
+  ) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
   };
 
-  // Delete modal
+  const handleReset = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText("");
+  };
+
+  const getColumnSearchProps = (dataIndex: string) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }: FilterDropdownProps) => (
+      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            handleSearch(selectedKeys as string[], confirm, dataIndex)
+          }
+          style={{ marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() =>
+              handleSearch(selectedKeys as string[], confirm, dataIndex)
+            }
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+          <Button type="link" size="small" onClick={() => close()}>
+            Close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? "#1677ff" : undefined }} />
+    ),
+    onFilter: (value: any, record: any) =>
+      record[dataIndex]
+        ?.toString()
+        .toLowerCase()
+        .includes((value as string).toLowerCase()),
+    render: (text: string) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ""}
+        />
+      ) : (
+        text
+      ),
+  });
+
   const deleteFunction = (id: any) => {
     confirm({
       title: "Xóa thành phần",
@@ -84,6 +165,11 @@ const DataTable = (props: Props) => {
     });
   };
 
+  const columnsWithSearch = props.column.map((col) => ({
+    ...col,
+    ...(col.searchable ? getColumnSearchProps(col.dataIndex) : {}),
+  }));
+
   return (
     <>
       <h2>{props.name}</h2>
@@ -91,12 +177,12 @@ const DataTable = (props: Props) => {
       <div className="list-btn-actions">
         {props.addButton && (
           <Button icon={<PlusOutlined />} onClick={() => props.addFunction?.()}>
-            {t("button.add")}
+            Thêm
           </Button>
         )}
         {props.addDeviceButton ? (
           <Button icon={<MobileOutlined />} onClick={() => navigate("/device")}>
-            {t("button.add-device")}
+            Thêm thiết bị
           </Button>
         ) : (
           ""
@@ -108,7 +194,7 @@ const DataTable = (props: Props) => {
             className="edit-btn"
             onClick={() => props.editFunction?.(selectedState[0])}
           >
-            {t("button.edit")}
+            Sửa
           </Button>
         )}
         {props.deleteButton && (
@@ -118,13 +204,7 @@ const DataTable = (props: Props) => {
             className="delete-btn"
             onClick={() => deleteFunction(selectedState[0])}
           >
-            {t("button.delete")}
-          </Button>
-        )}
-        {props?.customButton}
-        {props.chartButton && (
-          <Button disabled={!chartButton} onClick={() => props.openChart?.()}>
-            {t("button.graph")}
+            Xóa
           </Button>
         )}
       </div>
@@ -139,7 +219,7 @@ const DataTable = (props: Props) => {
         }
         loading={props.loading}
         bordered
-        columns={props.column.filter((item) => !item.hidden)}
+        columns={columnsWithSearch}
         dataSource={tableData}
         onRow={(record, rowIndex) => {
           return {
@@ -150,4 +230,5 @@ const DataTable = (props: Props) => {
     </>
   );
 };
+
 export default DataTable;

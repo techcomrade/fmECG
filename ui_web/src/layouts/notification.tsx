@@ -198,11 +198,8 @@ export const Notification: React.FC = () => {
       </div>
       <Divider style={{ margin: "0" }} />
       <div style={{ textAlign: "center", padding: "12px" }}>
-        <Text
-          style={{ color: "#8c8c8c", fontSize: "12px", cursor: "pointer" }}
-          onClick={() => dispatch(getNotificationByUserId())}
-        >
-          Tải lại các thông báo
+        <Text style={{ color: "#8c8c8c", fontSize: "12px" }}>
+          Tất cả thông báo đã hiển thị
         </Text>
       </div>
     </Card>
@@ -227,6 +224,7 @@ export const Notification: React.FC = () => {
             cursor: "pointer",
             color: "#ffc107",
           }}
+          onClick={() => dispatch(getNotificationByUserId())}
         />
       </Badge>
     </Dropdown>
