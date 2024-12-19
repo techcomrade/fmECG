@@ -18,6 +18,7 @@ function getIndexHtml() {
     .readFileSync(path.resolve(__dirname, "../../www/index.html"))
     .toString();
 }
+const SSORefreshTokenUrl = `${config.SSO_URL}/refresh-token`;
 
 app.get("/", (req, res) => {
   var templateHtml = getIndexHtml();
@@ -84,6 +85,10 @@ app.post("/", async (req: Request, res: Response, next) => {
   } catch (e) {
     console.log(e);
   }
+});
+
+app.post("/refreshtoken", async (req: Request, res: Response, next) => {
+  
 });
 
 app.use(
