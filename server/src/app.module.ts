@@ -1,3 +1,4 @@
+import { MongooseModule } from '@nestjs/mongoose';
 import { Module } from "@nestjs/common";
 import { UserModule } from "./modules/user/user.module";
 import { SequelizeModule } from "@nestjs/sequelize";
@@ -8,6 +9,9 @@ import { RecordModule } from "./modules/record/record.module";
 import { ConsultationScheduleModule } from "./modules/consultation_schedule/consultation_schedule.module";
 import { NotificationModule } from "./modules/notification/notification.module";
 import { StatisticModule } from "./modules/statistic/statistic.module";
+import { ChatModule } from "./modules/chat/chat.module";
+import { GroupChatModule } from './modules/groupChat/groupChat.module';
+// import { AuthenticationModule } from "./modules/authentication/authentication.module";
 require("dotenv").config();
 
 @Module({
@@ -23,6 +27,7 @@ require("dotenv").config();
       synchronize: true,
       logging: console.log,
     }),
+    MongooseModule.forRoot('mongodb://localhost:27017/chatdb'),
     UserModule,
     DeviceModule,
     RecordModule,
@@ -30,6 +35,9 @@ require("dotenv").config();
     ScheduleModule,
     NotificationModule,
     StatisticModule,
+    // AuthenticationModule,
+    ChatModule,
+    GroupChatModule
   ],
 })
 export class AppModule {}
