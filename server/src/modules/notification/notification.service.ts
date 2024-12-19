@@ -18,6 +18,14 @@ export class NotificationService {
     return await this.notificationRepository.add(notification);
   }
 
+  async checkExistingNotification(
+    notification: NotificationRequest
+  ): Promise<NotificationResponse> {
+    return await this.notificationRepository.checkExistingNotification(
+      notification
+    );
+  }
+
   async getAllNotifications(): Promise<NotificationResponse[]> {
     const notificationList =
       await this.notificationRepository.getAllNotifications();
