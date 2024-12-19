@@ -2,8 +2,6 @@ const { v4: uuidv4 } = require("uuid");
 
 import {
   Injectable,
-  ConflictException,
-  UnauthorizedException,
   forwardRef,
   Inject,
 } from "@nestjs/common";
@@ -44,6 +42,16 @@ export class ScheduleService {
     return result;
   }
 
+  async countExistingSchedule(schedule: ScheduleRequest): Promise<Number> {
+    return await this.scheduleRepository.countExistingSchedule(schedule);
+  }
+
+  async checkExistingSchedule(
+    schedule: ScheduleRequest
+  ): Promise<ScheduleResponse> {
+    return await this.scheduleRepository.checkExistingSchedule(schedule);
+  }
+
   async createSchedule(schedule: ScheduleRequest, doctor_id: string) {
     schedule.id = uuidv4();
     return await this.transactionService.transaction(async (t: any) => {
@@ -57,6 +65,7 @@ export class ScheduleService {
         },
         t
       );
+      await this
     });
   }
 
