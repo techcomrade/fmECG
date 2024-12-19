@@ -198,7 +198,6 @@ export const Home: React.FC = () => {
 
   React.useEffect(() => {
     if (dataState.loadGetStatistic === ApiLoadingStatus.Success) {
-      console.log(dataState.statistic);
       setStatistic(dataState.statistic);
 
       let records = dataState.statistic.record_array;

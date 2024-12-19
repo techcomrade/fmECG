@@ -2,7 +2,7 @@ import { Layout, theme, Menu } from "antd";
 import * as React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getRoutesByRole } from "./routes.type";
-import { UserOutlined, HomeOutlined, SettingOutlined } from "@ant-design/icons";
+import { UserOutlined, HomeOutlined, SettingOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import "./nav.scss";
 import { useTranslation } from "react-i18next";
 import logo from "../assets/logo.png";
@@ -22,7 +22,6 @@ export const Nav = () => {
   React.useEffect(() => {
     setSelectedKey(pathname);
   }, [pathname]);
-  
   return (
     <Sider width={200} style={{ background: colorBgContainer }}>
       <div className="brand">
@@ -69,6 +68,18 @@ export const Nav = () => {
             <UserOutlined />
           </span>
           <span>{t("page.side-bar.account-info")}</span>
+        </Menu.Item>
+        <Menu.Item
+          className="menu-item"
+          key="/setting"
+          onClick={() => {
+            window.location.href = `${Context.aboutUs}`
+          }}
+        >
+          <span className="menu-item-box-icon">
+          <InfoCircleOutlined />
+          </span>
+          <span>{t("page.side-bar.about-us")}</span>
         </Menu.Item>
         <Menu.Item
           className="menu-item"

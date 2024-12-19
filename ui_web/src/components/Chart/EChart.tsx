@@ -11,9 +11,6 @@ interface EChartProps {
 
 function EChart({ userArray, dataArray }: EChartProps) {
   const { Title, Paragraph } = Typography;
-  const { t, i18n } = useTranslation();
-
-  console.log(dataArray)
   return (
     <>
       <div id="chart">

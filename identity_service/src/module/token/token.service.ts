@@ -24,8 +24,8 @@ export class TokenService {
     return token;
   }
   public renderTokenPair(payload: PayloadModel): TokensResponseModel {
-    // 15 minute expired
-    const expiredTime = 15 * 60 * 1000;
+    // 60 minute expired
+    const expiredTime = 60 * 60 * 1000;
     // 30 day expired refresh token
     const expiredRefreshToken = 30 * 24 * 60 * 60 * 1000;
     const result: TokensResponseModel = {
@@ -54,16 +54,17 @@ export class TokenService {
     const decoded = this.decodeToken(token);
     if (!decoded) return null;
     const refreshTokens = await this.tokenRepository.getExpiredTokenByAccountId(
-      decoded?.account_id,
+      decoded?.accountId,
     );
-    if (refreshTokens) {
+    if (refreshTokens.length != 0) {
       return null;
     }
     const payload: PayloadModel = {
-      accountId: decoded.account_id,
+      accountId: decoded.accountId,
       role: decoded.role,
     };
     const tokenPair = this.renderTokenPair(payload);
+    console.log(tokenPair);
     const addTokenResult = await this.addToken({
       account_id: payload.accountId,
       refresh_token: tokenPair.refresh_token,
