@@ -31,6 +31,23 @@ export class ScheduleRepository {
     );
   }
 
+  async countExistingSchedule(schedule: ScheduleRequest): Promise<Number> {
+    return await this.scheduleModel.count({
+      where: { patient_id: schedule.patient_id, status_id: 2 },
+    });
+  }
+
+  async checkExistingSchedule(
+    schedule: ScheduleRequest
+  ): Promise<ScheduleResponse> {
+    return await this.scheduleModel.findOne({
+      where: {
+        patient_id: schedule.patient_id,
+        schedule_start_time: schedule.schedule_start_time,
+      },
+    });
+  }
+
   async getScheduleById(id: string): Promise<ScheduleResponse> {
     return await this.scheduleModel.findOne({
       where: {
@@ -84,7 +101,6 @@ export class ScheduleRepository {
         id: id,
       },
       transaction: t,
-      
     });
   }
 

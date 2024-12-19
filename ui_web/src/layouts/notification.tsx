@@ -92,7 +92,10 @@ export const Notification: React.FC = () => {
         return `Bác sĩ ${item.doctor_name} đã chấp nhận lịch hẹn vào ${time} ngày ${date} của bạn`;
       }
       if (item.status === 2) {
-        return `Bác sĩ ${item.doctor_name} đã tạo lịch hẹn vào ${time} ngày ${date} cho bạn`;
+        if (item.type === 0)
+          return `Bác sĩ ${item.doctor_name} đã tạo lịch hẹn vào ${time} ngày ${date} cho bạn`;
+        if (item.type === 1)
+          return `Bạn đã thành công đặt lịch hẹn với bác sĩ ${item.doctor_name} vào ${time} ngày ${date}, vui lòng đợi bác sĩ xác nhận`;
       } else if (item.status === 3) {
         return `Bác sĩ ${item.doctor_name} đã từ chối lịch hẹn vào ${time} ngày ${date} của bạn`;
       }
