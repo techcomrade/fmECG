@@ -30,7 +30,6 @@ app.get("/", (req, res) => {
       "$sso-redirect-url$",
       `http://${config.APP_HOST}:${config.APP_PORT}/identity`
     );
-
   res.send(responseHtml);
 });
 
@@ -57,6 +56,7 @@ app.post("/", async (req: Request, res: Response, next) => {
       token: access_token,
       expiredTime: expired_time,
       role: role,
+      aboutUs: `http://${config.APP_HOST}:${config.APP_PORT}/about-us`
     };
     if (refresh_token) {
       const date = new Date();
@@ -82,7 +82,6 @@ app.post("/", async (req: Request, res: Response, next) => {
     );
     res.send(responseHtml);
   } catch (e) {
-    console.log("false");
     console.log(e);
   }
 });
@@ -90,13 +89,17 @@ app.post("/", async (req: Request, res: Response, next) => {
 app.use(
   express.static(path.resolve(__dirname, "../../www")),
   express.json({ limit: "500kb" }),
-  express.urlencoded({ extended: true, limit: "500kb" })
+  express.urlencoded({ extended: true, limit: "500kb" }),
+  express.static(path.resolve(__dirname, "../about-us"))
 );
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../view"));
 app.post("/register", (req: Request, res: Response) => {
   res.send("register");
 });
+app.get("/about-us", (req: Request,res: Response) => {
+res.sendFile(path.join(__dirname,"../about-us/index.html"))
+})
 app.get("/logout", (req: Request, res: Response) => {
   res.clearCookie(REFRESHTOKENCOOKIEKEY);
   res.clearCookie(EXPIREDTIMECOOKIKEY);
