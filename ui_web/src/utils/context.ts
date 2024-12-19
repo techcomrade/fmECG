@@ -14,4 +14,5 @@ export interface AppContext{
     expiredTime?: Date;
     role: string;
     supportedLanguages?: string[];
+    aboutUs?: string;
 }
