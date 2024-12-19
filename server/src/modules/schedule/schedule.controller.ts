@@ -11,6 +11,7 @@ import {
   InternalServerErrorException,
   Param,
   Req,
+  UseGuards,
 } from "@nestjs/common";
 import { Response } from "express";
 import { ApiResponse } from "@nestjs/swagger";
@@ -22,7 +23,11 @@ import { UserService } from "../user/user.service";
 import { UserResponse } from "../user/dto/user.response";
 import { UserGuardModel } from "../authentication/dto/user.guard.model";
 import { AcceptScheduleRequest } from "./dto/acceptSchedule.request";
+import { AuthorizationGuard } from "../authentication/authorization.guard";
+import { Roles } from "../authentication/decorators/role.decorator";
+import { Role } from "../authentication/dto/role.enum";
 
+@UseGuards(AuthorizationGuard)
 @Controller("schedules")
 export class ScheduleController {
   constructor(
@@ -30,6 +35,7 @@ export class ScheduleController {
     private userService: UserService
   ) {}
 
+  @Roles(Role.Admin, Role.Doctor)
   @Get("")
   @ApiResponse({
     status: 200,
@@ -121,6 +127,7 @@ export class ScheduleController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Post("")
   @ApiResponse({
     status: 201,
@@ -147,6 +154,7 @@ export class ScheduleController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Put("accept-schedule")
   @ApiResponse({
     status: 200,
@@ -169,6 +177,7 @@ export class ScheduleController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Put("")
   @ApiResponse({
     status: 200,
@@ -199,6 +208,7 @@ export class ScheduleController {
     }
   }
 
+  @Roles(Role.Admin, Role.Doctor)
   @Delete("reject-schedule/:id")
   @ApiResponse({
     status: 200,
