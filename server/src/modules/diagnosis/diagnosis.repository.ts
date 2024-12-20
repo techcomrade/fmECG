@@ -29,4 +29,20 @@ export class DiagnosisRepository {
       },
     });
   }
+
+  async updateDiagnosisByScheduleId(
+    diagnosis: DiagnosisRequest,
+    schedule_id: string
+  ) {
+    return await this.diagnosisModel.update(
+      {
+        information: diagnosis.information,
+      },
+      {
+        where: {
+          schedule_id: schedule_id,
+        },
+      }
+    );
+  }
 }

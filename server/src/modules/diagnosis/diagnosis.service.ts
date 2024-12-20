@@ -18,4 +18,14 @@ export class DiagnosisService {
   ): Promise<DiagnosisResponse> {
     return await this.diagnosisRepository.getDiagnosisByScheduleId(schedule_id);
   }
+
+  async updateDiagnosisByScheduleId(
+    diagnosis: DiagnosisRequest,
+    schedule_id: string
+  ) {
+    return await this.diagnosisRepository.updateDiagnosisByScheduleId(
+      diagnosis,
+      schedule_id
+    );
+  }
 }
