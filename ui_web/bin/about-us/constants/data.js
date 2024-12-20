@@ -1,30 +1,31 @@
 const ECG = {
-    name: 'fmECG',
-    subtitle: 'Hệ thống theo dõi và quản lý dữ liệu điện tim.',
+    name: 'ECG',
+    subtitle: 'Hệ thống quản lý dữ liệu điện tim, hỗ trợ theo dõi sức khỏe và tạo cầu nối tương tác hiệu quả giữa bệnh nhân và bác sĩ.',
     subtitle2: 'Dự án quản lý dữ liệu điện tim',
     welcome: {
-        description: 'Dự án fmECG nhằm phát triển một hệ thống thông minh giúp thu thập, xử lý, và quản lý dữ liệu điện tim từ bệnh nhân. Hệ thống này sẽ hỗ trợ người dùng trong việc theo dõi sức khỏe hàng ngày, cung cấp cho bác sĩ và bệnh viện công cụ hữu ích trong việc quản lý và chẩn đoán. Đặc biệt, dữ liệu từ bệnh nhân sẽ được lưu trữ và bảo mật, đảm bảo tính liên tục và khả năng truy cập cho các chuyên gia y tế khi cần thiết.',
+        description: 'Dự án ECG nhằm phát triển một hệ thống thông minh giúp thu thập, xử lý và quản lý dữ liệu điện tim từ bệnh nhân. Hệ thống này hỗ trợ người dùng theo dõi sức khỏe hàng ngày, đồng thời cung cấp cho bác sĩ và phòng khám công cụ hữu ích trong việc quản lý và chẩn đoán. Dữ liệu từ bệnh nhân sẽ được lưu trữ an toàn, bảo mật, đảm bảo tính liên tục và khả năng truy cập cho các chuyên gia y tế khi cần thiết. Ngoài ra, hệ thống còn có sự tương tác giữa bệnh nhân và bác sĩ thông qua các tính năng lập lịch khám trực tuyến và nhắn tin trực tiếp, giúp trao đổi thông tin y tế nhanh chóng, quản lý thời gian hiệu quả, và hỗ trợ điều trị từ xa.',
         list: [
             'Giao diện bắt mắt, dễ sử dụng',
             'Hiển thị dữ liệu trực quan',
-            'Bảo mật thông tin'
+            'Bảo mật thông tin',
+            'Tương tác giữa bệnh nhân và bác sĩ'
         ]
     },
     services: [
         {
             iconClass: 'flaticon-electrocardiogram',
             name: 'Thu thập và xử lý dữ liệu điện tim',
-            description: 'Dữ liệu được lấy từ các thiết bị điện tim đeo tay hoặc đặt gần bệnh nhân và truyền qua Bluetooth về ứng dụng di động.'
+            description: 'Dữ liệu được thu thập từ các thiết bị điện tim đeo tay hoặc đặt gần bệnh nhân và truyền qua Bluetooth về ứng dụng di động, giúp đảm bảo tính chính xác và liên tục.'
         },
         {
             iconClass: 'flaticon-emergency-call',
-            name: 'Quản lý và lưu trữ dữ liệu',
-            description: 'Dữ liệu được lưu trữ trên hệ thống máy chủ, có thể truy xuất dễ dàng thông qua ứng dụng web dành cho bệnh nhân và bác sĩ. Hệ thống đảm bảo tính bảo mật và quyền riêng tư của bệnh nhân.'
+            name: 'Quản lý, lưu trữ và hiển thị dữ liệu',
+            description: 'Dữ liệu được lưu trữ trên hệ thống máy chủ, đảm bảo tính bảo mật và quyền riêng tư cho bệnh nhân. Hệ thống chuyển đổi dữ liệu thành các biểu đồ và bảng trực quan, giúp bác sĩ và bệnh nhân dễ dàng phân tích và theo dõi tình trạng sức khỏe.'
         },
         {
             iconClass: 'flaticon-first-aid-kit',
-            name: 'Hiển thị dữ liệu một cách trực quan',
-            description: 'Dữ liệu được chuyển đổi thành các bảng biểu và đồ thị, giúp bệnh nhân và bác sĩ dễ dàng phân tích và theo dõi tình trạng sức khỏe.'
+            name: 'Tương tác giữa bệnh nhân và bác sĩ',
+            description: 'Hệ thống hỗ trợ bệnh nhân đặt lịch khám trực tuyến và trao đổi trực tiếp với bác sĩ qua tin nhắn, giúp quản lý thời gian hiệu quả và tạo điều kiện để bác sĩ theo dõi và hỗ trợ bệnh nhân từ xa kịp thời.'
         },
     ],
     process: {
@@ -56,20 +57,22 @@ const ECG = {
                 'Hiển thị dữ liệu điện tim cho người dùng trên giao diện trực quan.',
                 'Đồng bộ dữ liệu với máy chủ để lưu trữ và phân tích lâu dài.',
                 'Cảnh báo và nhắc nhở người dùng trong các trường hợp kết quả điện tim không ổn định.',
+                'Cung cấp giao diện lập lịch hẹn với bác sĩ và tương tác trực tiếp qua nhắn tin.',
             ]
         },
         {
-            name: 'Ứng dụng web (web admin)',
+            name: 'Ứng dụng web',
             list: [
                 'Dành cho bác sĩ, bệnh viện và bệnh nhân để theo dõi tình trạng sức khỏe.',
                 'Hiển thị dữ liệu điện tim dưới dạng bảng biểu, đồ thị, cung cấp các công cụ phân tích chi tiết.',
                 'Quản lý hồ sơ bệnh nhân, bác sĩ và quyền truy cập dữ liệu.',
                 'Chức năng báo cáo và xuất dữ liệu cho các nghiên cứu lâm sàng hoặc y tế.',
+                'Cung cấp giao diện lập lịch hẹn với bác sĩ và tương tác trực tiếp qua nhắn tin.',
             ]
         }
     ],
     technology: {
-        subtitle: 'Hệ thống fmECG được phát triển dựa trên các công nghệ hiện đại, đảm bảo hiệu suất và bảo mật cao',
+        subtitle: 'Hệ thống ECG được phát triển dựa trên các công nghệ hiện đại, đảm bảo hiệu suất và bảo mật cao',
         list: [
             {
                 name: 'Ứng dụng di động (app)',
@@ -95,10 +98,10 @@ const ECG = {
             },
             {
                 name: 'Cơ sở dữ liệu',
-                description: 'Sử dụng các hệ quản trị cơ sở dữ liệu như MongoDB hoặc PostgreSQL để lưu trữ hồ sơ bệnh nhân và dữ liệu điện tim.',
+                description: 'Sử dụng các hệ quản trị cơ sở dữ liệu như MongoDB hoặc MySQL để lưu trữ hồ sơ bệnh nhân và dữ liệu điện tim.',
                 iconImg: [
                     'img/fmECG/mongodb.png',
-                    'img/fmECG/postgresql.png'
+                    'img/fmECG/mysql.png'
                 ]
             },
         ]
@@ -110,7 +113,7 @@ const ECG = {
             list: [
                 'Bệnh nhân có thể dễ dàng theo dõi tình trạng sức khỏe của mình mọi lúc, mọi nơi thông qua app.',
                 'Cảnh báo và thông báo kịp thời khi phát hiện vấn đề bất thường về nhịp tim.',
-                'Giúp bệnh nhân duy trì liên lạc với bác sĩ trong các tình huống cần thiết.'
+                'Giúp bệnh nhân duy trì liên lạc với bác sĩ trong các tình huống cần thiết thông qua lập lịch khám và nhắn tin.'
             ]
         },
         {
