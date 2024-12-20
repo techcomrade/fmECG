@@ -72,13 +72,27 @@ const ModalComponent = (props: any, ref: any) => {
       end_time: data.end_time,
     };
     console.log(payload);
-    const res = await props?.submitFunction(payload);
+    const res = await props?.submitFunction(payload, "add");
     if (!res?.error) {
       setIsOpen(false);
       setIsShow(false);
       form.resetFields();
       dispatch(getDiagnosisByScheduleId(data.schedule_id));
       dispatch(getAvailableScheduleByDoctorId(data.doctor_id));
+    }
+  };
+
+  const handleUpdate = async (values: any) => {
+    const payload = {
+      ...values,
+      schedule_id: data.schedule_id,
+    };
+    console.log(payload);
+    const res = await props?.submitFunction(payload, "update");
+    if (!res?.error) {
+      setIsOpen(false);
+      form.resetFields();
+      dispatch(getDiagnosisByScheduleId(data.schedule_id));
     }
   };
 
@@ -105,11 +119,18 @@ const ModalComponent = (props: any, ref: any) => {
     ) {
       dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis(diagnosisState.diagnosis);
+      form.setFieldsValue({
+        information: diagnosisState.diagnosis.information,
+      });
     }
-  }, [
-    diagnosisState.loadGetDiagnosisByScheduleIdStatus,
-    Object.keys(diagnosisState.diagnosis),
-  ]);
+    if (
+      diagnosisState.loadGetDiagnosisByScheduleIdStatus ===
+      ApiLoadingStatus.Failed
+    ) {
+      dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
+      setDiagnosis({} as DiagnosisResponse);
+    }
+  }, [diagnosisState.loadGetDiagnosisByScheduleIdStatus]);
 
   React.useEffect(() => {
     if (
@@ -143,6 +164,7 @@ const ModalComponent = (props: any, ref: any) => {
         <Modal
           title={props.title}
           open={isOpen}
+          width={470}
           onCancel={() => {
             setData([]);
             setIsOpen(false);
@@ -173,8 +195,8 @@ const ModalComponent = (props: any, ref: any) => {
           <Form
             form={form}
             onFinish={handleSubmit}
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 14 }}
+            labelCol={{ span: 10 }}
+            wrapperCol={{ span: 12 }}
             disabled={!isEnableAdd}
           >
             <Form.Item label="Bệnh nhân" style={{ marginBottom: "5px" }}>
@@ -238,7 +260,6 @@ const ModalComponent = (props: any, ref: any) => {
                     name={item.dataIndex}
                     key={item.dataIndex}
                     style={{ marginBottom: "0px" }}
-                    //rules={[{ required: true }]}
                   >
                     <Row gutter={10}>
                       <Col span={12}>
@@ -253,7 +274,7 @@ const ModalComponent = (props: any, ref: any) => {
                         >
                           <DatePicker
                             format={"DD/MM/YYYY"}
-                            placeholder="Ngày tái khám"
+                            placeholder="Ngày"
                             disabledDate={(day) =>
                               disabledDate(day, availableSchedule)
                             }
@@ -300,16 +321,42 @@ const ModalComponent = (props: any, ref: any) => {
         <Modal
           title={props.title}
           open={isOpen}
-          footer={null}
-          width={450}
+          width={470}
           onCancel={() => {
             setData([]);
             setIsOpen(false);
           }}
           className={props.className}
+          footer={[
+            <Button
+              key="cancel"
+              onClick={() => {
+                setData([]);
+                setIsOpen(false);
+                form.resetFields();
+              }}
+            >
+              Hủy bỏ
+            </Button>,
+            <Button
+              key="update-diagnosis"
+              type="primary"
+              onClick={() => form.submit()}
+            >
+              Chỉnh sửa chẩn đoán
+            </Button>,
+          ]}
         >
-          <Form form={form} labelCol={{ span: 10 }} wrapperCol={{ span: 12 }}>
-            <Form.Item label="Bệnh nhân" style={{ marginBottom: "2px" }}>
+          <Form
+            form={form}
+            labelCol={{ span: 10 }}
+            wrapperCol={{ span: 12 }}
+            onFinish={handleUpdate}
+          >
+            <Form.Item
+              label="Bệnh nhân"
+              style={{ marginTop: "10px", marginBottom: "2px" }}
+            >
               <div>{data.patient}</div>
             </Form.Item>
             <Form.Item label="Thời gian khám" style={{ marginBottom: "4px" }}>
@@ -319,9 +366,11 @@ const ModalComponent = (props: any, ref: any) => {
             </Form.Item>
             <Form.Item
               label="Thông tin chẩn đoán:"
-              style={{ marginBottom: "2px" }}
+              name="information"
+              key="information"
+              style={{ marginBottom: "25px" }}
             >
-              <div>{diagnosis.information}</div>
+              <Input.TextArea name="information" key="information" />
             </Form.Item>
           </Form>
         </Modal>

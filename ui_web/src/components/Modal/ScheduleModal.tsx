@@ -57,7 +57,7 @@ const ScheduleModalComponent = (props: any) => {
       dispatch(resetLoadRejectScheduleStatus());
     }
   }, [scheduleState.loadRejectScheduleStatus]);
-    
+
   React.useEffect(() => {
     if (notificationState.loadCreateNotification === ApiLoadingStatus.Success) {
       dispatch(resetLoadCreateNotification());
@@ -117,7 +117,7 @@ const ScheduleModalComponent = (props: any) => {
                 </Tooltip>,
                 ...(Context.role === userRole.doctor
                   ? [
-                      <Tooltip title="Tạo chẩn đoán" key="edit">
+                      <Tooltip title="Cập nhật chẩn đoán" key="edit">
                         <EditOutlined
                           onClick={() =>
                             props.addDiagnosis(
@@ -135,11 +135,11 @@ const ScheduleModalComponent = (props: any) => {
                   : []),
                 ...(Context.role === userRole.doctor && item.type === 2
                   ? [
-                      <Tooltip title="Chấp nhận lịch khám" key="accept">
+                      <Tooltip title="Phê duyệt lịch khám" key="accept">
                         <CarryOutOutlined
                           onClick={() => {
                             Modal.confirm({
-                              title: "Chấp nhận lịch khám",
+                              title: "Phê duyệt lịch khám",
                               content:
                                 "Bạn có muốn chấp nhận lịch khám này không?",
                               footer: (_, { CancelBtn }) => (

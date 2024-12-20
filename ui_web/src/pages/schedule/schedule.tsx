@@ -28,6 +28,8 @@ import { SelectInfo } from "antd/es/calendar/generateCalendar";
 import {
   createDiagnosis,
   resetLoadCreateDiagnosisStatus,
+  resetLoadUpdateDiagnosisByScheduleIdStatus,
+  updateDiagnosisByScheduleId,
 } from "../../redux/reducer/diagnosisSlice";
 import { DiagnosisRequest, NotificationRequest } from "../../api";
 import { ModalShowDiagnosis } from "../../components/Modal/ModalShowDiagnosis";
@@ -222,23 +224,28 @@ export const Schedule: React.FC = () => {
     );
   };
 
-  const handleSubmitAddDiagnosisFunction = (data: any) => {
-    dispatch(
-      createDiagnosis({
-        schedule_id: data.schedule_id,
-        information: data.information,
-      } as DiagnosisRequest)
-    );
-    if (
-      data.schedule_start_time !== null &&
-      data.schedule_start_time !== undefined
-    ) {
-      dispatch(createScheduleByDoctor(data));
+  const handleSubmitAddDiagnosisFunction = (data: any, type: string) => {
+    if (type === "add") {
       dispatch(
-        createNotification({
-          ...data,
-        } as NotificationRequest)
+        createDiagnosis({
+          schedule_id: data.schedule_id,
+          information: data.information,
+        } as DiagnosisRequest)
       );
+      if (
+        data.schedule_start_time !== null &&
+        data.schedule_start_time !== undefined
+      ) {
+        dispatch(createScheduleByDoctor(data));
+        dispatch(
+          createNotification({
+            ...data,
+          } as NotificationRequest)
+        );
+      }
+    }
+    if (type === "update") {
+      dispatch(updateDiagnosisByScheduleId(data));
     }
   };
 
@@ -289,6 +296,24 @@ export const Schedule: React.FC = () => {
       dispatch(resetLoadCreateScheduleByPatientStatus());
     }
   }, [dataState.loadCreateScheduleByPatientStatus]);
+
+  React.useEffect(() => {
+    if (
+      diagnosisState.loadUpdateDiagnosisByScheduleIdStatus ===
+      ApiLoadingStatus.Success
+    ) {
+      dispatch(resetLoadUpdateDiagnosisByScheduleIdStatus());
+      showNotiSuccess("Bạn đã chỉnh sửa chẩn đoán thành công");
+    }
+    if (
+      diagnosisState.loadUpdateDiagnosisByScheduleIdStatus ===
+        ApiLoadingStatus.Failed &&
+      diagnosisState.errorMessage
+    ) {
+      dispatch(resetLoadUpdateDiagnosisByScheduleIdStatus());
+      showNotiError(diagnosisState.errorMessage);
+    }
+  }, [diagnosisState.loadGetDiagnosisByScheduleIdStatus]);
 
   return (
     <>
@@ -369,7 +394,9 @@ export const Schedule: React.FC = () => {
       <ModalAddDiagnosis
         ref={modalAddDiagnosisRef}
         title="Chẩn đoán của bác sĩ"
-        submitFunction={(data: any) => handleSubmitAddDiagnosisFunction(data)}
+        submitFunction={(data: any, type: any) =>
+          handleSubmitAddDiagnosisFunction(data, type)
+        }
       ></ModalAddDiagnosis>
       <ModalShowDiagnosis
         ref={modalShowRef}
