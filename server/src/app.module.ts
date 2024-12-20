@@ -27,7 +27,7 @@ require("dotenv").config();
       synchronize: true,
       logging: console.log,
     }),
-    MongooseModule.forRoot('mongodb://localhost:27017/chatdb'),
+    MongooseModule.forRoot(process.env.MONGO_URL),
     UserModule,
     DeviceModule,
     RecordModule,
