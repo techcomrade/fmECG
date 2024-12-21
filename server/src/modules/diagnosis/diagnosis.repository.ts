@@ -1,9 +1,8 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { DiagnosisModel } from "../../entities/diagnosis.model";
 import { DiagnosisRequest } from "./dto/diagnosis.request";
 import { DiagnosisResponse } from "./dto/diagnosis.response";
-const { v4: uuidv4 } = require("uuid");
 
 @Injectable()
 export class DiagnosisRepository {
@@ -12,12 +11,17 @@ export class DiagnosisRepository {
     private diagnosisModel: typeof DiagnosisModel
   ) {}
 
-  async createDiagnosis(diagnosis: DiagnosisRequest) {
-    return await this.diagnosisModel.create({
-      id: diagnosis.id,
-      schedule_id: diagnosis.schedule_id,
-      information: diagnosis.information,
-    });
+  async createDiagnosis(diagnosis: DiagnosisRequest, t?: any) {
+    return await this.diagnosisModel.create(
+      {
+        id: diagnosis.id,
+        schedule_id: diagnosis.schedule_id,
+        information: diagnosis.information,
+      },
+      t && {
+        transaction: t,
+      }
+    );
   }
 
   async getDiagnosisByScheduleId(

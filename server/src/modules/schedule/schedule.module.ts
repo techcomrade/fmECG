@@ -31,7 +31,7 @@ import { TransactionModule } from "../transaction/transaction.module";
     ]),
     forwardRef(() => UserModule),
     ConsultationScheduleModule,
-    DiagnosisModule,
+    forwardRef(() => DiagnosisModule),
     TransactionModule,
   ],
   controllers: [ScheduleController],
