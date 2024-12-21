@@ -119,9 +119,6 @@ const ModalComponent = (props: any, ref: any) => {
     ) {
       dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis(diagnosisState.diagnosis);
-      form.setFieldsValue({
-        information: diagnosisState.diagnosis.information,
-      });
     }
     if (
       diagnosisState.loadGetDiagnosisByScheduleIdStatus ===
@@ -130,6 +127,11 @@ const ModalComponent = (props: any, ref: any) => {
       dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis({} as DiagnosisResponse);
     }
+    form.setFieldsValue({
+      information: diagnosisState.diagnosis
+        ? diagnosisState.diagnosis.information
+        : "",
+    });
   }, [diagnosisState.loadGetDiagnosisByScheduleIdStatus]);
 
   React.useEffect(() => {

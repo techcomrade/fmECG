@@ -213,6 +213,19 @@ export const convertScheduleStatusToString = (status: number) => {
   }
 };
 
+export const convertScheduleResultToString = (result: number) => {
+  switch (result) {
+    case 1:
+      return "Thành công";
+    case 2:
+      return "Chưa bắt đầu";
+    case 3:
+      return "Thất bại";
+    default:
+      return "Không xác định";
+  }
+};
+
 export const scheduleType = [
   {
     value: 1,
