@@ -19,8 +19,8 @@ const initialState: IChatState = {
 
 export const loadMessages = createAsyncThunkWrap(
     "/chat/messages",
-    async (messageRequest: { receiverId: string, groupChatId: string }) => {
-        return await Service.chatService.loadMessages(messageRequest.receiverId, messageRequest.groupChatId)
+    async (messageRequest: { groupChatId: string }) => {
+        return await Service.chatService.loadMessages(messageRequest.groupChatId)
     }
 );
 

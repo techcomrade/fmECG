@@ -40,12 +40,16 @@ export const ChatMes: React.FC = () => {
   const [newMessage, setNewMessage] = useState("");
   const [groupChat, setGroupChat] = useState<GroupChatSchema[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<string>("");
+  const [selectedPerson, setSelectedPerson] = useState<string>("");
   const [showTimestamp, setShowTimestamp] = useState<number | null>(null);
   const [showUser, setShowUser] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [groupTitle, setGroupTitle] = useState("");
+  const [personalName, setPersonalName] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [form] = Form.useForm();
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -80,13 +84,15 @@ export const ChatMes: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log(userState.loadGetUserByIdStatus)
+    console.log(userState.loadGetUserByIdStatus);
     if (userState.loadGetUserByIdStatus === ApiLoadingStatus.Success) {
       setAccountData(userState.userData);
-      console.log("account data loaded", accountData);
-      dispatch(getGroupChat(accountData.id));
     }
   }, [userState.loadGetUserByIdStatus]);
+
+  useEffect(() => {
+    dispatch(getGroupChat(accountData.id));
+  }, [accountData]);
 
   // Gửi tin nhắn
   const sendMessage = () => {
@@ -95,11 +101,11 @@ export const ChatMes: React.FC = () => {
         const messageData = {
           message: newMessage,
           groupChatId: selectedGroup,
-          timestamp: new Date().toISOString(),
+          time: new Date().toISOString(),
           senderId: accountData.id,
           senderName: accountData.username,
         };
-  
+
         const messageRequest = MessageRequest.fromJS(messageData);
         dispatch(sendMessageRedux(messageRequest));
         setNewMessage("");
@@ -124,30 +130,21 @@ export const ChatMes: React.FC = () => {
     };
   }, [selectedGroup]);
 
-
-  // use this below logic to create a new room for one to one messages 
-
-  // useEffect(() => {
-  //   let privateRoomId = '';
-  //   if (selectedGroup) {
-  //     privateRoomId = selectedGroup < accountData.id ? `${accountData.id}-${selectedGroup}` : `${selectedGroup}-${accountData.id}`;
-
-  //     socket.on(`receiveMessageFrom${privateRoomId}`, (message) => {
-  //       setMessages((prevMessages) => [...prevMessages, message]);
-  //     });
-  //   }
-
-  //   return () => {
-  //     socket.off(`receiveMessageFrom${privateRoomId}`);
-  //   };
-  // }, [selectedGroup]);
+  // use this below logic to create a new room for one to one messages
 
   useEffect(() => {
+    let privateRoomId = '';
+    if (selectedPerson) {
+      privateRoomId = selectedPerson < accountData.id ? `${accountData.id}-${selectedPerson}` : `${selectedPerson}-${accountData.id}`;
+    }
 
+    setSelectedGroup(privateRoomId);
+  }, [selectedPerson]);
+
+  useEffect(() => {
     if (selectedGroup) {
       dispatch(
         loadMessages({
-          receiverId: "23",
           groupChatId: selectedGroup,
         })
       );
@@ -201,6 +198,14 @@ export const ChatMes: React.FC = () => {
     }
   }, [groupState.loadCreateGroupChat]);
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value.toLowerCase());
+  };
+
+  const filteredUsers = userDropDown.filter((user) =>
+    user.label.toLowerCase().includes(searchQuery)
+  );
+
   return (
     <div className="chat-container">
       <div className="sidebar">
@@ -215,39 +220,86 @@ export const ChatMes: React.FC = () => {
         >
           + Tạo nhóm chat
         </Button>
-        <Input type="text" className="search" placeholder="Tìm kiếm..." />
-        <ul className="chat-groups">
-          {groupChat.map((item) => (
-            <li
-              className={`group-item ${
-                item._id === selectedGroup ? "selected" : ""
-              }`}
-              key={item._id}
-              onClick={() => {
-                setGroupTitle(item.title);
-                setSelectedGroup(item._id);
-              }}
-            >
-              {item.title}
-            </li>
-          ))}
-        </ul>
+        <Select
+          showSearch
+          placeholder="Tìm kiếm..."
+          style={{ width: "100%" }}
+          options={userDropDown}
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+          }
+          onChange={(value) => {
+            console.log("Người dùng được chọn:", value);
+            // Xử lý khi chọn một người dùng
+          }}
+        />
+
+        <div
+          className="personal-chat-section"
+          style={{ flex: 1, overflowY: "auto" }}
+        >
+          <h3>Chat Cá Nhân</h3>
+          <ul className="chat-groups">
+            {filteredUsers.map((user) => (
+              <li
+                className="group-item"
+                key={user.value}
+                onClick={() => {
+                  console.log("Personal chat with:", user.value);
+                  setSelectedPerson(user.value);
+                  setPersonalName(user.label);
+                }}
+              >
+                {user.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div
+          className="group-chat-section"
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            borderTop: "1px solid #ccc",
+            marginTop: "10px",
+            paddingTop: "10px",
+          }}
+        >
+          <h3>Chat Nhóm</h3>
+          <ul className="chat-groups">
+            {groupChat.map((item) => (
+              <li
+                className={`group-item ${
+                  item._id === selectedGroup ? "selected" : ""
+                }`}
+                key={item._id}
+                onClick={() => {
+                  setGroupTitle(item.title);
+                  setSelectedGroup(item._id);
+                }}
+              >
+                {item.title}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       <div className="chat-box-container">
-        {groupTitle.length === 0 ? (
+        {(!selectedGroup && !selectedPerson) ? (
           <div style={{ textAlign: "center", marginTop: "20px" }}>
             <img
               // src={groupChatImg}
               alt="No Group Selected"
-              style={{ width: "550px"}}
+              style={{ width: "550px" }}
             />
             <h3>Tạo hoặc chọn một nhóm để bắt đầu nhắn tin!</h3>
           </div>
         ) : (
           <>
             <div className="chat-header">
-              <h2>Tin nhắn nhóm {groupTitle}</h2>
+              <h3>{selectedGroup ? personalName : groupTitle}</h3>
             </div>
 
             <div className="chat-messages">
