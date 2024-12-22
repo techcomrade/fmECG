@@ -17,8 +17,8 @@ import { Context } from "../utils/context";
 import { userRole } from "../constants";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-dayjs.extend(relativeTime);
 import { showNotiError } from "../components/notification";
+dayjs.extend(relativeTime);
 
 const { Text } = Typography;
 
@@ -88,16 +88,22 @@ export const Notification: React.FC = () => {
       .format("HH:mm DD/MM/YYYY");
     const [time, date] = dateObj.split(" ");
     if (Context.role === userRole.patient) {
-      if (item.status === 1) {
+      if (item.status === 1)
         return `Bác sĩ ${item.doctor_name} đã chấp nhận lịch hẹn vào ${time} ngày ${date} của bạn`;
-      }
-      if (item.status === 2) {
-        return `Bác sĩ ${item.doctor_name} đã tạo lịch hẹn vào ${time} ngày ${date} cho bạn`;
-      } else if (item.status === 3) {
+      if (item.status === 2)
+        return `Bạn đã thành công đặt lịch hẹn với bác sĩ ${item.doctor_name} vào ${time} ngày ${date}, vui lòng đợi bác sĩ xác nhận`;
+      if (item.status === 3)
         return `Bác sĩ ${item.doctor_name} đã từ chối lịch hẹn vào ${time} ngày ${date} của bạn`;
-      }
-    } else if (Context.role === userRole.doctor)
-      return `Bệnh nhân ${item.patient_name} đã đặt lịch hẹn vào ${time} ngày ${date}, vui lòng xác nhận`;
+      return `Bác sĩ ${item.doctor_name} đã tạo lịch hẹn vào ${time} ngày ${date} cho bạn`;
+    } else if (Context.role === userRole.doctor) {
+      if (item.status === 1)
+        return `Bạn đã chấp nhận lịch hẹn vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
+      if (item.status === 2)
+        return `Bệnh nhân ${item.patient_name} đã đặt lịch hẹn vào ${time} ngày ${date}, vui lòng xác nhận`;
+      if (item.status === 3)
+        return `Bạn đã từ chối lịch hẹn vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
+      return `Bạn đã tạo lịch hẹn vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name}`;
+    }
   };
 
   const NotificationBox = () => (
@@ -221,9 +227,10 @@ export const Notification: React.FC = () => {
         <BellFilled
           style={{
             fontSize: "25px",
-            color: "#000",
             cursor: "pointer",
+            color: "#ffc107",
           }}
+          onClick={() => dispatch(getNotificationByUserId())}
         />
       </Badge>
     </Dropdown>

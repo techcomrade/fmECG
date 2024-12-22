@@ -1,18 +1,13 @@
 const { v4: uuidv4 } = require("uuid");
 
-import {
-  Injectable,
-  ConflictException,
-  UnauthorizedException,
-  forwardRef,
-  Inject,
-} from "@nestjs/common";
+import { Injectable, forwardRef, Inject } from "@nestjs/common";
 import { ScheduleRepository } from "./schedule.repository";
 import { ScheduleResponse } from "./dto/schedule.response";
 import { ScheduleRequest } from "./dto/schedule.request";
 import { ConsultationScheduleService } from "../consultation_schedule/consultation_schedule.service";
 import { UserService } from "../user/user.service";
 import { ConsultationScheduleRequest } from "../consultation_schedule/dto/consultation_schedule.request";
+import { TransactionService } from "../transaction/transaction.service";
 
 @Injectable()
 export class ScheduleService {
@@ -20,7 +15,8 @@ export class ScheduleService {
     private scheduleRepository: ScheduleRepository,
     @Inject(forwardRef(() => UserService))
     private userService: UserService,
-    private consultationScheduleService: ConsultationScheduleService
+    private consultationScheduleService: ConsultationScheduleService,
+    private transactionService: TransactionService
   ) {}
 
   async getAllSchedules(): Promise<ScheduleResponse[]> {
@@ -42,13 +38,29 @@ export class ScheduleService {
     return result;
   }
 
+  async countExistingSchedule(schedule: ScheduleRequest): Promise<Number> {
+    return await this.scheduleRepository.countExistingSchedule(schedule);
+  }
+
+  async checkExistingSchedule(
+    schedule: ScheduleRequest
+  ): Promise<ScheduleResponse> {
+    return await this.scheduleRepository.checkExistingSchedule(schedule);
+  }
+
   async createSchedule(schedule: ScheduleRequest, doctor_id: string) {
     schedule.id = uuidv4();
-    await this.scheduleRepository.createSchedule(schedule);
-    await this.consultationScheduleService.add(<ConsultationScheduleRequest>{
-      id: uuidv4(),
-      schedule_id: schedule.id,
-      doctor_id: doctor_id,
+    return await this.transactionService.transaction(async (t: any) => {
+      await this.scheduleRepository.createSchedule(schedule, t);
+      await this.consultationScheduleService.add(
+        <ConsultationScheduleRequest>{
+          id: uuidv4(),
+          schedule_id: schedule.id,
+          doctor_id: doctor_id,
+          schedule_start_time: schedule.schedule_start_time,
+        },
+        t
+      );
     });
   }
 
@@ -101,9 +113,22 @@ export class ScheduleService {
     return await this.scheduleRepository.updateScheduleById(schedule, id);
   }
 
+  async updateScheduleResult(schedule_id: string, result: number, t?: any) {
+    return await this.scheduleRepository.updateScheduleResultById(
+      schedule_id,
+      result,
+      t
+    );
+  }
+
   async deleteScheduleById(id: string) {
-    await this.consultationScheduleService.deleteConsultationByScheduleId(id);
-    return await this.scheduleRepository.deleteScheduleById(id);
+    return await this.transactionService.transaction(async (t: any) => {
+      await this.consultationScheduleService.deleteConsultationByScheduleId(
+        id,
+        t
+      );
+      await this.scheduleRepository.deleteScheduleById(id, t);
+    });
   }
 
   async getScheduleByPatientId(

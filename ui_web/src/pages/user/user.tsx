@@ -11,6 +11,7 @@ import {
   resetLoadDeleteDataStatus,
   getPatientByDoctorId,
   getDoctorByPatientId,
+  getAllDoctors,
 } from "../../redux/reducer/userSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { findElementById } from "../../utils/arrayUtils";
@@ -30,6 +31,9 @@ import {
 import dayjs from "dayjs";
 import { Context } from "../../utils/context";
 import { showNotiError, showNotiSuccess } from "../../components/notification";
+import { Tag } from "antd";
+import type { FilterDropdownProps } from "antd/es/table/interface";
+import type { InputRef, TableColumnsType, TableColumnType } from "antd";
 
 type UserDetailType = {
   open: (id: string) => void;
@@ -46,6 +50,11 @@ export const User: React.FC = () => {
   const [selectedData, setSelectedData] = React.useState<any[]>([]);
   const drawerRef = React.useRef<UserDetailType>(null);
   const modalUpdateRef = React.useRef<EditUserType>(null);
+
+  const [searchText, setSearchText] = React.useState("");
+  const [searchedColumn, setSearchedColumn] = React.useState("");
+  const searchInput = React.useRef<InputRef>(null);
+
   const columns = [
     {
       title: "Tên người dùng",
@@ -53,6 +62,7 @@ export const User: React.FC = () => {
       key: "username",
       type: "text",
       isEdit: true,
+      searchable: true,
     },
     {
       title: "Giới tính",
@@ -61,6 +71,18 @@ export const User: React.FC = () => {
       type: "select",
       dataSelect: gender,
       isEdit: true,
+      filters: [
+        {
+          text: "Nam",
+          value: 1,
+        },
+        {
+          text: "Nữ",
+          value: 2,
+        },
+      ],
+      onFilter: (value: any, record: any) =>
+        record.gender === convertGenderToString(value),
     },
     {
       title: "Ngày sinh",
@@ -75,6 +97,7 @@ export const User: React.FC = () => {
       key: "phone_number",
       type: "text",
       isEdit: true,
+      searchable: true,
     },
     {
       title: "Chức vụ",
@@ -83,6 +106,25 @@ export const User: React.FC = () => {
       type: "select",
       dataSelect: role,
       isEdit: true,
+      filters:
+        Context.role === userRole.admin
+          ? [
+              {
+                text: "Admin",
+                value: 1,
+              },
+              {
+                text: "Bác sĩ",
+                value: 2,
+              },
+              {
+                text: "Bệnh nhân",
+                value: 3,
+              },
+            ]
+          : undefined,
+      onFilter: (value: any, record: any) =>
+        record.role_id === convertRoleToString(value),
     },
     {
       title: "Trạng thái",
@@ -91,6 +133,25 @@ export const User: React.FC = () => {
       type: "select",
       isEdit: true,
       dataSelect: userStatus,
+      render: (status_id: any) => {
+        let color = status_id == 1 ? "green" : "volcano";
+        return (
+          <Tag color={color} key={status_id}>
+            {convertUserStatusToString(status_id)}
+          </Tag>
+        );
+      },
+      filters: [
+        {
+          text: "Đang hoạt động",
+          value: 1,
+        },
+        {
+          text: "Đã nghỉ",
+          value: 2,
+        },
+      ],
+      onFilter: (value: any, record: any) => record.status_id === Number(value),
     },
   ];
 
@@ -116,7 +177,6 @@ export const User: React.FC = () => {
         ...data,
         gender: convertGenderToString(data.gender),
         role_id: convertRoleToString(data.role_id),
-        status_id: convertUserStatusToString(data.status_id),
       };
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
@@ -136,11 +196,10 @@ export const User: React.FC = () => {
       dispatch(getPatientByDoctorId());
     }
     if (Context.role === userRole.patient) {
-      dispatch(getDoctorByPatientId());
+      dispatch(getAllDoctors());
     }
   }, []);
 
-  // Get data
   React.useEffect(() => {
     if (dataState.loadDataStatus === ApiLoadingStatus.Success) {
       const rawData = dataState.data;
@@ -154,6 +213,20 @@ export const User: React.FC = () => {
       showNotiError(dataState.errorMessage);
     }
   }, [dataState.loadDataStatus]);
+
+  React.useEffect(() => {
+    if (dataState.loadDoctorDataStatus === ApiLoadingStatus.Success) {
+      const rawData = dataState.doctorData;
+      const data = rawData.map((element) => handleData(element, "render"));
+      setDataTable(data);
+    }
+    if (
+      dataState.loadDoctorDataStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      showNotiError(dataState.errorMessage);
+    }
+  }, [dataState.loadDoctorDataStatus]);
 
   React.useEffect(() => {
     if (dataState.loadUpdateDataStatus === ApiLoadingStatus.Success) {

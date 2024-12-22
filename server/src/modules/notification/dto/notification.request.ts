@@ -43,7 +43,7 @@ export class NotificationRequest {
 
   @ApiProperty({
     description:
-      "Status of the schedule (1: accepted, 2:pending (if send to doctor) or successful follow-up schedule, 3: rejected)",
+      "Status of the schedule (1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule)",
     example: 0,
   })
   @IsNotEmpty()

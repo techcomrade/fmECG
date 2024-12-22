@@ -19,8 +19,29 @@
   font-size: 28px;
 }
 .event-details {
-  margin-left: 15px;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin-left: 60px;
+  font-size: 15px;
 }
+
+.event-row {
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.event-label {
+  font-weight: 600;
+  color: #555555;
+}
+
+.event-value {
+  font-weight: 400;
+  color: #333333;
+}
+
 .card-filter {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }

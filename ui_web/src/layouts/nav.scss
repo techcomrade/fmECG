@@ -1,6 +1,18 @@
 .brand img {
-    height: 100px;
+  height: 100px;
+}
+.brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-sidebar {
+  border: none !important;
+  .ant-menu-item {
+    padding-inline: 0;
   }
+<<<<<<< HEAD
   .brand {
     display: flex;
     justify-content: center;
@@ -41,3 +53,14 @@
     margin-right: 8px;
   }
   
+=======
+}
+
+.menu-item-header {
+  font-weight: 700;
+}
+
+.menu-item-box-icon {
+  margin-right: 6px;
+}
+>>>>>>> c577875e0bebcccd9d155003f4d5f1a3be1a10a8

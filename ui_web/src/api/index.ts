@@ -3,9 +3,8 @@ import * as ApiClientFactory from "./api-generated";
 
 export * from "./api-generated";
 
-const api_url: string = "http://localhost:3000";
+const api_url: string = Context.apiUrl ?? "http://localhost:3000";
 
-// define authorize common function, we also can config interceptors here
 // define authorize common function, we also can config interceptors here
 const authorizedFetchFunction = (
   url: RequestInfo,
@@ -55,6 +54,13 @@ const notificationScheduleClient =
     fetch: authorizedFetchFunction,
   });
 
+const statisticClient = new ApiClientFactory.StatisticControllerClient(
+  api_url,
+  {
+    fetch: authorizedFetchFunction,
+  }
+);
+
 interface IService {
   userService: ApiClientFactory.UserControllerClient;
   deviceService: ApiClientFactory.DeviceControllerClient;
@@ -63,6 +69,7 @@ interface IService {
   scheduleService: ApiClientFactory.ScheduleControllerClient;
   diagnosisService: ApiClientFactory.DiagnosisControllerClient;
   notificationScheduleService: ApiClientFactory.NotificationControllerClient;
+  statisticService: ApiClientFactory.StatisticControllerClient;
 }
 
 export const Service: IService = {
@@ -73,4 +80,5 @@ export const Service: IService = {
   scheduleService: scheduleClient,
   diagnosisService: diagnosisClient,
   notificationScheduleService: notificationScheduleClient,
+  statisticService: statisticClient,
 };

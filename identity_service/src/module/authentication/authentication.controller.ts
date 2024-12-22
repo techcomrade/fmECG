@@ -7,7 +7,6 @@ import {
   NotFoundException,
   Get,
   Headers,
-  Param,
   BadRequestException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -70,7 +69,7 @@ export class AuthenticationController {
   }
   @Post('refresh-token')
   async refreshToken(
-    @Param('refresh_token') refresh_token: string,
+    @Body('refresh_token') refresh_token: string,
     @Res() res: Response,
   ) {
     if (!refresh_token) {

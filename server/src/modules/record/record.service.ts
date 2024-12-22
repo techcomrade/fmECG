@@ -36,6 +36,10 @@ export class RecordService {
     return result;
   }
 
+  async countRecordsPerMonth(): Promise<any> {
+    return await this.recordRepository.countRecordsPerMonth();
+  }
+
   async getRecordByPatientId(patient_id: string): Promise<RecordResponse[]> {
     let result = [];
     let records = await this.recordRepository.getRecordByPatientId(patient_id);

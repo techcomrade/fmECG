@@ -16,6 +16,18 @@ export class NotificationRepository {
     return await this.notificationModel.findAll();
   }
 
+  async checkExistingNotification(
+    notification: NotificationRequest
+  ): Promise<NotificationResponse> {
+    return await this.notificationModel.findOne({
+      where: {
+        patient_id: notification.patient_id,
+        schedule_start_time: notification.schedule_start_time,
+        status: 2,
+      },
+    });
+  }
+  
   async add(notification: NotificationRequest) {
     return await this.notificationModel.create({
       id: notification.id,
