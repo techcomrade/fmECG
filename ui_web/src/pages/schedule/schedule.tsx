@@ -143,22 +143,19 @@ export const Schedule: React.FC = () => {
           .map((schedule) => ({
             type: schedule.status_id,
             schedule_id: schedule.id,
-            session_string: `Thời gian khám: Từ ${dayjs(
-              schedule.schedule_start_time
-            ).format("HH:mm")} đến ${dayjs(schedule.schedule_end_time).format(
+            session_string: `Từ ${dayjs(schedule.schedule_start_time).format(
               "HH:mm"
-            )}`,
+            )} đến ${dayjs(schedule.schedule_end_time).format("HH:mm")}`,
             start_time: dayjs(schedule.schedule_start_time).format("HH:mm"),
             end_time: dayjs(schedule.schedule_end_time).format("HH:mm"),
             time: Number(dayjs(schedule.schedule_start_time).format("HHmm")),
             doctor: schedule.doctor_name,
             patient: schedule.patient_name,
-            schedule_type: `Loại lịch hẹn: ${convertScheduleTypeToString(
+            schedule_type: convertScheduleTypeToString(
               schedule.schedule_type_id
-            )}`,
-            status: `Trạng thái lịch hẹn: ${convertScheduleStatusToString(
-              schedule.status_id
-            )}`,
+            ),
+            status: convertScheduleStatusToString(schedule.status_id),
+            result: schedule.schedule_result,
             doctor_id: schedule.doctor_id,
             patient_id: schedule.patient_id,
             schedule_start_time: dayjs(
@@ -240,9 +237,11 @@ export const Schedule: React.FC = () => {
         dispatch(
           createNotification({
             ...data,
+            status: 4,
           } as NotificationRequest)
         );
       }
+      dispatch(getScheduleByDoctorId());
     }
     if (type === "update") {
       dispatch(updateDiagnosisByScheduleId(data));
