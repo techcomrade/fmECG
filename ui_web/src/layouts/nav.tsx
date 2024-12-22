@@ -24,31 +24,33 @@ export const Nav = () => {
   }, [pathname]);
   
   return (
-    <Sider width={200} style={{ background: colorBgContainer }}>
+    <Sider width={200} style={{ background: colorBgContainer , backgroundColor: '#dda0dd' }}>
       <div className="brand">
         <img alt="ecg healthcare" src={logo} />
       </div>
 
       <Menu
         mode={"inline"}
+        style={{ background: colorBgContainer , backgroundColor: '#dda0dd' }}
         selectedKeys={selectedKey}
         defaultSelectedKeys={["/"]}
         className="menu-sidebar"
       >
-        <Menu.Item className="menu-item" key="/" onClick={() => navigate("/")}>
+        <Menu.Item className="menu-item darker-item" key="/" onClick={() => navigate("/")}
+        >
           <span className="menu-item-box-icon">
             <HomeOutlined />
           </span>
           <span>{t("page.side-bar.home")}</span>
         </Menu.Item>
-        <Menu.Item className="menu-item-header" key="6">
+        {/* <Menu.Item className="menu-item-header" key="6">
           {t("page.side-bar.management")}
-        </Menu.Item>
+        </Menu.Item> */}
 
         {Object.values(getRoutesByRole(Context.role)).map((item: any) => (
           <Menu.Item
             key={item.key}
-            className="menu-item"
+            className="menu-item darker-item"
             onClick={() => navigate(item.url)}
           >
             <span className="menu-item-box-icon">
@@ -57,11 +59,11 @@ export const Nav = () => {
             <span>{item.label}</span>
           </Menu.Item>
         ))}
-        <Menu.Item className="menu-item-header" key="5">
+        {/* <Menu.Item className="menu-item-header" key="5">
           {t("page.side-bar.account-management")}
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item
-          className="menu-item"
+          className="menu-item darker-item"
           key="/account"
           onClick={() => navigate("/account")}
         >
@@ -71,7 +73,7 @@ export const Nav = () => {
           <span>{t("page.side-bar.account-info")}</span>
         </Menu.Item>
         <Menu.Item
-          className="menu-item"
+          className="menu-item darker-item"
           key="/setting"
           onClick={() => navigate("/")}
         >

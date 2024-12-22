@@ -114,22 +114,22 @@ export const HeaderBar = () => {
               />
             </Dropdown>
           </div>
-
+{/* 
           <div className="header-icon-box">
             <Notification />
           </div>
 
           <div className="header-icon-box">
             <MessageFilled />
-          </div>
+          </div> */}
 
-          <div style={{ flex: 1, marginRight: "24px" }}>
+          {/* <div style={{ flex: 1, marginRight: "24px" }}>
             <Search
               placeholder="Search something here..."
               onSearch={onSearch}
               style={{ width: 450 }}
             />
-          </div>
+          </div> */}
         </Col>
       </Row>
     </div>
