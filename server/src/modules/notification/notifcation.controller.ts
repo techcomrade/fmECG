@@ -73,10 +73,7 @@ export class NotificationController {
       );
 
       const notificationResult = notificationList.filter((notification) =>
-        user.role_id === 3
-          ? notification.type === 0 ||
-            (notification.type === 1 && notification.status === 2)
-          : notification.type === 1
+        user.role_id === 3 ? notification.type === 0 : notification.type === 1
       );
 
       const result = plainToInstance(NotificationResponse, notificationResult);
@@ -108,11 +105,34 @@ export class NotificationController {
       notification.type = user.role_id === 3 ? 1 : 0;
       if (user.role_id === 2) notification.doctor_id = user.id;
       if (user.role_id === 3) notification.patient_id = user.id;
-      const existingNotification =
-        await this.notificationService.checkExistingNotification(notification);
-      if (!existingNotification) {
+
+      const selfNotification = {
+        ...notification,
+        is_seen: false,
+        type: notification.type === 0 ? 1 : 0,
+      };
+
+      if (![1, 3].includes(notification.status)) {
+        const checkExistingNotification =
+          await this.notificationService.checkExistingNotification(
+            notification
+          );
+        if (!checkExistingNotification) {
+          console.log("[P]:::Create notification data", notification);
+          await Promise.all([
+            this.notificationService.add(selfNotification),
+            this.notificationService.add(notification),
+          ]);
+          return res.json({
+            message: "Notification added successfully",
+          });
+        }
+      } else {
         console.log("[P]:::Create notification data", notification);
-        await this.notificationService.add(notification);
+        await Promise.all([
+          this.notificationService.add(selfNotification),
+          this.notificationService.add(notification),
+        ]);
         return res.json({
           message: "Notification added successfully",
         });

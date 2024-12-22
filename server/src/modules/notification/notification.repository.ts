@@ -23,6 +23,7 @@ export class NotificationRepository {
       where: {
         patient_id: notification.patient_id,
         schedule_start_time: notification.schedule_start_time,
+        status: 2,
       },
     });
   }
