@@ -18,12 +18,14 @@ import { UserGuardModel } from "../authentication/dto/user.guard.model";
 import { UserService } from "../user/user.service";
 import { NotificationRequest } from "./dto/notification.request";
 import { UpdateSeenStatusRequest } from "./dto/updateSeenStatus.request";
+import { ScheduleService } from "../schedule/schedule.service";
 
 @Controller("notification")
 export class NotificationController {
   constructor(
     private notificationService: NotificationService,
-    private userService: UserService
+    private userService: UserService,
+    private scheduleService: ScheduleService
   ) {}
 
   @Get("")
@@ -103,11 +105,38 @@ export class NotificationController {
       notification.type = user.role_id === 3 ? 1 : 0;
       if (user.role_id === 2) notification.doctor_id = user.id;
       if (user.role_id === 3) notification.patient_id = user.id;
-      console.log("[P]:::Create notification data", notification);
-      await this.notificationService.add(notification);
-      return res.json({
-        message: "Notification added successfully",
-      });
+
+      const selfNotification = {
+        ...notification,
+        is_seen: false,
+        type: notification.type === 0 ? 1 : 0,
+      };
+
+      if (![1, 3].includes(notification.status)) {
+        const checkExistingNotification =
+          await this.notificationService.checkExistingNotification(
+            notification
+          );
+        if (!checkExistingNotification) {
+          console.log("[P]:::Create notification data", notification);
+          await Promise.all([
+            this.notificationService.add(selfNotification),
+            this.notificationService.add(notification),
+          ]);
+          return res.json({
+            message: "Notification added successfully",
+          });
+        }
+      } else {
+        console.log("[P]:::Create notification data", notification);
+        await Promise.all([
+          this.notificationService.add(selfNotification),
+          this.notificationService.add(notification),
+        ]);
+        return res.json({
+          message: "Notification added successfully",
+        });
+      }
     } catch (e) {
       console.error(e);
       throw new InternalServerErrorException("Error when post notification");
@@ -135,7 +164,7 @@ export class NotificationController {
       throw new InternalServerErrorException("Error when update seen status");
     }
   }
-  
+
   @Delete(":id")
   @ApiResponse({
     status: 201,

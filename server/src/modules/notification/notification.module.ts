@@ -6,11 +6,13 @@ import { NotificationRepository } from "./notification.repository";
 import { UserModule } from "../user/user.module";
 import { NotificationScheduleModel } from "../../entities/notification_schedule.model";
 import { UserModel } from "../../entities/user.model";
+import { ScheduleModule } from "../schedule/schedule.module";
 
 @Module({
   imports: [
     SequelizeModule.forFeature([NotificationScheduleModel, UserModel]),
     UserModule,
+    ScheduleModule,
   ],
   controllers: [NotificationController],
   providers: [NotificationService, NotificationRepository],

@@ -275,14 +275,34 @@ export class ScheduleController {
         req.user.accountId
       );
       schedule.patient_id = patient.id;
-      await this.scheduleService.createSchedule(schedule, doctor_id);
-      return res.json({
-        message: "Schedule created successfully",
-      });
+      let existingSchedule = await this.scheduleService.checkExistingSchedule(
+        schedule
+      );
+      let countExistingSchedule =
+        await this.scheduleService.countExistingSchedule(schedule);
+      if (countExistingSchedule === 5)
+        throw new InternalServerErrorException(
+          "Quá giới hạn lịch được đặt, vui lòng đợi các bác sĩ phê duyệt lịch đã đặt trước khi tiếp tục"
+        );
+      if (!existingSchedule) {
+        await this.scheduleService.createSchedule(schedule, doctor_id);
+        return res.json({
+          message: "Schedule created successfully",
+        });
+      } else {
+        if (existingSchedule.status_id === 2)
+          throw new InternalServerErrorException(
+            "Bạn đã đặt lịch vào thời điểm này trước đó, vui lòng đợi bác sĩ phê duyệt"
+          );
+        if (existingSchedule.status_id === 1)
+          throw new InternalServerErrorException(
+            "Bạn đã có lịch vào thời điểm này, vui lòng kiểm tra lại"
+          );
+      }
     } catch (e) {
       console.log(e);
       throw new InternalServerErrorException(
-        "Error when create schedule by doctor with time"
+        (<any>e).message || "Error when create schedule by doctor with time"
       );
     }
   }

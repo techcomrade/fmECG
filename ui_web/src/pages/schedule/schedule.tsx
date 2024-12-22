@@ -28,6 +28,8 @@ import { SelectInfo } from "antd/es/calendar/generateCalendar";
 import {
   createDiagnosis,
   resetLoadCreateDiagnosisStatus,
+  resetLoadUpdateDiagnosisByScheduleIdStatus,
+  updateDiagnosisByScheduleId,
 } from "../../redux/reducer/diagnosisSlice";
 import { DiagnosisRequest, NotificationRequest } from "../../api";
 import { ModalShowDiagnosis } from "../../components/Modal/ModalShowDiagnosis";
@@ -141,22 +143,19 @@ export const Schedule: React.FC = () => {
           .map((schedule) => ({
             type: schedule.status_id,
             schedule_id: schedule.id,
-            session_string: `Thời gian khám: Từ ${dayjs(
-              schedule.schedule_start_time
-            ).format("HH:mm")} đến ${dayjs(schedule.schedule_end_time).format(
+            session_string: `Từ ${dayjs(schedule.schedule_start_time).format(
               "HH:mm"
-            )}`,
+            )} đến ${dayjs(schedule.schedule_end_time).format("HH:mm")}`,
             start_time: dayjs(schedule.schedule_start_time).format("HH:mm"),
             end_time: dayjs(schedule.schedule_end_time).format("HH:mm"),
             time: Number(dayjs(schedule.schedule_start_time).format("HHmm")),
             doctor: schedule.doctor_name,
             patient: schedule.patient_name,
-            schedule_type: `Loại lịch hẹn: ${convertScheduleTypeToString(
+            schedule_type: convertScheduleTypeToString(
               schedule.schedule_type_id
-            )}`,
-            status: `Trạng thái lịch hẹn: ${convertScheduleStatusToString(
-              schedule.status_id
-            )}`,
+            ),
+            status: convertScheduleStatusToString(schedule.status_id),
+            result: schedule.schedule_result,
             doctor_id: schedule.doctor_id,
             patient_id: schedule.patient_id,
             schedule_start_time: dayjs(
@@ -222,23 +221,30 @@ export const Schedule: React.FC = () => {
     );
   };
 
-  const handleSubmitAddDiagnosisFunction = (data: any) => {
-    dispatch(
-      createDiagnosis({
-        schedule_id: data.schedule_id,
-        information: data.information,
-      } as DiagnosisRequest)
-    );
-    if (
-      data.schedule_start_time !== null &&
-      data.schedule_start_time !== undefined
-    ) {
-      dispatch(createScheduleByDoctor(data));
+  const handleSubmitAddDiagnosisFunction = (data: any, type: string) => {
+    if (type === "add") {
       dispatch(
-        createNotification({
-          ...data,
-        } as NotificationRequest)
+        createDiagnosis({
+          schedule_id: data.schedule_id,
+          information: data.information,
+        } as DiagnosisRequest)
       );
+      if (
+        data.schedule_start_time !== null &&
+        data.schedule_start_time !== undefined
+      ) {
+        dispatch(createScheduleByDoctor(data));
+        dispatch(
+          createNotification({
+            ...data,
+            status: 4,
+          } as NotificationRequest)
+        );
+      }
+      dispatch(getScheduleByDoctorId());
+    }
+    if (type === "update") {
+      dispatch(updateDiagnosisByScheduleId(data));
     }
   };
 
@@ -289,6 +295,24 @@ export const Schedule: React.FC = () => {
       dispatch(resetLoadCreateScheduleByPatientStatus());
     }
   }, [dataState.loadCreateScheduleByPatientStatus]);
+
+  React.useEffect(() => {
+    if (
+      diagnosisState.loadUpdateDiagnosisByScheduleIdStatus ===
+      ApiLoadingStatus.Success
+    ) {
+      dispatch(resetLoadUpdateDiagnosisByScheduleIdStatus());
+      showNotiSuccess("Bạn đã chỉnh sửa chẩn đoán thành công");
+    }
+    if (
+      diagnosisState.loadUpdateDiagnosisByScheduleIdStatus ===
+        ApiLoadingStatus.Failed &&
+      diagnosisState.errorMessage
+    ) {
+      dispatch(resetLoadUpdateDiagnosisByScheduleIdStatus());
+      showNotiError(diagnosisState.errorMessage);
+    }
+  }, [diagnosisState.loadGetDiagnosisByScheduleIdStatus]);
 
   return (
     <>
@@ -369,7 +393,9 @@ export const Schedule: React.FC = () => {
       <ModalAddDiagnosis
         ref={modalAddDiagnosisRef}
         title="Chẩn đoán của bác sĩ"
-        submitFunction={(data: any) => handleSubmitAddDiagnosisFunction(data)}
+        submitFunction={(data: any, type: any) =>
+          handleSubmitAddDiagnosisFunction(data, type)
+        }
       ></ModalAddDiagnosis>
       <ModalShowDiagnosis
         ref={modalShowRef}

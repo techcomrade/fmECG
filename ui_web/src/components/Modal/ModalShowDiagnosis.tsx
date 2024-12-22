@@ -42,6 +42,13 @@ const ModalComponent = (props: any, ref: any) => {
       dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis(diagnosisState.diagnosis);
     }
+    if (
+      diagnosisState.loadGetDiagnosisByScheduleIdStatus ===
+      ApiLoadingStatus.Failed
+    ) {
+      dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
+      setDiagnosis({} as DiagnosisResponse);
+    }
   }, [diagnosisState.loadGetDiagnosisByScheduleIdStatus]);
 
   return (

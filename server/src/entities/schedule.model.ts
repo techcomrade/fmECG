@@ -60,6 +60,12 @@ export class ScheduleModel extends Model<ScheduleModel> {
   status_id: number;
 
   @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  schedule_result: number;
+
+  @Column({
     type: DataType.DATE,
   })
   createdAt: Date;

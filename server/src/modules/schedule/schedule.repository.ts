@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { ScheduleModel } from "../../entities/schedule.model";
 import { ScheduleResponse } from "./dto/schedule.response";
@@ -24,11 +24,29 @@ export class ScheduleRepository {
         schedule_end_time: schedule.schedule_end_time,
         schedule_type_id: schedule.schedule_type_id,
         status_id: schedule.status_id ?? 1,
+        schedule_result: schedule.schedule_result ?? 2,
       },
       t && {
         transaction: t,
       }
     );
+  }
+
+  async countExistingSchedule(schedule: ScheduleRequest): Promise<Number> {
+    return await this.scheduleModel.count({
+      where: { patient_id: schedule.patient_id, status_id: 2 },
+    });
+  }
+
+  async checkExistingSchedule(
+    schedule: ScheduleRequest
+  ): Promise<ScheduleResponse> {
+    return await this.scheduleModel.findOne({
+      where: {
+        patient_id: schedule.patient_id,
+        schedule_start_time: schedule.schedule_start_time,
+      },
+    });
   }
 
   async getScheduleById(id: string): Promise<ScheduleResponse> {
@@ -78,13 +96,26 @@ export class ScheduleRepository {
     );
   }
 
+  async updateScheduleResultById(id: string, result: number, t?: any) {
+    return await this.scheduleModel.update(
+      {
+        schedule_result: result,
+      },
+      {
+        where: {
+          id: id,
+        },
+        transaction: t,
+      }
+    );
+  }
+
   async deleteScheduleById(id: string, t?: any) {
     return await this.scheduleModel.destroy({
       where: {
         id: id,
       },
       transaction: t,
-      
     });
   }
 
@@ -94,6 +125,7 @@ export class ScheduleRepository {
     return await this.scheduleModel.findAll({
       where: {
         patient_id: patient_id,
+        status_id: 1,
       },
     });
   }

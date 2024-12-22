@@ -15,7 +15,6 @@ import { ScheduleRepository } from "./schedule.repository";
 import { UserModule } from "../user/user.module";
 import { ConsultationScheduleModule } from "../consultation_schedule/consultation_schedule.module";
 import { DiagnosisModule } from "../diagnosis/diagnosis.module";
-import { NotificationModule } from "../notification/notification.module";
 import { TransactionModule } from "../transaction/transaction.module";
 
 @Module({
@@ -32,7 +31,7 @@ import { TransactionModule } from "../transaction/transaction.module";
     ]),
     forwardRef(() => UserModule),
     ConsultationScheduleModule,
-    DiagnosisModule,
+    forwardRef(() => DiagnosisModule),
     TransactionModule,
   ],
   controllers: [ScheduleController],
