@@ -21,9 +21,8 @@ export class ChatController {
     type: [MessageSchema],
     description: "Successful",
   }) 
-  @Get('messages/:receiverId/:groupChatId')
+  @Get('messages/:groupChatId')
   async loadMessages(
-    @Param('receiverId') receiverId: string,
     @Param('groupChatId') groupChatId: string,
     @Req() req: Request & { user?: UserGuardModel },
   ) {
@@ -32,7 +31,6 @@ export class ChatController {
 
       let messageRequest = {
         senderId: sender.id,
-        receiverId: receiverId,
         groupChatId: groupChatId
       } as MessageRequest;
 
@@ -45,7 +43,7 @@ export class ChatController {
         let messageResponse = {
           senderId: msg.senderId,
           senderName: msgSender.username,
-          receiverId: receiverId,
+          receiverId: msg.receiverId,
           message: msg.message,
           groupChatId: groupChatId,
           time: msg.time,
