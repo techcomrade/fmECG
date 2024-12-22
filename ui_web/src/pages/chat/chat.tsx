@@ -242,7 +242,9 @@ export const ChatMes: React.FC = () => {
           <ul className="chat-groups">
             {filteredUsers.map((user) => (
               <li
-                className="group-item"
+              className={`group-item ${
+                user.value === selectedPerson ? "selected" : ""
+              }`}
                 key={user.value}
                 onClick={() => {
                   console.log("Personal chat with:", user.value);
@@ -277,6 +279,7 @@ export const ChatMes: React.FC = () => {
                 onClick={() => {
                   setGroupTitle(item.title);
                   setSelectedGroup(item._id);
+                  console.log(item);
                 }}
               >
                 {item.title}
@@ -299,7 +302,7 @@ export const ChatMes: React.FC = () => {
         ) : (
           <>
             <div className="chat-header">
-              <h3>{selectedGroup ? personalName : groupTitle}</h3>
+              <h3>{selectedGroup.includes(accountData.id) ? personalName : groupTitle}</h3>
             </div>
 
             <div className="chat-messages">
