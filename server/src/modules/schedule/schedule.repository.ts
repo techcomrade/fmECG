@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { ScheduleModel } from "../../entities/schedule.model";
 import { ScheduleResponse } from "./dto/schedule.response";
@@ -24,6 +24,7 @@ export class ScheduleRepository {
         schedule_end_time: schedule.schedule_end_time,
         schedule_type_id: schedule.schedule_type_id,
         status_id: schedule.status_id ?? 1,
+        schedule_result: schedule.schedule_result ?? 2,
       },
       t && {
         transaction: t,
@@ -95,6 +96,20 @@ export class ScheduleRepository {
     );
   }
 
+  async updateScheduleResultById(id: string, result: number, t?: any) {
+    return await this.scheduleModel.update(
+      {
+        schedule_result: result,
+      },
+      {
+        where: {
+          id: id,
+        },
+        transaction: t,
+      }
+    );
+  }
+
   async deleteScheduleById(id: string, t?: any) {
     return await this.scheduleModel.destroy({
       where: {
@@ -110,6 +125,7 @@ export class ScheduleRepository {
     return await this.scheduleModel.findAll({
       where: {
         patient_id: patient_id,
+        status_id: 1,
       },
     });
   }

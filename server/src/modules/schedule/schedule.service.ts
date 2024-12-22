@@ -1,10 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 
-import {
-  Injectable,
-  forwardRef,
-  Inject,
-} from "@nestjs/common";
+import { Injectable, forwardRef, Inject } from "@nestjs/common";
 import { ScheduleRepository } from "./schedule.repository";
 import { ScheduleResponse } from "./dto/schedule.response";
 import { ScheduleRequest } from "./dto/schedule.request";
@@ -65,7 +61,6 @@ export class ScheduleService {
         },
         t
       );
-      await this
     });
   }
 
@@ -116,6 +111,14 @@ export class ScheduleService {
 
   async updateSchedule(schedule: ScheduleRequest, id: string) {
     return await this.scheduleRepository.updateScheduleById(schedule, id);
+  }
+
+  async updateScheduleResult(schedule_id: string, result: number, t?: any) {
+    return await this.scheduleRepository.updateScheduleResultById(
+      schedule_id,
+      result,
+      t
+    );
   }
 
   async deleteScheduleById(id: string) {

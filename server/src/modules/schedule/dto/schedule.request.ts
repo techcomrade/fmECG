@@ -55,4 +55,11 @@ export class ScheduleRequest {
   })
   @IsInt()
   status_id?: number;
+
+  @ApiProperty({
+    description: "Result of the schedule (1: success, 2: upcoming, 3: failed)",
+    example: 1,
+  })
+  @IsInt()
+  schedule_result?: number;
 }

@@ -26,4 +26,7 @@ export class ScheduleResponse {
 
   @Expose()
   status_id: number;
+
+  @Expose()
+  schedule_result: number;
 }
