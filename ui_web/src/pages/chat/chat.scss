@@ -10,7 +10,9 @@
     width: 300px;
     background-color: #f4f4f4;
     padding: 20px;
-    border: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 
@@ -26,6 +28,40 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
+    .personal-chat-section,
+    .group-chat-section {
+      position: relative;
+      overflow-y: auto;
+      padding-right: 5px;
+      box-sizing: border-box;
+      scrollbar-width: thin;
+      scrollbar-color: #ccc #f4f4f4;
+
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #f4f4f4;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+      }
+    }
+
+    .personal-chat-section h3,
+    .group-chat-section h3 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
     .chat-groups {
       flex-grow: 1;
       display: flex;
@@ -36,7 +72,7 @@
       list-style: none;
 
       .group-item.selected {
-        background-color: #008afb;
+        background-color: #3399fc;
       }
       .group-item {
         display: flex;
@@ -51,7 +87,7 @@
         transition: all 0.3s ease;
 
         &:hover {
-          background-color: #008afb;
+          background-color: #3399fc;
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
           transform: translateY(-2px);
         }
@@ -70,15 +106,16 @@
     flex-direction: column;
     background-color: white;
     border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 
     .chat-header {
-      background-color: #0082fb;
+      background-color: #3399fc;
       color: white;
-      padding: 10px;
-      font-size: 12px;
+      padding-left: 15px;
+      font-size: 15px;
       border-top-right-radius: 10px;
     }
 
@@ -108,7 +145,7 @@
         .avatar {
           width: 40px;
           height: 40px;
-          background-color: #008afb;
+          background-color: #3399fc;
           color: white;
           display: flex;
           justify-content: center;
@@ -160,7 +197,7 @@
       }
 
       button {
-        background-color: #008afb;
+        background-color: #3399fc;
         color: white;
         padding: 10px 15px;
         border: none;
@@ -168,7 +205,7 @@
         cursor: pointer;
 
         &:hover {
-          background-color: #008afb;
+          background-color: #3399fc;
         }
       }
     }
