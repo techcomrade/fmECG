@@ -120,7 +120,9 @@ export const HeaderBar = () => {
           </div>
 
           <div className="header-icon-box">
-            <MessageFilled style={{ color: "#17a2b8" }} />
+            <NavLink to="/chat">
+              <MessageFilled style={{ color: "#3399FC" }} />
+            </NavLink>
           </div>
 
           <div style={{ flex: 1, marginRight: "24px" }}>
