@@ -32,7 +32,7 @@ import { Role } from "../authentication/dto/role.enum";
 @UseGuards(AuthorizationGuard)
 export class UserController {
   constructor(private userService: UserService) {}
-  @Roles(Role.Admin)
+  // @Roles(Role.Admin)
   @Get("")
   @ApiResponse({
     status: 200,
