@@ -14,9 +14,14 @@ import {
   GroupChatSchema,
 } from "../../api";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
-import { getAllUsers, getUserById } from "../../redux/reducer/userSlice";
+import {
+  getAllUsers,
+  getDoctorByPatientId,
+  getPatientByDoctorId,
+  getUserById,
+} from "../../redux/reducer/userSlice";
 import { Button, Col, Form, Input, Modal, Row, Select } from "antd";
-
+import dayjs from "dayjs";
 import io from "socket.io-client";
 import {
   createGroupChat,
@@ -24,7 +29,11 @@ import {
   resetLoadCreateGroupChat,
 } from "../../redux/reducer/groupChatSlice";
 import groupChatImg from "../../assets/groupChat.svg";
-import { IoMdChatbubbles, IoMdPeople } from "react-icons/io";
+import { IoMdChatbubbles } from "react-icons/io";
+import { Context } from "../../utils/context";
+import { convertRoleToString, userRole } from "../../constants";
+import avatar from "../../assets/avatar.svg";
+import groupAvatar from "../../assets/groupAvatar.svg";
 const socket = io("http://localhost:3000");
 
 export const ChatMes: React.FC = () => {
@@ -43,6 +52,7 @@ export const ChatMes: React.FC = () => {
   const [selectedGroup, setSelectedGroup] = useState<string>("");
   const [selectedRoomId, setSelectedRoomId] = useState<string>("");
   const [selectedPerson, setSelectedPerson] = useState<string>("");
+  const [role, setRole] = useState<number>(0);
   const [showTimestamp, setShowTimestamp] = useState<number | null>(null);
   const [showUser, setShowUser] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,15 +64,19 @@ export const ChatMes: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    dispatch(getAllUsers());
+    if (Context.role === userRole.admin) dispatch(getAllUsers());
+    if (Context.role === userRole.doctor) dispatch(getPatientByDoctorId());
+    if (Context.role === userRole.patient) dispatch(getDoctorByPatientId());
   }, []);
 
   useEffect(() => {
     if (userState.loadDataStatus === ApiLoadingStatus.Success) {
+      console.log(userState.data);
       setUserDropDown(
         userState.data.map((user) => ({
           label: user.username,
           value: user.id,
+          role: user.role_id,
         }))
       );
     }
@@ -183,7 +197,7 @@ export const ChatMes: React.FC = () => {
     const payload = {
       title: values.title,
       hostId: accountData.id,
-      member: values.member,
+      member: [...values.member, accountData.id],
     };
 
     console.log("Payload:", payload);
@@ -212,92 +226,83 @@ export const ChatMes: React.FC = () => {
   return (
     <div className="chat-container">
       <div className="sidebar">
-        <Button
-          style={{
-            marginBottom: "10px",
-            borderRadius: "8px",
-            height: "35px",
-            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-          }}
-          onClick={() => setIsModalOpen(true)}
-        >
-          + Tạo nhóm chat
-        </Button>
-        <Select
-          showSearch
-          placeholder="Tìm kiếm..."
-          style={{ width: "100%" }}
-          options={userDropDown}
-          filterOption={(input, option) =>
-            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-          }
-          allowClear
-          onChange={(value) => {
-            console.log("Người dùng được chọn:", value);
-          }}
-        />
-
-        <div
-          className="personal-chat-section"
-          style={{ flex: 1, overflowY: "auto" }}
-        >
-          <h3 style={{ marginTop: "10px" }}>
-            {" "}
-            <IoMdChatbubbles />
-            Tin nhắn riêng
-          </h3>
-          <ul className="chat-groups">
-            {filteredUsers.map((user) => (
-              <li
-                className={`group-item ${
-                  user.value === selectedPerson ? "selected" : ""
-                }`}
-                key={user.value}
-                onClick={() => {
-                  setSelectedGroup("");
-                  setSelectedPerson(user.value);
-                  setPersonalName(user.label);
-                }}
-              >
-                {user.label}
-              </li>
-            ))}
-          </ul>
+        <div className="navbar">
+          <IoMdChatbubbles className="chat-icon" />
+          <span className="logo">Tin nhắn</span>
         </div>
 
-        <div
-          className="group-chat-section"
-          style={{
-            flex: 1,
-            overflowY: "auto",
-            borderTop: "1px solid #ccc",
-          }}
-        >
-          <h3 style={{ marginTop: "10px" }}>
-            <IoMdPeople />
-            Tin nhắn nhóm
-          </h3>
-          <ul className="chat-groups">
-            {groupChat.map((item) => (
-              <li
-                className={`group-item ${
-                  item._id === selectedGroup ? "selected" : ""
+        {Context.role !== userRole.patient && (
+          <Button
+            className="create-group-btn"
+            onClick={() => setIsModalOpen(true)}
+          >
+            + Tạo nhóm
+          </Button>
+        )}
+
+        <div className="search">
+          <input
+            type="text"
+            placeholder="Tìm kiếm..."
+            className="search-bar"
+            onChange={(e) => handleSearchChange(e)}
+            value={searchQuery}
+          />
+        </div>
+
+        <div className="chats">
+          {[...filteredUsers, ...groupChat].map((item) => {
+            const isGroup = !!item._id;
+            return (
+              <div
+                key={isGroup ? item._id : item.value}
+                className={`userChat ${
+                  (isGroup && selectedGroup === item._id) ||
+                  (!isGroup && selectedPerson === item.value)
+                    ? "active"
+                    : ""
                 }`}
-                key={item._id}
                 onClick={() => {
-                  setSelectedPerson("");
-                  setGroupTitle(item.title);
-                  setSelectedGroup(item._id);
+                  if (isGroup) {
+                    setSelectedPerson("");
+                    setGroupTitle(item.title);
+                    setSelectedGroup(item._id);
+                  } else {
+                    setSelectedGroup("");
+                    setSelectedPerson(item.value);
+                    setPersonalName(item.label);
+                    setRole(item.role);
+                  }
                 }}
               >
-                {item.title}
-              </li>
-            ))}
-          </ul>
+                <img src={isGroup ? groupAvatar : avatar} alt="avatar" />
+                <div className="userChatInfo">
+                  <span>{isGroup ? item.title : item.label}</span>
+                  <p>
+                    {isGroup
+                      ? `Nhóm ${item.title}`
+                      : `${convertRoleToString(item.role)} ${item.label}`}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      <div className="chat-box-container">
+      <div
+        className="chat-box-container"
+        style={{
+          borderRight:
+            !selectedGroup && !selectedPerson ? "1px solid #ccc" : "",
+          borderTop: !selectedGroup && !selectedPerson ? "1px solid #ccc" : "",
+          borderBottom:
+            !selectedGroup && !selectedPerson ? "1px solid #ccc" : "",
+          borderTopRightRadius: !selectedGroup && !selectedPerson ? "10px" : "",
+          borderBottomRightRadius:
+            !selectedGroup && !selectedPerson ? "10px" : "",
+        }}
+      >
         {!selectedGroup && !selectedPerson ? (
           <div style={{ textAlign: "center", marginTop: "20px" }}>
             <img
@@ -313,7 +318,9 @@ export const ChatMes: React.FC = () => {
               <h3>
                 {selectedGroup.includes(accountData.id) ||
                 selectedRoomId.includes(accountData.id)
-                  ? `Tin nhắn với ${personalName}`
+                  ? `Tin nhắn với ${convertRoleToString(
+                      role
+                    ).toLowerCase()} ${personalName}`
                   : `Tin nhắn với nhóm ${groupTitle}`}
               </h3>
             </div>
@@ -344,8 +351,10 @@ export const ChatMes: React.FC = () => {
                             {showTimestamp === index && (
                               <div className="message-time">
                                 <em>
-                                  {showUser} -
-                                  {new Date(msg.time).toLocaleString()}
+                                  {showUser} - {""}
+                                  {dayjs
+                                    .unix(msg.time)
+                                    .format("HH:mm, DD/MM/YYYY")}
                                 </em>
                               </div>
                             )}
@@ -365,8 +374,10 @@ export const ChatMes: React.FC = () => {
                             {showTimestamp === index && (
                               <div className="message-time">
                                 <em>
-                                  {showUser} -
-                                  {new Date(msg.time).toLocaleString()}
+                                  {showUser} - {""}
+                                  {dayjs
+                                    .unix(msg.time)
+                                    .format("HH:mm, DD/MM/YYYY")}
                                 </em>
                               </div>
                             )}
@@ -403,7 +414,7 @@ export const ChatMes: React.FC = () => {
       </div>
 
       <Modal
-        width={"490px"}
+        width={"400px"}
         title="Tạo nhóm mới"
         open={isModalOpen}
         onOk={() => form.submit()}
