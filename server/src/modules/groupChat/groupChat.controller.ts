@@ -11,7 +11,6 @@ import {
 import { UserService } from "../user/user.service";
 import { GroupChatSchema } from "./schema/groupChat.schema";
 import { ApiResponse } from "@nestjs/swagger";
-// import { GroupChatGateway } from "./groupChat.gateway";
 import { groupChatRequest } from "./dto/groupChat.request";
 import { GroupChatService } from "./groupChat.service";
 import { UserGuardModel } from "../authentication/dto/user.guard.model";
@@ -21,7 +20,6 @@ export class GroupChatController {
   constructor(
     private userService: UserService,
     private groupChatService: GroupChatService,
-    // private readonly groupChatGateway: GroupChatGateway
   ) {}
 
   @ApiResponse({

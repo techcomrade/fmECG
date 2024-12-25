@@ -1,5 +1,3 @@
-export const context = "context";
-
 export const Context: AppContext = window.context;
 
 export interface AppContext{

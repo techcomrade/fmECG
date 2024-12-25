@@ -10,7 +10,6 @@ export class ChatService {
     @InjectModel(MessageSchema.name) private chatModel: Model<MessageSchema>
   ) { }
 
-  // Lưu tin nhắn vào MongoDB
   async saveMessage(messageRequest: MessageRequest): Promise<MessageSchema> {
     console.log(messageRequest);
     messageRequest.time = Math.floor(Date.now() / 1000);
@@ -18,32 +17,13 @@ export class ChatService {
     return chat.save();
   }
 
-  // async getMessageByGroupId(groupId: string): Promise<MessageSchema[]> {
-  //   return await this.chatModel.find({
-  //     groupChatId: groupId,
-  //   });
-  // }
-
-  // Lấy tin nhắn giữa hai người dùng hoặc trong nhóm
   async loadMessages(messageRequest: MessageRequest): Promise<MessageSchema[]> {
     console.log(messageRequest.senderId);
-    let senderId = messageRequest.senderId;
-    let receiverId = messageRequest.receiverId;
     if (messageRequest.groupChatId != null) {
       var groupChatId = messageRequest.groupChatId;
       return this.chatModel
         .find({ groupChatId })
         .sort({ timestamp: 1 });
     }
-    // else {
-    //   return this.chatModel
-    //     .find({
-    //       $or: [
-    //         { senderId, receiverId },
-    //         { senderId: receiverId, receiverId: senderId },
-    //       ],
-    //     })
-    //     .sort({ timestamp: 1 });
-    // }
   }
 }
