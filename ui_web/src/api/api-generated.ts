@@ -17,7 +17,7 @@ export class UserControllerClient {
         this.http = http ? http : window as any;
         this.baseUrl = baseUrl ?? "";
     }
-
+    
     /**
      * @return Successful
      */

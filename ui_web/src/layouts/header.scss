@@ -1,46 +1,90 @@
-.setting-drwer {
-  left: 30px;
-  right: auto;
-}
-
-.ant-page-header-heading {
-  margin-top: 0;
-}
-.ant-page-header-heading .ant-page-header-heading-title {
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 20px;
-  margin-top: 4px;
-}
-
-.header-control {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.user-avatar {
-  width: 25px;
-  height: 26px;
-  background-color: transparent;
-  margin-left: 3px;
-  margin-top: 3px;
-}
-.header-container {
+.header {
   background-color: #dda0dd;
-  width: 100%;
-}
-.header-icon-box {
-  font-size: 25px;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e8e8e8;
+  position: relative;
+  width: 100%; 
 
-  margin: 0 5px;
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+    margin: 0 auto;
+    width: 100%; 
+    padding: 0 24px; 
+  }
+
+  .header-left {
+    flex: 1;
+    margin-right: 20px;
+      width: auto; 
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+      width: auto; 
+    .header-controls {
+      display: flex;
+      align-items: center;
+    }
+
+     .header-clock {
+      font-size: 16px;
+      margin-right: 16px;
+    }
+    
+  }
+
+  .header-icon {
+    font-size: 20px;
+    margin-right: 16px;
+    
+  }
+
+  .user-avatar {
+    margin-left: 16px;
+  }
+
+    .header-social-icons {
+      display: flex;
+      align-items: center;
+        .social-icon {
+          font-size: 20px;
+          margin-right: 8px;
+      }
+   }
+
+  .header-breadcrumb {
+    .ant-breadcrumb-link {
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+  .header-clock-container {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0; /* Màu nền nhạt */
+    padding: 4px 8px;
+    border-radius: 4px; /* Bo góc */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+    font-family: 'Roboto', sans-serif; /* Font chữ */
+     transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu khi hover */
+     &:hover {
+         background-color: #e0e0e0;
+     }
+
+    .header-clock-icon {
+        font-size: 16px; /* Kích thước icon */
+        margin-right: 4px;
+        color: #555; /* Màu icon */
+    }
+
+    .header-clock {
+        font-size: 14px; /* Kích thước font */
+        color: #333; /* Màu chữ */
+    }
 }
-.header-breadcrumb {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-.user-button-header svg {
-  cursor: pointer;
 }

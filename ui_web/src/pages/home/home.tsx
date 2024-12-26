@@ -1,14 +1,16 @@
-import * as React from "react";
+import React, { useState } from "react";
 import "./home.scss";
-import { Card, Row, Col, Typography } from "antd";
-
-import EChart from "../../components/Chart/EChart";
-import LineChart from "../../components/Chart/LineChart";
+import { Card, Row, Col, Typography, Button } from "antd";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { getStatistic } from "../../redux/reducer/statisticSlice";
 import { StatisticResponse } from "../../api";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
+import anh1 from "../../assets/anh1.png";
+import anh2 from "../../assets/anh2.png";
+import anh3 from "../../assets/anh3.png";
+import anh4 from "../../assets/anh4.png";
 
 const profile = [
   <svg
@@ -36,11 +38,11 @@ const device = [
     <g
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     >
-      <path stroke-dasharray="6" stroke-dashoffset="6" d="M12 21h5M12 21h-5">
+      <path strokeDasharray="6" strokeDashoffset="6" d="M12 21h5M12 21h-5">
         <animate
           fill="freeze"
           attributeName="stroke-dashoffset"
@@ -48,7 +50,7 @@ const device = [
           values="6;0"
         />
       </path>
-      <path stroke-dasharray="6" stroke-dashoffset="6" d="M12 21v-4">
+      <path strokeDasharray="6" strokeDashoffset="6" d="M12 21v-4">
         <animate
           fill="freeze"
           attributeName="stroke-dashoffset"
@@ -57,7 +59,7 @@ const device = [
         />
       </path>
       <path
-        stroke-dasharray="64"
+        strokeDasharray="64"
         stroke-dashoffset="64"
         d="M12 17h-9v-12h18v12Z"
       >
@@ -83,9 +85,9 @@ const record = [
     <g
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
     >
       <path d="M3 3v16a2 2 0 0 0 2 2h16" />
       <path d="m19 9l-5 5l-4-4l-3 3" />
@@ -105,6 +107,18 @@ export const Home: React.FC = () => {
   const [dataArray, setDataArray] = React.useState<any>([]);
   const [userArray, setUserArray] = React.useState<any>([]);
   const [recordArray, setRecordArray] = React.useState<any>([]);
+  const images = [anh1, anh2, anh3, anh4];
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+     const handlePrevImage = () => {
+        setCurrentImageIndex((prevIndex) =>
+            prevIndex === 0 ? images.length - 1 : prevIndex - 1
+        );
+    };
+
+    const handleNextImage = () => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    };
 
   const countData = (array: any[], type: string) => {
     let result: number = 0;
@@ -191,6 +205,7 @@ export const Home: React.FC = () => {
       }
     }
   };
+
 
   React.useEffect(() => {
     dispatch(getStatistic());
@@ -321,7 +336,6 @@ export const Home: React.FC = () => {
       setCount(updatedCount);
     }
   }, [dataState, t]);
-
   return (
     <>
       <div className="layout-content">
@@ -344,7 +358,7 @@ export const Home: React.FC = () => {
               >
                 <div className="number">
                   <Row align="middle" gutter={[20, 0]}>
-                    <Col xs={17} style={{paddingLeft: '15px'}}>
+                    <Col xs={17} style={{ paddingLeft: "15px" }}>
                       <span>{c.today}</span>
                       <Title level={3}>
                         {c.title} <small className={c.bnb}>{c.persent}</small>
@@ -359,19 +373,42 @@ export const Home: React.FC = () => {
             </Col>
           ))}
         </Row>
-
-        <Row gutter={[24, 0]}>
-          <Col xs={24} sm={24} md={12} lg={12} xl={10} className="mb-24">
-            <Card bordered={false} className="circlebox h-full">
-              <EChart userArray={userArray} dataArray={dataArray} />
-            </Card>
+      </div>
+      <div className="image-slider-container">
+          <Button
+              icon={<LeftOutlined />}
+              onClick={handlePrevImage}
+              className="image-slider-button"
+          />
+        <Row gutter={[16, 16]}>
+          <Col span={12}>
+            <img
+              width="100%"
+              src={images[currentImageIndex % 4]}
+              alt={`Image ${currentImageIndex % 4 + 1}`}
+              style={{
+                 transition: 'opacity 0.5s ease-in-out',
+                 opacity: 1,
+               }}
+            />
           </Col>
-          <Col xs={24} sm={24} md={12} lg={12} xl={14} className="mb-24">
-            <Card bordered={false} className="circlebox h-full">
-              <LineChart recordArray={recordArray} />
-            </Card>
+          <Col span={12}>
+            <img
+              width="100%"
+              src={images[(currentImageIndex + 1) % 4]}
+              alt={`Image ${((currentImageIndex + 1) % 4) + 1}`}
+                style={{
+                 transition: 'opacity 0.5s ease-in-out',
+                 opacity: 1,
+               }}
+            />
           </Col>
         </Row>
+        <Button
+            icon={<RightOutlined />}
+            onClick={handleNextImage}
+            className="image-slider-button"
+        />
       </div>
     </>
   );

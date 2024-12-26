@@ -48,7 +48,7 @@ section.ant-layout.layout-content .ant-layout-content.content-ant {
 .icon-box {
   width: 48px;
   height: 48px;
-  background: #008AFB;
+  background: #dda0dd;
   color: #fff;
   border-radius: 0.5rem;
   margin-left: auto;
@@ -78,4 +78,39 @@ small.redtext {
 .bnb2 {
   color: #52c41a;
   font-weight: 700;
+}
+.image-slider-container {
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  img {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      max-width: 100%;
+     max-height: 100%;
+    height: auto;
+  }
+
+   .image-slider-button {
+      position: absolute;
+       background: transparent;
+        border: none;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+          &.ant-btn:hover {
+             background: transparent;
+        }
+
+       &:first-child {
+            left: 10px;
+        }
+
+         &:last-child {
+             right: 10px;
+         }
+    }
 }

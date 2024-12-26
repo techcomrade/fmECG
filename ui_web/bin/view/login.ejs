@@ -151,21 +151,22 @@
     }
 
     .input-group input:focus {
-      border: 0.125rem solid var(--primary-color);
-    }
+  border: 0.125rem solid var(--primary-color);
+}
 
-    .form button {
-      cursor: pointer;
-      width: 100%;
-      padding: 0.7rem 0;
-      border-radius: 0.5rem;
-      border: none;
-      background-color: var(--primary-color);
-      color: var(--white);
-      font-size: 1.2rem;
-      outline: none;
-      margin-top: 2%;
-    }
+.form button {
+  cursor: pointer;
+  width: 100%;
+  padding: 0.7rem 0;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #dda0dd; /* Màu tím nhạt */
+  color: var(--white);
+  font-size: 1.2rem;
+  outline: none;
+  margin-top: 2%;
+}
+
 
     .form p {
       margin: 1rem 0;
@@ -246,34 +247,44 @@
     /* BACKGROUND */
 
     .container::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100vh;
-      width: 300vw;
-      transform: translate(35%, 0);
-      background-image: linear-gradient(
-        -45deg,
-        var(--primary-color) 0%,
-        var(--secondary-color) 100%
-      );
-      transition: 1s ease-in-out;
-      z-index: 6;
-      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-      border-bottom-right-radius: max(50vw, 50vh);
-      border-top-left-radius: max(50vw, 50vh);
-    }
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50vw; /* Chiếm nửa màn hình bên trái */
+  height: 100vh; /* Chiều cao toàn màn hình */
+  background: linear-gradient(
+    to bottom right,
+    #dda0dd,
+    var(--secondary-color)
+  );
+  z-index: 1; /* Đặt phía sau nội dung */
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
 
-    .container.sign-in::before {
-      transform: translate(0, 0);
-      right: 50%;
-    }
+.container .welcome-text {
+  position: absolute;
+  top: 50%; /* Căn giữa theo chiều dọc */
+  left: 25%; /* Đặt ở giữa nửa màn hình bên trái */
+  transform: translate(-50%, -50%);
+  z-index: 2; /* Nội dung phía trước nền */
+  font-size: 2.5rem;
+  color: white;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Tạo hiệu ứng nổi bật cho chữ */
+  font-weight: bold; /* Tăng độ đậm cho chữ */
+  font-family: "Arial", sans-serif; /* Kiểu font chữ hiện đại */
+}
 
-    .container.sign-up::before {
-      transform: translate(100%, 0);
-      right: 50%;
-    }
+.container.sign-in::before {
+  transform: translateX(0); /* Nền ở nửa màn hình bên trái */
+  opacity: 1;
+}
+
+.container.sign-up::before {
+  transform: translateX(-50%); /* Nền thu nhỏ hơn */
+  opacity: 0.6;
+}
+
 
     /* RESPONSIVE */
 
@@ -542,7 +553,7 @@
         <!-- SIGN IN CONTENT -->
         <div class="col align-items-center flex-col">
           <div class="text sign-in">
-            <h2>Welcome</h2>
+            <h2>PNS Medical</h2>
           </div>
           <div class="img sign-in"></div>
         </div>

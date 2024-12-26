@@ -1,109 +1,153 @@
-import { useLocation } from "react-router-dom";
-import { Row, Col, Breadcrumb, Dropdown, Avatar, Input } from "antd";
-import "./header.scss";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation, NavLink } from "react-router-dom";
+import { Row, Col, Breadcrumb, Dropdown, Avatar, Tooltip, Badge } from "antd"; // Import Badge
 import {
   UserOutlined,
-  TranslationOutlined,
   LogoutOutlined,
-  MessageFilled,
   SettingOutlined,
+  BellOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import { Notification } from "./notification";
-import avatar from "../assets/avatar.svg";
+import avatar from "../assets/avatar.png";
 import { getRoutesByRole, IRouteItem } from "./routes.type";
 import { Context } from "../utils/context";
-import { GetProps } from "react-redux";
-type SearchProps = GetProps<typeof Input.Search>;
-
-export const HeaderBar = () => {
-  const { Search } = Input;
-  const { pathname } = useLocation();
-
-  const { t, i18n } = useTranslation();
-
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-  };
-
-  const logOut = () => {
-    console.log("he");
-    localStorage.removeItem("ui-context");
-    document.cookie = `expired_time=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    window.location.href = "/";
-  };
-
-  const items = [
+import "./header.scss";
+import { FacebookFilled, TwitterSquareFilled, InstagramFilled } from '@ant-design/icons';
+import { ClockCircleOutlined } from "@ant-design/icons";
+const UserMenu = ({ logOut }: { logOut: () => void }) => {
+  return [
     {
+      key: "0",
       label: (
-        <NavLink
-          to="/account"
-          style={{ display: "flex", justifyContent: "start" }}
-        >
-          <UserOutlined style={{ marginRight: "8px" }} />
+        <NavLink to="/account" className="menu-item-link">
+          <UserOutlined className="menu-item-icon" />
           Account
         </NavLink>
       ),
-      key: "0",
     },
     {
-      label: (
-        <a href="" style={{ display: "flex", justifyContent: "start" }}>
-          <SettingOutlined style={{ marginRight: "8px" }} />
-          Settings
-        </a>
-      ),
       key: "1",
+      label: (
+        <NavLink to="/settings" className="menu-item-link">
+          <SettingOutlined className="menu-item-icon" />
+          Settings
+        </NavLink>
+      ),
     },
     {
-      label: (
-        <a style={{ display: "flex" }} onClick={() => logOut()}>
-          <LogoutOutlined style={{ marginRight: "8px" }} />
-          Sign out
-        </a>
-      ),
       key: "2",
+      label: (
+        <div className="menu-item-link" onClick={logOut}>
+          <LogoutOutlined className="menu-item-icon" />
+          Sign out
+        </div>
+      ),
     },
   ];
+};
 
-  var menulist: { [key: string]: IRouteItem } = getRoutesByRole(Context.role);
-  function getLabelByKey(key: string) {
-    if (key === "/account") return "Thông tin tài khoản";
+const NotificationIcon = () => {
+    const [notificationCount, setNotificationCount] = useState(3)
+    const onNotificationClick = () => {
+        setNotificationCount(0);
+        console.log('open notification');
+    }
+    return <Tooltip title="Notification" color="#108ee9">
+        <Badge count={notificationCount} onClick={onNotificationClick}>
+            <BellOutlined className="header-icon" />
+        </Badge>
+    </Tooltip>
+}
+const MessageIcon = () => {
+    return <Tooltip title="Messages">
+        <MessageOutlined className="header-icon" />
+    </Tooltip>
+}
+const SocialIcons = () => {
+  return (
+    <div className="header-social-icons">
+        <Tooltip title="Facebook">
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                <FacebookFilled className="social-icon" />
+            </a>
+        </Tooltip>
+        <Tooltip title="Twitter">
+            <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
+                <TwitterSquareFilled className="social-icon" />
+            </a>
+        </Tooltip>
+        <Tooltip title="Instagram">
+        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+            <InstagramFilled className="social-icon" />
+        </a>
+        </Tooltip>
+    </div>
+  );
+};
 
-    const entry = Object.values(menulist).find((item: any) => item.key === key);
-    if (!entry) return null;
-    return entry.label;
-  }
+const Clock = () => {
+  const [time, setTime] = useState(new Date());
 
-  const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
-    console.log(info?.source, value);
+  useEffect(() => {
+      const interval = setInterval(() => {
+          setTime(new Date());
+      }, 1000);
+      return () => clearInterval(interval);
+  }, []);
+
+  const formattedTime = time.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+  });
 
   return (
-    <div className="header-container">
-      <Row gutter={[24, 0]}>
-        <Col span={24} md={12} className="header-breadcrumb">
-          <Breadcrumb>
-            <Breadcrumb.Item>
+      <div className="header-clock-container">
+          <ClockCircleOutlined className="header-clock-icon"/>
+          <span className="header-clock">{formattedTime}</span>
+      </div>
+  )
+};
+export const HeaderBar = () => {
+  const { pathname } = useLocation();
+  const { t, i18n } = useTranslation();
+    
+    const logOut = () => {
+        localStorage.removeItem("ui-context");
+        document.cookie = `expired_time=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        window.location.href = "/";
+    };
+    const menulist: { [key: string]: IRouteItem } = getRoutesByRole(Context.role);
+    
+    const getLabelByKey = (key: string) => {
+        if (key === "/account") return "Thông tin tài khoản";
+        const entry = Object.values(menulist).find((item: any) => item.key === key);
+        return entry ? entry.label : null;
+    };
+    
+
+  return (
+    <header className="header">
+      <div className="header-content">
+        <div className="header-left">
+          <Breadcrumb className="header-breadcrumb">
+              <Breadcrumb.Item>
               <NavLink to="/">{t("page.breadcrumb.pages")}</NavLink>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              {t(getLabelByKey(pathname) ?? "page.side-bar.home")}
-            </Breadcrumb.Item>
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>
+                  {t(getLabelByKey(pathname) ?? "page.side-bar.home")}
+              </Breadcrumb.Item>
           </Breadcrumb>
-          <div className="ant-page-header-heading">
-            <span
-              className="ant-page-header-heading-title"
-              style={{ textTransform: "capitalize" }}
-            ></span>
-          </div>
-        </Col>
-        <Col span={24} md={12} className="header-control">
-          <div onClick={(e) => e.preventDefault()}>
+        </div>
+        <div className="header-right">
+          <div className="header-controls">
+            <Clock />
+            <NotificationIcon />
+            <MessageIcon />
+            <SocialIcons />
             <Dropdown
-              menu={{
-                items,
-              }}
+              menu={{ items: UserMenu({ logOut }) }}
               trigger={["click"]}
             >
               <Avatar
@@ -114,29 +158,8 @@ export const HeaderBar = () => {
               />
             </Dropdown>
           </div>
-{/* 
-          <div className="header-icon-box">
-            <Notification />
-          </div>
-
-          <div className="header-icon-box">
-<<<<<<< HEAD
-            <MessageFilled />
-          </div> */}
-=======
-            <MessageFilled style={{ color: "#17a2b8" }} />
-          </div>
->>>>>>> c577875e0bebcccd9d155003f4d5f1a3be1a10a8
-
-          {/* <div style={{ flex: 1, marginRight: "24px" }}>
-            <Search
-              placeholder="Search something here..."
-              onSearch={onSearch}
-              style={{ width: 450 }}
-            />
-          </div> */}
-        </Col>
-      </Row>
-    </div>
+        </div>
+      </div>
+    </header>
   );
 };

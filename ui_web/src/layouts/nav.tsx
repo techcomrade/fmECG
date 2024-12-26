@@ -71,7 +71,7 @@ export const Nav = () => {
           </span>
           <span>{t("page.side-bar.account-info")}</span>
         </Menu.Item>
-        <Menu.Item
+        {/* <Menu.Item
           className="menu-item darker-item"
           key="/setting"
           onClick={() => {
@@ -82,8 +82,8 @@ export const Nav = () => {
           <InfoCircleOutlined />
           </span>
           <span>{t("page.side-bar.about-us")}</span>
-        </Menu.Item>
-        <Menu.Item
+        </Menu.Item> */}
+        {/* <Menu.Item
           className="menu-item"
           key="/setting"
           onClick={() => navigate("/")}
@@ -92,7 +92,7 @@ export const Nav = () => {
             <SettingOutlined />
           </span>
           <span>{t("page.side-bar.setting")}</span>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
     </Sider>
   );
