@@ -8,6 +8,9 @@ import { ConsultationScheduleService } from "../consultation_schedule/consultati
 import { UserService } from "../user/user.service";
 import { ConsultationScheduleRequest } from "../consultation_schedule/dto/consultation_schedule.request";
 import { TransactionService } from "../transaction/transaction.service";
+import { CronJob } from "cron";
+import { NotificationService } from "../notification/notification.service";
+import { NotificationRequest } from "../notification/dto/notification.request";
 
 @Injectable()
 export class ScheduleService {
@@ -16,8 +19,12 @@ export class ScheduleService {
     @Inject(forwardRef(() => UserService))
     private userService: UserService,
     private consultationScheduleService: ConsultationScheduleService,
-    private transactionService: TransactionService
-  ) {}
+    private transactionService: TransactionService,
+    private notificationService: NotificationService
+  ) {
+    this.autoCancelPendingSchedule();
+    this.autoSendScheduleReminder();
+  }
 
   async getAllSchedules(): Promise<ScheduleResponse[]> {
     const schedules = await this.scheduleRepository.getAllSchedules();
@@ -66,11 +73,11 @@ export class ScheduleService {
 
   async getAvailableScheduleByDoctorId(scheduleList: ScheduleResponse[]) {
     const availableSchedule = [];
-    const today = new Date();
+    const localTime = new Date(new Date().getTime() + 7 * 60 * 60 * 1000);
 
-    for (let i = 1; i < 14; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
+    for (let i = 2; i <= 15; i++) {
+      const date = new Date(localTime);
+      date.setDate(localTime.getDate() + i);
       const hours = [
         8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15,
         15.5, 16, 16.5, 17, 17.5,
@@ -190,10 +197,84 @@ export class ScheduleService {
       const schedule = await this.getScheduleById(id);
       if (
         schedule.schedule_start_time >= startTime &&
-        schedule.schedule_start_time <= startTime + TWO_WEEKS_IN_SECONDS
+        schedule.schedule_start_time < startTime + TWO_WEEKS_IN_SECONDS
       )
         scheduleList.push(schedule);
     }
     return scheduleList;
+  }
+
+  async cancelPendingSchedule() {
+    const pendingSchedules = await this.scheduleRepository.getPendingSchedule();
+    const ALLOW_TIME = 12 * 60 * 60 * 1000;
+    const currentTime = new Date().getTime();
+    for (const schedule of pendingSchedules) {
+      const consultation =
+        await this.consultationScheduleService.getConsultationScheduleByScheduleId(
+          schedule.id
+        );
+      if (schedule.createdAt.getTime() + ALLOW_TIME >= currentTime) {
+        await Promise.all([
+          this.notificationService.add({
+            doctor_id: consultation.doctor_id,
+            patient_id: schedule.patient_id,
+            schedule_start_time: schedule.schedule_start_time,
+            is_seen: false,
+            type: 0,
+            status: 5,
+          } as NotificationRequest),
+          this.deleteScheduleById(schedule.id),
+        ]);
+      }
+    }
+  }
+
+  autoCancelPendingSchedule() {
+    const job = CronJob.from({
+      cronTime: "0 */1 * * *",
+      onTick: async () => {
+        console.log(
+          `Running auto check pending schedule at ${new Date().toLocaleTimeString()}, ${new Date().toLocaleDateString()}`
+        );
+        await this.cancelPendingSchedule();
+      },
+      start: true,
+    });
+  }
+
+  async sendScheduleReminder() {
+    const currentTime = Math.floor(new Date().getTime() / 1000);
+    const acceptedSchedules =
+      await this.scheduleRepository.getAcceptedSchedule();
+    for (const schedule of acceptedSchedules) {
+      const reminderTime = Number(schedule.schedule_start_time) - currentTime;
+      if (reminderTime === 3600 || reminderTime === 900) {
+        const consultation =
+          await this.consultationScheduleService.getConsultationScheduleByScheduleId(
+            schedule.id
+          );
+        await this.notificationService.add({
+          doctor_id: consultation.doctor_id,
+          patient_id: schedule.patient_id,
+          schedule_start_time: schedule.schedule_start_time,
+          is_seen: false,
+          type: reminderTime === 3600 ? 0 : 1,
+          status: 0,
+        } as NotificationRequest);
+      }
+    }
+  }
+
+  autoSendScheduleReminder() {
+    const job = CronJob.from({
+      cronTime: "0,15,30,45 9-21 * * *",
+      onTick: async () => {
+        console.log(
+          `Running auto send schedule reminder at ${new Date().toLocaleTimeString()}, ${new Date().toLocaleDateString()}`
+        );
+        await this.sendScheduleReminder();
+      },
+      start: true,
+    });
   }
 }
