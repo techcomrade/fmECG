@@ -13,6 +13,7 @@ import {
   getScheduleByPatientId,
   resetLoadCreateScheduleByDoctorStatus,
   resetLoadCreateScheduleByPatientStatus,
+  setClickedNotificationDate,
 } from "../../redux/reducer/scheduleSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
@@ -116,6 +117,14 @@ export const Schedule: React.FC = () => {
     }
   }, [dataState.loadDataStatus]);
 
+  React.useEffect(() => {
+    if (dataState.clickedNotificationDate) {
+      setSelectedDate(dataState.clickedNotificationDate as Dayjs);
+      setIsOpen(true);
+      dispatch(setClickedNotificationDate(null));
+    }
+  }, [dataState.clickedNotificationDate]);
+
   const handleData = (data: any) => {
     const scheduleData = { ...data };
     Object.keys(data).forEach((key) => {
@@ -208,6 +217,7 @@ export const Schedule: React.FC = () => {
   const onDateSelect = (value: Dayjs, selectInfo: SelectInfo) => {
     if (selectInfo.source === "date") {
       setSelectedDate(value);
+      console.log(value);
       setIsOpen(true);
     }
   };

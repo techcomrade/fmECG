@@ -18,12 +18,15 @@ import { userRole } from "../constants";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { showNotiError } from "../components/notification";
+import { setClickedNotificationDate } from "../redux/reducer/scheduleSlice";
+import { useNavigate } from "react-router-dom";
 dayjs.extend(relativeTime);
 
 const { Text } = Typography;
 
 export const Notification: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const dataState = useAppSelector((state) => state.notificationSchedule);
   const [notifications, setNotifications] = useState<NotificationResponse[]>(
     []
@@ -31,6 +34,7 @@ export const Notification: React.FC = () => {
   const getRelativeTime = (createdAt: number): any => {
     return dayjs(createdAt).fromNow();
   };
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(getNotificationByUserId());
@@ -164,6 +168,10 @@ export const Notification: React.FC = () => {
                     updateSeenStatus({ id: item.id } as UpdateSeenStatusRequest)
                   );
                 }
+                const selectedDate = dayjs.unix(item.schedule_start_time);
+                navigate("/schedule");
+                dispatch(setClickedNotificationDate(selectedDate));
+                setIsOpen(false);
               }}
             >
               <List.Item.Meta
@@ -219,6 +227,7 @@ export const Notification: React.FC = () => {
 
   return (
     <Dropdown
+      open={isOpen}
       dropdownRender={() => <NotificationBox />}
       trigger={["click"]}
       placement="bottomRight"
@@ -236,7 +245,10 @@ export const Notification: React.FC = () => {
             cursor: "pointer",
             color: "#ffc107",
           }}
-          onClick={() => dispatch(getNotificationByUserId())}
+          onClick={() => {
+            setIsOpen(true);
+            dispatch(getNotificationByUserId());
+          }}
         />
       </Badge>
     </Dropdown>
