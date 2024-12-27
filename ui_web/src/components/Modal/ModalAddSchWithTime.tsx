@@ -165,13 +165,13 @@ const ModalComponent = (props: any, ref: any) => {
                   format={"DD/MM/YYYY"}
                   placeholder="Ngày khám"
                   disabledDate={(current) => {
-                    const today = dayjs();
-                    const twoWeeksFromToday = today.add(14, "day");
+                    const tomorrow = dayjs().add(1, "day");
+                    const afterTomorrow = tomorrow.add(1, "day");
+                    const twoWeeksFromTomorrow = tomorrow.add(14, "day");
                     return (
-                      today &&
                       current &&
-                      (current.isBefore(today.startOf("day")) ||
-                        current.isAfter(twoWeeksFromToday) ||
+                      (current.isBefore(afterTomorrow.startOf("day")) ||
+                        current.isAfter(twoWeeksFromTomorrow) ||
                         current.day() === 0 ||
                         current.day() === 6)
                     );
