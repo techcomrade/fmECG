@@ -78,9 +78,10 @@ export class ScheduleService {
     for (let i = 2; i <= 15; i++) {
       const date = new Date(localTime);
       date.setDate(localTime.getDate() + i);
+      date.setUTCHours(0, 0, 0, 0);
       const hours = [
-        8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15,
-        15.5, 16, 16.5, 17, 17.5,
+        9, 9.5, 10, 10.5, 11, 11.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18,
+        18.5, 19, 19.5, 20, 20.5,
       ];
       const formattedDate = date.toISOString().split("T")[0];
       const filterHours = hours.filter((hour) => {
@@ -267,7 +268,7 @@ export class ScheduleService {
 
   autoSendScheduleReminder() {
     const job = CronJob.from({
-      cronTime: "0,15,30,45 9-21 * * *",
+      cronTime: "0,15,30,45 8-21 * * *",
       onTick: async () => {
         console.log(
           `Running auto send schedule reminder at ${new Date().toLocaleTimeString()}, ${new Date().toLocaleDateString()}`
