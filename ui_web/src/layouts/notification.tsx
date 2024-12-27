@@ -88,14 +88,20 @@ export const Notification: React.FC = () => {
       .format("HH:mm DD/MM/YYYY");
     const [time, date] = dateObj.split(" ");
     if (Context.role === userRole.patient) {
+      if (item.status === 0)
+        return `Còn 1 tiếng nữa là đến lịch hẹn với bác sĩ ${item.doctor_name} vào ${time} ngày ${date} của bạn`;
       if (item.status === 1)
         return `Bác sĩ ${item.doctor_name} đã chấp nhận lịch hẹn vào ${time} ngày ${date} của bạn`;
       if (item.status === 2)
         return `Bạn đã thành công đặt lịch hẹn với bác sĩ ${item.doctor_name} vào ${time} ngày ${date}, vui lòng đợi bác sĩ xác nhận`;
       if (item.status === 3)
         return `Bác sĩ ${item.doctor_name} đã từ chối lịch hẹn vào ${time} ngày ${date} của bạn`;
-      return `Bác sĩ ${item.doctor_name} đã tạo lịch hẹn vào ${time} ngày ${date} cho bạn`;
+      if (item.status === 4)
+        return `Bác sĩ ${item.doctor_name} đã tạo lịch hẹn vào ${time} ngày ${date} cho bạn`;
+      return `Lịch hẹn vào ${time} ngày ${date} của bạn đã bị hủy tự động do chưa được bác sĩ xác nhận`;
     } else if (Context.role === userRole.doctor) {
+      if (item.status === 0)
+        return `Còn 15 phút nữa là đến lịch hẹn vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
       if (item.status === 1)
         return `Bạn đã chấp nhận lịch hẹn vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
       if (item.status === 2)
