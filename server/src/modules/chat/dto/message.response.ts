@@ -5,4 +5,6 @@ export class MessageResponse {
     message: string;
     groupChatId: string;
     time: number; 
+    latestMessage?: string;
+    seenBy: string[];
 }

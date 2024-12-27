@@ -4,4 +4,6 @@ export class MessageRequest {
     message: string;
     groupChatId: string;
     time: number;
+    latestMessage?: string;
+    seenBy: string[];
 }

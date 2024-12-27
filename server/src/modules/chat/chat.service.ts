@@ -26,4 +26,39 @@ export class ChatService {
         .sort({ timestamp: 1 });
     }
   }
+
+  async getLatestMessages(): Promise<MessageSchema[]> {
+    return this.chatModel.aggregate([
+      {
+        $sort: { time: -1 }, // Sắp xếp theo thời gian giảm dần
+      },
+      {
+        $group: {
+          _id: "$groupChatId", // Nhóm theo `groupChatId`
+          latestMessage: { $first: "$$ROOT" },
+        },
+      },
+      {
+        $replaceRoot: { newRoot: "$latestMessage" }, 
+      },
+    ]);
+  }
+
+  async countUnreadMessagesByGroup(userId: string): Promise<number[]> {
+    return this.chatModel.aggregate([
+      {
+        $match: {
+          seenBy: { $ne: userId }, 
+        },
+      },
+      {
+        $group: {
+          _id: "$groupChatId",
+          unreadCount: { $sum: 1 },
+        },
+      },
+    ]);
+  }
+  
+  
 }

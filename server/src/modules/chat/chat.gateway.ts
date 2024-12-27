@@ -42,10 +42,4 @@ export class ChatGateway {
     // Lưu tin nhắn vào cơ sở dữ liệu
     await this.chatService.saveMessage(messageRequest);
   }
-
-  @SubscribeMessage('getMessages')
-  async loadMessages(@MessageBody() messageRequest: MessageRequest, client: Socket) {
-    let messages = await this.chatService.loadMessages(messageRequest);
-    return messages;
-  }
 } 
