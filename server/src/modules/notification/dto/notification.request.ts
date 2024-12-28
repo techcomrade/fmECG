@@ -50,6 +50,14 @@ export class NotificationRequest {
   status: number;
 
   @ApiProperty({
+    description:
+      "Reason why the doctor rejected patient's schedule",
+    example: "I'm busy at that day, please choose another day such as 10/1 or 12/1",
+  })
+  @IsNotEmpty()
+  reject_reason?: string;
+
+  @ApiProperty({
     description: "Type of the notification (0: Send to Patient, 1: Send to Doctor)",
     example: 1,
   })

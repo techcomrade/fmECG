@@ -36,6 +36,7 @@ export class NotificationRepository {
       schedule_start_time: notification.schedule_start_time,
       is_seen: notification.is_seen,
       status: notification.status ?? 2,
+      reject_reason: notification.reject_reason ?? null,
       type: notification.type,
     });
   }
