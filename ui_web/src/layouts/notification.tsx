@@ -208,7 +208,8 @@ export const Notification: React.FC = () => {
                   background: "none",
                   transition: "color 0.3s",
                 }}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   dispatch(deleteNotification(item.id));
                 }}
               />
