@@ -30,5 +30,8 @@ export class NotificationResponse {
   status: number;
 
   @Expose()
+  reject_reason?: string;
+
+  @Expose()
   createdAt: Date;
 }

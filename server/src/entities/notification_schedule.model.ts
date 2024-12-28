@@ -55,6 +55,12 @@ export class NotificationScheduleModel extends Model<NotificationScheduleModel> 
   status: number;
 
   @Column({
+    type: DataType.TEXT,
+    allowNull: true,
+  })
+  reject_reason: string;
+
+  @Column({
     type: DataType.NUMBER,
     allowNull: false,
   })
