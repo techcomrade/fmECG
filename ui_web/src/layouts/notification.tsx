@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, List, Badge, Typography, Card, Divider, Button } from "antd";
+import {
+  Dropdown,
+  List,
+  Badge,
+  Typography,
+  Card,
+  Divider,
+  Button,
+  Modal,
+  Form,
+} from "antd";
 import { BellFilled, CloseOutlined } from "@ant-design/icons";
 import "./notification.scss";
 import {
@@ -18,8 +28,13 @@ import { userRole } from "../constants";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { showNotiError } from "../components/notification";
-import { setClickedNotificationDate } from "../redux/reducer/scheduleSlice";
+import {
+  getScheduleByDoctorId,
+  getScheduleByPatientId,
+  setClickedNotificationDate,
+} from "../redux/reducer/scheduleSlice";
 import { useNavigate } from "react-router-dom";
+import { convertTimeToDateTime } from "../utils/dateUtils";
 dayjs.extend(relativeTime);
 
 const { Text } = Typography;
@@ -35,6 +50,9 @@ export const Notification: React.FC = () => {
     return dayjs(createdAt).fromNow();
   };
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [showReason, setShowReason] = useState<boolean>(false);
+  const [data, setData] = React.useState<any>({});
+  const [form] = Form.useForm();
 
   useEffect(() => {
     dispatch(getNotificationByUserId());
@@ -99,7 +117,7 @@ export const Notification: React.FC = () => {
       if (item.status === 2)
         return `Bạn đã thành công đặt lịch hẹn với bác sĩ ${item.doctor_name} vào ${time} ngày ${date}, vui lòng đợi bác sĩ xác nhận`;
       if (item.status === 3)
-        return `Bác sĩ ${item.doctor_name} đã từ chối lịch hẹn vào ${time} ngày ${date} của bạn`;
+        return `Bác sĩ ${item.doctor_name} đã từ chối lịch hẹn vào ${time} ngày ${date} của bạn, nhấn để xem thông tin chi tiết`;
       if (item.status === 4)
         return `Bác sĩ ${item.doctor_name} đã tạo lịch hẹn vào ${time} ngày ${date} cho bạn`;
       return `Lịch hẹn vào ${time} ngày ${date} của bạn đã bị hủy tự động do chưa được bác sĩ xác nhận`;
@@ -163,15 +181,35 @@ export const Notification: React.FC = () => {
                 position: "relative",
               }}
               onClick={() => {
-                if (!item.is_seen) {
-                  dispatch(
-                    updateSeenStatus({ id: item.id } as UpdateSeenStatusRequest)
-                  );
+                if (item.status === 3 && Context.role === userRole.patient) {
+                  setShowReason(true);
+                  console.log(item);
+                  setData({
+                    doctor_name: item.doctor_name,
+                    schedule_start_time: item.schedule_start_time,
+                    schedule_end_time: item.schedule_start_time + 1800,
+                    reject_reason: item.reject_reason,
+                  });
+                  setIsOpen(false);
+                } else {
+                  if (Context.role === userRole.doctor) {
+                    dispatch(getScheduleByDoctorId());
+                  }
+                  if (Context.role === userRole.patient) {
+                    dispatch(getScheduleByPatientId());
+                  }
+                  if (!item.is_seen) {
+                    dispatch(
+                      updateSeenStatus({
+                        id: item.id,
+                      } as UpdateSeenStatusRequest)
+                    );
+                  }
+                  const selectedDate = dayjs.unix(item.schedule_start_time);
+                  navigate("/schedule");
+                  dispatch(setClickedNotificationDate(selectedDate));
+                  setIsOpen(false);
                 }
-                const selectedDate = dayjs.unix(item.schedule_start_time);
-                navigate("/schedule");
-                dispatch(setClickedNotificationDate(selectedDate));
-                setIsOpen(false);
               }}
             >
               <List.Item.Meta
@@ -227,31 +265,64 @@ export const Notification: React.FC = () => {
   );
 
   return (
-    <Dropdown
-      open={isOpen}
-      dropdownRender={() => <NotificationBox />}
-      trigger={["click"]}
-      placement="bottomRight"
-    >
-      <Badge
-        count={notifications.filter((n) => !n.is_seen).length}
-        size="small"
-        style={{
-          backgroundColor: "#1890ff",
-        }}
+    <>
+      <Modal
+        width={"400px"}
+        title="Thông tin chi tiết"
+        open={showReason}
+        footer={null}
+        onCancel={() => setShowReason(false)}
       >
-        <BellFilled
+        <Form form={form} labelCol={{ span: 11 }} wrapperCol={{ span: 12 }}>
+          <Form.Item
+            label="Bác sĩ:"
+            style={{ marginBottom: "0px", marginTop: "12px" }}
+          >
+            <div>{data.doctor_name}</div>
+          </Form.Item>
+          <Form.Item label="Ngày hẹn:" style={{ marginBottom: "0px" }}>
+            <div>
+              {convertTimeToDateTime(data.schedule_start_time).split(" ")[1]}
+            </div>
+          </Form.Item>
+          <Form.Item label="Ca hẹn:" style={{ marginBottom: "0px" }}>
+            <div>
+              Từ {convertTimeToDateTime(data.schedule_start_time).split(" ")[0]}{" "}
+              đến {convertTimeToDateTime(data.schedule_end_time).split(" ")[0]}
+            </div>
+          </Form.Item>
+          <Form.Item label="Lí do từ chối:" style={{ marginBottom: "0px" }}>
+            <div>{data.reject_reason}</div>
+          </Form.Item>
+        </Form>
+      </Modal>
+      <Dropdown
+        open={isOpen}
+        onOpenChange={(visible) => setIsOpen(visible)}
+        dropdownRender={() => <NotificationBox />}
+        trigger={["click"]}
+        placement="bottomRight"
+      >
+        <Badge
+          count={notifications.filter((n) => !n.is_seen).length}
+          size="small"
           style={{
-            fontSize: "25px",
-            cursor: "pointer",
-            color: "#ffc107",
+            backgroundColor: "#1890ff",
           }}
-          onClick={() => {
-            setIsOpen(true);
-            dispatch(getNotificationByUserId());
-          }}
-        />
-      </Badge>
-    </Dropdown>
+        >
+          <BellFilled
+            style={{
+              fontSize: "25px",
+              cursor: "pointer",
+              color: "#ffc107",
+            }}
+            onClick={() => {
+              setIsOpen(true);
+              dispatch(getNotificationByUserId());
+            }}
+          />
+        </Badge>
+      </Dropdown>
+    </>
   );
 };
