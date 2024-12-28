@@ -5,6 +5,8 @@ import { Injectable } from "@nestjs/common";
 import { DeviceService } from "../device/device.service";
 import { UserService } from "../user/user.service";
 const { v4: uuidv4 } = require("uuid");
+import * as fs from "fs";
+import * as path from "path";
 
 @Injectable()
 export class RecordService {
@@ -13,10 +15,43 @@ export class RecordService {
     private userService: UserService,
     private recordRepository: RecordRepository
   ) {}
+  private async saveFIle(file: Express.Multer.File, scheduleId: string) {
+    const uploadDir = path.resolve(__dirname, "..", "..", "public", "upload");
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    const uniqueFileName = `${scheduleId}-${file.originalname}`;
+    const filePath = path.join(uploadDir, uniqueFileName);
+    fs.writeFileSync(filePath, file.buffer);
 
-  async add(record: RecordRequest) {
+    return filePath;
+  }
+  async add(record: RecordRequest, file: Express.Multer.File) {
     record.id = uuidv4();
-    return await this.recordRepository.add(record);
+    try {
+      record.data_rec_url = await this.saveFIle(file, record.schedule_id);
+      return await this.recordRepository.add(record);
+    } catch (e) {
+      console.log("Error when create record", e);
+      if (record.data_rec_url) {
+        await this.deleteFile(record.data_rec_url);
+      }
+      throw new Error("Failed to add record. File has been removed.");
+    }
+  }
+
+  private async deleteFile(filePath: string) {
+    try {
+      const fullPath = path.resolve(__dirname, "..", "..", filePath);
+      if (fs.existsSync(fullPath)) {
+        fs.unlinkSync(fullPath);
+        console.log("File removed:", fullPath);
+      } else {
+        console.warn("File not found for deletion:", fullPath);
+      }
+    } catch (error) {
+      console.error("Error deleting file:", error);
+    }
   }
 
   async getAllRecord(): Promise<RecordResponse[]> {
