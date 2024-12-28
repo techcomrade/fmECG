@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import "./chat.scss";
 import {
+  getLatestMessages,
   loadMessages,
   resetGetMessageStatus,
   resetSendMessageStatus,
@@ -40,6 +41,7 @@ export const ChatMes: React.FC = () => {
   const dispatch = useAppDispatch();
   const userState = useAppSelector((state) => state.user);
   const dataState = useAppSelector((state) => state.chat);
+  const latestMessageState = useAppSelector((state) => state.chat);
   const groupState = useAppSelector((state) => state.groupChat);
   const [accountData, setAccountData] = useState<UserResponse>(
     {} as UserResponse
@@ -62,6 +64,7 @@ export const ChatMes: React.FC = () => {
   const [form] = Form.useForm();
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [latestMessage, setLatestMessage] = useState<MessageSchema[] | null>([]);
 
   useEffect(() => {
     if (Context.role === userRole.admin) dispatch(getAllUsers());
@@ -112,6 +115,7 @@ export const ChatMes: React.FC = () => {
 
   // Gửi tin nhắn
   const sendMessage = () => {
+    dispatch(getLatestMessages());
     if (selectedGroup || selectedRoomId) {
       if (newMessage.trim() !== "") {
         const messageData = {
@@ -130,12 +134,14 @@ export const ChatMes: React.FC = () => {
   };
 
   useEffect(() => {
+    
     if (selectedGroup || selectedRoomId) {
       socket.emit("joinGroup", selectedGroup || selectedRoomId);
       socket.on(
         `receiveMessageFrom${selectedGroup || selectedRoomId}`,
         (message) => {
           setMessages((prevMessages) => [...prevMessages, message]);
+          dispatch(getLatestMessages());
         }
       );
     }
@@ -143,7 +149,7 @@ export const ChatMes: React.FC = () => {
     return () => {
       socket.off(`receiveMessageFrom${selectedGroup || selectedRoomId}`);
     };
-  }, [selectedGroup, selectedRoomId]);
+  }, [selectedGroup, selectedRoomId, dispatch]);
 
   useEffect(() => {
     let privateRoomId = "";
@@ -174,7 +180,6 @@ export const ChatMes: React.FC = () => {
       dispatch(resetGetMessageStatus());
     }
   }, [dataState.loadGetMessageStatus, dispatch]);
-
   useEffect(() => {
     if (dataState.loadSendMessageStatus === ApiLoadingStatus.Success) {
       dispatch(resetSendMessageStatus());

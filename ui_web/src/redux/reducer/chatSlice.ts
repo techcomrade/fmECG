@@ -5,15 +5,19 @@ import { MessageSchema, MessageRequest, Service } from '../../api';
 
 interface IChatState {
     messages: MessageSchema[];
+    latestMessages: MessageSchema[];
     loadGetMessageStatus: ApiLoadingStatus;
     loadSendMessageStatus: ApiLoadingStatus;
+    loadGetLatestMessageStatus: ApiLoadingStatus;
     errorMessage: string | undefined;
 }
 
 const initialState: IChatState = {
     messages: [],
+    latestMessages: [],
     loadGetMessageStatus: ApiLoadingStatus.None,
     loadSendMessageStatus: ApiLoadingStatus.None,
+    loadGetLatestMessageStatus: ApiLoadingStatus.None,
     errorMessage: undefined,
 };
 
@@ -31,6 +35,13 @@ export const sendMessage = createAsyncThunkWrap(
     }
 );
 
+export const getLatestMessages = createAsyncThunkWrap(
+    "/chat/latest_messages",
+    async () => {
+        return await Service.chatService.getLatestMessages();
+    }
+)
+
 
 export const chatSlice = createSlice({
     name: 'chat',
@@ -41,7 +52,11 @@ export const chatSlice = createSlice({
         },
         resetSendMessageStatus: (state) => {
             state.loadSendMessageStatus = ApiLoadingStatus.None;
+        },
+        resetGetLatestMessageStatus: (state) => {
+            state.loadGetLatestMessageStatus = ApiLoadingStatus.None;
         }
+        
     },
     extraReducers: (builder) => {
         builder
@@ -65,13 +80,25 @@ export const chatSlice = createSlice({
             .addCase(sendMessage.rejected, (state, action) => {
                 state.errorMessage = (action.payload as any)?.message || "Unknown error";
                 state.loadSendMessageStatus = ApiLoadingStatus.Failed;
-            });
+            })
+            .addCase(getLatestMessages.pending, (state) => {
+                state.loadGetLatestMessageStatus = ApiLoadingStatus.Loading;
+            })
+            .addCase(getLatestMessages.fulfilled, (state, action) => {
+                state.latestMessages = action.payload;
+                state.loadGetLatestMessageStatus = ApiLoadingStatus.Success;
+            })
+            .addCase(getLatestMessages.rejected, (state, action) => {
+                state.errorMessage = (action.payload as any)?.message || "Unknown error";
+                state.loadGetLatestMessageStatus = ApiLoadingStatus.Failed;
+            })
     },
 });
 
 export const {
     resetGetMessageStatus,
-    resetSendMessageStatus
+    resetSendMessageStatus,
+    resetGetLatestMessageStatus
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

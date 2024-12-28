@@ -949,7 +949,7 @@ export class DiagnosisControllerClient {
     /**
      * @return Successful
      */
-    updateDiagnosis(body: DiagnosisRequest): Promise<boolean> {
+    updateDiagnosisByScheduleId(body: DiagnosisRequest): Promise<boolean> {
         let url_ = this.baseUrl + "/diagnosis/update";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -965,11 +965,11 @@ export class DiagnosisControllerClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUpdateDiagnosis(_response);
+            return this.processUpdateDiagnosisByScheduleId(_response);
         });
     }
 
-    protected processUpdateDiagnosis(response: Response): Promise<boolean> {
+    protected processUpdateDiagnosisByScheduleId(response: Response): Promise<boolean> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 201) {
@@ -2214,6 +2214,83 @@ export class ChatControllerClient {
         }
         return Promise.resolve<MessageSchema[]>(null as any);
     }
+
+    /**
+     * @return Get latest messages from all group chats
+     */
+    getLatestMessages(): Promise<MessageResponse[]> {
+        let url_ = this.baseUrl + "/chat/latest_messages";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetLatestMessages(_response);
+        });
+    }
+
+    protected processGetLatestMessages(response: Response): Promise<MessageResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MessageResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<MessageResponse[]>(null as any);
+    }
+
+    /**
+     * @return Get total unread messages for the current user
+     */
+    getUnreadCount(): Promise<void> {
+        let url_ = this.baseUrl + "/chat/unread-count";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetUnreadCount(_response);
+        });
+    }
+
+    protected processGetUnreadCount(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
 }
 
 export class GroupChatControllerClient {
@@ -2515,6 +2592,8 @@ export class ScheduleRequest implements IScheduleRequest {
     schedule_type_id!: number;
     /** Status ID of the schedule */
     status_id!: number;
+    /** Result of the schedule (1: success, 2: upcoming, 3: failed) */
+    schedule_result!: number;
 
     [key: string]: any;
 
@@ -2540,6 +2619,7 @@ export class ScheduleRequest implements IScheduleRequest {
             this.schedule_end_time = _data["schedule_end_time"];
             this.schedule_type_id = _data["schedule_type_id"];
             this.status_id = _data["status_id"];
+            this.schedule_result = _data["schedule_result"];
         }
     }
 
@@ -2563,6 +2643,7 @@ export class ScheduleRequest implements IScheduleRequest {
         data["schedule_end_time"] = this.schedule_end_time;
         data["schedule_type_id"] = this.schedule_type_id;
         data["status_id"] = this.status_id;
+        data["schedule_result"] = this.schedule_result;
         return data;
     }
 }
@@ -2582,6 +2663,8 @@ export interface IScheduleRequest {
     schedule_type_id: number;
     /** Status ID of the schedule */
     status_id: number;
+    /** Result of the schedule (1: success, 2: upcoming, 3: failed) */
+    schedule_result: number;
 
     [key: string]: any;
 }
@@ -3154,7 +3237,7 @@ export class NotificationRequest implements INotificationRequest {
     schedule_start_time!: number;
     /** Check if the notification was seen before (true: seen, false: not seen) */
     is_seen!: boolean;
-    /** Status of the schedule (1: accepted, 2:pending (if send to doctor) or successful follow-up schedule, 3: rejected) */
+    /** Status of the schedule (1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule) */
     status!: number;
     /** Type of the schedule (0: Send to Patient, 1: Send to Doctor) */
     type!: number;
@@ -3221,7 +3304,7 @@ export interface INotificationRequest {
     schedule_start_time: number;
     /** Check if the notification was seen before (true: seen, false: not seen) */
     is_seen: boolean;
-    /** Status of the schedule (1: accepted, 2:pending (if send to doctor) or successful follow-up schedule, 3: rejected) */
+    /** Status of the schedule (1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule) */
     status: number;
     /** Type of the schedule (0: Send to Patient, 1: Send to Doctor) */
     type: number;
@@ -3407,6 +3490,50 @@ export class MessageRequest implements IMessageRequest {
 }
 
 export interface IMessageRequest {
+
+    [key: string]: any;
+}
+
+export class MessageResponse implements IMessageResponse {
+
+    [key: string]: any;
+
+    constructor(data?: IMessageResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+        }
+    }
+
+    static fromJS(data: any): MessageResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new MessageResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        return data;
+    }
+}
+
+export interface IMessageResponse {
 
     [key: string]: any;
 }
