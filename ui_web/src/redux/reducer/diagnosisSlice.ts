@@ -36,7 +36,7 @@ export const getDiagnosisByScheduleId = createAsyncThunkWrap(
 export const updateDiagnosisByScheduleId = createAsyncThunkWrap(
   "/diagnosis/update",
   async (diagnosis: DiagnosisRequest) => {
-    return await Service.diagnosisService.updateDiagnosis(diagnosis);
+    return await Service.diagnosisService.updateDiagnosisByScheduleId(diagnosis);
   }
 );
 

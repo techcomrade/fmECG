@@ -25,7 +25,7 @@ export class RecordService {
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
-    const uniqueFileName = `${startTime}-${deviceId}-${file.originalname}`;
+    const uniqueFileName = `${deviceId}-${startTime}-${file.originalname}`;
     const filePath = path.join(uploadDir, uniqueFileName);
     fs.writeFileSync(filePath, file.buffer);
 

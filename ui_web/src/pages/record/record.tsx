@@ -19,6 +19,7 @@ import dayjs from "dayjs";
 import { Context } from "../../utils/context";
 import { userRole } from "../../constants";
 import { showNotiError, showNotiSuccess } from "../../components/notification";
+import { handleRecordName } from "../../utils/recordUtils";
 
 type RecordDetailType = {
   open: (id: string) => void;
@@ -110,8 +111,10 @@ export const Record: React.FC = () => {
     }
 
     if (type === "render") {
+      console.log(data);
       recordData = {
         ...data,
+        data_rec_url: handleRecordName(data.data_rec_url, data.device_id),
       };
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
