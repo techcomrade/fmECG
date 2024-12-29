@@ -308,7 +308,7 @@ export const ChatMes: React.FC = () => {
             <img
               src={groupChatImg}
               alt="No Group Selected"
-              style={{ width: "550px" }}
+              style={{ width: "100%", maxWidth: "550px" }}
             />
             <h3>Chọn một người hoặc nhóm để bắt đầu cuộc trò chuyện! 🚀</h3>
           </div>
@@ -352,9 +352,13 @@ export const ChatMes: React.FC = () => {
                               <div className="message-time">
                                 <em>
                                   {showUser} - {""}
-                                  {dayjs
-                                    .unix(msg.time)
-                                    .format("HH:mm, DD/MM/YYYY")}
+                                  {typeof msg.time === "number"
+                                    ? dayjs
+                                        .unix(msg.time)
+                                        .format("HH:mm, DD/MM/YYYY")
+                                    : dayjs(msg.time).format(
+                                        "HH:mm, DD/MM/YYYY"
+                                      )}
                                 </em>
                               </div>
                             )}

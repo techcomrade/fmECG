@@ -20,6 +20,7 @@ export class ConsultationScheduleRepository {
   ): Promise<ConsultationScheduleResponse> {
     return await this.consultationScheduleModel.findOne({
       where: { schedule_id: schedule_id },
+      lock: true,
     });
   }
 

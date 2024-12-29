@@ -79,7 +79,7 @@ const ModalComponent = (props: any, ref: any) => {
             <div>{data.doctor}</div>
           </Form.Item>
         )}
-        <Form.Item label="Thời gian khám" style={{ marginBottom: "4px" }}>
+        <Form.Item label="Thời gian hẹn" style={{ marginBottom: "4px" }}>
           <div>
             Từ {data.start_time} đến {data.end_time}
           </div>

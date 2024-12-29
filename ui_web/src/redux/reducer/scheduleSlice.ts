@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { createAsyncThunkWrap } from "../handler";
 import {
@@ -21,6 +21,7 @@ interface IScheduleState {
   loadAcceptScheduleStatus: ApiLoadingStatus;
   loadRejectScheduleStatus: ApiLoadingStatus;
   errorMessage: string | undefined;
+  clickedNotificationDate: object | null;
 }
 
 const initialState: IScheduleState = {
@@ -35,6 +36,7 @@ const initialState: IScheduleState = {
   loadAcceptScheduleStatus: ApiLoadingStatus.None,
   loadRejectScheduleStatus: ApiLoadingStatus.None,
   errorMessage: undefined,
+  clickedNotificationDate: null,
 };
 
 export const getAllSchedules = createAsyncThunkWrap("/schedules", async () => {
@@ -125,6 +127,9 @@ export const scheduleSlice = createSlice({
     },
     resetLoadRejectScheduleStatus: (state) => {
       state.loadAcceptScheduleStatus = ApiLoadingStatus.None;
+    },
+    setClickedNotificationDate: (state, action: PayloadAction<object | null>) => {
+      state.clickedNotificationDate = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -241,5 +246,6 @@ export const {
   resetLoadCreateScheduleByPatientStatus,
   resetLoadGetAvailableScheduleByDoctorId,
   resetLoadGetAvailableDoctorByScheduleTime,
+  setClickedNotificationDate,
 } = scheduleSlice.actions;
 export default scheduleSlice.reducer;

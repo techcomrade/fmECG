@@ -39,6 +39,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      reject_reason: {
+        type: Sequelize.TEXT,
+      },
       type: {
         type: Sequelize.INTEGER,
         allowNull: false,

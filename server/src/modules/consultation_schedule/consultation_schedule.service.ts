@@ -36,7 +36,7 @@ export class ConsultationScheduleService {
   async deleteConsultationByScheduleId(schedule_id: string, t?: any) {
     return this.consultationScheduleRepository.deleteConsultationByScheduleId(
       schedule_id,
-      t
+      t,
     );
   }
 }

@@ -229,7 +229,14 @@ export class ScheduleController {
     @Param("id") id: string
   ) {
     console.log("[P]::: Get available schedules of doctor by doctor id", id);
-    const timestamp = Math.floor(new Date().getTime() / 1000);
+
+    const today = new Date();
+    const afterTomorrow = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 2
+    );
+    const timestamp = Math.floor(afterTomorrow.getTime() / 1000);
 
     try {
       let doctorId: string;

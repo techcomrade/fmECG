@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Modal, Card, Tooltip, Button, Row, Col } from "antd";
+import { Modal, Card, Tooltip, Button, Row, Col, Input } from "antd";
 import "./schedule.scss";
 import { CarryOutOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Context } from "../../utils/context";
@@ -32,6 +32,9 @@ const ScheduleModalComponent = (props: any) => {
     (state) => state.notificationSchedule
   );
   const [statusIcon, setStatusIcon] = React.useState<any>(null);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [data, setData] = React.useState<any>({});
+  const [reason, setReason] = React.useState<string>("");
 
   React.useEffect(() => {
     if (listData[0]?.status === convertScheduleStatusToString(1)) {
@@ -85,208 +88,238 @@ const ScheduleModalComponent = (props: any) => {
   }, [notificationState.loadCreateNotification]);
 
   return (
-    <Modal
-      title={props.title}
-      open={props.isOpen}
-      onCancel={props.onClose}
-      footer={null}
-    >
-      {listData.length > 0 ? (
-        listData.map(
-          (
-            item: {
-              type: any;
-              schedule_id: string;
-              schedule_type: any;
-              doctor_id: string;
-              patient_id: string;
-              doctor: string;
-              patient: string;
-              session_string: any;
-              status: string;
-              result: string;
-              schedule_start_time: number;
-              start_time: string;
-              end_time: string;
-            },
-            index: any
-          ) => (
-            <Card
-              key={index}
-              className="card-filter"
-              actions={[
-                <Tooltip title="Xem chẩn đoán">
-                  <EyeOutlined
-                    key="show"
-                    onClick={() =>
-                      props.showDiagnosis(
-                        item.schedule_id,
-                        item.doctor,
-                        item.patient,
-                        item.start_time,
-                        item.end_time
-                      )
-                    }
-                  />
-                </Tooltip>,
-                ...(Context.role === userRole.doctor
-                  ? [
-                      <Tooltip title="Cập nhật chẩn đoán" key="edit">
-                        <EditOutlined
-                          onClick={() =>
-                            props.addDiagnosis(
-                              props.selectedDate,
-                              item.schedule_id,
-                              item.patient_id,
-                              item.patient,
-                              item.start_time,
-                              item.end_time
-                            )
-                          }
-                        />
-                      </Tooltip>,
-                    ]
-                  : []),
-                ...(Context.role === userRole.doctor && item.type === 2
-                  ? [
-                      <Tooltip title="Phê duyệt lịch khám" key="accept">
-                        <CarryOutOutlined
-                          onClick={() => {
-                            Modal.confirm({
-                              title: "Phê duyệt lịch khám",
-                              content:
-                                "Bạn có muốn chấp nhận lịch khám này không?",
-                              footer: (_, { CancelBtn }) => (
-                                <>
-                                  <CancelBtn />
-                                  <Button
-                                    key="not-accept"
-                                    onClick={() => {
-                                      dispatch(
-                                        rejectSchedule(item.schedule_id)
-                                      );
-                                      dispatch(
-                                        createNotification({
-                                          patient_id: item.patient_id,
-                                          schedule_start_time:
-                                            item.schedule_start_time,
-                                          status: 3,
-                                        } as NotificationRequest)
-                                      );
-                                      Modal.destroyAll();
-                                    }}
-                                  >
-                                    Không
-                                  </Button>
-                                  <Button
-                                    key="accept"
-                                    type="primary"
-                                    onClick={() => {
-                                      dispatch(
-                                        acceptSchedule({
+    <>
+      <Modal
+        width={"420px"}
+        title="Lí do từ chối lịch"
+        open={isOpen}
+        onOk={() => {
+          if (!reason.trim()) {
+            return alert("Vui lòng nhập lý do trước khi gửi!");
+          }
+          dispatch(rejectSchedule(data.schedule_id));
+          dispatch(
+            createNotification({
+              patient_id: data.patient_id,
+              schedule_start_time: data.schedule_start_time,
+              status: 3,
+              reject_reason: reason,
+            } as NotificationRequest)
+          );
+          setIsOpen(false);
+        }}
+        okText="Lưu"
+        onCancel={() => setIsOpen(false)}
+      >
+        <Input
+          placeholder="Nhập lí do bạn muốn từ chối lịch"
+          style={{ marginTop: "10px" }}
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
+        ></Input>
+      </Modal>
+      <Modal
+        title={props.title}
+        open={props.isOpen}
+        onCancel={props.onClose}
+        footer={null}
+      >
+        {listData.length > 0 ? (
+          listData.map(
+            (
+              item: {
+                type: any;
+                schedule_id: string;
+                schedule_type: any;
+                doctor_id: string;
+                patient_id: string;
+                doctor: string;
+                patient: string;
+                session_string: any;
+                status: string;
+                result: string;
+                schedule_start_time: number;
+                start_time: string;
+                end_time: string;
+              },
+              index: any
+            ) => (
+              <Card
+                key={index}
+                className="card-filter"
+                actions={[
+                  <Tooltip title="Xem chẩn đoán">
+                    <EyeOutlined
+                      key="show"
+                      onClick={() =>
+                        props.showDiagnosis(
+                          item.schedule_id,
+                          item.doctor,
+                          item.patient,
+                          item.start_time,
+                          item.end_time
+                        )
+                      }
+                    />
+                  </Tooltip>,
+                  ...(Context.role === userRole.doctor
+                    ? [
+                        <Tooltip title="Cập nhật chẩn đoán" key="edit">
+                          <EditOutlined
+                            onClick={() =>
+                              props.addDiagnosis(
+                                props.selectedDate,
+                                item.schedule_id,
+                                item.patient_id,
+                                item.patient,
+                                item.start_time,
+                                item.end_time
+                              )
+                            }
+                          />
+                        </Tooltip>,
+                      ]
+                    : []),
+                  ...(Context.role === userRole.doctor && item.type === 2
+                    ? [
+                        <Tooltip title="Phê duyệt lịch khám" key="accept">
+                          <CarryOutOutlined
+                            onClick={() => {
+                              Modal.confirm({
+                                title: "Phê duyệt lịch khám",
+                                content:
+                                  "Bạn có muốn chấp nhận lịch khám này không?",
+                                footer: (_, { CancelBtn }) => (
+                                  <>
+                                    <CancelBtn />
+                                    <Button
+                                      key="not-accept"
+                                      onClick={() => {
+                                        setIsOpen(true);
+                                        setData({
                                           schedule_id: item.schedule_id,
-                                        } as AcceptScheduleRequest)
-                                      );
-                                      dispatch(
-                                        createNotification({
                                           patient_id: item.patient_id,
                                           schedule_start_time:
                                             item.schedule_start_time,
-                                          status: 1,
-                                        } as NotificationRequest)
-                                      );
-                                      Modal.destroyAll();
-                                    }}
-                                  >
-                                    Có
-                                  </Button>
-                                </>
-                              ),
-                            });
-                          }}
-                        ></CarryOutOutlined>
-                      </Tooltip>,
-                    ]
-                  : []),
-              ]}
-            >
-              <div className="event-details">
-                {Object.entries(item).map(([key, value]) => {
-                  if (key === "result") {
-                    return (
-                      <Row key={key} className="event-row">
-                        <Col span={10} className="event-label">
-                          {value !== 2 ? "🎯 Kết quả lịch hẹn:" : ""}
-                        </Col>
-                        <Col span={14} className="event-value">
-                          {value !== 2
-                            ? convertScheduleResultToString(value)
-                            : ""}
-                        </Col>
-                      </Row>
-                    );
-                  }
+                                        });
+                                        Modal.destroyAll();
+                                      }}
+                                    >
+                                      Không
+                                    </Button>
+                                    <Button
+                                      key="accept"
+                                      type="primary"
+                                      onClick={() => {
+                                        dispatch(
+                                          acceptSchedule({
+                                            schedule_id: item.schedule_id,
+                                          } as AcceptScheduleRequest)
+                                        );
+                                        dispatch(
+                                          createNotification({
+                                            patient_id: item.patient_id,
+                                            schedule_start_time:
+                                              item.schedule_start_time,
+                                            status: 1,
+                                          } as NotificationRequest)
+                                        );
+                                        Modal.destroyAll();
+                                      }}
+                                    >
+                                      Có
+                                    </Button>
+                                  </>
+                                ),
+                              });
+                            }}
+                          ></CarryOutOutlined>
+                        </Tooltip>,
+                      ]
+                    : []),
+                ]}
+              >
+                <div className="event-details">
+                  {Object.entries(item).map(([key, value]) => {
+                    if (key === "result") {
+                      return (
+                        <Row key={key} className="event-row">
+                          <Col span={10} className="event-label">
+                            {value !== 2 ? "🎯 Kết quả lịch hẹn:" : ""}
+                          </Col>
+                          <Col span={14} className="event-value">
+                            {value !== 2
+                              ? convertScheduleResultToString(value)
+                              : ""}
+                          </Col>
+                        </Row>
+                      );
+                    }
 
-                  if (
-                    ["session_string", "schedule_type", "status"].includes(key)
-                  ) {
-                    return (
-                      <Row key={key} className="event-row">
-                        <Col span={10} className="event-label">
-                          {key === "session_string" && "⏰ Thời gian lịch hẹn:"}
-                          {key === "schedule_type" && "📋 Loại lịch hẹn:"}
-                          {key === "status" &&
-                            `${statusIcon} Trạng thái lịch hẹn:`}
-                        </Col>
-                        <Col span={14} className="event-value">
-                          {value}
-                        </Col>
-                      </Row>
-                    );
-                  }
+                    if (
+                      ["session_string", "schedule_type", "status"].includes(
+                        key
+                      )
+                    ) {
+                      return (
+                        <Row key={key} className="event-row">
+                          <Col span={10} className="event-label">
+                            {key === "session_string" &&
+                              "⏰ Thời gian lịch hẹn:"}
+                            {key === "schedule_type" && "📋 Loại lịch hẹn:"}
+                            {key === "status" &&
+                              `${statusIcon} Trạng thái lịch hẹn:`}
+                          </Col>
+                          <Col span={14} className="event-value">
+                            {value}
+                          </Col>
+                        </Row>
+                      );
+                    }
 
-                  if (
-                    (Context.role === userRole.admin ||
-                      Context.role === userRole.patient) &&
-                    key === "doctor"
-                  ) {
-                    return (
-                      <Row key={key} className="event-row">
-                        <Col span={10} className="event-label">
-                          👨‍⚕️ Bác sĩ:
-                        </Col>
-                        <Col span={14} className="event-value">
-                          {value}
-                        </Col>
-                      </Row>
-                    );
-                  }
+                    if (
+                      (Context.role === userRole.admin ||
+                        Context.role === userRole.patient) &&
+                      key === "doctor"
+                    ) {
+                      return (
+                        <Row key={key} className="event-row">
+                          <Col span={10} className="event-label">
+                            👨‍⚕️ Bác sĩ:
+                          </Col>
+                          <Col span={14} className="event-value">
+                            {value}
+                          </Col>
+                        </Row>
+                      );
+                    }
 
-                  if (
-                    (Context.role === userRole.admin ||
-                      Context.role === userRole.doctor) &&
-                    key === "patient"
-                  ) {
-                    return (
-                      <Row key={key} className="event-row">
-                        <Col span={10} className="event-label">
-                          🛌 Bệnh nhân:
-                        </Col>
-                        <Col span={14} className="event-value">
-                          {value}
-                        </Col>
-                      </Row>
-                    );
-                  }
-                })}
-              </div>
-            </Card>
+                    if (
+                      (Context.role === userRole.admin ||
+                        Context.role === userRole.doctor) &&
+                      key === "patient"
+                    ) {
+                      return (
+                        <Row key={key} className="event-row">
+                          <Col span={10} className="event-label">
+                            🛌 Bệnh nhân:
+                          </Col>
+                          <Col span={14} className="event-value">
+                            {value}
+                          </Col>
+                        </Row>
+                      );
+                    }
+                  })}
+                </div>
+              </Card>
+            )
           )
-        )
-      ) : (
-        <div>Không có lịch hẹn</div>
-      )}
-    </Modal>
+        ) : (
+          <div>Không có lịch hẹn</div>
+        )}
+      </Modal>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { NotificationController } from "./notifcation.controller";
 import { NotificationService } from "./notification.service";
@@ -11,8 +11,8 @@ import { ScheduleModule } from "../schedule/schedule.module";
 @Module({
   imports: [
     SequelizeModule.forFeature([NotificationScheduleModel, UserModel]),
-    UserModule,
-    ScheduleModule,
+    forwardRef(() => UserModule),
+    forwardRef(() => ScheduleModule),
   ],
   controllers: [NotificationController],
   providers: [NotificationService, NotificationRepository],

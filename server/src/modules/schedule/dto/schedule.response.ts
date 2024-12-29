@@ -1,5 +1,4 @@
 import { Expose, Exclude } from 'class-transformer';
-import { ApiProperty } from '@nestjs/swagger';
 
 @Exclude()
 export class ScheduleResponse {
@@ -29,4 +28,7 @@ export class ScheduleResponse {
 
   @Expose()
   schedule_result: number;
+
+  @Expose()
+  createdAt: Date;
 }

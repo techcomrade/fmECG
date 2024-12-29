@@ -49,6 +49,23 @@ export class ScheduleRepository {
     });
   }
 
+  async getAcceptedSchedule(): Promise<ScheduleResponse[]> {
+    return await this.scheduleModel.findAll({
+      where: {
+        status_id: 1,
+      },
+    });
+  }
+
+  async getPendingSchedule(): Promise<ScheduleResponse[]> {
+    return await this.scheduleModel.findAll({
+      where: {
+        status_id: 2,
+      },
+      lock: true,
+    });
+  }
+  
   async getScheduleById(id: string): Promise<ScheduleResponse> {
     return await this.scheduleModel.findOne({
       where: {
