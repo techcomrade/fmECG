@@ -15,21 +15,31 @@ export class RecordService {
     private userService: UserService,
     private recordRepository: RecordRepository
   ) {}
-  private async saveFIle(file: Express.Multer.File, scheduleId: string) {
+
+  private async saveFile(
+    file: Express.Multer.File,
+    deviceId: string,
+    startTime: bigint
+  ) {
     const uploadDir = path.resolve(__dirname, "..", "..", "public", "upload");
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
-    const uniqueFileName = `${scheduleId}-${file.originalname}`;
+    const uniqueFileName = `${startTime}-${deviceId}-${file.originalname}`;
     const filePath = path.join(uploadDir, uniqueFileName);
     fs.writeFileSync(filePath, file.buffer);
 
     return filePath;
   }
+
   async add(record: RecordRequest, file: Express.Multer.File) {
     record.id = uuidv4();
     try {
-      record.data_rec_url = await this.saveFIle(file, record.schedule_id);
+      record.data_rec_url = await this.saveFile(
+        file,
+        record.device_id,
+        record.start_time
+      );
       return await this.recordRepository.add(record);
     } catch (e) {
       console.log("Error when create record", e);
