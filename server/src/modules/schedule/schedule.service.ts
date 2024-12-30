@@ -214,7 +214,7 @@ export class ScheduleService {
         await this.consultationScheduleService.getConsultationScheduleByScheduleId(
           schedule.id
         );
-      if (schedule.createdAt.getTime() + ALLOW_TIME >= currentTime) {
+      if (schedule.createdAt.getTime() + ALLOW_TIME <= currentTime) {
         await Promise.all([
           this.notificationService.add({
             doctor_id: consultation.doctor_id,
@@ -230,7 +230,7 @@ export class ScheduleService {
     }
   }
 
-  autoCancelPendingSchedule() {
+  private async autoCancelPendingSchedule() {
     const job = CronJob.from({
       cronTime: "0 */1 * * *",
       onTick: async () => {
@@ -266,7 +266,7 @@ export class ScheduleService {
     }
   }
 
-  autoSendScheduleReminder() {
+  private async autoSendScheduleReminder() {
     const job = CronJob.from({
       cronTime: "0,15,30,45 8-21 * * *",
       onTick: async () => {

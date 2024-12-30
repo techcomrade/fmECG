@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { convertTimeToDateTime } from "../../utils/dateUtils";
 import { Context } from "../../utils/context";
 import { userRole } from "../../constants";
+import { handleRecordName } from "../../utils/recordUtils";
 
 const RecordDetailComponent = (props: any, ref: any) => {
   const dispatch = useAppDispatch();
@@ -32,7 +33,7 @@ const RecordDetailComponent = (props: any, ref: any) => {
     if (dataState.loadGetRecordByIdStatus === ApiLoadingStatus.Success) {
       const record = dataState.recordData;
       const rawData = {
-        ...record,
+        data_rec_url: handleRecordName(record.data_rec_url, record.device_id),
         patient: record.patient,
         doctor: record.doctor,
         device_name: record.device_name,

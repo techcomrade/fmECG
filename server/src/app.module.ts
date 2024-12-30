@@ -11,7 +11,6 @@ import { NotificationModule } from "./modules/notification/notification.module";
 import { StatisticModule } from "./modules/statistic/statistic.module";
 import { ChatModule } from "./modules/chat/chat.module";
 import { GroupChatModule } from './modules/groupChat/groupChat.module';
-// import { AuthenticationModule } from "./modules/authentication/authentication.module";
 require("dotenv").config();
 
 @Module({
@@ -35,7 +34,6 @@ require("dotenv").config();
     ScheduleModule,
     NotificationModule,
     StatisticModule,
-    // AuthenticationModule,
     ChatModule,
     GroupChatModule
   ],
