@@ -1,5 +1,6 @@
 import 'package:bluetooth_ecg/screens/new_screens/circular_indicator_home.dart';
 import 'package:bluetooth_ecg/screens/new_screens/progress_home.dart';
+import 'package:bluetooth_ecg/screens/notification_screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -46,8 +47,14 @@ class NewHomeScreen extends StatelessWidget {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
-                            icon: PhosphorIcon(PhosphorIcons.regular.gearSix,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const NotificationScreen()));
+                            },
+                            icon: PhosphorIcon(PhosphorIcons.regular.bell,
                                 color: Colors.white),
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
