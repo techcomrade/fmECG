@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:bluetooth_ecg/constants/api_constant.dart';
-import 'package:bluetooth_ecg/controllers/firebase_messages_controller.dart';
 import 'package:bluetooth_ecg/providers/user_provider.dart';
 import 'package:bluetooth_ecg/utils/utils.dart';
 import 'package:http/http.dart' as http;
@@ -117,11 +116,11 @@ class AuthProvider extends ChangeNotifier {
   }
 
   void _checkAndSaveFirebaseToken() async {
-    bool isFirebaseTokenExisted =
-        await FmECGFirebaseMessage().checkFirebaseTokenExist(_firebaseToken);
-    if (!isFirebaseTokenExisted) {
-      await FmECGFirebaseMessage().saveTokenToFirestore(_userId, _firebaseToken);
-    }
+    // bool isFirebaseTokenExisted =
+    //     await FmECGFirebaseMessage().checkFirebaseTokenExist(_firebaseToken);
+    // if (!isFirebaseTokenExisted) {
+    //   await FmECGFirebaseMessage().saveTokenToFirestore(_userId, _firebaseToken);
+    // }
   }
 
   Future<void> registerUser(String email, String password) async {

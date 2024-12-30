@@ -149,7 +149,7 @@ final class PersonalInfor extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.blue,
+                      backgroundColor: Colors.blue,
                     ),
                     child: const Text(
                       'Cập nhật lại định danh',
