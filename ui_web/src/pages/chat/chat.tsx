@@ -178,6 +178,7 @@ export const ChatMes: React.FC = () => {
   useEffect(() => {
     if (dataState.loadSendMessageStatus === ApiLoadingStatus.Success) {
       dispatch(resetSendMessageStatus());
+      dispatch(getLatestMessages());
     }
   }, [dataState.loadSendMessageStatus, dispatch]);
 
