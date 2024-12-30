@@ -10,7 +10,6 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:telephony/telephony.dart';
 import 'package:geolocator/geolocator.dart' as geo;
 import '../../constants/color_constant.dart';
 
@@ -119,15 +118,15 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   }
 
   Future<void> sendSMSAutomatically(String message) async {
-    String phoneNumber = await _getPhoneNumberFromPrefs();
-    if (phoneNumber.isNotEmpty) {
-      final Telephony telephony = Telephony.instance;
-      await telephony.sendSms(to: phoneNumber, message: message);
-    } else {
-      setState(() {
-        isNotSetupPhoneNumber = true;
-      });
-    }
+    // String phoneNumber = await _getPhoneNumberFromPrefs();
+    // if (phoneNumber.isNotEmpty) {
+    //   final Telephony telephony = Telephony.instance;
+    //   await telephony.sendSms(to: phoneNumber, message: message);
+    // } else {
+    //   setState(() {
+    //     isNotSetupPhoneNumber = true;
+    //   });
+    // }
   }
 
   _handleSaveRecordInFile() async {
