@@ -1,0 +1,66 @@
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty, IsNumber, IsUUID } from "class-validator";
+
+export class NotificationRequest {
+  @ApiProperty({
+    description: "The unique identifier for the schedule notification",
+    example: "987e6543-a21b-23d5-f456-5566b87741233",
+  })
+  @IsNotEmpty()
+  @IsUUID()
+  id: string;
+
+  @ApiProperty({
+    description: "The unique identifier for the user with role doctor",
+    example: "f4289c39-ff2e-43b0-8f78-4dcc98128a16",
+  })
+  @IsNotEmpty()
+  @IsUUID()
+  doctor_id: string;
+
+  @ApiProperty({
+    description: "The unique identifier for the user with role patient",
+    example: "f4289c39-ff2e-43b0-8f78-4dcc98128a16",
+  })
+  @IsNotEmpty()
+  @IsUUID()
+  patient_id: string;
+
+  @ApiProperty({
+    description: "Start time of the schedule",
+    example: "20241003092312",
+  })
+  @IsNotEmpty()
+  schedule_start_time: bigint;
+
+  @ApiProperty({
+    description:
+      "Check if the notification was seen before (true: seen, false: not seen)",
+    example: false,
+  })
+  @IsNotEmpty()
+  is_seen: boolean;
+
+  @ApiProperty({
+    description:
+      "Status of the notification (0: reminder, 1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule, 5: cancel automatically)",
+    example: 0,
+  })
+  @IsNotEmpty()
+  status: number;
+
+  @ApiProperty({
+    description:
+      "Reason why the doctor rejected patient's schedule",
+    example: "I'm busy at that day, please choose another day such as 10/1 or 12/1",
+  })
+  @IsNotEmpty()
+  reject_reason?: string;
+
+  @ApiProperty({
+    description: "Type of the notification (0: Send to Patient, 1: Send to Doctor)",
+    example: 1,
+  })
+  @IsNotEmpty()
+  type: number;
+}

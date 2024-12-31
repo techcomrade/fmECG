@@ -11,15 +11,24 @@ import {
   Res,
   Put,
   Req,
+  UseInterceptors,
+  UploadedFile,
 } from "@nestjs/common";
 import { Response } from "express";
 import { RecordService } from "./record.service";
 import { RecordRequest } from "./dto/record.request";
 import { RecordResponse } from "./dto/record.response";
 import { plainToInstance } from "class-transformer";
-import { ApiResponse } from "@nestjs/swagger";
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiResponse,
+  getSchemaPath,
+} from "@nestjs/swagger";
 import { UserGuardModel } from "../authentication/dto/user.guard.model";
 import { UserService } from "../user/user.service";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { ppid } from "process";
 
 @Controller("records")
 export class RecordController {
@@ -34,10 +43,43 @@ export class RecordController {
     type: Boolean,
     description: "Successful",
   })
-  async createRecord(@Body() record: RecordRequest, @Res() res: Response) {
+  @UseInterceptors(
+    FileInterceptor("file", {
+      fileFilter: (req, file, callback) => {
+        const allowedMimeTypes = ["text/csv", "text/plain", "audio/wav"];
+        if (allowedMimeTypes.includes(file.mimetype)) {
+          callback(null, true);
+        } else {
+          callback(new BadRequestException("Invalid file type"), false);
+        }
+      },
+    })
+  )
+  @ApiConsumes("multipart/form-data")
+  @ApiBody({
+    schema: {
+      type: "object",
+      properties: {
+        file: {
+          type: "string",
+          format: "binary",
+        },
+        data: {
+          type: "object",
+          $ref: getSchemaPath(RecordRequest),
+        },
+      },
+    },
+  })
+  async createRecord(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() record: RecordRequest,
+    @Res() res: Response
+  ) {
     console.log(`[P]:::Add record data`, record);
+    console.log(`[P]:::Uploaded file`, file);
     try {
-      await this.recordService.add(record);
+      await this.recordService.add(record, file);
       return res.json({
         message: "Record created successfully",
       });

@@ -169,8 +169,10 @@ export const convertDeviceStatusToString = (deviceStatus: number) => {
       return "Đang trống";
     case 2:
       return "Đang hoạt động";
-    default:
+    case 3:
       return "Đang bảo trì";
+    default:
+      return "Không xác định";
   }
 };
 
@@ -180,8 +182,10 @@ export const convertStringToDeviceStatus = (deviceStatus: string) => {
       return 1;
     case "Đang hoạt động":
       return 2;
-    default:
+    case "Đang bảo trì":
       return 3;
+    default:
+      return 4;
   }
 };
 
@@ -201,9 +205,24 @@ export const convertScheduleStatusToString = (status: number) => {
     case 1:
       return "Được chấp nhận";
     case 2:
+      return "Chưa được chấp nhận";
+    case 3:
       return "Không được chấp nhận";
     default:
-      return "Đang chờ";
+      return "Không xác định";
+  }
+};
+
+export const convertScheduleResultToString = (result: number) => {
+  switch (result) {
+    case 1:
+      return "Thành công";
+    case 2:
+      return "Chưa bắt đầu";
+    case 3:
+      return "Thất bại";
+    default:
+      return "Không xác định";
   }
 };
 

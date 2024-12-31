@@ -5,6 +5,8 @@ import { Injectable } from "@nestjs/common";
 import { DeviceService } from "../device/device.service";
 import { UserService } from "../user/user.service";
 const { v4: uuidv4 } = require("uuid");
+import * as fs from "fs";
+import * as path from "path";
 
 @Injectable()
 export class RecordService {
@@ -14,35 +16,84 @@ export class RecordService {
     private recordRepository: RecordRepository
   ) {}
 
-  async add(record: RecordRequest) {
+  private async saveFile(
+    file: Express.Multer.File,
+    deviceId: string,
+    startTime: bigint
+  ) {
+    const uploadDir = path.resolve(__dirname, "..", "..", "public", "upload");
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    const uniqueFileName = `${deviceId}-${startTime}-${file.originalname}`;
+    const filePath = path.join(uploadDir, uniqueFileName);
+    fs.writeFileSync(filePath, file.buffer);
+
+    return filePath;
+  }
+
+  async add(record: RecordRequest, file: Express.Multer.File) {
     record.id = uuidv4();
-    return await this.recordRepository.add(record);
+    try {
+      record.data_rec_url = await this.saveFile(
+        file,
+        record.device_id,
+        record.start_time
+      );
+      return await this.recordRepository.add(record);
+    } catch (e) {
+      console.log("Error when create record", e);
+      if (record.data_rec_url) {
+        await this.deleteFile(record.data_rec_url);
+      }
+      throw new Error("Failed to add record. File has been removed.");
+    }
+  }
+
+  private async deleteFile(filePath: string) {
+    try {
+      const fullPath = path.resolve(__dirname, "..", "..", filePath);
+      if (fs.existsSync(fullPath)) {
+        fs.unlinkSync(fullPath);
+        console.log("File removed:", fullPath);
+      } else {
+        console.warn("File not found for deletion:", fullPath);
+      }
+    } catch (error) {
+      console.error("Error deleting file:", error);
+    }
   }
 
   async getAllRecord(): Promise<RecordResponse[]> {
     let result = [];
     let records = await this.recordRepository.getAllRecord();
     for (const record of records) {
-      let user = await this.userService.getUserById(record.patient_id);
+      let patient = await this.userService.getUserById(record.patient_id);
       let device = await this.deviceService.getById(record.device_id);
+      let doctor = await this.userService.getUserById(device.doctor_id);
       result.push({
         ...(<any>record).dataValues,
-        username: user.username,
+        patient: patient.username,
+        doctor: doctor.username,
         device_name: device.device_name,
       });
     }
     return result;
   }
 
+  async countRecordsPerMonth(): Promise<any> {
+    return await this.recordRepository.countRecordsPerMonth();
+  }
+
   async getRecordByPatientId(patient_id: string): Promise<RecordResponse[]> {
     let result = [];
     let records = await this.recordRepository.getRecordByPatientId(patient_id);
     for (const record of records) {
-      let user = await this.userService.getUserById(record.patient_id);
       let device = await this.deviceService.getById(record.device_id);
+      let doctor = await this.userService.getUserById(device.doctor_id);
       result.push({
         ...(<any>record).dataValues,
-        username: user.username,
+        doctor: doctor.username,
         device_name: device.device_name,
       });
     }
@@ -56,11 +107,10 @@ export class RecordService {
       let records = await this.recordRepository.getRecordByDeviceId(device.id);
       if (records && records.length > 0) {
         for (const record of records) {
-          let username = (await this.userService.getUserById(record.patient_id))
-            .username;
+          let patient = await this.userService.getUserById(record.patient_id);
           result.push({
             ...(<any>record).dataValues,
-            username: username,
+            patient: patient.username,
             device_name: device.device_name,
           });
         }
@@ -71,11 +121,13 @@ export class RecordService {
 
   async getRecordById(id: string): Promise<RecordResponse> {
     let record = await this.recordRepository.getRecordById(id);
-    let user = await this.userService.getUserById(record.patient_id);
+    let patient = await this.userService.getUserById(record.patient_id);
     let device = await this.deviceService.getById(record.device_id);
+    let doctor = await this.userService.getUserById(device.doctor_id);
     return {
       ...(<any>record).dataValues,
-      username: user.username,
+      patient: patient.username,
+      doctor: doctor.username,
       device_name: device.device_name,
     };
   }

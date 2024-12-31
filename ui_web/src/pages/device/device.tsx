@@ -35,8 +35,9 @@ import {
   userRole,
 } from "../../constants";
 import dayjs from "dayjs";
-import { original } from "@reduxjs/toolkit";
 import { Context } from "../../utils/context";
+import { showNotiError, showNotiSuccess } from "../../components/notification";
+import { Tag } from "antd";
 
 type DeviceDetailType = {
   open: (id: string) => void;
@@ -67,6 +68,7 @@ export const Device: React.FC = () => {
       key: "device_name",
       type: "text",
       isEdit: true,
+      searchable: true,
     },
     {
       title: "Loại thiết bị",
@@ -75,6 +77,22 @@ export const Device: React.FC = () => {
       type: "select",
       isEdit: true,
       dataSelect: deviceType,
+      filters: [
+        {
+          text: "Đo điện tim",
+          value: 1,
+        },
+        {
+          text: "Đo chỉ số tim mạch",
+          value: 2,
+        },
+        {
+          text: "Đo âm thanh",
+          value: 3,
+        },
+      ],
+      onFilter: (value: any, record: any) =>
+        record.device_type_id === convertDeviceTypeToString(value),
     },
     {
       title: "Bác sĩ phụ trách",
@@ -83,6 +101,7 @@ export const Device: React.FC = () => {
       type: "select",
       isEdit: false,
       hidden: hidden,
+      searchable: true,
     },
     {
       title: "Bác sĩ phụ trách",
@@ -103,6 +122,30 @@ export const Device: React.FC = () => {
       type: "select",
       isEdit: true,
       dataSelect: deviceStatus,
+      render: (status_id: any) => {
+        let color =
+          status_id == 1 ? "geekblue" : status_id == 2 ? "green" : "volcano";
+        return (
+          <Tag color={color} key={status_id}>
+            {convertDeviceStatusToString(status_id)}
+          </Tag>
+        );
+      },
+      filters: [
+        {
+          text: "Đang trống",
+          value: 1,
+        },
+        {
+          text: "Đang hoạt động",
+          value: 2,
+        },
+        {
+          text: "Đang bảo trì",
+          value: 3,
+        },
+      ],
+      onFilter: (value: any, record: any) => record.status_id === Number(value),
     },
     {
       title: "Thông tin",
@@ -110,6 +153,7 @@ export const Device: React.FC = () => {
       key: "information",
       type: "text",
       isEdit: true,
+      searchable: true,
     },
     {
       title: "Tần số",
@@ -171,7 +215,6 @@ export const Device: React.FC = () => {
     if (type === "render") {
       deviceData = {
         ...data,
-        status_id: convertDeviceStatusToString(data.status_id),
         device_type_id: convertDeviceTypeToString(data.device_type_id),
       };
       Object.keys(data).forEach((key) => {
@@ -235,7 +278,6 @@ export const Device: React.FC = () => {
     }
   }, []);
 
-  // Get data
   React.useEffect(() => {
     if (dataState.loadDataStatus === ApiLoadingStatus.Success) {
       const rawData = dataState.data.map((device) =>
@@ -243,32 +285,65 @@ export const Device: React.FC = () => {
       );
       setDataTable(rawData);
     }
+    if (
+      dataState.loadDataStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      showNotiError(dataState.errorMessage);
+    }
   }, [dataState.loadDataStatus]);
 
   React.useEffect(() => {
     if (doctorState.loadDoctorDataStatus === ApiLoadingStatus.Success) {
       setDoctorDropDown(doctorState.doctorData);
     }
+    if (
+      doctorState.loadDoctorDataStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      showNotiError(dataState.errorMessage);
+    }
   }, [doctorState.loadDoctorDataStatus]);
 
   React.useEffect(() => {
     if (dataState.loadAddDataStatus === ApiLoadingStatus.Success) {
+      showNotiSuccess("Bạn đã thêm thiết bị thành công");
       dispatch(resetLoadAddDataStatus());
       dispatch(getAllDevices());
+    }
+    if (
+      dataState.loadAddDataStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      showNotiError(dataState.errorMessage);
     }
   }, [dataState.loadAddDataStatus]);
 
   React.useEffect(() => {
     if (dataState.loadUpdateDataStatus === ApiLoadingStatus.Success) {
+      showNotiSuccess("Bạn đã sửa thiết bị thành công");
       dispatch(resetLoadUpdateDataStatus());
       dispatch(getAllDevices());
+    }
+    if (
+      dataState.loadUpdateDataStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      showNotiError(dataState.errorMessage);
     }
   }, [dataState.loadUpdateDataStatus]);
 
   React.useEffect(() => {
     if (dataState.loadDeleteDataStatus === ApiLoadingStatus.Success) {
+      showNotiSuccess("Bạn đã xóa thiết bị thành công");
       dispatch(resetLoadDeleteDataStatus());
       dispatch(getAllDevices());
+    }
+    if (
+      dataState.loadDeleteDataStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      showNotiError(dataState.errorMessage);
     }
   }, [dataState.loadDeleteDataStatus]);
 

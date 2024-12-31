@@ -27,7 +27,6 @@ const ModalComponent = (props: any, ref: any) => {
     open: (data: any) => {
       setIsOpen(true);
       setData(data);
-      console.log(data);
     },
   }));
 
@@ -46,8 +45,10 @@ const ModalComponent = (props: any, ref: any) => {
     if (
       diagnosisState.loadGetDiagnosisByScheduleIdStatus ===
       ApiLoadingStatus.Failed
-    )
+    ) {
+      dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis({} as DiagnosisResponse);
+    }
   }, [diagnosisState.loadGetDiagnosisByScheduleIdStatus]);
 
   return (
@@ -78,7 +79,7 @@ const ModalComponent = (props: any, ref: any) => {
             <div>{data.doctor}</div>
           </Form.Item>
         )}
-        <Form.Item label="Thời gian khám" style={{ marginBottom: "4px" }}>
+        <Form.Item label="Thời gian hẹn" style={{ marginBottom: "4px" }}>
           <div>
             Từ {data.start_time} đến {data.end_time}
           </div>

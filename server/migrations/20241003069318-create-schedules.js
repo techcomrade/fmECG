@@ -42,6 +42,10 @@ module.exports = {
           key: "id",
         },
       },
+      schedule_result: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       createdAt: {
         type: Sequelize.DATE,
       },

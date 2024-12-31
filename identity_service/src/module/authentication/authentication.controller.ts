@@ -7,7 +7,6 @@ import {
   NotFoundException,
   Get,
   Headers,
-  Param,
   BadRequestException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -26,11 +25,8 @@ export class AuthenticationController {
   constructor(private readonly authService: AuthenticationService) {}
   @Post('register')
   async register(@Body() register: AccountRegisterModel, @Res() res: Response) {
-    const user = await this.authService.register(register);
-    if (!user) {
-      throw new NotFoundException('Register failed');
-    }
-    return res.status(HttpStatus.OK).json('register successfully');
+    await this.authService.register(register);
+    return res.status(HttpStatus.CREATED).json('register successfully');
   }
   @Post('login')
   async login(@Body() login: LoginRequest, @Res() res: Response) {
@@ -73,7 +69,7 @@ export class AuthenticationController {
   }
   @Post('refresh-token')
   async refreshToken(
-    @Param('refresh_token') refresh_token: string,
+    @Body('refresh_token') refresh_token: string,
     @Res() res: Response,
   ) {
     if (!refresh_token) {

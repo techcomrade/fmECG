@@ -69,4 +69,29 @@ export class DiagnosisController {
       );
     }
   }
+
+  @Post("update")
+  @ApiResponse({
+    status: 201,
+    type: Boolean,
+    description: "Successful",
+  })
+  async updateDiagnosisByScheduleId(
+    @Body() diagnosis: DiagnosisRequest,
+    @Res() res: Response
+  ) {
+    console.log("[P]:::Update diagnosis by schedule id", diagnosis.id);
+    try {
+      await this.diagnosisService.updateDiagnosisByScheduleId(
+        diagnosis,
+        diagnosis.schedule_id
+      );
+      return res.json({
+        message: "Diagnosis updated successfully",
+      });
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException("Error when update diagnosis by schedule id");
+    }
+  }
 }

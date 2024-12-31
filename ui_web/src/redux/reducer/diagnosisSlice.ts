@@ -7,12 +7,16 @@ interface IScheduleState {
   diagnosis: DiagnosisResponse;
   loadCreateDiagnosisStatus: ApiLoadingStatus;
   loadGetDiagnosisByScheduleIdStatus: ApiLoadingStatus;
+  loadUpdateDiagnosisByScheduleIdStatus: ApiLoadingStatus;
+  errorMessage: string | undefined;
 }
 
 const initialState: IScheduleState = {
   diagnosis: {} as DiagnosisResponse,
   loadCreateDiagnosisStatus: ApiLoadingStatus.None,
   loadGetDiagnosisByScheduleIdStatus: ApiLoadingStatus.None,
+  loadUpdateDiagnosisByScheduleIdStatus: ApiLoadingStatus.None,
+  errorMessage: undefined,
 };
 
 export const createDiagnosis = createAsyncThunkWrap(
@@ -29,6 +33,13 @@ export const getDiagnosisByScheduleId = createAsyncThunkWrap(
   }
 );
 
+export const updateDiagnosisByScheduleId = createAsyncThunkWrap(
+  "/diagnosis/update",
+  async (diagnosis: DiagnosisRequest) => {
+    return await Service.diagnosisService.updateDiagnosisByScheduleId(diagnosis);
+  }
+);
+
 export const diagnosisSlice = createSlice({
   name: "diagnosis",
   initialState,
@@ -38,6 +49,9 @@ export const diagnosisSlice = createSlice({
     },
     resetLoadGetDiagnosisByScheduleIdStatus: (state) => {
       state.loadGetDiagnosisByScheduleIdStatus = ApiLoadingStatus.None;
+    },
+    resetLoadUpdateDiagnosisByScheduleIdStatus: (state) => {
+      state.loadUpdateDiagnosisByScheduleIdStatus = ApiLoadingStatus.None;
     },
   },
   extraReducers: (builder) => {
@@ -49,6 +63,7 @@ export const diagnosisSlice = createSlice({
         state.loadCreateDiagnosisStatus = ApiLoadingStatus.Success;
       })
       .addCase(createDiagnosis.rejected, (state, action) => {
+        state.errorMessage = (<any>action.payload)?.message;
         state.loadCreateDiagnosisStatus = ApiLoadingStatus.Failed;
       })
       .addCase(getDiagnosisByScheduleId.pending, (state, action) => {
@@ -60,10 +75,25 @@ export const diagnosisSlice = createSlice({
       })
       .addCase(getDiagnosisByScheduleId.rejected, (state, action) => {
         state.diagnosis = {} as DiagnosisResponse;
+        state.errorMessage = (<any>action.payload)?.message;
         state.loadGetDiagnosisByScheduleIdStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(updateDiagnosisByScheduleId.pending, (state, action) => {
+        state.loadUpdateDiagnosisByScheduleIdStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(updateDiagnosisByScheduleId.fulfilled, (state, action) => {
+        state.loadUpdateDiagnosisByScheduleIdStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(updateDiagnosisByScheduleId.rejected, (state, action) => {
+        state.errorMessage = (<any>action.payload)?.message;
+        state.loadUpdateDiagnosisByScheduleIdStatus = ApiLoadingStatus.Failed;
       });
   },
 });
 
-export const { resetLoadCreateDiagnosisStatus, resetLoadGetDiagnosisByScheduleIdStatus } = diagnosisSlice.actions;
+export const {
+  resetLoadCreateDiagnosisStatus,
+  resetLoadGetDiagnosisByScheduleIdStatus,
+  resetLoadUpdateDiagnosisByScheduleIdStatus,
+} = diagnosisSlice.actions;
 export default diagnosisSlice.reducer;

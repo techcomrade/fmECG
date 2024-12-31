@@ -1,18 +1,16 @@
 const { v4: uuidv4 } = require("uuid");
 
-import {
-  Injectable,
-  ConflictException,
-  UnauthorizedException,
-  forwardRef,
-  Inject,
-} from "@nestjs/common";
+import { Injectable, forwardRef, Inject } from "@nestjs/common";
 import { ScheduleRepository } from "./schedule.repository";
 import { ScheduleResponse } from "./dto/schedule.response";
 import { ScheduleRequest } from "./dto/schedule.request";
 import { ConsultationScheduleService } from "../consultation_schedule/consultation_schedule.service";
 import { UserService } from "../user/user.service";
 import { ConsultationScheduleRequest } from "../consultation_schedule/dto/consultation_schedule.request";
+import { TransactionService } from "../transaction/transaction.service";
+import { CronJob } from "cron";
+import { NotificationService } from "../notification/notification.service";
+import { NotificationRequest } from "../notification/dto/notification.request";
 
 @Injectable()
 export class ScheduleService {
@@ -20,8 +18,13 @@ export class ScheduleService {
     private scheduleRepository: ScheduleRepository,
     @Inject(forwardRef(() => UserService))
     private userService: UserService,
-    private consultationScheduleService: ConsultationScheduleService
-  ) {}
+    private consultationScheduleService: ConsultationScheduleService,
+    private transactionService: TransactionService,
+    private notificationService: NotificationService
+  ) {
+    this.autoCancelPendingSchedule();
+    this.autoSendScheduleReminder();
+  }
 
   async getAllSchedules(): Promise<ScheduleResponse[]> {
     const schedules = await this.scheduleRepository.getAllSchedules();
@@ -42,26 +45,43 @@ export class ScheduleService {
     return result;
   }
 
+  async countExistingSchedule(schedule: ScheduleRequest): Promise<Number> {
+    return await this.scheduleRepository.countExistingSchedule(schedule);
+  }
+
+  async checkExistingSchedule(
+    schedule: ScheduleRequest
+  ): Promise<ScheduleResponse> {
+    return await this.scheduleRepository.checkExistingSchedule(schedule);
+  }
+
   async createSchedule(schedule: ScheduleRequest, doctor_id: string) {
     schedule.id = uuidv4();
-    await this.scheduleRepository.createSchedule(schedule);
-    await this.consultationScheduleService.add(<ConsultationScheduleRequest>{
-      id: uuidv4(),
-      schedule_id: schedule.id,
-      doctor_id: doctor_id,
+    return await this.transactionService.transaction(async (t: any) => {
+      await this.scheduleRepository.createSchedule(schedule, t);
+      await this.consultationScheduleService.add(
+        <ConsultationScheduleRequest>{
+          id: uuidv4(),
+          schedule_id: schedule.id,
+          doctor_id: doctor_id,
+          schedule_start_time: schedule.schedule_start_time,
+        },
+        t
+      );
     });
   }
 
   async getAvailableScheduleByDoctorId(scheduleList: ScheduleResponse[]) {
     const availableSchedule = [];
-    const today = new Date();
+    const localTime = new Date(new Date().getTime() + 7 * 60 * 60 * 1000);
 
-    for (let i = 1; i < 14; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
+    for (let i = 2; i <= 15; i++) {
+      const date = new Date(localTime);
+      date.setDate(localTime.getDate() + i);
+      date.setUTCHours(0, 0, 0, 0);
       const hours = [
-        8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15,
-        15.5, 16, 16.5, 17, 17.5,
+        9, 9.5, 10, 10.5, 11, 11.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18,
+        18.5, 19, 19.5, 20, 20.5,
       ];
       const formattedDate = date.toISOString().split("T")[0];
       const filterHours = hours.filter((hour) => {
@@ -86,19 +106,37 @@ export class ScheduleService {
   }
 
   async getScheduleByStartTime(startTime: number): Promise<ScheduleResponse[]> {
-    return this.scheduleRepository.getScheduleByStartTime(startTime);
+    return await this.scheduleRepository.getScheduleByStartTime(startTime);
   }
 
   async getScheduleById(id: string): Promise<ScheduleResponse> {
-    return this.scheduleRepository.getScheduleById(id);
+    return await this.scheduleRepository.getScheduleById(id);
+  }
+
+  async acceptSchedule(schedule_id: string) {
+    return await this.scheduleRepository.acceptSchedule(schedule_id);
   }
 
   async updateSchedule(schedule: ScheduleRequest, id: string) {
-    return this.scheduleRepository.updateScheduleById(schedule, id);
+    return await this.scheduleRepository.updateScheduleById(schedule, id);
+  }
+
+  async updateScheduleResult(schedule_id: string, result: number, t?: any) {
+    return await this.scheduleRepository.updateScheduleResultById(
+      schedule_id,
+      result,
+      t
+    );
   }
 
   async deleteScheduleById(id: string) {
-    return this.scheduleRepository.deleteScheduleById(id);
+    return await this.transactionService.transaction(async (t: any) => {
+      await this.consultationScheduleService.deleteConsultationByScheduleId(
+        id,
+        t
+      );
+      await this.scheduleRepository.deleteScheduleById(id, t);
+    });
   }
 
   async getScheduleByPatientId(
@@ -160,10 +198,84 @@ export class ScheduleService {
       const schedule = await this.getScheduleById(id);
       if (
         schedule.schedule_start_time >= startTime &&
-        schedule.schedule_start_time <= startTime + TWO_WEEKS_IN_SECONDS
+        schedule.schedule_start_time < startTime + TWO_WEEKS_IN_SECONDS
       )
         scheduleList.push(schedule);
     }
     return scheduleList;
+  }
+
+  async cancelPendingSchedule() {
+    const pendingSchedules = await this.scheduleRepository.getPendingSchedule();
+    const ALLOW_TIME = 12 * 60 * 60 * 1000;
+    const currentTime = new Date().getTime();
+    for (const schedule of pendingSchedules) {
+      const consultation =
+        await this.consultationScheduleService.getConsultationScheduleByScheduleId(
+          schedule.id
+        );
+      if (schedule.createdAt.getTime() + ALLOW_TIME <= currentTime) {
+        await Promise.all([
+          this.notificationService.add({
+            doctor_id: consultation.doctor_id,
+            patient_id: schedule.patient_id,
+            schedule_start_time: schedule.schedule_start_time,
+            is_seen: false,
+            type: 0,
+            status: 5,
+          } as NotificationRequest),
+          this.deleteScheduleById(schedule.id),
+        ]);
+      }
+    }
+  }
+
+  private async autoCancelPendingSchedule() {
+    const job = CronJob.from({
+      cronTime: "0 */1 * * *",
+      onTick: async () => {
+        console.log(
+          `Running auto check pending schedule at ${new Date().toLocaleTimeString()}, ${new Date().toLocaleDateString()}`
+        );
+        await this.cancelPendingSchedule();
+      },
+      start: true,
+    });
+  }
+
+  async sendScheduleReminder() {
+    const currentTime = Math.floor(new Date().getTime() / 1000);
+    const acceptedSchedules =
+      await this.scheduleRepository.getAcceptedSchedule();
+    for (const schedule of acceptedSchedules) {
+      const reminderTime = Number(schedule.schedule_start_time) - currentTime;
+      if (reminderTime === 3600 || reminderTime === 900) {
+        const consultation =
+          await this.consultationScheduleService.getConsultationScheduleByScheduleId(
+            schedule.id
+          );
+        await this.notificationService.add({
+          doctor_id: consultation.doctor_id,
+          patient_id: schedule.patient_id,
+          schedule_start_time: schedule.schedule_start_time,
+          is_seen: false,
+          type: reminderTime === 3600 ? 0 : 1,
+          status: 0,
+        } as NotificationRequest);
+      }
+    }
+  }
+
+  private async autoSendScheduleReminder() {
+    const job = CronJob.from({
+      cronTime: "0,15,30,45 8-21 * * *",
+      onTick: async () => {
+        console.log(
+          `Running auto send schedule reminder at ${new Date().toLocaleTimeString()}, ${new Date().toLocaleDateString()}`
+        );
+        await this.sendScheduleReminder();
+      },
+      start: true,
+    });
   }
 }

@@ -26,9 +26,17 @@ export class ConsultationScheduleService {
     );
   }
 
-  async add(consultation: ConsultationScheduleRequest) {
+  async add(consultation: ConsultationScheduleRequest, t?: any) {
     return this.consultationScheduleRepository.addConsultationSchedule(
-      consultation
+      consultation,
+      t
+    );
+  }
+
+  async deleteConsultationByScheduleId(schedule_id: string, t?: any) {
+    return this.consultationScheduleRepository.deleteConsultationByScheduleId(
+      schedule_id,
+      t,
     );
   }
 }

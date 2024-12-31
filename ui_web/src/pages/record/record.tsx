@@ -18,6 +18,8 @@ import { findElementById } from "../../utils/arrayUtils";
 import dayjs from "dayjs";
 import { Context } from "../../utils/context";
 import { userRole } from "../../constants";
+import { showNotiError, showNotiSuccess } from "../../components/notification";
+import { handleRecordName } from "../../utils/recordUtils";
 
 type RecordDetailType = {
   open: (id: string) => void;
@@ -42,13 +44,25 @@ export const Record: React.FC = () => {
       key: "data_rec_url",
       type: "text",
       isEdit: false,
+      searchable: true,
     },
     {
       title: "Tên bệnh nhân",
-      dataIndex: "username",
-      key: "username",
+      dataIndex: "patient",
+      key: "patient",
       type: "text",
       isEdit: false,
+      hidden: Context.role === userRole.patient,
+      searchable: true,
+    },
+    {
+      title: "Tên bác sĩ",
+      dataIndex: "doctor",
+      key: "doctor",
+      type: "text",
+      isEdit: false,
+      hidden: Context.role === userRole.doctor,
+      searchable: true,
     },
     {
       title: "Tên thiết bị",
@@ -56,6 +70,7 @@ export const Record: React.FC = () => {
       key: "device_name",
       type: "text",
       isEdit: false,
+      searchable: true,
     },
     {
       title: "ID lịch khám",
@@ -96,8 +111,10 @@ export const Record: React.FC = () => {
     }
 
     if (type === "render") {
+      console.log(data);
       recordData = {
         ...data,
+        data_rec_url: handleRecordName(data.data_rec_url, data.device_id),
       };
       Object.keys(data).forEach((key) => {
         if (checkDateTypeKey(key)) {
@@ -129,19 +146,41 @@ export const Record: React.FC = () => {
       );
       setDataTable(rawData);
     }
+    if (
+      dataState.loadDataStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      showNotiError(dataState.errorMessage);
+    }
   }, [dataState.loadDataStatus]);
 
   React.useEffect(() => {
     if (dataState.loadUpdateDataStatus === ApiLoadingStatus.Success) {
       dispatch(resetLoadUpdateDataStatus());
-      dispatch(getAllRecord());
+      dispatch(getRecordByDoctorId());
+      showNotiSuccess("Bạn đã sửa bản ghi thành công");
+    }
+    if (
+      dataState.loadUpdateDataStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      showNotiError(dataState.errorMessage);
+      dispatch(resetLoadUpdateDataStatus());
     }
   }, [dataState.loadUpdateDataStatus]);
 
   React.useEffect(() => {
     if (dataState.loadDeleteDataStatus === ApiLoadingStatus.Success) {
       dispatch(resetLoadDeleteDataStatus());
-      dispatch(getAllRecord());
+      dispatch(getRecordByDoctorId());
+      showNotiSuccess("Bạn đã xoá bản ghi thành công");
+    }
+    if (
+      dataState.loadDeleteDataStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
+    ) {
+      showNotiError(dataState.errorMessage);
+      dispatch(resetLoadDeleteDataStatus());
     }
   }, [dataState.loadDeleteDataStatus]);
 

@@ -1,5 +1,3 @@
-export const context = "context";
-
 export const Context: AppContext = window.context;
 
 export interface AppContext{
@@ -14,4 +12,5 @@ export interface AppContext{
     expiredTime?: Date;
     role: string;
     supportedLanguages?: string[];
+    aboutUs?: string;
 }
