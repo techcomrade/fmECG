@@ -118,6 +118,7 @@ import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screens/bluetooth_classic_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
+import 'package:bluetooth_ecg/screens/login_screen/log_in_screen.dart';
 import 'package:bluetooth_ecg/screens/new_screens/home_screen.dart';
 import 'package:bluetooth_ecg/screens/new_screens/schedule_screen.dart';
 import 'package:bluetooth_ecg/screens/new_screens/search_screen.dart';
@@ -142,10 +143,11 @@ class _MainScreenState extends State<MainScreen> {
   List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
   late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
   int _currentIndex = 0;
+  final PageController _pageController = PageController();
 
   static const List<Widget> _screens = <Widget>[
     NewHomeScreen(),
-    SearchScreen(),
+    SignInScreen(),
     ScheduleScreen(),
     ChatScreen(),
     PersonalInfor(),
@@ -164,6 +166,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void dispose() {
     _connectivitySubscription.cancel();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -196,14 +199,28 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: _screens[_currentIndex],
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        children: _screens,
+        physics: const BouncingScrollPhysics(),
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
+        type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: (int index) {
           setState(() {
             _currentIndex = index;
           });
+          _pageController.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
         },
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -234,23 +251,33 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _buildCustomIcon(IconData icon, String label, int index) {
     bool isSelected = index == _currentIndex;
-    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Icon(
-        icon,
-        color: isSelected ? Colors.blue : Colors.grey[400],
-      ),
-      const SizedBox(
-        width: 8,
-      ),
-      if (isSelected)
-        Padding(
-          padding: const EdgeInsets.only(top: 4.0),
-          child: Text(label,
-              style: const TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14)),
-        )
-    ]);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Icon(
+            icon,
+            color: isSelected ? Colors.blue : Colors.grey[400],
+          ),
+          const SizedBox(
+            width: 2,
+          ),
+          if (isSelected)
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Text(
+                label,
+                style: const TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+            )
+        ]),
+      ],
+    );
   }
 }

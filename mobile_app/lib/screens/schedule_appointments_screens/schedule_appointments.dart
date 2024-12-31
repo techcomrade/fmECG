@@ -1,3 +1,4 @@
+import 'package:bluetooth_ecg/screens/schedule_appointments_screens/date_picker_screens.dart';
 import 'package:bluetooth_ecg/screens/schedule_appointments_screens/doctor_list_screens.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,19 @@ class ScheduleAppointmentScreen extends StatelessWidget {
 
   void _openDatePicker(BuildContext context) {
     print('Date picker tapped');
+    try {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const DatePicker(
+                  doctorId: '',
+                  doctorName: '',
+                  doctorDescription: '',
+                  type: '2')));
+      print('Navigated to DatePicker');
+    } catch (e) {
+      print('Error navigating: $e');
+    }
   }
 
   @override
