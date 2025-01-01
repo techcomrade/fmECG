@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:bluetooth_ecg/components/one_perfect_chart.dart';
+import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/controllers/ecg_data_controller.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
 import 'package:bluetooth_ecg/utils/files_management.dart';
@@ -10,8 +12,7 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:geolocator/geolocator.dart' as geo;
-import '../../constants/color_constant.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 
 class BleLiveChartTest extends StatefulWidget {
@@ -34,21 +35,16 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   static const platform = MethodChannel("com.example.method_channel/java");
 
   final flutterReactiveBle = FlutterReactiveBle();
-  List<_ChartData>? chartDataChannel;
-  List<_ChartData>? chartDataChannel2;
+  List<ChartData> chartDataChannel = [];
+  List<ChartData> chartDataChannel2 = [];
 
   late int count;
   ChartSeriesController? _chartSeriesController;
   ChartSeriesController? _chartSeriesController2;
 
   late StreamSubscription<List<int>> subscribeStream;
-  late StreamController<List> _dataStreamController;
-
-  String _currentLocation = '';
-
   final ScrollController _scrollController = ScrollController();
 
-  Stream<List> get _dataStream => _dataStreamController.stream;
   List samples = [];
   bool isMeasuring = false;
   bool isUploaded = false;
@@ -59,14 +55,23 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   String _textHeartRate = '';
   String _textDeviation = '';
 
+  CrosshairBehavior crosshairBehavior = CrosshairBehavior(
+    enable: true,
+    lineType: CrosshairLineType.vertical,
+    activationMode: ActivationMode.none,
+    lineColor: const Color(0xFF010101),
+    lineWidth: 2,
+  );
+
+  int countX = 1000;
+
   bool isNotSetupPhoneNumber = false;
 
   @override
   void initState() {
     count = 0;
-    chartDataChannel = <_ChartData>[];
-    chartDataChannel2 = <_ChartData>[];
-    _dataStreamController = StreamController<List<double>>.broadcast();
+    chartDataChannel = <ChartData>[];
+    chartDataChannel2 = <ChartData>[];
     super.initState();
   }
 
@@ -74,7 +79,6 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
   void dispose() {
     _clearDataInChart();
     subscribeStream.cancel();
-    _dataStreamController.close();
     super.dispose();
   }
 
@@ -88,50 +92,8 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
     });
   }
 
-  Future<void> _fetchAndSendLocation(String additionalMessage) async {
-    bool serviceEnabled;
-    geo.LocationPermission permission;
-
-    serviceEnabled = await geo.Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      await geo.Geolocator.openLocationSettings();
-      return;
-    }
-
-    permission = await geo.Geolocator.checkPermission();
-    if (permission == geo.LocationPermission.deniedForever) {
-      await geo.Geolocator.openAppSettings();
-      return;
-    }
-
-    if (permission == geo.LocationPermission.denied) {
-      permission = await geo.Geolocator.requestPermission();
-      if (permission != geo.LocationPermission.whileInUse && permission != geo.LocationPermission.always) {
-        return;
-      }
-    }
-
-    geo.Position position = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
-    _currentLocation = 'https://www.google.com/maps/search/?api=1&query=${position.latitude},${position.longitude}';
-    String message = additionalMessage + "\n Vị trí hiện tại: $_currentLocation";
-    await sendSMSAutomatically(message);
-  }
-
-  Future<void> sendSMSAutomatically(String message) async {
-    // String phoneNumber = await _getPhoneNumberFromPrefs();
-    // if (phoneNumber.isNotEmpty) {
-    //   final Telephony telephony = Telephony.instance;
-    //   await telephony.sendSms(to: phoneNumber, message: message);
-    // } else {
-    //   setState(() {
-    //     isNotSetupPhoneNumber = true;
-    //   });
-    // }
-  }
-
   _handleSaveRecordInFile() async {
     subscribeStream.cancel();
-    _dataStreamController.close();
     _clearDataInChart();
 
     await FilesManagement.handleSaveDataToFileV2(widget.fileToSave, samples);
@@ -139,38 +101,36 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
     setState(() {
       samples.clear();
     });
+    return Utils.showDialogWarningError(context, false, "Lỗi khi xử lý dữ liệu với Python");
 
-    OverlayEntry overlayLoadingWidget = Utils.setOverlayLoadingWithHeavyTask();
-    try {
-      Overlay.of(context).insert(overlayLoadingWidget);
-      final bytesInFile = await widget.fileToSave.readAsBytes();
-      final data = await platform.invokeMethod('helloWorldPython', {'bytes': bytesInFile});
-      if (data != null) {
-        setState(() {
-          isCalculated = true;
-          _textSBP = data!["sbp"].toString();
-          _textDBP = data!["dbp"].toString();
-          _textHeartRate = data!["heart_rate"].toString();
-          _textDeviation = data!["standard_deviation"].toString();
-        });
-      }
-      overlayLoadingWidget.remove();
-    } catch (e) {
-      overlayLoadingWidget.remove();
-      Utils.showDialogWarningError(context, false, "Lỗi khi xử lý dữ liệu với Python");
-    }
-
+    // OverlayEntry overlayLoadingWidget = Utils.setOverlayLoadingWithHeavyTask();
+    // try {
+    //   Overlay.of(context).insert(overlayLoadingWidget);
+    //   final bytesInFile = await widget.fileToSave.readAsBytes();
+    //   final data = await platform.invokeMethod('helloWorldPython', {'bytes': bytesInFile});
+    //   if (data != null) {
+    //     setState(() {
+    //       isCalculated = true;
+    //       _textSBP = data!["sbp"].toString();
+    //       _textDBP = data!["dbp"].toString();
+    //       _textHeartRate = data!["heart_rate"].toString();
+    //       _textDeviation = data!["standard_deviation"].toString();
+    //     });
+    //   }
+    //   overlayLoadingWidget.remove();
+    // } catch (e) {
+    //   overlayLoadingWidget.remove();
+    //   Utils.showDialogWarningError(context, false, "Lỗi khi xử lý dữ liệu với Python");
+    // }
   }
 
-  _clearDataInChart() {
+  _clearDataInChart({bool pauseStream = true}) {
     setState(() {
-      chartDataChannel!.clear();
-      chartDataChannel2!.clear();
+      chartDataChannel.clear();
+      chartDataChannel2.clear();
       count = 0;
-      subscribeStream.cancel();
-      _chartSeriesController = null;
-      _chartSeriesController2 = null;
     });
+    if (pauseStream) subscribeStream.pause();
   }
 
   _getPhoneNumberFromPrefs() async {
@@ -204,19 +164,31 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(S.current.yourBloodPressureChart),
-                // Text('RSSI: ${widget.deviceConnected.rssi}'),
-                StreamBuilder<List>(
-                    stream: _dataStream,
-                    builder: (context, snapshot) {
-                      return _buildLiveLineChart();
-                    }
+                OneChart(
+                  xCount: countX,
+                  legendTitle: "Channel 1",
+                  setChartSeriesController: (c) => _chartSeriesController = c,
+                  chartData: chartDataChannel,
+                  crosshairBehavior: crosshairBehavior
                 ),
-                StreamBuilder<List>(
-                    stream: _dataStream,
-                    builder: (context, snapshot) {
-                      return _buildLiveLineChart1();
-                    }
+                const SizedBox(height: 20),
+                SfSlider(
+                  min: 500,
+                  max: 1000,
+                  stepSize: 50,
+                  value: countX,
+                  interval: 50,
+                  showTicks: true,
+                  showLabels: true,
+                  activeColor: const Color(0xFF4f6bff),
+                  enableTooltip: true,
+                  minorTicksPerInterval: 0,
+                  onChanged: (dynamic value){
+                    _clearDataInChart(pauseStream: false);
+                    setState(() {
+                      countX = value.toInt();
+                    });
+                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -234,117 +206,117 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
                         },
                         child: Text(isMeasuring ? S.current.reset : S.current.measure)
                     ),
-                    ElevatedButton(
-                        onPressed: isMeasuring == false ? null : () async {
-          
-                          await _handleSaveRecordInFile();
-
-                          if (isCalculated) {
-                            final snackBar = SnackBar(
-                              duration: const Duration(seconds: 2),
-                              content: Text(S.current.saveDataToStorage),
-                            );
-                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-                            int sbpNumber = double.parse(_textSBP).round();
-                            int dbpNumber = double.parse(_textDBP).round();
-                            int heartRateNumber = double.parse(_textHeartRate).round();
-                            int deviationNumber = double.parse(_textDeviation).round();
-                            double position = calculateIndicatorPosition(sbpNumber, dbpNumber);
-
-                            final bool isNormalPressure = sbpNumber < 120 && dbpNumber < 80;
-                            final bool isHighPressure =  sbpNumber >= 120 && sbpNumber < 130 && dbpNumber < 80;
-                            final bool isHighPressure1 =  sbpNumber >= 130 && sbpNumber < 140 && dbpNumber >= 80 && dbpNumber < 90;
-                            final bool isHighPressure2 = sbpNumber > 140 && dbpNumber > 90;
-                            final bool isHighPressure3 = sbpNumber > 180 && dbpNumber > 120;
-                            final bool isNormalHeartRate = heartRateNumber >= 60 && heartRateNumber <= 100;
-                            final bool isLowHeartRate = heartRateNumber < 60 ;
-                            final bool isHighHeartRate = heartRateNumber > 100 ;
-                            final bool isManyHeartRate = deviationNumber > 50 ;
-
-                            String smsMessage = "";
-                            if (isHighPressure || isHighPressure1 || isHighPressure2 || isHighPressure3 ||
-                                isLowHeartRate || isHighHeartRate || isManyHeartRate) {
-                              smsMessage = "Thông báo về tình trạng sức khỏe: ";
-                              if (isHighPressure) {
-                                smsMessage += "Huyết áp cao. ";
-                              } else if (isHighPressure1) {
-                                smsMessage += "Tăng huyết áp Độ 1. ";
-                              } else if (isHighPressure2) {
-                                smsMessage += "Tăng huyết áp Độ 2. ";
-                              } else if (isHighPressure3) {
-                                smsMessage += "Huyết áp cực kỳ cao! ";
-                              }
-
-                              if (isLowHeartRate) {
-                                smsMessage += "Nhịp tim thấp. ";
-                              } else if (isHighHeartRate) {
-                                smsMessage += "Nhịp tim cao. ";
-                              }
-
-                              if (isManyHeartRate) {
-                                smsMessage += "Sự chênh lệch lớn trong nhịp tim. ";
-                              }
-
-                              _fetchAndSendLocation(smsMessage);
-                            }
-
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext ctxxx) {
-                                  return Scaffold(
-                                    appBar: AppBar(
-                                      title: Text(S.current.result),
-                                      centerTitle: true,
-                                    ),
-                                    body: Container(
-                                      padding: const EdgeInsets.all(20),
-                                      child: SingleChildScrollView( // Sử dụng SingleChildScrollView để có thể cuộn nếu nội dung quá dài
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              alignment: Alignment.topLeft,
-                                              child: Text(
-                                                S.current.general,
-                                                style: TextStyle(
-                                                    color: ColorConstant.primary,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 22),
-                                              ),
-                                            ),
-                                            const SizedBox(height: 10),
-                                            BloodPressureIndicator(indicatorPosition: position),
-                                            const SizedBox(height: 40),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                NumberCard(number: sbpNumber, text: S.current.systolic, subText: "mmHg", color1: Colors.red, percentage: sbpNumber/250),
-                                                NumberCard(number: dbpNumber, text: S.current.diastolic, subText: "mmHg", color1: Colors.blue, percentage: dbpNumber/200),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 30), // Khoảng cách giữa hai hàng
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                NumberCard(number: heartRateNumber, text: S.current.heartbeat, subText: "bpm", color1: Colors.green, percentage: heartRateNumber/150),
-                                                NumberCard(number: deviationNumber, text: S.current.variability, subText: "bpm", color1: Colors.purple, percentage: deviationNumber/150),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 10),
-                                            const BloodPressureLegendTable(),
-                                          ],
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ); 
-                            }
-                          },
-                          child: Text(S.current.saveAndCalculate)
-                      )
+                    // ElevatedButton(
+                    //     onPressed: isMeasuring == false ? null : () async {
+                    //
+                    //       await _handleSaveRecordInFile();
+                    //
+                    //       if (isCalculated) {
+                    //         final snackBar = SnackBar(
+                    //           duration: const Duration(seconds: 2),
+                    //           content: Text(S.current.saveDataToStorage),
+                    //         );
+                    //         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    //
+                    //         int sbpNumber = double.parse(_textSBP).round();
+                    //         int dbpNumber = double.parse(_textDBP).round();
+                    //         int heartRateNumber = double.parse(_textHeartRate).round();
+                    //         int deviationNumber = double.parse(_textDeviation).round();
+                    //         double position = calculateIndicatorPosition(sbpNumber, dbpNumber);
+                    //
+                    //         final bool isNormalPressure = sbpNumber < 120 && dbpNumber < 80;
+                    //         final bool isHighPressure =  sbpNumber >= 120 && sbpNumber < 130 && dbpNumber < 80;
+                    //         final bool isHighPressure1 =  sbpNumber >= 130 && sbpNumber < 140 && dbpNumber >= 80 && dbpNumber < 90;
+                    //         final bool isHighPressure2 = sbpNumber > 140 && dbpNumber > 90;
+                    //         final bool isHighPressure3 = sbpNumber > 180 && dbpNumber > 120;
+                    //         final bool isNormalHeartRate = heartRateNumber >= 60 && heartRateNumber <= 100;
+                    //         final bool isLowHeartRate = heartRateNumber < 60 ;
+                    //         final bool isHighHeartRate = heartRateNumber > 100 ;
+                    //         final bool isManyHeartRate = deviationNumber > 50 ;
+                    //
+                    //         String smsMessage = "";
+                    //         if (isHighPressure || isHighPressure1 || isHighPressure2 || isHighPressure3 ||
+                    //             isLowHeartRate || isHighHeartRate || isManyHeartRate) {
+                    //           smsMessage = "Thông báo về tình trạng sức khỏe: ";
+                    //           if (isHighPressure) {
+                    //             smsMessage += "Huyết áp cao. ";
+                    //           } else if (isHighPressure1) {
+                    //             smsMessage += "Tăng huyết áp Độ 1. ";
+                    //           } else if (isHighPressure2) {
+                    //             smsMessage += "Tăng huyết áp Độ 2. ";
+                    //           } else if (isHighPressure3) {
+                    //             smsMessage += "Huyết áp cực kỳ cao! ";
+                    //           }
+                    //
+                    //           if (isLowHeartRate) {
+                    //             smsMessage += "Nhịp tim thấp. ";
+                    //           } else if (isHighHeartRate) {
+                    //             smsMessage += "Nhịp tim cao. ";
+                    //           }
+                    //
+                    //           if (isManyHeartRate) {
+                    //             smsMessage += "Sự chênh lệch lớn trong nhịp tim. ";
+                    //           }
+                    //
+                    //           // _fetchAndSendLocation(smsMessage);
+                    //         }
+                    //
+                    //         Navigator.of(context).push(
+                    //           MaterialPageRoute(
+                    //             builder: (BuildContext ctxxx) {
+                    //               return Scaffold(
+                    //                 appBar: AppBar(
+                    //                   title: Text(S.current.result),
+                    //                   centerTitle: true,
+                    //                 ),
+                    //                 body: Container(
+                    //                   padding: const EdgeInsets.all(20),
+                    //                   child: SingleChildScrollView( // Sử dụng SingleChildScrollView để có thể cuộn nếu nội dung quá dài
+                    //                     child: Column(
+                    //                       children: [
+                    //                         Container(
+                    //                           alignment: Alignment.topLeft,
+                    //                           child: Text(
+                    //                             S.current.general,
+                    //                             style: TextStyle(
+                    //                                 color: ColorConstant.primary,
+                    //                                 fontWeight: FontWeight.bold,
+                    //                                 fontSize: 22),
+                    //                           ),
+                    //                         ),
+                    //                         const SizedBox(height: 10),
+                    //                         BloodPressureIndicator(indicatorPosition: position),
+                    //                         const SizedBox(height: 40),
+                    //                         Row(
+                    //                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //                           children: [
+                    //                             NumberCard(number: sbpNumber, text: S.current.systolic, subText: "mmHg", color1: Colors.red, percentage: sbpNumber/250),
+                    //                             NumberCard(number: dbpNumber, text: S.current.diastolic, subText: "mmHg", color1: Colors.blue, percentage: dbpNumber/200),
+                    //                           ],
+                    //                         ),
+                    //                         const SizedBox(height: 30), // Khoảng cách giữa hai hàng
+                    //                         Row(
+                    //                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //                           children: [
+                    //                             NumberCard(number: heartRateNumber, text: S.current.heartbeat, subText: "bpm", color1: Colors.green, percentage: heartRateNumber/150),
+                    //                             NumberCard(number: deviationNumber, text: S.current.variability, subText: "bpm", color1: Colors.purple, percentage: deviationNumber/150),
+                    //                           ],
+                    //                         ),
+                    //                         const SizedBox(height: 10),
+                    //                         const BloodPressureLegendTable(),
+                    //                       ],
+                    //                       mainAxisAlignment: MainAxisAlignment.center,
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //               );
+                    //             },
+                    //           ),
+                    //         ); 
+                    //         }
+                    //       },
+                    //       child: Text(S.current.saveAndCalculate)
+                    //   )
                     ],
                   ),
                 const SizedBox(height: 20),
@@ -367,128 +339,47 @@ class _BleLiveChartTestState extends State<BleLiveChartTest> {
     );
   }
 
+  void updateChartData(List dataChannelsToShowOnChart) {
+    // ChartData newData = ChartData(microTimeInserted, dataChannelsToShowOnChart[0]);
+    // ChartData newData2 = ChartData(microTimeInserted, dataChannelsToShowOnChart[2]);
+    // chartDataChannel.add(newData);
+    // chartDataChannel2!.add(newData2);
 
-  SfCartesianChart _buildLiveLineChart() => SfCartesianChart(
-    // title: ChartTitle(
-    //   text: "Biểu đồ đo điện tim thời gian thực",
-    //   alignment: ChartAlignment.center,
-    // ),
-    // plotAreaBackgroundColor: Color(0XFF006A89),
-      plotAreaBorderWidth: 0,
-      primaryXAxis: NumericAxis(zoomPosition: 0.2, interval: 500, edgeLabelPlacement: EdgeLabelPlacement.shift),
-      primaryYAxis:
-      NumericAxis(
-        edgeLabelPlacement: EdgeLabelPlacement.shift, 
-        majorGridLines: const MajorGridLines(width: 1),
-        // minimum: -0.2,
-        // maximum: 0.2,
-        // interval: 0.02
-      ),
-      legend: Legend(isVisible: true, isResponsive: true, position: LegendPosition.top),
-      enableAxisAnimation: true,
-      series: [
-        FastLineSeries<_ChartData, int>(
-            onRendererCreated: (ChartSeriesController controller) {
-              _chartSeriesController = controller;
-            },
-            dataSource: chartDataChannel!,
-            color: const Color.fromARGB(255, 42, 25, 228),
-            xValueMapper: (_ChartData data, _) => data.time,
-            yValueMapper: (_ChartData data, _) => data.value,
-            animationDuration: 0,
-            legendItemText: "PCG"
-        ),
-      ]
-  );
+    final int index = count % countX;
+    ChartData newDataPPG = ChartData(index, (dataChannelsToShowOnChart[0]).toDouble());
+    // ChartData newDataPCG = ChartData(index, (dataChannelsToShowOnChart[1]).toDouble());
 
-  SfCartesianChart _buildLiveLineChart1() => SfCartesianChart(
-      plotAreaBorderWidth: 0,
-      primaryXAxis: NumericAxis(
-          zoomPosition: 0.2,
-          interval: 500,
-          edgeLabelPlacement: EdgeLabelPlacement.shift
-      ),
-      primaryYAxis: NumericAxis(
-          edgeLabelPlacement: EdgeLabelPlacement.shift,
-          majorGridLines: const MajorGridLines(width: 1)),
-      legend: Legend(
-          isVisible: true,
-          isResponsive: true,
-          position: LegendPosition.top
-      ),
-      enableAxisAnimation: true,
-      series: [
-        FastLineSeries<_ChartData, int>(
-            onRendererCreated: (ChartSeriesController controller) {
-              _chartSeriesController2 = controller;
-            },
-            dataSource: chartDataChannel2!,
-            color: const Color.fromARGB(255, 228, 25, 25),
-            xValueMapper: (_ChartData data, _) => data.time,
-            yValueMapper: (_ChartData data, _) => data.value,
-            animationDuration: 0,
-            legendItemText: "PPG"
-        ),
-      ]
-  );
+    if (chartDataChannel.length == countX) {
+      crosshairBehavior.showByIndex(index);
+      chartDataChannel[index] = newDataPPG;
 
-  void _updateChartData(int microTimeInserted, List dataChannelsToShowOnChart) {
-    _ChartData newData = _ChartData(microTimeInserted, dataChannelsToShowOnChart[0]);
-    _ChartData newData2 = _ChartData(microTimeInserted, dataChannelsToShowOnChart[2]);
-    chartDataChannel!.add(newData);
-    chartDataChannel2!.add(newData2);
-
-    if (microTimeInserted - chartDataChannel!.first.time >= 3000000) {
-      _updateDataRunningChart(controller: _chartSeriesController!, data: chartDataChannel);
-      _updateDataRunningChart(controller: _chartSeriesController2!, data: chartDataChannel2);
+      _chartSeriesController?.updateDataSource(updatedDataIndexes: <int>[index]);
     } else {
-      _updateDataStandingChart(controller: _chartSeriesController!, data: chartDataChannel);
-      _updateDataStandingChart(controller: _chartSeriesController2!, data: chartDataChannel2);
+      chartDataChannel.add(newDataPPG);
+      _chartSeriesController?.updateDataSource(addedDataIndexes: <int>[chartDataChannel.length - 1]);
     }
-  }
-
-  void _updateDataRunningChart({required ChartSeriesController controller, List<_ChartData>? data}) {
-    if (data == null) return;
-    data.removeAt(0);
-    controller.updateDataSource(
-      addedDataIndexes: <int>[data.length - 1],
-      removedDataIndexes: <int>[0],
-    );
-  }
-
-  void _updateDataStandingChart({required ChartSeriesController controller, List<_ChartData>? data}) {
-    if (data == null) return;
-    controller.updateDataSource(
-      addedDataIndexes: <int>[data.length - 1],
-    );
-  }
+    count = count + 1;
   
+  }
+
   subscribeCharacteristic() {
     subscribeStream = flutterReactiveBle.subscribeToCharacteristic(
       widget.bluetoothCharacteristic).listen((value) {
-        final int microTime = DateTime.now().microsecondsSinceEpoch;
         List<double> packetHandled = ECGDataController.handleDataRowFromBluetooth(value);
+        print('value:$value');
         List dataChannelsToShowOnChart = ECGDataController.calculateDataPointToShow(packetHandled);
-        samples.add([0,	0, 0, 0, 0, 0, ...packetHandled]);
-
+        // samples.add([0,	0, 0, 0, 0, 0, ...packetHandled]);
         // if (samples.length == 50000) {
         //   FilesManagement.handleSaveDataToFileV2(
         //       widget.fileToSave, samples);
         //   samples.clear();
         // }
-        if (count % 5 == 0) {
-          _updateChartData(microTime, dataChannelsToShowOnChart);
-        }
-        count++;
+        // if (count % 5 == 0) {
+        updateChartData(dataChannelsToShowOnChart);
+        // }
       }
     );
   }
-}
-
-class _ChartData {
-  _ChartData(this.time, this.value);
-  final int time;
-  final value;
 }
 
 class NumberCard extends StatelessWidget {
