@@ -60,7 +60,9 @@ const statisticClient = new ApiClientFactory.StatisticControllerClient(
     fetch: authorizedFetchFunction,
   }
 );
-
+const revenueClient = new ApiClientFactory.RevenueControllerClient(api_url, {
+  fetch: authorizedFetchFunction,
+});
 interface IService {
   userService: ApiClientFactory.UserControllerClient;
   deviceService: ApiClientFactory.DeviceControllerClient;
@@ -70,6 +72,7 @@ interface IService {
   diagnosisService: ApiClientFactory.DiagnosisControllerClient;
   notificationScheduleService: ApiClientFactory.NotificationControllerClient;
   statisticService: ApiClientFactory.StatisticControllerClient;
+  revenueService: ApiClientFactory.RevenueControllerClient;
 }
 
 export const Service: IService = {
@@ -81,4 +84,5 @@ export const Service: IService = {
   diagnosisService: diagnosisClient,
   notificationScheduleService: notificationScheduleClient,
   statisticService: statisticClient,
+  revenueService: revenueClient,
 };

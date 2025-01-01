@@ -6,6 +6,7 @@ import scheduleReducer from "./reducer/scheduleSlice";
 import diagnosisReducer from "./reducer/diagnosisSlice";
 import notificationScheduleReducer from "./reducer/notificationScheduleSlice";
 import statisticReducer from "./reducer/statisticSlice";
+import reveneuReducer from "./reducer/revenueSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     diagnosis: diagnosisReducer,
     notificationSchedule: notificationScheduleReducer,
     statistic: statisticReducer,
+    revenue: reveneuReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -9,8 +9,10 @@ import {
   LineChartOutlined,
   ScheduleOutlined,
   UserOutlined,
+  CreditCardOutlined,
 } from "@ant-design/icons";
 import { userRole } from "../constants";
+import { Revenue } from "../pages/revenue";
 
 export interface IRouteItem {
   key: string;
@@ -55,6 +57,13 @@ export const adminRouterMappingGroup: { [key: string]: IRouteItem } = {
     label: "Thông tin lịch khám",
     component: Schedule,
     icon: ScheduleOutlined,
+  },
+  Revenue: {
+    key: "/revenue",
+    url: "/revenue",
+    label: "Thông tin doanh thu",
+    component: Revenue,
+    icon: CreditCardOutlined,
   },
 };
 

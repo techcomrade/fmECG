@@ -8,6 +8,7 @@ import { RecordModule } from "./modules/record/record.module";
 import { ConsultationScheduleModule } from "./modules/consultation_schedule/consultation_schedule.module";
 import { NotificationModule } from "./modules/notification/notification.module";
 import { StatisticModule } from "./modules/statistic/statistic.module";
+import { RevenueModule } from "./modules/revenue/revenue.module";
 require("dotenv").config();
 
 @Module({
@@ -30,6 +31,7 @@ require("dotenv").config();
     ScheduleModule,
     NotificationModule,
     StatisticModule,
+    RevenueModule,
   ],
 })
 export class AppModule {}

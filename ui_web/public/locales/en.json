@@ -11,7 +11,8 @@
             "register-info": "Register Information",
             "account-management": "Account Management",
             "about-us": "About us",
-            "setting": "Settings"
+            "setting": "Settings",
+            "revenue": "Revenue Information"
         },
         "breadcrumb": {
             "pages": "Pages"
