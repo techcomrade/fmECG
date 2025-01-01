@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:bluetooth_ecg/components/live_chart.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_chart_test.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_screen.dart';
 import 'package:bluetooth_ecg/screens/new_screens/circular_indicator_home.dart';
 import 'package:bluetooth_ecg/screens/new_screens/progress_home.dart';
 import 'package:flutter/material.dart';
@@ -181,6 +186,23 @@ class NewHomeScreen extends StatelessWidget {
                   _buildGlucoseWeightSection(),
                   const SizedBox(height: 20),
                   _buildIntroductionSection(),
+                  const SizedBox(height: 20),
+                  ImageCard(
+                    imageAsset: 'assets/images/heart_rate_example.jpeg', 
+                    functionScanBluetooth: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(
+                          builder: (context) => const BleReactiveScreen(),
+                        )
+                      );
+                    }, 
+                    temporaryNothing: () async {
+                      // FilesManagement.createDirectoryFirstTimeWithDevice();
+                      // fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
+                    }
+                  ),
+                  const SizedBox(height: 20),
+                  LiveChartSample(callBackToPreview: () => {}),
                 ],
               ),
             ),
@@ -308,22 +330,22 @@ class NewHomeScreen extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    blurRadius: 10,
-                    spreadRadius: 2,
-                  ),
-                ],
-              ),
-              child: const ProgressBar(
-                title: 'CARBS',
-                value: 14 / 196,
-              )),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            child: const ProgressBar(
+              title: 'CARBS',
+              value: 14 / 196,
+            )),
         ),
         const SizedBox(width: 12),
         Expanded(
