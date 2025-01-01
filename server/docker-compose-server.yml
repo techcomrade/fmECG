@@ -1,0 +1,35 @@
+services:
+  database:
+    image: mysql:debian
+    container_name: identity
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    env_file: .env
+    networks:
+      - server-fmecg
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  server:
+    container_name: server
+    build: 
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    depends_on:
+      database: 
+        condition: service_healthy
+    env_file: .env
+    networks:
+      - server-fmecg
+networks:
+  server-fmecg:
+    driver: bridge
