@@ -16,7 +16,7 @@ UserProvider userProvider =
     Provider.of<UserProvider>(Utils.globalContext!, listen: false);
 
 class AuthProvider extends ChangeNotifier {
-  String _token = "";
+  String _accessToken = "";
   String _refreshToken = "";
   final String _firebaseToken = "";
   DateTime? _expiryDate;
@@ -37,8 +37,8 @@ class AuthProvider extends ChangeNotifier {
   String get token {
     if (_expiryDate != null &&
         _expiryDate!.isAfter(DateTime.now()) &&
-        _token != "") {
-      return _token;
+        _accessToken != "") {
+      return _accessToken;
     } else {
       return "";
     }
@@ -53,7 +53,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
     print("${email}, ${password}");
     try {
-      final url = Uri.parse("http://192.168.4.2:3003/auth/login");
+      final url = Uri.parse("http://192.168.1.6:3003/auth/login");
       final response = await http.post(
         url,
         headers: {
@@ -63,12 +63,13 @@ class AuthProvider extends ChangeNotifier {
           "email": email,
           "password": password,
         },
-      ).timeout(const Duration(seconds: 10));
+      );
+      //.timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         print("response: ${response.body}");
         final responseData = json.decode(response.body);
         _email = email;
-        _token = responseData['access_token'];
+        _accessToken = responseData['access_token'];
         _refreshToken = responseData['refresh_token'];
         _roleId = responseData['role'];
         _expiryDate =
@@ -89,8 +90,8 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> _saveToPrefs() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', _token);
-    await prefs.setString('refreshToken', _refreshToken);
+    await prefs.setString('access_token', _accessToken);
+    await prefs.setString('refresh_token', _refreshToken);
     await prefs.setString('email', _email);
     await prefs.setInt('role', _roleId);
     await prefs.setString('expiryDate', _expiryDate?.toIso8601String() ?? '');
@@ -98,10 +99,10 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> _loadFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
-    _token = prefs.getString('token') ?? '';
+    _accessToken = prefs.getString('access_token') ?? '';
     _email = prefs.getString('email') ?? '';
     _roleId = prefs.getInt('roleId') ?? -1;
-    _refreshToken = prefs.getString('refreshToken') ?? '';
+    _refreshToken = prefs.getString('refresh_token') ?? '';
     final expiryDateString = prefs.getString('expiryDate');
     if (expiryDateString != null && expiryDateString.isNotEmpty) {
       _expiryDate = DateTime.parse(expiryDateString);
@@ -208,24 +209,27 @@ class AuthProvider extends ChangeNotifier {
     // call API with email and password
     String url = apiConstant.apiUrl + 'logout';
     try {
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {...apiConstant.headers, 'Cookie': 'token=$_token'},
-      );
-      final responseData = jsonDecode(response.body);
+      // final response = await http.get(
+      //   Uri.parse(url),
+      //   headers: {...apiConstant.headers, 'Cookie': 'token=$_accessToken'},
+      // );
+      // final responseData = jsonDecode(response.body);
 
-      if (responseData["status"] == "success") {
-        // do something with data
-        _token = "";
-        _refreshToken = '';
-        _token = "";
-        _email = "";
-        _roleId = -1;
-        _expiryDate = null;
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.clear();
-        notifyListeners();
-      }
+      // if (responseData["status"] == "success") {
+      //   // do something with data
+      //   _accessToken = "";
+      //   _refreshToken = '';
+      //   _accessToken = "";
+      //   _email = "";
+      //   _roleId = -1;
+      //   _expiryDate = null;
+      //   final prefs = await SharedPreferences.getInstance();
+      //   await prefs.clear();
+      //   notifyListeners();
+      // }
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.clear();
+      notifyListeners();
     } catch (err) {
       debugPrint('error from logout: $err');
     }

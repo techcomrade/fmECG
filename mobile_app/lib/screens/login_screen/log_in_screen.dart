@@ -165,11 +165,27 @@ class _SignInScreenState extends State<SignInScreen> {
                                       );
                                     }
                                     if (authProvider.token.isNotEmpty) {
-                                      Navigator.pushReplacement(
+                                      // Show success message
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Login successful!'),
+                                          duration: Duration(
+                                              seconds:
+                                                  2), // Duration for the SnackBar
+                                        ),
+                                      );
+
+                                      // Navigate to the MainScreen after a short delay
+                                      Future.delayed(const Duration(seconds: 2),
+                                          () {
+                                        Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const MainScreen()));
+                                                  const MainScreen()),
+                                        );
+                                      });
                                     }
                                   },
                             child: authProvider.isLoading
