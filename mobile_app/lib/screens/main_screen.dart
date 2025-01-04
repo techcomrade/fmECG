@@ -115,6 +115,7 @@ import 'dart:async';
 
 import 'package:bluetooth_ecg/constants/color_constant.dart';
 import 'package:bluetooth_ecg/generated/l10n.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_screen.dart';
 import 'package:bluetooth_ecg/screens/chat_screens/chat_screen.dart';
 import 'package:bluetooth_ecg/screens/history_screens/bluetooth_classic_screen.dart';
 import 'package:bluetooth_ecg/screens/home_screen.dart';
@@ -130,6 +131,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -147,7 +149,7 @@ class _MainScreenState extends State<MainScreen> {
 
   static const List<Widget> _screens = <Widget>[
     NewHomeScreen(),
-    SignInScreen(),
+    HeartRateScreen(),
     ScheduleScreen(),
     ChatScreen(),
     PersonalInfor(),
@@ -209,75 +211,41 @@ class _MainScreenState extends State<MainScreen> {
         children: _screens,
         physics: const BouncingScrollPhysics(),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
-        },
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: _buildCustomIcon(Icons.home, 'Home', 0),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildCustomIcon(Icons.search, 'Search', 1),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon:
-                _buildCustomIcon(PhosphorIcons.regular.calendar, 'Calendar', 2),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildCustomIcon(PhosphorIcons.regular.chatCircle, 'Chat', 3),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildCustomIcon(Icons.settings, 'Settings', 4),
-            label: '',
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCustomIcon(IconData icon, String label, int index) {
-    bool isSelected = index == _currentIndex;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Icon(
-            icon,
-            color: isSelected ? Colors.blue : Colors.grey[400],
-          ),
-          const SizedBox(
-            width: 2,
-          ),
-          if (isSelected)
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0),
-              child: Text(
-                label,
-                style: const TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14),
-                textAlign: TextAlign.center,
-              ),
-            )
-        ]),
-      ],
+      bottomNavigationBar: SalomonBottomBar(
+          currentIndex: _currentIndex,
+          onTap: (int index) {
+            setState(() {
+              _currentIndex = index;
+            });
+            _pageController.animateToPage(
+              index,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+          },
+          items: [
+            SalomonBottomBarItem(
+                icon: const Icon(Icons.home),
+                title: const Text('Home'),
+                selectedColor: Colors.blue),
+            SalomonBottomBarItem(
+                icon: const Icon(Icons.search),
+                title: const Text('Measurement'),
+                selectedColor: Colors.blue),
+            SalomonBottomBarItem(
+              icon: Icon(PhosphorIcons.regular.calendar),
+              title: const Text('Calendar'),
+              selectedColor: Colors.purple,
+            ),
+            SalomonBottomBarItem(
+                icon: Icon(PhosphorIcons.regular.chatCircle),
+                title: const Text('Chat'),
+                selectedColor: Colors.blue),
+            SalomonBottomBarItem(
+                icon: const Icon(Icons.settings),
+                title: const Text('Settings'),
+                selectedColor: Colors.blue),
+          ]),
     );
   }
 }
