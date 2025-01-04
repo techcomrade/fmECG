@@ -65,13 +65,14 @@ export class ScheduleController {
       await this.userService.getUserByAccountId(req.user.accountId)
     ).id;
     console.log("[P]:::Get schedule by patient id", patientId);
-    let checkExistPatient = await this.userService.getUserById(patientId);
-    if (checkExistPatient == null) {
+    let patient = await this.userService.getUserById(patientId);
+    if (patient == null) {
       throw new NotFoundException("No patient found, please try again");
     }
     try {
       let schedules = await this.scheduleService.getScheduleByPatientId(
-        patientId
+        patientId,
+        patient
       );
       if (!schedules.length) {
         throw new NotFoundException("No schedule found, please try again");
@@ -100,13 +101,14 @@ export class ScheduleController {
       await this.userService.getUserByAccountId(req.user.accountId)
     ).id;
     console.log("[P]:::Get schedule by doctor id", doctorId);
-    let checkExistDoctor = await this.userService.getUserById(doctorId);
-    if (checkExistDoctor == null) {
+    let doctor = await this.userService.getUserById(doctorId);
+    if (doctor == null) {
       throw new NotFoundException("No doctor found, please try again");
     }
     try {
       let schedules = await this.scheduleService.getScheduleByDoctorId(
-        doctorId
+        doctorId,
+        doctor
       );
       if (!schedules.length) {
         throw new NotFoundException("No schedule found, please try again");
@@ -121,7 +123,7 @@ export class ScheduleController {
     }
   }
 
-  @Post("")
+  @Post("create-by-doctor")
   @ApiResponse({
     status: 201,
     type: Boolean,
@@ -263,7 +265,7 @@ export class ScheduleController {
     }
   }
 
-  @Post("create/doctor")
+  @Post("create-by-patient")
   @ApiResponse({
     status: 201,
     type: Boolean,

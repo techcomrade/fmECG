@@ -21,9 +21,6 @@ export class RecordResponse {
   device_name?: string;
 
   @Expose()
-  schedule_id: string;
-
-  @Expose()
   start_time: bigint;
 
   @Expose()

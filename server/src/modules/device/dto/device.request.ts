@@ -18,7 +18,7 @@ export class DeviceRequest {
   })
   @IsNotEmpty()
   @IsUUID()
-  doctor_id: string;
+  user_id: string;
 
   @ApiProperty({
     description: "The unique identifier for the device",
@@ -48,10 +48,16 @@ export class DeviceRequest {
   status_id: number;
 
   @ApiProperty({
-    description: "Start date of the device",
+    description: "Start time when the user borrows the device",
     example: 1,
   })
-  start_date: number;
+  start_time: number;
+
+  @ApiProperty({
+    description: "End time when the user borrows the device",
+    example: 1,
+  })
+  end_time: number;
 
   @ApiProperty()
   @Type(() => DeviceDetailRequest)
