@@ -10,7 +10,6 @@ import { RecordController } from "./record.controller";
 import { RecordService } from "./record.service";
 import { RecordRepository } from "./record.repository"
 import { UserModule } from "../user/user.module";
-import { ScheduleModule } from "../schedule/schedule.module";
 
 @Module({
   imports: [
@@ -23,7 +22,6 @@ import { ScheduleModule } from "../schedule/schedule.module";
     ]),
     DeviceModule,
     UserModule,
-    ScheduleModule,
   ],
   controllers: [RecordController],
   providers: [RecordRepository, RecordService],

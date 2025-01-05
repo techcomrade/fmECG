@@ -136,7 +136,6 @@ const ModalComponent = (props: any, ref: any) => {
                 }}
               />
             )}
-
             {column.type === "list" && (
               <Form.List name={[column.dataIndex, "list"]}>
                 {(subFields, subOpt) => (

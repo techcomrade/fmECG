@@ -3,46 +3,29 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("devices", {
+    await queryInterface.createTable("device_schedule", {
       id: {
         type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true,
       },
-      doctor_id: {
+      schedule_id: {
         type: Sequelize.STRING,
         references: {
-          model: "users",
+          model: "schedules",
           key: "id",
         },
         onDelete: "CASCADE", 
         onUpdate: "SET NULL",
       },
-      device_name: {
+      device_id: {
         type: Sequelize.STRING,
-        allowNull: false,
-      },
-      information: {
-        type: Sequelize.TEXT,
-      },
-      device_type_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
-          model: "device_type",
+          model: "devices",
           key: "id",
         },
-      },
-      start_date: {
-        type: Sequelize.BIGINT,
-      },
-      status_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "device_status",
-          key: "id",
-        },
+        onDelete: "CASCADE", 
+        onUpdate: "SET NULL",
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -54,6 +37,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("devices");
+    await queryInterface.dropTable("device_schedule");
   },
 };
