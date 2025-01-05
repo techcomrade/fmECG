@@ -96,6 +96,13 @@ export const doctorRouterMappingGroup: { [key: string]: IRouteItem } = {
     component: Schedule,
     icon: ScheduleOutlined,
   },
+  Revenue: {
+    key: "/revenue",
+    url: "/revenue",
+    label: "Thông tin doanh thu",
+    component: Revenue,
+    icon: CreditCardOutlined,
+  },
 };
 
 export const patientRouterMappingGroup: { [key: string]: IRouteItem } = {

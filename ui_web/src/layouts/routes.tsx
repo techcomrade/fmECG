@@ -23,7 +23,7 @@ export const Routes = (props: IProps) => {
       <Route path="/error" />
       <Route path="/home" element={<Home />} />
       <Route path="/account" element={<Detail />} />
-      <Route path="/revenue" element={<Revenue />} /> 
+      {/* <Route path="/revenue" element={<Revenue />} />  */}
       {Object.values(getRoutesByRole(Context.role)).map((route: any) => (
           <Route
             key={route.key}
