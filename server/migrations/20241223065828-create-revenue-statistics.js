@@ -53,6 +53,10 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
+       discount: { 
+           type: Sequelize.DECIMAL(10, 2),
+           allowNull: true, 
+       },
       createdAt: {
         type: Sequelize.DATE,
       },

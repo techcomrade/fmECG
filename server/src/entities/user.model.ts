@@ -35,6 +35,19 @@ export class UserModel extends Model<UserModel> {
   })
   account_id: string;
 
+   @Column({
+        type: DataType.STRING(255),
+        allowNull: false,
+        unique: true,
+    })
+    email: string;
+
+    @Column({
+        type: DataType.STRING(255),
+        allowNull: false,
+    })
+    password: string;
+
   @Column({
     type: DataType.STRING(255),
     allowNull: false,

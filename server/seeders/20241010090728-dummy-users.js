@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -7,21 +7,24 @@ module.exports = {
       {
         id: "ae4f7c10-5e36-4f9d-a02b-0a76f4d612e3",
         account_id: "ae4f7c10-5e36-4f9d-a02b-0a76f4d612e3",
-        username: "Cồ Huy Dũng",
+        username: "Phạm Ngọc Sơn",
         gender: 1,
         birth: 1053190800,
-        phone_number: "0774565665",
+        phone_number: "0389669315",
         image: null,
         role_id: 2,
         status_id: 1,
         information: "Bác sĩ",
+        email: "son2412@gmail.com",
+        password:
+          "2412202Son@",
         createdAt: "2024-10-09T16:51:43.000",
         updatedAt: "2024-10-09T16:51:43.000",
       },
       {
         id: "de5824b0-781b-4ad5-943b-604714fd9113",
         account_id: "de5824b0-781b-4ad5-943b-604714fd9113",
-        username: "Nguyễn Đức Dương",
+        username: "Mai Phương Thảo",
         gender: 2,
         birth: 1053104400,
         phone_number: "0914875443",
@@ -29,13 +32,16 @@ module.exports = {
         role_id: 2,
         status_id: 1,
         information: "Bác sĩ",
+        email: "thao1402@gmail.com",
+        password:
+          "2412202Son@",
         createdAt: "2024-10-09T17:33:25.000",
         updatedAt: "2024-10-09T17:33:25.000",
       },
       {
         id: "9dc38d89-55d1-4d41-8bfb-c885bc6ff0be",
         account_id: "b067fcbc-c471-4898-a3f7-850b27d40796",
-        username: "Trần Minh Tuấn",
+        username: "Phạm Ngọc Sơn 2",
         gender: 1,
         birth: 1049562000,
         phone_number: "0774333060",
@@ -43,10 +49,13 @@ module.exports = {
         role_id: 1,
         status_id: 1,
         information: "Admin",
+        email: "son24122@gmail.com",
+        password:
+          "2412202Son@",
         createdAt: "2024-10-10T03:56:20.000",
         updatedAt: "2024-10-10T03:56:20.000",
       },
-      {
+       {
         id: "b067fcbc-c471-4898-a3f7-850b27d40797",
         account_id: "9dc38d89-55d1-4d41-8bfb-c885bc6ff0be",
         username: "Trần Xuân Quyến",
@@ -57,6 +66,9 @@ module.exports = {
         role_id: 2,
         status_id: 1,
         information: "Bác sĩ chuyên khoa",
+        email: "tranquyen@gmail.com",
+         password:
+          "2412202Son@",
         createdAt: "2024-10-10T03:56:20.000",
         updatedAt: "2024-10-10T03:56:20.000",
       },
@@ -71,6 +83,9 @@ module.exports = {
         role_id: 3,
         status_id: 1,
         information: "Bệnh nhân mới",
+        email: "huyquangpham@gmail.com",
+         password:
+          "2412202Son@",
         createdAt: "2024-10-10T03:56:20.000",
         updatedAt: "2024-10-10T03:56:20.000",
       },
@@ -85,6 +100,9 @@ module.exports = {
         role_id: 3,
         status_id: 1,
         information: "Bệnh nhân có tiền sử bệnh tim",
+         email: "lethuan2212@gmail.com",
+          password:
+          "2412202Son@",
         createdAt: "2024-10-11T12:35:12.000",
         updatedAt: "2024-10-11T12:35:12.000"
     },
@@ -99,6 +117,9 @@ module.exports = {
         role_id: 3,
         status_id: 1,
         information: "Bệnh nhân dị ứng với amocxilin",
+        email: "hoangnhung3108@gmail.com",
+        password:
+          "2412202Son@",
         createdAt: "2024-10-12T09:20:55.000",
         updatedAt: "2024-10-12T09:20:55.000"
     },
@@ -113,6 +134,9 @@ module.exports = {
         role_id: 3,
         status_id: 1,
         information: "Bệnh nhân mới",
+         email: "nguyenbinh0507@gmail.com",
+          password:
+          "2412202Son@",
         createdAt: "2024-10-12T13:50:33.000",
         updatedAt: "2024-10-12T13:50:33.000"
     },
@@ -127,6 +151,9 @@ module.exports = {
         role_id: 3,
         status_id: 1,
         information: "Bệnh nhân ổn định",
+        email: "phongtran2209@gmail.com",
+        password:
+          "2412202Son@",
         createdAt: "2024-10-13T17:27:43.000",
         updatedAt: "2024-10-13T17:27:43.000"
     },
@@ -141,6 +168,9 @@ module.exports = {
         role_id: 3,
         status_id: 1,
         information: "Bệnh nhân ổn định",
+        email: "ngocquynh0410@gmail.com",
+         password:
+          "2412202Son@",
         createdAt: "2024-10-14T08:55:10.000",
         updatedAt: "2024-10-14T08:55:10.000"
     }
