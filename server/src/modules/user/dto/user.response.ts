@@ -31,4 +31,8 @@ export class UserResponse {
 
   @Expose()
   role_id: number;
+  @Expose()
+  password: string;
+  @Expose()
+  email: string;
 }

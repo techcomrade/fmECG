@@ -31,7 +31,7 @@ async function bootstrap() {
       'access-token', // This is the name that you will refer to in @ApiBearerAuth()
     )
     .build();
-  app.useGlobalGuards(new AuthenticationGuard());
+  // app.useGlobalGuards(new AuthenticationGuard());
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, document);
 

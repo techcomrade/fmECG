@@ -3,10 +3,19 @@ import { UserResponse } from "./dto/user.response";
 import { UserRepository } from "./user.repository";
 const { v4: uuidv4 } = require("uuid");
 
-import { forwardRef, Inject, Injectable } from "@nestjs/common";
+import {
+  BadRequestException,
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { ScheduleResponse } from "../schedule/dto/schedule.response";
 import { ConsultationScheduleService } from "../consultation_schedule/consultation_schedule.service";
 import { ScheduleService } from "../schedule/schedule.service";
+import { LoginRequestModel } from "./dto/login.request";
+import { LoginResponseModel } from "./dto/login.response";
+import { AccountRegisterModel } from "./dto/register.request";
 @Injectable()
 export class UserService {
   constructor(
@@ -116,4 +125,27 @@ export class UserService {
     );
     return doctorAvailableArray;
   }
+
+  async login(LoginInfo: LoginRequestModel): Promise<LoginResponseModel> {
+    const user = await this.userRepository.getUserByEmail(LoginInfo.email);
+    if (!user) {
+      throw new NotFoundException("No user found, please try again");
+    }
+    console.log(LoginInfo);
+    if (user.password != LoginInfo.password) {
+      throw new BadRequestException("Wrong password");
+    }
+    // 60 minute expired
+    const expiredTime = 60 * 60 * 1000;
+    const expiredAt = Date.now() + expiredTime;
+    const result: LoginResponseModel = {
+      access_token: `kjsdhfueinmxvnjksdfhldksjfmdfbk-${user.account_id}-jxcvjdksfdjfkbdkfjdbsjfkbdsfjk-${expiredAt}-bdsjfbskdfjbskfbsmncvcvmxmbv-${user.role_id}-`,
+      role: user.role_id,
+      expired_time: expiredAt,
+    };
+    return result;
+  };
+  async register(registerInfo: AccountRegisterModel): Promise<Boolean>{
+    return true;
+  };
 }

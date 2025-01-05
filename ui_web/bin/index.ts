@@ -5,7 +5,7 @@ import { config } from "./config";
 import cors from "cors";
 import { AppContext } from "./declaration";
 import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
+
 const app = express();
 app.use(cors());
 // Middleware to parse JSON
@@ -18,7 +18,7 @@ function getIndexHtml() {
     .readFileSync(path.resolve(__dirname, "../../www/index.html"))
     .toString();
 }
-const SSORefreshTokenUrl = `${config.SSO_URL}/refresh-token`;
+
 
 app.get("/", (req, res) => {
   var templateHtml = getIndexHtml();
@@ -41,8 +41,8 @@ app.get("/identity", (req: Request, res: Response) => {
     return res.redirect("/");
   }
   return res.render("login", {
-    registerurl: `${config.SSO_URL}/register`,
-    ssourl: `${config.SSO_URL}/login`,
+    registerurl: `${config.DEFAULT_API_URL}/users/register`,
+    ssourl: `${config.DEFAULT_API_URL}/users/login`,
   });
 });
 
@@ -52,7 +52,7 @@ app.post("/", async (req: Request, res: Response, next) => {
     const appContext: AppContext = {
       env: config.NODE_ENV,
       apiUrl: config.DEFAULT_API_URL,
-      ssoUrl: `${config.SSO_URL}/login`,
+      ssoUrl: `${config.DEFAULT_API_URL}/users/login`,
       loginResult: true,
       token: access_token,
       expiredTime: expired_time,

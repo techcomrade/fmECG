@@ -25,14 +25,12 @@ import { UserGuardModel } from "../authentication/dto/user.guard.model";
 import { Roles } from "../authentication/decorators/role.decorator";
 import { AuthorizationGuard } from "../authentication/authorization.guard";
 import { Role } from "../authentication/dto/role.enum";
+import { LoginRequestModel } from "./dto/login.request";
 
 @Controller("users")
-@ApiBearerAuth("access-token") // Reference the name from addBearerAuth()
-@UseGuards(AuthenticationGuard)
-@UseGuards(AuthorizationGuard)
+// @ApiBearerAuth("access-token") // Reference the name from addBearerAuth()
 export class UserController {
   constructor(private userService: UserService) {}
-  @Roles(Role.Admin)
   @Get("")
   @ApiResponse({
     status: 200,
@@ -178,6 +176,40 @@ export class UserController {
   })
   async createUser(@Body() user: UserRequest, @Res() res: Response) {
     console.log(`[P]:::Add user data`, user);
+    try {
+      await this.userService.add(user);
+      return res.json({
+        message: "User created successfully",
+      });
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException("Failed to create user");
+    }
+  }
+  @Post("/login")
+  @ApiResponse({
+    status: 201,
+    type: Boolean,
+    description: "Successful",
+  })
+  async login(@Body() user: LoginRequestModel, @Res() res: Response) {
+    console.log(`[P]:::login`, user);
+    try {
+      const result = await this.userService.login(user);
+      return res.json(result);
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException("Failed to login");
+    }
+  }
+  @Post("/register")
+  @ApiResponse({
+    status: 201,
+    type: Boolean,
+    description: "Successful",
+  })
+  async register(@Body() user: UserRequest, @Res() res: Response) {
+    console.log(`[P]:::register`, user);
     try {
       await this.userService.add(user);
       return res.json({

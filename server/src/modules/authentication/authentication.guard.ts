@@ -19,13 +19,11 @@ export class AuthenticationGuard implements CanActivate {
       return true;
     }
     try {
-      const response = await axios.post(`${process.env.SSO_URL}/auth/decode`, {
-        token: token,
-      });
-      if (response.data && response.status === 200) {
-        const expiredTime = response.data?.exp * 1000;
-        const accountId = response.data?.accountId;
-        const role = response.data?.role;
+        const response = this.decodeToken(token);
+   
+        const expiredTime = Number(response.exp);
+        const accountId = response.account_id;
+        const role = Number(response.role);
 
         const user: UserGuardModel = {
           accountId: accountId,
@@ -38,7 +36,7 @@ export class AuthenticationGuard implements CanActivate {
         };
         request.user = user;
         return true;
-      }
+      
 
       return false;
     } catch (e) {
@@ -51,5 +49,18 @@ export class AuthenticationGuard implements CanActivate {
     return authHeader && authHeader.startsWith("Bearer ")
       ? authHeader.split(" ")[1]
       : null;
+  }
+  private decodeToken (token: string){
+    const parts = token.split('-');
+
+      if (parts.length >= 4) {
+        const account_id = parts[1]; // Phần chứa account_id
+        const exp = parts[2];  // Phần chứa expiredAt
+        const role = parts[3]
+        return { account_id, exp, role };
+    }
+
+
+    return null;
   }
 }
