@@ -20,7 +20,11 @@ export class UserRepository {
       where: { role_id: 2 },
     });
   }
-
+  async getUserByEmail(email:string): Promise<UserResponse> {
+    return await this.userModel.findOne({
+      where: {email: email}
+    })
+  }
   async countUsersPerMonth(): Promise<any> {
     const [doctors] = await this.userModel.sequelize.query(
       "SELECT EXTRACT(MONTH FROM createdAt) AS month, COUNT(*) AS doctor_count FROM users WHERE role_id = 2 GROUP BY month ORDER BY month"
