@@ -49,7 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Image.asset("assets/logo/care_me.png"),
+        title: Image.asset("assets/logo/fmECG_branding.png"),
       ),
       body: SafeArea(
         child: Center(
@@ -63,7 +63,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       color: Colors.blue.shade800,
                     )),
                 const Text(
-                  "To CareMe!",
+                  "To fmECG!",
                   style: TextStyle(
                     fontSize: 22,
                     color: Colors.black,
@@ -165,18 +165,14 @@ class _SignInScreenState extends State<SignInScreen> {
                                       );
                                     }
                                     if (authProvider.token.isNotEmpty) {
-                                      // Show success message
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         const SnackBar(
                                           content: Text('Login successful!'),
-                                          duration: Duration(
-                                              seconds:
-                                                  2), // Duration for the SnackBar
+                                          duration: Duration(seconds: 2),
                                         ),
                                       );
 
-                                      // Navigate to the MainScreen after a short delay
                                       Future.delayed(const Duration(seconds: 2),
                                           () {
                                         Navigator.pushReplacement(
