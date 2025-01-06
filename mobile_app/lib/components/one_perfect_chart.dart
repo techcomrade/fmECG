@@ -56,7 +56,7 @@ class _OneChartState extends State<OneChart> {
         majorGridLines: MajorGridLines(width: 1, color: Color(0xFF7a935a)),
         minorGridLines: MinorGridLines(width: 0, color: Color(0xFF7a935a)),
         majorTickLines: MajorTickLines(size: 5, width: 2, color: Color(0xFF7a935a)),
-        edgeLabelPlacement: EdgeLabelPlacement.none,
+        edgeLabelPlacement: EdgeLabelPlacement.shift,
       ),
       series: [
         FastLineSeries<ChartData, int>(
