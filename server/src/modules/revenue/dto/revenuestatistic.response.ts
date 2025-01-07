@@ -4,13 +4,22 @@ import { Expose, Exclude } from "class-transformer";
 export class RevenueStatisticResponse {
 
   @Expose()
-  total_revenue: number;
-  @Expose()
-  revenue_by_year: { year: number; revenue: number }[];
+  totalRevenue: number;
 
   @Expose()
-  revenue_by_month: { month: number; revenue: number }[];
+  totalRevenueByMonth: number;
 
   @Expose()
-  revenue_by_date: { date: string; revenue: number }[];
+  totalRevenueByDate: number;
+
+
+  @Expose()
+  revenueByYear: { year: number; revenue: number }[];
+
+  @Expose()
+  revenueByMonth: { month: number; revenue: number }[];
+
+  @Expose()
+  revenueByDate: { date: string; revenue: number }[];
+  
 }

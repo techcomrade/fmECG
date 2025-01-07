@@ -1,5 +1,3 @@
-
-
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { RevenueModel } from "../../entities/revenue.model";
@@ -70,7 +68,7 @@ export class RevenueRepository {
         });
       }
 
-      async getRevenueByDate(startDate: Date, endDate: Date): Promise<RevenueResponse[]> {
+      async getRevenueByDate(startDate: Date, endDate: Date): Promise<RevenueModel[]> {
         return await this.revenueModel.findAll({
           where: {
             createdAt: {
@@ -80,25 +78,37 @@ export class RevenueRepository {
         });
     }
 
-    async getRevenueByYear(year: number): Promise<RevenueResponse[]> {
-      return this.sequelize.query(`
-        SELECT *
-        FROM revenues
-        WHERE EXTRACT(YEAR FROM revenue_date) = :year
-      `, {
-          replacements: { year },
-          model: RevenueModel,
-          mapToModel: true,
+  async getRevenueByMonth(year: number, month: number): Promise<RevenueModel[]> {
+    const startDate = new Date(year, month - 1, 1);
+      const endDate = new Date(year, month, 0, 23, 59, 59);
+
+      return this.revenueModel.findAll({
+        where: {
+          createdAt: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
       });
   }
 
-    async getTotalRevenueByYear(year: number): Promise<any> {
-      return this.sequelize.query(`
-          SELECT SUM(amount) as totalAmount
-          FROM revenues
-          WHERE EXTRACT(YEAR FROM revenue_date) = :year
-        `, {
-            replacements: { year },
-          });
-  }
+  async getRevenueByYear(year: number): Promise<RevenueModel[]> {
+    return await this.revenueModel.findAll({
+      where: this.sequelize.where(
+          this.sequelize.fn('YEAR', this.sequelize.col('createdAt')),
+          year
+      )
+    });
+}
+
+    async getTotalRevenueByYear(year: number): Promise<{ totalAmount: number }> {
+        const result = await this.revenueModel.findAll({
+            attributes: [[this.sequelize.fn('SUM', this.sequelize.col('fee')), 'totalAmount']],
+            where: this.sequelize.where(
+                this.sequelize.fn('YEAR', this.sequelize.col('createdAt')),
+                year
+            )
+        });
+
+       return result.length > 0 ? { totalAmount: Number(result[0].get('totalAmount')) || 0 } : { totalAmount: 0 };
+    }
 }

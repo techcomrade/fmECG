@@ -8,6 +8,7 @@ import {
     deleteRevenueById,
     resetLoadDeleteDataStatus,
     resetLoadUpdateDataStatus,
+    getRevenueStatistic
 } from "../../redux/reducer/revenueSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { convertTimeToDateTime, checkDateTypeKey } from "../../utils/dateUtils";
@@ -17,9 +18,8 @@ import { Context } from "../../utils/context";
 import { userRole } from "../../constants";
 import { showNotiError, showNotiSuccess } from "../../components/notification";
 import { Button, DatePicker, Input, Space } from "antd";
-import { getRevenueStatistic } from "../../redux/reducer/revenueSlice";
 import { useEffect } from "react";
-
+import styles from "./revenue.module.scss";
 const { RangePicker, MonthPicker } = DatePicker;
 
 
@@ -33,18 +33,17 @@ export const Revenue: React.FC = () => {
     const [dataTable, setDataTable] = React.useState<any[]>([]);
     const [selectedData, setSelectedData] = React.useState<any[]>([]);
     const modalUpdateRef = React.useRef<EditRevenueType>(null);
-    const [totalRevenue, setTotalRevenue] = React.useState<number | null>(null);
+    const [totalRevenueByYear, setTotalRevenueByYear] = React.useState<number | null>(null);
+    const [totalRevenueByMonth, setTotalRevenueByMonth] = React.useState<number | null>(null);
+    const [totalRevenueByDate, setTotalRevenueByDate] = React.useState<number | null>(null);
     const [statisticYear, setStatisticYear] = React.useState<number>(new Date().getFullYear())
     const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(null);
     const [selectedMonth, setSelectedMonth] = React.useState<Dayjs | null>(null);
-    const [selectedRange, setSelectedRange] = React.useState<Dayjs[] | null>(null);
     const [filterData, setFilterData] = React.useState<{
         date: Dayjs | null;
         month: Dayjs | null;
-        range: Dayjs[] | null;
         year: number;
-    }>({ date: null, month: null, range: null, year: new Date().getFullYear() });
-
+    }>({ date: null, month: null, year: new Date().getFullYear() });
 
 
     const columns = [
@@ -152,10 +151,22 @@ export const Revenue: React.FC = () => {
           dispatch(getAllRevenue());
     }, [dispatch]);
 
-    useEffect(() => {
-        dispatch(getRevenueStatistic(statisticYear))
-    }, [statisticYear, dispatch])
-
+     useEffect(() => {
+        if(filterData.year){
+             dispatch(getRevenueStatistic(filterData.year))
+         }
+    }, [filterData.year, dispatch])
+    
+     useEffect(() => {
+          if(filterData.month){
+            dispatch(getRevenueStatistic(filterData.month.year(), filterData.month.month() + 1))
+        }
+    }, [filterData.month, dispatch])
+     useEffect(() => {
+        if(filterData.date){
+            dispatch(getRevenueStatistic(filterData.date.year(), filterData.date.month() + 1, filterData.date.date()))
+        }
+    }, [filterData.date, dispatch])
 
     // Get data
     React.useEffect(() => {
@@ -166,7 +177,15 @@ export const Revenue: React.FC = () => {
             setDataTable(rawData);
         }
          if (dataState.statisticData?.total_revenue) {
-            setTotalRevenue(dataState.statisticData?.total_revenue)
+             if(filterData.year) {
+                   setTotalRevenueByYear(dataState.statisticData?.total_revenue)
+             }
+             if(filterData.month) {
+                 setTotalRevenueByMonth(dataState.statisticData?.total_revenue)
+             }
+            if(filterData.date) {
+                 setTotalRevenueByDate(dataState.statisticData?.total_revenue)
+             }
         }
         if (
             dataState.loadDataStatus === ApiLoadingStatus.Failed &&
@@ -222,60 +241,64 @@ export const Revenue: React.FC = () => {
         dispatch(deleteRevenueById(id));
     };
 
-    const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setStatisticYear(Number(e.target.value));
-    };
+   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+       setStatisticYear(Number(e.target.value));
+   };
 
-    const handleDateChange = (date: dayjs.Dayjs | null) => {
-        setSelectedDate(date);
-    };
 
-    const handleMonthChange = (month: dayjs.Dayjs | null) => {
-        setSelectedMonth(month);
-    };
+   const handleDateChange = (date: dayjs.Dayjs | null) => {
+       setSelectedDate(date);
+   };
 
-    const handleRangeChange = (dates: (dayjs.Dayjs | null)[] | null) => {
-        setSelectedRange(dates);
-    };
+   const handleMonthChange = (month: dayjs.Dayjs | null) => {
+       setSelectedMonth(month);
+   };
 
-    const handleSaveFilter = () => {
-          setFilterData({
-               date: selectedDate,
-               month: selectedMonth,
-               range: selectedRange,
-                year: statisticYear,
-           });
+
+
+   const handleSaveYearFilter = () => {
+        setFilterData((prev) => ({ ...prev, year: statisticYear }))
        
-       console.log({
-                date: selectedDate,
-                month: selectedMonth,
-                range: selectedRange,
-                year: statisticYear
-            })
     }
 
+    const handleSaveDateFilter = () => {
+         setFilterData((prev) => ({ ...prev, date: selectedDate }))
+    }
+    const handleSaveMonthFilter = () => {
+         setFilterData((prev) => ({ ...prev, month: selectedMonth }))
+    }
     return (
-        <>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-                <div>
-                    <h2>Tổng doanh thu: {totalRevenue}</h2>
-                    <Space>
-                        <DatePicker onChange={handleDateChange} value={selectedDate} />
-                        <MonthPicker onChange={handleMonthChange} value={selectedMonth} />
-                       <RangePicker onChange={handleRangeChange} value={selectedRange} />
-                     </Space>
+        <div className={styles.revenueContainer}>
+            <div className={styles.filterSection}>
+                <div className={styles.revenueTypeContainer}>
+                    <h3>Tổng doanh thu theo năm: {totalRevenueByYear}</h3>
+                    <Space className={styles.inputGroup}>
+                        <Input
+                            type="number"
+                            style={{ width: 150, marginRight: 20 }}
+                            placeholder="Năm"
+                            onChange={handleYearChange}
+                            value={statisticYear}
+                        />
+                        <Button type="primary" onClick={handleSaveYearFilter}>Hiển thị</Button>
+                    </Space>
                 </div>
-                <div>
-                    <Input
-                        type="number"
-                        style={{ width: 150, marginRight: 20 }}
-                        placeholder="Năm"
-                        onChange={handleYearChange}
-                        value={statisticYear}
-                    />
-                    <Button type="primary" onClick={handleSaveFilter}>Lưu</Button>
+                <div className={styles.revenueTypeContainer}>
+                    <h3>Tổng doanh thu theo tháng: {totalRevenueByMonth}</h3>
+                    <Space className={styles.inputGroup}>
+                        <MonthPicker onChange={handleMonthChange} value={selectedMonth} />
+                        <Button type="primary" onClick={handleSaveMonthFilter}>Hiển thị</Button>
+                    </Space>
+                </div>
+                <div className={styles.revenueTypeContainer}>
+                    <h3>Tổng doanh thu theo ngày: {totalRevenueByDate}</h3>
+                    <Space className={styles.inputGroup}>
+                        <DatePicker onChange={handleDateChange} value={selectedDate} />
+                        <Button type="primary" onClick={handleSaveDateFilter}>Hiển thị</Button>
+                    </Space>
                 </div>
             </div>
+            <div className={styles.dataTableContainer}>
             <DataTable
                 role={Context.role === userRole.doctor ? userRole.doctor : undefined}
                 editButton={Context.role === userRole.doctor}
@@ -288,11 +311,12 @@ export const Revenue: React.FC = () => {
                 editFunction={handleEditFunction}
                 deleteFunction={handleDeleteFunction}
             />
+            </div>
             <ModalControlData
                 ref={modalUpdateRef}
                 title="Sửa thông tin doanh thu"
                 submitFunction={(data: any) => handleSubmitEditRevenue(data)}
             />
-        </>
+        </div>
     );
 };
