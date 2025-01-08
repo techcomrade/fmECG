@@ -1,4 +1,4 @@
-FROM node:23-alpine
+FROM node:18.20.1-alpine
 
 WORKDIR /server/
 
@@ -12,4 +12,4 @@ COPY . .
 # Build the NestJS application
 RUN npm run build
 
-CMD ["sh", "-c", "npm run db:reset && npm run db:migrate && npm run db:seed && npm start"]
+CMD ["sh", "-c", "npm start"]
