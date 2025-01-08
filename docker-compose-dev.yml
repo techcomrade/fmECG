@@ -5,7 +5,7 @@ services:
     build: 
       dockerfile: Dockerfile
       context: ./identity_service
-    profiles: ["backend"]
+    # profiles: ["backend"]
     volumes:
       - ./identity_service/:/server/
       - /identity/node_modules
@@ -15,19 +15,19 @@ services:
     networks:
       - network-fmecg
   
-  # react-app:
-  #   container_name: react-fmecg
-  #   build: 
-  #     dockerfile: Dockerfile.dev
-  #     context: ./ui
-  #   profiles: ["frontend"]
-  #   volumes:
-  #     - ./ui:/ui/
-  #     - /ui/node_modules
-  #   depends_on:
-  #     - database
-  #   networks:
-  #     - network-fmecg
+  ui-web:
+    container_name: ui-web
+    build: 
+      dockerfile: Dockerfile
+      context: ./ui
+    # profiles: ["frontend"]
+    volumes:
+      - ./ui-web/:/ui/
+      - /ui-web/node_modules
+    depends_on:
+      - database
+    networks:
+      - network-fmecg
 
   database:
     image: mysql:8.0
