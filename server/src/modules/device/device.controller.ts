@@ -80,21 +80,21 @@ export class DeviceController {
     return res.status(HttpStatus.OK).json(result);
   }
 
-  @Get("data/user")
+  @Get("data/doctor_id")
   @ApiResponse({
     status: 200,
     type: [DeviceResponse],
     description: "successful",
   })
-  async getDeviceByUserId(
+  async getDeviceByDoctorId(
     @Req() req: Request & { user?: UserGuardModel },
     @Res() res: Response,
   ) {
-    const userId = (
+    const doctorId = (
       await this.userService.getUserByAccountId(req.user.accountId)
     ).id;
-    console.log("[P]::: Get device by user id");
-    let devices = await this.deviceService.getByUserId(userId);
+    console.log("[P]::: Get device by doctor id");
+    let devices = await this.deviceService.getByDoctorId(doctorId);
     if (!devices.length) {
       throw new NotFoundException("No devices found, please try again");
     }
@@ -129,17 +129,9 @@ export class DeviceController {
     type: Boolean,
     description: "successful",
   })
-  async add(
-    @Req() req: Request & { user?: UserGuardModel },
-    @Body() device: DeviceRequest,
-    @Res() res: Response
-  ) {
+  async add(@Body() device: DeviceRequest, @Res() res: Response) {
     console.log(`[P]:::Add device data`, device);
     try {
-      const user = await this.userService.getUserByAccountId(
-        req.user.accountId
-      );
-      //device.user_id = user.id;
       await this.deviceService.add(device);
       return res.json({
         message: "Device created successfully",

@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/sequelize";
 import { RecordModel } from "../../entities/record.model";
 import { RecordRequest } from "./dto/record.request";
 import { RecordResponse } from "./dto/record.response";
+const sequelize = require("../../config/sequelize");
 
 @Injectable()
 export class RecordRepository {
@@ -27,6 +28,7 @@ export class RecordRepository {
       id: record.id,
       patient_id: record.patient_id,
       device_id: record.device_id,
+      schedule_id: record.schedule_id,
       start_time: record.start_time,
       end_time: record.end_time,
       data_rec_url: record.data_rec_url,
@@ -38,6 +40,7 @@ export class RecordRepository {
       {
         patient_id: record.patient_id,
         device_id: record.device_id,
+        schedule_id: record.schedule_id,
         start_time: record.start_time,
         end_time: record.end_time,
         data_rec_url: record.data_rec_url,

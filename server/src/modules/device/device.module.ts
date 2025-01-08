@@ -8,6 +8,7 @@ import { RecordModel } from "../../entities/record.model";
 import { RecordDiagnosisModel } from "../../entities/record_diagnosis.model";
 import { DeviceStatusModel } from "../../entities/device_status.model";
 import { DeviceTypeModel } from "../../entities/device_type.model";
+import { DeviceScheduleModel } from "../../entities/device_schedule.model";
 import { DeviceDetailModel } from "../../entities/device_detail.model";
 import { UserModule } from "../user/user.module";
 import { DeviceDetailModule } from "../device_details/device_detail.module";
@@ -18,6 +19,7 @@ import { DeviceDetailModule } from "../device_details/device_detail.module";
       DeviceModel,
       DeviceStatusModel,
       DeviceTypeModel,
+      DeviceScheduleModel,
       RecordModel,
       RecordDiagnosisModel,
       DeviceDetailModel,

@@ -38,6 +38,14 @@ export class RecordModel extends Model<RecordModel> {
   })
   device_id: string;
 
+  @ForeignKey(() => ScheduleModel)
+  @Column({
+    type: DataType.STRING,
+    onDelete: "CASCADE", 
+    onUpdate: "SET NULL",
+  })
+  schedule_id: string;
+
   @Column({
     type: DataType.BIGINT,
     allowNull: false,
@@ -71,6 +79,9 @@ export class RecordModel extends Model<RecordModel> {
 
   @BelongsTo(() => DeviceModel)
   device: DeviceModel;
+  
+  @BelongsTo(() => ScheduleModel)
+  schedule: ScheduleModel;
 
   @HasOne(() => RecordDiagnosisModel)
   record_diagnosis: RecordDiagnosisModel;

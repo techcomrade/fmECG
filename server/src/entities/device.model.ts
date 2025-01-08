@@ -12,6 +12,7 @@ import { UserModel } from "./user.model";
 import { DeviceTypeModel } from "./device_type.model";
 import { DeviceStatusModel } from "./device_status.model";
 import { DeviceDetailModel } from "./device_detail.model";
+import { DeviceScheduleModel } from "./device_schedule.model";
 import { RecordModel } from "./record.model";
 
 @Table({ tableName: "devices" })
@@ -29,7 +30,7 @@ export class DeviceModel extends Model<DeviceModel> {
     onDelete: "CASCADE", 
     onUpdate: "SET NULL",
   })
-  user_id: string;
+  doctor_id: string;
 
   @Column({
     type: DataType.STRING,
@@ -50,13 +51,9 @@ export class DeviceModel extends Model<DeviceModel> {
 
   @Column({
     type: DataType.BIGINT,
+    allowNull: false,
   })
-  start_time: number;
-
-  @Column({
-    type: DataType.BIGINT,
-  })
-  end_time: number;
+  start_date: number;
 
   @ForeignKey(() => DeviceStatusModel)
   @Column({
@@ -86,6 +83,9 @@ export class DeviceModel extends Model<DeviceModel> {
 
   @HasMany(() => DeviceDetailModel)
   device_details: DeviceDetailModel[];
+
+  @HasMany(() => DeviceScheduleModel)
+  device_schedules: DeviceScheduleModel[];
 
   @HasMany(() => RecordModel)
   records: RecordModel[];

@@ -56,12 +56,29 @@ export const Record: React.FC = () => {
       searchable: true,
     },
     {
+      title: "Tên bác sĩ",
+      dataIndex: "doctor",
+      key: "doctor",
+      type: "text",
+      isEdit: false,
+      hidden: Context.role === userRole.doctor,
+      searchable: true,
+    },
+    {
       title: "Tên thiết bị",
       dataIndex: "device_name",
       key: "device_name",
       type: "text",
       isEdit: false,
       searchable: true,
+    },
+    {
+      title: "ID lịch khám",
+      dataIndex: "schedule_id",
+      key: "schedule_id",
+      type: "select",
+      isEdit: false,
+      hidden: true,
     },
     {
       title: "Thời gian bắt đầu phiên đo",
@@ -94,6 +111,7 @@ export const Record: React.FC = () => {
     }
 
     if (type === "render") {
+      console.log(data);
       recordData = {
         ...data,
         data_rec_url: handleRecordName(data.data_rec_url, data.device_id),

@@ -14,10 +14,8 @@ import { convertTimeToDate } from "../../utils/dateUtils";
 import {
   convertDeviceTypeToString,
   convertDeviceStatusToString,
-  userRole,
 } from "../../constants";
 import { showNotiError } from "../../components/notification";
-import { Context } from "../../utils/context";
 
 const DeviceDetailComponent = (props: any, ref: any) => {
   const dispatch = useAppDispatch();
@@ -59,8 +57,7 @@ const DeviceDetailComponent = (props: any, ref: any) => {
           dataState.deviceData.device_type_id
         ),
         status_id: convertDeviceStatusToString(dataState.deviceData.status_id),
-        start_time: convertTimeToDate(dataState.deviceData.start_time),
-        end_time: convertTimeToDate(dataState.deviceData.end_time),
+        start_date: convertTimeToDate(dataState.deviceData.start_date),
       };
       setData(rawData);
     }
@@ -73,18 +70,11 @@ const DeviceDetailComponent = (props: any, ref: any) => {
   }, [dataState.loadGetDeviceByIdStatus]);
 
   const labelsInfo = {
-    username: Context.role === userRole.admin ? "Người phụ trách" : "",
+    doctor_name: "Bác sĩ phụ trách",
     device_name: "Tên thiết bị",
     device_type_id: "Loại thiết bị",
     status_id: "Trạng thái",
-    start_time:
-      data.status_id === convertDeviceStatusToString(1)
-        ? "Thời gian bắt đầu sử dụng"
-        : "",
-    end_time:
-      data.status_id === convertDeviceStatusToString(1)
-        ? "Thời gian kết thúc sử dụng"
-        : "",
+    start_date: "Ngày bắt đầu sử dụng",
     frequency: "Tần số",
     connection: "Phương thức kết nối",
     storage: "Phương thức lưu trữ dữ liệu",

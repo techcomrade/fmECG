@@ -7,6 +7,7 @@ import { ConsultationScheduleModel } from "../../entities/consultation_schedule.
 import { DiagnosisModel } from "../../entities/diagnosis.model";
 import { UserModel } from "../../entities/user.model";
 import { RecordModel } from "../../entities/record.model";
+import { DeviceScheduleModel } from "../../entities/device_schedule.model";
 import { ScheduleController } from "./schedule.controller";
 import { ScheduleService } from "./schedule.service";
 import { ScheduleRepository } from "./schedule.repository";
@@ -27,6 +28,7 @@ import { NotificationModule } from "../notification/notification.module";
       DiagnosisModel,
       UserModel,
       RecordModel,
+      DeviceScheduleModel,
     ]),
     forwardRef(() => UserModule),
     ConsultationScheduleModule,

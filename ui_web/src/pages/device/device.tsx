@@ -14,9 +14,9 @@ import {
   deleteDeviceDetailById,
   addDeviceDetail,
   updateDeviceDetailById,
-  getDeviceByUserId,
+  getDeviceByDoctorId,
 } from "../../redux/reducer/deviceSlice";
-import { getAllUsers } from "../../redux/reducer/userSlice";
+import { getAllDoctors } from "../../redux/reducer/userSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { convertTimeToDate, checkDateTypeKey } from "../../utils/dateUtils";
 import {
@@ -33,13 +33,11 @@ import {
   convertDeviceStatusToString,
   convertStringToDeviceStatus,
   userRole,
-  convertRoleToString,
 } from "../../constants";
 import dayjs from "dayjs";
 import { Context } from "../../utils/context";
 import { showNotiError, showNotiSuccess } from "../../components/notification";
 import { Tag } from "antd";
-import { ModalAssignDevice } from "../../components/Modal/ModalAssignDevice";
 
 type DeviceDetailType = {
   open: (id: string) => void;
@@ -49,21 +47,16 @@ type AddEditDeviceType = {
   open: (data: any[], columns: any[], layout: any) => void;
 };
 
-type AssignDeviceType = {
-  open: (data: any[]) => void;
-};
-
 export const Device: React.FC = () => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.device);
-  const userState = useAppSelector((state) => state.user);
+  const doctorState = useAppSelector((state) => state.user);
   const [dataTable, setDataTable] = React.useState<any[]>([]);
-  const [userDropDown, setUserDropDown] = React.useState<any[]>([]);
+  const [doctorDropDown, setDoctorDropDown] = React.useState<any[]>([]);
   const [selectedData, setSelectedData] = React.useState<any[]>([]);
   const [hidden, setHidden] = React.useState<boolean>(false);
   const drawerRef = React.useRef<DeviceDetailType>(null);
   const modalAddRef = React.useRef<AddEditDeviceType>(null);
-  const modalAssignRef = React.useRef<AssignDeviceType>(null);
   const modalUpdateRef = React.useRef<AddEditDeviceType>(null);
 
   const listLabel = ["detail_name", "value", "information"];
@@ -102,24 +95,24 @@ export const Device: React.FC = () => {
         record.device_type_id === convertDeviceTypeToString(value),
     },
     {
-      title: "Người phụ trách",
-      dataIndex: "username",
-      key: "username",
+      title: "Bác sĩ phụ trách",
+      dataIndex: "doctor_name",
+      key: "doctor_name",
       type: "select",
       isEdit: false,
       hidden: hidden,
       searchable: true,
     },
     {
-      title: "Người phụ trách",
-      dataIndex: "user_id",
-      key: "user_id",
+      title: "Bác sĩ phụ trách",
+      dataIndex: "doctor_id",
+      key: "doctor_id",
       type: "select",
-      isEdit: false,
+      isEdit: true,
       hidden: true,
-      dataSelect: userDropDown.map((user) => ({
-        value: user.id,
-        label: user.username,
+      dataSelect: doctorDropDown.map((doctor) => ({
+        value: doctor.id,
+        label: doctor.username,
       })),
     },
     {
@@ -127,7 +120,7 @@ export const Device: React.FC = () => {
       dataIndex: "status_id",
       key: "status_id",
       type: "select",
-      isEdit: false,
+      isEdit: true,
       dataSelect: deviceStatus,
       render: (status_id: any) => {
         let color =
@@ -140,11 +133,11 @@ export const Device: React.FC = () => {
       },
       filters: [
         {
-          text: "Đang được mượn",
+          text: "Đang trống",
           value: 1,
         },
         {
-          text: "Đang trống",
+          text: "Đang hoạt động",
           value: 2,
         },
         {
@@ -188,6 +181,13 @@ export const Device: React.FC = () => {
       isEdit: true,
       hidden: true,
       listLabel: listLabel,
+    },
+    {
+      title: "Ngày bắt đầu sử dụng",
+      dataIndex: "start_date",
+      key: "start_date",
+      type: "date",
+      isEdit: true,
     },
   ];
 
@@ -265,16 +265,16 @@ export const Device: React.FC = () => {
   React.useEffect(() => {
     if (Context.role === userRole.admin) {
       dispatch(getAllDevices());
-      dispatch(getAllUsers());
+      dispatch(getAllDoctors());
       setHidden(false);
     }
     if (Context.role === userRole.doctor) {
-      dispatch(getDeviceByUserId());
+      dispatch(getDeviceByDoctorId());
       setHidden(true);
     }
     if (Context.role === userRole.patient) {
-      dispatch(getDeviceByUserId());
-      setHidden(true);
+      dispatch(getAllDoctors());
+      setHidden(false);
     }
   }, []);
 
@@ -294,16 +294,16 @@ export const Device: React.FC = () => {
   }, [dataState.loadDataStatus]);
 
   React.useEffect(() => {
-    if (userState.loadDataStatus === ApiLoadingStatus.Success) {
-      setUserDropDown(userState.data);
+    if (doctorState.loadDoctorDataStatus === ApiLoadingStatus.Success) {
+      setDoctorDropDown(doctorState.doctorData);
     }
     if (
-      userState.loadDataStatus === ApiLoadingStatus.Failed &&
-      userState.errorMessage
+      doctorState.loadDoctorDataStatus === ApiLoadingStatus.Failed &&
+      dataState.errorMessage
     ) {
-      showNotiError(userState.errorMessage);
+      showNotiError(dataState.errorMessage);
     }
-  }, [userState.loadDataStatus]);
+  }, [doctorState.loadDoctorDataStatus]);
 
   React.useEffect(() => {
     if (dataState.loadAddDataStatus === ApiLoadingStatus.Success) {
@@ -347,6 +347,12 @@ export const Device: React.FC = () => {
     }
   }, [dataState.loadDeleteDataStatus]);
 
+  const handleEditFunction = () => {
+    const deviceData = findElementById(dataTable, selectedData[0]);
+    const dataEdit = handleData(deviceData, "edit-form");
+    modalUpdateRef.current?.open(dataEdit, columns, "vertical");
+  };
+
   const handleSubmitAddFunction = (data: any) => {
     const result = {
       ...data,
@@ -355,12 +361,6 @@ export const Device: React.FC = () => {
       storage: data.storage["list"],
     };
     return dispatch(addDevice(result));
-  };
-
-  const handleEditFunction = () => {
-    const deviceData = findElementById(dataTable, selectedData[0]);
-    const dataEdit = handleData(deviceData, "edit-form");
-    modalUpdateRef.current?.open(dataEdit, columns, "vertical");
   };
 
   const handleSubmitEditDevice = (data: any) => {
@@ -388,19 +388,6 @@ export const Device: React.FC = () => {
     dispatch(updateDeviceById(payload));
   };
 
-  const handleAssignFunction = () => {
-    const deviceData = findElementById(dataTable, selectedData[0]);
-    const dataEdit = handleData(deviceData, "edit-form");
-    modalAssignRef.current?.open(dataEdit);
-  };
-
-  const handleSubmitAssignDevice = (data: any) => {
-    console.log(data);
-    dispatch(
-      updateDeviceById(data)
-    );
-  };
-
   const handleDeleteFunction = (id: string) => {
     dispatch(deleteDeviceById(id));
   };
@@ -408,7 +395,7 @@ export const Device: React.FC = () => {
   const initData: any = {
     device_name: "",
     device_type_id: "",
-    user_id: "",
+    doctor_id: "",
     status_id: "",
     information: "",
     frequency: {
@@ -446,7 +433,6 @@ export const Device: React.FC = () => {
         role={Context.role === userRole.admin ? userRole.admin : undefined}
         addButton={Context.role === userRole.admin}
         editButton={Context.role === userRole.admin}
-        assignButton={Context.role === userRole.admin}
         deleteButton={Context.role === userRole.admin}
         column={columns}
         name="Thông tin thiết bị"
@@ -457,7 +443,6 @@ export const Device: React.FC = () => {
           modalAddRef.current?.open(initData, columns, "vertical")
         }
         editFunction={handleEditFunction}
-        assginFunction={handleAssignFunction}
         deleteFunction={handleDeleteFunction}
         handleOpenDrawer={(id) => drawerRef.current?.open(id)}
       />
@@ -466,16 +451,6 @@ export const Device: React.FC = () => {
         title="Thêm thiết bị mới"
         submitFunction={(data: any) => handleSubmitAddFunction(data)}
         className="add-device"
-      />
-      <ModalAssignDevice
-        ref={modalAssignRef}
-        title="Phân công thiết bị"
-        userOptions={userDropDown.map((user) => ({
-          value: user.id,
-          label: `${convertRoleToString(user.role_id)} ${user.username}`,
-        }))}
-        submitFunction={(data: any) => handleSubmitAssignDevice(data)}
-        className="assign-device"
       />
       <ModalControlData
         ref={modalUpdateRef}
