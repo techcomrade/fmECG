@@ -3,6 +3,7 @@ import 'package:bluetooth_ecg/features/authentication/bloc/authentication_event.
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_state.dart';
 import 'package:bluetooth_ecg/features/authentication/repository/authentication_repo.dart';
 import 'package:bluetooth_ecg/features/authentication/view/login2_screen.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_screen.dart';
 import 'package:bluetooth_ecg/screens/login_screen/log_in_screen.dart';
 import 'package:bluetooth_ecg/screens/main_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +14,11 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthenticationBloc(authRepository: AuthRepository()),
-      child: const BlocNavigate(),
-    );
+    return const BleReactiveScreen();
+    // return BlocProvider(
+    //   create: (context) => AuthenticationBloc(authRepository: AuthRepository()),
+    //   child: const BlocNavigate(),
+    // );
   }
 }
 

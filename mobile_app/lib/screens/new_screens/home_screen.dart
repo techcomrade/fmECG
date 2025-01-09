@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:bluetooth_ecg/components/live_chart.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_chart_test.dart';
+import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_screen.dart';
 import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/screens/new_screens/circular_indicator_home.dart';
 import 'package:bluetooth_ecg/screens/new_screens/progress_home.dart';
@@ -361,22 +366,22 @@ class NewHomeScreen extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    blurRadius: 10,
-                    spreadRadius: 2,
-                  ),
-                ],
-              ),
-              child: const ProgressBar(
-                title: 'CARBS',
-                value: 14 / 196,
-              )),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            child: const ProgressBar(
+              title: 'CARBS',
+              value: 14 / 196,
+            )),
         ),
         const SizedBox(width: 12),
         Expanded(
