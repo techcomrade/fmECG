@@ -33,24 +33,24 @@ services:
     networks:
       - fmecg-network
   
-  ui-web:
-    container_name: ui-web
-    build: 
-      dockerfile: Dockerfile
-      context: ./ui_web
-    env_file: ./ui_web/.env.docker
-    ports:
-      - 3002:3002
-    volumes:
-      - ./ui_web/:/ui_web/
-      - /ui_web/node_modules
-      - /ui_web/bin/node_modules
-      - /ui_web/www
-    depends_on:
-      - identity-database
-      - main-database
-    networks:
-      - fmecg-network
+  # ui-web:
+  #   container_name: ui-web
+  #   build: 
+  #     dockerfile: Dockerfile
+  #     context: ./ui_web
+  #   env_file: ./ui_web/.env.docker
+  #   ports:
+  #     - 3002:3002
+  #   volumes:
+  #     - ./ui_web/:/ui_web/
+  #     - /ui_web/node_modules
+  #     - /ui_web/bin/node_modules
+  #     - /ui_web/www
+  #   depends_on:
+  #     - identity-database
+  #     - main-database
+  #   networks:
+  #     - fmecg-network
 
   identity-database:
     image: mysql:8.0
