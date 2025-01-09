@@ -1,5 +1,13 @@
+import 'package:bluetooth_ecg/screens/home_screen.dart';
 import 'package:bluetooth_ecg/screens/login_screen/sign_up_screen.dart';
+import 'package:bluetooth_ecg/screens/main_screen.dart';
+import 'package:bluetooth_ecg/screens/new_screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'dart:async';
+import '../../providers/auth_provider.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -37,10 +45,11 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Image.asset("assets/logo/care_me.png"),
+        title: Image.asset("assets/logo/fmECG_branding.png"),
       ),
       body: SafeArea(
         child: Center(
@@ -54,7 +63,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       color: Colors.blue.shade800,
                     )),
                 const Text(
-                  "To CareMe!",
+                  "To fmECG!",
                   style: TextStyle(
                     fontSize: 22,
                     color: Colors.black,
@@ -146,7 +155,43 @@ class _SignInScreenState extends State<SignInScreen> {
                               bottom: size.height * 0.02),
                           height: size.height * 0.08,
                           child: ElevatedButton(
-                            onPressed: null,
+                            onPressed: authProvider.isLoading
+                                ? null
+                                : () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      await authProvider.login(
+                                        _emailController.text,
+                                        _passwordController.text,
+                                      );
+                                    }
+                                    if (authProvider.token.isNotEmpty) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Login successful!'),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+
+                                      Future.delayed(const Duration(seconds: 2),
+                                          () {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const MainScreen()),
+                                        );
+                                      });
+                                    }
+                                  },
+                            child: authProvider.isLoading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : const Text(
+                                    "Log in",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                             style: ButtonStyle(
                               backgroundColor: MaterialStatePropertyAll<Color>(
                                   Colors.blue.shade700),
@@ -156,10 +201,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                   horizontal: size.width * 0.39,
                                 ),
                               ),
-                            ),
-                            child: const Text(
-                              "Log in",
-                              style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),

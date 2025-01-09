@@ -359,37 +359,44 @@ class _DarkLightSwitchState extends State<DarkLightSwitch> {
 class SquareContainer extends StatelessWidget {
   final IconData icon;
   final String text;
+  final Function? onTap;
 
-  const SquareContainer({Key? key, required this.icon, required this.text})
+  const SquareContainer({Key? key, required this.icon, required this.text, this.onTap})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100.0,
-      height: 100.0,
-      decoration: BoxDecoration(
-        color: ColorConstant.description,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            color: ColorConstant.quaternary,
-            size: 35.0,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => onTap?.call(),
+        child: Container(
+          width: 100.0,
+          height: 100.0,
+          decoration: BoxDecoration(
+            color: ColorConstant.description,
+            borderRadius: BorderRadius.circular(12),
           ),
-          const SizedBox(height: 10.0),
-          Text(
-            text,
-            style: TextStyle(
-              color: ColorConstant.quaternary,
-              fontSize: 15.0,
-              fontWeight: FontWeight.bold,
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                color: ColorConstant.quaternary,
+                size: 35.0,
+              ),
+              const SizedBox(height: 10.0),
+              Text(
+                text,
+                style: TextStyle(
+                  color: ColorConstant.quaternary,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

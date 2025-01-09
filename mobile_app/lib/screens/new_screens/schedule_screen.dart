@@ -15,6 +15,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   DateTime _selectedDate = DateTime.now();
   int _selectedDayIndex = DateTime.now().weekday - 1;
 
+  Future _fetcherSchedule() async {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

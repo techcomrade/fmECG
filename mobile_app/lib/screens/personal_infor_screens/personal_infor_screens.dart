@@ -1,5 +1,8 @@
+import 'package:bluetooth_ecg/providers/auth_provider.dart';
+import 'package:bluetooth_ecg/screens/login_screen/log_in_screen.dart';
 import 'package:bluetooth_ecg/screens/personal_infor_screens/listView_infor.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 final List<Map<String, String>> listInfo = [
   {"title": "Họ và tên", "description": "Đồng Minh Thái"},
@@ -95,21 +98,21 @@ final class PersonalInfor extends StatelessWidget {
               const SizedBox(
                 height: 12,
               ),
-              Padding(
+              const Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    const Text(
+                    Text(
                       'Thông tin định danh',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Spacer(),
-                    const Text(
+                    Spacer(),
+                    Text(
                       'Chi tiết',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,
@@ -129,8 +132,7 @@ final class PersonalInfor extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(
-                      Icons
-                          .security, 
+                      Icons.security,
                       size: 20,
                       color: Colors.green,
                     ),
@@ -146,19 +148,55 @@ final class PersonalInfor extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                    ),
-                    child: const Text(
-                      'Cập nhật lại định danh',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                        ),
+                        child: const Text(
+                          'Cập nhật lại định danh',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () async {
+                          try {
+                            // Gọi hàm logout
+                            await Provider.of<AuthProvider>(context,
+                                    listen: false)
+                                .logoutUser();
+                            if (context.mounted) {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => const SignInScreen()),
+                                (Route<dynamic> route) => false,
+                              );
+                            }
+                          } catch (e) {
+                            // Xử lý lỗi nếu cần
+                            debugPrint('Error during logout: $e');
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                        ),
+                        child: const Text(
+                          'Đăng xuất',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
