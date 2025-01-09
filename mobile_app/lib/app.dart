@@ -3,6 +3,7 @@ import 'package:bluetooth_ecg/features/authentication/bloc/authentication_event.
 import 'package:bluetooth_ecg/features/authentication/bloc/authentication_state.dart';
 import 'package:bluetooth_ecg/features/authentication/repository/authentication_repo.dart';
 import 'package:bluetooth_ecg/features/authentication/view/login2_screen.dart';
+import 'package:bluetooth_ecg/screens/login_screen/log_in_screen.dart';
 import 'package:bluetooth_ecg/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,13 +39,14 @@ class _BlocNavigateState extends State<BlocNavigate> {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
         print(state);
-        if (state is AuthenticationSuccess) {
-          return const MainScreen();
-        } else if (state is AuthenticationLoading) {
-          return const CircularProgressIndicator();
-        } else {
-          return const Login2Screen();
-        }
+        // if (state is AuthenticationSuccess) {
+        //   return const MainScreen();
+        // } else if (state is AuthenticationLoading) {
+        //   return const CircularProgressIndicator();
+        // } else {
+        //   return const Login2Screen();
+        // }
+        return const MainScreen();
       },
     );
   }
