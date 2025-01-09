@@ -10,10 +10,12 @@ services:
     depends_on:
       - identity-database
       - main-database
+      - chat-database
     env_file: ./server/.env.docker
     volumes:
       - ./server/:/server/
       - /server/node_modules
+      - /server/dist
     networks:
       -  fmecg-network
 
@@ -27,6 +29,7 @@ services:
     volumes:
       - ./identity_service/:/identity/
       - /identity/node_modules
+      - /identity/dist
     depends_on:
       - identity-database
     env_file: ./identity_service/.env.docker
@@ -73,6 +76,17 @@ services:
     env_file: ./server/.env.docker
     volumes:
       - ./docker/data/main_mysql:/var/lib/mysql
+    networks:
+      - fmecg-network
+  
+  chat-database:
+    image: mongodb/mongodb-community-server:6.0.16-ubi8
+    container_name: chat-database
+    # ports:
+    #   - 27017:27017
+    env_file: ./server/.env.docker
+    volumes:
+      - ./docker/data/mongodb:/data/db
     networks:
       - fmecg-network
 

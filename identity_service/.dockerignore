@@ -3,3 +3,4 @@ Dockerfile
 Dockerfile.dev
 .dockerignore
 package-lock.json
+dist/

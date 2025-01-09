@@ -26,7 +26,7 @@ require("dotenv").config();
       synchronize: true,
       logging: console.log,
     }),
-    // MongooseModule.forRoot(process.env.MONGO_URL),
+    MongooseModule.forRoot(process.env.MONGO_URL),
     UserModule,
     DeviceModule,
     RecordModule,
@@ -35,7 +35,7 @@ require("dotenv").config();
     NotificationModule,
     StatisticModule,
     // AuthenticationModule,
-    // ChatModule,
+    ChatModule,
     // GroupChatModule
   ],
 })
