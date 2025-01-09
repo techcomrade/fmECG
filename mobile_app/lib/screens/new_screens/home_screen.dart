@@ -3,16 +3,22 @@ import 'dart:io';
 import 'package:bluetooth_ecg/components/live_chart.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_chart_test.dart';
 import 'package:bluetooth_ecg/screens/bluetooth_screens/ble_screen.dart';
+import 'package:bluetooth_ecg/providers/auth_provider.dart';
 import 'package:bluetooth_ecg/screens/new_screens/circular_indicator_home.dart';
 import 'package:bluetooth_ecg/screens/new_screens/progress_home.dart';
+import 'package:bluetooth_ecg/screens/notification_screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:provider/provider.dart';
 
 class NewHomeScreen extends StatelessWidget {
   const NewHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+    final token = authProvider.token;
+    print('token:$token');
     return Scaffold(
       body: Stack(
         children: [
@@ -51,8 +57,14 @@ class NewHomeScreen extends StatelessWidget {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
-                            icon: PhosphorIcon(PhosphorIcons.regular.gearSix,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const NotificationScreen()));
+                            },
+                            icon: PhosphorIcon(PhosphorIcons.regular.bell,
                                 color: Colors.white),
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
@@ -179,36 +191,60 @@ class NewHomeScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  _buildCaloriesSection(),
-                  const SizedBox(height: 20),
-                  _buildMacronutrientSection(),
-                  const SizedBox(height: 20),
-                  _buildGlucoseWeightSection(),
-                  const SizedBox(height: 20),
-                  _buildIntroductionSection(),
-                  const SizedBox(height: 20),
-                  ImageCard(
-                    imageAsset: 'assets/images/heart_rate_example.jpeg', 
-                    functionScanBluetooth: () {
-                      Navigator.push(context,
-                        MaterialPageRoute(
-                          builder: (context) => const BleReactiveScreen(),
-                        )
-                      );
-                    }, 
-                    temporaryNothing: () async {
-                      // FilesManagement.createDirectoryFirstTimeWithDevice();
-                      // fileToSave = await FilesManagement.setUpFileToSaveDataMeasurement();
-                    }
+                  // _buildCaloriesSection(),
+                  // const SizedBox(height: 20),
+                  DefaultTabController(
+                    length: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const TabBar(
+                          indicatorColor: Colors.blue,
+                          labelColor: Colors.blue,
+                          unselectedLabelColor: Colors.grey,
+                          tabs: [
+                            Tab(text: 'Calories'),
+                            Tab(text: 'Measurement history'),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 300,
+                          child: TabBarView(
+                            children: [
+                              _buildCombinedSection(),
+                              _buildMeasureHistory()
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 20),
-                  LiveChartSample(callBackToPreview: () => {}),
                 ],
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildCombinedSection() {
+    return Column(
+      children: [
+        _buildCaloriesSection(),
+        const SizedBox(height: 20),
+        _buildMacronutrientSection(),
+      ],
+    );
+  }
+
+  Widget _buildMeasureHistory() {
+    return const Column(
+      children: [
+        SizedBox(
+          height: 20,
+        )
+      ],
     );
   }
 
@@ -449,27 +485,6 @@ class NewHomeScreen extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildIntroductionSection() {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 10,
-            spreadRadius: 2,
-          ),
-        ],
-      ),
-      // child: const Text(
-      //   'Introduction and eat well\nEat well and enjoy your life!',
-      //   style: TextStyle(fontSize: 16),
-      // ),
     );
   }
 }
