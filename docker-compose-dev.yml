@@ -1,49 +1,81 @@
 
 services:
+  main-server:
+    container_name: main-server
+    build: 
+      dockerfile: Dockerfile
+      context: ./server
+    ports:
+      - 3000:3000
+    depends_on:
+      - identity-database
+      - main-database
+    env_file: ./server/.env.docker
+    volumes:
+      - ./server/:/server/
+      - /server/node_modules
+    networks:
+      -  fmecg-network
+
   identity:
-    container_name: identity_service
+    container_name: identity-service
     build: 
       dockerfile: Dockerfile
       context: ./identity_service
-    # profiles: ["backend"]
+    ports:
+      - 3003:3003
     volumes:
-      - ./identity_service/:/server/
+      - ./identity_service/:/identity/
       - /identity/node_modules
     depends_on:
-      - database
+      - identity-database
     env_file: ./identity_service/.env.docker
     networks:
-      - network-fmecg
+      - fmecg-network
   
-  ui-web:
-    container_name: ui-web
-    build: 
-      dockerfile: Dockerfile
-      context: ./ui
-    # profiles: ["frontend"]
-    volumes:
-      - ./ui-web/:/ui/
-      - /ui-web/node_modules
-    depends_on:
-      - database
-    networks:
-      - network-fmecg
+  # ui-web:
+  #   container_name: ui-web
+  #   build: 
+  #     dockerfile: Dockerfile
+  #     context: ./ui_web
+  #   env_file: ./ui_web/.env.docker
+  #   ports:
+  #     - 3002:3002
+  #   volumes:
+  #     - ./ui_web/:/ui_web/
+  #     - /ui_web/node_modules
+  #     - /ui_web/bin/node_modules
+  #     - /ui_web/www
+  #   depends_on:
+  #     - identity-database
+  #     - main-database
+  #   networks:
+  #     - fmecg-network
 
-  database:
+  identity-database:
     image: mysql:8.0
-    container_name: database-identity
+    container_name: identity-database
     restart: unless-stopped
-    profiles: ["backend"]
     ports:
       - 3306:3306
-    expose:
-      - 3306
     env_file: ./identity_service/.env.docker
     volumes:
-      - ./docker/data/mysql:/var/lib/mysql
+      - ./docker/data/identity_mysql:/var/lib/mysql
     networks:
-      - network-fmecg
+      - fmecg-network
+  
+  main-database:
+    image: mysql:8.0
+    container_name: main-database
+    restart: unless-stopped
+    ports:
+      - 3307:3306
+    env_file: ./server/.env.docker
+    volumes:
+      - ./docker/data/main_mysql:/var/lib/mysql
+    networks:
+      - fmecg-network
 
 networks:
-  network-fmecg:
+  fmecg-network:
     driver: bridge

@@ -1,5 +1,6 @@
-/node_modules
+**/node_modules/
 Dockerfile
 Dockerfile.dev
 .dockerignore
-package-lock.json
+**/package-lock.json
+**/www/
