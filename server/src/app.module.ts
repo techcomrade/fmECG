@@ -18,7 +18,7 @@ require("dotenv").config();
     SequelizeModule.forRoot({
       dialect: "mysql",
       host: process.env.DB_HOST,
-      port: 3306,
+      port: parseInt(process.env.DB_PORT),
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
@@ -26,7 +26,7 @@ require("dotenv").config();
       synchronize: true,
       logging: console.log,
     }),
-    MongooseModule.forRoot(process.env.MONGO_URL),
+    // MongooseModule.forRoot(process.env.MONGO_URL),
     UserModule,
     DeviceModule,
     RecordModule,
@@ -34,8 +34,9 @@ require("dotenv").config();
     ScheduleModule,
     NotificationModule,
     StatisticModule,
-    ChatModule,
-    GroupChatModule
+    // AuthenticationModule,
+    // ChatModule,
+    // GroupChatModule
   ],
 })
 export class AppModule {}
