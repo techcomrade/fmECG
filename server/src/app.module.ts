@@ -34,7 +34,6 @@ require("dotenv").config();
     ScheduleModule,
     NotificationModule,
     StatisticModule,
-    // AuthenticationModule,
     ChatModule,
     // GroupChatModule
   ],

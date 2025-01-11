@@ -29,7 +29,7 @@ async function bootstrap() {
   SwaggerModule.setup("api", app, document);
 
   await app.listen(port, () => {
-    console.log(`Application is runninggg on: http://${host}:${port}`);
+    console.log(`Application is running on: http://${host}:${port}`);
   });
 }
 

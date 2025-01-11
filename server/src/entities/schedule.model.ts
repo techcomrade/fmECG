@@ -9,7 +9,6 @@ import {
   BelongsTo,
 } from "sequelize-typescript";
 import { UserModel } from "./user.model";
-import { DeviceScheduleModel } from "./device_schedule.model";
 import { DiagnosisModel } from "./diagnosis.model";
 import { RecordModel } from "./record.model";
 import { ScheduleTypeModel } from "./schedule_type.model";
@@ -83,12 +82,6 @@ export class ScheduleModel extends Model<ScheduleModel> {
 
   @BelongsTo(() => ScheduleStatusModel)
   schedule_status: ScheduleStatusModel;
-
-  @HasMany(() => DeviceScheduleModel)
-  device_schedules: DeviceScheduleModel[];
-
-  @HasMany(() => RecordModel)
-  records: RecordModel[];
 
   @HasMany(() => DiagnosisModel)
   diagnosis: DiagnosisModel[];
