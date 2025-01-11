@@ -7,10 +7,10 @@ export class DeviceResponse {
   id: string;
 
   @Expose()
-  doctor_id: string;
+  user_id: string;
 
   @Expose()
-  doctor_name?: string;
+  username?: string;
 
   @Expose()
   device_name: string;
@@ -25,7 +25,10 @@ export class DeviceResponse {
   status_id: number;
 
   @Expose()
-  start_date: number;
+  start_time: number;
+
+  @Expose()
+  end_time: number;
 
   @Expose()
   @Type(() => DeviceDetailResponse)

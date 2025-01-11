@@ -151,11 +151,11 @@ export const convertStringToDeviceType = (deviceType: string) => {
 export const deviceStatus = [
   {
     value: 1,
-    label: "Đang trống",
+    label: "Đang được mượn",
   },
   {
     value: 2,
-    label: "Đang hoạt động",
+    label: "Đang trống",
   },
   {
     value: 3,
@@ -166,9 +166,9 @@ export const deviceStatus = [
 export const convertDeviceStatusToString = (deviceStatus: number) => {
   switch (deviceStatus) {
     case 1:
-      return "Đang trống";
+      return "Đang được mượn";
     case 2:
-      return "Đang hoạt động";
+      return "Đang trống";
     case 3:
       return "Đang bảo trì";
     default:
