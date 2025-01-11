@@ -113,6 +113,13 @@ export const patientRouterMappingGroup: { [key: string]: IRouteItem } = {
     component: User,
     icon: UserOutlined,
   },
+  Device: {
+    key: "/device",
+    url: "/device",
+    label: "Thông tin thiết bị",
+    component: Device,
+    icon: DesktopOutlined,
+  },
   RecordInformation: {
     key: "/record",
     url: "/record",
