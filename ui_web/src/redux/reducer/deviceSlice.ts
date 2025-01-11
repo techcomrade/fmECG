@@ -45,10 +45,10 @@ export const getDeviceById = createAsyncThunkWrap(
   }
 );
 
-export const getDeviceByDoctorId = createAsyncThunkWrap(
+export const getDeviceByUserId = createAsyncThunkWrap(
   "/devices/data/doctor-id",
   async () => {
-    return await Service.deviceService.getDeviceByDoctorId();
+    return await Service.deviceService.getDeviceByUserId();
   }
 );
 
@@ -134,14 +134,14 @@ export const deviceSlice = createSlice({
         state.errorMessage = (<any>action.payload)?.message;
         state.loadDataStatus = ApiLoadingStatus.Failed;
       })
-      .addCase(getDeviceByDoctorId.pending, (state, action) => {
+      .addCase(getDeviceByUserId.pending, (state, action) => {
         state.loadDataStatus = ApiLoadingStatus.Loading;
       })
-      .addCase(getDeviceByDoctorId.fulfilled, (state, action) => {
+      .addCase(getDeviceByUserId.fulfilled, (state, action) => {
         state.data = action.payload;
         state.loadDataStatus = ApiLoadingStatus.Success;
       })
-      .addCase(getDeviceByDoctorId.rejected, (state, action) => {
+      .addCase(getDeviceByUserId.rejected, (state, action) => {
         state.deviceData = {} as DeviceResponse;
         state.errorMessage = (<any>action.payload)?.message;
         state.loadDataStatus = ApiLoadingStatus.Failed;

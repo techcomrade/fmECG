@@ -27,14 +27,6 @@ export class RecordRequest {
   device_id: string;
 
   @ApiProperty({
-    description: "The unique identifier for the schedule",
-    example: "234e5678-f89a-34d7-b456-123d89653000",
-  })
-  @IsNotEmpty()
-  @IsUUID()
-  schedule_id: string;
-
-  @ApiProperty({
     description: "Start time of the recording session",
     example: "20241003092312",
   })

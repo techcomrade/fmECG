@@ -27,15 +27,6 @@ module.exports = {
         onDelete: "CASCADE",
         onUpdate: "SET NULL",
       },
-      schedule_id: {
-        type: Sequelize.STRING,
-        references: {
-          model: "schedules",
-          key: "id",
-        },
-        onDelete: "CASCADE",
-        onUpdate: "SET NULL",
-      },
       start_time: {
         type: Sequelize.BIGINT,
         allowNull: false,
