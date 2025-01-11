@@ -6,61 +6,106 @@
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 3. THIẾT KẾ HỆ THỐNG}
 
-Trong chương này, chúng em sẽ trình bày về thiết kế hệ thống từ tổng quan đến chi tiết dựa trên phân tích từ Chương 2. Bắt đầu với việc xây dựng sơ đồ kiến trúc hệ thống,
-sau đó là thiết kế giao diện, chức năng cho website và server. Nội dung chính của chương sẽ tập trung vào các hình
-ảnh và sơ đồ mô tả chi tiết từng luồng hoạt động của hệ thống và đồng thời minh họa cách các phần trong hệ thống tương tác với nhau.
-
+Trong chương này, chúng em sẽ trình bày về thiết kế hệ thống từ tổng quan đến chi tiết dựa trên phân tích từ Chương 2.
+Đầu tiên là xây dựng sơ đồ kiến trúc hệ thống.
+Sau đó thiết kế giao diện, chức năng cho website và server.
+Nội dung chính của chương tập trung vào các hình ảnh và sơ đồ mô tả từng luồng hoạt động của hệ thống.
 \subsection{Sơ đồ kiến trúc tổng quan của hệ thống}
-Hệ thống được chia làm ba phần chính bao gồm Device (Thiết bị), Server (Máy chủ) và Application (Ứng dụng bao gồm: web và app). Mỗi thành phần đóng vai trò quan trọng trong việc vận hành tổng thể hệ thống trong hình vẽ:
 
-% \begin{figure}[H]
-%   \centering
-%   \includegraphics[width=12cm,height=14cm]{Images/system/fmECG_architecture-System_Architecture.png}
-%   \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
-%   \label{fmECG_architecture-System} %đặt tên cho ảnh
-% \end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm,height=18cm]{Images/System/fmECG_architecture-System_Architecture.drawio.png}
+  \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
+  \label{fmECG_architecture-System} %đặt tên cho ảnh
+\end{figure}
+Hệ thống được chia làm ba phần chính bao gồm Device (Thiết bị), Server (Máy chủ) và Application (Ứng dụng bao gồm: web và app).
+Mỗi thành phần đóng vai trò quan trọng trong việc vận hành tổng thể hệ thống trong hình vẽ
 
-Hình  thể hiện ba phần: 
+Hình \ref{fmECG_architecture-System} thể hiện ba phần: 
 
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
   \item Device (Thiết bị): Bao gồm thiết bị phần cứng đo điện tim, có thể kết nối với ứng dụng di động của bệnh nhân thông qua Bluetooth 
   \item Application (Ứng dụng): Bao gồm ứng dụng di động cho bệnh nhân, bác sĩ; website của quản trị viên, website của bác sĩ, website của bệnh nhân
-  \item Server (Máy chủ): Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu, Cloud lưu trữ, kết nối với model GPT-4 trên OpenAI thông qua API
+  \item Server (Máy chủ): Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu.
 \end{itemize}
 \end{adjustwidth}
 
-Trong sơ đồ kiến trúc hệ thống, bệnh nhân tương tác trực tiếp với Thiết bị (Device) thông qua ứng dụng di động (Mobile App). Khối Ứng dụng (Application) giao tiếp với Khối Máy chủ (Server) thông qua API với giao thức HTTP. 
-Khi nhận được yêu cầu từ Application, Server sẽ xử lý dữ liệu. Mọi yêu cầu đều được xử lý bởi các Services chuyên biệt. Dựa vào loại yêu cầu, Service tương ứng sẽ lấy hoặc lưu dữ liệu trong cơ sở dữ liệu và trả về kết quả cho người dùng.\begin{adjustwidth}{1.5em}{}
+Hệ thống được thiết kế với sự tương tác trực tiếp giữa bệnh nhân và thiết bị thông qua ứng dụng di động. 
+Ứng dụng đóng vai trò trung gian, giao tiếp với máy chủ bằng API và giao thức HTTP. 
+Máy chủ chịu trách nhiệm xử lý dữ liệu thông qua các dịch vụ chuyên biệt. 
+Mỗi dịch vụ được thiết kế để xử lý một loại yêu cầu cụ thể, bao gồm cả việc truy vấn và cập nhật cơ sở dữ liệu, 
+trước khi trả kết quả về cho người dùng.\begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item User Service: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin cá nhân
-  \item Storage Service: Xử lý các tác vụ liên quan tới lưu trữ dữ liệu của hệ thống
-  \item AI Service: Xử lý các tác vụ liên quan tới trợ lý ảo, bao gồm: huấn luyện, kết nối với model GPT-4 thông qua api và xử lý kết quả 
-  và trả về tin nhắn và các hành động của ai can thiệp trực tiếp vào hệ thống 
-  \item Message Service: Xử lý các yêu cầu liên quan tới hội thoại, tin nhắn.
-  \item Device Service: Xử lý các tác vụ liên quan tới thiết bị như thêm, sửa, xoá thiết bị, cập nhật thông tin.
-  \item Record Service: Xử lý các tác vụ liên quan tới bản ghi như là thêm sửa xoá, xử lý dữ liệu file đo, vẽ đồ thị
-  \item Authen Service: Xử lý các tác vụ liên quan tới bảo mật như: mã hoá và cung cấp token, kiểm tra token, phân quyền truy cập api, mã hoá các dữ liệu nhạy cảm trước khi lưu trữ.
-  \item Statictic Service: Xử lý các tác vụ liên quan tới thống kê như: thống kê người dùng, thiết bị, bản ghi, tin nhắn theo tuần theo tháng.
+  \item User service: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin cá nhân
+  \item Device service: Xử lý các tác vụ liên quan tới thiết bị như thêm, sửa, xoá thiết bị, cập nhật thông tin.
+  \item Storage service: Xử lý các tác vụ liên quan tới lưu trữ dữ liệu của hệ thống.
+  \item Record service: Xử lý các tác vụ liên quan tới bản ghi như là thêm sửa xoá, xử lý dữ liệu file đo, vẽ đồ thị
+  \item Message service: Xử lý các yêu cầu liên quan tới tin nhắn.
+  \item Authen service: Xử lý các tác vụ liên quan tới bảo mật như: mã hoá và cung cấp token, kiểm tra token, phân quyền truy cập api, mã hoá các dữ liệu nhạy cảm trước khi lưu trữ.
+  \item Statistic service: Xử lý các tác vụ liên quan tới thống kê như: thống kê người dùng, thiết bị, bản ghi.
+  \item Schedule service: Xử lý các tác vụ liên quan đến đặt lịch hẹn, phản hồi lịch.
 \end{itemize}
 \end{adjustwidth}
-
-Ngoài ra hệ thống sẽ có thêm chức năng tự động triển khai trên môi trường internet để việc phát triển và kiểm thử dễ dàng 
-làm tăng chất lượng và độ hoàn thiện của hệ thống.
 
 Sau đây là mô tả chi tiết về từng khối nhỏ hơn trong kiến trúc hệ thống, dựa trên các đối tượng đã được xác định trong hệ thống.
 \newpage
 \subsection{Sơ đồ khối phần mềm}
 
 \subsubsection{Website dành cho bệnh nhân}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Patient.drawio.png}
+  \caption[Sơ đồ khối Website dành cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối Website dành cho bệnh nhân}
+  \label{fmECG_architecture-Patient} %đặt tên cho ảnh
+\end{figure}
+Lớp trên cùng trong sơ đồ hình \ref{fmECG_architecture-Patient} là lớp giao diện người dùng,
+nơi người dùng trực tiếp tương tác với hệ thống, thực hiện các request thông qua API Adapter.
 
+Sau đó các request được gửi đến lớp Application nơi chứa các Services để xử lý các request từ người dùng. 
+Kết quả được trả về giao diện. Ở đây các services gồm có: 
 
+\begin{adjustwidth}{1.5em}{}
+  \begin{itemize}
+    \item User service: Khối có nhiệm vụ xử lý thông tin cá nhân
+    \item Device service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến mượn trả thiết bị.
+    \item Schedule service: Khối có nhiệm vụ quản lý việc đặt lịch của bệnh nhân
+    \item Record service: Khối có nhiệm vụ xử lý thông tin bản ghi
+    \item Message service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ
+    \item Storage service: Khối service đặc biệt có nhiệm vụ lưu thông tin vào bộ nhớ
+  \end{itemize}
+\end{adjustwidth}
 
 \subsubsection{Website dành cho bác sĩ}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Doctors.drawio.png}
+  \caption[Sơ đồ khối Website dành cho bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối Website dành cho bác sĩ}
+  \label{fmECG_architecture-Doctor} %đặt tên cho ảnh
+\end{figure}
+\begin{adjustwidth}{1.5em}{}
+  \begin{itemize}
+    \item User service: Khối có nhiệm vụ xử lý thông tin cá nhân
+    \item Device service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến mượn trả thiết bị.
+    \item Schedule service: Khối có nhiệm vụ quản lý việc đặt lịch của bệnh nhân
+    \item Record service: Khối có nhiệm vụ xử lý thông tin bản ghi
+    \item Message service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ,
+    trao đổi trong nhóm.
+    \item Storage service: Khối service đặc biệt có nhiệm vụ lưu thông tin vào bộ nhớ
+  \end{itemize}
+\end{adjustwidth}
 
 
 \subsubsection{Website cho quản trị viên}
-
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Admin.drawio.png}
+  \caption[Sơ đồ khối Website dành cho quản trị viên]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối Website dành cho quản trị viên}
+  \label{fmECG_architecture-Admin} %đặt tên cho ảnh
+\end{figure}
+Về cơ bản, website dành cho admin có cấu trúc tương tự như website dành cho bác sĩ và bệnh nhân.
+Admin sẽ có quyền quản lý toàn bộ thông tin người dùng, thiết bị, bản ghi. 
+Bên cạnh đó, admin có quyền thống kê dữ liệu từ các services thông qua Statistic service.
 
 \subsection{Thiết kế cơ sở dữ liệu}
 
