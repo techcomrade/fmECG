@@ -4,38 +4,48 @@ import { createAsyncThunkWrap } from "../handler";
 import {
     RevenueRequest,
     RevenueResponse,
-    RevenueStatisticResponse,
     Service,
 } from "../../api";
+import { stat } from "fs";
 
 interface IRevenueState {
     data: RevenueResponse[];
-    statisticData: RevenueStatisticResponse | null;
+    statisticData: any | null;
     loadDataStatus: ApiLoadingStatus;
     loadCreateDataStatus: ApiLoadingStatus;
     loadUpdateDataStatus: ApiLoadingStatus;
     loadDeleteDataStatus: ApiLoadingStatus;
     loadStatisticDataStatus: ApiLoadingStatus;
+    staticByYear: number;
+    loadStaticByYear: ApiLoadingStatus;
     errorMessage: string | undefined;
 }
 
 const initialState: IRevenueState = {
     data: [],
-    statisticData: null,
+    statisticData: 0,
     loadDataStatus: ApiLoadingStatus.None,
     loadCreateDataStatus: ApiLoadingStatus.None,
     loadUpdateDataStatus: ApiLoadingStatus.None,
     loadDeleteDataStatus: ApiLoadingStatus.None,
-     loadStatisticDataStatus: ApiLoadingStatus.None,
+    loadStatisticDataStatus: ApiLoadingStatus.None,
+    loadStaticByYear: ApiLoadingStatus.None,
+    staticByYear: 0,
     errorMessage: undefined,
 };
 
+export const getStaticByYear = createAsyncThunkWrap("/revenue/staticByYear",
+    async (year:number) => {
+        return await Service.revenueService.getRevenueStatistic(year);
+    }
+)
 export const getAllRevenue = createAsyncThunkWrap(
     "/revenue/getAllRevenue", 
     async () => {
         return await Service.revenueService.getAllRevenue();
     }
 );
+
 
 export const addRevenue = createAsyncThunkWrap(
     "/revenue/addRevenue",
@@ -92,9 +102,24 @@ export const revenueSlice = createSlice({
         resetLoadStatisticDataStatus: (state) => {
             state.loadStatisticDataStatus = ApiLoadingStatus.None;
         },
+        resetLoadStaticByYearStatus: (state) => {
+            state.loadStaticByYear = ApiLoadingStatus.None
+        }
     },
     extraReducers: (builder) => {
         builder
+            .addCase(getStaticByYear.pending, state => {
+                state.loadStaticByYear = ApiLoadingStatus.Loading;
+            })
+            .addCase(getStaticByYear.fulfilled, (state,action) => {
+                state.loadStaticByYear = ApiLoadingStatus.Success;
+                state.staticByYear = action.payload;
+            })
+            .addCase(getStaticByYear.rejected, (state, action)=> {
+                state.loadStaticByYear = ApiLoadingStatus.Failed;
+                state.staticByYear = 0;
+                state.errorMessage = (action.payload as any)?.message;
+            })
             .addCase(getAllRevenue.pending, (state) => {
                 state.loadDataStatus = ApiLoadingStatus.Loading;
             })
@@ -135,7 +160,7 @@ export const revenueSlice = createSlice({
              state.loadStatisticDataStatus = ApiLoadingStatus.Success;
            })
            .addCase(getRevenueStatistic.rejected, (state, action) => {
-              state.statisticData = null;
+              state.statisticData = 0;
              state.errorMessage = (<any>action.payload)?.message;
               state.loadStatisticDataStatus = ApiLoadingStatus.Failed;
            })

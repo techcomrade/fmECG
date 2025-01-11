@@ -8,7 +8,8 @@ import {
     deleteRevenueById,
     resetLoadDeleteDataStatus,
     resetLoadUpdateDataStatus,
-    getRevenueStatistic
+    getRevenueStatistic,
+    getStaticByYear
 } from "../../redux/reducer/revenueSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { convertTimeToDateTime, checkDateTypeKey } from "../../utils/dateUtils";
@@ -33,7 +34,7 @@ export const Revenue: React.FC = () => {
     const [dataTable, setDataTable] = React.useState<any[]>([]);
     const [selectedData, setSelectedData] = React.useState<any[]>([]);
     const modalUpdateRef = React.useRef<EditRevenueType>(null);
-    const [totalRevenueByYear, setTotalRevenueByYear] = React.useState<number | null>(null);
+    const [totalRevenueByYear, setTotalRevenueByYear] = React.useState<number>(0);
     const [totalRevenueByMonth, setTotalRevenueByMonth] = React.useState<number | null>(null);
     const [totalRevenueByDate, setTotalRevenueByDate] = React.useState<number | null>(null);
     const [statisticYear, setStatisticYear] = React.useState<number>(new Date().getFullYear())
@@ -118,7 +119,11 @@ export const Revenue: React.FC = () => {
             isEdit: false,
         }
     ];
-
+    useEffect(()=>{
+        if(dataState.loadStaticByYear === ApiLoadingStatus.Success){
+            setTotalRevenueByYear(dataState.staticByYear);
+        }
+    },[dataState.loadStaticByYear])
     const handleData = (data: any, type: string) => {
         let revenueData = {} as any;
 
@@ -159,12 +164,12 @@ export const Revenue: React.FC = () => {
     
      useEffect(() => {
           if(filterData.month){
-            dispatch(getRevenueStatistic(filterData.month.year(), filterData.month.month() + 1))
+            dispatch(getRevenueStatistic(filterData.month.year()))
         }
     }, [filterData.month, dispatch])
      useEffect(() => {
         if(filterData.date){
-            dispatch(getRevenueStatistic(filterData.date.year(), filterData.date.month() + 1, filterData.date.date()))
+            dispatch(getRevenueStatistic(filterData.date.year()))
         }
     }, [filterData.date, dispatch])
 
@@ -257,7 +262,7 @@ export const Revenue: React.FC = () => {
 
 
    const handleSaveYearFilter = () => {
-        setFilterData((prev) => ({ ...prev, year: statisticYear }))
+        dispatch(getStaticByYear(totalRevenueByYear))
        
     }
 

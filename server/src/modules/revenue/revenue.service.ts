@@ -51,29 +51,41 @@ export class RevenueService {
     return this.revenueRepository.getRevenueByYear(year);
   }
 
-    async getTotalRevenueByDate(startDate: Date, endDate: Date): Promise<number> {
-        const revenueByDate = await this.revenueRepository.getRevenueByDate(
-            startDate,
-            endDate
-        );
-        return revenueByDate.reduce((sum, record) => sum + record.fee, 0);
-    }
+  async getTotalRevenueByDate(startDate: Date, endDate: Date): Promise<number> {
+    const revenueByDate = await this.revenueRepository.getRevenueByDate(
+      startDate,
+      endDate
+    );
+    return revenueByDate.reduce((sum, record) => sum + record.fee, 0);
+  }
+  async getStaticByYearDate(year: number): Promise<number> {
+    const revenueArrays = await this.revenueRepository.getRevenueByYear(year);
+    return revenueArrays.reduce((sum,i)=> sum + parseFloat(i.fee.toString()), 0);
+  }
 
-    async getTotalRevenueByMonth(year: number, month: number): Promise<number> {
-      const revenueByMonth = await this.revenueRepository.getRevenueByMonth(year, month);
-      return revenueByMonth.reduce((sum, record) => sum + record.fee, 0);
-    }
+  async getTotalRevenueByMonth(year: number, month: number): Promise<number> {
+    const revenueByMonth = await this.revenueRepository.getRevenueByMonth(
+      year,
+      month
+    );
+    return revenueByMonth.reduce((sum, record) => sum + record.fee, 0);
+  }
 
   async getTotalRevenueByYear(year: number): Promise<any> {
     return this.revenueRepository.getTotalRevenueByYear(year);
   }
 
   async getRevenueStatistic(year: number): Promise<RevenueStatisticResponse> {
-      const revenueByYear = await this.revenueRepository.getRevenueByYear(year);
-      const totalRevenue = await this.getTotalRevenueByYear(year);
-      const totalRevenueByMonth = await this.getTotalRevenueByMonth(year, new Date().getMonth() + 1)
-     const totalRevenueByDate = await this.getTotalRevenueByDate(new Date(year, new Date().getMonth(), new Date().getDate()), new Date(year, new Date().getMonth(), new Date().getDate() ) )
-
+    const revenueByYear = await this.revenueRepository.getRevenueByYear(year);
+    const totalRevenue = await this.getTotalRevenueByYear(year);
+    const totalRevenueByMonth = await this.getTotalRevenueByMonth(
+      year,
+      new Date().getMonth() + 1
+    );
+    const totalRevenueByDate = await this.getTotalRevenueByDate(
+      new Date(year, new Date().getMonth(), new Date().getDate()),
+      new Date(year, new Date().getMonth(), new Date().getDate())
+    );
 
     const revenueByMonth = this.calculateMonthlyRevenue(revenueByYear, year);
     const revenueByDate = await this.getRevenueByDateOfYear(year);
