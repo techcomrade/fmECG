@@ -12,6 +12,7 @@ export class AuthenticationGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = this.extractToken(request);
+
     if (!token) return false;
     const cachedData = this.tokenCache[token];
     if (cachedData && cachedData.expiration > Date.now()) {
@@ -36,9 +37,6 @@ export class AuthenticationGuard implements CanActivate {
         };
         request.user = user;
         return true;
-      
-
-      return false;
     } catch (e) {
       console.error("invalid token:", e);
       return false;
@@ -46,12 +44,13 @@ export class AuthenticationGuard implements CanActivate {
   }
   private extractToken(request: any): string | null {
     const authHeader = request.headers.authorization;
+    console.log(request.headers.authorization)
     return authHeader && authHeader.startsWith("Bearer ")
       ? authHeader.split(" ")[1]
       : null;
   }
   private decodeToken (token: string){
-    const parts = token.split('-');
+    const parts = token.split('$');
 
       if (parts.length >= 4) {
         const account_id = parts[1]; // Phần chứa account_id

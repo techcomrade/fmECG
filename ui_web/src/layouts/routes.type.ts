@@ -9,10 +9,12 @@ import {
   LineChartOutlined,
   ScheduleOutlined,
   UserOutlined,
+  WechatWorkOutlined,
   CreditCardOutlined,
 } from "@ant-design/icons";
 import { userRole } from "../constants";
 import { Revenue } from "../pages/revenue";
+import { ChatMes } from "../pages/chat";
 
 export interface IRouteItem {
   key: string;
@@ -65,6 +67,13 @@ export const adminRouterMappingGroup: { [key: string]: IRouteItem } = {
     component: Revenue,
     icon: CreditCardOutlined,
   },
+  Chat: {
+    key: "/chat",
+    url: "/chat",
+    label: "Tin nhắn",
+    component: ChatMes,
+    icon: WechatWorkOutlined
+  }
 };
 
 export const doctorRouterMappingGroup: { [key: string]: IRouteItem } = {
@@ -103,6 +112,13 @@ export const doctorRouterMappingGroup: { [key: string]: IRouteItem } = {
     component: Revenue,
     icon: CreditCardOutlined,
   },
+  Chat: {
+    key: "/chat",
+    url: "/chat",
+    label: "Tin nhắn",
+    component: ChatMes,
+    icon: WechatWorkOutlined
+  }
 };
 
 export const patientRouterMappingGroup: { [key: string]: IRouteItem } = {
@@ -127,6 +143,13 @@ export const patientRouterMappingGroup: { [key: string]: IRouteItem } = {
     component: Schedule,
     icon: ScheduleOutlined,
   },
+  Chat: {
+    key: "/chat",
+    url: "/chat",
+    label: "Tin nhắn",
+    component: ChatMes,
+    icon: WechatWorkOutlined
+  }
 };
 
 export const getRoutesByRole = (role: string) => {

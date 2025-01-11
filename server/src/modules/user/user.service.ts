@@ -139,7 +139,7 @@ export class UserService {
     const expiredTime = 60 * 60 * 1000;
     const expiredAt = Date.now() + expiredTime;
     const result: LoginResponseModel = {
-      access_token: `kjsdhfueinmxvnjksdfhldksjfmdfbk-${user.account_id}-jxcvjdksfdjfkbdkfjdbsjfkbdsfjk-${expiredAt}-bdsjfbskdfjbskfbsmncvcvmxmbv-${user.role_id}-`,
+      access_token: `kjsdhfueinmxvnjksdfhldksjfmdfbk$${user.account_id}$jxcvjdksfdjfkbdkfjdbsjfkbdsfjk$${expiredAt}$bdsjfbskdfjbskfbsmncvcvmxmbv$${user.role_id}$`,
       role: user.role_id,
       expired_time: expiredAt,
     };

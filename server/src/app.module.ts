@@ -9,6 +9,10 @@ import { ConsultationScheduleModule } from "./modules/consultation_schedule/cons
 import { NotificationModule } from "./modules/notification/notification.module";
 import { StatisticModule } from "./modules/statistic/statistic.module";
 import { RevenueModule } from "./modules/revenue/revenue.module";
+import { MongooseModule } from '@nestjs/mongoose';
+import { ChatModule } from "./modules/chat/chat.module";
+import { GroupChatModule } from "./modules/groupChat/groupChat.module";
+
 require("dotenv").config();
 
 @Module({
@@ -28,10 +32,14 @@ require("dotenv").config();
     DeviceModule,
     RecordModule,
     ConsultationScheduleModule,
+    MongooseModule.forRoot(process.env.MONGO_URL),
     ScheduleModule,
     NotificationModule,
     StatisticModule,
     RevenueModule,
+    ChatModule,
+    GroupChatModule
+
   ],
 })
 export class AppModule {}

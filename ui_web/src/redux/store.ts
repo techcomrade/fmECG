@@ -7,6 +7,8 @@ import diagnosisReducer from "./reducer/diagnosisSlice";
 import notificationScheduleReducer from "./reducer/notificationScheduleSlice";
 import statisticReducer from "./reducer/statisticSlice";
 import reveneuReducer from "./reducer/revenueSlice";
+import chatReducer from "./reducer/chatSlice"
+import groupChatReducer from "./reducer/groupChatSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,7 +19,10 @@ export const store = configureStore({
     diagnosis: diagnosisReducer,
     notificationSchedule: notificationScheduleReducer,
     statistic: statisticReducer,
-    revenue: reveneuReducer
+    revenue: reveneuReducer,
+    groupChat: groupChatReducer,
+    chat: chatReducer,
+
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

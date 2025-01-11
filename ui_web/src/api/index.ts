@@ -63,6 +63,13 @@ const statisticClient = new ApiClientFactory.StatisticControllerClient(
 const revenueClient = new ApiClientFactory.RevenueControllerClient(api_url, {
   fetch: authorizedFetchFunction,
 });
+const chatClient = new ApiClientFactory.ChatControllerClient(api_url, {
+  fetch: authorizedFetchFunction,
+});
+const groupChatClient = new ApiClientFactory.GroupChatControllerClient(api_url, {
+  fetch: authorizedFetchFunction,
+})
+
 interface IService {
   userService: ApiClientFactory.UserControllerClient;
   deviceService: ApiClientFactory.DeviceControllerClient;
@@ -73,6 +80,9 @@ interface IService {
   notificationScheduleService: ApiClientFactory.NotificationControllerClient;
   statisticService: ApiClientFactory.StatisticControllerClient;
   revenueService: ApiClientFactory.RevenueControllerClient;
+  chatService: ApiClientFactory.ChatControllerClient;
+  groupChatService: ApiClientFactory.GroupChatControllerClient;
+
 }
 
 export const Service: IService = {
@@ -85,4 +95,7 @@ export const Service: IService = {
   notificationScheduleService: notificationScheduleClient,
   statisticService: statisticClient,
   revenueService: revenueClient,
+  chatService: chatClient,
+  groupChatService: groupChatClient,
+
 };

@@ -59,6 +59,11 @@
     "sequelize-cli": "^6.6.2",
     "sequelize-typescript": "^2.1.6",
     "typescript-web": "file:",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "@nestjs/mongoose": "^10.1.0",
+    "@nestjs/platform-socket.io": "^10.4.15",
+    "@nestjs/websockets": "^10.4.15",
+    "mongoose": "^8.9.2",
+    "socket.io": "^4.8.1"
   }
 }
