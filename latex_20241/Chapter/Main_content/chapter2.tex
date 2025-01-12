@@ -223,7 +223,33 @@ chuyển sang phê duyệt tài khoản và trả về kết quả.
 
 \subsubsection{Sơ đồ tuần tự xóa người dùng theo id}
 
+\subsubsection{Sơ đồ tuần tự thiết kế chức năng kết nối và nhận/lưu trữ dữ liệu từ thiết bị điện tim}
+Chức năng kết nối và thực hiện đo với thiết bị điện tim là một trong những tính năng quan trọng nhất của ứng dụng. Để thực hiện được chức năng này, ứng dụng cần có khả năng bật Bluetooth. Trước tiên, người dùng phải thiết lập kết nối Bluetooth giữa ứng dụng di động và thiết bị đo điện tim. Khi kết nối được thiết lập thành công, ứng dụng sẽ dựa vào cơ chế Bluetooth Low Energy (BLE) để bắt đầu lắng nghe dữ liệu được gửi từ thiết bị. Dữ liệu thô nhận được sẽ được xử lý thông qua các công thức tính toán và hiển thị trên biểu đồ. Sau khi hoàn tất quá trình đo, người dùng có thể chọn lưu kết quả để đồng bộ dữ liệu lên máy chủ, từ đó bác sĩ có thể truy cập và xem được thông tin đo đạc.
 
+Quá trình kết nối Bluetooth với thiết bị đo điện tim không quá phức tạp nhờ sự hỗ trợ từ các thư viện và hệ điều hành. Tuy nhiên, điều đáng lưu ý là cách xử lý dữ liệu sau khi kết nối. Sau khi thiết bị và ứng dụng đã ghép nối thành công, việc làm thế nào để nhận dữ liệu từ thiết bị điện tim là một vấn đề quan trọng cần giải quyết. Trong hệ thống BLE, một giao thức được gọi là GATT (Generic ATTribute Profile) sẽ được sử dụng. GATT đóng vai trò xác định cách hai thiết bị giao tiếp và truyền dữ liệu thông qua các Service và Characteristic, giúp quá trình thu nhận và xử lý dữ liệu diễn ra hiệu quả.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=16cm,height=8cm]{Images/System/fmECG_BLE_system.png}
+  \caption[Cấu trúc dữ liệu gói]{\bfseries \fontsize{12pt}{0pt}\selectfont Cấu trúc dữ liệu gói}
+  \label{fmECG_BLE_system} %đặt tên cho ảnh
+\end{figure}
+Services được xem như một tập hợp thông tin được thiết kế để đảm bảo thực hiện một chức năng cụ thể. Các Service, chẳng hạn như Battery Service hoặc Sensor Service, được sử dụng để cung cấp các chức năng riêng biệt. Bên trong mỗi Service, một hoặc nhiều Characteristic được định nghĩa để đảm nhận các nhiệm vụ hoặc thông tin cụ thể liên quan đến chức năng của Service đó. UUID (Universal Unique Identifier) được sử dụng để định danh duy nhất toàn cầu cho từng Service và Characteristic.
+
+Dựa trên các cơ sở này, việc lắng nghe và nhận dữ liệu từ thiết bị điện tim cần được thực hiện thông qua kết nối đúng với các Services và Characteristics tương ứng. Trong thiết bị đo điện tim được sử dụng trong đồ án này, các UUID tiêu chuẩn (được biểu diễn dưới dạng chuỗi String) đã được xác định và áp dụng để đảm bảo việc thu nhận dữ liệu từ thiết bị được thực hiện một cách chính xác và hiệu quả:
+
+\begin{adjustwidth}{1.5em}{}
+  \begin{itemize}
+    \item UUID Service: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
+    \item UUID Characteristic: 6E400003-B5A3-F393-E0A9-E50E24DCCA9E
+  \end{itemize}
+  \end{adjustwidth}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm,height=12cm]{Images/System/BLE_system.drawio.png}
+    \caption[Sơ đồ tuần tự thiết kế chức năng kết nối và nhận dữ liệu điện tim real-time]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự thiết kế chức năng kết nối và nhận dữ liệu điện tim real-time}
+    \label{BLE_system} %đặt tên cho ảnh
+  \end{figure}
 \subsection{Phân tích dữ liệu}
 
 Tại phần này, chúng em sẽ tiến hành xác định và mô tả các thực thể cũng như

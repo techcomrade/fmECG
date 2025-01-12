@@ -51,13 +51,12 @@ trước khi trả kết quả về cho người dùng.\begin{adjustwidth}{1.5em
 Sau đây là mô tả chi tiết về từng khối nhỏ hơn trong kiến trúc hệ thống, dựa trên các đối tượng đã được xác định trong hệ thống.
 \newpage
 \subsection{Sơ đồ khối phần mềm}
-
-\subsubsection{Website dành cho bệnh nhân}
+\subsubsection{Ứng dụng di động dành cho bệnh nhân}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Patient.drawio.png}
-  \caption[Sơ đồ khối Website dành cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối Website dành cho bệnh nhân}
-  \label{fmECG_architecture-Patient} %đặt tên cho ảnh
+  \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Patient-App.drawio.png}
+  \caption[Sơ đồ khối ứng dụng di động dành cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối ứng dụng di động dành cho bệnh nhân}
+  \label{fmECG_architecture-Patient-App} %đặt tên cho ảnh
 \end{figure}
 Lớp trên cùng trong sơ đồ hình \ref{fmECG_architecture-Patient} là lớp giao diện người dùng,
 nơi người dùng trực tiếp tương tác với hệ thống, thực hiện các request thông qua API Adapter.
@@ -76,7 +75,21 @@ Kết quả được trả về giao diện. Ở đây các services gồm có:
   \end{itemize}
 \end{adjustwidth}
 
-\subsubsection{Website dành cho bác sĩ}
+Riêng với App cho bệnh nhân thì sẽ có Khối Bluetooth và Khối Device để phục vụ
+cho việc đo điện tim.
+
+
+\subsubsection{Website dành cho bệnh nhân}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Patient.drawio.png}
+  \caption[Sơ đồ khối Website dành cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối Website dành cho bệnh nhân}
+  \label{fmECG_architecture-Patient} %đặt tên cho ảnh
+\end{figure}
+Về cơ bản, Website cho bệnh nhân có những khối tương tự với bệnh nhân, trừ
+việc sẽ không có hai khối Device và Bluetooth để phục vụ việc đo phía App.
+
+\subsubsection{Website, ứng dụng di động dành cho bác sĩ}
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Doctors.drawio.png}
