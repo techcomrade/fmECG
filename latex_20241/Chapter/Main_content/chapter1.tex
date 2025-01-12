@@ -32,8 +32,8 @@ Hệ thống được thiết kế để phục vụ các đối tượng sau:
 Các chức năng chính của hệ thống bao gồm:
 \begin{adjustwidth}{1.5em}{}
   \begin{itemize}
-      \item Ghi lại dữ liệu thiết bị: Hệ thống cho phép ghi lại dữ liệu từ thiết bị y tế được truyền qua ứng dụng di động. Dữ liệu được chuyển tới website của người dùng thông qua ứng dụng di động để lưu trữ, phân tích và có thể xem lại sau này.
-      \item Hiển thị dữ liệu: Hệ thống hiển thị dữ liệu y tế theo dạng bảng biểu và đồ thị. Hệ thống cũng hỗ trợ xuất ra các tệp đã được chuẩn hoá cho các dữ liệu chuỗi thời gian (time-series database) để phục vụ mục đích phân tích và nghiên cứu.
+      \item Ghi dữ liệu đo của thiết bị: App trên điện thoại ghi dữ liệu đo được từ thiết bị đo điện tim thông qua Bluetooth. Dữ liệu đo được ghi lại dưới dạng bảng biểu theo các tham số và được lưu trữ trên máy chủ của hệ thống.
+      \item Hiển thị dữ liệu: Các số liệu được lưu trữ trên máy chủ hệ thống được tính toán theo công thức để hiển thị lên trên web, app dưới dạng đồ thị đường.
       \item Lưu trữ: Hệ thống hỗ trợ lưu dữ liệu mà người dùng đo được từ thiết bị trên cả ứng dụng và trên server của hệ thống. Dữ liệu điện tim cũng được đồng bộ hóa và lưu trữ trên máy chủ của hệ thống. Qua quá trình đồng bộ hóa, dữ liệu từ ứng dụng được truyền đến máy chủ và được lưu trữ an toàn và bảo mật trên hệ thống. Việc lưu trữ dữ liệu trên cả ứng dụng và máy chủ giúp đảm bảo rằng dữ liệu quan trọng này được lưu trữ một cách đáng tin cậy và có sẵn cho phân tích hoặc sử dụng tương lai
       \item Trao đổi và chia sẻ thông tin về dữ liệu y tế: Hệ thống giúp người dùng có thể trao đổi trực tiếp với bác sĩ và trợ lý ảo, chia sẻ kết quả đo điện tim, hỏi đáp về các vấn đề sức khỏe, các vấn đề liên quan đến hệ thống và thiết bị hoặc thảo luận về các quyết định. Điều này mang lại sự tiện lợi và hỗ trợ đáng kể cho người dùng trong việc xác định về tình trạng sức khoẻ hiện tại của bản thân.
       
