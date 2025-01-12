@@ -35,7 +35,7 @@ fmECG Project is a biomedical system for measuring electrogram data using Flutte
 ## Run code with git-crypt
 Project is using git-crypt to encrypt all credentials, contributors need to contact to repo's owner to get decryption key.
 
-Install `git-crypt`: [MacOS, Ubuntu](https://github.com/AGWA/git-crypt/blob/master/INSTALL.md), [Windows](https://github.com/AGWA/git-crypt/releases/tag/0.7.0)
+Install `git-crypt`: [MacOS, Ubuntu](https://github.com/AGWA/git-crypt/blob/master/INSTALL.md), [Windows](https://github.com/oholovko/git-crypt-windows?tab=readme-ov-file#git-crypt-for-windows)
 
 After saving key somewhere in your directory, command:
 ```bash
