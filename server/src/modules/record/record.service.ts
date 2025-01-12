@@ -100,20 +100,6 @@ export class RecordService {
 
   async getRecordByDoctorId(doctor_id: string): Promise<RecordResponse[]> {
     let result = [];
-    // let devices = await this.deviceService.getByDoctorId(doctor_id);
-    // for (const device of devices) {
-    //   let records = await this.recordRepository.getRecordByDeviceId(device.id);
-    //   if (records && records.length > 0) {
-    //     for (const record of records) {
-    //       let patient = await this.userService.getUserById(record.patient_id);
-    //       result.push({
-    //         ...(<any>record).dataValues,
-    //         patient: patient.username,
-    //         device_name: device.device_name,
-    //       });
-    //     }
-    //   }
-    // }
     const schedules = await this.scheduleService.getScheduleByDoctorId(doctor_id);
     for (const schedule of schedules) {
       const records = await this.recordRepository.getRecordByPatientId(schedule.patient_id);

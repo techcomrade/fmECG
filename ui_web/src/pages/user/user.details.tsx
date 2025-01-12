@@ -54,7 +54,12 @@ const UserDetailComponent = (props: any, ref: any) => {
   }, [dataState.loadGetUserByIdStatus]);
 
   const labelsInfo = {
-    username: Context.role === userRole.doctor ? "Tên bệnh nhân" : "Tên bác sĩ",
+    username:
+      Context.role === userRole.doctor
+        ? "Tên bệnh nhân"
+        : Context.role === userRole.patient
+        ? "Tên bác sĩ"
+        : "Tên người dùng",
     gender: "Giới tính",
     birth: "Ngày sinh",
     phone_number: "Số điện thoại",
