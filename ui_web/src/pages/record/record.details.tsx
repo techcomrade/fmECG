@@ -7,8 +7,7 @@ import { DesktopOutlined } from "@ant-design/icons";
 import { Avatar, Divider, Table } from "antd";
 import { useTranslation } from "react-i18next";
 import { convertTimeToDateTime } from "../../utils/dateUtils";
-import { Context } from "../../utils/context";
-import { userRole } from "../../constants";
+import { handleRecordName } from "../../utils/recordUtils";
 
 const RecordDetailComponent = (props: any, ref: any) => {
   const dispatch = useAppDispatch();
@@ -32,11 +31,9 @@ const RecordDetailComponent = (props: any, ref: any) => {
     if (dataState.loadGetRecordByIdStatus === ApiLoadingStatus.Success) {
       const record = dataState.recordData;
       const rawData = {
-        ...record,
+        data_rec_url: handleRecordName(record.data_rec_url, record.device_id),
         patient: record.patient,
-        doctor: record.doctor,
         device_name: record.device_name,
-        schedule_id: record.schedule_id,
         start_time: convertTimeToDateTime(record.start_time),
         end_time: convertTimeToDateTime(record.end_time),
       };
@@ -46,14 +43,8 @@ const RecordDetailComponent = (props: any, ref: any) => {
 
   const labelsInfo = {
     data_rec_url: "Tên bản ghi",
-    ...(Context.role === userRole.doctor || Context.role === userRole.admin
-      ? { patient: "Tên bệnh nhân" }
-      : {}),
-    ...(Context.role === userRole.patient || Context.role === userRole.admin
-      ? { doctor: "Tên bác sĩ" }
-      : {}),
+    patient: "Tên bệnh nhân",
     device_name: "Tên thiết bị",
-    schedule_id: "ID lịch khám",
     start_time: "Thời gian bắt đầu phiên đo",
     end_time: "Thời gian kết thúc phiên đo",
   };

@@ -13,17 +13,14 @@ dựa trên các mục tiêu đã nêu ra trong Mục Đề xuất hệ thống 
 Hệ thống được thiết kế để phục vụ các đối tượng sau:
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-    \item Bệnh nhân: sử dụng hệ thống để theo dõi dữ liệu điện tim của mình thông qua website. 
-    Bệnh nhân truy cập vào tài khoản của mình, có thể tìm kiếm và chọn lịch, 
-    chọn bác sĩ phù hợp để đăng ký khám hoặc tư vấn thiết bị, nhắn tin với bác sĩ của mình.
+    \item Bệnh nhân: Hệ thống giúp bệnh nhân theo dõi dữ liệu điện tim (ECG), quản lý lịch khám, và tìm kiếm bác sĩ phù hợp để thăm khám hoặc tư vấn y tế.
+    Tính năng nhắn tin trực tiếp với bác sĩ mang đến sự thuận tiện trong giao tiếp. Nhờ đó, bệnh nhân dễ dàng quản lý sức khỏe một cách hiệu quả, an toàn và toàn diện.
     
-    \item Bác sĩ: sử dụng hệ thống để thực hiện theo dõi các bệnh nhân có trong hệ thống. 
-    Bác sĩ có quyền truy cập vào kết quả ECG của bệnh nhân, có thể trao đổi, 
-    tư vấn với bệnh nhân về các thông tin liên quan, đặt lịch tái khám cho bệnh nhân. 
-    Nhắn tin với bệnh nhân của mình và các nhóm chat để trao đổi thông tin.
+    \item Bác sĩ: Hệ thống hỗ trợ bác sĩ quản lý danh sách bệnh nhân, truy cập dữ liệu đo điện tim, và cập nhật thông tin sức khỏe.
+    Tính năng đặt lịch tái khám, trao đổi trực tiếp với bệnh nhân, và tham gia nhóm thảo luận giúp bác sĩ làm việc hiệu quả hơn, đồng thời nâng cao chất lượng tư vấn và phối hợp điều trị.
     
-    \item Quản trị viên: sử dụng hệ thống để quản lý các tài khoản người dùng, thiết bị, 
-    quản lý lịch của bác sĩ và bệnh nhân, quản lý các bản dữ liệu đo.
+    \item Quản trị viên: Quản trị viên chịu trách nhiệm quản lý thông tin tài khoản của bệnh nhân, bác sĩ và các thiết bị y tế, đồng thời giám sát lịch khám và dữ liệu đo lường.
+    Họ đảm bảo hệ thống vận hành chính xác, hiệu quả và đáp ứng nhu cầu của mọi người dùng.
     
 \end{itemize}
 \end{adjustwidth}
@@ -32,11 +29,10 @@ Hệ thống được thiết kế để phục vụ các đối tượng sau:
 Các chức năng chính của hệ thống bao gồm:
 \begin{adjustwidth}{1.5em}{}
   \begin{itemize}
-      \item Ghi dữ liệu đo của thiết bị: App trên điện thoại ghi dữ liệu đo được từ thiết bị đo điện tim thông qua Bluetooth. Dữ liệu đo được ghi lại dưới dạng bảng biểu theo các tham số và được lưu trữ trên máy chủ của hệ thống.
-      \item Hiển thị dữ liệu: Các số liệu được lưu trữ trên máy chủ hệ thống được tính toán theo công thức để hiển thị lên trên web, app dưới dạng đồ thị đường.
-      \item Lưu trữ: Hệ thống hỗ trợ lưu dữ liệu mà người dùng đo được từ thiết bị trên cả ứng dụng và trên server của hệ thống. Dữ liệu điện tim cũng được đồng bộ hóa và lưu trữ trên máy chủ của hệ thống. Qua quá trình đồng bộ hóa, dữ liệu từ ứng dụng được truyền đến máy chủ và được lưu trữ an toàn và bảo mật trên hệ thống. Việc lưu trữ dữ liệu trên cả ứng dụng và máy chủ giúp đảm bảo rằng dữ liệu quan trọng này được lưu trữ một cách đáng tin cậy và có sẵn cho phân tích hoặc sử dụng tương lai
-      \item Trao đổi và chia sẻ thông tin về dữ liệu y tế: Hệ thống giúp người dùng có thể trao đổi trực tiếp với bác sĩ và trợ lý ảo, chia sẻ kết quả đo điện tim, hỏi đáp về các vấn đề sức khỏe, các vấn đề liên quan đến hệ thống và thiết bị hoặc thảo luận về các quyết định. Điều này mang lại sự tiện lợi và hỗ trợ đáng kể cho người dùng trong việc xác định về tình trạng sức khoẻ hiện tại của bản thân.
-      
+      \item Ghi dữ liệu đo từ thiết bị: Ứng dụng trên điện thoại thu thập dữ liệu đo từ thiết bị điện tim thông qua kết nối Bluetooth. Các thông số đo được ghi lại dưới dạng bảng biểu chi tiết và lưu trữ trên máy chủ của hệ thống để đảm bảo tính an toàn, sẵn sàng cho các nhu cầu sử dụng tiếp theo.
+      \item Hiển thị dữ liệu: Các số liệu được lưu trữ trên hệ thống máy chủ được xử lý và tính toán thông qua các thuật toán chuyên biệt. Kết quả được hiển thị trực quan trên ứng dụng hoặc website dưới dạng biểu đồ đường, giúp bác sĩ dễ dàng theo dõi và phân tích.
+      \item Lưu trữ: Hệ thống hỗ trợ lưu trữ dữ liệu đo lường từ thiết bị không chỉ trên ứng dụng mà còn trên máy chủ. Quá trình đồng bộ hóa giúp truyền tải thông tin từ ứng dụng lên máy chủ, đảm bảo dữ liệu điện tim được lưu trữ an toàn, bảo mật và có thể truy cập mọi lúc. Điều này mang lại độ tin cậy cao và đảm bảo khả năng sử dụng lâu dài cho các mục đích phân tích hoặc theo dõi sức khỏe trong tương lai.
+      \item Trao đổi và chia sẻ thông tin về dữ liệu y tế: Hệ thống cung cấp nền tảng để người dùng dễ dàng trao đổi trực tiếp với bác sĩ, chia sẻ kết quả đo điện tim, đặt câu hỏi về sức khỏe hoặc thảo luận về các vấn đề liên quan đến thiết bị. Những tính năng này không chỉ mang lại sự tiện lợi mà còn đóng vai trò quan trọng trong việc hỗ trợ người dùng hiểu rõ hơn về tình trạng sức khỏe và đưa ra các quyết định phù hợp.
 
   \end{itemize}
 \end{adjustwidth}
@@ -44,44 +40,42 @@ Các chức năng chính của hệ thống bao gồm:
 \textbf{Đối với bệnh nhân:}
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-    \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, ngày sinh, số điện thoại và mật khẩu
+    \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, ngày sinh, số điện thoại và mật khẩu.
     \item Cập nhật các thông tin cá nhân
-    \item Được theo dõi điện tim trực tiếp khi kết nối ứng dụng di động với thiết bị đo điện tim thông qua Bluetooth
-    \item Xem kết quả ECG của mình, bao gồm biểu đồ và các thông số liên quan
-    \item Nhận thông báo và có thể trao đổi trực tiếp với bác sĩ về tình hình sức khoẻ và các kết quả đo được từ thiết bị
-    \item Nhận tư vấn từ trợ lý ảo về hệ thống và các thông tin liên quan về sức khoẻ.
+    \item Được theo dõi điện tim trực tiếp khi kết nối ứng dụng di động với thiết bị đo điện tim thông qua Bluetooth.
+    \item Xem kết quả các phiên đo của mình, bao gồm biểu đồ và các thông số liên quan.
+    \item Nhận thông báo và có thể trao đổi trực tiếp với bác sĩ về tình hình sức khoẻ và các kết quả đo được từ thiết bị.
 \end{itemize}
 \end{adjustwidth}
 \textbf{Đối với bác sĩ:}
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-    \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, ngày sinh, số điện thoại và mật khẩu
-    \item Cập nhật thông tin cá nhân
-    \item Quản lý danh sách bệnh nhân
-    \item Quản lý danh sách các bản ghi dữ liệu đo của các bệnh nhân trong list quản lý của mình
-    \item Nhận thông báo và có thể trao đổi trực tiếp với bệnh nhân về tình hình sức khoẻ và các kết quả đo được từ thiết bị
-    \item Tìm thêm thông tin về y tế và hệ thống này thông qua tương tác với trợ lý ảo 
+    \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, ngày sinh, số điện thoại và mật khẩu.
+    \item Cập nhật thông tin cá nhân.
+    \item Quản lý danh sách bệnh nhân.
+    \item Quản lý danh sách các bản ghi dữ liệu đo của các bệnh nhân mà bác sĩ đó đã chấp nhận yêu cầu đặt lịch hẹn.
+    \item Nhận thông báo và có thể trao đổi trực tiếp với bệnh nhân về tình hình sức khoẻ và các kết quả đo được từ thiết bị.
 \end{itemize}
 \end{adjustwidth}
 \textbf{Đối với quản trị viên:}
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-    \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, số điện thoại và mật khẩu
-    \item Cập nhật thông tin cá nhân
-    \item Quản lý danh sách người dùng trong hệ thống, bao gồm bệnh nhân và bác sĩ
-    \item Quản lý danh sách thiết bị, bản ghi của các dữ liệu
-    \item Quản lý phân công bác sĩ - bệnh nhân
-    \item Quản lý phê duyệt tài khoản khi người dùng đăng ký trên hệ thống
+    \item Đăng nhập và đăng ký tài khoản bằng thông tin cá nhân, bao gồm tên, địa chỉ email, số điện thoại và mật khẩu.
+    \item Cập nhật thông tin cá nhân.
+    \item Quản lý danh sách người dùng trong hệ thống, bao gồm bệnh nhân và bác sĩ.
+    \item Quản lý danh sách thiết bị, chịu trách nhiệm phân công thiết bị cho người dùng.
+    \item Quản lí các bản ghi đã đo được.
+    \item Quản lý lịch hẹn của toàn bộ người dùng.
 \end{itemize}
 \end{adjustwidth}
 
 \subsubsection{Yêu cầu phi chức năng}
 \begin{itemize}
-    \item Hệ thống có thể tương thích với hầu hết các trình duyệt phổ biến hiện nay
-    \item Hệ thống đảm bảo tính bảo mật và quyền riêng tư thông tin của người dùng
-    \item Hệ thống phải có giao diện người dùng thân thiện, dễ sử dụng để có thể tương tác mà không gặp quá nhiều khó khăn
-    \item Thời gian phản hồi của hệ thống phải nhanh chóng và ổn định
-    % \item Hệ thống cần sao lưu dữ liệu định kỳ để đảm bảo tính an toàn và khả năng khôi phục dữ liệu khi cần thiết.
+    \item Hệ thống có thể tương thích với hầu hết các trình duyệt phổ biến hiện nay.
+    \item Hệ thống đảm bảo tính bảo mật và quyền riêng tư thông tin của người dùng.
+    \item Hệ thống phải có giao diện người dùng thân thiện, dễ sử dụng để có thể tương tác mà không gặp quá nhiều khó khăn.
+    \item Thời gian phản hồi của hệ thống phải nhanh chóng và ổn định.
+    \item Hệ thống cần được tối ưu hóa để hoạt động hiệu quả ngay cả khi có lưu lượng truy cập cao.
 \end{itemize}
 
 Quá trình phân tích yêu cầu hệ thống giúp xác định rõ ràng các chức năng, yêu cầu phi chức năng và đối tượng người dùng mà hệ thống cần phục vụ. 

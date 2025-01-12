@@ -1,3 +1,11 @@
+plugins {
+    id "com.android.application"
+    id "org.jetbrains.kotlin.android"
+    id "com.google.gms.google-services"
+    // id "com.chaquo.python"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -27,15 +35,6 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-apply plugin: 'com.android.application'
-// START: FlutterFire Configuration
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.android.application'
-apply plugin: 'com.chaquo.python'
-// END: FlutterFire Configuration
-apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-
-
 android {
     namespace 'vn.hust.electrospic'
     compileSdkVersion 34
@@ -56,11 +55,11 @@ android {
           // use it if run on windows?
           abiFilters "arm64-v8a"
         }
-        python {
-            pip {
-                install("-r", "requirements.txt")
-            }
-        }
+        // python {
+        //     pip {
+        //         install("-r", "requirements.txt")
+        //     }
+        // }
     }
 
     signingConfigs {
@@ -88,7 +87,5 @@ flutter {
 }
 
 dependencies {
-    implementation 'androidx.preference:preference:1.1.1'
-    // implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
 }

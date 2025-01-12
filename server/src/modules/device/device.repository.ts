@@ -15,12 +15,13 @@ export class DeviceRepository {
   async add(device: DeviceRequest) {
     return await this.deviceModel.create({
       id: device.id,
-      doctor_id: device.doctor_id,
+      user_id: device.user_id,
       device_name: device.device_name,
       information: device.information ?? "",
       device_type_id: device.device_type_id,
       status_id: device.status_id,
-      start_date: device.start_date,
+      start_time: device.start_time ?? null,
+      end_time: device.end_time ?? null,
     });
   }
 
@@ -36,18 +37,10 @@ export class DeviceRepository {
     });
   }
 
-  async getByUserId(doctor_id: string): Promise<DeviceResponse[]> {
+  async getByUserId(user_id: string): Promise<DeviceResponse[]> {
     return await this.deviceModel.findAll({
       where: {
-        doctor_id: doctor_id,
-      },
-    });
-  }
-
-  async getByDoctorId(doctor_id: string): Promise<DeviceResponse[]> {
-    return await this.deviceModel.findAll({
-      where: {
-        doctor_id: doctor_id,
+        user_id: user_id,
       },
     });
   }
@@ -63,12 +56,13 @@ export class DeviceRepository {
   async updateById(device: DeviceRequest, id: string) {
     return await this.deviceModel.update(
       {
-        doctor_id: device.doctor_id,
+        user_id: device.user_id,
         device_name: device.device_name,
         information: device.information,
         device_type_id: device.device_type_id,
         status_id: device.status_id,
-        start_date: device.start_date,
+        start_time: device.start_time,
+        end_time: device.end_time,
       },
       {
         where: {
@@ -96,7 +90,7 @@ export class DeviceRepository {
 
   async countDevicesPerMonth(): Promise<any[]> {
     const [result, metadata] = await this.deviceModel.sequelize.query(
-      "SELECT EXTRACT(MONTH FROM FROM_UNIXTIME(start_date)) AS month, COUNT(*) AS device_count FROM devices GROUP BY month ORDER BY month"
+      "SELECT EXTRACT(MONTH FROM FROM_UNIXTIME(createdAt)) AS month, COUNT(*) AS device_count FROM devices GROUP BY month ORDER BY month"
     );
     return result;
   }

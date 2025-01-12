@@ -25,8 +25,8 @@ Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 
 \begin{adjustwidth}{1.5em}{}
 \begin{itemize}
-  \item Device (Thiết bị): Bao gồm thiết bị phần cứng đo điện tim, có thể kết nối với ứng dụng di động của bệnh nhân thông qua Bluetooth 
-  \item Application (Ứng dụng): Bao gồm ứng dụng di động cho bệnh nhân, bác sĩ; website của quản trị viên, website của bác sĩ, website của bệnh nhân
+  \item Device (Thiết bị): Bao gồm thiết bị phần cứng đo điện tim, có thể kết nối với ứng dụng di động của bệnh nhân thông qua Bluetooth.
+  \item Application (Ứng dụng): Bao gồm ứng dụng di động và website cho bệnh nhân, bác sĩ, quản trị viên.
   \item Server (Máy chủ): Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu.
 \end{itemize}
 \end{adjustwidth}
@@ -40,7 +40,7 @@ trước khi trả kết quả về cho người dùng.\begin{adjustwidth}{1.5em
   \item User service: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin cá nhân
   \item Device service: Xử lý các tác vụ liên quan tới thiết bị như thêm, sửa, xoá thiết bị, cập nhật thông tin.
   \item Storage service: Xử lý các tác vụ liên quan tới lưu trữ dữ liệu của hệ thống.
-  \item Record service: Xử lý các tác vụ liên quan tới bản ghi như là thêm sửa xoá, xử lý dữ liệu file đo, vẽ đồ thị
+  \item Record service: Xử lý các tác vụ liên quan tới bản ghi như thêm, sửa, xoá, xử lý dữ liệu file đo.
   \item Message service: Xử lý các yêu cầu liên quan tới tin nhắn.
   \item Authen service: Xử lý các tác vụ liên quan tới bảo mật như: mã hoá và cung cấp token, kiểm tra token, phân quyền truy cập api, mã hoá các dữ liệu nhạy cảm trước khi lưu trữ.
   \item Statistic service: Xử lý các tác vụ liên quan tới thống kê như: thống kê người dùng, thiết bị, bản ghi.
@@ -104,8 +104,7 @@ Kết quả được trả về giao diện. Ở đây các services gồm có:
   \label{fmECG_architecture-Admin} %đặt tên cho ảnh
 \end{figure}
 Về cơ bản, website dành cho admin có cấu trúc tương tự như website dành cho bác sĩ và bệnh nhân.
-Admin sẽ có quyền quản lý toàn bộ thông tin người dùng, thiết bị, bản ghi. 
-Bên cạnh đó, admin có quyền thống kê dữ liệu từ các services thông qua Statistic service.
+Admin sẽ có quyền quản lý toàn bộ thông tin người dùng, thiết bị, bản ghi.
 
 \subsection{Thiết kế cơ sở dữ liệu}
 
@@ -152,25 +151,25 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
   \end{tabularx}
 \end{table}
 
-\paragraph{Chuẩn hoá bảng Token đăng nhập}
-\mbox{}
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Token đăng nhập}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID token, ID tài khoản, Token truy cập, Token làm mới \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi người dùng có một ID token riêng, có duy nhất ID tài khoản, token truy cập và token làm mới 
-    & \parbox[t]{\linewidth}{$\text{ID token} \rightarrow$ ID tài khoản, Token truy cập, Token làm mới} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID token đăng nhập}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Token  đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
+% \paragraph{Chuẩn hoá bảng Token đăng nhập}
+% \mbox{}
+% \begin{table}[H]
+%   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Token đăng nhập}
+%   \centering
+%   \begin{tabularx}{0.9\textwidth}{|X|X|}
+%     \hline
+%     \textbf{Danh sách thuộc tính} & ID token, ID tài khoản, Token truy cập, Token làm mới \\
+%     \hline
+%     \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
+%     \hline
+%     Mỗi người dùng có một ID token riêng, có duy nhất ID tài khoản, token truy cập và token làm mới 
+%     & \parbox[t]{\linewidth}{$\text{ID token} \rightarrow$ ID tài khoản, Token truy cập, Token làm mới} \\
+%     \hline
+%     \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID token đăng nhập}$} \\
+%     \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Token  đã ở 3NF}$} \\
+%     \hline
+%   \end{tabularx}
+% \end{table}
 
 \paragraph{Chuẩn hoá bảng Thiết bị}
 \mbox{}
@@ -179,15 +178,15 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
   \centering
   \begin{tabularx}{0.9\textwidth}{|X|X|}
     \hline
-    \textbf{Danh sách thuộc tính} & ID thiết bị, ID người dùng thiết bị, ID bác sĩ theo dõi, Tên thiết bị, 
-    Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng \\
+    \textbf{Danh sách thuộc tính} & ID thiết bị, ID người dùng thiết bị, Tên thiết bị, 
+    Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng, Ngày kết thúc sử dụng \\
     \hline
     \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
     \hline
-    Mỗi thiết bị khi được sử dụng sẽ có một ID thiết bị riêng, có duy nhất tên thiết bị, loại thiết bị, thông tin thiết bị.
-    ID người dùng thiết bị, ID bác sĩ theo dõi, trạng thái thiết bị, ngày bắt đầu sử dụng
-    & \parbox[t]{\linewidth}{$\text{ID thiết bị} \rightarrow$ ID người dùng thiết bị, ID bác sĩ theo dõi, Tên thiết bị, 
-    Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng} \\
+    Mỗi thiết bị khi được sử dụng sẽ có một ID thiết bị riêng, có duy nhất tên thiết bị, loại thiết bị, thông tin thiết bị,
+    ID người dùng thiết bị, trạng thái thiết bị, ngày bắt đầu sử dụng, ngày kết thúc sử dụng
+    & \parbox[t]{\linewidth}{$\text{ID thiết bị} \rightarrow$ ID người dùng thiết bị, Tên thiết bị, 
+    Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng, Ngày kết thúc sử dụng} \\
     \hline
     \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID thiết bị}$} \\
     \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
@@ -225,153 +224,18 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
   \centering
   \begin{tabularx}{0.9\textwidth}{|X|X|}
     \hline
-    \textbf{Danh sách thuộc tính} & ID bản ghi dữ liệu, ID người dùng, ID thiết bị, Loại bản ghi, 
+    \textbf{Danh sách thuộc tính} & ID bản ghi dữ liệu, ID người dùng, ID thiết bị,
     Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo \\
     \hline
     \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
     \hline
-    Mỗi bản ghi có một ID bản ghi dữ liệu riêng, có duy nhất ID người dùng, ID thiết bị, Loại bản ghi, 
+    Mỗi bản ghi có một ID bản ghi dữ liệu riêng, có duy nhất ID người dùng, ID thiết bị,
     Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo
-    & \parbox[t]{\linewidth}{$\text{ID bản ghi dữ liệu} \rightarrow$ ID người dùng, ID thiết bị, Loại bản ghi, 
+    & \parbox[t]{\linewidth}{$\text{ID bản ghi dữ liệu} \rightarrow$ ID người dùng, ID thiết bị,
     Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo} \\
     \hline
     \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID bản ghi dữ liệu}$} \\
     \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Bản ghi dữ liệu đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\paragraph{Chuẩn hoá bảng Thông tin hội thoại}
-\mbox{}
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thông tin hội thoại}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID hội thoại, Tên hội thoại, 
-    Loại hội thoại, Đường dẫn avatar hội thoại \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi hội thoại có một ID hội thoại riêng, có duy nhất tên hội thoại, 
-    loại hội thoại, đường dẫn avatar hội thoại
-    & \parbox[t]{\linewidth}{$\text{ID hội thoại} \rightarrow$ Tên hội thoại, 
-    Loại hội thoại, Đường dẫn avatar hội thoại} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID hội thoại}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thông tin hội thoại đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\paragraph{Chuẩn hoá bảng Thành viên tham gia hội thoại}
-\mbox{}
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thành viên tham gia hội thoại}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID, ID hội thoại, ID người dùng tham gia,
-    Trạng thái thông báo, Tác vụ, Trạng thái đã xem \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi hội thoại có nhiều ID người dùng tham gia, mỗi người dùng có duy nhất trạng thái thông báo,
-    tác vụ, trạng thái đã xem trong một hội thoại
-    & \parbox[t]{\linewidth}{$\text{ID} \rightarrow$ ID hội thoại, ID người dùng tham gia,
-    Trạng thái thông báo, Tác vụ, Trạng thái đã xem} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thành viên tham gia hội thoại đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\paragraph{Chuẩn hoá bảng Tin nhắn}
-\mbox{}
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tin nhắn}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID tin nhắn, ID hội thoại, ID người gửi, Các tệp đính kèm, 
-    Tin nhắn hệ thống, Ghim, Thời gian ghim tin nhắn, Các lượt thả cảm xúc \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi tin nhắn có một ID tin nhắn riêng, thuộc một hội thoại, có duy nhất ID người gửi, các tệp đính kèm,
-    tin nhắn hệ thống, ghim, thời gian ghim tin nhắn, các lượt thả cảm xúc
-    & \parbox[t]{\linewidth}{$\text{ID tin nhắn} \rightarrow$ ID hội thoại, ID người gửi, các tệp đính kèm,
-    tin nhắn hệ thống, ghim, thời gian ghim tin nhắn, các lượt thả cảm xúc} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tin nhắn}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tin nhắn đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\paragraph{Chuẩn hoá bảng Tệp đính kèm}
-\mbox{}
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tệp đính kèm}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID tệp đính kèm, ID tin nhắn, ID hội thoại, Đường dẫn nội
-    dung, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi tệp đính kèm có một ID tệp đính kèm riêng, thuộc một tin nhắn trong một hội thoại, có duy nhất đường dẫn nội
-    dung, tên tệp, kích thước tệp, đường dẫn thumbnail, loại đính kèm
-    & \parbox[t]{\linewidth}{$\text{ID tệp đính kèm} \rightarrow$ ID tin nhắn, ID hội thoại, Đường dẫn nội
-    dung, Tên tệp, Kích thước tệp, Đường dẫn thumbnail, Loại đính kèm} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tệp đính kèm}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tệp đính kèm đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\paragraph{Chuẩn hoá bảng Phân công bệnh nhân - bác sĩ}
-\mbox{}
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Phân công bệnh nhân - bác sĩ}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID phân công, ID bệnh nhân, ID bác sĩ, Ngày bắt đầu \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi phân công bệnh nhân - bác sĩ có một ID phân công riêng, có duy nhất ID bệnh nhân, ID bác sĩ, ngày bắt đầu.
-    Mỗi bệnh nhân thuộc một phân công duy nhất, còn mỗi bác sĩ có thể được giao nhiều phân công.
-    & \parbox[t]{\linewidth}{$\text{ID phân công} \rightarrow$ ID bệnh nhân, ID bác sĩ, Ngày bắt đầu} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID phân công}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Phân công bệnh nhân - bác sĩ đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\paragraph{Chuẩn hoá bảng Tài khoản phê duyệt}
-\mbox{}
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tài khoản phê duyệt}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID tài khoản phê duyệt, Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi tài khoản chờ phê duyệt có một ID riêng, có duy nhất Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính,
-     Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng 
-    & \parbox[t]{\linewidth}{$\text{ID tài khoản phê duyệt} \rightarrow$ Email, Mật khẩu, Tên người dùng, Ngày sinh, Giới tính,
-    Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tài khoản phê duyệt}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Người dùng đã ở 3NF}$} \\
     \hline
   \end{tabularx}
 \end{table}
@@ -431,115 +295,6 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 \end{table}
 
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng register}
-  \centering
-  \begin{tabularx}{\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    id & STRING & ID tài khoản đăng ký \\
-    \hline
-    email & STRING & Địa chỉ email của tài khoản đăng ký. \\
-    \hline
-    password & STRING & Mật khẩu của tài khoản đâng ký. \\
-    \hline
-    username & STRING & Họ và tên của tài khoản đăng ký. \\
-    \hline
-    gender & INT & Giới tính của tài khoản đăng ký. \\
-    \hline
-    birth & DATE & Ngày sinh của tài khoản đăng ký. \\
-    \hline
-    phone\_number & STRING & Số điện thoại của tài khoản đăng ký. \\
-    \hline
-    image & STRING & Ảnh đại diện của tài khoản đăng ký. \\
-    \hline
-    status & INTEGER & Trạng thái của tài khoản đăng ký (0 - đang chờ xử lý, 1 - được admin chấp nhận, 2 - bị admin từ chối). \\
-    \hline
-    information & STRING & Thông tin thêm về người dùng. \\
-    \hline
-    role & INTEGER & Chức vụ của tài khoản đăng ký (0 - bệnh nhân, 1 - bác sĩ, 2 - quản trị viên).\\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng record}
-  \centering
-  \begin{tabularx}{\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    id & STRING & ID bản ghi record  \\
-    \hline
-    user\_id & STRING & ID bệnh nhân  \\
-    \hline
-    device\_id & STRING & ID thiết bị theo dõi  \\
-    \hline
-    record\_type & INTEGER & Loại bản ghi (0 - PPG, 1 - PCG, 2 - HeartRate, 3 - ECG). \\
-    \hline
-    data\_rec\_url & STRING & Đường dẫn lưu trữ bản ghi. \\
-    \hline
-    start\_time & DATE & Thời gian bắt đầu phiên đo. \\
-    \hline
-    end\_time & DATE & Thời gian kết thúc phiên đo. \\
-    \hline
-    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu. \\
-    \hline
-    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu. \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng patient\_doctor\_assignment}
-  \centering
-  \begin{tabularx}{\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    id & STRING & ID phân công bác sĩ - bệnh nhân  \\
-    \hline
-    patient\_id & STRING & ID bệnh nhân  \\
-    \hline
-    doctor\_id & INTEGER & ID bác sĩ  \\
-    \hline
-    start\_date & DATE & Ngày bắt đầu phân công. \\
-    \hline
-    end\_date & DATE & Ngày kết thúc phân công. \\
-    \hline
-    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu. \\
-    \hline
-    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu. \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng token}
-  \centering
-  \begin{tabularx}{\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    id & STRING & ID của mã đại diện xác thực  \\
-    \hline
-    account\_id & STRING & ID tài khoản  \\
-    \hline
-    access\_token & STRING & Mã đại diện cho người dùng thao tác với hệ thống. \\
-    \hline
-    refresh\_token & STRING & Mã đại diện cho người dùng thao tác với hệ thống sau khi \texttt{access\_token} hết hạn. \\
-    \hline
-    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu.. \\
-    \hline
-    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu.. \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-
-
-
-\begin{table}[H]
   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng device}
   \centering
   \begin{tabularx}{\textwidth}{|c|c|X|}
@@ -548,17 +303,17 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
     \hline
     id & STRING & ID thiết bị  \\
     \hline
-    user\_id & STRING & ID bệnh nhân  \\
-    \hline
-    doctor\_id & STRING & ID bác sĩ  \\
+    user\_id & STRING & ID người dùng  \\
     \hline
     device\_name & STRING & Tên thiết bị. \\
     \hline
     information & STRING & Thông tin thêm về thiết bị. \\
     \hline
-    device\_type & INTEGER & Loại thiết bị (1 - thiết bị đo điện tim, 2 - thiết bị đo nhịp tim, âm thanh tim). \\
+    device\_type\_id & INTEGER & Loại thiết bị (1 - thiết bị đo điện tim, 2 - thiết bị đo nhịp tim, âm thanh tim). \\
     \hline
-    start\_date & DATE & Thời gian lúc bắt đầu sử dụng thiết bị. \\
+    start\_time & DATE & Thời gian lúc bắt đầu sử dụng thiết bị. \\
+    \hline
+    end\_time & DATE & Thời gian lúc kết thúc sử dụng thiết bị. \\
     \hline
     status & INTEGER & Trạng thái của thiết bị (0 - đang được sử dụng, 1 - đang không được sử dụng). \\
     \hline
@@ -596,123 +351,14 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
   \end{tabularx}
 \end{table}
 
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng conversation}
-  \centering
-  \begin{tabularx}{\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    conversation\_id & STRING & ID cuộc hội thoại  \\
-    \hline
-    name & STRING & Tên cuộc hội thoại \\
-    \hline
-    type & INTEGER & Loại cuộc hội thoại (0 - hội thoại 2 người, 1 - hội thoại nhóm, 2 - chatbot) \\
-    \hline
-    avatar & STRING & Đường dẫn ảnh đại diện của cuộc hội thoại  \\
-    \hline
-    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu \\
-    \hline
-    updated\_at & DATE & Thời gian lúc thay đôi dữ liệu trong cơ sở dữ liệu \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng message}
-  \centering
-  \begin{tabularx}{\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    message\_id & STRING & ID tin nhắn  \\
-    \hline
-    conversation\_id & STRING & ID hội thoại  \\
-    \hline
-    sender\_id & STRING & ID người gửi tin nhắn  \\
-    \hline
-    attachments & LIST <Map> & Danh sách tệp tin đính kèm khi gửi tin nhắn\\
-    \hline
-    system\_message & BOOLEAN & Tin nhắn trả về từ hệ thống\\
-    \hline
-    pin & BOOLEAN & Đánh dấu tin nhắn có được ghim không\\
-    \hline
-    pin\_time & DATE & Thời gian ghim tin nhắn\\
-    \hline
-    reactions & LIST <Map> & Danh sách các phản ứng lại với tin nhắn này.\\
-    \hline
-    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu \\
-    \hline
-    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng conversation\_member}
-  \centering
-  \begin{tabularx}{\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    id & STRING & ID của thành viên hội thoại \\
-    \hline
-    conversation\_id & STRING & ID hội thoại \\
-    \hline
-    user\_id & STRING & ID người dùng  \\
-    \hline
-    status\_notify & INTEGER & Trạng thái thông báo tin nhắn (0 - có thông báo tin nhắn, 1 - không nhận thông báo tin nhắn).\\
-    \hline
-    seen & BOOLEAN & Tin nhắn đã được xem chưa.\\
-    \hline
-    role & INTEGER & Vai trò của người dùng trong hội thoại (tương ứng trong bảng \texttt{user}).\\
-    \hline
-    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu \\
-    \hline
-    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu \\
-    \hline
-  \end{tabularx}
-\end{table}
-
-
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng conversation\_attachment}
-  \centering
-  \begin{tabularx}{\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    id & STRING & ID tệp đính kèm tin nhắn  \\
-    \hline
-    conversation\_id & STRING & ID cuộc hội thoại  \\
-    \hline
-    message\_id & STRING & ID tin nhắn  \\
-    \hline
-    content\_url & STRING & Đường dẫn lưu trữ tệp đính kèm\\
-    \hline
-    file\_name & STRING & Tên của tệp tin.\\
-    \hline
-    size & INTEGER & Dung lượng của tệp tin.\\
-    \hline
-    thumbnail\_url & STRING & Đoạn mã chứa hình ảnh tĩnh của tệp tin.\\
-    \hline
-    type & INTEGER & Loại của tệp tin (0 - ảnh, 1 - video, 2 - tệp). \\
-    \hline
-    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu \\
-    \hline
-    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu \\
-    \hline
-  \end{tabularx}
-\end{table}
-
 \subsubsection{Sơ đồ ERD}
 
-% \begin{figure}[H]
-%   \centering
-%   \includegraphics[width=15cm,height=15cm]{Images/system/fmECG_database.png}
-%   \caption[Sơ đồ ERD]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ ERD}
-%   \label{fmECG_architecture-Database} %đặt tên cho ảnh
-% \end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm,height=15cm]{Images/system/fmECG_database.png}
+  \caption[Sơ đồ ERD]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ ERD}
+  \label{fmECG_architecture-Database} 
+\end{figure}
 
 \subsection{Thiết kế giao diện}
 
