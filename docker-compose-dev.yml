@@ -1,113 +1,95 @@
 
 services:
-  node-app:
-    container_name: node-fmecg
+  main-server:
+    container_name: main-server
     build: 
       dockerfile: Dockerfile
-      context: ./server-web
-    profiles: ["backend"]
-    volumes:
-      - ./server-web/:/server/
-      - /server/node_modules
-    depends_on:
-      - database
-    env_file: ./server-web/.env.docker
-    networks:
-      - network-fmecg
-  
-  react-app:
-    container_name: react-fmecg
-    build: 
-      dockerfile: Dockerfile.dev
-      context: ./frontend_web
-    profiles: ["frontend"]
-    volumes:
-      - ./frontend_web:/web/
-      - /web/node_modules
-    depends_on:
-      - database
-    networks:
-      - network-fmecg
-
-  bin-login:
-    container_name: bin-fmecg
-    build:
-      dockerfile: Dockerfile
-      context: ./frontend_web/bin
-    profiles: ["frontend"]
-    env_file: ./frontend_web/bin/.env.docker
-    volumes:
-      - ./frontend_web/bin:/bin_login/
-      - /bin_login/node_modules
-    depends_on:
-      - database
-    networks:
-      - network-fmecg
-  
-  proxy:
-    container_name: proxy-fmecg
-    build:
-      dockerfile: Dockerfile
-      context: ./proxy
-    profiles: ["backend", "frontend"]
-    restart: unless-stopped
-    depends_on:
-      - node-app
-      # - react-app
-      - chat-app
-      # - bin-login
+      context: ./server
     ports:
-      - 80:80
+      - 3000:3000
+    depends_on:
+      - identity-database
+      - main-database
+      - chat-database
+    env_file: ./server/.env.docker
     volumes:
-      - ./proxy/default.conf:/etc/nginx/conf.d/default.conf
+      - ./server/:/server/
+      - /server/node_modules
+      - /server/dist
     networks:
-      - network-fmecg
+      -  fmecg-network
 
-  database:
+  identity:
+    container_name: identity-service
+    build: 
+      dockerfile: Dockerfile
+      context: ./identity_service
+    ports:
+      - 3003:3003
+    volumes:
+      - ./identity_service/:/identity/
+      - /identity/node_modules
+      - /identity/dist
+    depends_on:
+      - identity-database
+    env_file: ./identity_service/.env.docker
+    networks:
+      - fmecg-network
+  
+  # ui-web:
+  #   container_name: ui-web
+  #   build: 
+  #     dockerfile: Dockerfile
+  #     context: ./ui_web
+  #   env_file: ./ui_web/.env.docker
+  #   ports:
+  #     - 3002:3002
+  #   volumes:
+  #     - ./ui_web/:/ui_web/
+  #     - /ui_web/node_modules
+  #     - /ui_web/bin/node_modules
+  #     - /ui_web/www
+  #   depends_on:
+  #     - identity-database
+  #     - main-database
+  #   networks:
+  #     - fmecg-network
+
+  identity-database:
     image: mysql:8.0
-    container_name: database-fmecg
+    container_name: identity-database
     restart: unless-stopped
-    profiles: ["backend"]
     ports:
       - 3306:3306
-    expose:
-      - 3306
-    env_file: ./server-web/.env.docker
+    env_file: ./identity_service/.env.docker
     volumes:
-      - ./docker/data/mysql:/var/lib/mysql
+      - ./docker/data/identity_mysql:/var/lib/mysql
     networks:
-      - network-fmecg
+      - fmecg-network
   
-  chat-app:
-    container_name: chat-fmecg
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./server_chat
-    profiles: ["backend"]
-    # command: iex -S mix phx.server
+  main-database:
+    image: mysql:8.0
+    container_name: main-database
     restart: unless-stopped
-    depends_on:
-      - database-chat
-    env_file: ./server_chat/.env.docker
-    volumes:
-      - ./server_chat/:/app/
-    networks:
-      - network-fmecg
-  
-  database-chat:
-    image: postgres:12.19
-    container_name: database-chat-fmecg
-    profiles: ["backend"]
     ports:
-      - 5432:5432
-    expose:
-      - 5432
-    restart: unless-stopped
-    env_file: ./server_chat/.env.docker
+      - 3307:3306
+    env_file: ./server/.env.docker
     volumes:
-      - ./docker/data/postgresql:/var/lib/postgresql/data
+      - ./docker/data/main_mysql:/var/lib/mysql
     networks:
-      - network-fmecg
+      - fmecg-network
+  
+  chat-database:
+    image: mongodb/mongodb-community-server:6.0.16-ubi8
+    container_name: chat-database
+    # ports:
+    #   - 27017:27017
+    env_file: ./server/.env.docker
+    volumes:
+      - ./docker/data/mongodb:/data/db
+    networks:
+      - fmecg-network
+
 networks:
-  network-fmecg:
+  fmecg-network:
     driver: bridge

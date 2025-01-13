@@ -6,6 +6,7 @@ import {
   EditOutlined,
   DeleteOutlined,
   MobileOutlined,
+  TagOutlined,
 } from "@ant-design/icons";
 import "./dataTable.scss";
 import { ExclamationCircleFilled } from "@ant-design/icons";
@@ -25,6 +26,8 @@ interface Props {
   addButton?: boolean;
   addFunction?: () => void;
   addDeviceButton?: boolean;
+  assignButton?: boolean;
+  assginFunction?: (id: any) => void;
   editButton: boolean;
   editFunction?: (id: any) => void;
   deleteButton: boolean;
@@ -43,6 +46,7 @@ const DataTable = (props: Props) => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const [tableData, setTableData] = useState<any[]>([]);
   const [editButton, setEditButtton] = useState<boolean>(false);
+  const [assginButton, setAssignButton] = useState<boolean>(false);
   const [deleteButton, setDeleteButton] = useState<boolean>(false);
   const [chartButton, setChartButton] = useState<boolean>(false);
   const [selectedState, setSelectedRowKeys] = useState<any[]>([]);
@@ -56,17 +60,18 @@ const DataTable = (props: Props) => {
     }
   }, [props.data]);
 
-    const rowSelection = {
-      selectedRowKeys: selectedState,
-      onChange: (selectedRowKeys: any[]) => {
-        setSelectedRowKeys(selectedRowKeys);
-        if (props.editButton) setEditButtton(selectedRowKeys.length === 1);
-        if (props.deleteButton) setDeleteButton(selectedRowKeys.length === 1);
-        if (props.chartButton) setChartButton(selectedRowKeys.length === 1);
-        props.updateSelectedData?.(selectedRowKeys);
-      },
-    };
-  
+  const rowSelection = {
+    selectedRowKeys: selectedState,
+    onChange: (selectedRowKeys: any[]) => {
+      setSelectedRowKeys(selectedRowKeys);
+      if (props.editButton) setEditButtton(selectedRowKeys.length === 1);
+      if (props.assignButton) setAssignButton(selectedRowKeys.length === 1);
+      if (props.deleteButton) setDeleteButton(selectedRowKeys.length === 1);
+      if (props.chartButton) setChartButton(selectedRowKeys.length === 1);
+      props.updateSelectedData?.(selectedRowKeys);
+    },
+  };
+
   const handleSearch = (
     selectedKeys: string[],
     confirm: () => void,
@@ -195,6 +200,15 @@ const DataTable = (props: Props) => {
             onClick={() => props.editFunction?.(selectedState[0])}
           >
             Sửa
+          </Button>
+        )}
+        {props.assignButton &&  (
+          <Button
+            icon={<TagOutlined />}
+            disabled={!assginButton}
+            onClick={() => props.assginFunction?.(selectedState[0])}
+          >
+            Phân công thiết bị
           </Button>
         )}
         {props.deleteButton && (

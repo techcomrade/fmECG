@@ -31,3 +31,15 @@ fmECG Project is a biomedical system for measuring electrogram data using Flutte
 - npm run db:reset
 - npm run db:migrate
 - npm run db:seed
+
+## Run code with git-crypt
+Project is using git-crypt to encrypt all credentials, contributors need to contact to repo's owner to get decryption key.
+
+Install `git-crypt`: [MacOS, Ubuntu](https://github.com/AGWA/git-crypt/blob/master/INSTALL.md), [Windows](https://github.com/oholovko/git-crypt-windows?tab=readme-ov-file#git-crypt-for-windows)
+
+After saving key somewhere in your directory, command:
+```bash
+git-crypt unlock <path_to_key>
+```
+If all files are decrypted, done! You can run code normally.
+
