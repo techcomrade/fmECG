@@ -78,18 +78,18 @@ export class RevenueRepository {
         });
     }
 
-  async getRevenueByMonth(year: number, month: number): Promise<RevenueModel[]> {
-    const startDate = new Date(year, month - 1, 1);
-      const endDate = new Date(year, month, 0, 23, 59, 59);
+  // async getRevenueByMonth(year: number, month: number): Promise<RevenueModel[]> {
+  //   const startDate = new Date(year, month - 1, 1);
+  //     const endDate = new Date(year, month, 0, 23, 59, 59);
 
-      return this.revenueModel.findAll({
-        where: {
-          createdAt: {
-            [Op.between]: [startDate, endDate],
-          },
-        },
-      });
-  }
+  //     return this.revenueModel.findAll({
+  //       where: {
+  //         createdAt: {
+  //           [Op.between]: [startDate, endDate],
+  //         },
+  //       },
+  //     });
+  // }
 
   async getRevenueByYear(year: number): Promise<RevenueModel[]> {
     return await this.revenueModel.findAll({
@@ -100,15 +100,49 @@ export class RevenueRepository {
     });
 }
 
-    async getTotalRevenueByYear(year: number): Promise<{ totalAmount: number }> {
-        const result = await this.revenueModel.findAll({
-            attributes: [[this.sequelize.fn('SUM', this.sequelize.col('fee')), 'totalAmount']],
-            where: this.sequelize.where(
-                this.sequelize.fn('YEAR', this.sequelize.col('createdAt')),
-                year
-            )
-        });
-
-       return result.length > 0 ? { totalAmount: Number(result[0].get('totalAmount')) || 0 } : { totalAmount: 0 };
-    }
+async getRevenueByMonth(month: number, year: number): Promise<RevenueModel[]> {
+  return await this.revenueModel.findAll({
+      where: this.sequelize.and(
+          this.sequelize.where(
+              this.sequelize.fn('YEAR', this.sequelize.col('createdAt')),
+              year
+          ),
+          this.sequelize.where(
+             this.sequelize.fn('MONTH', this.sequelize.col('createdAt')),
+             month
+          )
+      )
+  });
 }
+async getRevenueByDay(day: number, month: number, year: number): Promise<RevenueModel[]> {
+  return await this.revenueModel.findAll({
+      where: this.sequelize.and(
+        this.sequelize.where(
+          this.sequelize.fn('YEAR', this.sequelize.col('createdAt')),
+          year
+        ),
+        this.sequelize.where(
+          this.sequelize.fn('MONTH', this.sequelize.col('createdAt')),
+          month
+        ),
+        this.sequelize.where(
+          this.sequelize.fn('DAY', this.sequelize.col('createdAt')),
+          day
+        )
+      )
+  });
+}
+}
+
+//     async getTotalRevenueByYear(year: number): Promise<{ totalAmount: number }> {
+//         const result = await this.revenueModel.findAll({
+//             attributes: [[this.sequelize.fn('SUM', this.sequelize.col('fee')), 'totalAmount']],
+//             where: this.sequelize.where(
+//                 this.sequelize.fn('YEAR', this.sequelize.col('createdAt')),
+//                 year
+//             )
+//         });
+
+//        return result.length > 0 ? { totalAmount: Number(result[0].get('totalAmount')) || 0 } : { totalAmount: 0 };
+//     }
+// }

@@ -6,7 +6,6 @@ import {
   LogoutOutlined,
   SettingOutlined,
   BellOutlined,
-  MessageOutlined,
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import avatar from "../assets/avatar.png";
@@ -15,6 +14,7 @@ import { Context } from "../utils/context";
 import "./header.scss";
 import { FacebookFilled, TwitterSquareFilled, InstagramFilled } from '@ant-design/icons';
 import { ClockCircleOutlined } from "@ant-design/icons";
+
 const UserMenu = ({ logOut }: { logOut: () => void }) => {
   return [
     {
@@ -59,11 +59,7 @@ const NotificationIcon = () => {
         </Badge>
     </Tooltip>
 }
-const MessageIcon = () => {
-    return <Tooltip title="Messages">
-        <MessageOutlined className="header-icon" />
-    </Tooltip>
-}
+
 const SocialIcons = () => {
   return (
     <div className="header-social-icons">
@@ -144,7 +140,6 @@ export const HeaderBar = () => {
           <div className="header-controls">
             <Clock />
             <NotificationIcon />
-            <MessageIcon />
             <SocialIcons />
             <Dropdown
               menu={{ items: UserMenu({ logOut }) }}

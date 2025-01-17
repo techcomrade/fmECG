@@ -70,14 +70,54 @@ export class RevenueController {
   async getRevenueStatistic(@Param("year") year: number, @Res() res: Response) {
     console.log("[P]:::Get revenue statistic");
     try {
-      const revenueStatistic = await this.RevenueService.getStaticByYearDate(
-        2025
-      );
+      const revenueStatistic = await this.RevenueService.getStaticByYearDate(year);
       return res.json(revenueStatistic);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException("Error when get all revenue");
     }
+  }
+
+  @Get("/statistic/:year/:month")
+  @ApiResponse({
+      status: 200,
+      type: Number,
+      description: "Successful",
+  })
+  async getRevenueStatisticByMonth(
+      @Param("year") year: number,
+      @Param("month") month: number,
+      @Res() res: Response
+  ) {
+      console.log("[P]:::Get revenue statistic by month");
+      try {
+          const revenueStatistic = await this.RevenueService.getStaticByMonthDate(month, year);
+          return res.json(revenueStatistic);
+      } catch (error) {
+          console.log(error);
+          throw new InternalServerErrorException("Error when get revenue by month");
+      }
+  }
+  @Get("/statistic/:year/:month/:day")
+  @ApiResponse({
+      status: 200,
+      type: Number,
+      description: "Successful",
+  })
+  async getRevenueStatisticByDay(
+      @Param("year") year: number,
+      @Param("month") month: number,
+      @Param("day") day: number,
+      @Res() res: Response
+  ) {
+      console.log("[P]:::Get revenue statistic by day");
+      try {
+          const revenueStatistic = await this.RevenueService.getStaticByDayDate(day, month, year);
+          return res.json(revenueStatistic);
+      } catch (error) {
+          console.log(error);
+          throw new InternalServerErrorException("Error when get revenue by day");
+      }
   }
 
   @Post("")

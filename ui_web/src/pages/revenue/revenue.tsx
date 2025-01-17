@@ -9,7 +9,9 @@ import {
     resetLoadDeleteDataStatus,
     resetLoadUpdateDataStatus,
     getRevenueStatistic,
-    getStaticByYear
+    getStaticByYear,
+    getStaticByMonth,
+    getStaticByDay,
 } from "../../redux/reducer/revenueSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { convertTimeToDateTime, checkDateTypeKey } from "../../utils/dateUtils";
@@ -124,6 +126,16 @@ export const Revenue: React.FC = () => {
             setTotalRevenueByYear(dataState.staticByYear);
         }
     },[dataState.loadStaticByYear])
+     useEffect(()=>{
+        if(dataState.loadStaticByMonth === ApiLoadingStatus.Success){
+            setTotalRevenueByMonth(dataState.staticByMonth);
+        }
+    },[dataState.loadStaticByMonth])
+      useEffect(()=>{
+        if(dataState.loadStaticByDay === ApiLoadingStatus.Success){
+            setTotalRevenueByDate(dataState.staticByDay);
+        }
+    },[dataState.loadStaticByDay])
     const handleData = (data: any, type: string) => {
         let revenueData = {} as any;
 
@@ -156,23 +168,19 @@ export const Revenue: React.FC = () => {
           dispatch(getAllRevenue());
     }, [dispatch]);
 
-     useEffect(() => {
+      useEffect(() => {
         if(filterData.year){
-             dispatch(getRevenueStatistic(filterData.year))
+             dispatch(getStaticByYear(filterData.year))
          }
-    }, [filterData.year, dispatch])
+         if(filterData.month) {
+            dispatch(getStaticByMonth({ month: filterData.month.month() + 1, year: filterData.month.year()}))
+         }
+        if(filterData.date) {
+             dispatch(getStaticByDay({ day: filterData.date.date(), month: filterData.date.month() + 1, year: filterData.date.year() }))
+         }
+    }, [filterData, dispatch])
     
-     useEffect(() => {
-          if(filterData.month){
-            dispatch(getRevenueStatistic(filterData.month.year()))
-        }
-    }, [filterData.month, dispatch])
-     useEffect(() => {
-        if(filterData.date){
-            dispatch(getRevenueStatistic(filterData.date.year()))
-        }
-    }, [filterData.date, dispatch])
-
+    
     // Get data
     React.useEffect(() => {
          if (dataState.loadDataStatus === ApiLoadingStatus.Success) {
@@ -181,24 +189,13 @@ export const Revenue: React.FC = () => {
             );
             setDataTable(rawData);
         }
-         if (dataState.statisticData?.total_revenue) {
-             if(filterData.year) {
-                   setTotalRevenueByYear(dataState.statisticData?.total_revenue)
-             }
-             if(filterData.month) {
-                 setTotalRevenueByMonth(dataState.statisticData?.total_revenue)
-             }
-            if(filterData.date) {
-                 setTotalRevenueByDate(dataState.statisticData?.total_revenue)
-             }
-        }
         if (
             dataState.loadDataStatus === ApiLoadingStatus.Failed &&
             dataState.errorMessage
         ) {
             showNotiError(dataState.errorMessage);
         }
-    }, [dataState.loadDataStatus, dataState.statisticData]);
+    }, [dataState.loadDataStatus]);
 
 
     React.useEffect(() => {
@@ -262,15 +259,14 @@ export const Revenue: React.FC = () => {
 
 
    const handleSaveYearFilter = () => {
-        dispatch(getStaticByYear(totalRevenueByYear))
-       
+        setFilterData((prev) => ({...prev, year: statisticYear, month: null, date: null}))
     }
 
     const handleSaveDateFilter = () => {
-         setFilterData((prev) => ({ ...prev, date: selectedDate }))
+         setFilterData((prev) => ({ ...prev, date: selectedDate, month: null, year: new Date().getFullYear()  }))
     }
     const handleSaveMonthFilter = () => {
-         setFilterData((prev) => ({ ...prev, month: selectedMonth }))
+         setFilterData((prev) => ({ ...prev, month: selectedMonth, date: null, year: new Date().getFullYear()  }))
     }
     return (
         <div className={styles.revenueContainer}>

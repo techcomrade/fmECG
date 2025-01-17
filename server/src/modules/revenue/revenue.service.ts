@@ -62,87 +62,100 @@ export class RevenueService {
     const revenueArrays = await this.revenueRepository.getRevenueByYear(year);
     return revenueArrays.reduce((sum,i)=> sum + parseFloat(i.fee.toString()), 0);
   }
-
-  async getTotalRevenueByMonth(year: number, month: number): Promise<number> {
-    const revenueByMonth = await this.revenueRepository.getRevenueByMonth(
-      year,
-      month
-    );
-    return revenueByMonth.reduce((sum, record) => sum + record.fee, 0);
-  }
-
-  async getTotalRevenueByYear(year: number): Promise<any> {
-    return this.revenueRepository.getTotalRevenueByYear(year);
-  }
-
-  async getRevenueStatistic(year: number): Promise<RevenueStatisticResponse> {
-    const revenueByYear = await this.revenueRepository.getRevenueByYear(year);
-    const totalRevenue = await this.getTotalRevenueByYear(year);
-    const totalRevenueByMonth = await this.getTotalRevenueByMonth(
-      year,
-      new Date().getMonth() + 1
-    );
-    const totalRevenueByDate = await this.getTotalRevenueByDate(
-      new Date(year, new Date().getMonth(), new Date().getDate()),
-      new Date(year, new Date().getMonth(), new Date().getDate())
-    );
-
-    const revenueByMonth = this.calculateMonthlyRevenue(revenueByYear, year);
-    const revenueByDate = await this.getRevenueByDateOfYear(year);
-
-    return {
-      totalRevenue: totalRevenue[0]?.totalAmount,
-      totalRevenueByMonth: totalRevenueByMonth,
-      totalRevenueByDate: totalRevenueByDate,
-      revenueByYear: [{ year: year, revenue: totalRevenue[0]?.totalAmount }],
-      revenueByMonth: revenueByMonth,
-      revenueByDate: revenueByDate,
-    };
-  }
-
-  private calculateMonthlyRevenue(
-    revenues: RevenueResponse[],
-    year: number
-  ): { month: number; revenue: number }[] {
-    const monthlyRevenueMap = new Map<number, number>();
-
-    for (const revenue of revenues) {
-      const month = revenue.createdAt.getMonth() + 1;
-      if (monthlyRevenueMap.has(month)) {
-        monthlyRevenueMap.set(
-          month,
-          (monthlyRevenueMap.get(month) || 0) + revenue.fee
-        );
-      } else {
-        monthlyRevenueMap.set(month, revenue.fee);
-      }
-    }
-
-    const monthlyRevenue: { month: number; revenue: number }[] = [];
-    for (const [month, revenue] of monthlyRevenueMap) {
-      monthlyRevenue.push({ month, revenue });
-    }
-
-    return monthlyRevenue;
-  }
-
-  private async getRevenueByDateOfYear(
-    year: number
-  ): Promise<{ date: string; revenue: number }[]> {
-    const startDate = new Date(year, 0, 1);
-    const endDate = new Date(year, 11, 31);
-
-    const revenueByDate = await this.revenueRepository.getRevenueByDate(
-      startDate,
-      endDate
-    );
-    const result = revenueByDate.map((item) => {
-      const date = item.createdAt.toISOString().split("T")[0];
-      return {
-        date: date,
-        revenue: item.fee,
-      };
-    });
-    return result;
-  }
+  async getStaticByMonthDate(month: number, year: number): Promise<number> {
+    const revenueArrays = await this.revenueRepository.getRevenueByMonth(month, year);
+    return revenueArrays.reduce((sum, i) => sum + parseFloat(i.fee.toString()), 0);
 }
+
+async getStaticByDayDate(day: number, month: number, year: number): Promise<number> {
+  const revenueArrays = await this.revenueRepository.getRevenueByDay(day, month, year);
+  return revenueArrays.reduce((sum, i) => sum + parseFloat(i.fee.toString()), 0);
+}
+}
+
+
+
+
+  // async getTotalRevenueByMonth(year: number, month: number): Promise<number> {
+  //   const revenueByMonth = await this.revenueRepository.getRevenueByMonth(
+  //     year,
+  //     month
+  //   );
+  //   return revenueByMonth.reduce((sum, record) => sum + record.fee, 0);
+  // }
+
+  // async getTotalRevenueByYear(year: number): Promise<any> {
+  //   return this.revenueRepository.getTotalRevenueByYear(year);
+  // }
+
+  // async getRevenueStatistic(year: number): Promise<RevenueStatisticResponse> {
+  //   const revenueByYear = await this.revenueRepository.getRevenueByYear(year);
+  //   const totalRevenue = await this.getTotalRevenueByYear(year);
+  //   const totalRevenueByMonth = await this.getTotalRevenueByMonth(
+  //     year,
+  //     new Date().getMonth() + 1
+  //   );
+  //   const totalRevenueByDate = await this.getTotalRevenueByDate(
+  //     new Date(year, new Date().getMonth(), new Date().getDate()),
+  //     new Date(year, new Date().getMonth(), new Date().getDate())
+  //   );
+
+  //   const revenueByMonth = this.calculateMonthlyRevenue(revenueByYear, year);
+  //   const revenueByDate = await this.getRevenueByDateOfYear(year);
+
+  //   return {
+  //     totalRevenue: totalRevenue[0]?.totalAmount,
+  //     totalRevenueByMonth: totalRevenueByMonth,
+  //     totalRevenueByDate: totalRevenueByDate,
+  //     revenueByYear: [{ year: year, revenue: totalRevenue[0]?.totalAmount }],
+  //     revenueByMonth: revenueByMonth,
+  //     revenueByDate: revenueByDate,
+  //   };
+  // }
+
+  // private calculateMonthlyRevenue(
+  //   revenues: RevenueResponse[],
+  //   year: number
+  // ): { month: number; revenue: number }[] {
+  //   const monthlyRevenueMap = new Map<number, number>();
+
+  //   for (const revenue of revenues) {
+  //     const month = revenue.createdAt.getMonth() + 1;
+  //     if (monthlyRevenueMap.has(month)) {
+  //       monthlyRevenueMap.set(
+  //         month,
+  //         (monthlyRevenueMap.get(month) || 0) + revenue.fee
+  //       );
+  //     } else {
+  //       monthlyRevenueMap.set(month, revenue.fee);
+  //     }
+  //   }
+
+//     const monthlyRevenue: { month: number; revenue: number }[] = [];
+//     for (const [month, revenue] of monthlyRevenueMap) {
+//       monthlyRevenue.push({ month, revenue });
+//     }
+
+//     return monthlyRevenue;
+//   }
+
+//   private async getRevenueByDateOfYear(
+//     year: number
+//   ): Promise<{ date: string; revenue: number }[]> {
+//     const startDate = new Date(year, 0, 1);
+//     const endDate = new Date(year, 11, 31);
+
+//     const revenueByDate = await this.revenueRepository.getRevenueByDate(
+//       startDate,
+//       endDate
+//     );
+//     const result = revenueByDate.map((item) => {
+//       const date = item.createdAt.toISOString().split("T")[0];
+//       return {
+//         date: date,
+//         revenue: item.fee,
+//       };
+//     });
+//     return result;
+//   }
+// }

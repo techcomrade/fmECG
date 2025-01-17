@@ -46,13 +46,13 @@ export const adminRouterMappingGroup: { [key: string]: IRouteItem } = {
     component: Device,
     icon: DesktopOutlined,
   },
-  Record: {
-    key: "/record",
-    url: "/record",
-    label: "Thông tin bản ghi",
-    component: Record,
-    icon: LineChartOutlined,
-  },
+  // Record: {
+  //   key: "/record",
+  //   url: "/record",
+  //   label: "Thông tin bệnh án",
+  //   component: Record,
+  //   icon: LineChartOutlined,
+  // },
   Schedule: {
     key: "/schedule",
     url: "/schedule",
@@ -70,7 +70,7 @@ export const adminRouterMappingGroup: { [key: string]: IRouteItem } = {
   Chat: {
     key: "/chat",
     url: "/chat",
-    label: "Tin nhắn",
+    label: "Tư vấn-Tin nhắn",
     component: ChatMes,
     icon: WechatWorkOutlined
   }
@@ -91,13 +91,13 @@ export const doctorRouterMappingGroup: { [key: string]: IRouteItem } = {
     component: Device,
     icon: DesktopOutlined,
   },
-  Record: {
-    key: "/record",
-    url: "/record",
-    label: "Thông tin bản ghi",
-    component: Record,
-    icon: LineChartOutlined,
-  },
+  // Record: {
+  //   key: "/record",
+  //   url: "/record",
+  //   label: "Thông tin bệnh án",
+  //   component: Record,
+  //   icon: LineChartOutlined,
+  // },
   Schedule: {
     key: "/schedule",
     url: "/schedule",
@@ -115,7 +115,7 @@ export const doctorRouterMappingGroup: { [key: string]: IRouteItem } = {
   Chat: {
     key: "/chat",
     url: "/chat",
-    label: "Tin nhắn",
+    label: "Tư vấn-Tin nhắn",
     component: ChatMes,
     icon: WechatWorkOutlined
   }
@@ -129,13 +129,13 @@ export const patientRouterMappingGroup: { [key: string]: IRouteItem } = {
     component: User,
     icon: UserOutlined,
   },
-  RecordInformation: {
-    key: "/record",
-    url: "/record",
-    label: "Thông tin bản ghi",
-    component: Record,
-    icon: LineChartOutlined,
-  },
+  // RecordInformation: {
+  //   key: "/record",
+  //   url: "/record",
+  //   label: "Thông tin bệnh án",
+  //   component: Record,
+  //   icon: LineChartOutlined,
+  // },
   Schedule: {
     key: "/schedule",
     url: "/schedule",
@@ -146,7 +146,7 @@ export const patientRouterMappingGroup: { [key: string]: IRouteItem } = {
   Chat: {
     key: "/chat",
     url: "/chat",
-    label: "Tin nhắn",
+    label: "Tư vấn-Tin nhắn",
     component: ChatMes,
     icon: WechatWorkOutlined
   }
