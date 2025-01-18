@@ -61,7 +61,7 @@ const ModalComponent = (props: any, ref: any) => {
     return dataSubmit;
   };
 
-  const handleSubmit = async (values: any) => {
+  const handleAdd = async (values: any) => {
     const payload = {
       ...handleData(values),
       doctor_id: data.doctor_id,
@@ -196,7 +196,7 @@ const ModalComponent = (props: any, ref: any) => {
         >
           <Form
             form={form}
-            onFinish={handleSubmit}
+            onFinish={handleAdd}
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 12 }}
             disabled={!isEnableAdd}

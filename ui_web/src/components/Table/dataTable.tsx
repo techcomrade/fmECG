@@ -7,6 +7,7 @@ import {
   DeleteOutlined,
   MobileOutlined,
   TagOutlined,
+  LineChartOutlined,
 } from "@ant-design/icons";
 import "./dataTable.scss";
 import { ExclamationCircleFilled } from "@ant-design/icons";
@@ -33,7 +34,7 @@ interface Props {
   deleteButton: boolean;
   deleteFunction?: (id: any) => void;
   chartButton?: boolean;
-  openChart?: () => void;
+  openChartFunction?: (id: any) => void;
   customButton?: React.ReactNode;
   customData?: React.ReactNode;
   hasCheckBox?: "checkbox" | "radio";
@@ -191,6 +192,16 @@ const DataTable = (props: Props) => {
           </Button>
         ) : (
           ""
+        )}
+        {props.chartButton && (
+          <Button
+            icon={<LineChartOutlined />}
+            disabled={!chartButton}
+            className="chart-btn"
+            onClick={() => props.openChartFunction?.(selectedState[0])}
+          >
+            Xem đồ thị
+          </Button>
         )}
         {props.editButton && (
           <Button

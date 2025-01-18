@@ -6,7 +6,6 @@ import dayjs from "dayjs";
 import "dayjs/locale/vi";
 import viVN from "antd/lib/locale/vi_VN";
 import {
-  createScheduleByDoctor,
   createScheduleByPatient,
   getAllSchedules,
   getScheduleByDoctorId,
@@ -26,17 +25,9 @@ import {
   userRole,
 } from "../../constants";
 import { SelectInfo } from "antd/es/calendar/generateCalendar";
-import {
-  createDiagnosis,
-  resetLoadCreateDiagnosisStatus,
-  resetLoadUpdateDiagnosisByScheduleIdStatus,
-  updateDiagnosisByScheduleId,
-} from "../../redux/reducer/diagnosisSlice";
-import { DiagnosisRequest, NotificationRequest } from "../../api";
-import { ModalShowDiagnosis } from "../../components/Modal/ModalShowDiagnosis";
+import { NotificationRequest } from "../../api";
 import { PlusOutlined } from "@ant-design/icons";
 import { ModalAddSchWithDoctor } from "../../components/Modal/ModalAddSchWithDoctor";
-import { ModalAddDiagnosis } from "../../components/Modal/ModalAddDiagnosis";
 import { Context } from "../../utils/context";
 import { ModalAddSchWithTime } from "../../components/Modal/ModalAddSchWithTime";
 import { showNotiError, showNotiSuccess } from "../../components/notification";
@@ -46,25 +37,14 @@ type AddSchedule = {
   open: (data: any[]) => void;
 };
 
-type AddDiagnosis = {
-  open: (data: any[], columns: any[]) => void;
-};
-
-type ShowDiagnosis = {
-  open: (data: any[]) => void;
-};
-
 export const Schedule: React.FC = () => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.schedule);
-  const diagnosisState = useAppSelector((state) => state.diagnosis);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(null);
   const [data, setData] = React.useState<any[]>([]);
   const modalAddSchWithDoctorRef = React.useRef<AddSchedule>(null);
   const modalAddSchWithTimeRef = React.useRef<AddSchedule>(null);
-  const modalAddDiagnosisRef = React.useRef<AddDiagnosis>(null);
-  const modalShowRef = React.useRef<ShowDiagnosis>(null);
 
   const columns = [
     {
@@ -217,7 +197,6 @@ export const Schedule: React.FC = () => {
   const onDateSelect = (value: Dayjs, selectInfo: SelectInfo) => {
     if (selectInfo.source === "date") {
       setSelectedDate(value);
-      console.log(value);
       setIsOpen(true);
     }
   };
@@ -230,47 +209,6 @@ export const Schedule: React.FC = () => {
       } as NotificationRequest)
     );
   };
-
-  const handleSubmitAddDiagnosisFunction = (data: any, type: string) => {
-    if (type === "add") {
-      dispatch(
-        createDiagnosis({
-          schedule_id: data.schedule_id,
-          information: data.information,
-        } as DiagnosisRequest)
-      );
-      if (
-        data.schedule_start_time !== null &&
-        data.schedule_start_time !== undefined
-      ) {
-        dispatch(createScheduleByDoctor(data));
-        dispatch(
-          createNotification({
-            ...data,
-            status: 4,
-          } as NotificationRequest)
-        );
-      }
-      dispatch(getScheduleByDoctorId());
-    }
-    if (type === "update") {
-      dispatch(updateDiagnosisByScheduleId(data));
-    }
-  };
-
-  React.useEffect(() => {
-    if (diagnosisState.loadCreateDiagnosisStatus === ApiLoadingStatus.Success) {
-      dispatch(resetLoadCreateDiagnosisStatus());
-      showNotiSuccess("Bạn đã tạo chẩn đoán thành công");
-    }
-    if (
-      diagnosisState.loadCreateDiagnosisStatus === ApiLoadingStatus.Failed &&
-      dataState.errorMessage
-    ) {
-      dispatch(resetLoadCreateDiagnosisStatus());
-      showNotiError(dataState.errorMessage);
-    }
-  }, [diagnosisState.loadCreateDiagnosisStatus]);
 
   React.useEffect(() => {
     if (
@@ -306,24 +244,6 @@ export const Schedule: React.FC = () => {
     }
   }, [dataState.loadCreateScheduleByPatientStatus]);
 
-  React.useEffect(() => {
-    if (
-      diagnosisState.loadUpdateDiagnosisByScheduleIdStatus ===
-      ApiLoadingStatus.Success
-    ) {
-      dispatch(resetLoadUpdateDiagnosisByScheduleIdStatus());
-      showNotiSuccess("Bạn đã chỉnh sửa chẩn đoán thành công");
-    }
-    if (
-      diagnosisState.loadUpdateDiagnosisByScheduleIdStatus ===
-        ApiLoadingStatus.Failed &&
-      diagnosisState.errorMessage
-    ) {
-      dispatch(resetLoadUpdateDiagnosisByScheduleIdStatus());
-      showNotiError(diagnosisState.errorMessage);
-    }
-  }, [diagnosisState.loadGetDiagnosisByScheduleIdStatus]);
-
   return (
     <>
       {Context.role === userRole.patient && (
@@ -351,43 +271,9 @@ export const Schedule: React.FC = () => {
           isOpen={isOpen}
           selectedDate={selectedDate}
           data={data}
-          onClose={() => setIsOpen(false)}
           getListData={getListData}
-          showDiagnosis={(
-            schedule_id: string,
-            doctor: string,
-            patient: string,
-            start_time: string,
-            end_time: string
-          ) =>
-            modalShowRef.current?.open({
-              schedule_id: schedule_id,
-              doctor: doctor,
-              patient: patient,
-              start_time: start_time,
-              end_time: end_time,
-            } as any)
-          }
-          addDiagnosis={(
-            selected_date: Dayjs | null,
-            schedule_id: string,
-            patient_id: string,
-            patient: string,
-            start_time: string,
-            end_time: string
-          ) =>
-            modalAddDiagnosisRef.current?.open(
-              {
-                selected_date: selected_date,
-                schedule_id: schedule_id,
-                patient_id: patient_id,
-                patient: patient,
-                start_time: start_time,
-                end_time: end_time,
-              } as any,
-              columns
-            )
-          }
+          columns={columns}
+          onClose={() => setIsOpen(false)}
         />
       </ConfigProvider>
       <ModalAddSchWithDoctor
@@ -400,17 +286,6 @@ export const Schedule: React.FC = () => {
         title="Đặt lịch theo thời gian"
         submitFunction={(data: any) => handleSubmitAddScheduleFunction(data)}
       ></ModalAddSchWithTime>
-      <ModalAddDiagnosis
-        ref={modalAddDiagnosisRef}
-        title="Chẩn đoán của bác sĩ"
-        submitFunction={(data: any, type: any) =>
-          handleSubmitAddDiagnosisFunction(data, type)
-        }
-      ></ModalAddDiagnosis>
-      <ModalShowDiagnosis
-        ref={modalShowRef}
-        title="Xem chẩn đoán"
-      ></ModalShowDiagnosis>
     </>
   );
 };
