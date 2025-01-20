@@ -87,19 +87,19 @@ Chương này sẽ trình bày chi tiết về quá trình phân tích hệ th�
     \textbf{Thuộc tính (Attributes):} & \\
     id(uuid) 
     
-    username(String)
+    username(string)
 
-    birth(Timestamps)
+    birth(timestamps)
 
-    phone\_number(String)
+    phone\_number(string)
     & 
-    image(String) 
+    image(string) 
     
-    role(Integer) 
+    role(integer) 
     
-    created\_at(Timestamps)
+    createdAt(Date)
 
-    updated\_at(Timestamps)
+    updatedAt(Date)
     \\ \hline
   \end{tabularx}
   \\     
@@ -110,65 +110,7 @@ Chương này sẽ trình bày chi tiết về quá trình phân tích hệ th�
 
     Toàn thể - Bộ phận (Aggregation):
     
-    Liên kết (Association): Tài khoản, Phân công bác sĩ - bệnh nhân 
-    \\
-    \hline
-  \end{tabularx}
-  \end{xltabular}
-
-  \begin{xltabular}{\textwidth}{
-    >{\centering\arraybackslash}X 
-  }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tệp đính kèm}
-  % \label{table_api_news}
-  \\
-  \begin{tabularx}{0.9\textwidth}{X}
-    Mặt trước thẻ
-  \end{tabularx}
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Tên lớp:} Tệp đính kèm & \textbf{ID:} 14 \\
-    \hline
-    \textbf{Mô tả:} Đối tượng mô tả thông tin Tệp đính kèm tin nhắn & \textbf{Use case liên quan:} Quản lý dịch vụ nhắn tin \\
-    \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
-    Mô tả thông tin Tệp đính kèm
-
-    Lấy thông tin tệp đính kèm theo tin nhắn, cuộc hội thoại
-    & 
-    Tin nhắn, Cuộc hội thoại
-    \\
-    \hline
-  \end{tabularx}
-  \\ 
-  \begin{tabularx}{0.9\textwidth}{X}
-    Mặt sau thẻ
-  \end{tabularx} 
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Thuộc tính (Attributes):} & \\
-    id(String) 
-
-    content\_url(String)
-    
-    file\_name(String)
-    &
-    size(Integer)
-
-    thumbnail\_url(String)
-
-    type(Integer)
-    \\
-    \hline
-  \end{tabularx}
-  \\     
-  \begin{tabularx}{0.9\textwidth}{|X|}
-    \textbf{Mối quan hệ (Relationships):} \\
-    Tổng quát hóa (Generalize):  
-
-    Toàn thể - Bộ phận (Aggregation): 
-    
-    Liên kết (Association): Tin nhắn, Cuộc hội thoại 
+    Liên kết (Association): Tài khoản, Lịch hẹn, Thiết bị, Bản ghi 
     \\
     \hline
   \end{tabularx}
@@ -177,7 +119,7 @@ Chương này sẽ trình bày chi tiết về quá trình phân tích hệ th�
 
 % \newpage
 \subsection{Sơ đồ lớp}
-  Dựa trên các thẻ CRC đã được mô tả ở phần trên, chúng em xin phép trình bày về sơ đồ lớp của hệ thống.
+  % Dựa trên các thẻ CRC đã được mô tả ở phần trên, chúng em xin phép trình bày về sơ đồ lớp của hệ thống.
 
   % Hình \ref*{UML} thể hiện các lớp trong hệ thống:
   % \begin{itemize}
@@ -198,30 +140,30 @@ Chương này sẽ trình bày chi tiết về quá trình phân tích hệ th�
   % \end{itemize}
 % \newpage
 \subsection{Sơ đồ tuần tự}
-Để phân tích cụ thể hơn về từng luồng trong hệ thống thông qua sơ đồ use case và sơ đồ hoạt động, dưới đây là phần thiết kế
- về các sơ đồ tuần tự.
+% Để phân tích cụ thể hơn về từng luồng trong hệ thống thông qua sơ đồ use case và sơ đồ hoạt động, dưới đây là phần thiết kế
+%  về các sơ đồ tuần tự.
 
-\subsubsection{Sơ đồ tuần tự đăng ký tài khoản}
+% \subsubsection{Sơ đồ tuần tự đăng ký tài khoản}
 
-Sơ đồ tuần tự mô tả chi tiết quá trình người dùng đăng ký một tài khoản mới trên hệ thống. Người dùng sẽ phải gửi yêu cầu đăng ký, hệ thống sẽ được xử lý
-bởi lớp Register, nếu có lỗi phát sinh hệ thống sẽ thông báo lõi cho người dùng. Nếu việc đăng ký thành công, lớp Register sẽ gửi thông báo 
-chuyển sang phê duyệt tài khoản và trả về kết quả.  
+% Sơ đồ tuần tự mô tả chi tiết quá trình người dùng đăng ký một tài khoản mới trên hệ thống. Người dùng sẽ phải gửi yêu cầu đăng ký, hệ thống sẽ được xử lý
+% bởi lớp Register, nếu có lỗi phát sinh hệ thống sẽ thông báo lõi cho người dùng. Nếu việc đăng ký thành công, lớp Register sẽ gửi thông báo 
+% chuyển sang phê duyệt tài khoản và trả về kết quả.  
 
 
-\subsubsection{Sơ đồ tuần tự đăng nhập tài khoản}
-\subsubsection{Sơ đồ tuần tự lấy tất cả người dùng}
+% \subsubsection{Sơ đồ tuần tự đăng nhập tài khoản}
+% \subsubsection{Sơ đồ tuần tự lấy tất cả người dùng}
 
-\subsubsection{Sơ đồ tuần tự lấy người dùng theo id}
+% \subsubsection{Sơ đồ tuần tự lấy người dùng theo id}
 
-\subsubsection{Sơ đồ tuần tự cập nhật người dùng theo id}
+% \subsubsection{Sơ đồ tuần tự cập nhật người dùng theo id}
 
-\subsubsection{Sơ đồ tuần tự lấy bệnh nhân theo id bác sĩ}
+% \subsubsection{Sơ đồ tuần tự lấy bệnh nhân theo id bác sĩ}
 
-\subsubsection{Sơ đồ tuần tự lấy bác sĩ theo id bệnh nhân}
+% \subsubsection{Sơ đồ tuần tự lấy bác sĩ theo id bệnh nhân}
 
-\subsubsection{Sơ đồ tuần tự lấy tất cả bác sĩ}
+% \subsubsection{Sơ đồ tuần tự lấy tất cả bác sĩ}
 
-\subsubsection{Sơ đồ tuần tự xóa người dùng theo id}
+% \subsubsection{Sơ đồ tuần tự xóa người dùng theo id}
 
 
 \subsection{Phân tích dữ liệu}
@@ -230,11 +172,11 @@ Tại phần này, chúng em sẽ tiến hành xác định và mô tả các th
  thuộc tính trong hệ thống. Việc này giúp chúng em có thể nắm được các phần chính 
  trong việc thiết kế nên cơ sở dữ liệu.
 
-Đầu tiên, chúng em sẽ xác định các thực thể và mô tả thuộc tính của nó trong hệ
-thống dươi dạng bảng và sơ đồ mô hình liên kết. 
+% Đầu tiên, chúng em sẽ xác định các thực thể và mô tả thuộc tính của nó trong hệ
+% thống dươi dạng bảng và sơ đồ mô hình liên kết. 
 
 
-Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em xác định được mô hình thực thể liên kết như sau:
+% Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em xác định được mô hình thực thể liên kết như sau:
 
 \subsection{Kết luận}
 
