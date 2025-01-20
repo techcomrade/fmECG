@@ -1,20 +1,16 @@
 \section*{TÓM TẮT ĐỒ ÁN}
 \phantomsection\addcontentsline{toc}{section}{\numberline{}TÓM TẮT ĐỒ ÁN}
 
-Đồ án "Hệ thống quản lý dữ liệu điện tim và tương tác giữa bệnh nhân - bác sĩ" là hệ thống bao gồm Web/App/Server 
-giúp việc đặt lịch và tương tác giữa các bác sĩ, bệnh nhân trên website và ứng dụng di động một cách dễ dàng và hiệu quả. 
-Tại đây thông tin người dùng, dữ liệu đặt lịch, dữ liệu đo hay các đoạn hội thoại sẽ được lưu trữ trên server để người dùng có thể xem lại bất cứ lúc nào.
-Bên cạnh đó hệ thống cung cấp tính năng đặt lịch hẹn giúp bệnh nhân thoải mái chọn lịch phù hợp với thời gian của mình.
-Bác sĩ sẽ đồng ý hoặc từ chối lịch, sau đó thông báo sẽ được gửi đến bệnh nhân. Nếu bác sĩ quên, sẽ có mail thông báo đến bác sĩ.
-Sau khi bác sĩ đồng ý lịch hẹn, bệnh nhân và bác sĩ có thể nhắn tin để trao đổi thông tin.
+Đồ án "Hệ thống quản lý dữ liệu điện tim và tương tác giữa bệnh nhân - bác sĩ" phát triển một hệ thống tích hợp gồm Web/App/Server, hỗ trợ quản lý dữ liệu đo điện tim, đặt lịch hẹn và cung cấp kênh giao tiếp hiệu quả giữa bệnh nhân và bác sĩ.
+Hệ thống cho phép lưu trữ thông tin người dùng, dữ liệu lịch hẹn, các bản ghi điện tim và nội dung trao đổi giữa bệnh nhân và bác sĩ trên server, giúp người dùng dễ dàng tra cứu khi cần.
 
-Đồ án tập trung hoàn thiện theo quy trình phát triển phần mềm, 
-sau khi xác định được các yêu cầu của hệ thống sẽ tiến hành phân tích, thiết kế và triển khai hệ thống. 
-Quá trình này áp dụng phương pháp phân tích và thiết kế hướng đối tượng, đồng thời sử dụng ngôn ngữ UML để biểu diễn các luồng thực hiện hành động. 
-Ứng dụng Web sử dụng ReactJS, và server là NodeJS, framework NestJS. Cơ sở dữ liệu sử dụng là MySQL và MongoDb.
+Một trong những điểm nổi bật của hệ thống là khả năng lưu trữ và hiển thị dữ liệu đo điện tim dưới dạng biểu đồ trực quan. Tính năng này giúp bệnh nhân theo dõi sức khỏe lâu dài và cung cấp dữ liệu giá trị hỗ trợ bác sĩ trong việc chẩn đoán và điều trị.
+Ngoài ra, hệ thống hỗ trợ đặt lịch hẹn trực tuyến, giúp bệnh nhân lựa chọn bác sĩ và thời gian thuận tiện. Bác sĩ có thể phê duyệt hoặc từ chối yêu cầu, với thông báo tự động gửi đến bệnh nhân. Sau khi lịch hẹn được xác nhận, bệnh nhân và bác sĩ có thể sử dụng tính năng nhắn tin để trao đổi thông tin sức khỏe.
 
-Quyển đồ án được trình bày theo quy trình phát triển phần mềm, nội dung mỗi chương được triển khai và trình bày thông qua sơ đồ và diễn giải chi tiết. 
-Các chương theo thứ tự lần lượt là phân tích hệ thống, thiết kế hệ thống, triển khai và kiểm thử, cuối cùng là kết luận.
+Đồ án được thực hiện dựa trên quy trình phát triển phần mềm tiêu chuẩn, bao gồm các bước xác định yêu cầu, phân tích, thiết kế, triển khai và kiểm thử hệ thống. Phương pháp phân tích và thiết kế hướng đối tượng được áp dụng, với các luồng xử lý và hành động được biểu diễn thông qua sơ đồ UML.
+Ứng dụng Web sử dụng ReactJS, server được xây dựng trên nền NodeJS với framework NestJS, và cơ sở dữ liệu được triển khai bằng MySQL cùng MongoDB.
+
+Nội dung quyển đồ án được trình bày theo quy trình phát triển phần mềm, với các chương lần lượt gồm: phân tích hệ thống, thiết kế hệ thống, triển khai và kiểm thử, kết thúc bằng phần kết luận. Các nội dung được diễn giải chi tiết kèm theo sơ đồ minh họa cụ thể.
 
 % \cleardoublepage
 
@@ -22,21 +18,16 @@ Các chương theo thứ tự lần lượt là phân tích hệ thống, thiế
 \section*{ABSTRACT}
 % \phantomsection\addcontentsline{toc}{section}{\numberline{}ABSTRACT}
 
-The project "Electrocardiogram Data Management System and Patient-Doctor Interaction" is a system comprising Web/App/Server components that facilitate scheduling 
-and interaction between doctors and patients through websites and mobile applications in an easy and efficient manner.
+The project "Electrocardiogram Data Management System and Patient-Doctor Interaction" develops an integrated system comprising Web/App/Server components to manage electrocardiogram (ECG) data, facilitate appointment scheduling, and provide an effective communication channel between patients and doctors.
+The system securely stores user information, appointment data, ECG records, and messages exchanged between patients and doctors on the server, enabling users to access and review them conveniently.
 
-Here, user information, appointment schedules, measurement data, and conversations are stored on the server, allowing users to review them at any time. 
-Additionally, the system offers a scheduling feature that enables patients to conveniently select a suitable appointment time. Doctors can approve or decline the schedule, 
-and a notification will then be sent to the patient. If the doctor forgets, a reminder email will be sent to the doctor. 
-Once the doctor approves the appointment, patients and doctors can chat to exchange information.
+A key highlight of the system is its ability to store and display ECG measurement data through interactive charts. This feature allows patients to monitor their health over time and provides valuable data to support doctors in diagnosis and treatment.
+Additionally, the system supports online appointment scheduling, enabling patients to select a doctor and a convenient time slot. Doctors can approve or decline appointment requests, with automatic notifications sent to patients. Once the appointment is confirmed, patients and doctors can use the messaging feature to discuss health-related information.
 
-The project focuses on completing the software development process. 
-After identifying the system requirements, the analysis, design, and implementation phases are carried out. 
-This process applies object-oriented analysis and design methods, while utilizing UML language to represent action execution flows. 
-The web application uses ReactJS, the server is built with NodeJS and the NestJS framework, and the databases used are MySQL and MongoDB.
+The project is implemented based on a standard software development process, including steps such as requirements identification, system analysis, design, implementation, and testing. Object-oriented analysis and design methods are applied, and system processes and actions are represented using UML diagrams.
+The web application is developed using ReactJS, the server is built on NodeJS with the NestJS framework, and the database systems utilized are MySQL and MongoDB.
 
-The project report is presented according to the software development process, with each chapter developed and detailed through diagrams and comprehensive explanations. 
-The chapters are ordered as follows: system analysis, system design, implementation and testing, and finally, conclusion.
+The project report is organized according to the software development lifecycle, presenting each phase in a clear and structured manner. It includes system analysis, design, implementation, testing, and a concluding section summarizing the findings. Each chapter is thoroughly detailed and supported with diagrams to enhance understanding and clarity.
 
 \cleardoublepage
 
