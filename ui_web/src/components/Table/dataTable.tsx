@@ -8,6 +8,7 @@ import {
   MobileOutlined,
   TagOutlined,
   LineChartOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import "./dataTable.scss";
 import { ExclamationCircleFilled } from "@ant-design/icons";
@@ -51,6 +52,7 @@ const DataTable = (props: Props) => {
   const [deleteButton, setDeleteButton] = useState<boolean>(false);
   const [chartButton, setChartButton] = useState<boolean>(false);
   const [selectedState, setSelectedRowKeys] = useState<any[]>([]);
+  const [tableKey, setTableKey] = useState(0);
   const searchInput = useRef<any>(null);
   const navigate = useNavigate();
 
@@ -85,6 +87,11 @@ const DataTable = (props: Props) => {
 
   const handleReset = (clearFilters: () => void) => {
     clearFilters();
+    setSearchText("");
+  };
+
+  const resetFilters = () => {
+    setTableKey((tableKey) => tableKey + 1);
     setSearchText("");
   };
 
@@ -213,7 +220,7 @@ const DataTable = (props: Props) => {
             Sửa
           </Button>
         )}
-        {props.assignButton &&  (
+        {props.assignButton && (
           <Button
             icon={<TagOutlined />}
             disabled={!assginButton}
@@ -232,8 +239,12 @@ const DataTable = (props: Props) => {
             Xóa
           </Button>
         )}
+        <Button icon={<ReloadOutlined />} onClick={() => resetFilters()}>
+          Xóa bộ lọc và tìm kiếm
+        </Button>
       </div>
       <Table
+        key={tableKey}
         rowSelection={
           props.role
             ? {
