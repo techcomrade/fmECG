@@ -26,7 +26,7 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 	\end{tabularx}
 	\begin{tabularx}{0.9\textwidth}{|X|X|}
 		\hline
-		\textbf{Tên lớp:} Tài khoản (account)                                     & \textbf{ID:} 0                                                                                           \\
+		\textbf{Tên lớp:} Tài khoản người dùng (account)                          & \textbf{ID:} 0                                                                                           \\
 		\hline
 		\textbf{Mô tả:} Lớp quản lý thông tin tài khoản người dùng trong hệ thống & \textbf{Use case liên quan:}  Đăng ký tài khoản, Quản lý tài khoản cá nhân, Quản lí thông tin người dùng \\
 		\hline
@@ -50,11 +50,11 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 		\textbf{Thuộc tính (Attributes):} & \\
 		id(uuid)
 
-		email(string)
+		user\_email(string)
 
-		password(string)
+		user\_password(string)
 		                                  &
-		role(integer)
+		user\_role(integer)
 
 		createdAt(Datetime)
 
@@ -284,13 +284,19 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 
 		username(string)
 
-		birth(timestamps)
+		user\_role\_id(integer)
 
-		phone\_number(string)
+		date\_of\_birth(timestamps)
+
+		user\_phone\_number(string)
+
+		user\_gender(integer)
 		                                  &
-		image(string)
+		profile\_image(string)
 
-		role(integer)
+		additional\_infor(string)
+
+		user\_status\_id(integer)
 
 		createdAt(Datetime)
 
@@ -457,15 +463,15 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 
 		device\_name(string)
 
-		information(string)
+		device\_information(string)
 
 		device\_type\_id(integer)
 		                                  &
-		status\_id(integer)
+		device\_status\_id(integer)
 
-		start\_time(timestamps)
+		device\_start\_time(timestamps)
 
-		end\_time(timestamps)
+		device\_end\_time(timestamps)
 
 		createdAt(Datetime)
 
@@ -520,15 +526,15 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 		\textbf{Thuộc tính (Attributes):} & \\
 		id(uuid)
 
-		device\_id(string)
+		associated\_device\_id(string)
 
-		detail\_name(string)
+		device\_detail\_name(string)
 
-		detail\_type(integer)
+		device\_detail\_type(integer)
 		                                  &
-		value(string)
+		detail\_value(string)
 
-		information(string)
+		detail\_information(string)
 
 		createdAt(Datetime)
 
@@ -589,11 +595,11 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 
 		device\_id(string)
 
-		data\_rec\_url(string)
+		record\_file\_url(string)
 		                                  &
-		start\_time(string)
+		season\_start\_time(string)
 
-		end\_time(string)
+		season\_end\_time(string)
 
 		createdAt(Datetime)
 
@@ -960,7 +966,7 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 
 		schedule\_id(string)
 
-		information(string)
+		diagnosis\_infor(string)
 		                                  &
 		createdAt(Datetime)
 
@@ -1237,59 +1243,59 @@ Trước tiên, chúng em sẽ tiến hành xác định các thực thể trong
 	\raggedright
 	\begin{tabularx}{\textwidth}{|p{4.5cm}|X|}
 		\hline
-		\bfseries Thực thể               & \bfseries Thuộc tính                                                                                           \\ \hline
+		\bfseries Thực thể               & \bfseries Thuộc tính                                                                                                     \\ \hline
 		Tài khoản                        &
-		ID tài khoản, Địa chỉ email, Mật khẩu truy cập                                                                                                                    \\
+		ID tài khoản, Địa chỉ email đăng ký, Mật khẩu truy cập                                                                                                      \\
 		\hline
 		Token đăng nhập                  &
-		ID token, Token làm mới, Hạn sử dụng, Trạng thái token                                                                                    \\
+		ID token, Token làm mới, Hạn sử dụng, Trạng thái token                                                                                                      \\
 		\hline
 		Vai trò người dùng               &
-		ID vai trò, Tên vai trò, Mô tả vai trò                                                                                                            \\
+		ID vai trò, Tên vai trò, Mô tả vai trò                                                                                                                      \\
 		\hline
 		Trạng thái người dùng            &
-		ID trạng thái, Tên trạng thái, Mô tả trạng thái                                                                                                   \\
+		ID trạng thái người dùng, Tên trạng thái, Mô tả trạng thái                                                                                                  \\
 		\hline
 		Người dùng                       &
 		ID người dùng, Tên đầy đủ, Ngày tháng năm sinh, Giới tính, Số liên lạc, Vai trò người dùng, Trạng thái hoạt động, Đường dẫn ảnh đại diện, Thông tin bổ sung \\
 		\hline
 		Loại thiết bị                    &
-		ID loại thiết bị, Tên loại thiết bị, Mô tả loại thiết bị                                                                                          \\
+		ID loại thiết bị, Tên loại thiết bị, Mô tả loại thiết bị                                                                                                    \\
 		\hline
 		Trạng thái thiết bị              &
-		ID trạng thái, Tên trạng thái, Mô tả trạng thái                                                                                                   \\
+		ID trạng thái thiết bị, Tên trạng thái, Mô tả trạng thái                                                                                                    \\
 		\hline
 		Thiết bị                         &
-		ID thiết bị, Tên thiết bị, Loại thiết bị, Thông tin chi tiết về thiết bị, Tình trạng hiện tại, Ngày bắt đầu thời gian mượn, Ngày kết thúc thời gian mượn                                           \\
+		ID thiết bị, Tên thiết bị, Loại thiết bị, Thông tin chi tiết về thiết bị, Tình trạng hiện tại, Ngày bắt đầu thời gian mượn, Ngày kết thúc thời gian mượn    \\
 		\hline
 		Thông số kỹ thuật                &
-		ID thông số, Tên thông số, Loại thông số, Giá trị thông số, Mô tả chi tiết thông số                                                                    \\
+		ID thông số, Tên thông số, Loại thông số, Giá trị thông số, Mô tả chi tiết thông số                                                                         \\
 		\hline
 		Dữ liệu phiên đo                 &
-		ID dữ liệu phiên đo, Đường dẫn lưu trữ phiên đo, Thời gian bắt đầu thu thập dữ liệu, Thời gian kết thúc thu thập dữ liệu                                          \\
+		ID dữ liệu phiên đo, Đường dẫn lưu trữ phiên đo, Thời gian bắt đầu thu thập dữ liệu, Thời gian kết thúc thu thập dữ liệu                                    \\
 		\hline
 		Loại lịch hẹn                    &
-		ID loại lịch hẹn, Tên loại lịch hẹn, Mô tả loại lịch hẹn                                                                                          \\
+		ID loại lịch hẹn, Tên loại lịch hẹn, Mô tả loại lịch hẹn                                                                                                    \\
 		\hline
 		Trạng thái lịch hẹn              &
-		ID trạng thái, Tên trạng thái, Mô tả trạng thái                                                                                                   \\
+		ID trạng thái, Tên trạng thái, Mô tả trạng thái                                                                                                             \\
 		\hline
 		Lịch hẹn                         &
-		ID lịch hẹn, Thời gian bắt đầu lịch hẹn, Thời gian kết thúc lịch hẹn, Kết quả lịch hẹn                                                            \\
+		ID lịch hẹn, Thời gian bắt đầu lịch hẹn, Thời gian kết thúc lịch hẹn, Kết quả lịch hẹn                                                                      \\
 		\hline
 		Lịch hẹn của bác sĩ              &
-		ID lịch hẹn của bác sĩ                                                                                                                            \\
+		ID lịch hẹn của bác sĩ, Thông tin lịch hẹn, Thông tin bác sĩ                                                                                                \\
 		\hline
 		Chẩn đoán cho bệnh nhân          &
-		ID chẩn đoán, Thông tin chẩn đoán                                                                                                                 \\
+		ID chẩn đoán, Thông tin chẩn đoán                                                                                                                           \\
 		\hline
 		Thông báo liên quan đến lịch hẹn &
 		ID thông báo, Loại thông báo (gửi cho bác sĩ hoặc gửi cho bệnh nhân), Thời gian bắt đầu lịch hẹn, Nội dung thông báo,
 		Trạng thái thông báo (nhắc hẹn, được bác sĩ chấp nhận, đang chờ xác nhận, từ chối, đặt lịch tái khám thành công, bị hủy tự động),
-		Trạng thái đã xem, Lý do từ chối lịch (nếu có)                                                                                                    \\
+		Trạng thái đã xem, Lý do từ chối lịch (nếu có)                                                                                                              \\
 		\hline
 		Tin nhắn                         &
-		ID tin nhắn, Người gửi tin nhắn, Nhóm trò chuyện nhận tin nhắn, Nội dung tin nhắn, Thời điểm gửi										 \\
+		ID tin nhắn, Người gửi tin nhắn, Nhóm trò chuyện nhận tin nhắn, Nội dung tin nhắn, Thời điểm gửi                                                            \\
 		\hline
 		Nhóm trò chuyện                  &
 		ID nhóm trò chuyện, Tên nhóm trò chuyện, Người tạo nhóm, Danh sách thành viên nhóm, Sự kiện gửi tin nhắn, Sự kiện nhận tin nhắn                             \\
@@ -1301,11 +1307,11 @@ Dựa trên bảng thực thể và thuộc tính đã hoàn thiện, mô hình 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=9.5cm]{Images/System/fmECG_connection_entity.png}
+	\includegraphics[width=15.5cm,height=9cm]{Images/System/fmECG_connection_entity.png}
 	\caption[Mô hình thực thể liên kết]{\bfseries \fontsize{12pt}{0pt}
-	\selectfont Mô hình thực thể liên kết}
+		\selectfont Mô hình thực thể liên kết}
 	\label{entity-diag}
-  \end{figure}
+\end{figure}
 
 \subsection{Kết luận}
 
