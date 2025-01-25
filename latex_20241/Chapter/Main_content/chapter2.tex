@@ -260,11 +260,11 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 	\end{tabularx}
 	\begin{tabularx}{0.9\textwidth}{|X|X|}
 		\hline
-		\textbf{Tên lớp:} Người dùng (User)                                                      & \textbf{ID:} 4                                                                               \\
+		\textbf{Tên lớp:} Người dùng (User)                                                      & \textbf{ID:} 4                                                                                \\
 		\hline
-		\textbf{Mô tả:} Lớp quản lý thông tin cá nhân và quyền hạn của người dùng trong hệ thống & \textbf{Use case liên quan:}  Đăng ký tài khoản, Quản lý tài khoản cá nhân, Quản lý lịch hẹn \\
+		\textbf{Mô tả:} Lớp quản lý thông tin cá nhân và quyền hạn của người dùng trong hệ thống & \textbf{Use case liên quan:}  Đăng ký tài khoản, Quản lý tài khoản cá nhân, Quản lý lịch khám \\
 		\hline
-		\textbf{Trách nhiệm (Responsibility):}                                                   & \textbf{Các lớp cộng tác (Collaboration):}                                                   \\
+		\textbf{Trách nhiệm (Responsibility):}                                                   & \textbf{Các lớp cộng tác (Collaboration):}                                                    \\
 		Quản lý thông tin người dùng, bao gồm thêm mới, chỉnh sửa và xóa dữ liệu
 
 		Truy vấn danh sách người dùng hiện có trong hệ thống dựa trên các tiêu chí như ID, tài khoản, hoặc vai trò
@@ -311,7 +311,7 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 
 		Toàn thể - Bộ phận (Aggregation):
 
-		Liên kết (Association): Tài khoản, Vai trò người dùng, Trạng thái người dùng, Lịch hẹn, Thiết bị, Dữ liệu phiên đo
+		Liên kết (Association): Tài khoản, Vai trò người dùng, Trạng thái người dùng, Lịch khám, Thiết bị, Dữ liệu phiên đo
 		\\
 		\hline
 	\end{tabularx}
@@ -620,83 +620,28 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 	\end{tabularx}
 \end{xltabular}
 
-\subsubsection{Thẻ CRC lớp Loại lịch hẹn}
+\subsubsection{Thẻ CRC lớp Trạng thái lịch khám}
 
 \begin{xltabular}{\textwidth}{
 		>{\centering\arraybackslash}X
 	}
-	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Loại lịch hẹn}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Trạng thái lịch khám}
 	\\
 	\begin{tabularx}{0.9\textwidth}{X}
 		Mặt trước thẻ
 	\end{tabularx}
 	\begin{tabularx}{0.9\textwidth}{|X|X|}
 		\hline
-		\textbf{Tên lớp:} Loại lịch hẹn (schedule\_type)                   & \textbf{ID:} 10                                \\
+		\textbf{Tên lớp:} Trạng thái lịch khám (schedule\_status)                              & \textbf{ID:} 10                                 \\
 		\hline
-		\textbf{Mô tả:} Lớp quản lý thông tin các loại lịch hẹn có thể đặt & \textbf{Use case liên quan:}  Quản lý lịch hẹn \\
+		\textbf{Mô tả:} Lớp quản lý thông tin các trạng thái lịch khám hiện tại trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch khám \\
 		\hline
-		\textbf{Trách nhiệm (Responsibility):}                             & \textbf{Các lớp cộng tác (Collaboration):}     \\
-		Lưu trữ danh sách các loại lịch hẹn khả dụng (ví dụ: Lịch khám, Lịch tư vấn thiết bị)
+		\textbf{Trách nhiệm (Responsibility):}                                                 & \textbf{Các lớp cộng tác (Collaboration):}      \\
+		Lưu trữ danh sách các trạng thái lịch khám (ví dụ: Thành công (được bác sĩ chấp nhận), Thất bại (bị từ chối), Đang chờ xác nhận)
 
-		Cung cấp thông tin các loại lịch hẹn cho các chức năng liên quan đến lập lịch
-		                                                                   &
-		Lịch hẹn
-		\\
-		\hline
-	\end{tabularx}
-	\\
-	\begin{tabularx}{0.9\textwidth}{X}
-		Mặt sau thẻ
-	\end{tabularx}
-	\begin{tabularx}{0.9\textwidth}{|X|X|}
-		\hline
-		\textbf{Thuộc tính (Attributes):} & \\
-		id(uuid)
-
-		type\_name(string)
-		                                  &
-		createdAt(Datetime)
-
-		updatedAt(Datetime)
-		\\ \hline
-	\end{tabularx}
-	\\
-	\begin{tabularx}{0.9\textwidth}{|X|}
-		\hline
-		\textbf{Mối quan hệ (Relationships)} \\
-		Tổng quát hóa (Generalize):
-
-		Toàn thể - Bộ phận (Aggregation):
-
-		Liên kết (Association): Lịch hẹn
-		\\
-		\hline
-	\end{tabularx}
-\end{xltabular}
-
-\subsubsection{Thẻ CRC lớp Trạng thái lịch hẹn}
-
-\begin{xltabular}{\textwidth}{
-		>{\centering\arraybackslash}X
-	}
-	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Trạng thái lịch hẹn}
-	\\
-	\begin{tabularx}{0.9\textwidth}{X}
-		Mặt trước thẻ
-	\end{tabularx}
-	\begin{tabularx}{0.9\textwidth}{|X|X|}
-		\hline
-		\textbf{Tên lớp:} Trạng thái lịch hẹn (schedule\_status)                              & \textbf{ID:} 11                                \\
-		\hline
-		\textbf{Mô tả:} Lớp quản lý thông tin các trạng thái lịch hẹn hiện tại trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch hẹn \\
-		\hline
-		\textbf{Trách nhiệm (Responsibility):}                                                & \textbf{Các lớp cộng tác (Collaboration):}     \\
-		Lưu trữ danh sách các trạng thái lịch hẹn (ví dụ: Thành công (được bác sĩ chấp nhận), Thất bại (bị từ chối), Đang chờ xác nhận)
-
-		Cung cấp thông tin các trạng thái lịch hẹn để hỗ trợ các chức năng liên quan đến quản lí và hiển thị lịch hẹn
-		                                                                                      &
-		Lịch hẹn
+		Cung cấp thông tin các trạng thái lịch khám để hỗ trợ các chức năng liên quan đến quản lý và hiển thị lịch khám
+		                                                                                       &
+		Lịch khám
 		\\
 		\hline
 	\end{tabularx}
@@ -724,40 +669,93 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 
 		Toàn thể - Bộ phận (Aggregation):
 
-		Liên kết (Association): Lịch hẹn
+		Liên kết (Association): Lịch khám
 		\\
 		\hline
 	\end{tabularx}
 \end{xltabular}
 
-\subsubsection{Thẻ CRC lớp Lịch hẹn}
+\subsubsection{Thẻ CRC lớp Kết quả lịch khám}
 
 \begin{xltabular}{\textwidth}{
 		>{\centering\arraybackslash}X
 	}
-	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Lịch hẹn}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Kết quả lịch khám}
 	\\
 	\begin{tabularx}{0.9\textwidth}{X}
 		Mặt trước thẻ
 	\end{tabularx}
 	\begin{tabularx}{0.9\textwidth}{|X|X|}
 		\hline
-		\textbf{Tên lớp:} Trạng thái lịch hẹn (schedule\_status)                   & \textbf{ID:} 12                                \\
+		\textbf{Tên lớp:} Kết quả lịch khám (schedule\_result)          & \textbf{ID:} 11                                 \\
 		\hline
-		\textbf{Mô tả:} Lớp quản lý thông tin các lịch hẹn hiện tại trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch hẹn \\
+		\textbf{Mô tả:} Lớp quản lý thông tin các kết quả của lịch khám & \textbf{Use case liên quan:}  Quản lý lịch khám \\
 		\hline
-		\textbf{Trách nhiệm (Responsibility):}                                     & \textbf{Các lớp cộng tác (Collaboration):}     \\
-		Lưu trữ danh sách các lịch hẹn
+		\textbf{Trách nhiệm (Responsibility):}                          & \textbf{Các lớp cộng tác (Collaboration):}      \\
+		Lưu trữ danh sách các kết quả lịch khám có thể có (ví dụ: Lịch khám đã diễn ra, Lịch khám không diễn ra (Bệnh nhân không tới, các lí do khác))
 
-		Truy vấn danh sách lịch hẹn dựa trên ID bệnh nhân
+		Cung cấp thông tin các kết quả lịch khám cho các chức năng liên quan đến lập lịch
+		                                                                &
+		Lịch khám
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
 
-		Lập lịch hẹn dựa theo các tiêu chí như bác sĩ hoặc thời gian rảnh
-		                                                                           &
-		Loại lịch hẹn
+		result\_description(string)
+		                                  &
+		createdAt(Datetime)
 
-		Trạng thái lịch hẹn
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
 
-		Lịch hẹn của bác sĩ
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Lịch khám
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Lịch khám}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Lịch khám}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Lịch khám (schedule)                                      & \textbf{ID:} 12                                 \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin các lịch khám hiện tại trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch khám \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                      & \textbf{Các lớp cộng tác (Collaboration):}      \\
+		Lưu trữ danh sách các lịch khám
+
+		Truy vấn danh sách lịch khám dựa trên ID bệnh nhân
+
+		Lập lịch khám dựa theo các tiêu chí như bác sĩ hoặc thời gian rảnh
+		                                                                            &
+		Trạng thái lịch khám
+
+		Kết quả lịch khám
 
 		Người dùng
 		\\
@@ -774,15 +772,15 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 
 		patient\_id(string)
 
+		doctor\_id(string)
+
 		schedule\_start\_time(timestamps)
 
 		schedule\_end\_time(timestamps)
-
-		schedule\_type\_id(integer)
 		                                  &
-		status\_id(integer)
+		schedule\_status\_id(integer)
 
-		schedule\_result(integer)
+		schedule\_result\_id(integer)
 
 		createdAt(Datetime)
 
@@ -797,93 +795,34 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 
 		Toàn thể - Bộ phận (Aggregation):
 
-		Liên kết (Association): Loại lịch hẹn, Trạng thái lịch hẹn, Lịch hẹn của bác sĩ,
+		Liên kết (Association): Trạng thái lịch khám, Kết quả lịch khám,
 		Người dùng, Chẩn đoán cho bệnh nhân
 		\\
 		\hline
 	\end{tabularx}
 \end{xltabular}
 
-\subsubsection{Thẻ CRC lớp Lịch hẹn của bác sĩ}
+\subsubsection{Thẻ CRC lớp Thông báo liên quan đến lịch khám}
 
 \begin{xltabular}{\textwidth}{
 		>{\centering\arraybackslash}X
 	}
-	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Lịch hẹn của bác sĩ}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thông báo liên quan đến lịch khám}
 	\\
 	\begin{tabularx}{0.9\textwidth}{X}
 		Mặt trước thẻ
 	\end{tabularx}
 	\begin{tabularx}{0.9\textwidth}{|X|X|}
 		\hline
-		\textbf{Tên lớp:} Lịch hẹn của bác sĩ (consultation\_schedule)               & \textbf{ID:} 13                                \\
+		\textbf{Tên lớp:} Thông báo liên quan đến lịch khám (notifications\_schedule)              & \textbf{ID:} 14                                 \\
 		\hline
-		\textbf{Mô tả:} Lớp quản lý thông tin các lịch hẹn của bác sĩ trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch hẹn \\
+		\textbf{Mô tả:} Lớp quản lý thông tin các thông báo liên quan đến lịch khám trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch khám \\
 		\hline
-		\textbf{Trách nhiệm (Responsibility):}                                       & \textbf{Các lớp cộng tác (Collaboration):}     \\
-		Lưu trữ danh sách các lịch hẹn với ID bác sĩ tương ứng
-
-		Truy vấn danh sách lịch hẹn theo ID bác sĩ
-		                                                                             &
-		Lịch hẹn
-
-		Người dùng
-		\\
-		\hline
-	\end{tabularx}
-	\\
-	\begin{tabularx}{0.9\textwidth}{X}
-		Mặt sau thẻ
-	\end{tabularx}
-	\begin{tabularx}{0.9\textwidth}{|X|X|}
-		\hline
-		\textbf{Thuộc tính (Attributes):} & \\
-		id(uuid)
-
-		schedule\_id(string)
-
-		doctor\_id(string)
-		                                  &
-		createdAt(Datetime)
-
-		updatedAt(Datetime)
-		\\ \hline
-	\end{tabularx}
-	\\
-	\begin{tabularx}{0.9\textwidth}{|X|}
-		\hline
-		\textbf{Mối quan hệ (Relationships)} \\
-		Tổng quát hóa (Generalize):
-
-		Toàn thể - Bộ phận (Aggregation):
-
-		Liên kết (Association): Người dùng, Lịch hẹn
-		\\
-		\hline
-	\end{tabularx}
-\end{xltabular}
-
-\subsubsection{Thẻ CRC lớp Thông báo liên quan đến lịch hẹn}
-
-\begin{xltabular}{\textwidth}{
-		>{\centering\arraybackslash}X
-	}
-	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thông báo liên quan đến lịch hẹn}
-	\\
-	\begin{tabularx}{0.9\textwidth}{X}
-		Mặt trước thẻ
-	\end{tabularx}
-	\begin{tabularx}{0.9\textwidth}{|X|X|}
-		\hline
-		\textbf{Tên lớp:} Thông báo liên quan đến lịch hẹn (notifications\_schedule)              & \textbf{ID:} 14                                \\
-		\hline
-		\textbf{Mô tả:} Lớp quản lý thông tin các thông báo liên quan đến lịch hẹn trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch hẹn \\
-		\hline
-		\textbf{Trách nhiệm (Responsibility):}                                                    & \textbf{Các lớp cộng tác (Collaboration):}     \\
-		Lưu trữ danh sách thông báo với thông tin lịch hẹn, bác sĩ, và bệnh nhân tương ứng
+		\textbf{Trách nhiệm (Responsibility):}                                                     & \textbf{Các lớp cộng tác (Collaboration):}      \\
+		Lưu trữ danh sách thông báo với thông tin lịch khám, bác sĩ, và bệnh nhân tương ứng
 
 		Truy vấn danh sách thông báo theo ID bác sĩ hoặc ID bệnh nhân
-		                                                                                          &
+		                                                                                           &
 		Người dùng
 		\\
 		\hline
@@ -942,16 +881,16 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 	\end{tabularx}
 	\begin{tabularx}{0.9\textwidth}{|X|X|}
 		\hline
-		\textbf{Tên lớp:} Chẩn đoán cho bệnh nhân (diagnosis)                                                               & \textbf{ID:} 15                                \\
+		\textbf{Tên lớp:} Chẩn đoán cho bệnh nhân (diagnosis)                                                                & \textbf{ID:} 15                                 \\
 		\hline
-		\textbf{Mô tả:} Lớp quản lý thông tin chi tiết các chẩn đoán cho bệnh nhân (nếu có) của mỗi lịch hẹn trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch hẹn \\
+		\textbf{Mô tả:} Lớp quản lý thông tin chi tiết các chẩn đoán cho bệnh nhân (nếu có) của mỗi lịch khám trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch khám \\
 		\hline
-		\textbf{Trách nhiệm (Responsibility):}                                                                              & \textbf{Các lớp cộng tác (Collaboration):}     \\
-		Lưu trữ danh sách chẩn đoán cho bệnh nhân với lịch hẹn tương ứng
+		\textbf{Trách nhiệm (Responsibility):}                                                                               & \textbf{Các lớp cộng tác (Collaboration):}      \\
+		Lưu trữ danh sách chẩn đoán cho bệnh nhân với lịch khám tương ứng
 
 		Truy vấn danh sách chẩn đoán theo ID lịch khám
-		                                                                                                                    &
-		Lịch hẹn
+		                                                                                                                     &
+		Lịch khám
 		\\
 		\hline
 	\end{tabularx}
@@ -981,7 +920,7 @@ Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa
 
 		Toàn thể - Bộ phận (Aggregation):
 
-		Liên kết (Association): Lịch hẹn
+		Liên kết (Association): Lịch khám
 		\\
 		\hline
 	\end{tabularx}
@@ -1131,11 +1070,10 @@ Hình \ref*{fmECG_UML} thể hiện các lớp trong hệ thống:
 	\item Lớp Device (Thiết bị): Chứa các thông tin cơ bản về thiết bị và người dùng thiết bị, hỗ trợ việc quản lý, tương tác và thu thập dữ liệu từ thiết bị trong hệ thống.
 	\item Lớp DeviceDetail (Thông số kỹ thuật): Cung cấp các thông tin kỹ thuật chi tiết về thiết bị, hỗ trợ trong việc cấu hình, kiểm tra và quản lý hiệu năng của thiết bị.
 	\item Lớp Record (Dữ liệu phiên đo): Được thiết kế để lưu trữ thông tin về dữ liệu mỗi phiên đo của bệnh nhân, đảm bảo quản lý dữ liệu một cách hiệu quả, an toàn và hỗ trợ xử lý nhanh chóng, chính xác.
-	\item Lớp ScheduleType (Loại lịch hẹn): Xác định các loại lịch hẹn trong hệ thống, phục vụ việc phân loại và quản lý lịch hẹn.
-	\item Lớp ScheduleStatus (Trạng thái lịch hẹn): Quản lý trạng thái của lịch hẹn (bao gồm các trạng thái như đang chờ xác nhận, đã được bác sĩ chấp nhận, hoặc chưa được xác nhận), giúp theo dõi và cập nhật trạng thái trong suốt vòng đời của lịch hẹn.
-	\item Lớp Schedule (Lịch hẹn): Đại diện cho cấu trúc thông tin của một lịch hẹn, cung cấp các phương thức để lưu trữ, truy vấn và xử lý dữ liệu lịch hẹn.
-	\item Lớp ConsultationSchedule (Lịch hẹn của bác sĩ): Quản lý các lịch hẹn liên quan đến bác sĩ, hỗ trợ xử lý dữ liệu hiệu quả trong khi vẫn đảm bảo kết nối đồng bộ với thông tin lịch hẹn của bệnh nhân.
-	\item Lớp NotificationSchedule (Thông báo liên quan đến lịch hẹn): Chịu trách nhiệm tạo và quản lý các thông báo liên quan đến lịch hẹn, giúp người dùng và bác sĩ cập nhật tình trạng lịch hẹn kịp thời.
+	\item Lớp ScheduleStatus (Trạng thái lịch khám): Quản lý trạng thái của lịch khám (bao gồm các trạng thái như đang chờ xác nhận, đã được bác sĩ chấp nhận, hoặc chưa được xác nhận), giúp theo dõi và cập nhật trạng thái trong suốt vòng đời của lịch khám.
+	\item Lớp ScheduleResult (Kết quả lịch khám): Xác định các kết quả lịch khám trong hệ thống, phục vụ việc phân loại và quản lý lịch khám.
+	\item Lớp Schedule (Lịch khám): Đại diện cho cấu trúc thông tin của một lịch khám, cung cấp các phương thức để lưu trữ, truy vấn và xử lý dữ liệu lịch khám.
+	\item Lớp NotificationSchedule (Thông báo liên quan đến lịch khám): Chịu trách nhiệm tạo và quản lý các thông báo liên quan đến lịch khám, giúp người dùng và bác sĩ cập nhật tình trạng lịch khám kịp thời.
 	\item Lớp Diagnosis (Chẩn đoán cho bệnh nhân): Quản lý thông tin chẩn đoán bệnh của bệnh nhân (nếu có).
 	\item Lớp Message (Tin nhắn): Xử lý thông tin các tin nhắn được gửi trong hệ thống, cho phép người dùng trao đổi thông tin trong các cuộc trò chuyện cá nhân hoặc nhóm.
 	\item Lớp GroupChat (Nhóm trò chuyện): Quản lý các nhóm trò chuyện trong hệ thống, cho phép tổ chức và thực hiện các hoạt động giao tiếp nhóm một cách hiệu quả.
@@ -1192,33 +1130,33 @@ Hình \ref*{fmECG_UML} thể hiện các lớp trong hệ thống:
 
 % \subsubsection{Sơ đồ tuần tự xóa dữ liệu phiên đo theo ID}
 
-% \subsubsection{Sơ đồ tuần tự truy vấn danh sách toàn bộ lịch hẹn}
+% \subsubsection{Sơ đồ tuần tự truy vấn danh sách toàn bộ lịch khám}
 
-% \subsubsection{Sơ đồ tuần tự tìm kiếm lịch hẹn theo ID bệnh nhân}
+% \subsubsection{Sơ đồ tuần tự tìm kiếm lịch khám theo ID bệnh nhân}
 
-% \subsubsection{Sơ đồ tuần tự tìm kiếm lịch hẹn theo ID bác sĩ}
+% \subsubsection{Sơ đồ tuần tự tìm kiếm lịch khám theo ID bác sĩ}
 
-% \subsubsection{Sơ đồ tuần tự tạo lịch hẹn mới bởi bệnh nhân}
+% \subsubsection{Sơ đồ tuần tự tạo lịch khám mới bởi bệnh nhân}
 
-% \subsubsection{Sơ đồ tuần tự tạo lịch tái hẹn bởi bác sĩ}
+% \subsubsection{Sơ đồ tuần tự tạo lịch tái khám bởi bác sĩ}
 
 % \subsubsection{Sơ đồ tuần tự tìm kiêm các lịch rảnh của bác sĩ theo ID bác sĩ}
 
 % \subsubsection{Sơ đồ tuần tự tìm kiếm danh sách các bác sĩ dựa trên lịch rảnh của bệnh nhân}
 
-% \subsubsection{Sơ đồ tuần tự xác nhận lịch hẹn bệnh nhân đã đặt}
+% \subsubsection{Sơ đồ tuần tự xác nhận lịch khám bệnh nhân đã đặt}
 
-% \subsubsection{Sơ đồ tuần tự xóa lịch hẹn theo ID}
+% \subsubsection{Sơ đồ tuần tự xóa lịch khám theo ID}
 
 % \subsubsection{Sơ đồ tuần tự thêm chẩn đoán cho bệnh nhân}
 
-% \subsubsection{Sơ đồ tuần tự tìm kiếm chẩn đoán theo ID lịch hẹn}
+% \subsubsection{Sơ đồ tuần tự tìm kiếm chẩn đoán theo ID lịch khám}
 
-% \subsubsection{Sơ đồ tuần tự cập nhật thông tin chẩn đoán theo ID lịch hẹn}
+% \subsubsection{Sơ đồ tuần tự cập nhật thông tin chẩn đoán theo ID lịch khám}
 
-% \subsubsection{Sơ đồ tuần tự truy vấn danh sách các thông báo liên quan đến lịch hẹn theo ID người dùng}
+% \subsubsection{Sơ đồ tuần tự truy vấn danh sách các thông báo liên quan đến lịch khám theo ID người dùng}
 
-% \subsubsection{Sơ đồ tuần tự tạo mới thông báo liên quan đến lịch hẹn}
+% \subsubsection{Sơ đồ tuần tự tạo mới thông báo liên quan đến lịch khám}
 
 % \subsubsection{Sơ đồ tuần tự đánh dấu thông báo là đã đọc}
 
@@ -1243,61 +1181,58 @@ Trước tiên, chúng em sẽ tiến hành xác định các thực thể trong
 	\raggedright
 	\begin{tabularx}{\textwidth}{|p{4.5cm}|X|}
 		\hline
-		\bfseries Thực thể               & \bfseries Thuộc tính                                                                                                     \\ \hline
-		Tài khoản                        &
+		\bfseries Thực thể                & \bfseries Thuộc tính                                                                                                    \\ \hline
+		Tài khoản                         &
 		ID tài khoản, Địa chỉ email đăng ký, Mật khẩu truy cập                                                                                                      \\
 		\hline
-		Token đăng nhập                  &
+		Token đăng nhập                   &
 		ID token, Token làm mới, Hạn sử dụng, Trạng thái token                                                                                                      \\
 		\hline
-		Vai trò người dùng               &
-		ID vai trò, Tên vai trò, Mô tả vai trò                                                                                                                      \\
+		Vai trò người dùng                &
+		ID vai trò, Tên vai trò                                                                                                                                     \\
 		\hline
-		Trạng thái người dùng            &
-		ID trạng thái người dùng, Tên trạng thái, Mô tả trạng thái                                                                                                  \\
+		Trạng thái người dùng             &
+		ID trạng thái người dùng, Mô tả trạng thái                                                                                                                  \\
 		\hline
-		Người dùng                       &
+		Người dùng                        &
 		ID người dùng, Tên đầy đủ, Ngày tháng năm sinh, Giới tính, Số liên lạc, Vai trò người dùng, Trạng thái hoạt động, Đường dẫn ảnh đại diện, Thông tin bổ sung \\
 		\hline
-		Loại thiết bị                    &
-		ID loại thiết bị, Tên loại thiết bị, Mô tả loại thiết bị                                                                                                    \\
+		Loại thiết bị                     &
+		ID loại thiết bị, Tên loại thiết bị                                                                                                                         \\
 		\hline
-		Trạng thái thiết bị              &
-		ID trạng thái thiết bị, Tên trạng thái, Mô tả trạng thái                                                                                                    \\
+		Trạng thái thiết bị               &
+		ID trạng thái thiết bị, Mô tả trạng thái                                                                                                                    \\
 		\hline
-		Thiết bị                         &
+		Thiết bị                          &
 		ID thiết bị, Tên thiết bị, Loại thiết bị, Thông tin chi tiết về thiết bị, Tình trạng hiện tại, Ngày bắt đầu thời gian mượn, Ngày kết thúc thời gian mượn    \\
 		\hline
-		Thông số kỹ thuật                &
+		Thông số kỹ thuật                 &
 		ID thông số, Tên thông số, Loại thông số, Giá trị thông số, Mô tả chi tiết thông số                                                                         \\
 		\hline
-		Dữ liệu phiên đo                 &
+		Dữ liệu phiên đo                  &
 		ID dữ liệu phiên đo, Đường dẫn lưu trữ phiên đo, Thời gian bắt đầu thu thập dữ liệu, Thời gian kết thúc thu thập dữ liệu                                    \\
 		\hline
-		Loại lịch hẹn                    &
-		ID loại lịch hẹn, Tên loại lịch hẹn, Mô tả loại lịch hẹn                                                                                                    \\
+		Trạng thái lịch khám              &
+		ID trạng thái, Mô tả trạng thái                                                                                                                             \\
 		\hline
-		Trạng thái lịch hẹn              &
-		ID trạng thái, Tên trạng thái, Mô tả trạng thái                                                                                                             \\
+		Kết quả lịch khám                 &
+		ID kết quả lịch khám, Mô tả kết quả lịch khám                                                                                                               \\
 		\hline
-		Lịch hẹn                         &
-		ID lịch hẹn, Thời gian bắt đầu lịch hẹn, Thời gian kết thúc lịch hẹn, Kết quả lịch hẹn                                                                      \\
+		Lịch khám                         &
+		ID lịch khám, Thời gian bắt đầu lịch khám, Thời gian kết thúc lịch khám, Kết quả lịch khám                                                                  \\
 		\hline
-		Lịch hẹn của bác sĩ              &
-		ID lịch hẹn của bác sĩ, Thông tin lịch hẹn, Thông tin bác sĩ                                                                                                \\
-		\hline
-		Chẩn đoán cho bệnh nhân          &
+		Chẩn đoán cho bệnh nhân           &
 		ID chẩn đoán, Thông tin chẩn đoán                                                                                                                           \\
 		\hline
-		Thông báo liên quan đến lịch hẹn &
-		ID thông báo, Loại thông báo (gửi cho bác sĩ hoặc gửi cho bệnh nhân), Thời gian bắt đầu lịch hẹn, Nội dung thông báo,
-		Trạng thái thông báo (nhắc hẹn, được bác sĩ chấp nhận, đang chờ xác nhận, từ chối, đặt lịch tái khám thành công, bị hủy tự động),
+		Thông báo liên quan đến lịch khám &
+		ID thông báo, Loại thông báo (gửi cho bác sĩ hoặc gửi cho bệnh nhân), Thời gian bắt đầu lịch khám, Nội dung thông báo,
+		Trạng thái thông báo (nhắc khám, được bác sĩ chấp nhận, đang chờ xác nhận, từ chối, đặt lịch tái khám thành công, bị hủy tự động),
 		Trạng thái đã xem, Lý do từ chối lịch (nếu có)                                                                                                              \\
 		\hline
-		Tin nhắn                         &
+		Tin nhắn                          &
 		ID tin nhắn, Người gửi tin nhắn, Nhóm trò chuyện nhận tin nhắn, Nội dung tin nhắn, Thời điểm gửi                                                            \\
 		\hline
-		Nhóm trò chuyện                  &
+		Nhóm trò chuyện                   &
 		ID nhóm trò chuyện, Tên nhóm trò chuyện, Người tạo nhóm, Danh sách thành viên nhóm, Sự kiện gửi tin nhắn, Sự kiện nhận tin nhắn                             \\
 		\hline
 	\end{tabularx}
