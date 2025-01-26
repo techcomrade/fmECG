@@ -1,42 +1,20 @@
 \section*{TÓM TẮT ĐỒ ÁN}
 \phantomsection\addcontentsline{toc}{section}{\numberline{}TÓM TẮT ĐỒ ÁN}
+Đồ án "Phát triển ứng dụng di động tích hợp trong hệ thống quản lý dữ liệu tim mạch, hỗ trợ kết nối giữa bệnh nhân - bác sĩ" là một hệ thống tích hợp bao gồm Web/App/Server, sử dụng công nghệ Bluetooth Low Energy để hỗ trợ việc theo dõi và quản lý dữ liệu điện tim trên ứng dụng di động một cách hiệu quả và tiện lợi. Dữ liệu sau mỗi phiên đo được lưu trữ trên server, cho phép người dùng xem lại bất kỳ lúc nào và phục vụ cho các mục đích nghiên cứu trong tương lai. Bên cạnh đó, hệ thống còn cung cấp các tính năng hỗ trợ kết nối trực tiếp giữa bệnh nhân và bác sĩ, như đặt lịch hẹn, nhắn tin trao đổi thông tin và theo dõi dữ liệu sức khỏe, mang lại sự tiện ích và chuyên nghiệp trong quản lý sức khỏe.
 
-Đồ án "Hệ thống quản lý dữ liệu điện tim và tương tác giữa bệnh nhân - bác sĩ" là hệ thống bao gồm Web/App/Server 
-giúp việc đặt lịch và tương tác giữa các bác sĩ, bệnh nhân trên website và ứng dụng di động một cách dễ dàng và hiệu quả. 
-Tại đây thông tin người dùng, dữ liệu đặt lịch, dữ liệu đo hay các đoạn hội thoại sẽ được lưu trữ trên server để người dùng có thể xem lại bất cứ lúc nào.
-Bên cạnh đó hệ thống cung cấp tính năng đặt lịch hẹn giúp bệnh nhân thoải mái chọn lịch phù hợp với thời gian của mình.
-Bác sĩ sẽ đồng ý hoặc từ chối lịch, sau đó thông báo sẽ được gửi đến bệnh nhân. Nếu bác sĩ quên, sẽ có mail thông báo đến bác sĩ.
-Sau khi bác sĩ đồng ý lịch hẹn, bệnh nhân và bác sĩ có thể nhắn tin để trao đổi thông tin.
+Trong đồ án, nhóm tập trung hoàn thiện hệ thống theo quy trình phát triển phần mềm, từ việc xác định các yêu cầu hệ thống đến phân tích, thiết kế và triển khai. Quy trình này áp dụng phương pháp phân tích và thiết kế hướng đối tượng, sử dụng ngôn ngữ UML để biểu diễn các luồng thực hiện hành động. Về mặt kỹ thuật, ứng dụng di động được phát triển trên hệ điều hành Android và iOS sử dụng Flutter Framework, trong khi ứng dụng Web được xây dựng với ReactJS và AdminJS. Server của hệ thống sử dụng NodeJS, framework NestJS, và được triển khai trên Amazon EC2. Hệ thống sử dụng cơ sở dữ liệu MySQL kết hợp với NoSQL (MongoDB) để đảm bảo hiệu năng và khả năng lưu trữ linh hoạt.
 
-Đồ án tập trung hoàn thiện theo quy trình phát triển phần mềm, 
-sau khi xác định được các yêu cầu của hệ thống sẽ tiến hành phân tích, thiết kế và triển khai hệ thống. 
-Quá trình này áp dụng phương pháp phân tích và thiết kế hướng đối tượng, đồng thời sử dụng ngôn ngữ UML để biểu diễn các luồng thực hiện hành động. 
-Ứng dụng Web sử dụng ReactJS, và server là NodeJS, framework NestJS. Cơ sở dữ liệu sử dụng là MySQL và MongoDb.
-
-Quyển đồ án được trình bày theo quy trình phát triển phần mềm, nội dung mỗi chương được triển khai và trình bày thông qua sơ đồ và diễn giải chi tiết. 
-Các chương theo thứ tự lần lượt là phân tích hệ thống, thiết kế hệ thống, triển khai và kiểm thử, cuối cùng là kết luận.
-
+Quyển đồ án được trình bày theo quy trình phát triển phần mềm, với nội dung được triển khai chi tiết trong từng chương, bao gồm: phân tích hệ thống, thiết kế hệ thống, triển khai và kiểm thử, và cuối cùng là phần kết luận. Tất cả các nội dung được minh họa bằng sơ đồ và các diễn giải cụ thể, đảm bảo tính rõ ràng và khoa học.
 % \cleardoublepage
 
 \newpage
 \section*{ABSTRACT}
 % \phantomsection\addcontentsline{toc}{section}{\numberline{}ABSTRACT}
+The project "Development of a Mobile Application Integrated into a Cardiovascular Data Management System, Supporting Patient-Doctor Connectivity" is an integrated system comprising Web/App/Server, leveraging Bluetooth Low Energy (BLE) technology to facilitate effective and convenient monitoring of electrocardiogram (ECG) data through a mobile application. The data collected after each measurement session is stored on the server, enabling users to review it at any time and supporting future research purposes. Furthermore, the system provides features that enhance direct connectivity between patients and doctors, including appointment scheduling, messaging for information exchange, and health data monitoring, delivering convenience and professionalism in healthcare management.
 
-The project "Electrocardiogram Data Management System and Patient-Doctor Interaction" is a system comprising Web/App/Server components that facilitate scheduling 
-and interaction between doctors and patients through websites and mobile applications in an easy and efficient manner.
+This project focuses on completing the system following a software development lifecycle (SDLC), starting from identifying system requirements to analyzing, designing, and implementing the solution. The development process applies object-oriented analysis and design (OOAD) methodologies, utilizing Unified Modeling Language (UML) to represent action flows. From a technical perspective, the mobile application is developed for both Android and iOS platforms using the Flutter framework. The web application is built with ReactJS and AdminJS, while the server utilizes NodeJS and the NestJS framework, deployed on Amazon EC2. The system employs MySQL in combination with NoSQL (MongoDB) databases to ensure both performance and flexible data storage capabilities.
 
-Here, user information, appointment schedules, measurement data, and conversations are stored on the server, allowing users to review them at any time. 
-Additionally, the system offers a scheduling feature that enables patients to conveniently select a suitable appointment time. Doctors can approve or decline the schedule, 
-and a notification will then be sent to the patient. If the doctor forgets, a reminder email will be sent to the doctor. 
-Once the doctor approves the appointment, patients and doctors can chat to exchange information.
-
-The project focuses on completing the software development process. 
-After identifying the system requirements, the analysis, design, and implementation phases are carried out. 
-This process applies object-oriented analysis and design methods, while utilizing UML language to represent action execution flows. 
-The web application uses ReactJS, the server is built with NodeJS and the NestJS framework, and the databases used are MySQL and MongoDB.
-
-The project report is presented according to the software development process, with each chapter developed and detailed through diagrams and comprehensive explanations. 
-The chapters are ordered as follows: system analysis, system design, implementation and testing, and finally, conclusion.
+The project documentation is structured according to the software development lifecycle, with detailed content presented in individual chapters, including system analysis, system design, implementation, testing, and finally, conclusions. All content is illustrated with diagrams and comprehensive explanations, ensuring clarity and scientific rigor.
 
 \cleardoublepage
 
