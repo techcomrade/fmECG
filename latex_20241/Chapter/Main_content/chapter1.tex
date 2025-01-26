@@ -101,7 +101,7 @@ Từ cơ sở này, việc thiết kế và phát triển hệ thống quản l�
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=9cm,height=2.5cm]{Images/use_case/use_case_register.png}
-	\caption[Sơ đồ trường hợp sử dụng chức năng tạo tài khoản người dùng của hệ thống]{\bfseries \fontsize{12pt}{0pt}
+	\caption[Sơ đồ trường hợp sử dụng chức năng tạo tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}
 		\selectfont Sơ đồ trường hợp sử dụng chức năng tạo tài khoản người dùng}
 	\label{use_case_register} %đặt tên cho ảnh
 \end{figure}
@@ -167,22 +167,22 @@ Từ cơ sở này, việc thiết kế và phát triển hệ thống quản l�
 	\end{tabularx}
 \end{table}
 
-\subsubsection{Sơ đồ trường hợp sử dụng chức năng quản lý tài khoản cá nhân}
+\subsubsection{Sơ đồ trường hợp sử dụng chức năng quản lý tài khoản người dùng}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm,height=6cm]{Images/use_case/use_case_account_info.png}
-	\caption[Sơ đồ trường hợp sử dụng chức năng quản lý tài khoản cá nhân]{\bfseries \fontsize{12pt}{0pt}
-		\selectfont Sơ đồ trường hợp sử dụng chức năng quản lý tài khoản cá nhân}
+	\caption[Sơ đồ trường hợp sử dụng chức năng quản lý tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}
+		\selectfont Sơ đồ trường hợp sử dụng chức năng quản lý tài khoản người dùng}
 	\label{use_case_account_info} %đặt tên cho ảnh
 \end{figure}
 
 \begin{table}[H]
-	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Phân tích trường hợp sử dụng chức năng quản lý thông tin tài khoản}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Phân tích trường hợp sử dụng chức năng quản lý tài khoản người dùng}
 	\centering
 	\begin{tabularx}{0.9\textwidth}{|c|X|}
 		\hline
-		\textbf{Tên chức năng} & \textbf{Quản lý thông tin tài khoản cá nhân}                                     \\
+		\textbf{Tên chức năng} & \textbf{Quản lý thông tin tài khoản người dùng}                                  \\
 		\hline
 		Tác nhân               & Người sử dụng hệ thống                                                           \\
 		\hline
@@ -201,15 +201,84 @@ Từ cơ sở này, việc thiết kế và phát triển hệ thống quản l�
 	\end{tabularx}
 \end{table}
 
-\subsubsection{Sơ đồ trường hợp sử dụng chức năng quản lý thông tin người dùng}
+\subsubsection{Sơ đồ trường hợp sử dụng chức năng quản lý người dùng hệ thống}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm,height=11cm]{Images/use_case/use_case_user.png}
+	\includegraphics[width=12cm,height=12cm]{Images/use_case/use_case_user.png}
 	\caption[Sơ đồ trường hợp sử dụng chức năng quản lý người dùng]{\bfseries \fontsize{12pt}{0pt}
 		\selectfont Sơ đồ trường hợp sử dụng chức năng quản lý người dùng hệ thống}
 	\label{use_case_user} %đặt tên cho ảnh
 \end{figure}
+
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Phân tích trường hợp sử dụng chức năng tra cứu danh sách người dùng}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|c|X|}
+		\hline
+		\textbf{Tên chức năng} & \textbf{Tra cứu danh sách người dùng}                                                                             \\
+		\hline
+		Tác nhân               & Quản trị viên                                                                                                     \\
+		\hline
+		Mô tả                  & Hỗ trợ quản trị viên thực hiện các tác vụ như tra cứu và quản lý thông tin chi tiết của người dùng trong hệ thống \\
+		\hline
+		Điều kiện trước        & Quản trị viên phải đăng nhập vào hệ thống với quyền truy cập hợp lệ                                               \\
+		\hline
+		Dòng sự kiện chính     &
+		- Quản trị viên truy cập tính năng tra cứu danh sách người dùng \newline
+		- Hệ thống hiển thị danh sách thông tin tất cả người dùng trong hệ thống \newline
+		- Quản trị viên thực hiện tìm kiếm và chọn một người dùng cụ thể \newline
+		- Hệ thống cung cấp thông tin chi tiết của người dùng được chọn \newline
+		- Hoàn thành quá trình tra cứu danh sách người dùng                                                                                        \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Phân tích trường hợp sử dụng chức năng tra cứu danh sách bác sĩ}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|c|X|}
+		\hline
+		\textbf{Tên chức năng} & \textbf{Tra cứu danh sách bác sĩ}                                         \\
+		\hline
+		Tác nhân               & Bệnh nhân                                                                 \\
+		\hline
+		Mô tả                  & Hỗ trợ bệnh nhân tra cứu thông tin chi tiết của các bác sĩ trong hệ thống \\
+		\hline
+		Điều kiện trước        & Bệnh nhân phải đăng nhập vào hệ thống với quyền truy cập hợp lệ           \\
+		\hline
+		Dòng sự kiện chính     &
+		- Bệnh nhân truy cập tính năng tra cứu danh sách bác sĩ \newline
+		- Hệ thống hiển thị danh sách các bác sĩ cùng thông tin cơ bản. \newline
+		- Bệnh nhân chọn bác sĩ cụ thể từ danh sách. \newline
+		- Hệ thống hiển thị thông tin chi tiết về bác sĩ được chọn. \newline
+		- Hoàn thành quá trình tra cứu danh sách bác sĩ trong hệ thống                                     \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Phân tích trường hợp sử dụng chức năng tra cứu danh sách bệnh nhân}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|c|X|}
+		\hline
+		\textbf{Tên chức năng} & \textbf{Tra cứu danh sách bệnh nhân đang theo dõi}                                                      \\
+		\hline
+		Tác nhân               & Bác sĩ                                                                                                  \\
+		\hline
+		Mô tả                  & Hỗ trợ bác sĩ tìm kiếm và xem thông tin chi tiết của các bệnh nhân mà họ đang phụ trách trong hệ thống. \\
+		\hline
+		Điều kiện trước        & Bác sĩ phải đăng nhập vào hệ thống với quyền truy cập hợp lệ                                            \\
+		\hline
+		Dòng sự kiện chính     &
+		- Bác sĩ truy cập tính năng tra cứu danh sách bệnh nhân đang phụ trách \newline
+		- Hệ thống hiển thị danh sách các bệnh nhân cùng thông tin cơ bản. \newline
+		- Bác sĩ chọn bệnh nhân cụ thể từ danh sách. \newline
+		- Hệ thống cung cấp thông tin chi tiết của bệnh nhân được chọn. \newline
+		- Hoàn thành quá trình tra cứu danh sách bệnh nhân                                                                               \\
+		\hline
+	\end{tabularx}
+\end{table}
 
 \begin{table}[H]
 	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Phân tích trường hợp sử dụng chức năng tra cứu danh sách người dùng}
@@ -451,7 +520,7 @@ Từ cơ sở này, việc thiết kế và phát triển hệ thống quản l�
 \end{table}
 
 \begin{table}[H]
-	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Phân tích trường hợp sử dụng chức năng xem đồ thị dữ liệu phiên đo}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Phân tích trường hợp sử dụng chức năng xem đồ thị các tín hiệu đã đo}
 	\centering
 	\begin{tabularx}{0.9\textwidth}{|c|X|}
 		\hline
@@ -500,24 +569,24 @@ Từ cơ sở này, việc thiết kế và phát triển hệ thống quản l�
 \end{table}
 
 \begin{table}[H]
-	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Phân tích trường hợp sử dụng chức năng xóa dữ liệu phiên đo}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Phân tích trường hợp sử dụng chức năng phiên đo}
 	\centering
 	\begin{tabularx}{0.9\textwidth}{|c|X|}
 		\hline
-		\textbf{Tên chức năng} & \textbf{Tải bản ghi dữ liệu phiên đo}                                                                                                                                                 \\
+		\textbf{Tên chức năng} & \textbf{Xóa phiên đo}                               \\
 		\hline
-		Tác nhân               & Bác sĩ, Quản trị viên                                                                                                                                                                 \\
+		Tác nhân               & Bác sĩ, Quản trị viên                               \\
 		\hline
-		Mô tả                  & Cung cấp chức năng xóa dữ liệu phiên đo. \\
+		Mô tả                  & Cung cấp chức năng xóa phiên đo.                    \\
 		\hline
-		Điều kiện trước        & Người dùng phải đăng nhập với quyền truy cập hợp lệ                                                                                                                                   \\
+		Điều kiện trước        & Người dùng phải đăng nhập với quyền truy cập hợp lệ \\
 		\hline
 		Dòng sự kiện chính     &
 		- Người dùng truy cập chức năng xóa dữ liệu phiên đo \newline
 		- Hệ thống hiển thị danh sách các phiên đo có thể xóa \newline
 		- Người dùng chọn phiên đo cần xóa dữ liệu \newline
 		- Hệ thống thực hiện xóa phiên đo được chọn, cập nhật danh sách phiên đo và gửi thông báo kết quá \newline
-		- Hoàn thành quá trình xóa dữ liệu phiên đo                                                                                                                                   \\
+		- Hoàn thành quá trình xóa dữ liệu phiên đo                                  \\
 		\hline
 	\end{tabularx}
 \end{table}
@@ -553,6 +622,29 @@ Từ cơ sở này, việc thiết kế và phát triển hệ thống quản l�
 		- Bệnh nhân chọn thời gian và bác sĩ phù hợp để đặt lịch \newline
 		- Hệ thống xử lý yêu cầu, lưu thông tin và thông báo đặt lịch thành công. Sau đó chờ lịch được xác nhận từ phía bác sĩ \newline
 		- Hoàn thành quá trình đặt lịch                                                                                                                                               \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Phân tích trường hợp sử dụng chức năng tra cứu lịch khám trong hệ thống}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|c|X|}
+		\hline
+		\textbf{Tên chức năng} & \textbf{Tra cứu lịch khám trong hệ thống}                                           \\
+		\hline
+		Tác nhân               & Quản trị viên                                                                       \\
+		\hline
+		Mô tả                  & Cho phép quản trị viên xem và tra cứu chi tiết các lịch khám đang có trong hệ thống \\
+		\hline
+		Điều kiện trước        & Quản trị viên phải đăng nhập vào hệ thống với quyền truy cập hợp lệ                 \\
+		\hline
+		Dòng sự kiện chính     &
+		- Quản trị viên truy cập chức năng tra cứu lịch khám \newline
+		- Hệ thống hiển thị danh sách các lịch khám trong hệ thống \newline
+		- Quản trị viên chọn một lịch khám cụ thể \newline
+		- Hệ thống hiển thị chi tiết lịch khám, bao gồm thời gian, bác sĩ phụ trách, bệnh nhân và thông tin chẩn đoán (nếu có) \newline
+		- Quá trình tra cứu lịch khám trong hệ thống hoàn tất                                                        \\
 		\hline
 	\end{tabularx}
 \end{table}
@@ -652,35 +744,11 @@ Từ cơ sở này, việc thiết kế và phát triển hệ thống quản l�
 	\end{tabularx}
 \end{table}
 
-\begin{table}[H]
-	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Phân tích trường hợp sử dụng chức năng tra cứu lịch khám trong hệ thống}
-	\centering
-	\begin{tabularx}{0.9\textwidth}{|c|X|}
-		\hline
-		\textbf{Tên chức năng} & \textbf{Tra cứu lịch khám trong hệ thống}                                           \\
-		\hline
-		Tác nhân               & Quản trị viên                                                                       \\
-		\hline
-		Mô tả                  & Cho phép quản trị viên xem và tra cứu chi tiết các lịch khám đang có trong hệ thống \\
-		\hline
-		Điều kiện trước        & Quản trị viên phải đăng nhập vào hệ thống với quyền truy cập hợp lệ                 \\
-		\hline
-		Dòng sự kiện chính     &
-		- Quản trị viên truy cập chức năng tra cứu lịch khám \newline
-		- Hệ thống hiển thị danh sách các lịch khám trong hệ thống \newline
-		- Quản trị viên chọn một lịch khám cụ thể \newline
-		- Hệ thống hiển thị chi tiết lịch khám, bao gồm thời gian, bác sĩ phụ trách, bệnh nhân và thông tin chẩn đoán (nếu có) \newline
-		- Quá trình tra cứu lịch khám trong hệ thống hoàn tất                                                        \\
-		\hline
-	\end{tabularx}
-\end{table}
-
-
 \subsubsection{Sơ đồ trường hợp sử dụng chức năng quản lý dịch vụ nhắn tin}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm,height=10cm]{Images/use_case/use_case_chat.png}
+	\includegraphics[width=12cm,height=9cm]{Images/use_case/use_case_chat.png}
 	\caption[Sơ đồ trường hợp sử dụng chức năng quản lý dịch vụ nhắn tin]{\bfseries \fontsize{12pt}{0pt}
 		\selectfont Sơ đồ trường hợp sử dụng chức năng quản lý dịch vụ nhắn tin}
 	\label{use_case_chat} %đặt tên cho ảnh
