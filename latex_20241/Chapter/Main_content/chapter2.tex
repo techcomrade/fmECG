@@ -1,186 +1,1255 @@
-
-\section*{CHƯƠNG 2. PHÂN TÍCH HỆ THỐNG}
+\section*{CHƯƠNG 2. TÌM HIỂU VÀ PHÂN TÍCH HỆ THỐNG}
 \setcounter{section}{2}
 \setcounter{subsection}{0} %LƯU Ý MỖI LẦN THÊM CHƯƠNG MỚI CẦN THÊM CÂU NÀY ĐỂ RESET THỨ TỰ CỦA SUBSECTON VỀ 1
 \setcounter{table}{0} % LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 2. PHÂN TÍCH HỆ THỐNG}
-Chương này sẽ trình bày chi tiết về quá trình phân tích hệ thống, dựa trên các yêu cầu đã được nêu trong Phần mở đầu và Chương 1. Quá trình này bao gồm các bước sau:\begin{adjustwidth}{1.5em}{}
-  \begin{itemize}
-    \item Thiết kế các thẻ CRC (Class - Responsibility - Collaboration Card) cùng các lớp dựa trên thông tin từ các sơ đồ use case chức năng của hệ thống
-    \item Xây dựng sơ đồ lớp dựa trên các lớp đã được định nghĩa với thuộc tính và phương thức
-    \item Sau khi đã xác định về phương thức cũng như thuộc tính các lớp cùng chức năng, bước tiếp theo sẽ thiết kế các sơ đồ tuần tự minh họa sự tương tác giữa các lớp 
-          khi thực hiện chức năng cụ thể
-  \end{itemize}
-  \end{adjustwidth}
+Chương này trình bày chi tiết quá trình phân tích hệ thống, dựa trên các yêu cầu đã được xác định trong Phần mở đầu và Chương 1. Nội dung bao gồm các bước sau:\begin{adjustwidth}{1.5em}{}
+	\begin{itemize}
+		\item Thiết kế các thẻ CRC (Class - Responsibility - Collaboration Card) cùng các lớp dựa trên thông tin thu thập từ các sơ đồ use case mô tả chức năng của hệ thống.
+		\item Xây dựng sơ đồ lớp với đầy đủ thuộc tính và phương thức, dựa trên các lớp đã được định nghĩa.
+		\item Sau khi xác định thuộc tính, phương thức và chức năng của các lớp, tiếp tục thiết kế sơ đồ tuần tự để minh họa chi tiết sự tương tác giữa các lớp khi thực hiện các chức năng cụ thể.
+	\end{itemize}
+\end{adjustwidth}
 % \newpage
 \subsection{Thẻ CRC (Class - Responsibility - Collaboration Card)}
 
-\subsubsection{Thẻ CRC lớp account}
-\subsubsection{Thẻ CRC lớp user role}
-
-\subsubsection{Thẻ CRC lớp user status}
-
-\subsubsection{Thẻ CRC lớp users}
-
-\subsubsection{Thẻ CRC lớp device type}
-
-\subsubsection{Thẻ CRC lớp device status}
-
-\subsubsection{Thẻ CRC lớp devices}
-
-\subsubsection{Thẻ CRC lớp device details}
-\subsubsection{Thẻ CRC lớp records}
-
-\subsubsection{Thẻ CRC lớp record diagnosis}
-
-\subsubsection{Thẻ CRC lớp notification schedule}
-
-\subsubsection{Thẻ CRC lớp schedule type}
-
-\subsubsection{Thẻ CRC lớp schedule status}
-
-\subsubsection{Thẻ CRC lớp schedules}
-
-\subsubsection{Thẻ CRC lớp diagnosis}
-
-\subsubsection{Thẻ CRC lớp device type}
-
-\subsubsection{Thẻ CRC lớp consultation schedule}
-
-
-
-
+\subsubsection{Thẻ CRC lớp Tài khoản người dùng}
 
 \begin{xltabular}{\textwidth}{
-   >{\centering\arraybackslash}X 
-  }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Người dùng}
-  % \label{table_api_news}
-  \\
-  \begin{tabularx}{0.9\textwidth}{X}
-    Mặt trước thẻ
-  \end{tabularx}
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Tên lớp:} Người dùng (User) & \textbf{ID:} 1 \\
-    \hline
-    \textbf{Mô tả:} Đối tượng mô tả thông tin người dùng & \textbf{Use case liên quan:}  Đăng ký tài khoản, Quản lý tài khoản cá nhân, Quản lý phân công bác sĩ - bệnh nhân\\
-    \hline
-    \textbf{Trách nhiệm (Responsibility):} & \textbf{Các lớp cộng tác (Collaboration):} \\
-    Thêm, sửa, xóa thông tin người dùng 
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tài khoản người dùng}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Tài khoản người dùng (account)                          & \textbf{ID:} 0                                                                                           \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin tài khoản người dùng trong hệ thống & \textbf{Use case liên quan:}  Đăng ký tài khoản, Quản lý tài khoản cá nhân, Quản lí thông tin người dùng \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                    & \textbf{Các lớp cộng tác (Collaboration):}                                                               \\
+		Xử lý đăng nhập và đăng xuất
 
-    Lấy danh sách người dùng
+		Đăng ký tài khoản mới cho người dùng
+		                                                                          &
+		Token đăng nhập
 
-    Lấy thông tin người dùng qua ID, tài khoản, chức vụ
-    & 
-    Tài khoản
-    \\
-    \hline
-  \end{tabularx}
-  \\ 
-  \begin{tabularx}{0.9\textwidth}{X}
-    Mặt sau thẻ
-  \end{tabularx} 
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Thuộc tính (Attributes):} & \\
-    id(uuid) 
-    
-    username(string)
+		Người dùng
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
 
-    birth(timestamps)
+		user\_email(string)
 
-    phone\_number(string)
-    & 
-    image(string) 
-    
-    role(integer) 
-    
-    createdAt(Date)
+		user\_password(string)
+		                                  &
+		user\_role(integer)
 
-    updatedAt(Date)
-    \\ \hline
-  \end{tabularx}
-  \\     
-  \begin{tabularx}{0.9\textwidth}{|X|}
-    \hline
-   \textbf{Mối quan hệ (Relationships)} \\
-    Tổng quát hóa (Generalize):  
+		createdAt(Datetime)
 
-    Toàn thể - Bộ phận (Aggregation):
-    
-    Liên kết (Association): Tài khoản, Lịch hẹn, Thiết bị, Bản ghi 
-    \\
-    \hline
-  \end{tabularx}
-  \end{xltabular}
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
 
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Token đăng nhập, Người dùng
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Token}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Token}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Token                                                           & \textbf{ID:} 1                                     \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin token liên kết với mỗi tài khoản người dùng & \textbf{Use case liên quan:}  Đăng nhập, đăng xuất \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                            & \textbf{Các lớp cộng tác (Collaboration):}         \\
+		Quản lý vòng đời của access\_token và refresh\_token (tạo mới, xóa khi cần)
+
+		Xác minh token để kiểm tra tính hợp lệ trong các yêu cầu của người dùng
+
+		Đảm bảo tính hợp lệ của phiên đăng nhập
+		                                                                                  &
+		Tài khoản người dùng
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		account\_id(string)
+
+		refresh\_token(string)
+
+		expired\_At(Datetime)
+		                                  &
+		is\_expired(integer)
+
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Tài khoản người dùng
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Vai trò người dùng}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Vai trò người dùng}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Vai trò người dùng (user\_role)                               & \textbf{ID:} 2                                             \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin các vai trò của người dùng trong hệ thống & \textbf{Use case liên quan:}  Quản lí thông tin người dùng \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                          & \textbf{Các lớp cộng tác (Collaboration):}                 \\
+		Lưu trữ và quản lý các vai trò người dùng (như Bệnh nhân, Bác sĩ, Quản trị viên)
+
+		Cung cấp thông tin vai trò để phân quyền truy cập trong hệ thống
+		                                                                                &
+		Người dùng
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		role\_name(string)
+		                                  &
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Người dùng
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Trạng thái người dùng}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Trạng thái người dùng}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Trạng thái người dùng (user\_status)                             & \textbf{ID:} 3                                             \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin các trạng thái của người dùng trong hệ thống & \textbf{Use case liên quan:}  Quản lí thông tin người dùng \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                             & \textbf{Các lớp cộng tác (Collaboration):}                 \\
+		Lưu trữ các trạng thái hoạt động của người dùng (ví dụ: hoạt động, bị khóa, tạm ngưng)
+
+		Cung cấp thông tin trạng thái để hỗ trợ quản lý quyền truy cập hệ thống
+		                                                                                   &
+		Người dùng
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		status\_description(string)
+		                                  &
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Người dùng
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Người dùng}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Người dùng}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Người dùng (User)                                                      & \textbf{ID:} 4                                                                                \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin cá nhân và quyền hạn của người dùng trong hệ thống & \textbf{Use case liên quan:}  Đăng ký tài khoản, Quản lý tài khoản cá nhân, Quản lý lịch khám \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                                   & \textbf{Các lớp cộng tác (Collaboration):}                                                    \\
+		Quản lý thông tin người dùng, bao gồm thêm mới, chỉnh sửa và xóa dữ liệu
+
+		Truy vấn danh sách người dùng hiện có trong hệ thống dựa trên các tiêu chí như ID, tài khoản, hoặc vai trò
+		                                                                                         &
+		Tài khoản
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		username(string)
+
+		user\_role\_id(integer)
+
+		date\_of\_birth(timestamps)
+
+		user\_phone\_number(string)
+
+		user\_gender(integer)
+		                                  &
+		profile\_image(string)
+
+		additional\_infor(string)
+
+		user\_status\_id(integer)
+
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Tài khoản, Vai trò người dùng, Trạng thái người dùng, Lịch khám, Thiết bị, Dữ liệu phiên đo
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Loại thiết bị}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Loại thiết bị}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Loại thiết bị (device\_type)                                      & \textbf{ID:} 5                                 \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin các loại thiết bị được sử dụng trong hệ thống & \textbf{Use case liên quan:}  Quản lí thiết bị \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                              & \textbf{Các lớp cộng tác (Collaboration):}     \\
+		Lưu trữ và quản lý danh sách các loại thiết bị
+		                                                                                    &
+		Thiết bị
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		type\_name(string)
+		                                  &
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Thiết bị
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Trạng thái thiết bị}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Trạng thái thiết bị}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Trạng thái thiết bị (device\_status)                                        & \textbf{ID:} 6                                 \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin các trạng thái của thiết bị được sử dụng trong hệ thống & \textbf{Use case liên quan:}  Quản lí thiết bị \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                                        & \textbf{Các lớp cộng tác (Collaboration):}     \\
+		Lưu trữ danh sách các trạng thái của thiết bị (ví dụ: Hoạt động, Không hoạt động, Bảo trì)
+
+		Cung cấp thông tin trạng thái cho các chức năng quản lý và phân công thiết bị
+		                                                                                              &
+		Thiết bị
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		status\_description(string)
+		                                  &
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Thiết bị
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Thiết bị}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thiết bị}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Thiết bị (device)                                                     & \textbf{ID:} 7                                 \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin chi tiết các thiết bị được sử dụng trong hệ thống & \textbf{Use case liên quan:}  Quản lí thiết bị \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                                  & \textbf{Các lớp cộng tác (Collaboration):}     \\
+		Quản lý thông tin thiết bị: thêm mới, chỉnh sửa, và xóa dữ liệu thiết bị
+
+		Truy vấn danh sách các thiết bị hiện có trong hệ thống dựa trên các tiêu chí như ID bệnh nhân và bác sĩ
+		                                                                                        &
+		Thiết bị
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		user\_id(string)
+
+		device\_name(string)
+
+		device\_information(string)
+
+		device\_type\_id(integer)
+		                                  &
+		device\_status\_id(integer)
+
+		device\_start\_time(timestamps)
+
+		device\_end\_time(timestamps)
+
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Dữ liệu phiên đo, Người dùng, Loại thiết bị, Trạng thái thiết bị, Thông tin chi tiết thiết bị
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Thông số kỹ thuật}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thông số kỹ thuật}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Thông số kỹ thuật (device\_details)                                                         & \textbf{ID:} 8                                 \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin chi tiết thông số kỹ thuật của các thiết bị được sử dụng trong hệ thống & \textbf{Use case liên quan:}  Quản lí thiết bị \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                                                        & \textbf{Các lớp cộng tác (Collaboration):}     \\
+		Lưu trữ và quản lý thông số kỹ thuật của thiết bị: thêm mới, chỉnh sửa, và xóa thông số theo ID thiết bị
+
+		Truy vấn các thông số kỹ thuật dựa trên ID thiết bị cụ thể
+		                                                                                                              &
+		Thiết bị
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		associated\_device\_id(string)
+
+		device\_detail\_name(string)
+
+		device\_detail\_type(integer)
+		                                  &
+		detail\_value(string)
+
+		detail\_information(string)
+
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Thiết bị
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Dữ liệu phiên đo}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Dữ liệu phiên đo}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Dữ liệu phiên đo (records)                                & \textbf{ID:} 9                                         \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin các Dữ liệu phiên đo của mỗi phiên đo & \textbf{Use case liên quan:}  Quản lý dữ liệu phiên đo \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                      & \textbf{Các lớp cộng tác (Collaboration):}             \\
+		Lưu trữ và quản lý danh sách các dữ liệu phiên đo: chỉnh sửa, và xóa dữ liệu
+
+		Truy vấn danh sách dữ liệu phiên đo dựa trên ID bệnh nhân hoặc ID bác sĩ
+		                                                                            &
+		Người dùng
+
+		Thiết bị
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		patient\_id(string)
+
+		device\_id(string)
+
+		record\_file\_url(string)
+		                                  &
+		season\_start\_time(string)
+
+		season\_end\_time(string)
+
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Thiết bị, Người dùng
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Trạng thái lịch khám}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Trạng thái lịch khám}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Trạng thái lịch khám (schedule\_status)                              & \textbf{ID:} 10                                 \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin các trạng thái lịch khám hiện tại trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch khám \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                                 & \textbf{Các lớp cộng tác (Collaboration):}      \\
+		Lưu trữ danh sách các trạng thái lịch khám (ví dụ: Thành công (được bác sĩ chấp nhận), Thất bại (bị từ chối), Đang chờ xác nhận)
+
+		Cung cấp thông tin các trạng thái lịch khám để hỗ trợ các chức năng liên quan đến quản lý và hiển thị lịch khám
+		                                                                                       &
+		Lịch khám
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		status\_description(string)
+		                                  &
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Lịch khám
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Kết quả lịch khám}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Kết quả lịch khám}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Kết quả lịch khám (schedule\_result)          & \textbf{ID:} 11                                 \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin các kết quả của lịch khám & \textbf{Use case liên quan:}  Quản lý lịch khám \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                          & \textbf{Các lớp cộng tác (Collaboration):}      \\
+		Lưu trữ danh sách các kết quả lịch khám có thể có (ví dụ: Lịch khám đã diễn ra, Lịch khám không diễn ra (Bệnh nhân không tới, các lí do khác))
+
+		Cung cấp thông tin các kết quả lịch khám cho các chức năng liên quan đến lập lịch
+		                                                                &
+		Lịch khám
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		result\_description(string)
+		                                  &
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Lịch khám
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Lịch khám}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Lịch khám}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Lịch khám (schedule)                                      & \textbf{ID:} 12                                 \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin các lịch khám hiện tại trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch khám \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                      & \textbf{Các lớp cộng tác (Collaboration):}      \\
+		Lưu trữ danh sách các lịch khám
+
+		Truy vấn danh sách lịch khám dựa trên ID bệnh nhân
+
+		Lập lịch khám dựa theo các tiêu chí như bác sĩ hoặc thời gian rảnh
+		                                                                            &
+		Trạng thái lịch khám
+
+		Kết quả lịch khám
+
+		Người dùng
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		patient\_id(string)
+
+		doctor\_id(string)
+
+		schedule\_start\_time(timestamps)
+
+		schedule\_end\_time(timestamps)
+		                                  &
+		schedule\_status\_id(integer)
+
+		schedule\_result\_id(integer)
+
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Trạng thái lịch khám, Kết quả lịch khám,
+		Người dùng, Chẩn đoán cho bệnh nhân
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Thông báo liên quan đến lịch khám}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Thông báo liên quan đến lịch khám}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Thông báo liên quan đến lịch khám (notifications\_schedule)              & \textbf{ID:} 14                                 \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin các thông báo liên quan đến lịch khám trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch khám \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                                     & \textbf{Các lớp cộng tác (Collaboration):}      \\
+		Lưu trữ danh sách thông báo với thông tin lịch khám, bác sĩ, và bệnh nhân tương ứng
+
+		Truy vấn danh sách thông báo theo ID bác sĩ hoặc ID bệnh nhân
+		                                                                                           &
+		Người dùng
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		patient\_id(string)
+
+		doctor\_id(string)
+
+		schedule\_start\_time(timestamps)
+
+		status(integer)
+		                                  &
+		reject\_reason(string)
+
+		type(integer)
+
+		is\_seen(boolean)
+
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Người dùng
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Chẩn đoán cho bệnh nhân}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Chẩn đoán cho bệnh nhân}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Chẩn đoán cho bệnh nhân (diagnosis)                                                                & \textbf{ID:} 15                                 \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin chi tiết các chẩn đoán cho bệnh nhân (nếu có) của mỗi lịch khám trong hệ thống & \textbf{Use case liên quan:}  Quản lý lịch khám \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                                                               & \textbf{Các lớp cộng tác (Collaboration):}      \\
+		Lưu trữ danh sách chẩn đoán cho bệnh nhân với lịch khám tương ứng
+
+		Truy vấn danh sách chẩn đoán theo ID lịch khám
+		                                                                                                                     &
+		Lịch khám
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		schedule\_id(string)
+
+		diagnosis\_infor(string)
+		                                  &
+		createdAt(Datetime)
+
+		updatedAt(Datetime)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Lịch khám
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+\subsubsection{Thẻ CRC lớp Tin nhắn}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Tin nhắn}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Tin nhắn (messages)                                         & \textbf{ID:} 16                                        \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin chi tiết các tin nhắn có trong hệ thống & \textbf{Use case liên quan:}  Quản lý dịch vụ nhắn tin \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                        & \textbf{Các lớp cộng tác (Collaboration):}             \\
+		Lưu trữ danh sách tin nhắn được trao đổi giữa hai người hoặc trong các nhóm trò chuyện
+
+		Truy vấn danh sách tin nhắn dựa trên ID nhóm hoặc ID cá nhân liên quan
+
+		Cung cấp thông tin người gửi, nội dung tin nhắn và thời gian gửi
+		                                                                              &
+		Người dùng
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		senderId(string)
+
+		groupChatId(string)
+		                                  &
+		message(string)
+
+		time(timestamps)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Người dùng
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
+
+
+\subsubsection{Thẻ CRC lớp Nhóm trò chuyện}
+
+\begin{xltabular}{\textwidth}{
+		>{\centering\arraybackslash}X
+	}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Thẻ CRC lớp Nhóm trò chuyện}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt trước thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Tên lớp:} Nhóm trò chuyện (group\_chat)                                      & \textbf{ID:} 17                                        \\
+		\hline
+		\textbf{Mô tả:} Lớp quản lý thông tin chi tiết các nhóm trò chuyện có trong hệ thống & \textbf{Use case liên quan:}  Quản lý dịch vụ nhắn tin \\
+		\hline
+		\textbf{Trách nhiệm (Responsibility):}                                               & \textbf{Các lớp cộng tác (Collaboration):}             \\
+		Lưu trữ danh sách các nhóm trò chuyện trong hệ thống
+
+		Truy vấn danh sách các nhóm trò chuyện dựa trên ID nhóm hoặc ID cá nhân liên quan
+
+		Cung cấp thông tin người gửi, nội dung tin nhắn và thời gian gửi
+		                                                                                     &
+		Người dùng, Tin nhắn
+		\\
+		\hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{X}
+		Mặt sau thẻ
+	\end{tabularx}
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Thuộc tính (Attributes):} & \\
+		id(uuid)
+
+		title(string)
+
+		hostId(string)
+		                                  &
+		member(aray)
+
+		sendEvent(string)
+
+		receiveEvent(string)
+		\\ \hline
+	\end{tabularx}
+	\\
+	\begin{tabularx}{0.9\textwidth}{|X|}
+		\hline
+		\textbf{Mối quan hệ (Relationships)} \\
+		Tổng quát hóa (Generalize):
+
+		Toàn thể - Bộ phận (Aggregation):
+
+		Liên kết (Association): Người dùng, Tin nhắn
+		\\
+		\hline
+	\end{tabularx}
+\end{xltabular}
 
 % \newpage
 \subsection{Sơ đồ lớp}
-  % Dựa trên các thẻ CRC đã được mô tả ở phần trên, chúng em xin phép trình bày về sơ đồ lớp của hệ thống.
+Dựa trên các thẻ CRC đã được mô tả ở phần trước, chúng em xin trình bày sơ đồ lớp của hệ thống.
 
-  % Hình \ref*{UML} thể hiện các lớp trong hệ thống:
-  % \begin{itemize}
-  %   \item Lớp Account (Tài khoản): Lớp thể hiện cho cấu trúc của một account khi đăng ký sử dụng hệ thống, cung cấp các hàm và các biến để thực hiện chức năng đăng ký người dùng
-  %   \item Lớp Register (Tài khoản phê duyệt): Lớp thể hiện cho cấu trúc của người dùng khi mới đăng ký, cung cấp các hàm, phương thức thao tác dữ liệu người dùng khi mới đăng ký
-  %   \item Lớp User (Người dùng): Lớp thể hiện cho cấu trúc của người dùng sau khi đã đăng ký, cung cấp các hàm, phương thức liên quan đến dữ liệu người dùng sau đăng ký
-  %   \item Lớp Token: Lớp thể hiện cho cấu trúc của một token, cung cấp biến, hàm để thao tác với người dùng khi thực hiện đăng ký, đăng nhập
-  %   \item Lớp PatientDoctorAssignment (Phân công bác sĩ - bệnh nhân): Lớp thể hiện cho cấu trúc của một bảng phân công giữa bệnh nhân và bác sĩ, cung cấp các hàm, phương thức để lấy dữ liệu phân công bệnh nhân/bác sĩ
-  %   \item Lớp Record (Bản ghi): Lớp thể hiện cho cấu trúc của một bản ghi record, cung cấp các hàm, phương thức để thực hiện liên quan đến các bản ghi dữ liệu sức khỏe của bệnh nhân
-  %   \item Lớp Device (Thiết bị): Lớp thể hiện cho cấu trúc của một thiết bị, cung cấp các biến, hàm, phương thức để thực hiện liên quan đến thông tin các thiết bị sử dụng trong các ghi record
-  %   \item Lớp DeviceDetail (Thông số thiết bị): Lớp thể hiện cho cấu trúc của chi tiết liên quan đến lớp thiết bị, cung cấp các hàm, phương thức để thực hiện thao tác với dữ liệu các thiết bị và các bản ghi record
-  %   \item Lớp News (Tin tức): Lớp thể hiện cho cấu trúc của một tin tức, cung cấp các hàm, phương thức để lấy dữ liệu tin tức
-  %   \item Lớp NewsCategories (Danh mục tin tức): Lớp thể hiện cho cấu trúc của một danh mục tin tức, cung cấp các hàm, phương thức để lấy dữ liệu từ danh mục tin tức
-  %   \item Lớp Conversation (Cuộc hội thoại): Lớp thể hiện cho cấu trúc của một cuộc hội thoại, cung cấp các biến, hàm, phương thức để lấy dữ liệu liên quan đến cuộc hội thoại
-  %   \item Lớp ConversationMember (Thành viên tham gia hội thoại): Lớp thể hiện cho cấu trúc của danh sách những người tham gia một cuộc hội thoại, cung cấp các hàm, phương thức để xử lý dữ liệu liên quan đến người dùng
-  %   \item Lớp ConversationAttachment (Tệp đính kèm): Lớp thể hiện cho cấu trúc của danh sách những tệp được đính kém trong danh sách hội thoại, cung cấp các hàm, phương thức để xử lý các chức năng liên quan đến hội thoại
-  %   \item Lớp Message (Tin nhắn): Lớp thể hiện cho cấu trúc của một message được sử dụng trong hội thoại, cung cấp các hàm, phương thức để xử lý dữ liệu trong cuộc hội thoại
-  % \end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm,height=12cm]{Images/system/fmECG_UML.png}
+	\caption[Sơ đồ ERD]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ UML}
+	\label{fmECG_UML}
+\end{figure}
+
+Hình \ref*{fmECG_UML} thể hiện các lớp trong hệ thống:
+\begin{itemize}
+	\item Lớp Account (Tài khoản): Chịu trách nhiệm quản lý thông tin cơ bản của tài khoản trong hệ thống. Cung cấp các phương thức để thực hiện thao tác tạo mới, xác thực và quản lý dữ liệu liên quan đến tài khoản người dùng.
+	\item Lớp Token: Đảm nhiệm việc lưu trữ và xử lý thông tin về các token sử dụng trong quá trình đăng nhập, đăng ký và xác thực người dùng, đảm bảo tính bảo mật và hiệu quả trong giao tiếp.
+	\item Lớp UserRole (Vai trò người dùng): Mô tả và quản lý các vai trò mà người dùng có thể đảm nhiệm, hỗ trợ trong việc phân quyền và xác định hành vi của từng loại vai trò.
+	\item Lớp UserStatus (Trạng thái người dùng): Theo dõi và duy trì trạng thái hiện tại của người dùng trong hệ thống, ví dụ như trạng thái hoạt động, bị khóa hoặc đang chờ xác minh.
+	\item Lớp User (Người dùng): Lưu trữ thông tin chi tiết của người dùng sau khi đăng ký, cung cấp các phương thức xử lý liên quan đến thông tin cá nhân và các hoạt động của người dùng trong hệ thống.
+	\item Lớp DeviceType (Loại thiết bị): Định nghĩa các loại thiết bị khác nhau mà hệ thống hỗ trợ, giúp tổ chức và phân loại thông tin thiết bị một cách khoa học.
+	\item Lớp DeviceStatus (Trạng thái thiết bị): Quản lý tình trạng hoạt động của thiết bị, cho phép theo dõi và kiểm soát thiết bị một cách hiệu quả trong hệ thống.
+	\item Lớp Device (Thiết bị): Chứa các thông tin cơ bản về thiết bị và người dùng thiết bị, hỗ trợ việc quản lý, tương tác và thu thập dữ liệu từ thiết bị trong hệ thống.
+	\item Lớp DeviceDetail (Thông số kỹ thuật): Cung cấp các thông tin kỹ thuật chi tiết về thiết bị, hỗ trợ trong việc cấu hình, kiểm tra và quản lý hiệu năng của thiết bị.
+	\item Lớp Record (Dữ liệu phiên đo): Được thiết kế để lưu trữ thông tin về dữ liệu mỗi phiên đo của bệnh nhân, đảm bảo quản lý dữ liệu một cách hiệu quả, an toàn và hỗ trợ xử lý nhanh chóng, chính xác.
+	\item Lớp ScheduleStatus (Trạng thái lịch khám): Quản lý trạng thái của lịch khám (bao gồm các trạng thái như đang chờ xác nhận, đã được bác sĩ chấp nhận, hoặc chưa được xác nhận), giúp theo dõi và cập nhật trạng thái trong suốt vòng đời của lịch khám.
+	\item Lớp ScheduleResult (Kết quả lịch khám): Xác định các kết quả lịch khám trong hệ thống, phục vụ việc phân loại và quản lý lịch khám.
+	\item Lớp Schedule (Lịch khám): Đại diện cho cấu trúc thông tin của một lịch khám, cung cấp các phương thức để lưu trữ, truy vấn và xử lý dữ liệu lịch khám.
+	\item Lớp NotificationSchedule (Thông báo liên quan đến lịch khám): Chịu trách nhiệm tạo và quản lý các thông báo liên quan đến lịch khám, giúp người dùng và bác sĩ cập nhật tình trạng lịch khám kịp thời.
+	\item Lớp Diagnosis (Chẩn đoán cho bệnh nhân): Quản lý thông tin chẩn đoán bệnh của bệnh nhân (nếu có).
+	\item Lớp Message (Tin nhắn): Xử lý thông tin các tin nhắn được gửi trong hệ thống, cho phép người dùng trao đổi thông tin trong các cuộc trò chuyện cá nhân hoặc nhóm.
+	\item Lớp GroupChat (Nhóm trò chuyện): Quản lý các nhóm trò chuyện trong hệ thống, cho phép tổ chức và thực hiện các hoạt động giao tiếp nhóm một cách hiệu quả.
+\end{itemize}
 % \newpage
 \subsection{Sơ đồ tuần tự}
-% Để phân tích cụ thể hơn về từng luồng trong hệ thống thông qua sơ đồ use case và sơ đồ hoạt động, dưới đây là phần thiết kế
-%  về các sơ đồ tuần tự.
+% Để phân tích chi tiết hơn từng luồng trong hệ thống thông qua sơ đồ use case và sơ đồ hoạt động, dưới đây là phần thiết kế các sơ đồ tuần tự.
 
 % \subsubsection{Sơ đồ tuần tự đăng ký tài khoản}
 
-% Sơ đồ tuần tự mô tả chi tiết quá trình người dùng đăng ký một tài khoản mới trên hệ thống. Người dùng sẽ phải gửi yêu cầu đăng ký, hệ thống sẽ được xử lý
-% bởi lớp Register, nếu có lỗi phát sinh hệ thống sẽ thông báo lõi cho người dùng. Nếu việc đăng ký thành công, lớp Register sẽ gửi thông báo 
-% chuyển sang phê duyệt tài khoản và trả về kết quả.  
-
-
 % \subsubsection{Sơ đồ tuần tự đăng nhập tài khoản}
-% \subsubsection{Sơ đồ tuần tự lấy tất cả người dùng}
 
-% \subsubsection{Sơ đồ tuần tự lấy người dùng theo id}
+% \subsubsection{Sơ đồ tuần tự truy vấn danh sách người dùng}
 
-% \subsubsection{Sơ đồ tuần tự cập nhật người dùng theo id}
+% \subsubsection{Sơ đồ tuần tự truy vấn danh sách bác sĩ}
 
-% \subsubsection{Sơ đồ tuần tự lấy bệnh nhân theo id bác sĩ}
+% \subsubsection{Sơ đồ tuần tự tìm kiếm người dùng theo ID}
 
-% \subsubsection{Sơ đồ tuần tự lấy bác sĩ theo id bệnh nhân}
+% \subsubsection{Sơ đồ tuần tự truy vấn bệnh nhân theo ID bác sĩ}
 
-% \subsubsection{Sơ đồ tuần tự lấy tất cả bác sĩ}
+% \subsubsection{Sơ đồ tuần tự truy vấn bác sĩ theo ID bệnh nhân}
 
-% \subsubsection{Sơ đồ tuần tự xóa người dùng theo id}
+% \subsubsection{Sơ đồ tuần tự cập nhật thông tin người dùng theo ID}
 
+% \subsubsection{Sơ đồ tuần tự xóa người dùng theo ID}
 
-\subsection{Phân tích dữ liệu}
+% \subsubsection{Sơ đồ tuần tự truy vấn danh sách tất cả các thiết bị}
 
-Tại phần này, chúng em sẽ tiến hành xác định và mô tả các thực thể cũng như
- thuộc tính trong hệ thống. Việc này giúp chúng em có thể nắm được các phần chính 
- trong việc thiết kế nên cơ sở dữ liệu.
+% \subsubsection{Sơ đồ tuần tự tìm kiếm thiết bị theo ID}
 
-% Đầu tiên, chúng em sẽ xác định các thực thể và mô tả thuộc tính của nó trong hệ
-% thống dươi dạng bảng và sơ đồ mô hình liên kết. 
+% \subsubsection{Sơ đồ tuần tự thêm thiết bị mới}
 
+% \subsubsection{Sơ đồ tuần tự cập nhật thông tin thiết bị theo ID}
 
-% Sau khi hoàn thành được bảng thực thể và thuộc tính, chúng em xác định được mô hình thực thể liên kết như sau:
+% \subsubsection{Sơ đồ tuần tự xóa thiết bị theo ID}
+
+% \subsubsection{Sơ đồ tuần tự thêm thông số kỹ thuật cho thiết bị}
+
+% \subsubsection{Sơ đồ tuần tự điều chỉnh thông số kỹ thuật của thiết bị theo ID}
+
+% \subsubsection{Sơ đồ tuần tự xóa thông số kỹ thuật cho thiết bị theo ID}
+
+% \subsubsection{Sơ đồ tuần tự truy vấn danh sách tất cả các dữ liệu phiên đo}
+
+% \subsubsection{Sơ đồ tuần tự tìm kiếm dữ liệu phiên đo theo ID}
+
+% \subsubsection{Sơ đồ tuần tự tìm kiếm dữ liệu phiên đo theo ID bác sĩ}
+
+% \subsubsection{Sơ đồ tuần tự tìm kiếm dữ liệu phiên đo theo ID bệnh nhân}
+
+% \subsubsection{Sơ đồ tuần tự thêm dữ liệu phiên đo mới}
+
+% \subsubsection{Sơ đồ tuần tự cập nhật thông tin dữ liệu phiên đo dựa trên ID}
+
+% \subsubsection{Sơ đồ tuần tự xóa dữ liệu phiên đo theo ID}
+
+% \subsubsection{Sơ đồ tuần tự truy vấn danh sách toàn bộ lịch khám}
+
+% \subsubsection{Sơ đồ tuần tự tìm kiếm lịch khám theo ID bệnh nhân}
+
+% \subsubsection{Sơ đồ tuần tự tìm kiếm lịch khám theo ID bác sĩ}
+
+% \subsubsection{Sơ đồ tuần tự tạo lịch khám mới bởi bệnh nhân}
+
+% \subsubsection{Sơ đồ tuần tự tạo lịch tái khám bởi bác sĩ}
+
+% \subsubsection{Sơ đồ tuần tự tìm kiêm các lịch rảnh của bác sĩ theo ID bác sĩ}
+
+% \subsubsection{Sơ đồ tuần tự tìm kiếm danh sách các bác sĩ dựa trên lịch rảnh của bệnh nhân}
+
+% \subsubsection{Sơ đồ tuần tự xác nhận lịch khám bệnh nhân đã đặt}
+
+% \subsubsection{Sơ đồ tuần tự xóa lịch khám theo ID}
+
+% \subsubsection{Sơ đồ tuần tự thêm chẩn đoán cho bệnh nhân}
+
+% \subsubsection{Sơ đồ tuần tự tìm kiếm chẩn đoán theo ID lịch khám}
+
+% \subsubsection{Sơ đồ tuần tự cập nhật thông tin chẩn đoán theo ID lịch khám}
+
+% \subsubsection{Sơ đồ tuần tự truy vấn danh sách các thông báo liên quan đến lịch khám theo ID người dùng}
+
+% \subsubsection{Sơ đồ tuần tự tạo mới thông báo liên quan đến lịch khám}
+
+% \subsubsection{Sơ đồ tuần tự đánh dấu thông báo là đã đọc}
+
+% \subsubsection{Sơ đồ tuần tự xóa thông báo dựa trên ID}
+
+% \subsubsection{Sơ đồ tuần tự truy vấn danh sách tất cả tin nhắn theo ID người dùng}
+
+% \subsubsection{Sơ đồ tuần tự thêm tin nhắn mới}
+
+% \subsubsection{Sơ đồ tuần tự tạo nhóm trò chuyện mới}
+
+% \subsubsection{Sơ đồ tuần tự truy vấn các nhóm trò chuyện theo ID người dùng}
+
+\subsection{Xử lý và phân tích dữ liệu}
+
+Trong phần này, chúng em sẽ xác định và mô tả chi tiết các thực thể cùng các thuộc tính trong hệ thống.
+Quá trình này đóng vai trò quan trọng trong việc giúp chúng em hiểu rõ các thành phần cốt lõi, từ đó thiết kế và xây dựng cơ sở dữ liệu một cách tối ưu và hiệu quả.
+
+Trước tiên, chúng em sẽ tiến hành xác định các thực thể trong hệ thống và mô tả chi tiết các thuộc tính của chúng thông qua bảng biểu và sơ đồ liên kết.
+
+\begin{table}[H]
+	\raggedright
+	\begin{tabularx}{\textwidth}{|p{4.5cm}|X|}
+		\hline
+		\bfseries Thực thể                & \bfseries Thuộc tính                                                                                                    \\ \hline
+		Tài khoản                         &
+		ID tài khoản, Địa chỉ email đăng ký, Mật khẩu truy cập                                                                                                      \\
+		\hline
+		Token đăng nhập                   &
+		ID token, Token làm mới, Hạn sử dụng, Trạng thái token                                                                                                      \\
+		\hline
+		Vai trò người dùng                &
+		ID vai trò, Tên vai trò                                                                                                                                     \\
+		\hline
+		Trạng thái người dùng             &
+		ID trạng thái người dùng, Mô tả trạng thái                                                                                                                  \\
+		\hline
+		Người dùng                        &
+		ID người dùng, Tên đầy đủ, Ngày tháng năm sinh, Giới tính, Số liên lạc, Vai trò người dùng, Trạng thái hoạt động, Đường dẫn ảnh đại diện, Thông tin bổ sung \\
+		\hline
+		Loại thiết bị                     &
+		ID loại thiết bị, Tên loại thiết bị                                                                                                                         \\
+		\hline
+		Trạng thái thiết bị               &
+		ID trạng thái thiết bị, Mô tả trạng thái                                                                                                                    \\
+		\hline
+		Thiết bị                          &
+		ID thiết bị, Tên thiết bị, Loại thiết bị, Thông tin chi tiết về thiết bị, Tình trạng hiện tại, Ngày bắt đầu thời gian mượn, Ngày kết thúc thời gian mượn    \\
+		\hline
+		Thông số kỹ thuật                 &
+		ID thông số, Tên thông số, Loại thông số, Giá trị thông số, Mô tả chi tiết thông số                                                                         \\
+		\hline
+		Dữ liệu phiên đo                  &
+		ID dữ liệu phiên đo, Đường dẫn lưu trữ phiên đo, Thời gian bắt đầu thu thập dữ liệu, Thời gian kết thúc thu thập dữ liệu                                    \\
+		\hline
+		Trạng thái lịch khám              &
+		ID trạng thái, Mô tả trạng thái                                                                                                                             \\
+		\hline
+		Kết quả lịch khám                 &
+		ID kết quả lịch khám, Mô tả kết quả lịch khám                                                                                                               \\
+		\hline
+		Lịch khám                         &
+		ID lịch khám, Thời gian bắt đầu lịch khám, Thời gian kết thúc lịch khám, Kết quả lịch khám                                                                  \\
+		\hline
+		Chẩn đoán cho bệnh nhân           &
+		ID chẩn đoán, Thông tin chẩn đoán                                                                                                                           \\
+		\hline
+		Thông báo liên quan đến lịch khám &
+		ID thông báo, Loại thông báo (gửi cho bác sĩ hoặc gửi cho bệnh nhân), Thời gian bắt đầu lịch khám, Nội dung thông báo,
+		Trạng thái thông báo (nhắc khám, được bác sĩ chấp nhận, đang chờ xác nhận, từ chối, đặt lịch tái khám thành công, bị hủy tự động),
+		Trạng thái đã xem, Lý do từ chối lịch (nếu có)                                                                                                              \\
+		\hline
+		Tin nhắn                          &
+		ID tin nhắn, Người gửi tin nhắn, Nhóm trò chuyện nhận tin nhắn, Nội dung tin nhắn, Thời điểm gửi                                                            \\
+		\hline
+		Nhóm trò chuyện                   &
+		ID nhóm trò chuyện, Tên nhóm trò chuyện, Người tạo nhóm, Danh sách thành viên nhóm, Sự kiện gửi tin nhắn, Sự kiện nhận tin nhắn                             \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+Dựa trên bảng thực thể và thuộc tính đã hoàn thiện, mô hình thực thể liên kết của hệ thống được xác định như sau:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=15.5cm,height=9cm]{Images/System/fmECG_connection_entity.png}
+	\caption[Mô hình thực thể liên kết]{\bfseries \fontsize{12pt}{0pt}
+		\selectfont Mô hình thực thể liên kết}
+	\label{entity-diag}
+\end{figure}
 
 \subsection{Kết luận}
 
-Chương này thực hiện phân tích khái quát về
- hệ thống, nhằm đáp ứng các yêu cầu và mục tiêu đã được đề ra trong các phần trên.
+Chương này tập trung phân tích tổng quan về hệ thống, nhằm đảm bảo đáp ứng đầy đủ các yêu cầu và mục tiêu đã được đề cập ở các phần trước.
 
 \newpage
