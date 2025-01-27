@@ -37,9 +37,9 @@ Khi nhận được yêu cầu từ Application, Server sẽ thực hiện xử 
 Tùy theo loại yêu cầu, các dịch vụ này sẽ truy xuất hoặc cập nhật dữ liệu trong cơ sở dữ liệu, sau đó gửi kết quả phản hồi cho người dùng,
 hoàn thiện quá trình tương tác giữa người dùng và hệ thống.\begin{adjustwidth}{1.5em}{}
 	\begin{itemize}
-		\item Authen Service: Đảm nhận các nhiệm vụ liên quan đến bảo mật hệ thống, bao gồm mã hóa dữ liệu nhạy cảm, tạo và xác thực token để đảm bảo tính an toàn khi truy cập,
+		\item Authen Service: Đảm nhận các nhiệm vụ liên quan đến bảo mật hệ thống, bao gồm mã hóa dữ liệu nhạy cảm, tạo và xác minh token để đảm bảo tính an toàn khi truy cập,
 		      quản lý phân quyền người dùng đối với API,và thực hiện mã hóa thông tin trước khi lưu trữ nhằm ngăn chặn rò rỉ dữ liệu.
-		\item User Service: Xử lý toàn bộ các thao tác liên quan đến người dùng, như tạo tài khoản mới, xác thực thông tin đăng nhập, lấy thông tin cá nhân của người dùng,
+		\item User Service: Xử lý toàn bộ các thao tác liên quan đến người dùng, như tạo tài khoản mới, xác minh thông tin đăng nhập, lấy thông tin cá nhân của người dùng,
 		      đồng thời hỗ trợ cập nhật và chỉnh sửa thông tin cá nhân khi cần thiết.
 		\item Device Service: Chịu trách nhiệm quản lý thiết bị, bao gồm các chức năng như thêm mới, chỉnh sửa thông tin, xóa thiết bị,
 		      và cập nhật tình trạng thiết bị hoặc thông số liên quan để đảm bảo thiết bị hoạt động đúng trong hệ thống.
@@ -484,66 +484,65 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 
 \subsection{Thiết kế các chức năng cho website và server}
 
-\subsubsection{Thiết kế API}
+\subsubsection{Thiết kế các API cần thiết}
 
 
 \begin{enumerate}[a)]
-  \item API xác thực người dùng
+  \item API xác minh tài khoản
 
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}m{4.6cm}
     | >{\centering\arraybackslash}m{2.8cm}
     | >{\raggedright\arraybackslash}X |
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API xác thực tài khoản}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API xác minh tài khoản}
     \label{table_api_auth}
     \\
     \hline
     \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-    api/ecg/auth/register   &   POST  & Đăng ký tài khoản \\ \hline
-  api/ecg/auth/login   &    POST    & Đăng nhập vào hệ thống \\ \hline
-  api/ecg/auth/logout   &    POST    & Đăng xuất khỏi hệ thống \\ \hline
+    api/ecg/auth/create-account   &   POST  & Tạo mới tài khoản người dùng \\ \hline
+    api/ecg/auth/login   &    POST    & Đăng nhập vào hệ thống \\ \hline
+    api/ecg/auth/logout   &    POST    & Đăng xuất khỏi hệ thống \\ \hline
   \end{xltabular}
 
-  \item API quản lý thông tin người dùng
+  \item API quản lý người dùng trong hệ thống
   \begin{xltabular}{\textwidth}{
     | >{\raggedright\arraybackslash}m{4.6cm}
     | >{\centering\arraybackslash}m{2.8cm}
     | >{\raggedright\arraybackslash}X |
     }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý dữ liệu người dùng}
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý người dùng trong hệ thống}
     \label{table_api_user}
     \\
     \hline
     \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-    api/ecg/users   &   GET  &  Lấy danh sách thông tin của tất cả người dùng \\  \hline
-	api/ecg/users/doctors   &   GET  &  Lấy danh sách bác sĩ \\  \hline
-	api/ecg/users/:id   &   GET  &  Lấy dữ liệu người dùng cụ thể \\  \hline
-	api/ecg/users/data/ patient-data   &   GET  &  Lấy danh sách bệnh nhân của bác sĩ cụ thể\\  \hline
-	api/ecg/users/data/ doctor-id   &   GET  &  Lấy danh sách bệnh bác sĩ phụ trách bệnh nhân cụ thể \\  \hline
-	api/ecg/users/   &   PUT  &  Cập nhật thông tin người dùng \\  \hline
-	api/ecg/users/:userId  &   DELETE  &  Xóa người dùng cụ thể \\  \hline
+    api/ecg/users   &   GET  &  Tra cứu danh sách tất cả người dùng trong hệ thống\\  \hline
+	api/ecg/users/doctors   &   GET  &  Tra cứu danh sách toàn bộ bác sĩ trong hệ thống \\  \hline
+	api/ecg/users/:id   &   GET  &  Tra cứu dữ liệu người dùng cụ thể dựa trên id tương ứng \\  \hline
+	api/ecg/users/data/patient-data   &   GET  &  Tra cứu danh sách các bệnh nhân đang được theo dõi của bác sĩ cụ thể \\  \hline
+	api/ecg/users/   &   PUT  &  Chỉnh sửa thông tin người dùng \\  \hline
+	api/ecg/users/:userId  &   DELETE  &  Xóa người dùng cụ thể dựa trên id tương ứng \\  \hline
   \end{xltabular}
 
-\item API quản lý thiết bị
+\item API quản lý thiết bị y tế
 \begin{xltabular}{\textwidth}{
   | >{\raggedright\arraybackslash}m{4.8cm}
   | >{\centering\arraybackslash}m{2.8cm}
   | >{\raggedright\arraybackslash}X |
   }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý thiết bị}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý thiết bị y tế}
   \label{table_api_device}
   \\
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-  api/ecg/device   &   GET  & Lấy danh sách thiết bị \\ \hline
-  api/ecg/devide/:id   &    GET    & Lấy thông tin của một thiết bị \\ \hline
-  api/ecg/device/add &   POST     & Thêm thiết bị mới \\ \hline
-  api/ecg/device\_detail &   POST     & Thêm chi tiết cho thiết bị \\ \hline
-  api/ecg/device/:device\_id  &     DELETE   & Xóa thiết bị cụ thể \\ \hline
-  api/ecg/device/:device\_id  &     PUT   & Cập nhật thông tin bị cụ thể \\ 
-  api/ecg/device\_detail  &     PUT   & Cập nhật thông số kỹ thuật của thiết bị \\ \hline
-  api/ecg/device\_detail/ :detail\_id  &     PUT   & Xoá thông số kỹ thuật của thiết bị \\ \hline
+  api/ecg/device   &   GET  & Tra cứu danh sách toàn bộ thiết bị y tế trong hệ thống\\ \hline
+  api/ecg/devide/:id   &    GET    & Tra cứu thông tin chi tiết của một thiết bị y tế dựa trên id tương ứng \\ \hline
+  api/ecg/device/add &   POST     & Thêm mới thiết bị y tế \\ \hline
+  api/ecg/device\_detail &   POST     & Thêm thông số kỹ thuật cho một thiết bị y tế \\ \hline
+  api/ecg/device/:device\_id  &     PUT   & Cập nhật thông tin chi tiết cho thiết bị y tế cụ thể \\ \hline
+  api/ecg/device/:device\_id  &     DELETE   & Xóa thiết bị y tế dựa trên id tương ứng \\ \hline
+  api/ecg/device\_detail  &     PUT   & Cập nhật thông số kỹ thuật cho thiết bị y tế \\ \hline
+  api/ecg/device\_detail/:detail\_id  &     PUT   & Xoá thông số kỹ thuật của thiết bị y tế \\ \hline
 \end{xltabular}
 
 \item API quản lý dữ liệu phiên đo
@@ -556,73 +555,73 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
   \label{table_api_record}
   \\
   \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
- api/ecg/records   &   GET  & Lấy tất cả dữ liệu phiên đo \\ \hline
- api/ecg/records/:id   &    GET    & Lấy dữ liệu phiên đo cụ thể \\ \hline
- api/ecg/records/doctor/ :doctorId &   GET     & Lấy danh sách các dữ liệu phiên đo của bác sĩ phụ trách cụ thể \\ \hline
- api/ecg/records/   &    POST    & Tạo mới dữ liệu phiên đo\\ \hline
- api/ecg/records/   &    PUT    & Cập nhật dữ liệu phiên đo\\ \hline
- api/ecg/records/:record\_id  &    DELETE    & Xóa dữ liệu phiên đo cụ thể\\ \hline
+  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả \\ \hline
+   api/ecg/records   &   GET  & Tra cứu dữ liệu tất cả các phiên đo \\ \hline
+   api/ecg/records/:id   &    GET    & Tra cứu dữ liệu phiên đo cụ thể dựa theo id tương ứng \\ \hline
+   api/ecg/records/data/doctor-id &   GET     & Tra cứu dữ liệu tất cả các phiên đo của bệnh nhân mà bác sĩ phụ trách \\ \hline
+   api/ecg/records/   &    POST    & Tạo dữ liệu phiên đo mới \\ \hline
+   api/ecg/records/   &    PUT    & Cập nhật dữ liệu phiên đo \\ \hline
+   api/ecg/records/:record\_id  &    DELETE    & Xóa dữ liệu phiên đo dựa theo id tương ứng \\ \hline
   \end{xltabular}
 
 
-\item API đặt lịch hẹn bác sĩ - bệnh nhân
+\item API quản lý dịch vụ lịch khám
 \begin{xltabular}{\textwidth}{
   | >{\raggedright\arraybackslash}m{4.5cm}
   | >{\centering\arraybackslash}m{2.8cm}
   | >{\raggedright\arraybackslash}X |
   }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API đặt lịch hẹn bác sĩ - bệnh nhân}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý dịch vụ lịch khám}
   \label{table_api_schedule}
   \\
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-  api/ecg/schedules   &   GET  & Lấy danh sách tất cả lịch hẹn  \\ \hline
-  api/ecg/schedules/doctor-id  &    GET    & Lấy danh sách lịch hẹn của bác sĩ cụ thể \\ \hline
-  api/ecg/schedules/patient-id  &    GET    & Lấy danh sách lịch hẹn của bệnh nhân cụ thể \\ \hline
-  api/ecg/schedules/create-by-doctor  &    POST    & Bác sĩ đặt lịch tái khám cho bệnh nhân \\ \hline
-  api/ecg/schedules/create-by-patient  &    POST    & Bệnh nhân đặt lịch khám \\ \hline
-  api/ecg/schedules/time/ available-doctor/ :schedule\_time  &    GET    & Lấy danh sách bác sĩ có thể đặt lịch hẹn theo thời gian cụ thể\\ \hline
-  api/ecg/schedules/ available-schedule/:id  &    GET    & Lấy danh sách thời gian có thể đặt lịch hẹn với bác sĩ cụ thể\\ \hline
-  api/ecg/schedules/ accept-schedule  &    PUT    & Chấp nhận lịch hẹn cụ thể \\ \hline
-  api/ecg/schedules/reject-schedule/:id  &    DELETE    & Từ chối lịch hẹn cụ thể \\ \hline
+  api/ecg/schedules   &   GET  & Tra cứu danh sách tất cả lịch khám trong hệ thống \\ \hline
+  api/ecg/schedules/doctor-id  &    GET    & Tra cứu danh sách lịch khám của bác sĩ cụ thể \\ \hline
+  api/ecg/schedules/patient-id  &    GET    & Tra cứu danh sách lịch khám của bệnh nhân cụ thể \\ \hline
+  api/ecg/schedules/create-by-doctor  &    POST    & Cho phép bác sĩ đặt lịch tái khám cho bệnh nhân \\ \hline
+  api/ecg/schedules/create-by-patient  &    POST    & Cho phép bệnh nhân đặt lịch khám với bác sĩ \\ \hline
+  api/ecg/schedules/time/available-doctor/:schedule\_time  &    GET    & Tra cứu danh sách các bác sĩ khả dụng theo thời gian đã chọn \\ \hline
+  api/ecg/schedules/available-schedule/:id  &    GET    & Tra cứu các khung giờ trống có thể đặt lịch với bác sĩ cụ thể. \\ \hline
+  api/ecg/schedules/accept-schedule  &    PUT    & Chấp nhận lịch khám cụ thể \\ \hline
+  api/ecg/schedules/reject-schedule/:id  &    DELETE    & Từ chối lịch khám cụ thể \\ \hline
   \end{xltabular}
 
-  \item API liên quan đến chẩn đoán
+\item API liên quan đến chẩn đoán cho bệnh nhân
 \begin{xltabular}{\textwidth}{
   | >{\raggedright\arraybackslash}m{4.5cm}
   | >{\centering\arraybackslash}m{2.8cm}
   | >{\raggedright\arraybackslash}X |
   }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến chẩn đoán}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến chẩn đoán cho bệnh nhân}
   \label{table_api_diagnosis}
   \\
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-  api/ecg/diagnosis   &   POST  & Tạo chẩn đoán mới  \\ \hline
-  api/ecg/diagnosis/ schedule/:schedule\_id   &   POST  & Lấy thông tin chẩn đoán của lịch khám cụ thể\\ \hline
-  api/ecg/diagnosis/update   &   POST  & Cập nhật thông tin chẩn đoán\\ \hline
+  api/ecg/diagnosis   &   POST  & Tạo chẩn đoán mới cho bệnh nhân \\ \hline
+  api/ecg/diagnosis/schedule/:schedule\_id   &   POST  & Tra cứu thông tin chẩn đoán dựa trên id lịch khám tương ứng\\ \hline
+  api/ecg/diagnosis/update   &   POST  & Cập nhật thông tin chẩn đoán \\ \hline
   \end{xltabular}
 
 
-\item API liên quan đến thông báo
+\item API liên quan đến thông báo về lịch khám
 \begin{xltabular}{\textwidth}{
   | >{\raggedright\arraybackslash}m{4.5cm}
   | >{\centering\arraybackslash}m{2.8cm}
   | >{\raggedright\arraybackslash}X |
   }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến thông báo}
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến thông báo về lịch khám}
   \label{table_api_notification}
   \\
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-  api/ecg/notification/get   &   GET  & Lấy thông báo của người dùng cụ thể  \\ \hline
-  api/ecg/notification   &   POST  & Tạo thông báo mới\\ \hline
-  api/ecg/notification/ update-seen   &   POST  & Cập nhật trạng thái thông báo đã được xem\\ \hline
-  api/ecg/notification/:id   &   DELETE  & Xóa thông báo cụ thể\\ \hline
+  api/ecg/notification/get   &   GET  & Tra cứu tất cả các thông báo của người dùng cụ thể  \\ \hline
+  api/ecg/notification   &   POST  & Tạo thông báo mới liên quan đến lịch khám \\ \hline
+  api/ecg/notification/update-seen   &   POST  & Cập nhật trạng thái thông báo đã được xem\\ \hline
+  api/ecg/notification/:id   &   DELETE  & Xóa thông báo dựa trên id tương ứng\\ \hline
   \end{xltabular}
 
-  \item API liên quan đến tin nhắn
+\item API liên quan đến tin nhắn
 \begin{xltabular}{\textwidth}{
   | >{\raggedright\arraybackslash}m{4.5cm}
   | >{\centering\arraybackslash}m{2.8cm}
@@ -634,20 +633,115 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
   \hline
   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
   api/ecg/groupChat   &   POST  & Tạo nhóm trò chuyện mới  \\ \hline
-  api/ecg/groupChat   &   GET  & Lấy danh sách nhóm trò chuyện của người dùng  \\ \hline
-  api/ecg/chat/messages/ :groupChatId   &   GET  & Lấy danh sách tin nhắn theo nhóm trò chuyện\\ \hline
-  api/ecg/chat/send   &   POST  & Gửi tin nhắn trong nhóm trò chuyện\\ \hline
+  api/ecg/groupChat   &   GET  & Tra cứu danh sách các nhóm trò chuyện của người dùng  \\ \hline
+  api/ecg/chat/messages/:groupChatId   &   GET  & Tra cứu lịch sử trò chuyện của các đoạn hội thoại đã thực hiện \\ \hline
+  api/ecg/chat/send   &   POST  & Cho phép người dùng gửi tin nhắn đến các đối tượng liên quan \\ \hline
   \end{xltabular}
 \end{enumerate}
 
 
-
-
 \subsubsection{Sơ đồ tuần tự API}
-
+Phần này cung cấp các sơ đồ tuần tự minh họa chi tiết cách thức hoạt động của các API trong hệ thống.
+Dựa trên bảng API đã thiết kế, các sơ đồ tuần tự sẽ mô phỏng luồng xử lý từ khi nhận yêu cầu đến khi trả về kết quả cho người dùng,
+cho thấy rõ sự tương tác giữa các thành phần và lớp chức năng trong hệ thống.
 % ------------------------Auth----------------------
 
+\subsubsubsection{Các API phục vụ mục đích xác minh tài khoản}
 
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tạo mới tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tạo mới tài khoản người dùng}
+	\label{sequence_diagram_create_account}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API đăng nhập vào hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API đăng nhập vào hệ thống}
+	\label{sequence_diagram_login}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API đăng xuất khỏi hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API đăng xuất khỏi hệ thống}
+	\label{sequence_diagram_logout}
+\end{figure}
+
+% ------------------------User----------------------
+\subsubsubsection{Các API phục vụ mục đích quản lý người dùng trong hệ thống}
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách tất cả người dùng trong hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách tất cả người dùng trong hệ thống}
+	\label{sequence_diagram_get_all_users}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách toàn bộ bác sĩ trong hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách toàn bộ bác sĩ trong hệ thống}
+	\label{sequence_diagram_get_all_doctors}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tra cứu dữ liệu người dùng cụ thể dựa trên id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu người dùng cụ thể dựa trên id}
+	\label{sequence_diagram_get_user_by_id}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách bệnh nhân đang được theo dõi]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách bệnh nhân đang được theo dõi}
+	\label{sequence_diagram_get_patient_data}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API chỉnh sửa thông tin người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API chỉnh sửa thông tin người dùng}
+	\label{sequence_diagram_update_user}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API xóa người dùng cụ thể dựa trên id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa người dùng cụ thể dựa trên id}
+	\label{sequence_diagram_delete_user}
+\end{figure}
+
+% ------------------------Device----------------------
+\subsubsubsection{Các API phục vụ mục đích quản lý thiết bị y tế}
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách toàn bộ thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách toàn bộ thiết bị y tế}
+	\label{sequence_diagram_get_all_devices}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tra cứu thông tin chi tiết thiết bị y tế dựa trên id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu thông tin chi tiết thiết bị y tế dựa trên id}
+	\label{sequence_diagram_get_device_by_id}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API thêm mới thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API thêm mới thiết bị y tế}
+	\label{sequence_diagram_add_device}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API thêm thông số kỹ thuật cho nột thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API thêm thông số kỹ thuật cho một thiết bị y tế}
+	\label{sequence_diagram_add_device}
+\end{figure}
 
 \subsection{Kết luận chương}
 
