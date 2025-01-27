@@ -1299,7 +1299,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API thêm chi tiết thông tin thiết bị}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API thêm thông số kỹ thuật thiết bị}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -1309,7 +1309,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Thiết bị tồn tại với id cho trước
-		      & Chi tiết thông tin thiết bị
+		      & thông số kỹ thuật thiết bị
 
 		      \{
 
@@ -1334,7 +1334,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      "message": "Device detail created successfully",
 
-		      data: Chi tiết thông tin của thiết bị
+		      data: thông số kỹ thuật của thiết bị
 
 		      \}
 
@@ -1344,7 +1344,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Thiết bị không tồn tại với id cho trước
-		      & Chi tiết thông tin thiết bị
+		      & thông số kỹ thuật thiết bị
 
 		      \{
 
@@ -1377,7 +1377,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-3
 		      & Người dùng không tồn tại với id tương ứng
-		      & Chi tiết thông tin thiết bị
+		      & thông số kỹ thuật thiết bị
 
 		      \{
 
@@ -1607,7 +1607,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API cập nhật chi tiết thông tin thiết bị}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API cập nhật thông số kỹ thuật thiết bị}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -1617,7 +1617,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Thông tin chi tiết mới phù hợp
-		      & Chi tiết thông tin thiết bị
+		      & thông số kỹ thuật thiết bị
 
 		      \{
 
@@ -1642,7 +1642,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      "message": "Device detail updated successfully",
 
-		      data: Chi tiết thông tin của thiết bị sau khi cập nhật
+		      data: thông số kỹ thuật của thiết bị sau khi cập nhật
 
 		      \}
 
@@ -1652,7 +1652,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Thông tin chi tiết mới không phù hợp
-		      & Chi tiết thông tin thiết bị
+		      & thông số kỹ thuật thiết bị
 
 		      \{
 
@@ -1692,7 +1692,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API xóa chi tiết thông tin thiết bị}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API xóa thông số kỹ thuật thiết bị}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -1702,7 +1702,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Thông tin chi tiết mới phù hợp
-		      & id chi tiết thông tin thiết bị
+		      & id thông số kỹ thuật thiết bị
 		      &
 
 		      Status code: 200 OK
@@ -1713,7 +1713,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      "message": "Device detail deleted successfully",
 
-		      data: Chi tiết thông tin của thiết bị sau khi cập nhật
+		      data: thông số kỹ thuật của thiết bị sau khi cập nhật
 
 		      \}
 
@@ -2837,7 +2837,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 	      \end{xltabular}
 
-	\item URL: GET schedule/{:schedule\_id}
+	\item URL: GET diagnosis/schedule/{:schedule\_id}
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -2967,7 +2967,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 \paragraph{API liên quan liên quan đến thông báo}
 \mbox{}
 \begin{enumerate}
-	\item URL: GET notification/GET
+	\item URL: GET notification/get
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -3228,7 +3228,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tạo nhóm chat}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tạo nhóm trò chuyện}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -3238,13 +3238,13 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Admin hoặc bác sĩ của hệ thống
-		      & Thông tin nhóm chat
+		      & Thông tin nhóm trò chuyện
 		      \{
-		      "title": Tên nhóm chat,
+		      "title": Tên nhóm trò chuyện,
 		      "hostId: id của người tạo nhóm,
-		      "member": Danh sách id của các thành viên trong nhóm,
-		      "sendEvent": Sự kiện gửi của nhóm chat
-		      "receiveEvent": Sự kiện nhận của nhóm chat
+		      "member": Danh sách id của các thành viên trong nhóm trò chuyện,
+		      "sendEvent": Sự kiện gửi của nhóm trò chuyện
+		      "receiveEvent": Sự kiện nhận của nhóm trò chuyện
 		      \}
 		      &
 
@@ -3254,7 +3254,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      \{
 
-		      data: thông tin của nhóm chat đã tạo,
+		      data: thông tin của nhóm trò chuyện đã tạo,
 
 		      \}
 
@@ -3264,13 +3264,13 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Là bệnh nhân của hệ thống (bệnh nhân chỉ có thể tạo đoạn chat 2 người với bác sĩ khám cho mình)
-		      & Thông tin nhóm chat
+		      & Thông tin nhóm trò chuyện
 		      \{
-		      "title": Tên nhóm chat,
+		      "title": Tên nhóm trò chuyện,
 		      "hostId: id của người tạo nhóm,
 		      "member": Danh sách id của các thành viên trong nhóm,
-		      "sendEvent": Sự kiện gửi của nhóm chat
-		      "receiveEvent": Sự kiện nhận của nhóm chat
+		      "sendEvent": Sự kiện gửi của nhóm trò chuyện
+		      "receiveEvent": Sự kiện nhận của nhóm trò chuyện
 		      \}
 		      &
 
@@ -3298,7 +3298,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tìm danh sách nhóm chat của người dùng}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tìm danh sách nhóm trò chuyện của người dùng}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -3317,7 +3317,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      \{
 
-		      data: danh sách nhóm chat của người dùng này
+		      data: danh sách nhóm trò chuyện của người dùng này
 
 		      \}
 
@@ -3354,7 +3354,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy tin nhắn theo id nhóm chat}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy tin nhắn theo id nhóm trò chuyện}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -3364,7 +3364,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC
 		      & Người dùng của hệ thống
-		      & id nhóm chat của người dùng
+		      & id nhóm trò chuyện của người dùng
 		      &
 
 		      Status code: 200 OK
@@ -3373,9 +3373,9 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      \{
 
-		      Tin nhắn của người dùng trong nhóm chat này được lấy đúng,
+		      Tin nhắn của người dùng trong nhóm trò chuyện này được lấy đúng,
 
-		      Tin nhắn của các người dùng khác trong nhóm chat này được lấy đúng
+		      Tin nhắn của các người dùng khác trong nhóm trò chuyện này được lấy đúng
 
 		      \}
 
@@ -3393,7 +3393,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API gửi tin nhắn trong nhóm chat}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API gửi tin nhắn trong nhóm trò chuyện}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -3406,7 +3406,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      & Thông tin tin nhắn
 		      \{
 		      "senderId" : id người gửi,
-		      "groupChatId" : id nhóm chat,
+		      "groupChatId" : id nhóm trò chuyện,
 		      "message" : nội dung tin nhắn,
 		      "time": thời gian gửi
 		      \}
@@ -3418,7 +3418,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      Thời gian gửi được lưu vào cơ sở dữ liệu theo thời gian thực,
 
-		      Người nhận nhận được tin nhắn theo thời gian thực, đúng nhóm chat, đúng người gửi
+		      Người nhận nhận được tin nhắn theo thời gian thực, đúng nhóm trò chuyện, đúng người gửi
 
 		      & OK
 
@@ -3663,11 +3663,11 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	\\ \hline
 
 	\\ \hline
-	Kiểm tra chức năng tạo nhóm chat
+	Kiểm tra chức năng tạo nhóm trò chuyện
 	&
 	1. Truy cập màn hình nhắn tin
 
-	2. Chọn tạo nhóm chat
+	2. Chọn tạo nhóm trò chuyện
 
 	3. Nhập các thông tin, chọn thành viên phù hợp
 
@@ -3677,11 +3677,11 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 	1. Hiển thị danh sách các đoạn tin nhắn, nút tạo nhóm
 
-	2. Hiển thị giao diện tạo nhóm chat
+	2. Hiển thị giao diện tạo nhóm trò chuyện
 
 	3. Thông tin thành viên phù hợp hiển thị lên màn hình
 
-	4. Nhóm chat được tạo thành công
+	4. nhóm trò chuyện được tạo thành công
 
 	& OK
 
