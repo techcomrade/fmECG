@@ -1120,7 +1120,7 @@ Lớp Token sẽ xóa thông tin token truy cập liên quan và gửi phản h�
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=9cm,height=9cm]{Images/sequence/user/account_info.drawio.png}
+	\includegraphics[width=9.5cm,height=9.5cm]{Images/sequence/user/account_info.drawio.png}
 	\caption[Sơ đồ tuần tự chức năng quản lý tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}
 		\selectfont Sơ đồ tuần tự chức năng quản lý tài khoản người dùng}
 	\label{sequence_account} %đặt tên cho ảnh
@@ -1144,7 +1144,7 @@ Quy trình đảm bảo thông tin được truy xuất chính xác, nhanh chón
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm,height=10cm]{Images/sequence/user/getDoctorByPatient.drawio.png}
+	\includegraphics[width=10cm,height=8.5cm]{Images/sequence/user/getDoctorByPatient.drawio.png}
 	\caption[Sơ đồ tuần tự chức năng tra cứu danh sách bác sĩ]{\bfseries \fontsize{12pt}{0pt}
 		\selectfont Sơ đồ tuần tự chức năng tra cứu danh sách bác sĩ}
 	\label{sequence_get_all_doctor} %đặt tên cho ảnh
@@ -1154,7 +1154,7 @@ và thông tin chi tiết của các bác sĩ trong hệ thống, hỗ trợ b�
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm,height=12cm]{Images/sequence/user/getPatientByDoctor.drawio.png}
+	\includegraphics[width=12.8cm,height=11cm]{Images/sequence/user/getPatientByDoctor.drawio.png}
 	\caption[Sơ đồ tuần tự chức năng tra cứu danh sách bệnh nhân đang theo dõi]{\bfseries \fontsize{12pt}{0pt}
 		\selectfont Sơ đồ tuần tự chức năng tra cứu danh sách bệnh nhân đang theo dõi}
 	\label{sequence_get_patient} %đặt tên cho ảnh
@@ -1173,13 +1173,16 @@ với dữ liệu được xử lý và cung cấp từ lớp User, đảm bảo
 Sơ đồ tuần tự này minh họa chi tiết quy trình quản lý việc sửa thông tin người dùng bởi quản trị viên. Khi quản trị viên gửi yêu cầu xem thông tin người dùng, hệ thống chuyển yêu cầu đến lớp User để xử lý và trả về thông tin chi tiết.
 Nếu quản trị viên yêu cầu thay đổi thông tin, hệ thống tiếp nhận và gửi yêu cầu đến lớp User để cập nhật thông tin cần thiết. Sau khi hoàn tất quá trình thay đổi, hệ thống trả về kết quả xác nhận, đảm bảo mọi thông tin được cập nhật chính xác và nhanh chóng.
 
-% \begin{figure}[H]
-% 	\centering
-% 	\includegraphics[width=12cm,height=10cm]{Images/sequence/user/delete.drawio.png}
-% 	\caption[Sơ đồ tuần tự chức năng xóa người dùng khỏi hệ thống]{\bfseries \fontsize{12pt}{0pt}
-% 		\selectfont Sơ đồ tuần tự chức năng xóa người dùng khỏi hệ thống}
-% 	\label{sequence_delete_user} %đặt tên cho ảnh
-% \end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm,height=10cm]{Images/sequence/user/delete.drawio.png}
+	\caption[Sơ đồ tuần tự chức năng xóa người dùng khỏi hệ thống]{\bfseries \fontsize{12pt}{0pt}
+		\selectfont Sơ đồ tuần tự chức năng xóa người dùng khỏi hệ thống}
+	\label{sequence_delete_user} %đặt tên cho ảnh
+\end{figure}
+Sơ đồ tuần tự này minh họa quy trình xóa người dùng khỏi hệ thống. Đầu tiên, quản trị viên gửi yêu cầu xóa tài khoản người dùng.
+Hệ thống tiếp nhận và thực hiện xóa thông tin người dùng thông qua lớp User. Sau đó, hệ thống tiếp tục xóa thông tin tài khoản tương ứng thông qua lớp Account.
+Cuối cùng, hệ thống trả về kết quả xử lý để thông báo cho quản trị viên về trạng thái hoàn tất của quy trình.
 
 \subsubsection{Sơ đồ tuần tự chức năng quản lý thiết bị y tế}
 
@@ -1230,7 +1233,7 @@ Khi hoàn tất, hệ thống trả về kết quả xác nhận, đảm bảo t
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm,height=10.5cm]{Images/sequence/device/delete.drawio.png}
+	\includegraphics[width=11cm,height=9cm]{Images/sequence/device/delete.drawio.png}
 	\caption[Sơ đồ tuần tự chức năng xóa thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}
 		\selectfont Sơ đồ tuần tự chức năng xóa thiết bị y tế}
 	\label{sequence_delete_device} %đặt tên cho ảnh
@@ -1263,7 +1266,7 @@ Trong quá trình xử lý, hệ thống lặp qua danh sách phiên đo để l
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm,height=11cm]{Images/sequence/record/getByDoctorId.drawio.png}
+	\includegraphics[width=15.5cm,height=12.5cm]{Images/sequence/record/getByDoctorId.drawio.png}
 	\caption[Sơ đồ tuần tự chức năng tra cứu danh sách các phiên đo của bệnh nhân đang theo dõi]{\bfseries \fontsize{12pt}{0pt}
 		\selectfont Sơ đồ tuần tự chức năng tra cứu danh sách các phiên đo của bệnh nhân đang theo dõi}
 	\label{sequence_get_record_by_doctor} %đặt tên cho ảnh
@@ -1431,7 +1434,7 @@ Cuối cùng, hệ thống trả về kết quả, thông báo việc điền ch
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12.5cm,height=8cm]{Images/sequence/diagnosis/getByScheduleId.drawio.png}
+	\includegraphics[width=11.5cm,height=7cm]{Images/sequence/diagnosis/getByScheduleId.drawio.png}
 	\caption[Sơ đồ tuần tự chức năng tra cứu thông tin chẩn đoán của lịch khám]{\bfseries \fontsize{12pt}{0pt}
 		\selectfont Sơ đồ tuần tự chức năng tra cứu thông tin chẩn đoán của lịch khám}
 	\label{sequence_get} %đặt tên cho ảnh
@@ -1441,13 +1444,14 @@ Sau khi lấy được thông tin cần thiết, hệ thống trả về kết q
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm,height=8.5cm]{Images/sequence/diagnosis/update.drawio.png}
+	\includegraphics[width=11cm,height=9cm]{Images/sequence/diagnosis/update.drawio.png}
 	\caption[Sơ đồ tuần tự chức năng chỉnh sửa thông tin chẩn đoán của lịch khám]{\bfseries \fontsize{12pt}{0pt}
 		\selectfont Sơ đồ tuần tự chức năng chỉnh sửa thông tin chẩn đoán của lịch khám}
 	\label{sequence_update} %đặt tên cho ảnh
 \end{figure}
 Sơ đồ tuần tự trên minh họa chi tiết quy trình chỉnh sửa thông tin chẩn đoán của lịch khám. Khi bác sĩ gửi yêu cầu chỉnh sửa, hệ thống sẽ truy xuất thông tin chẩn đoán hiện tại từ lớp Diagnosis và trả kết quả về cho bác sĩ.
-Sau khi bác sĩ cập nhật các thay đổi cần thiết và xác nhận, hệ thống sẽ tiến hành lưu thông tin mới vào cơ sở dữ liệu. Kết thúc quy trình, hệ thống gửi phản hồi xác nhận việc chỉnh sửa đã thành công, đảm bảo mọi thông tin được cập nhật đầy đủ và chính xác.
+Sau khi bác sĩ cập nhật các thay đổi cần thiết và xác nhận, hệ thống sẽ tiến hành lưu thông tin mới vào cơ sở dữ liệu.
+Kết thúc quy trình, hệ thống phản hồi xác nhận việc chỉnh sửa thành công và hiển thị chẩn đoán đã được cập nhật, đảm bảo mọi thông tin được cập nhật đầy đủ và chính xác.
 
 \subsubsection{Sơ đồ tuần tự chức năng quản lý dịch vụ nhắn tin}
 
