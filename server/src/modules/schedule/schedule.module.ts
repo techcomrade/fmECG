@@ -1,7 +1,6 @@
 import { forwardRef, Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { ScheduleModel } from "../../entities/schedule.model";
-import { ScheduleTypeModel } from "../../entities/schedule_type.model";
 import { ScheduleStatusModel } from "../../entities/schedule_status.model";
 import { ConsultationScheduleModel } from "../../entities/consultation_schedule.model";
 import { DiagnosisModel } from "../../entities/diagnosis.model";
@@ -21,7 +20,6 @@ import { NotificationModule } from "../notification/notification.module";
   imports: [
     SequelizeModule.forFeature([
       ScheduleModel,
-      ScheduleTypeModel,
       ScheduleStatusModel,
       ConsultationScheduleModel,
       DiagnosisModel,

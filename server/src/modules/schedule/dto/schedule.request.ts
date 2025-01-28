@@ -42,14 +42,6 @@ export class ScheduleRequest {
   schedule_end_time: bigint;
 
   @ApiProperty({
-    description: "Type ID of the schedule",
-    example: 1,
-  })
-  @IsNotEmpty()
-  @IsInt()
-  schedule_type_id: number;
-
-  @ApiProperty({
     description: "Status ID of the schedule",
     example: 1,
   })

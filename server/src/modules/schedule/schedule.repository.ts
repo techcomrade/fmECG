@@ -22,7 +22,6 @@ export class ScheduleRepository {
         patient_id: schedule.patient_id,
         schedule_start_time: schedule.schedule_start_time,
         schedule_end_time: schedule.schedule_end_time,
-        schedule_type_id: schedule.schedule_type_id,
         status_id: schedule.status_id ?? 1,
         schedule_result: schedule.schedule_result ?? 2,
       },
@@ -102,7 +101,6 @@ export class ScheduleRepository {
         patient_id: schedule.patient_id,
         schedule_start_time: schedule.schedule_start_time,
         schedule_end_time: schedule.schedule_end_time,
-        schedule_type_id: schedule.schedule_type_id,
         status_id: schedule.status_id,
       },
       {
