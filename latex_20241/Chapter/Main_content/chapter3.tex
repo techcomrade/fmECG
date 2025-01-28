@@ -514,7 +514,8 @@ Sau khi thiết kế cơ sở dữ liệu của hệ thống, chúng em tiến �
 	\label{about-us}
 \end{figure}
 
-Hình \ref{about-us} là giao diện trang giới thiệu về chúng tôi, tại đây trang sẽ giới thiệu về nhóm phát triển, mục tiêu phát triển của nhóm, cũng như các thông tin liên hệ của nhóm phát triển và các công nghệ mà nhóm sử dụng cho sản phẩm này.
+Hình \ref{about-us} minh họa giao diện trang giới thiệu về chúng tôi, nơi cung cấp thông tin về nhóm phát triển, bao gồm mục tiêu,
+định hướng hoạt động, thông tin liên hệ, và các công nghệ chủ chốt được sử dụng để tạo ra sản phẩm này.
 
 \subsubsection{Giao diện góc nhìn của admin}
 \begin{figure}[H]
@@ -524,7 +525,9 @@ Hình \ref{about-us} là giao diện trang giới thiệu về chúng tôi, tạ
 	\label{home-admin}
 \end{figure}
 
-Hình \ref{home-admin} là giao diện trang chủ admin. Sau khi đăng nhập sẽ thấy giao diện tổng quan với các thống kê dữ liệu quan trọng, bao gồm tình hình hoạt động, biểu đồ, và báo cáo chi tiết. Từ đây, bạn có thể dễ dàng quản lý thông tin, theo dõi tiến độ và truy cập các tính năng cần thiết để điều hành hiệu quả. 
+Hình \ref{home-admin} mô tả giao diện trang chủ dành cho quản trị viên. Sau khi đăng nhập với quyền quản trị, người dùng sẽ được đưa đến màn hình tổng quan,
+nơi tích hợp các thống kê quan trọng, biểu đồ trực quan, và báo cáo chi tiết. Giao diện này được tối ưu hóa để giúp quản trị viên quản lý thông tin hiệu quả,
+theo dõi tiến độ công việc, và truy cập nhanh chóng vào các tính năng chính, đảm bảo việc điều hành hệ thống diễn ra mượt mà và chính xác.
 
 \begin{figure}[H]
 	\centering
@@ -533,16 +536,18 @@ Hình \ref{home-admin} là giao diện trang chủ admin. Sau khi đăng nhập 
 	\label{users-admin}
 \end{figure}
 
-Hình \ref{users-admin} là giao diện trang quản lý người dùng. Tại đây, admin có thể thêm, sửa, xóa thông tin người dùng, cũng như xem thông tin chi tiết của người dùng.
+Hình \ref{users-admin} là giao diện trang quản lý người dùng. Giao diện này cho phép quản trị viên thực hiện các thao tác như thêm mới,
+chỉnh sửa, hoặc xóa thông tin người dùng, đồng thời cung cấp khả năng xem chi tiết hồ sơ của từng người dùng một cách dễ dàng và nhanh chóng.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=8cm]{Images/admin_ui/user-detail.png}
-	\caption[Giao diện trang thông tin chi tiết của người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang thông tin chi tiết của người dùng}
+	\caption[Giao diện cửa sổ ngăn kéo hiển thị thông tin chi tiết của người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện cửa sổ ngăn kéo hiển thị thông tin chi tiết của người dùng}
 	\label{user-detail-admin}
 \end{figure}
 
-Hình \ref{user-detail-admin} là giao diện trang thông tin chi tiết của người dùng. Tại đây, admin có thể xem thông tin chi tiết của người dùng, cũng như thay đổi thông tin người dùng.
+Hình \ref{user-detail-admin} minh họa giao diện cửa sổ ngăn kéo hiển thị thông tin chi tiết của người dùng. Giao diện này
+cho phép quản trị viênxem đầy đủ thông tin cá nhân và các chi tiết liên quan của người dùng một cách rõ ràng và tiện lợi.
 
 \begin{figure}[H]
 	\centering
@@ -828,9 +833,10 @@ Hình \ref{accepted} là giao diện chấp nhận lịch hẹn. Là giao diện
 	\\
 	\hline
 	\bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả \\ \hline
-	 api/ecg/records   &   GET  & Tra cứu dữ liệu tất cả các phiên đo \\ \hline
+	 api/ecg/records   &   GET  & Tra cứu danh sách các dữ liệu phiên đo \\ \hline
 	 api/ecg/records/:id   &    GET    & Tra cứu dữ liệu phiên đo cụ thể dựa theo id tương ứng \\ \hline
-	 api/ecg/records/data/ doctorId &   GET     & Tra cứu dữ liệu tất cả các phiên đo của bệnh nhân mà bác sĩ phụ trách \\ \hline
+	 api/ecg/records/data/ doctor &   GET     & Tra cứu danh sách các dữ liệu phiên đo của bệnh nhân mà bác sĩ phụ trách \\ \hline
+	 api/ecg/records/data/ patient &   GET     & Tra cứu danh sách dữ liệu các phiên đo cá nhân \\ \hline
 	 api/ecg/records/   &    POST    & Tạo dữ liệu phiên đo mới \\ \hline
 	 api/ecg/records/   &    PUT    & Cập nhật dữ liệu phiên đo \\ \hline
 	 api/ecg/records/:recordId  &    DELETE    & Xóa dữ liệu phiên đo dựa theo id tương ứng \\ \hline
@@ -1014,14 +1020,14 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=11cm]{Images/api_sequence/device/device-GetDeviceById.drawio.png}
-	\caption[Sơ đồ tuần tự API tra cứu thiết bị cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu thiết bị cụ thể}
+	\caption[Sơ đồ tuần tự API tra cứu thông tin một thiết bị cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu thông tin một thiết bị cụ thể}
 	\label{sequence_diagram_add_device}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/device/device-updateDevice.drawio.png}
-	\caption[Sơ đồ tuần tự API Cập nhật thiết bị và thông số kỹ thuật (nếu cần)]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API Cập nhật thiết bị và thông số kỹ thuật (nếu cần)}
+	\caption[Sơ đồ tuần tự API cập nhật thiết bị và thông số kỹ thuật (nếu cần)]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API Cập nhật thiết bị và thông số kỹ thuật (nếu cần)}
 	\label{sequence_diagram_update_device}
 \end{figure}
 
@@ -1033,68 +1039,68 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \end{figure}
 
 % % ------------------------Schedule----------------------
-\paragraph{Các API phục vụ mục đích đặt lịch hẹn bác sĩ - bệnh nhân}
+\paragraph{Các API phục vụ mục đích quản lý dịch vụ lịch khám}
 \mbox{}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/getAllSchedules.drawio.png}
-	\caption[Sơ đồ tuần tự API tra cứu tất cả lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu tất cả lịch hẹn}
+	\caption[Sơ đồ tuần tự API tra cứu tất cả lịch khám trong hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu tất cả lịch khám trong hệ thống}
 	\label{sequence_diagram_get_schedule}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/createScheduleByDoctor.drawio.png}
-	\caption[Sơ đồ tuần tự API bác sĩ tạo lịch tái khám cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API bác sĩ tạo lịch tái khám cho bệnh nhân}
-	\label{sequence_diagram_create_schedule_by_doctor}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/createScheduleByPatient.drawio.png}
-	\caption[Sơ đồ tuần tự API bệnh nhân chủ động đặt lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API bệnh nhân chủ động đặt lịch hẹn}
-	\label{sequence_diagram_create_schedule_by_patient}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
 	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/getScheduleByDoctorId.drawio.png}
-	\caption[Sơ đồ tuần tự API tra cứu lịch hẹn của bác sĩ cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu lịch hẹn của bác sĩ cụ thể}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách lịch khám của bác sĩ cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách lịch khám của bác sĩ cụ thể}
 	\label{sequence_diagram_get_schedule_by_doctor}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/getScheduleByPatientId.drawio.png}
-	\caption[Sơ đồ tuần tự API tra cứu lịch hẹn của bệnh nhân cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu lịch hẹn của bệnh nhân cụ thể}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách lịch khám của bệnh nhân cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách lịch khám của bệnh nhân cụ thể}
 	\label{sequence_diagram_get_schedule_by_patient}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/createScheduleByDoctor.drawio.png}
+	\caption[Sơ đồ tuần tự API cho phép bác sĩ đặt lịch tái khám cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cho phép bác sĩ đặt lịch tái khám cho bệnh nhân}
+	\label{sequence_diagram_create_schedule_by_doctor}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/createScheduleByPatient.drawio.png}
+	\caption[Sơ đồ tuần tự API cho phép bệnh nhân chủ động đặt lịch khám]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cho phép bệnh nhân chủ động đặt lịch khám}
+	\label{sequence_diagram_create_schedule_by_patient}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/getAvailableScheduleByDoctorId.drawio.png}
-	\caption[Sơ đồ tuần tự API tra cứu lịch rảnh của bác sĩ cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu lịch rảnh của bác sĩ cụ thể}
+	\caption[Sơ đồ tuần tự API tra cứu các khung giờ trống có thể đặt lịch với bác sĩ cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu các khung giờ trống có thể đặt lịch với bác sĩ cụ thể}
 	\label{sequence_diagram_get_available_by_doctor}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/getAvailableDoctorByScheduleTime.drawio.png}
-	\caption[Sơ đồ tuần tự API tra cứu bác sĩ phù hợp với thời gian đã chọn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu bác sĩ phù hợp với thời gian đã chọn}
+	\caption[Sơ đồ tuần tự API tra cứu các bác sĩ khả dụng theo thời gian đã chọn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu các bác sĩ khả dụng theo thời gian đã chọn}
 	\label{sequence_diagram_get_available_with_time}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/acceptSchedule.drawio.png}
-	\caption[Sơ đồ tuần tự API bác sĩ xác nhận lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API bác sĩ xác nhận lịch hẹn}
+	\caption[Sơ đồ tuần tự API chấp nhận lịch khám cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API chấp nhận lịch khám cụ thể}
 	\label{sequence_diagram_accept_schedule}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=10cm,height=9cm]{Images/api_sequence/schedule/deleteScheduleById.drawio.png}
-	\caption[Sơ đồ tuần tự API bác sĩ từ chối lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API bác sĩ từ chối lịch hẹn}
+	\caption[Sơ đồ tuần tự API từ chối lịch khám cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API bác sĩ từ chối lịch khám cụ thể}
 	\label{sequence_diagram_reject_schedule}
 \end{figure}
 % % ------------------------Record----------------------
@@ -1110,21 +1116,21 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/record/getRecordById.drawio.png}
-	\caption[Sơ đồ tuần tự API tra cứu dữ liệu phiên đo theo id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu phiên đo theo id}
+	\caption[Sơ đồ tuần tự API tra cứu dữ liệu phiên đo theo id tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu phiên đo theo id tương ứng}
 	\label{sequence_diagram_get_record_by_id}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/record/getRecordByPatientId.drawio.png}
-	\caption[Sơ đồ tuần tự API tra cứu dữ liệu phiên đo của bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu phiên đo của bệnh nhân}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách dữ liệu các phiên đo cá nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu các phiên đo cá nhân}
 	\label{sequence_diagram_get_record_by_patient_id}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/record/getRecordByDoctorId.drawio.png}
-	\caption[Sơ đồ tuần tự API tra cứu dữ liệu phiên đo do bác sĩ phụ trách]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu phiên đo do bác sĩ phụ trách}
+	\caption[Sơ đồ tuần tự API tra cứu dữ liệu các phiên đo do bác sĩ phụ trách]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu các phiên đo do bác sĩ phụ trách}
 	\label{sequence_diagram_get_record_by_doctor_id}
 \end{figure}
 
@@ -1145,7 +1151,7 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/record/deleteRecordByID.drawio.png}
-	\caption[Sơ đồ tuần tự API xóa dữ liệu phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa dữ liệu phiên đo}
+	\caption[Sơ đồ tuần tự API xóa dữ liệu phiên đo theo id tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa dữ liệu phiên đo theo id tương ứng}
 	\label{sequence_diagram_delete_record}
 \end{figure}
 % % ------------------------Diag----------------------
@@ -1155,7 +1161,7 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=11cm]{Images/api_sequence/diag/getByScheduleId.drawio.png}
-	\caption[Sơ đồ tuần tự API lấy chẩn đoán theo lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API lấy chẩn đoán theo lịch hẹn}
+	\caption[Sơ đồ tuần tự API lấy chẩn đoán theo id lịch hẹn tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API lấy chẩn đoán id lịch hẹn tương ứng}
 	\label{sequence_diagram_get_diagnosis_by_schedule}
 \end{figure}
 
@@ -1232,8 +1238,14 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 	\caption[Sơ đồ tuần tự API lấy danh sách nhóm trò chuyện của người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API lấy danh sách nhóm trò chuyện của người dùng}
 	\label{sequence_diagram_get_group_chat}
 \end{figure}
+
+Những sơ đồ tuần tự này giúp đảm bảo các API được thiết kế và triển khai đúng với mục tiêu đề ra.
+Nhờ đó, hệ thống không chỉ hoạt động ổn định và hiệu quả mà còn đáp ứng linh hoạt các yêu cầu thực tiễn của người dùng,
+đồng thời tạo tiền đề vững chắc cho việc mở rộng và cải tiến trong tương lai.
+
 \subsection{Kết luận chương}
 
-Chương 3 trình bày chi tiết về quá trình thiết kế hệ thống, bao gồm kiến trúc tổng thể và các thành phần cụ thể.
-Thiết kế hệ thống tập trung vào việc xây dựng kiến trúc vận hành hiệu quả và mượt mà, chú trọng vào tính bảo mật, hiệu suất và khả năng mở rộng tối ưu.
+Chương 3 tập trung trình bày chi tiết quá trình thiết kế hệ thống, bao gồm kiến trúc tổng quan và từng thành phần cụ thể.
+Quá trình thiết kế hướng đến việc xây dựng một kiến trúc hoạt động hiệu quả, đảm bảo sự mượt mà trong vận hành,
+đồng thời ưu tiên các yếu tố như bảo mật, hiệu suất cao và khả năng mở rộng linh hoạt.
 \newpage
