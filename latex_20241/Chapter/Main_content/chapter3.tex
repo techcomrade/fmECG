@@ -52,49 +52,60 @@ Sau đây là mô tả chi tiết về từng khối nhỏ hơn trong kiến tr�
 \newpage
 \subsection{Sơ đồ khối phần mềm}
 
-\subsubsection{Website dành cho bệnh nhân}
+\subsubsection{Ứng dụng di động dành cho bệnh nhân}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Patient.drawio.png}
-  \caption[Sơ đồ khối Website dành cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối Website dành cho bệnh nhân}
-  \label{fmECG_architecture-Patient} %đặt tên cho ảnh
+  \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Patient-App.drawio.png}
+  \caption[Sơ đồ khối ứng dụng di động dành cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối ứng dụng di động dành cho bệnh nhân}
+  \label{fmECG_architecture-Patient-App} %đặt tên cho ảnh
 \end{figure}
-Lớp trên cùng trong sơ đồ hình \ref{fmECG_architecture-Patient} là lớp giao diện người dùng,
-nơi người dùng trực tiếp tương tác với hệ thống, thực hiện các request thông qua API Adapter.
+% Lớp trên cùng trong sơ đồ hình \ref{fmECG_architecture-Patient} là lớp giao diện người dùng,
+% nơi người dùng trực tiếp tương tác với hệ thống, thực hiện các request thông qua API Adapter.
 
-Sau đó các request được gửi đến lớp Application nơi chứa các Services để xử lý các request từ người dùng. 
-Kết quả được trả về giao diện. Ở đây các services gồm có: 
+% Sau đó các request được gửi đến lớp Application nơi chứa các Services để xử lý các request từ người dùng. 
+% Kết quả được trả về giao diện. Ở đây các services gồm có: 
 
-\begin{adjustwidth}{1.5em}{}
-  \begin{itemize}
-    \item User service: Khối có nhiệm vụ xử lý thông tin cá nhân
-    \item Device service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến mượn trả thiết bị.
-    \item Schedule service: Khối có nhiệm vụ quản lý việc đặt lịch của bệnh nhân
-    \item Record service: Khối có nhiệm vụ xử lý thông tin bản ghi
-    \item Message service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ
-    \item Storage service: Khối service đặc biệt có nhiệm vụ lưu thông tin vào bộ nhớ
-  \end{itemize}
-\end{adjustwidth}
+% \begin{adjustwidth}{1.5em}{}
+%   \begin{itemize}
+%     \item User service: Khối có nhiệm vụ xử lý thông tin cá nhân
+%     \item Device service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến mượn trả thiết bị.
+%     \item Schedule service: Khối có nhiệm vụ quản lý việc đặt lịch của bệnh nhân
+%     \item Record service: Khối có nhiệm vụ xử lý thông tin bản ghi
+%     \item Message service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ
+%     \item Storage service: Khối service đặc biệt có nhiệm vụ lưu thông tin vào bộ nhớ
+%   \end{itemize}
+% \end{adjustwidth}
+Tầng trên cùng trong sơ đồ hình \ref{fmECG_architecture-Patient-App} là User Interface (Giao diện người dùng), nơi bệnh nhân trực tiếp tương tác với hệ thống thông qua API Adapter để gửi yêu cầu và nhận phản hồi.
+Các yêu cầu này được xử lý bởi các Services chính, bao gồm User Service, Device Service, Record Service, Schedule Service, Diagnosis Service, Notification Service và Storage Service.
 
-\subsubsection{Website dành cho bác sĩ}
+Những Services này được thiết kế nhằm đáp ứng các nhu cầu của bệnh nhân, từ quản lý thông tin cá nhân, mượn và trả thiết bị, theo dõi lịch sử dữ liệu phiên đo, cho đến việc quản lý lịch khám,
+tra cứu thông tin chẩn đoán cho từng lịch khám. Ngoài ra, hệ thống còn đảm bảo việc gửi thông báo nhắc nhở kịp thời và hỗ trợ bệnh nhân trao đổi thông tin với bác sĩ một cách liền mạch và hiệu quả.
+
+\subsubsection{Ứng dụng di động dành cho bác sĩ}
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Doctors.drawio.png}
-  \caption[Sơ đồ khối Website dành cho bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối Website dành cho bác sĩ}
+  \caption[Sơ đồ khối Ứng dụng dành cho bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối ứng dụng di động dành cho bác sĩ}
   \label{fmECG_architecture-Doctor} %đặt tên cho ảnh
 \end{figure}
-\begin{adjustwidth}{1.5em}{}
-  \begin{itemize}
-    \item User service: Khối có nhiệm vụ xử lý thông tin cá nhân
-    \item Device service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến mượn trả thiết bị.
-    \item Schedule service: Khối có nhiệm vụ quản lý việc đặt lịch của bệnh nhân
-    \item Record service: Khối có nhiệm vụ xử lý thông tin bản ghi
-    \item Message service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ,
-    trao đổi trong nhóm.
-    \item Storage service: Khối service đặc biệt có nhiệm vụ lưu thông tin vào bộ nhớ
-  \end{itemize}
-\end{adjustwidth}
+% \begin{adjustwidth}{1.5em}{}
+%   \begin{itemize}
+%     \item User service: Khối có nhiệm vụ xử lý thông tin cá nhân
+%     \item Device service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến mượn trả thiết bị.
+%     \item Schedule service: Khối có nhiệm vụ quản lý việc đặt lịch của bệnh nhân
+%     \item Record service: Khối có nhiệm vụ xử lý thông tin bản ghi
+%     \item Message service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ,
+%     trao đổi trong nhóm.
+%     \item Storage service: Khối service đặc biệt có nhiệm vụ lưu thông tin vào bộ nhớ
+%   \end{itemize}
+% \end{adjustwidth}
+Tương tự với bệnh nhân, sơ đồ hình \ref{fmECG_architecture-Doctor} được xây dựng để hỗ trợ bác sĩ thực hiện các nhiệm vụ chuyên môn thông qua giao diện người dùng và API Adapter, đảm bảo việc xử lý thông tin diễn ra nhanh chóng và hiệu quả.
 
+Các Services chính, bao gồm User Service, Device Service, Record Service, Schedule Service, Diagnosis Service, Notification Service và Storage Service, đóng vai trò quan trọng trong việc hỗ trợ bác sĩ.
+Các nhiệm vụ được tập trung vào việc theo dõi và phân tích dữ liệu phiên đo từ bệnh nhân, quản lý lịch khám, chấp nhận hoặc từ chối yêu cầu đặt lịch, ghi nhận thông tin chẩn đoán, và trao đổi trực tiếp với bệnh nhân.
+Hơn nữa, hệ thống cung cấp khả năng tự động gửi thông báo về lịch khám và nhắc nhở các cuộc khám sắp tới, giúp bác sĩ quản lý thời gian và công việc hiệu quả hơn.
+
+Cách tiếp cận này không chỉ hỗ trợ bác sĩ tổ chức công việc thuận lợi mà còn góp phần nâng cao hiệu quả điều trị cho bệnh nhân.
 
 \subsubsection{Website cho quản trị viên}
 \begin{figure}[H]
@@ -108,393 +119,943 @@ Admin sẽ có quyền quản lý toàn bộ thông tin người dùng, thiết 
 
 \subsection{Thiết kế cơ sở dữ liệu}
 
+\subsubsection{Chuyển đổi từ mô hình thực thể liên kết sang mô hình quan hệ}
+Dựa trên bảng mô tả các thực thể và thuộc tính, chúng em tiến hành chuyển đổi từ mô hình thực thể liên kết thành mô hình quan hệ như sau.
+
+\begin{itemize}
+	\item Tài khoản đăng nhập (\textbf{ID tài khoản đăng nhập}, Địa chỉ email đăng ký, Mật khẩu truy cập)
+	\item Token đăng nhập (\textbf{ID token đăng nhập}, ID tài khoản đăng nhập, Token làm mới, Hạn sử dụng, Trạng thái token)
+	\item Vai trò người dùng (\textbf{ID vai trò}, Tên vai trò)
+	\item Trạng thái hoạt động (\textbf{ID trạng thái người dùng}, Mô tả trạng thái người dùng)
+	\item Người dùng (\textbf{ID người dùng}, ID tài khoản đăng nhập, ID vai trò người dùng, ID trạng thái hoạt động, Tên đầy đủ, Ngày tháng năm sinh, Giới tính, Số liên lạc, Đường dẫn ảnh đại diện, Thông tin bổ sung)
+	\item Loại thiết bị (\textbf{ID loại thiết bị}, Tên loại thiết bị)
+	\item Trạng thái thiết bị (\textbf{ID trạng thái thiết bị}, Mô tả trạng thái thiết bị)
+	\item Thiết bị (\textbf{ID thiết bị}, ID người dùng thiết bị, ID loại thiết bị, ID trạng thái thiết bị, Tên thiết bị, Thông tin chi tiết về thiết bị, Ngày bắt đầu thời gian mượn, Ngày kết thúc thời gian mượn)
+	\item Thông số kỹ thuật (\textbf{ID thông số kỹ thuật}, ID thiết bị, Loại thông số, Tên thông số, Giá trị thông số, Mô tả chi tiết thông số)
+	\item Dữ liệu phiên đo (\textbf{ID dữ liệu phiên đo}, ID bệnh nhân, ID thiết bị, Loại bản ghi, Đường dẫn lưu trữ dữ liệu phiên đo, Thời gian bắt đầu thu thập dữ liệu, Thời gian kết thúc thu thập dữ liệu)
+	\item Trạng thái lịch khám (\textbf{ID trạng thái lịch khám}, Mô tả trạng thái lịch khám)
+	\item Kết quả lịch khám (\textbf{ID kết quả lịch khám}, Mô tả kết quả lịch khám)
+	\item Lịch khám (\textbf{ID lịch khám}, ID bệnh nhân, ID bác sĩ, ID trạng thái lịch khám, ID kết quả lịch khám, Thời gian bắt đầu lịch khám, Thời gian kết thúc lịch khám)
+	\item Thông báo liên quan đến lịch khám (\textbf{ID thông báo}, ID lịch khám, Loại thông báo, Nội dung thông báo, Trạng thái thông báo, Trạng thái đã xem, Lý do từ chối lịch khám)
+	\item Chẩn đoán (\textbf{ID chẩn đoán}, ID lịch khám, Thông tin chẩn đoán)
+	\item Tin nhắn (\textbf{ID tin nhắn}, ID người gửi, ID nhóm trò chuyện nhận tin nhắn, Nội dung tin nhắn, Thời gian gửi tin nhắn)
+	\item Nhóm trò chuyện (\textbf{ID nhóm trò chuyện}, Tên nhóm trò chuyện, Người tạo nhóm, Danh sách thành viên nhóm, Sự kiện gửi tin nhắn, Sự kiện nhận tin nhắn)
+
+\end{itemize}
 \subsubsection{Chuẩn hoá 3NF}
 Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì không có thuộc tính lặp lại và các thuộc tính không phụ thuộc vào một tập hợp con của khóa chính.
-
-\paragraph{Chuẩn hoá bảng Người dùng}
-\mbox{}
-\begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Người dùng}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID người dùng, ID tài khoản, Tên người dùng, Ngày sinh, Giới tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin người dùng \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi người dùng có một ID riêng, có duy nhất ID tài khoản, tên, ngày sinh, giới tính, số điện thoại, quyền,
-    trạng thái, đường dẫn lưu trữ ảnh, thông tin & \parbox[t]{\linewidth}{$\text{ID người dùng} \rightarrow$ ID tài khoản, Tên người dùng, Ngày sinh, Giới Tính, Số điện thoại, Quyền, Trạng thái, Đường dẫn lưu trữ ảnh, Thông tin} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID người dùng}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Người dùng đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
-\end{table}
 
 \paragraph{Chuẩn hoá bảng Tài khoản}
 \mbox{}
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tài khoản}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID tài khoản, Email, Mật khẩu \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi tài khoản có một ID riêng, có duy nhất email, mật khẩu 
-    & \parbox[t]{\linewidth}{$\text{ID tài khoản} \rightarrow$ Email, mật khẩu} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tài khoản}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tài khoản đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tài khoản đăng nhập}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID tài khoản đăng nhập, Địa chỉ email đăng ký, Mật khẩu truy cập                                   \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                             \\
+		\hline
+		Mỗi tài khoản có một ID riêng, có duy nhất Địa chỉ email đăng ký, Mật khẩu truy cập
+		                              & \parbox[t]{\linewidth}{$\text{ID tài khoản} \rightarrow$ Địa chỉ email đăng ký, Mật khẩu truy cập} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID tài khoản đăng nhập}$}                                             \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tài khoản đăng nhập đã ở 3NF}$}                                                       \\
+		\hline
+	\end{tabularx}
 \end{table}
 
-% \paragraph{Chuẩn hoá bảng Token đăng nhập}
-% \mbox{}
-% \begin{table}[H]
-%   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Token đăng nhập}
-%   \centering
-%   \begin{tabularx}{0.9\textwidth}{|X|X|}
-%     \hline
-%     \textbf{Danh sách thuộc tính} & ID token, ID tài khoản, Token truy cập, Token làm mới \\
-%     \hline
-%     \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-%     \hline
-%     Mỗi người dùng có một ID token riêng, có duy nhất ID tài khoản, token truy cập và token làm mới 
-%     & \parbox[t]{\linewidth}{$\text{ID token} \rightarrow$ ID tài khoản, Token truy cập, Token làm mới} \\
-%     \hline
-%     \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID token đăng nhập}$} \\
-%     \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Token  đã ở 3NF}$} \\
-%     \hline
-%   \end{tabularx}
-% \end{table}
+\paragraph{Chuẩn hoá bảng Token đăng nhập}
+\mbox{}
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Token đăng nhập}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID token đăng nhập, ID tài khoản đăng nhập, Token làm mới, Hạn sử dụng, Trạng thái token                         \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                                           \\
+		\hline
+		Mỗi tài khoản có một ID token riêng, có duy nhất ID tài khoản, Token làm mới, Hạn sử dụng, Trạng thái token
+		                              & \parbox[t]{\linewidth}{$\text{ID token} \rightarrow$ ID tài khoản, Token làm mới, Hạn sử dụng, Trạng thái token} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID token đăng nhập}$}                                                               \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Token đăng nhập đã ở 3NF}$}                                                                         \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Vai trò người dùng}
+\mbox{}
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Vai trò người dùng}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID vai trò, Tên vai trò                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                              \\
+		\hline
+		Mỗi vai trò có một ID riêng, có duy nhất Tên vai trò
+		                              & \parbox[t]{\linewidth}{$\text{ID vai trò} \rightarrow$ Tên vai trò} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID vai trò}$}                          \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Vai trò người dùng đã ở 3NF}$}                         \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Trạng thái hoạt động}
+\mbox{}
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Trạng thái hoạt động}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID trạng thái người dùng, Mô tả trạng thái người dùng                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                            \\
+		\hline
+		Mỗi trạng thái người dùng có một ID riêng, có duy nhất Mô tả trạng thái người dùng
+		                              & \parbox[t]{\linewidth}{$\text{ID trạng thái người dùng} \rightarrow$ Mô tả trạng thái người dùng} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID trạng thái người dùng}$}                                          \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Trạng thái hoạt động đã ở 3NF}$}                                                     \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Người dùng}
+\mbox{}
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Người dùng}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính}                                                                                                                                                                                          & ID người dùng, ID tài khoản đăng nhập, ID vai trò người dùng, ID trạng thái hoạt động, Tên đầy đủ, Ngày tháng năm sinh, Giới tính, Số liên lạc, Đường dẫn ảnh đại diện, Thông tin bổ sung                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}                                                                                                                                                                                             & \textbf{Phụ thuộc hàm}                                                                                                                                                                                                                \\
+		\hline
+		Mỗi người dùng có một ID riêng, có duy nhất ID tài khoản đăng nhập, ID vai trò người dùng, ID trạng thái hoạt động, Tên đầy đủ, Ngày tháng năm sinh, Giới tính, Số liên lạc, Đường dẫn ảnh đại diện, Thông tin bổ sung & \parbox[t]{\linewidth}{$\text{ID người dùng} \rightarrow$ ID tài khoản đăng nhập, ID vai trò người dùng, ID trạng thái hoạt động, Tên đầy đủ, Ngày tháng năm sinh, Giới tính, Số liên lạc, Đường dẫn ảnh đại diện, Thông tin bổ sung} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID người dùng}$}                                                                                                                                                                                                                                                                                                                                                                                  \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Người dùng đã ở 3NF}$}                                                                                                                                                                                                                                                                                                                                                                                            \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Loại thiết bị}
+\mbox{}
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Loại thiết bị}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID loại thiết bị, Tên loại thiết bị                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                          \\
+		\hline
+		Mỗi loại thiết bị có một ID riêng, có duy nhất Tên loại thiết bị
+		                              & \parbox[t]{\linewidth}{$\text{ID loại thiết bị} \rightarrow$ Tên loại thiết bị} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID loại thiết bị}$}                                \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng loại thiết bị đã ở 3NF}$}                                          \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Trạng thái thiết bị}
+\mbox{}
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Trạng thái thiết bị}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID trạng thái thiết bị, Mô tả trạng thái thiết bị                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                        \\
+		\hline
+		Mỗi trạng thái thiết bị có một ID riêng, có duy nhất Mô tả trạng thái thiết bị
+		                              & \parbox[t]{\linewidth}{$\text{ID trạng thái thiết bị} \rightarrow$ Mô tả trạng thái thiết bị} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID trạng thái thiết bị}$}                                        \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Trạng thái thiết bị đã ở 3NF}$}                                                  \\
+		\hline
+	\end{tabularx}
+\end{table}
 
 \paragraph{Chuẩn hoá bảng Thiết bị}
 \mbox{}
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thiết bị}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID thiết bị, ID người dùng thiết bị, Tên thiết bị, 
-    Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng, Ngày kết thúc sử dụng \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi thiết bị khi được sử dụng sẽ có một ID thiết bị riêng, có duy nhất tên thiết bị, loại thiết bị, thông tin thiết bị,
-    ID người dùng thiết bị, trạng thái thiết bị, ngày bắt đầu sử dụng, ngày kết thúc sử dụng
-    & \parbox[t]{\linewidth}{$\text{ID thiết bị} \rightarrow$ ID người dùng thiết bị, Tên thiết bị, 
-    Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng, Ngày kết thúc sử dụng} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID thiết bị}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thiết bị}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID thiết bị, ID người dùng thiết bị, Tên thiết bị, Thông tin chi tiết về thiết bị, Ngày bắt đầu thời gian mượn, Ngày kết thúc thời gian mượn \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                                                                       \\
+		\hline
+		Mỗi thiết bị có một ID thiết bị riêng, có duy nhất tên thiết bị, loại thiết bị, thông tin thiết bị,
+		ID người dùng thiết bị, trạng thái thiết bị, ngày bắt đầu sử dụng, ngày kết thúc sử dụng
+		                              & \parbox[t]{\linewidth}{$\text{ID thiết bị} \rightarrow$ ID người dùng thiết bị, Tên thiết bị,
+		Loại thiết bị, Thông tin thiết bị, Trạng thái thiết bị, Ngày bắt đầu sử dụng, Ngày kết thúc sử dụng}                                                                         \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID thiết bị}$}                                                                                                  \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$}                                                                                                            \\
+		\hline
+	\end{tabularx}
 \end{table}
 
-\paragraph{Chuẩn hoá bảng Thông số thiết bị}
+\paragraph{Chuẩn hoá bảng Thông số kỹ thuật}
 \mbox{}
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thông số thiết bị}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID thông số, ID thiết bị, Tên thông số, Giá trị, 
-    Thông tin thông số, Loại thông số \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi thông số thiết bị sẽ có một ID thông số riêng, có duy nhất Tên thông số, ID thiết bị, Giá trị,
-    Thông tin thông số, Loại thông số
-    & \parbox[t]{\linewidth}{$\text{ID thông số} \rightarrow$ Tên thông số, ID thiết bị, Giá trị,
-    Thông tin thông số, Loại thông số} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID thông số thiết bị}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thiết bị đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thông số kỹ thuật}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID thông số kỹ thuật, ID thiết bị, Loại thông số, Tên thông số, Giá trị thông số, Mô tả chi tiết thông số                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                                                                                \\
+		\hline
+		Mỗi thông số kỹ thuật sẽ có một ID riêng, có duy nhất ID thiết bị, Loại thông số, Tên thông số, Giá trị thông số, Mô tả chi tiết thông số
+		                              & \parbox[t]{\linewidth}{$\text{ID thông số kỹ thuật} \rightarrow$ ID thiết bị, Loại thông số, Tên thông số, Giá trị thông số, Mô tả chi tiết thông số} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID thông số kỹ thuật}$}                                                                                                  \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thông số kỹ thuật đã ở 3NF}$}                                                                                                            \\
+		\hline
+	\end{tabularx}
 \end{table}
 
-\paragraph{Chuẩn hoá bảng Bản ghi dữ liệu}
+\paragraph{Chuẩn hoá bảng Dữ liệu phiên đo}
 \mbox{}
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Bản ghi dữ liệu}
-  \centering
-  \begin{tabularx}{0.9\textwidth}{|X|X|}
-    \hline
-    \textbf{Danh sách thuộc tính} & ID bản ghi dữ liệu, ID người dùng, ID thiết bị,
-    Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo \\
-    \hline
-    \textbf{Quy tắc nghiệp vụ} & \textbf{Phụ thuộc hàm} \\
-    \hline
-    Mỗi bản ghi có một ID bản ghi dữ liệu riêng, có duy nhất ID người dùng, ID thiết bị,
-    Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo
-    & \parbox[t]{\linewidth}{$\text{ID bản ghi dữ liệu} \rightarrow$ ID người dùng, ID thiết bị,
-    Đường dẫn lưu trữ dữ liệu, Thời gian bắt đầu đo, Thời gian kết thúc đo} \\
-    \hline
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID bản ghi dữ liệu}$} \\
-    \multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Bản ghi dữ liệu đã ở 3NF}$} \\
-    \hline
-  \end{tabularx}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Dữ liệu phiên đo}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID dữ liệu phiên đo, ID bệnh nhân, ID thiết bị, Loại bản ghi, Đường dẫn lưu trữ dữ liệu phiên đo, Thời gian bắt đầu thu thập dữ liệu, Thời gian kết thúc thu thập dữ liệu                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                                                                                                                                                \\
+		\hline
+		Mỗi dữ liệu phiên đo có một ID riêng, có duy nhất ID bệnh nhân, ID thiết bị, Loại bản ghi, Đường dẫn lưu trữ dữ liệu phiên đo, Thời gian bắt đầu thu thập dữ liệu, Thời gian kết thúc thu thập dữ liệu
+		                              & \parbox[t]{\linewidth}{$\text{ID dữ liệu phiên đo} \rightarrow$ ID bệnh nhân, ID thiết bị, Loại bản ghi, Đường dẫn lưu trữ dữ liệu phiên đo, Thời gian bắt đầu thu thập dữ liệu, Thời gian kết thúc thu thập dữ liệu} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID dữ liệu phiên đo}$}                                                                                                                                                                   \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Dữ liệu phiên đo đã ở 3NF}$}                                                                                                                                                                             \\
+		\hline
+	\end{tabularx}
 \end{table}
 
-\subsubsection{Từ điển dữ liệu}
-
+\paragraph{Chuẩn hoá bảng Trạng thái lịch khám}
+\mbox{}
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng user}
-  \centering
-  \begin{tabularx}{\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    id & STRING & ID người dùng.  \\
-    \hline
-    account\_id & STRING & ID tài khoản người dùng. \\
-    \hline
-    username & STRING & Họ và tên người dùng. \\
-    \hline
-    gender & INT & Giới tính của người dùng. \\
-    \hline
-    birth & DATE & Ngày tháng năm sinh của người dùng. \\
-    \hline
-    phone\_number & STRING & Số điện thoại của người dùng. \\
-    \hline
-    image & STRING & Ảnh đại diện của người dùng. \\
-    \hline
-    status & INTEGER & Trạng thái sử dụng của người dùng (0 - còn đang sử dụng, 1 - không còn đang sử dụng). \\
-    \hline
-    information & STRING & Thông tin thêm về người dùng. \\
-    \hline
-    role & INTEGER & Chức vụ của người dùng (0 - bệnh nhân, 1 - bác sĩ, 2 - quản trị viên). \\
-    \hline
-    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu. \\
-    \hline
-    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu. \\
-    \hline
-    
-  \end{tabularx}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Trạng thái lịch khám}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID trạng thái lịch khám, Mô tả trạng thái lịch khám                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                          \\
+		\hline
+		Mỗi trạng thái lịch khám có một ID riêng, có duy nhất Mô tả trạng thái lịch khám
+		                              & \parbox[t]{\linewidth}{$\text{ID trạng thái lịch khám} \rightarrow$ Mô tả trạng thái lịch khám} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID trạng thái lịch khám}$}                                         \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Trạng thái lịch khám đã ở 3NF}$}                                                   \\
+		\hline
+	\end{tabularx}
 \end{table}
 
-
+\paragraph{Chuẩn hoá bảng Kết quả lịch khám}
+\mbox{}
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng account}
-  \centering
-  \begin{tabularx}{\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    id & STRING & ID tài khoản  \\
-    \hline
-    email & STRING & Địa chỉ email của tài khoản. \\
-    \hline
-    password & STRING & Mật khẩu của tài khoản. \\
-    \hline
-  \end{tabularx}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Kết quả lịch khám}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID kết quả lịch khám, Mô tả kết quả lịch khám                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                    \\
+		\hline
+		Mỗi Kết quả lịch khám có một ID riêng, có duy nhất Mô tả kết quả lịch khám
+		                              & \parbox[t]{\linewidth}{$\text{ID kết quả lịch khám} \rightarrow$ Mô tả kết quả lịch khám} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID kết quả lịch khám}$}                                      \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Kết quả lịch khám đã ở 3NF}$}                                                \\
+		\hline
+	\end{tabularx}
 \end{table}
 
+\paragraph{Chuẩn hoá bảng Lịch khám}
+\mbox{}
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng device}
-  \centering
-  \begin{tabularx}{\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    id & STRING & ID thiết bị  \\
-    \hline
-    user\_id & STRING & ID người dùng  \\
-    \hline
-    device\_name & STRING & Tên thiết bị. \\
-    \hline
-    information & STRING & Thông tin thêm về thiết bị. \\
-    \hline
-    device\_type\_id & INTEGER & Loại thiết bị (1 - thiết bị đo điện tim, 2 - thiết bị đo nhịp tim, âm thanh tim). \\
-    \hline
-    start\_time & DATE & Thời gian lúc bắt đầu sử dụng thiết bị. \\
-    \hline
-    end\_time & DATE & Thời gian lúc kết thúc sử dụng thiết bị. \\
-    \hline
-    status & INTEGER & Trạng thái của thiết bị (0 - đang được sử dụng, 1 - đang không được sử dụng). \\
-    \hline
-    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu. \\
-    \hline
-    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu. \\
-    \hline
-  \end{tabularx}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Lịch khám}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID lịch khám, ID bệnh nhân, ID bác sĩ, ID trạng thái lịch khám, ID kết quả lịch khám, Thời gian bắt đầu lịch khám, Thời gian kết thúc lịch khám                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                                                                                                                      \\
+		\hline
+		Mỗi Lịch khám có một ID riêng, có duy nhất ID bệnh nhân, ID bác sĩ, ID trạng thái lịch khám, ID kết quả lịch khám, Thời gian bắt đầu lịch khám, Thời gian kết thúc lịch khám
+		                              & \parbox[t]{\linewidth}{$\text{ID lịch khám} \rightarrow$ ID bệnh nhân, ID bác sĩ, ID trạng thái lịch khám, ID kết quả lịch khám, Thời gian bắt đầu lịch khám, Thời gian kết thúc lịch khám} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID  lịch khám}$}                                                                                                                                               \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Lịch khám đã ở 3NF}$}                                                                                                                                                          \\
+		\hline
+	\end{tabularx}
 \end{table}
 
-
+\paragraph{Chuẩn hoá bảng Thông báo liên quan đến lịch khám}
+\mbox{}
 \begin{table}[H]
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng device\_detail}
-  \centering
-  \begin{tabularx}{\textwidth}{|c|c|X|}
-    \hline
-    \textbf{Thuộc tính} & \textbf{Kiểu dữ liệu} & \textbf{Mô tả} \\
-    \hline
-    id & STRING & ID thông số thiết bị  \\
-    \hline
-    device\_id & STRING & ID thiết bị  \\
-    \hline
-    detail\_name & STRING & Tên trường thông số thiết bị dựa vào \texttt{detail\_type}. \\
-    \hline
-    infomation & STRING & Thông tin về trường \texttt{detail\_name} của thiết bị. \\
-    \hline
-    value & STRING & Giá trị thông số của thiết bị dựa vào \texttt{detail\_type} (1 - tần số, 2 - dữ liệu kết nối, 3 - dung lượng lưu trữ). \\
-    \hline
-    detail\_type & INTEGER & Loại thông tin về thiết bị (1 - tín hiệu đo, 2 - loại kết nối, 3 - kiểu lưu trữ). \\
-    \hline
-    created\_at & DATE & Thời gian lúc tạo mới dữ liệu trong cơ sở dữ liệu. \\
-    \hline
-    updated\_at & DATE & Thời gian lúc thay đổi dữ liệu trong cơ sở dữ liệu. \\
-    \hline
-  \end{tabularx}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Thông báo liên quan đến lịch khám}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID thông báo, ID lịch khám, Loại thông báo, Nội dung thông báo, Trạng thái thông báo, Trạng thái đã xem, Lý do từ chối lịch khám                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                                                                                                       \\
+		\hline
+		Mỗi Thông báo liên quan đến lịch khám có một ID riêng, có duy nhất ID lịch khám, Loại thông báo, Nội dung thông báo, Trạng thái thông báo, Trạng thái đã xem, Lý do từ chối lịch khám
+		                              & \parbox[t]{\linewidth}{$\text{ID thông báo} \rightarrow$ ID lịch khám, Loại thông báo, Nội dung thông báo, Trạng thái thông báo, Trạng thái đã xem, Lý do từ chối lịch khám} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID  thông báo}$}                                                                                                                                \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Thông báo liên quan đến lịch khám đã ở 3NF}$}                                                                                                                   \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Chẩn đoán}
+\mbox{}
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Chẩn đoán}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID chẩn đoán, ID lịch khám, Thông tin chẩn đoán                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                      \\
+		\hline
+		Mỗi Chẩn đoán có một ID riêng, có duy nhất ID lịch khám, Thông tin chẩn đoán
+		                              & \parbox[t]{\linewidth}{$\text{ID chẩn đoán} \rightarrow$ ID lịch khám, Thông tin chẩn đoán} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID  chẩn đoán}$}                                               \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Chẩn đoán đã ở 3NF}$}                                                          \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Tin nhắn}
+\mbox{}
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Tin nhắn}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID tin nhắn, ID người gửi, ID nhóm trò chuyện nhận tin nhắn, Nội dung tin nhắn, Thời gian gửi tin nhắn                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                                                                             \\
+		\hline
+		Mỗi Tin nhắn có một ID riêng, có duy nhất ID người gửi, ID nhóm trò chuyện nhận tin nhắn, Nội dung tin nhắn, Thời gian gửi tin nhắn
+		                              & \parbox[t]{\linewidth}{$\text{ID tin nhắn} \rightarrow$ ID người gửi, ID nhóm trò chuyện nhận tin nhắn, Nội dung tin nhắn, Thời gian gửi tin nhắn} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID  tin nhắn}$}                                                                                                       \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Tin nhắn đã ở 3NF}$}                                                                                                                  \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\paragraph{Chuẩn hoá bảng Nhóm trò chuyện}
+\mbox{}
+\begin{table}[H]
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng chuẩn hoá bảng Nhóm trò chuyện}
+	\centering
+	\begin{tabularx}{0.9\textwidth}{|X|X|}
+		\hline
+		\textbf{Danh sách thuộc tính} & ID nhóm trò chuyện, Tên nhóm trò chuyện, Người tạo nhóm, Danh sách thành viên nhóm, Sự kiện gửi tin nhắn, Sự kiện nhận tin nhắn                                             \\
+		\hline
+		\textbf{Quy tắc nghiệp vụ}    & \textbf{Phụ thuộc hàm}                                                                                                                                                      \\
+		\hline
+		Mỗi Nhóm trò chuyện có một ID riêng, có duy nhất Tên nhóm trò chuyện, Người tạo nhóm, Danh sách thành viên nhóm, Sự kiện gửi tin nhắn, Sự kiện nhận tin nhắn
+		                              & \parbox[t]{\linewidth}{$\text{ID nhóm trò chuyện} \rightarrow$ Tên nhóm trò chuyện, Người tạo nhóm, Danh sách thành viên nhóm, Sự kiện gửi tin nhắn, Sự kiện nhận tin nhắn} \\
+		\hline
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Khoá chính của bảng: ID  nhóm trò chuyện}$}                                                                                                                         \\
+		\multicolumn{2}{|X|}{$\Rightarrow \text{Bảng Nhóm trò chuyện đã ở 3NF}$}                                                                                                                                    \\
+		\hline
+	\end{tabularx}
 \end{table}
 
 \subsubsection{Sơ đồ ERD}
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm,height=15cm]{Images/system/fmECG_database.png}
-  \caption[Sơ đồ ERD]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ ERD}
-  \label{fmECG_architecture-Database} 
+	\centering
+	\includegraphics[width=15cm,height=15cm]{Images/system/fmECG_database.png}
+	\caption[Sơ đồ ERD]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ ERD}
+	\label{fmECG_architecture-Database}
 \end{figure}
 
 \subsection{Thiết kế giao diện}
 
-\subsection{Thiết kế các chức năng cho website và server}
+% Ứng dụng được thiết kế với giao diện hiện đại, sử dụng tông màu chủ đạo là trắng và xanh dương, mang lại cảm giác trang nhã và chuyên nghiệp, đồng thời phù hợp với hình ảnh đặc trưng của lĩnh vực y tế. Sự kết hợp này không chỉ tạo ấn tượng về sự tin cậy mà còn mang đến trải nghiệm người dùng dễ chịu, thân thiện.
 
-\subsubsection{Thiết kế API}
+% Dưới đây là các giao diện được em thiết kế trong App: 
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/startApp.jpg}
+% 	\caption[Giao diện khởi động app]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện khởi động app}
+% 	\label{startApp}
+% \end{figure}
+% Hình ảnh hiển thị biểu tượng chính của ứng dụng với nền màu xanh nhạt, mang lại cảm giác nhẹ nhàng và thân thiện với người dùng. Biểu tượng trung tâm là một quả cầu năng lượng với dòng chữ "fmECG," được tô điểm bằng hiệu ứng ánh sáng động, tượng trưng cho sự liên kết giữa công nghệ và y học hiện đại.
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/login.jpg}
+% 	\caption[Giao diện trang đăng nhập]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng nhập}
+% 	\label{login}
+% \end{figure}
+% Giao diện đăng nhập của ứng dụng "fmECG" được thiết kế đơn giản và thân thiện với người dùng. Ở phía trên cùng, tên ứng dụng "fmECG" được hiển thị rõ ràng, giúp người dùng dễ dàng nhận diện thương hiệu. Phía dưới là thông điệp chào mừng "Welcome to fmECG!" nhằm tạo cảm giác thân thiện và chuyên nghiệp. Giao diện cung cấp hai ô nhập thông tin: một ô dành cho "Email" và một ô cho "Password," với biểu tượng mắt đi kèm để hỗ trợ người dùng kiểm tra mật khẩu đã nhập.
 
+% \begin{figure}[H] \centering \includegraphics[width=8.5cm,height=18cm]{Images/AppUI/homePage1Doctor.jpg} \caption[Giao diện trang chủ của bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang chủ của bác sĩ} \label{homeDoctor} \end{figure} 
+% Trang chủ của bác sĩ được thiết kế để cung cấp thông tin tổng quan nhanh chóng và rõ ràng. Phần trên cùng hiển thị lời chào cá nhân hóa với số lượng cuộc hẹn trong ngày, đi kèm hai biểu tượng tin nhắn và thông báo ở góc phải để bác sĩ dễ dàng theo dõi thông tin quan trọng. Ngoài ra, mục "Pending approvals" hiển thị số yêu cầu đang chờ xử lý với nút "View" để chuyển hướng đến chi tiết. Phần dưới là danh sách các cuộc hẹn đã xác nhận, bao gồm thông tin thời gian, bệnh nhân, và trạng thái.
 
-% \begin{enumerate}[a)]
-%   \item API xác thực người dùng
+% \begin{figure}[H] \centering \includegraphics[width=8.5cm,height=18cm]{Images/AppUI/homePage2Doctor.jpg} \caption[Giao diện danh sách bệnh nhân của bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện danh sách bệnh nhân của bác sĩ} \label{patientListDoctor} \end{figure} 
+% Tab "Patients" trong giao diện bác sĩ hiển thị danh sách các bệnh nhân dưới dạng các mục riêng biệt. Mỗi mục bao gồm tên bệnh nhân cùng nút điều hướng để truy cập nhanh vào hồ sơ chi tiết của từng người. Thiết kế này giúp bác sĩ dễ dàng quản lý và theo dõi thông tin bệnh nhân của mình.
 
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{4.5cm}
-%     | >{\centering\arraybackslash}m{2.8cm}
-%     | >{\raggedright\arraybackslash}X |
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API xác thực người dùng}
-%     \label{table_api_auth}
-%     \\
-%     \hline
-%     \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-%     api/auth/register   &   POST  & Đăng ký tài khoản \\ \hline
-%   api/auth/login   &    POST    & Đăng nhập vào hệ thống \\ \hline
-%   api/auth/logout   &    POST    & Đăng xuất khỏi hệ thống \\ \hline
-%   api/auth/reset-password  &     POST   &  Gửi reset link kèm reset token đến email của người dùng để thay đổi mật khẩu \\  \hline
-%   api/auth/reset-password/reset &   POST     &  Thay đổi lại mật khẩu với mã token được nhận  \\ \hline
-%   \end{xltabular}
+% \begin{figure}[H] \centering \includegraphics[width=8.5cm,height=18cm]{Images/AppUI/homePagePatient.jpg} \caption[Giao diện thông tin sức khỏe của bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện thông tin sức khỏe của bệnh nhân} \label{healthInfoPatient} \end{figure}
+% Giao diện của bệnh nhân tập trung vào việc hiển thị trạng thái sức khỏe tổng quan với đánh giá "Overall Health: Good" được cập nhật gần nhất. Bên dưới là 6 số liệu liên quan đến điện tim, được trình bày rõ ràng và dễ hiểu. Những số liệu này đại diện cho các thông tin đo lường quan trọng, giúp bệnh nhân theo dõi tình trạng sức khỏe tim mạch của mình một cách trực quan. Giao diện hiện đại và thân thiện, mang đến trải nghiệm sử dụng thuận tiện và tối ưu.
 
-%   \item API xét duyệt đăng ký tài khoản
-
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{4cm}
-%     | >{\centering\arraybackslash}m{2.8cm}
-%     | >{\raggedright\arraybackslash}X |
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API xét duyệt đăng ký tài khoản}
-%     \label{table_api_register}
-%     \\
-%     \hline
-%     \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-%     api/register/list   &   GET  & Lấy danh sách các tài khoản đang chờ phê duyệt \\ \hline
-%     api/register/accepted   &    POST    & Phê duyệt tài khoản đăng ký \\ \hline
-%     api/register/rejected  &     POST   &  Từ chối phê duyệt tài khoản đăng ký \\  \hline  
-%   \end{xltabular}
-
-%   \item API quản lý thông tin người dùng
-  
-%   \begin{xltabular}{\textwidth}{
-%     | >{\raggedright\arraybackslash}p{4cm}
-%     | >{\centering\arraybackslash}m{2.8cm}
-%     | >{\raggedright\arraybackslash}X |
-%     }
-%     \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý thông tin người dùng}
-%     \label{table_api_user}
-%     \\
-%     \hline
-%     \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-%     api/user   &   GET  &  Lấy danh sách thông tin của tất cả người dùng \\  \hline
-%    api/user/id/:userId  &   GET     & Lấy thông tin cụ thể của người dùng theo Id \\ \hline
-%    api/user/role/:role  &   GET     & Lấy danh sách người dùng theo chức vụ \\ \hline
-%    api/user/update   &    POST    &  Cập nhật thông tin người dùng \\  \hline
-%    api/user/delete/:userId  &   DELETE     & Xóa thông tin người dùng theo Id \\ \hline
-%   \end{xltabular}
-
-% \item API quản lý thiết bị
-% \begin{xltabular}{\textwidth}{
-%   | >{\raggedright\arraybackslash}p{4.8cm}
-%   | >{\centering\arraybackslash}m{2.8cm}
-%   | >{\raggedright\arraybackslash}X |
-%   }
-%   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý thiết bị}
-%   \label{table_api_device}
-%   \\
-%   \hline
-%   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-%   api/device   &   GET  & Lấy danh sách thông tin tất cả thiết bị \\ \hline
-%   api/devide/:deviceId   &    GET    & Lấy thông tin của một thiết bị \\ \hline
-%   api/device/add &   POST     & Thêm thông tin thiết bị mới \\ \hline
-%   api/device/update  &     POST   & Cập nhật thông tin một thiết bị \\ \hline
-%   api/device/delete/:deviceId  &     DELETE   & Xóa thông tin một thiết bị theo Id \\ \hline
-% \end{xltabular}
-
-% \item API quản lý bản ghi ECG
-% \begin{xltabular}{\textwidth}{
-%   | >{\raggedright\arraybackslash}p{5cm}
-%   | >{\centering\arraybackslash}m{2.8cm}
-%   | >{\raggedright\arraybackslash}X |
-%   }
-%   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý bản ghi ECG}
-%   \label{table_api_ecg}
-%   \\
-%   \hline
-%   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-%  api/record   &   GET  & Lấy danh sách thông tin các phiên đo ECG \\ \hline
-%  api/record/user/:userId   &    GET    & Lấy danh sách thông tin các phiên đo ECG của bệnh nhân \\ \hline
-%  api/record/doctor/:doctorId &   GET     & Lấy danh sách thông tin các phiên đo ECG của các bệnh nhân được quản lý bởi bác sĩ \\ \hline
-%  api/record/id/:recordId  &     GET   & Lấy thông tin một phiên đo của bệnh nhân \\ \hline
-%  api/record/getData/:recordId  &     GET   & Lấy dữ liệu một phiên đo của bệnh nhân \\ \hline
-%  api/ record/download/:recordId  &     GET   & Tải dữ liệu một phiên đo của bệnh nhân \\ \hline
-%  api/record/update  &     POST   & Cập nhật thông tin một phiên đo của bệnh nhân \\ \hline
-%  api/record/delete/:recordId  &     DELETE   & Xóa thông tin một phiên đo của bệnh nhân \\ \hline
-%   \end{xltabular}
+% Sang giao diện đặt lịch:
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/scheduleUpComing.jpg}
+% 	\caption[Giao diện quản lý lịch của bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện quản lý lịch của bác sĩ}
+% 	\label{scheduleDoctor}
+% \end{figure}
+% Giao diện quản lý lịch của bác sĩ được chia thành ba tab chính: \textbf{Upcoming}, \textbf{Completed}, và \textbf{Canceled}. Tab \textbf{Upcoming} hiển thị danh sách các cuộc hẹn sắp tới với thông tin chi tiết như tên bệnh nhân, ngày và giờ hẹn, cùng nút "Urgent message" để liên lạc khẩn cấp khi cần thiết. 
 
 
-% \item API quản lý phân công bệnh sĩ - bệnh nhân
-% \begin{xltabular}{\textwidth}{
-%   | >{\raggedright\arraybackslash}p{4.5cm}
-%   | >{\centering\arraybackslash}m{2.8cm}
-%   | >{\raggedright\arraybackslash}X |
-%   }
-%   \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý phân công bác sĩ - bệnh nhân}
-%   \label{table_api_pda}
-%   \\
-%   \hline
-%   \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-%   api/pda   &   GET  & Lấy danh sách tất cả thông tin phân công bác sĩ - bệnh nhân \\ \hline
-%   api/pda/create  &    POST    & Tạo một phân công bác sĩ - bệnh nhân mới \\ \hline
-%   api/pda/update  &    POST    & Cập nhật thông tin một phân công bác sĩ - bệnh nhân mới \\ \hline
-%   api/pda/delete/:pdaId  &    DELETE    & Xóa một phân công bác sĩ - bệnh nhân mới \\ \hline
-%   api/pda/patient/:doctorId &  GET  & Lấy danh sách tất cả bệnh nhân theo ID bác sĩ \\ \hline
-%   api/pda/doctor/:patientId &  GET  & Lấy danh sách tất cả bác sĩ theo ID bệnh nhân \\ \hline
-%   \end{xltabular}
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/optionSchedule.jpg}
+% 	\caption[Tùy chọn hủy lịch hẹn trong tab Upcoming]{\bfseries \fontsize{12pt}{0pt}\selectfont Tùy chọn hủy lịch hẹn trong tab Upcoming}
+% 	\label{upcomingOptions}
+% \end{figure}
+% Trong tab \textbf{Upcoming}, mỗi cuộc hẹn đều có biểu tượng dấu ba chấm ở góc phải, cho phép bác sĩ truy cập vào các tùy chọn bổ sung. Một trong số đó là chức năng \textbf{Hủy lịch hẹn}. Khi nhấn vào tùy chọn này, một cửa sổ mới sẽ xuất hiện, yêu cầu bác sĩ nhập lý do hủy lịch.
 
-% \end{enumerate}
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/cancelledSchedule.jpg}
+% 	\caption[Giao diện nhập lý do hủy lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện nhập lý do hủy lịch hẹn}
+% 	\label{cancelAppointment}
+% \end{figure}
+% Giao diện nhập lý do hủy lịch hẹn cung cấp một ô nhập liệu để bác sĩ điền thông tin giải thích lý do hủy cuộc hẹn. Phía dưới là hai nút chức năng:
+% \begin{itemize}
+% 	\item \textbf{Cancel Appointment}: Xác nhận hủy lịch hẹn sau khi lý do được nhập.
+% 	\item \textbf{Close}: Đóng cửa sổ mà không thực hiện thay đổi.
+% \end{itemize}
+% Chức năng này đảm bảo bác sĩ có thể quản lý lịch hẹn linh hoạt, đồng thời cung cấp thông tin rõ ràng cho bệnh nhân về lý do hủy lịch.
 
 
+% Tab \textbf{Completed} tập hợp các cuộc hẹn đã hoàn thành. Khi nhấn vào một mục trong danh sách, bác sĩ sẽ được chuyển đến cửa sổ chi tiết, hiển thị thông tin bệnh nhân như tên, tuổi, giới tính, và số điện thoại, cùng với các tùy chọn thao tác như nhập thông tin chẩn đoán và tạo lịch tái khám. Tab \textbf{Canceled} cho phép bác sĩ theo dõi các cuộc hẹn đã bị hủy, hỗ trợ việc quản lý lịch sử làm việc dễ dàng hơn.
+
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/scheduleCompleted.jpg}
+% 	\caption[Chi tiết thông tin bệnh nhân từ lịch đã hoàn thành]{\bfseries \fontsize{12pt}{0pt}\selectfont Chi tiết thông tin bệnh nhân từ lịch đã hoàn thành}
+% 	\label{patientInfo}
+% \end{figure}
+% Khi truy cập vào thông tin chi tiết từ tab \textbf{Completed}, bác sĩ sẽ thấy toàn bộ thông tin về bệnh nhân, bao gồm tên, tuổi, giới tính, và số điện thoại. Bên dưới là các nút chức năng như:
+% \begin{itemize}
+% 	\item \textbf{Chẩn đoán}: Cho phép bác sĩ nhập hoặc chỉnh sửa thông tin chẩn đoán cho bệnh nhân.
+% 	\item \textbf{Tạo lịch tái khám}: Hỗ trợ bác sĩ đặt lịch tái khám mới với giao diện chọn ngày và giờ trực quan.
+% 	\item \textbf{Đóng cửa sổ}: Kết thúc thao tác và quay lại danh sách.
+% \end{itemize}
+
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/blockInputDIag.jpg}
+% 	\caption[Cửa sổ cập nhật thông tin chẩn đoán]{\bfseries \fontsize{12pt}{0pt}\selectfont Cửa sổ cập nhật thông tin chẩn đoán}
+% 	\label{diagnosisUpdate}
+% \end{figure}
+% Giao diện cập nhật chẩn đoán cung cấp một ô nhập liệu để bác sĩ thêm hoặc chỉnh sửa nội dung chẩn đoán, đi kèm nút \textbf{Update} để lưu thông tin mới.
+
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/repickSchedule2.jpg}
+% 	\caption[Cửa sổ tạo lịch tái khám]{\bfseries \fontsize{12pt}{0pt}\selectfont Cửa sổ tạo lịch tái khám}
+% 	\label{reschedule}
+% \end{figure}
+% Giao diện đặt lịch tái khám cho phép bác sĩ chọn ngày và giờ, sau đó xác nhận bằng nút \textbf{Xác nhận lịch tái khám}. Điều này giúp đảm bảo việc quản lý các cuộc hẹn diễn ra mượt mà và hiệu quả.
+
+\subsubsection{Màn hình khởi động và đăng nhập}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/startApp.jpg}
+	\caption[Giao diện khởi động app]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện khởi động app}
+	\label{startApp}
+\end{figure}
+Hình ảnh hiển thị biểu tượng chính của ứng dụng với nền màu xanh nhạt, mang lại cảm giác nhẹ nhàng và thân thiện với người dùng. Biểu tượng trung tâm là một quả cầu năng lượng với dòng chữ "fmECG," được tô điểm bằng hiệu ứng ánh sáng động, tượng trưng cho sự liên kết giữa công nghệ và y học hiện đại.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/login.jpg}
+	\caption[Giao diện trang đăng nhập]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang đăng nhập}
+	\label{login}
+\end{figure}
+Giao diện đăng nhập của ứng dụng "fmECG" được thiết kế đơn giản và thân thiện với người dùng. Ở phía trên cùng, tên ứng dụng "fmECG" được hiển thị rõ ràng, giúp người dùng dễ dàng nhận diện thương hiệu. Phía dưới là thông điệp chào mừng "Welcome to fmECG!" nhằm tạo cảm giác thân thiện và chuyên nghiệp. Giao diện cung cấp hai ô nhập thông tin: một ô dành cho "Email" và một ô cho "Password," với biểu tượng mắt đi kèm để hỗ trợ người dùng kiểm tra mật khẩu đã nhập.
+
+\subsubsection{Giao diện của bác sĩ (Doctor)}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/homePage1Doctor.jpg}
+	\caption[Giao diện trang chủ của bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang chủ của bác sĩ}
+	\label{homeDoctor}
+\end{figure}
+Trang chủ của bác sĩ được thiết kế để cung cấp thông tin tổng quan nhanh chóng và rõ ràng. Phần trên cùng hiển thị lời chào cá nhân hóa với số lượng cuộc hẹn trong ngày, đi kèm hai biểu tượng tin nhắn và thông báo ở góc phải để bác sĩ dễ dàng theo dõi thông tin quan trọng. Ngoài ra, mục "Pending approvals" hiển thị số yêu cầu đang chờ xử lý với nút "View" để chuyển hướng đến chi tiết. Phần dưới là danh sách các cuộc hẹn đã xác nhận, bao gồm thông tin thời gian, bệnh nhân, và trạng thái.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/homePage2Doctor.jpg}
+	\caption[Giao diện danh sách bệnh nhân của bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện danh sách bệnh nhân của bác sĩ}
+	\label{patientListDoctor}
+\end{figure}
+Tab "Patients" trong giao diện bác sĩ hiển thị danh sách các bệnh nhân dưới dạng các mục riêng biệt. Mỗi mục bao gồm tên bệnh nhân cùng nút điều hướng để truy cập nhanh vào hồ sơ chi tiết của từng người.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/scheduleUpComing.jpg}
+	\caption[Giao diện quản lý lịch của bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện quản lý lịch của bác sĩ}
+	\label{scheduleDoctor}
+\end{figure}
+Giao diện quản lý lịch của bác sĩ được chia thành ba tab chính: \textbf{Upcoming}, \textbf{Completed}, và \textbf{Canceled}. Tab \textbf{Upcoming} hiển thị danh sách các cuộc hẹn sắp tới với thông tin chi tiết như tên bệnh nhân, ngày và giờ hẹn, cùng nút "Urgent message" để liên lạc khẩn cấp khi cần thiết.
+
+Sang giao diện đặt lịch:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/scheduleUpComing.jpg}
+	\caption[Giao diện quản lý lịch của bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện quản lý lịch của bác sĩ}
+	\label{scheduleDoctor}
+\end{figure}
+Giao diện quản lý lịch của bác sĩ được chia thành ba tab chính: \textbf{Upcoming}, \textbf{Completed}, và \textbf{Canceled}. Tab \textbf{Upcoming} hiển thị danh sách các cuộc hẹn sắp tới với thông tin chi tiết như tên bệnh nhân, ngày và giờ hẹn, cùng nút "Urgent message" để liên lạc khẩn cấp khi cần thiết. 
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/optionSchedule.jpg}
+	\caption[Tùy chọn hủy lịch hẹn trong tab Upcoming]{\bfseries \fontsize{12pt}{0pt}\selectfont Tùy chọn hủy lịch hẹn trong tab Upcoming}
+	\label{upcomingOptions}
+\end{figure}
+Trong tab \textbf{Upcoming}, mỗi cuộc hẹn đều có biểu tượng dấu ba chấm ở góc phải, cho phép bác sĩ truy cập vào các tùy chọn bổ sung. Một trong số đó là chức năng \textbf{Hủy lịch hẹn}. Khi nhấn vào tùy chọn này, một cửa sổ mới sẽ xuất hiện, yêu cầu bác sĩ nhập lý do hủy lịch.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/cancelledSchedule.jpg}
+	\caption[Giao diện nhập lý do hủy lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện nhập lý do hủy lịch hẹn}
+	\label{cancelAppointment}
+\end{figure}
+Giao diện nhập lý do hủy lịch hẹn cung cấp một ô nhập liệu để bác sĩ điền thông tin giải thích lý do hủy cuộc hẹn. Phía dưới là hai nút chức năng:
+\begin{itemize}
+	\item \textbf{Cancel Appointment}: Xác nhận hủy lịch hẹn sau khi lý do được nhập.
+	\item \textbf{Close}: Đóng cửa sổ mà không thực hiện thay đổi.
+\end{itemize}
+Chức năng này đảm bảo bác sĩ có thể quản lý lịch hẹn linh hoạt, đồng thời cung cấp thông tin rõ ràng cho bệnh nhân về lý do hủy lịch.
+
+
+Tab \textbf{Completed} tập hợp các cuộc hẹn đã hoàn thành. Khi nhấn vào một mục trong danh sách, bác sĩ sẽ được chuyển đến cửa sổ chi tiết, hiển thị thông tin bệnh nhân như tên, tuổi, giới tính, và số điện thoại, cùng với các tùy chọn thao tác như nhập thông tin chẩn đoán và tạo lịch tái khám. Tab \textbf{Canceled} cho phép bác sĩ theo dõi các cuộc hẹn đã bị hủy, hỗ trợ việc quản lý lịch sử làm việc dễ dàng hơn.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/scheduleCompleted.jpg}
+	\caption[Chi tiết thông tin bệnh nhân từ lịch đã hoàn thành]{\bfseries \fontsize{12pt}{0pt}\selectfont Chi tiết thông tin bệnh nhân từ lịch đã hoàn thành}
+	\label{patientInfo}
+\end{figure}
+Khi truy cập vào thông tin chi tiết từ tab \textbf{Completed}, bác sĩ sẽ thấy toàn bộ thông tin về bệnh nhân, bao gồm tên, tuổi, giới tính, và số điện thoại. Bên dưới là các nút chức năng như:
+\begin{itemize}
+	\item \textbf{Chẩn đoán}: Cho phép bác sĩ nhập hoặc chỉnh sửa thông tin chẩn đoán cho bệnh nhân.
+	\item \textbf{Tạo lịch tái khám}: Hỗ trợ bác sĩ đặt lịch tái khám mới với giao diện chọn ngày và giờ trực quan.
+	\item \textbf{Đóng cửa sổ}: Kết thúc thao tác và quay lại danh sách.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/blockInputDIag.jpg}
+	\caption[Cửa sổ cập nhật thông tin chẩn đoán]{\bfseries \fontsize{12pt}{0pt}\selectfont Cửa sổ cập nhật thông tin chẩn đoán}
+	\label{diagnosisUpdate}
+\end{figure}
+Giao diện cập nhật chẩn đoán cung cấp một ô nhập liệu để bác sĩ thêm hoặc chỉnh sửa nội dung chẩn đoán, đi kèm nút \textbf{Update} để lưu thông tin mới.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/repickSchedule2.jpg}
+	\caption[Cửa sổ tạo lịch tái khám]{\bfseries \fontsize{12pt}{0pt}\selectfont Cửa sổ tạo lịch tái khám}
+	\label{reschedule}
+\end{figure}
+Giao diện đặt lịch tái khám cho phép bác sĩ chọn ngày và giờ, sau đó xác nhận bằng nút \textbf{Xác nhận lịch tái khám}. Điều này giúp đảm bảo việc quản lý các cuộc hẹn diễn ra mượt mà và hiệu quả.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/chatDoctor.jpg}
+	\caption[Giao diện trang hội thoại]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang hội thoại}
+	\label{chat}
+\end{figure}
+Giao diện trên thuộc màn hình của bác sĩ, được thiết kế để tạo cuộc hội thoại giữa bác sĩ và bệnh nhân. Tại đây, bác sĩ có thể dễ dàng tìm kiếm tên bệnh nhân hoặc truy cập nhanh các cuộc hội thoại thông qua danh sách hiển thị ở giữa màn hình. Mỗi cuộc hội thoại đều đi kèm với tên người liên hệ, tin nhắn gần nhất, và thời gian trao đổi, giúp bác sĩ nhanh chóng xác định nội dung cần trao đổi.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/infoDoctor.jpg}
+	\caption[Giao diện màn thông tin của bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn thông tin của bác sĩ}
+	\label{infoDoctor}
+\end{figure}
+
+Trong phần "Profile" dành cho bác sĩ, giao diện cung cấp đầy đủ các chi tiết cơ bản như họ và tên, số điện thoại, email, và ngày sinh của người dùng. Ngoài ra, chức năng hiển thị rõ vai trò chuyên môn của bác sĩ, chẳng hạn như "Bác sĩ chuyên khoa". Một điểm nổi bật là tính năng định danh tài khoản, được hiển thị với trạng thái "Định danh thành công", nhằm đảm bảo bảo mật và xác thực thông tin của bác sĩ. Giao diện trực quan, dễ sử dụng, giúp bác sĩ nhanh chóng truy cập và cập nhật thông tin cá nhân.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=6cm]{Images/AppUI/buttonInfoPage.png}
+	\caption[Giao diện màn thông tin của bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện màn thông tin của bác sĩ}
+	\label{infoDoctor}
+\end{figure}
+
+Ngoài việc cung cấp các thông tin cá nhân chi tiết, phần này còn có hai nút chức năng quan trọng: "Cập nhật lại định danh" và "Đăng xuất". Nút "Cập nhật lại định danh" cho phép bác sĩ xác thực lại thông tin tài khoản để đảm bảo tính chính xác và an toàn. Trong khi đó, nút "Đăng xuất" được thiết kế với màu đỏ nổi bật, giúp bác sĩ nhanh chóng thoát khỏi tài khoản khi cần thiết. Cả hai nút đều được đặt ở vị trí dễ thấy, hỗ trợ tốt cho việc quản lý tài khoản một cách hiệu quả.
+\subsubsection{Giao diện của bệnh nhân (Patient)}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/homePagePatient.jpg}
+	\caption[Giao diện thông tin sức khỏe của bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện thông tin sức khỏe của bệnh nhân}
+	\label{healthInfoPatient}
+\end{figure}
+Giao diện của bệnh nhân tập trung vào việc hiển thị trạng thái sức khỏe tổng quan với đánh giá "Overall Health: Good" được cập nhật gần nhất. Bên dưới là 6 số liệu liên quan đến điện tim, được trình bày rõ ràng và dễ hiểu. Những số liệu này giúp bệnh nhân theo dõi tình trạng sức khỏe tim mạch của mình một cách trực quan và chi tiết.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/homePagePatient2.jpg}
+	\caption[Giao diện lịch sử đo của bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện lịch sử đo của bệnh nhân}
+	\label{measurementHistory}
+\end{figure}
+	Ở Tab \textbf{Measurement history}, cung cấp cho bệnh nhân lịch sử các lần đo trước đo với tên bác sĩ cùng với đó là thời gian bắt đầu đo và thời gian kết thúc đo, tên thiết bị đo.
+
+\begin{figure}[H]
+		\centering
+		\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/measure.jpg}
+		\caption[Giao diện đo tín hiệu điện tim của bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện đo tin hiệu điện tim của bệnh nhân}
+		\label{measurement}
+\end{figure}
+	Đây là giao diện phần Measurement khi bệnh nhân muốn đo tín hiệu điện tim, khi click vào hình trái tim, thiết bị sẽ bắt đầu đo và kết quả sẽ được hiển thị trên màn hình điện thoại của bệnh nhân.
+
+	Giao diện phần đặt lịch Schedules, chủ yếu vẫn khá giống giao diện bên phần của bác sĩ, có sự khác biệt khi click vào nút "+" ở bên trên góc phải, sẽ xuất hiện màn hình lựa chọn
+\begin{figure}[H]
+		\centering
+		\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/scheduleChoice.jpg}
+		\caption[Giao diện lựa chọn kiểu đặt lịch cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện lựa chọn kiểu đặt lịch của bệnh nhân}
+		\label{scheduleChoice}
+\end{figure}
+	Với lựa chọn đầu tiên là chọn Bác sĩ trước, bệnh nhân có thể lựa chọn bác sĩ mình muốn đặt lịch trước rồi mới cần chọn lịch dựa trên những lịch đang rảnh của bác sĩ
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/pickDoctor.jpg}
+	\caption[Giao diện lựa chọn bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện lựa chọn bác sĩ}
+	\label{DoctorList}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/selectTimeWithDoctorPick.jpg}
+	\caption[Giao diện chọn thời gian tương ứng với bác sĩ đã chọn trước đó]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện chọn thời gian tương ứng với bác sĩ đã chọn trước đó}
+	\label{TimePickWithDoctor}
+\end{figure}
+
+Khi đã chọn xong sẽ hiển thị Popup xác nhận đặt lịch của bệnh nhân
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/firmPicker.jpg}
+	\caption[Popup xác nhận đặt lịch]{\bfseries \fontsize{12pt}{0pt}\selectfont Popup xác nhận đặt lịch}
+	\label{TimePickWithDoctor}
+\end{figure}
+
+	Với lựa chọn thứ 2 là chọn thời gian trước, bệnh nhân sẽ đặt thời gian rảnh trước và màn hình sẽ hiển thị ra các bác sĩ đang rảnh trong thời gian đó để bệnh nhân có thể lựa chọn. Quy trình xác nhận đặt lịch tương tự như phần bên trên.
+
+Khi đặt lịch thành công, sẽ có thông báo trả về ở phần Thông báo của cả bệnh nhân lẫn bác sĩ.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/noti.jpg}
+	\caption[Giao diện thông báo đặt lịch thành công]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện thông báo đặt lịch thành công}
+	\label{TimePickWithDoctor}
+\end{figure}
+Về giao diện phần Hội thoại và Thông tin cá nhân sẽ được thiết kế giống với phần giao diện bên phía bác sĩ.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8.5cm,height=18cm]{Images/AppUI/infoPatient.jpg}
+	\caption[Giao diện thông tin cá nhân của bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện thông tin cá nhân của bệnh nhân}
+	\label{TimePickWithDoctor}
+\end{figure}
+	\subsection{Thiết kế các chức năng}
+
+\subsubsection{Thiết kế các API cần thiết}
+
+
+\begin{enumerate}[a)]
+  \item API xác minh tài khoản
+
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{4.6cm}
+    | >{\centering\arraybackslash}m{2.8cm}
+    | >{\raggedright\arraybackslash}X |
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API xác minh tài khoản}
+    \label{table_api_auth}
+    \\
+    \hline
+    \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+    api/ecg/auth/create-account   &   POST  & Tạo mới tài khoản người dùng \\ \hline
+    api/ecg/auth/login   &    POST    & Đăng nhập vào hệ thống \\ \hline
+    api/ecg/auth/logout   &    POST    & Đăng xuất khỏi hệ thống \\ \hline
+  \end{xltabular}
+
+  \item API quản lý người dùng trong hệ thống
+  \begin{xltabular}{\textwidth}{
+    | >{\raggedright\arraybackslash}m{4.6cm}
+    | >{\centering\arraybackslash}m{2.8cm}
+    | >{\raggedright\arraybackslash}X |
+    }
+    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý người dùng trong hệ thống}
+    \label{table_api_user}
+    \\
+    \hline
+    \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+    api/ecg/users   &   GET  &  Tra cứu danh sách tất cả người dùng trong hệ thống\\  \hline
+	api/ecg/users/doctors   &   GET  &  Tra cứu danh sách toàn bộ bác sĩ trong hệ thống \\  \hline
+	api/ecg/users/:id   &   GET  &  Tra cứu dữ liệu người dùng cụ thể dựa trên id tương ứng \\  \hline
+	api/ecg/users/data/patient-data   &   GET  &  Tra cứu danh sách các bệnh nhân đang được theo dõi của bác sĩ cụ thể \\  \hline
+	api/ecg/users/   &   PUT  &  Chỉnh sửa thông tin người dùng \\  \hline
+	api/ecg/users/:userId  &   DELETE  &  Xóa người dùng cụ thể dựa trên id tương ứng \\  \hline
+  \end{xltabular}
+
+\item API quản lý thiết bị y tế
+\begin{xltabular}{\textwidth}{
+  | >{\raggedright\arraybackslash}m{4.8cm}
+  | >{\centering\arraybackslash}m{2.8cm}
+  | >{\raggedright\arraybackslash}X |
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý thiết bị y tế}
+  \label{table_api_device}
+  \\
+  \hline
+  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+  api/ecg/device   &   GET  & Tra cứu danh sách toàn bộ thiết bị y tế trong hệ thống\\ \hline
+  api/ecg/devide/:id   &    GET    & Tra cứu thông tin chi tiết của một thiết bị y tế dựa trên id tương ứng \\ \hline
+  api/ecg/device/add &   POST     & Thêm mới thiết bị y tế \\ \hline
+  api/ecg/device-detail &   POST     & Thêm thông số kỹ thuật cho một thiết bị y tế \\ \hline
+  api/ecg/device/:deviceId  &     PUT   & Cập nhật thông tin chi tiết cho thiết bị y tế cụ thể \\ \hline
+  api/ecg/device/:deviceId  &     DELETE   & Xóa thiết bị y tế dựa trên id tương ứng \\ \hline
+  api/ecg/device-detail  &     PUT   & Cập nhật thông số kỹ thuật cho thiết bị y tế \\ \hline
+  api/ecg/device-detail/: detailId  &     PUT   & Xoá thông số kỹ thuật của thiết bị y tế \\ \hline
+\end{xltabular}
+
+\item API quản lý dữ liệu phiên đo
+\begin{xltabular}{\textwidth}{
+  | >{\raggedright\arraybackslash}p{5cm}
+  | >{\centering\arraybackslash}m{2.8cm}
+  | >{\raggedright\arraybackslash}X |
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý dữ liệu phiên đo}
+  \label{table_api_record}
+  \\
+  \hline
+  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả \\ \hline
+   api/ecg/records   &   GET  & Tra cứu dữ liệu tất cả các phiên đo \\ \hline
+   api/ecg/records/:id   &    GET    & Tra cứu dữ liệu phiên đo cụ thể dựa theo id tương ứng \\ \hline
+   api/ecg/records/data/ doctorId &   GET     & Tra cứu dữ liệu tất cả các phiên đo của bệnh nhân mà bác sĩ phụ trách \\ \hline
+   api/ecg/records/   &    POST    & Tạo dữ liệu phiên đo mới \\ \hline
+   api/ecg/records/   &    PUT    & Cập nhật dữ liệu phiên đo \\ \hline
+   api/ecg/records/:recordId  &    DELETE    & Xóa dữ liệu phiên đo dựa theo id tương ứng \\ \hline
+  \end{xltabular}
+
+
+\item API quản lý dịch vụ lịch khám
+\begin{xltabular}{\textwidth}{
+  | >{\raggedright\arraybackslash}m{4.5cm}
+  | >{\centering\arraybackslash}m{2.8cm}
+  | >{\raggedright\arraybackslash}X |
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý dịch vụ lịch khám}
+  \label{table_api_schedule}
+  \\
+  \hline
+  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+  api/ecg/schedules   &   GET  & Tra cứu danh sách tất cả lịch khám trong hệ thống \\ \hline
+  api/ecg/schedules/ doctorId  &    GET    & Tra cứu danh sách lịch khám của bác sĩ cụ thể \\ \hline
+  api/ecg/schedules/ patientId  &    GET    & Tra cứu danh sách lịch khám của bệnh nhân cụ thể \\ \hline
+  api/ecg/schedules/create-by-doctor  &    POST    & Cho phép bác sĩ đặt lịch tái khám cho bệnh nhân \\ \hline
+  api/ecg/schedules/create-by-patient  &    POST    & Cho phép bệnh nhân đặt lịch khám với bác sĩ \\ \hline
+  api/ecg/schedules/time/ available-doctor/: schedule-time  &    GET    & Tra cứu danh sách các bác sĩ khả dụng theo thời gian đã chọn \\ \hline
+  api/ecg/schedules/ available-schedule/:id  &    GET    & Tra cứu các khung giờ trống có thể đặt lịch với bác sĩ cụ thể. \\ \hline
+  api/ecg/schedules/accept-schedule  &    PUT    & Chấp nhận lịch khám cụ thể \\ \hline
+  api/ecg/schedules/reject-schedule/:id  &    DELETE    & Từ chối lịch khám cụ thể \\ \hline
+  \end{xltabular}
+
+\item API liên quan đến chẩn đoán cho bệnh nhân
+\begin{xltabular}{\textwidth}{
+  | >{\raggedright\arraybackslash}m{4.5cm}
+  | >{\centering\arraybackslash}m{2.8cm}
+  | >{\raggedright\arraybackslash}X |
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến chẩn đoán cho bệnh nhân}
+  \label{table_api_diagnosis}
+  \\
+  \hline
+  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+  api/ecg/diagnosis   &   POST  & Tạo chẩn đoán mới cho bệnh nhân \\ \hline
+  api/ecg/diagnosis/ schedule/:scheduleId   &   POST  & Tra cứu thông tin chẩn đoán dựa trên id lịch khám tương ứng\\ \hline
+  api/ecg/diagnosis/update   &   POST  & Cập nhật thông tin chẩn đoán \\ \hline
+  \end{xltabular}
+
+
+\item API liên quan đến thông báo về lịch khám
+\begin{xltabular}{\textwidth}{
+  | >{\raggedright\arraybackslash}m{4.5cm}
+  | >{\centering\arraybackslash}m{2.8cm}
+  | >{\raggedright\arraybackslash}X |
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến thông báo về lịch khám}
+  \label{table_api_notification}
+  \\
+  \hline
+  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+  api/ecg/notification/get   &   GET  & Tra cứu tất cả các thông báo của người dùng cụ thể  \\ \hline
+  api/ecg/notification   &   POST  & Tạo thông báo mới liên quan đến lịch khám \\ \hline
+  api/ecg/notification/ update-seen   &   POST  & Cập nhật trạng thái thông báo đã được xem\\ \hline
+  api/ecg/notification/:id   &   DELETE  & Xóa thông báo dựa trên id tương ứng\\ \hline
+  \end{xltabular}
+
+\item API liên quan đến tin nhắn
+\begin{xltabular}{\textwidth}{
+  | >{\raggedright\arraybackslash}m{4.5cm}
+  | >{\centering\arraybackslash}m{2.8cm}
+  | >{\raggedright\arraybackslash}X |
+  }
+  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin nhắn}
+  \label{table_api_chat}
+  \\
+  \hline
+  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+  api/ecg/groupChat   &   POST  & Tạo nhóm trò chuyện mới  \\ \hline
+  api/ecg/groupChat   &   GET  & Tra cứu danh sách các nhóm trò chuyện của người dùng  \\ \hline
+  api/ecg/chat/messages/: groupChatId   &   GET  & Tra cứu lịch sử trò chuyện của các đoạn hội thoại đã thực hiện \\ \hline
+  api/ecg/chat/send   &   POST  & Cho phép người dùng gửi tin nhắn đến các đối tượng liên quan \\ \hline
+  \end{xltabular}
+\end{enumerate}
 
 
 \subsubsection{Sơ đồ tuần tự API}
-
+Phần này cung cấp các sơ đồ tuần tự minh họa chi tiết cách thức hoạt động của các API trong hệ thống.
+Dựa trên bảng API đã thiết kế, các sơ đồ tuần tự sẽ mô phỏng luồng xử lý từ khi nhận yêu cầu đến khi trả về kết quả cho người dùng,
+cho thấy rõ sự tương tác giữa các thành phần và lớp chức năng trong hệ thống.
 % ------------------------Auth----------------------
 
+\paragraph{Các API phục vụ mục đích xác minh tài khoản}
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tạo mới tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tạo mới tài khoản người dùng}
+	\label{sequence_diagram_create_account}
+\end{figure}
 
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API đăng nhập vào hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API đăng nhập vào hệ thống}
+	\label{sequence_diagram_login}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API đăng xuất khỏi hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API đăng xuất khỏi hệ thống}
+	\label{sequence_diagram_logout}
+\end{figure}
+
+% ------------------------User----------------------
+\paragraph{Các API phục vụ mục đích quản lý người dùng trong hệ thống}
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách tất cả người dùng trong hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách tất cả người dùng trong hệ thống}
+	\label{sequence_diagram_get_all_users}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách toàn bộ bác sĩ trong hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách toàn bộ bác sĩ trong hệ thống}
+	\label{sequence_diagram_get_all_doctors}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tra cứu dữ liệu người dùng cụ thể dựa trên id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu người dùng cụ thể dựa trên id}
+	\label{sequence_diagram_get_user_by_id}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách bệnh nhân đang được theo dõi]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách bệnh nhân đang được theo dõi}
+	\label{sequence_diagram_get_patient_data}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API chỉnh sửa thông tin người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API chỉnh sửa thông tin người dùng}
+	\label{sequence_diagram_update_user}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API xóa người dùng cụ thể dựa trên id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa người dùng cụ thể dựa trên id}
+	\label{sequence_diagram_delete_user}
+\end{figure}
+
+% ------------------------Device----------------------
+\paragraph{Các API phục vụ mục đích quản lý thiết bị y tế}
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách toàn bộ thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách toàn bộ thiết bị y tế}
+	\label{sequence_diagram_get_all_devices}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API tra cứu thông tin chi tiết thiết bị y tế dựa trên id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu thông tin chi tiết thiết bị y tế dựa trên id}
+	\label{sequence_diagram_get_device_by_id}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API thêm mới thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API thêm mới thiết bị y tế}
+	\label{sequence_diagram_add_device}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\caption[Sơ đồ tuần tự API thêm thông số kỹ thuật cho nột thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API thêm thông số kỹ thuật cho một thiết bị y tế}
+	\label{sequence_diagram_add_device}
+\end{figure}
 
 \subsection{Kết luận chương}
 
-Chương 3 trình bày chi tiết về quá trình thiết kế hệ thống, bao gồm kiến trúc tổng thể và các thành phần cụ thể. 
+Chương 3 trình bày chi tiết về quá trình thiết kế hệ thống, bao gồm kiến trúc tổng thể và các thành phần cụ thể.
 Thiết kế hệ thống tập trung vào việc xây dựng kiến trúc vận hành hiệu quả và mượt mà, chú trọng vào tính bảo mật, hiệu suất và khả năng mở rộng tối ưu.
 \newpage
