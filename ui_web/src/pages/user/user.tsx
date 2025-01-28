@@ -261,7 +261,7 @@ export const User: React.FC = () => {
   const handleEditFunction = () => {
     const userData = findElementById(dataTable, selectedData[0]);
     const dataEdit = handleData(userData, "edit-form");
-    modalUpdateRef.current?.open(dataEdit, columns, "horizontal");
+    modalUpdateRef.current?.open(dataEdit, columns, "vertical");
   };
 
   const handleSubmitEditUser = (data: any) => {

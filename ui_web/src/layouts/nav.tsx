@@ -38,10 +38,10 @@ export const Nav = () => {
           <span className="menu-item-box-icon">
             <HomeOutlined />
           </span>
-          <span>{t("page.side-bar.home")}</span>
+          <span>Trang chủ</span>
         </Menu.Item>
         <Menu.Item className="menu-item-header" key="6">
-          {t("page.side-bar.management")}
+          Quản lý hệ thống
         </Menu.Item>
 
         {Object.values(getRoutesByRole(Context.role)).map((item: any) => (
@@ -57,7 +57,7 @@ export const Nav = () => {
           </Menu.Item>
         ))}
         <Menu.Item className="menu-item-header" key="5">
-          {t("page.side-bar.account-management")}
+        Quản lý tài khoản
         </Menu.Item>
         <Menu.Item
           className="menu-item"
@@ -67,7 +67,7 @@ export const Nav = () => {
           <span className="menu-item-box-icon">
             <UserOutlined />
           </span>
-          <span>{t("page.side-bar.account-info")}</span>
+          <span>Thông tin tài khoản</span>
         </Menu.Item>
         <Menu.Item
           className="menu-item"
@@ -79,7 +79,7 @@ export const Nav = () => {
           <span className="menu-item-box-icon">
           <InfoCircleOutlined />
           </span>
-          <span>{t("page.side-bar.about-us")}</span>
+          <span>Về chúng tôi</span>
         </Menu.Item>
         <Menu.Item
           className="menu-item"
@@ -89,7 +89,7 @@ export const Nav = () => {
           <span className="menu-item-box-icon">
             <SettingOutlined />
           </span>
-          <span>{t("page.side-bar.setting")}</span>
+          <span>Cài đặt</span>
         </Menu.Item>
       </Menu>
     </Sider>

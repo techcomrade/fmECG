@@ -67,14 +67,14 @@ export function Detail() {
             <Row gutter={[16, 16]}>
               <Col span={12}>
                 <Form.Item
-                  label={t("column.user-name")}
+                  label={"Tên người dùng"}
                   style={{ marginBottom: "25px" }}
                 >
                   <Input value={accountData.username} name="name" />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label={t("column.sex")}>
+                <Form.Item label={"Giới tính"}>
                   <Input
                     value={convertGenderToString(accountData.gender)}
                     name="gender"
@@ -85,14 +85,14 @@ export function Detail() {
             <Row gutter={[16, 16]}>
               <Col span={12}>
                 <Form.Item
-                  label={t("column.phone-number")}
+                  label={"Số điện thoại"}
                   style={{ marginBottom: "25px" }}
                 >
                   <Input value={accountData.phone_number} name="name" />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label={t("column.birth")}>
+                <Form.Item label={"Ngày tháng năm sinh"}>
                   <DatePicker
                     format={"DD/MM/YYYY"}
                     name="ngày sinh"
@@ -113,7 +113,7 @@ export function Detail() {
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label={t("column.role")}>
+                <Form.Item label={"Vai trò người dùng"}>
                   <Input
                     value={convertRoleToString(Number(Context.role))}
                     name="role"
@@ -125,7 +125,7 @@ export function Detail() {
             <Row gutter={[16, 16]}>
               <Col span={12}>
                 <Form.Item
-                  label={t("column.password")}
+                  label={"Mật khẩu truy cập"}
                   name="password"
                   style={{ marginBottom: "25px" }}
                   rules={[
@@ -141,7 +141,7 @@ export function Detail() {
               <Col span={12}>
                 <Form.Item
                   name="confirm"
-                  label="Confirm Password"
+                  label="Nhập lại mật khẩu (nếu muốn thay đổi)"
                   dependencies={["password"]}
                   rules={[
                     ({ getFieldValue }) => ({

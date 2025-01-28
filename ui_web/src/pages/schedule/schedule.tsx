@@ -214,7 +214,7 @@ export const Schedule: React.FC = () => {
     if (
       dataState.loadCreateScheduleByDoctorStatus === ApiLoadingStatus.Success
     ) {
-      showNotiSuccess("Bạn đã tạo lịch hẹn thành công");
+      showNotiSuccess("Bạn đã tạo lịch khám thành công");
       dispatch(resetLoadCreateScheduleByDoctorStatus());
       dispatch(getScheduleByDoctorId());
     }
@@ -231,7 +231,7 @@ export const Schedule: React.FC = () => {
     if (
       dataState.loadCreateScheduleByPatientStatus === ApiLoadingStatus.Success
     ) {
-      showNotiSuccess("Bạn đã đặt lịch hẹn thành công");
+      showNotiSuccess("Bạn đã đặt lịch khám thành công");
       dispatch(resetLoadCreateScheduleByPatientStatus());
       dispatch(getScheduleByPatientId());
     }
@@ -267,7 +267,7 @@ export const Schedule: React.FC = () => {
       <ConfigProvider locale={viVN}>
         <Calendar cellRender={cellRender} onSelect={onDateSelect} />
         <ScheduleModal
-          title={`Lịch hẹn ngày ${selectedDate?.format("DD-MM-YYYY")}`}
+          title={`Lịch khám ngày ${selectedDate?.format("DD-MM-YYYY")}`}
           isOpen={isOpen}
           selectedDate={selectedDate}
           data={data}

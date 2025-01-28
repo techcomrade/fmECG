@@ -111,26 +111,26 @@ export const Notification: React.FC = () => {
     const [time, date] = dateObj.split(" ");
     if (Context.role === userRole.patient) {
       if (item.status === 0)
-        return `Còn 1 tiếng nữa là đến lịch hẹn với bác sĩ ${item.doctor_name} vào ${time} ngày ${date} của bạn`;
+        return `Còn 1 tiếng nữa là đến lịch khám với bác sĩ ${item.doctor_name} vào ${time} ngày ${date} của bạn`;
       if (item.status === 1)
-        return `Bác sĩ ${item.doctor_name} đã chấp nhận lịch hẹn vào ${time} ngày ${date} của bạn`;
+        return `Bác sĩ ${item.doctor_name} đã chấp nhận lịch khám vào ${time} ngày ${date} của bạn`;
       if (item.status === 2)
-        return `Bạn đã thành công đặt lịch hẹn với bác sĩ ${item.doctor_name} vào ${time} ngày ${date}, vui lòng đợi bác sĩ xác nhận`;
+        return `Bạn đã thành công đặt lịch khám với bác sĩ ${item.doctor_name} vào ${time} ngày ${date}, vui lòng đợi bác sĩ xác nhận`;
       if (item.status === 3)
-        return `Bác sĩ ${item.doctor_name} đã từ chối lịch hẹn vào ${time} ngày ${date} của bạn, nhấn để xem thông tin chi tiết`;
+        return `Bác sĩ ${item.doctor_name} đã từ chối lịch khám vào ${time} ngày ${date} của bạn, nhấn để xem thông tin chi tiết`;
       if (item.status === 4)
-        return `Bác sĩ ${item.doctor_name} đã tạo lịch hẹn vào ${time} ngày ${date} cho bạn`;
-      return `Lịch hẹn vào ${time} ngày ${date} của bạn đã bị hủy tự động do chưa được bác sĩ xác nhận`;
+        return `Bác sĩ ${item.doctor_name} đã tạo lịch khám vào ${time} ngày ${date} cho bạn`;
+      return `Lịch khám vào ${time} ngày ${date} của bạn đã bị hủy tự động do chưa được bác sĩ xác nhận`;
     } else if (Context.role === userRole.doctor) {
       if (item.status === 0)
-        return `Còn 15 phút nữa là đến lịch hẹn vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
+        return `Còn 15 phút nữa là đến lịch khám vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
       if (item.status === 1)
-        return `Bạn đã chấp nhận lịch hẹn vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
+        return `Bạn đã chấp nhận lịch khám vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
       if (item.status === 2)
-        return `Bệnh nhân ${item.patient_name} đã đặt lịch hẹn vào ${time} ngày ${date}, vui lòng xác nhận`;
+        return `Bệnh nhân ${item.patient_name} đã đặt lịch khám vào ${time} ngày ${date}, vui lòng xác nhận`;
       if (item.status === 3)
-        return `Bạn đã từ chối lịch hẹn vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
-      return `Bạn đã tạo lịch hẹn vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name}`;
+        return `Bạn đã từ chối lịch khám vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
+      return `Bạn đã tạo lịch khám vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name}`;
     }
   };
 
@@ -144,7 +144,7 @@ export const Notification: React.FC = () => {
             fontSize: "16px",
           }}
         >
-          Thông báo lịch hẹn
+          Thông báo lịch khám
         </div>
       }
       style={{
@@ -280,12 +280,12 @@ export const Notification: React.FC = () => {
           >
             <div>{data.doctor_name}</div>
           </Form.Item>
-          <Form.Item label="Ngày hẹn:" style={{ marginBottom: "0px" }}>
+          <Form.Item label="Ngày khám:" style={{ marginBottom: "0px" }}>
             <div>
               {convertTimeToDateTime(data.schedule_start_time).split(" ")[1]}
             </div>
           </Form.Item>
-          <Form.Item label="Ca hẹn:" style={{ marginBottom: "0px" }}>
+          <Form.Item label="Ca khám:" style={{ marginBottom: "0px" }}>
             <div>
               Từ {convertTimeToDateTime(data.schedule_start_time).split(" ")[0]}{" "}
               đến {convertTimeToDateTime(data.schedule_end_time).split(" ")[0]}

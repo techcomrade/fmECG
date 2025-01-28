@@ -158,23 +158,6 @@ const ModalComponent = (props: any, ref: any) => {
         {isShow && (
           <>
             <Form.Item
-              label="Loại lịch khám"
-              name="schedule_type_id"
-              key="schedule_type_id"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng chọn loại lịch khám",
-                },
-              ]}
-            >
-              <Select
-                options={scheduleType}
-                value={data["schedule_type_id"]}
-                placeholder="Loại lịch khám"
-              ></Select>
-            </Form.Item>
-            <Form.Item
               label="Chọn lịch khám"
               name="schedule_start_time"
               key="schedule_start_time"

@@ -318,10 +318,10 @@ const ScheduleModalComponent = (props: any) => {
                     if (key === "result") {
                       return (
                         <Row key={key} className="event-row">
-                          <Col span={10} className="event-label">
-                            {value !== 2 ? "🎯 Kết quả lịch hẹn:" : ""}
+                          <Col span={12} className="event-label">
+                            {value !== 2 ? "🎯 Kết quả lịch khám:" : ""}
                           </Col>
-                          <Col span={14} className="event-value">
+                          <Col span={12} className="event-value">
                             {value !== 2
                               ? convertScheduleResultToString(value)
                               : ""}
@@ -331,20 +331,19 @@ const ScheduleModalComponent = (props: any) => {
                     }
 
                     if (
-                      ["session_string", "schedule_type", "status"].includes(
+                      ["session_string", "status"].includes(
                         key
                       )
                     ) {
                       return (
                         <Row key={key} className="event-row">
-                          <Col span={10} className="event-label">
+                          <Col span={12} className="event-label">
                             {key === "session_string" &&
-                              "⏰ Thời gian lịch hẹn:"}
-                            {key === "schedule_type" && "📋 Loại lịch hẹn:"}
+                              "⏰ Thời gian lịch khám:"}
                             {key === "status" &&
-                              `${statusIcon} Trạng thái lịch hẹn:`}
+                              `${statusIcon} Trạng thái lịch khám:`}
                           </Col>
-                          <Col span={14} className="event-value">
+                          <Col span={12} className="event-value">
                             {value}
                           </Col>
                         </Row>
@@ -358,10 +357,10 @@ const ScheduleModalComponent = (props: any) => {
                     ) {
                       return (
                         <Row key={key} className="event-row">
-                          <Col span={10} className="event-label">
+                          <Col span={12} className="event-label">
                             👨‍⚕️ Bác sĩ:
                           </Col>
-                          <Col span={14} className="event-value">
+                          <Col span={12} className="event-value">
                             {value}
                           </Col>
                         </Row>
@@ -375,10 +374,10 @@ const ScheduleModalComponent = (props: any) => {
                     ) {
                       return (
                         <Row key={key} className="event-row">
-                          <Col span={10} className="event-label">
+                          <Col span={12} className="event-label">
                             🛌 Bệnh nhân:
                           </Col>
-                          <Col span={14} className="event-value">
+                          <Col span={12} className="event-value">
                             {value}
                           </Col>
                         </Row>
@@ -390,7 +389,7 @@ const ScheduleModalComponent = (props: any) => {
             )
           )
         ) : (
-          <div>Không có lịch hẹn</div>
+          <div>Không có lịch khám</div>
         )}
       </Modal>
       <ModalAddDiagnosis
