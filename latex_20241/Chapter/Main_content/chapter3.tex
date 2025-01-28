@@ -923,21 +923,21 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/user/register.drawio.png}
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence/user/register.drawio.png}
 	\caption[Sơ đồ tuần tự API tạo mới tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tạo mới tài khoản người dùng}
 	\label{sequence_diagram_create_account}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/user/login.drawio.png}
+	% \includegraphics[width=15cm,height=15cm]{Images/sequence/user/login.drawio.png}
 	\caption[Sơ đồ tuần tự API đăng nhập vào hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API đăng nhập vào hệ thống}
 	\label{sequence_diagram_login}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=13cm,height=10cm]{Images/sequence/user/logout.drawio.png}
+	% \includegraphics[width=13cm,height=10cm]{Images/sequence/user/logout.drawio.png}
 	\caption[Sơ đồ tuần tự API đăng xuất khỏi hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API đăng xuất khỏi hệ thống}
 	\label{sequence_diagram_logout}
 \end{figure}
@@ -947,42 +947,49 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \mbox{}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/user/getAllUser.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/user/getAllUsers.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu danh sách tất cả người dùng trong hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách tất cả người dùng trong hệ thống}
 	\label{sequence_diagram_get_all_users}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/user/getDoctor.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/user/getAllDoctors.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu danh sách toàn bộ bác sĩ trong hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách toàn bộ bác sĩ trong hệ thống}
 	\label{sequence_diagram_get_all_doctors}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=16cm,height=14cm]{Images/sequence/user/account_info.drawio.png}
+	\includegraphics[width=16cm,height=14cm]{Images/api_sequence/user/getUserById.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu dữ liệu người dùng cụ thể dựa trên id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu người dùng cụ thể dựa trên id}
 	\label{sequence_diagram_get_user_by_id}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/user/getPatientByDoctor.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/user/getPatientByDoctorId.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu danh sách bệnh nhân đang được theo dõi]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách bệnh nhân đang được theo dõi}
 	\label{sequence_diagram_get_patient_data}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/user/update.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/user/getDoctorByPatientId.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách bác sĩ phụ trách]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách bác sĩ phụ trách}
+	\label{sequence_diagram_get_doctor_data}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/user/updateUserById.drawio.png}
 	\caption[Sơ đồ tuần tự API chỉnh sửa thông tin người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API chỉnh sửa thông tin người dùng}
 	\label{sequence_diagram_update_user}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/user/delete.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/user/deleteUserById.drawio.png}
 	\caption[Sơ đồ tuần tự API xóa người dùng cụ thể dựa trên id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa người dùng cụ thể dựa trên id}
 	\label{sequence_diagram_delete_user}
 \end{figure}
@@ -992,35 +999,35 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \mbox{}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/device/getAll.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/device/device-GetAllDevice.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu danh sách thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách toàn bộ thiết bị y tế}
 	\label{sequence_diagram_get_all_devices}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/device/add.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/device/device-Add.drawio.png}
 	\caption[Sơ đồ tuần tự API thêm mới thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API thêm mới thiết bị y tế}
 	\label{sequence_diagram_add_device}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=11cm]{Images/sequence/device/assign.drawio.png}
-	\caption[Sơ đồ tuần tự API đăng ký mượn thiết bị]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API đăng ký mượn thiết bị}
+	\includegraphics[width=15cm,height=11cm]{Images/api_sequence/device/device-GetDeviceById.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu thiết bị cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu thiết bị cụ thể}
 	\label{sequence_diagram_add_device}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/device/update.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/device/device-updateDevice.drawio.png}
 	\caption[Sơ đồ tuần tự API Cập nhật thiết bị và thông số kỹ thuật (nếu cần)]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API Cập nhật thiết bị và thông số kỹ thuật (nếu cần)}
 	\label{sequence_diagram_update_device}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=13cm]{Images/sequence/device/delete.drawio.png}
+	\includegraphics[width=15cm,height=13cm]{Images/api_sequence/device/device-Add.drawio.png}
 	\caption[Sơ đồ tuần tự API xóa thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa thiết bị y tế}
 	\label{sequence_diagram_get_device_by_id}
 \end{figure}
@@ -1030,63 +1037,63 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \mbox{}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/schedule/getAll.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/getAllSchedules.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu tất cả lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu tất cả lịch hẹn}
 	\label{sequence_diagram_get_schedule}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/schedule/createByDoctor.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/createScheduleByDoctor.drawio.png}
 	\caption[Sơ đồ tuần tự API bác sĩ tạo lịch tái khám cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API bác sĩ tạo lịch tái khám cho bệnh nhân}
 	\label{sequence_diagram_create_schedule_by_doctor}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/schedule/createByPatient.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/createScheduleByPatient.drawio.png}
 	\caption[Sơ đồ tuần tự API bệnh nhân chủ động đặt lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API bệnh nhân chủ động đặt lịch hẹn}
 	\label{sequence_diagram_create_schedule_by_patient}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/schedule/getByDoctor.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/getScheduleByDoctorId.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu lịch hẹn của bác sĩ cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu lịch hẹn của bác sĩ cụ thể}
 	\label{sequence_diagram_get_schedule_by_doctor}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/schedule/getByPatient.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/getScheduleByPatientId.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu lịch hẹn của bệnh nhân cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu lịch hẹn của bệnh nhân cụ thể}
 	\label{sequence_diagram_get_schedule_by_patient}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/schedule/getAvailableByDoctor.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/getAvailableScheduleByDoctorId.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu lịch rảnh của bác sĩ cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu lịch rảnh của bác sĩ cụ thể}
 	\label{sequence_diagram_get_available_by_doctor}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/schedule/getAvailableWithTime.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/getAvailableDoctorByScheduleTime.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu bác sĩ phù hợp với thời gian đã chọn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu bác sĩ phù hợp với thời gian đã chọn}
 	\label{sequence_diagram_get_available_with_time}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/schedule/accept.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/schedule/acceptSchedule.drawio.png}
 	\caption[Sơ đồ tuần tự API bác sĩ xác nhận lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API bác sĩ xác nhận lịch hẹn}
 	\label{sequence_diagram_accept_schedule}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm,height=9cm]{Images/sequence/schedule/delete.drawio.png}
+	\includegraphics[width=10cm,height=9cm]{Images/api_sequence/schedule/deleteScheduleById.drawio.png}
 	\caption[Sơ đồ tuần tự API bác sĩ từ chối lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API bác sĩ từ chối lịch hẹn}
 	\label{sequence_diagram_reject_schedule}
 \end{figure}
@@ -1095,58 +1102,51 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \mbox{}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=11cm,height=9cm]{Images/sequence/record/getAll.drawio.png}
+	\includegraphics[width=11cm,height=9cm]{Images/api_sequence/record/getAllRecord.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu danh sách các dữ liệu phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách các dữ liệu phiên đo}
 	\label{sequence_diagram_get_all_records}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/record/getById.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/record/getRecordById.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu dữ liệu phiên đo theo id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu phiên đo theo id}
 	\label{sequence_diagram_get_record_by_id}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/record/getByPatientId.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/record/getRecordByPatientId.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu dữ liệu phiên đo của bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu phiên đo của bệnh nhân}
 	\label{sequence_diagram_get_record_by_patient_id}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/record/getByDoctorId.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/record/getRecordByDoctorId.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu dữ liệu phiên đo do bác sĩ phụ trách]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu phiên đo do bác sĩ phụ trách}
 	\label{sequence_diagram_get_record_by_doctor_id}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/record/create.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/record/createRecord.drawio.png}
 	\caption[Sơ đồ tuần tự API tạo mới dữ liệu phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tạo mới dữ liệu phiên đo}
 	\label{sequence_diagram_create_record}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/record/update.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/record/updateRecordById.drawio.png}
 	\caption[Sơ đồ tuần tự API cập nhật dữ liệu phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cập nhật dữ liệu phiên đo}
 	\label{sequence_diagram_update_record}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/record/delete.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/record/deleteRecordByID.drawio.png}
 	\caption[Sơ đồ tuần tự API xóa dữ liệu phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa dữ liệu phiên đo}
 	\label{sequence_diagram_delete_record}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/record/chart.drawio.png}
-	\caption[Sơ đồ tuần tự API tra cứu đồ thị các tín hiệu đã đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu đồ thị các tín hiệu đã đo}
-	\label{sequence_diagram_chart_record}
 \end{figure}
 % % ------------------------Diag----------------------
 \paragraph{Các API phục vụ mục đích liên quan đến chẩn đoán}
@@ -1154,21 +1154,21 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=11cm]{Images/sequence/diagnosis/getByScheduleId.drawio.png}
+	\includegraphics[width=15cm,height=11cm]{Images/api_sequence/diag/getByScheduleId.drawio.png}
 	\caption[Sơ đồ tuần tự API lấy chẩn đoán theo lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API lấy chẩn đoán theo lịch hẹn}
 	\label{sequence_diagram_get_diagnosis_by_schedule}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=12cm]{Images/sequence/diagnosis/create.drawio.png}
+	\includegraphics[width=15cm,height=12cm]{Images/api_sequence/diag/create.drawio.png}
 	\caption[Sơ đồ tuần tự API tạo mới chẩn đoán]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tạo mới chẩn đoán}
 	\label{sequence_diagram_create_diagnosis}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=11cm]{Images/sequence/diagnosis/update.drawio.png}
+	\includegraphics[width=15cm,height=11cm]{Images/api_sequence/diag/update.drawio.png}
 	\caption[Sơ đồ tuần tự API cập nhật thông tin chẩn đoán]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cập nhật thông tin chẩn đoán}
 	\label{sequence_diagram_update_diagnosis}
 \end{figure}
@@ -1177,28 +1177,28 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \mbox{}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=12cm]{Images/sequence/notification/create.drawio.png}
+	\includegraphics[width=15cm,height=12cm]{Images/api_sequence/noti/createNotification.drawio.png}
 	\caption[Sơ đồ tuần tự API tạo thông báo mới]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tạo thông báo mới}
 	\label{sequence_diagram_create_notification}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/notification/getByUserId.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/noti/getNotificationByUserId.drawio.png}
 	\caption[Sơ đồ tuần tự API lấy danh sách thông báo của người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API lấy danh sách thông báo của người dùng}
 	\label{sequence_diagram_get_notification_by_user}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=8cm,height=8cm]{Images/sequence/notification/updateSeen.drawio.png}
+	\includegraphics[width=8cm,height=8cm]{Images/api_sequence/noti/updateSeenStatus.drawio.png}
 	\caption[Sơ đồ tuần tự API cập nhật trạng thái đã xem thông báo]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cập nhật trạng thái đã xem thông báo}
 	\label{sequence_diagram_update_seen}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=11cm]{Images/sequence/notification/delete.drawio.png}
+	\includegraphics[width=15cm,height=11cm]{Images/api_sequence/noti/deleteNotification.drawio.png}
 	\caption[Sơ đồ tuần tự API xóa thông báo]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa thông báo}
 	\label{sequence_diagram_delete_notification}
 \end{figure}
@@ -1207,28 +1207,28 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \mbox{}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/sequence/chat/load.drawio.png}
+	\includegraphics[width=15cm,height=15cm]{Images/api_sequence/chat/loadMessages.drawio.png}
 	\caption[Sơ đồ tuần tự API lấy danh sách tin nhắn của người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API lấy danh sách tin nhắn của người dùng}
 	\label{sequence_diagram_load_chat}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=12cm]{Images/sequence/chat/send.drawio.png}
+	\includegraphics[width=15cm,height=12cm]{Images/api_sequence/chat/sendMessage.drawio.png}
 	\caption[Sơ đồ tuần tự API gửi tin nhắn trong nhóm trò chuyện]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API gửi tin nhắn trong nhóm trò chuyện}
 	\label{sequence_diagram_send_chat}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=12cm]{Images/sequence/chat/createGroupChat.drawio.png}
+	\includegraphics[width=15cm,height=12cm]{Images/api_sequence/chat/createGroupChat.drawio.png}
 	\caption[Sơ đồ tuần tự API tạo nhóm trò chuyện mới]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tạo nhóm trò chuyện mới}
 	\label{sequence_diagram_create_group_chat}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=12cm]{Images/sequence/chat/getGroupChat.drawio.png}
+	\includegraphics[width=15cm,height=12cm]{Images/api_sequence/chat/getGroupChat.drawio.png}
 	\caption[Sơ đồ tuần tự API lấy danh sách nhóm trò chuyện của người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API lấy danh sách nhóm trò chuyện của người dùng}
 	\label{sequence_diagram_get_group_chat}
 \end{figure}
