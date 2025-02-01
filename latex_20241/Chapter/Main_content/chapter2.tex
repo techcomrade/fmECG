@@ -1103,14 +1103,14 @@ Trong trường hợp có lỗi, hệ thống sẽ phản hồi và hiển thị
 		\selectfont Sơ đồ tuần tự chức năng đăng nhập vào hệ thống}
 	\label{sequence_login} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự minh họa chi tiết quy trình đăng nhập vào hệ thống. Người dùng nhập các thông tin cần thiết vào biểu mẫu đăng nhập và gửi yêu cầu. Hệ thống sẽ chuyển yêu cầu đến lớp Account để xử lý.
+Người dùng nhập các thông tin cần thiết vào biểu mẫu đăng nhập và gửi yêu cầu. Hệ thống sẽ chuyển yêu cầu đến lớp Account để xử lý.
 Nếu có lỗi xảy ra, hệ thống sẽ gửi thông báo lỗi để người dùng điều chỉnh. Ngược lại, khi đăng nhập thành công, lớp Account sẽ tạo token truy cập mới dựa trên lớp Token, gửi thông báo xác nhận và chuyển hướng người dùng tới trang chính của hệ thống.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=10cm,height=8cm]{Images/sequence/user/logout.drawio.png}
-	\caption[Sơ đồ tuần tự chức năng đăng xuất khỏi hệ thống]{\bfseries \fontsize{12pt}{0pt}
-		\selectfont Sơ đồ tuần tự chức năng đăng xuất khỏi hệ thống}
+	\caption[Sơ đồ tuần tự chức năng người dùng đăng xuất khỏi hệ thống]{\bfseries \fontsize{12pt}{0pt}
+		\selectfont Sơ đồ tuần tự chức năng người dùng đăng xuất khỏi hệ thống}
 	\label{sequence_logout} %đặt tên cho ảnh
 \end{figure}
 Sơ đồ tuần tự minh họa chi tiết quy trình đăng xuất khỏi hệ thống. Người dùng gửi yêu cầu đăng xuất, hệ thống chuyển yêu cầu này đến lớp Token để xử lý.
