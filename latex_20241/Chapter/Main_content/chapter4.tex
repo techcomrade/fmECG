@@ -15,7 +15,7 @@ ReactJS (thường được gọi tắt là React) là một thư viện JavaScr
 
 Một số đặc điểm nổi bật của React chúng em đã sử dụng trong đồ án:
 \begin{itemize}
-	\item Với các Component có thể lặp lại, chúng em có thể viết riêng ra để có thể tái sử dụng code.
+	\item Với các Components có thể lặp lại, chúng em có thể viết riêng ra để có thể tái sử dụng code.
 	\item Hiệu suất cao, tối ưu việc cập nhật giao diện giúp phát triển giao diện nhanh chóng
 	\item Dễ dàng debug: Facebook đã phát hành một Chrome extension hỗ trợ debug trong quá trình phát triển ứng dụng React.
 	\item Tương thích với nhiều trình duyệt như Chrome, Edge, FireFox, Cốc Cốc, ...
@@ -138,14 +138,14 @@ Những lợi ích của Docker có thể kể đến như:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=8cm,height=4cm]{Images/Technology/docker.jpg}
-	\caption[Logo Docker]{\bfseries \fontsize{12pt}{0pt}
-		\selectfont Logo Docker}
+	\caption[Logo của Docker]{\bfseries \fontsize{12pt}{0pt}
+		\selectfont Logo của Docker}
 	\label{docker} %đặt tên cho ảnh
 \end{figure}
 
 
-\subsection{Triển khai ứng dụng}
-Trong quá trình triển khai ứng dụng, chúng em áp dụng quy trình phát triển ứng dụng CI/CD để liên tục cập nhật và deploy. Để triển khai hệ thống theo đúng quy trình CI/CD thì chúng em đã sử dụng các dịch vụ, VPS server để triển khai server API và website, Docker để tự động deploy ứng dụng, MySQL Server và MongoDb Compass để quản lý cơ sở dữ liệu, Github để quản lý code của dự án.
+\subsection{Xây dựng và triển khai ứng dụng}
+Để giúp cho việc xây dung hệ thống thuận tiện hơn , sản phẩm của chúng em đã được hỗ trợ áp dụng quy trình CI/CD giúp việc cập nhật và triển khai dễ dàng và liên tục. Để làm được việc này thì nhóm chúng em đã sử dụng VPS để triển khai server API cũng như website. Công nghệ Docker giúp tự động deploy ứng dụng. Để quản lý cơ sở dữ liệu chúng em dùng MySQL Server và MongoDb Compass. Và cuối cùng là Github để quản lý code của dự án.
 
 \subsubsection{Quy trình CI/CD}
 CI/CD là một tập hợp các phương pháp và thực hành giúp tự động hóa quy trình phát triển, kiểm thử và triển khai phần mềm. CI (Continuous Integration - Tích hợp liên tục) tập trung vào việc thường xuyên tích hợp mã nguồn từ nhiều nhà phát triển vào một kho lưu trữ chung, sau đó tự động xây dựng và kiểm tra phần mềm. Việc này giúp phát hiện sớm các lỗi tích hợp và giảm thiểu xung đột giữa các thay đổi.
