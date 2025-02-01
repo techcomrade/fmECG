@@ -18,7 +18,7 @@ Nội dung chính được thể hiện qua hình ảnh và sơ đồ minh họa
 	\caption[Tổng quan kiến trúc hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Tổng quan kiến trúc hệ thống}
 	\label{fmECG_architecture-System} %đặt tên cho ảnh
 \end{figure}
-Hệ thống được chia thành ba phần chính: Thiết bị (Device), Máy chủ (Server) và Ứng dụng (bao gồm web và app).
+Hệ thống bao gồm ba thành phần chính: Máy chủ (Server), Thiết bị (Device) và Ứng dụng (bao gồm web và app).
 Mỗi thành phần đảm nhiệm một vai trò quan trọng, cùng phối hợp để đảm bảo hoạt động của toàn bộ hệ thống như được minh họa trong hình vẽ.
 
 Hình \ref{fmECG_architecture-System} thể hiện ba phần:
@@ -33,7 +33,7 @@ Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 
 Trong sơ đồ kiến trúc hệ thống, bệnh nhân sử dụng ứng dụng di động (Mobile App) để kết nối trực tiếp với thiết bị (Device).
 Ứng dụng di động thuộc Khối Ứng dụng (Application), chịu trách nhiệm giao tiếp với Khối Máy chủ (Server) thông qua các API và giao thức HTTP.
-Khi nhận được yêu cầu từ Application, Server sẽ thực hiện xử lý dữ liệu thông qua các dịch vụ (Services) được thiết kế riêng biệt.
+Khi yêu cầu được nhận từ Application, Server sẽ thực hiện xử lý dữ liệu thông qua các dịch vụ (Services) được thiết kế riêng biệt.
 Tùy theo loại yêu cầu, các dịch vụ này sẽ truy xuất hoặc cập nhật dữ liệu trong cơ sở dữ liệu, sau đó gửi kết quả phản hồi cho người dùng,
 hoàn thiện quá trình tương tác giữa người dùng và hệ thống.\begin{adjustwidth}{1.5em}{}
 	\begin{itemize}
@@ -1033,7 +1033,7 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=16cm]{Images/api_sequence/device/device-updateDevice.drawio.png}
-	\caption[Sơ đồ tuần tự API cập nhật thông tin chi tiết cho thiết bị y tế cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cập nhật thông tin chi tiết cho thiết bị y tế cụ thể}
+	\caption[Sơ đồ tuần tự API chỉnh sửa thông tin chi tiết cho thiết bị y tế cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cập nhật thông tin chi tiết cho thiết bị y tế cụ thể}
 	\label{sequence_diagram_update_device}
 \end{figure}
 
