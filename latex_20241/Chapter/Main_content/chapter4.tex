@@ -15,10 +15,10 @@ ReactJS (thường được gọi tắt là React) là một thư viện JavaScr
 
 Một số đặc điểm nổi bật của React chúng em đã sử dụng trong đồ án:
 \begin{itemize}
-	\item Với các Components có thể lặp lại, chúng em có thể viết riêng ra để có thể tái sử dụng code.
+	\item Với các Components có tính lặp lại, chúng em tách chúng thành các thành phần độc lập để tái sử dụng, giúp code gọn gàng và hiệu quả hơn.
 	\item Hiệu suất cao, tối ưu việc cập nhật giao diện giúp phát triển giao diện nhanh chóng
 	\item Dễ dàng debug: Facebook đã phát hành một Chrome extension hỗ trợ debug trong quá trình phát triển ứng dụng React.
-	\item Tương thích với nhiều trình duyệt như Chrome, Edge, FireFox, Cốc Cốc, ...
+	\item Tương thích với nhiều trình duyệt như Chrome, Edge, FireFox, Cốc Cốc,...
 \end{itemize}
 
 \begin{figure}[H]
@@ -145,8 +145,7 @@ Những lợi ích của Docker có thể kể đến như:
 
 
 \subsection{Xây dựng và triển khai ứng dụng}
-Để giúp cho việc xây dung hệ thống thuận tiện hơn , sản phẩm của chúng em đã được hỗ trợ áp dụng quy trình CI/CD giúp việc cập nhật và triển khai dễ dàng và liên tục. Để làm được việc này thì nhóm chúng em đã sử dụng VPS để triển khai server API cũng như website. Công nghệ Docker giúp tự động deploy ứng dụng. Để quản lý cơ sở dữ liệu chúng em dùng MySQL Server và MongoDb Compass. Và cuối cùng là Github để quản lý code của dự án.
-
+Để giúp cho việc xây dung hệ thống thuận tiện hơn, sản phẩm của chúng em đã áp dụng quy trình CI/CD giúp cập nhật và triển khai một cách nhanh chóng, liên tục. Nhóm đã sử dụng VPS để triển khai server API và website, kết hợp với Docker để tự động hóa quá trình deploy ứng dụng. Về quản lý cơ sở dữ liệu, chúng em sử dụng MySQL Server và MongoDB Compass, đảm bảo hiệu suất và tính linh hoạt. Cuối cùng, toàn bộ mã nguồn dự án được quản lý trên GitHub, giúp theo dõi và kiểm soát phiên bản hiệu quả.
 \subsubsection{Quy trình CI/CD}
 CI/CD là một tập hợp các phương pháp và thực hành giúp tự động hóa quy trình phát triển, kiểm thử và triển khai phần mềm. CI (Continuous Integration - Tích hợp liên tục) tập trung vào việc thường xuyên tích hợp mã nguồn từ nhiều nhà phát triển vào một kho lưu trữ chung, sau đó tự động xây dựng và kiểm tra phần mềm. Việc này giúp phát hiện sớm các lỗi tích hợp và giảm thiểu xung đột giữa các thay đổi.
 
@@ -160,8 +159,8 @@ CD (Continuous Delivery/Continuous Deployment - Chuyển giao/Triển khai liên
 \end{figure}
 
 \subsubsection{Kiến trúc Microservices}
-Kiến trúc Microservices là một phương pháp phát triển phần mềm trong đó một
-ứng dụng lớn được chia thành nhiều dịch vụ nhỏ độc lập với nhau.  Mỗi dịch vụ thực hiện một chức năng cụ thể và có thể được phát triển, triển khai, mở rộng và bảo trì một cách độc lập với các microservice khác. Chúng thường giao tiếp với nhau thông qua mạng, sử dụng các giao thức như HTTP/REST hoặc message queues.
+Kiến trúc Microservices là một cách tiếp cận trong quy trình phát triển phần mềm, ở đó một ứng dụng lớn được tách thành nhiều dịch vụ nhỏ hoạt động độc lập với nhau.
+Mỗi dịch vụ thực hiện một chức năng cụ thể và có thể được phát triển, triển khai, mở rộng và bảo trì một cách độc lập với các microservice khác. Chúng thường giao tiếp với nhau thông qua mạng, sử dụng các giao thức như HTTP/REST hoặc message queues.
 
 \begin{figure}[H]
 	\centering
@@ -182,7 +181,7 @@ Một số lợi ích của microservice đã hỗ trợ chúng em:
 % \subsubsection{Triển khai Server và ứng dụng web trên máy chủ VPS}
 \subsection{Kiểm thử}
 
-\subsubsection{Kiểm thử hoạt động của các API}
+\subsubsection{Đánh giá và kiểm tra hoạt động của các API}
 
 
 % Môi trường: 
@@ -193,7 +192,7 @@ Một số lợi ích của microservice đã hỗ trợ chúng em:
 % \end{itemize}
 % \end{adjustwidth}
 
-Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
+Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu API.
 
 \paragraph{API liên quan đến việc xác thực người dùng}
 \mbox{}
@@ -3434,7 +3433,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	| >{\raggedright\arraybackslash}X
 	| >{\raggedright\arraybackslash}p{1cm}|
 	}
-	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng của website quản trị}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng của website}
 	% \label{table_api_news}
 	\\
 	\hline
@@ -3443,7 +3442,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 	Kiểm tra chức năng đăng nhập
-	& 1. Truy cập giao diện đăng nhập tài khoản $\rightarrow$ Nhập thông tin đăng nhập chưa có trong hệ thống
+	& 1. Truy cập giao diện đăng nhập tài khoản $\rightarrow$ Nhập thông tin đăng nhập không hợp lệ
 	$\rightarrow$ Nhấn nút đăng nhập
 
 	% \\ &
@@ -3452,7 +3451,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	$\rightarrow$ Nhấn nút đăng nhập
 	&
 
-	1. Hiển thị thông báo sai email hoặc mật khẩu
+	1. Hiển thị thông báo sai email đăng nhập hoặc mật khẩu truy cập
 
 
 	2. Đăng nhập thành công vào hệ thống
@@ -3464,61 +3463,61 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	Kiểm tra chức năng đăng ký
 	&
 
-	1. Truy cập giao diện đăng ký tài khoản mới $\rightarrow$ Nhập thông tin đăng ký tài khoản đã tồn tại
+	1. Truy cập giao diện tạo tài khoản người dùng mới $\rightarrow$ Nhập thông tin tương ứng với tài khoản đã tồn tại
 	$\rightarrow$ Nhấn đăng ký
 
 	% \\ &
 
-	2. Truy cập giao diện đăng ký tài khoản mới $\rightarrow$ Nhập các thông tin tài khoản đăng ký hơp lệ
+	2. Truy cập giao diện tạo tài khoản người dùng mới $\rightarrow$ Nhập các thông tin tài khoản hơp lệ
 	$\rightarrow$ Chọn nút đăng ký
 
 	&
 
 
-	1. Hiển thị thông báo email đã tồn tại trong hệ thông
+	1. Hiển thị thông báo email đã tồn tại hoặc sai thông tin đăng ký
 
-	2. Hiển thị thông báo tài khoản đã đăng ký thành công
+	2. Hiển thị thông báo tài khoản đã được tạo mới thành công
 
 	& OK
 
 	\\ \hline
-	Kiểm tra chức năng quản lý người dùng
+	Kiểm tra chức năng quản lý người dùng hệ thống
 	&
 
-	1. Truy cập màn hình quản lý người dùng
+	1. Truy cập trang quản lý người dùng hệ thống
 
-	2. Xem thông tin người dùng
+	2. Tra cứu thông tin chi tiết của người dùng cụ thể
 
-	3. Sửa thông tin người dùng có sẵn  $\rightarrow$ Lưu thay đổi
+	3. Sửa thông tin chi tiết của một người dùng  $\rightarrow$ Lưu thay đổi
 
-	4. Xóa một người dùng khỏi hệ thống
+	4. Xóa người dùng khỏi hệ thống
 
 	&
 
-	1. Hiển thị danh sách người dùng
+	1. Hiển thị danh sách người dùng trong hệ thống
 
-	2. Hiển thị thông tin cụ thể của người dùng
+	2. Hiển thị thông tin chi tiết của người dùng đã chọn
 
 	3. Cập nhật thông tin người dùng thành công
 
-	4. Xóa tài khoản người dùng khỏi hệ thống thành công
+	4. Xóa người dùng khỏi hệ thống thành công
 
 	& OK
 
 	\\ \hline
 
-	Kiểm tra chức năng xem thông tin bác sĩ
+	Kiểm tra chức năng xem thông tin các bác sĩ
 	&
 
-	1. Truy cập màn hình thông tin bác sĩ
+	1. Truy cập trang thông tin bác sĩ
 
-	2. Xem thông tin cụ thể của bác sĩ
+	2. Tra cứu thông tin chi tiết của bác sĩ cụ thể
 
 	&
 
-	1. Hiển thị danh sách bác sĩ
+	1. Hiển thị danh sách các bác sĩ trong hệ thống
 
-	2. Hiển thị thông tin cụ thể của bác sĩ
+	2. Hiển thị thông tin chi tiết của bác sĩ đã chọn
 
 
 	& OK
@@ -3528,43 +3527,43 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	Kiểm tra chức năng xem danh sách bệnh nhân
 	&
 
-	1. Truy cập màn hình quản lý bệnh nhân
+	1. Truy cập trang quản lý bệnh nhân
 
-	2. Hiển thị thông tin cụ thể bệnh nhân
+	2. Tra cứu thông tin chi tiết của bệnh nhân cụ thể
 
 	&
 
-	1. Hiển thị danh sách bệnh nhân
+	1. Hiển thị danh sách các bệnh nhân trong hệ thống
 
-	2. Hiển thị thông tin cụ thể của bệnh nhân
+	2. Hiển thị thông tin chi tiết của bệnh nhân đã chọn
 
 	& OK
 
 	\\ \hline
 
 
-	Kiểm tra chức năng quản lý thiết bị
+	Kiểm tra chức năng quản lý thiết bị y tế
 	&
 
-	1. Truy cập màn hình quản lý thiết bị
+	1. Truy cập trang quản lý thiết bị y tế
 
-	2. Xem thông tin chi tiết thiết bị
+	2. Tra cứu thông tin chi tiết thiết bị y tế cụ thể
 
 	3. Thêm thiết bị mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
 
 	4. Sửa thông tin thiết bị có sẵn $\rightarrow$ Lưu thay đổi
 
-	5. Xóa thiết bị (Đối với Admin hệ thống)
+	5. Xóa thiết bị (Đối với Quản trị viên hệ thống)
 
 	&
 
-	1. Hiển thị danh sách thiết bị
+	1. Hiển thị danh sách thiết bị y tế trong hệ thống
 
-	2. Hiển thị thông tin chi tiết thiết bị
+	2. Hiển thị thông tin chi tiết thiết bị y tế đã chọn
 
-	3. Thêm thiết bị thành công
+	3. Thêm thiết bị mới thành công
 
-	4. Cập nhật thông tin thiết bị thành công
+	4. Cập nhật thông tin thiết bị y tế thành công
 
 	5. Xóa thiết bị khỏi hệ thống thành công
 
@@ -3572,53 +3571,72 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 	\\ \hline
 
-	Kiểm tra chức năng quản lý đặt lịch hẹn bởi bệnh nhân
+	Kiểm tra chức năng quản lý lịch khám cá nhân
 	&
 
-	1. Vào màn hình đặt lịch hẹn
+	1. Vào trang quản lý lịch khám cá nhân
 
-	2. Đặt lịch hẹn
+	2. Tra cứu thông tin chi tiết lịch khám cụ thể
 
-	3. Chọn bác sĩ hoặc giờ khám
+	3. Đặt lịch khám theo yêu cầu (chọn bác sĩ trước hoặc thời gian rảnh của bản thân trước)
 
 	4. Lưu
 
-
 	&
 
-	1. Hiển thị giao diện lịch, bao gồm những ngày trống, những ngày có lịch hẹn
+	1. Hiển thị giao diện các lịch khám cá nhân, bao gồm những ngày trống và những ngày có lịch khám
 
-	2. Hiển thị giao diện đật lịch
+	2. Hiển thị thông tin chi tiết lịch khám đã chọn
 
-	3. Giờ khám hoặc bác sĩ phù hợp sẽ hiển thị
+	3. Hiển thị giao diện đặt lịch khám theo yêu cầu
 
-	4. Lịch hẹn được lưu thành công
+	4. Lịch khám được đặt thành công, gửi thông báo đến cả bác sĩ và bệnh nhân
 
 	& OK
 
 	\\ \hline
 
-	Kiểm tra chức năng quản lý đặt lịch tái khám bởi bác sĩ
+	Kiểm tra chức năng phê duyệt lịch khám của bác sĩ
 	&
 
-	1. Chọn 1 lịch khám đã thành công
+	1. Vào trang quản lý lịch khám hoặc xem thông báo
 
-	2. Chọn đặt lịch tái khám
+	2. Chọn lịch khám cần phê duyệt
 
-	3. Chọn ngày giờ phù hợp
-
-	4. Lưu
-
+	3. Phê duyệt lịch khám
 
 	&
 
-	1. Hiển thị giao diện thông tin chẩn đoán
+	1. Hiển thị giao diện các lịch khám, bao gồm những ngày trống và những ngày có lịch khám
 
-	2. Giao diện được mở rộng để đặt lịch tái khám
+	2. Hiển thị thông tin chi tiết lịch khám đã chọn
 
-	3. Thông tin lịch hẹn hiển thị trên màn hình
+	3. Lịch khám được chấp nhận hoặc từ chối kèm theo lý do (nếu có), gửi thông báo đến cả bác sĩ và bệnh nhân
 
-	4. Lịch hẹn được lưu thành công
+	& OK
+
+	\\ \hline
+
+	Kiểm tra chức năng quản lý chẩn đoán và đặt lịch tái khám
+	&
+
+	1. Chọn 1 lịch khám đã hoặc đang diễn ra
+
+	2. Chọn chỉnh sửa chẩn đoán
+
+	3. Chọn lịch tái khám (nếu cần thiết)
+
+	4. Điền các thông tin cần thiết và ấn lưu
+
+	&
+
+	1. Hiển thị giao diện thông tin chi tiết lịch khám đã chọn
+
+	2. Hiển thị giao diện cho phép điền hoặc chỉnh sửa thông tin chẩn đoán (nếu đã có chẩn đoán)
+
+	3. Hiển thị thông tin các ca khám rảnh, cho phép bác sĩ chọn lịch phù hợp
+
+	4. Thông tin chẩn đoán được lưu và lịch tái khám được tạo thành công (nếu có)
 
 	& OK
 
@@ -3626,13 +3644,13 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 	Kiểm tra chức năng quản lý thông tin cá nhân
 	&
-	1. Truy cập màn hình quản lý thông tin cá nhân
+	1. Truy cập trang quản lý thông tin cá nhân
 
 	2. Sửa thông tin cá nhân có sẵn $\rightarrow$ Lưu thông tin
 
 	&
 
-	1. Hiển thị thông tin tài khoản cá nhân
+	1. Hiển thị thông tin chi tiết tài khoản cá nhân
 
 	2. Cập nhật thông tin cá nhân thành công
 
@@ -3641,19 +3659,19 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 	\\ \hline
-	Kiểm tra chức năng nhắn tin
+	Kiểm tra chức năng quản lý dịch vụ tin nhắn
 	&
-	1. Truy cập màn hình nhắn tin
+	1. Truy cập trang quản lý dịch vụ tin nhắn
 
-	2. Chọn nhóm/ người dùng cần nhắn
+	2. Chọn người dùng hoặc nhóm muốn nhắn
 
-	3. Nhắn tin
+	3. Tiến hành nhắn tin và ấn nút gửi
 
 	&
 
-	1. Hiển thị danh sách các đoạn tin nhắn
+	1. Hiển thị danh sách các đoạn hội thoại
 
-	2. Hiển thị tin nhắn lên màn hình
+	2. Hiển thị đầy đủ lịch sử trò chuyện của đoạn hội thoại được chọn
 
 	3. Tin nhắn được gửi thành công
 
@@ -3665,23 +3683,19 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	\\ \hline
 	Kiểm tra chức năng tạo nhóm trò chuyện
 	&
-	1. Truy cập màn hình nhắn tin
+	1. Truy cập trang quản lý dịch vụ tin nhắn
 
 	2. Chọn tạo nhóm trò chuyện
 
-	3. Nhập các thông tin, chọn thành viên phù hợp
-
-	4. Lưu
+	3. Nhập các thông tin cần thiết và ấn lưu
 
 	&
 
-	1. Hiển thị danh sách các đoạn tin nhắn, nút tạo nhóm
+	1. Hiển thị danh sách các đoạn hội thoại và nút tạo nhóm
 
 	2. Hiển thị giao diện tạo nhóm trò chuyện
 
-	3. Thông tin thành viên phù hợp hiển thị lên màn hình
-
-	4. nhóm trò chuyện được tạo thành công
+	3. Nhóm trò chuyện được tạo thành công
 
 	& OK
 
@@ -3692,5 +3706,6 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 \subsection{Kết luận chương}
-Chương 4 đã trình bày chi tiết về quá trình triển khai hệ thống và các nền tảng, công cụ được sử dụng trong hệ thống. Đồng thời, chương cũng trình bày về quá trình kiểm thử hệ thống, bao gồm kiểm thử API và kiểm thử ứng dụng web. Nhờ đó, hệ thống đã được kiểm thử kỹ lưỡng trước khi triển khai, giúp đảm bảo tính ổn định và chất lượng của hệ thống.
+Chương 4 cung cấp cái nhìn chi tiết về quá trình triển khai hệ thống, bao gồm các công nghệ và nền tảng được áp dụng. Ngoài ra, chương này cũng đề cập đến quá trình kiểm thử, bao gồm kiểm thử API và ứng dụng web,
+nhằm đánh giá hiệu suất và độ chính xác của hệ thống. Việc kiểm thử kỹ lưỡng trước khi đưa vào hoạt động giúp đảm bảo hệ thống vận hành ổn định và đáp ứng các yêu cầu chất lượng đặt ra.
 \newpage

@@ -1103,7 +1103,7 @@ Trong trường hợp có lỗi, hệ thống sẽ phản hồi và hiển thị
 		\selectfont Sơ đồ tuần tự chức năng đăng nhập vào hệ thống}
 	\label{sequence_login} %đặt tên cho ảnh
 \end{figure}
-Người dùng nhập các thông tin cần thiết vào biểu mẫu đăng nhập và gửi yêu cầu. Hệ thống sẽ chuyển yêu cầu đến lớp Account để xử lý.
+Sơ đồ tuần tự minh họa chi tiết quy trình đăng nhập vào hệ thống. Người dùng nhập các thông tin cần thiết vào biểu mẫu đăng nhập và gửi yêu cầu. Hệ thống sẽ chuyển yêu cầu đến lớp Account để xử lý.
 Nếu có lỗi xảy ra, hệ thống sẽ gửi thông báo lỗi để người dùng điều chỉnh. Ngược lại, khi đăng nhập thành công, lớp Account sẽ tạo token truy cập mới dựa trên lớp Token, gửi thông báo xác nhận và chuyển hướng người dùng tới trang chính của hệ thống.
 
 \begin{figure}[H]
@@ -1113,7 +1113,7 @@ Nếu có lỗi xảy ra, hệ thống sẽ gửi thông báo lỗi để ngư�
 		\selectfont Sơ đồ tuần tự chức năng người dùng đăng xuất khỏi hệ thống}
 	\label{sequence_logout} %đặt tên cho ảnh
 \end{figure}
-Sơ đồ tuần tự minh họa chi tiết quy trình đăng xuất khỏi hệ thống. Người dùng gửi yêu cầu đăng xuất, hệ thống chuyển yêu cầu này đến lớp Token để xử lý.
+Sơ đồ tuần tự minh họa chi tiết quy trình xử lý khi người dùng đăng xuất khỏi hệ thống. Người dùng gửi yêu cầu đăng xuất, hệ thống chuyển yêu cầu này đến lớp Token để xử lý.
 Lớp Token sẽ xóa thông tin token truy cập liên quan và gửi phản hồi xác nhận thành công, hoàn tất quá trình đăng xuất.
 
 \subsubsection{Sơ đồ tuần tự chức năng quản lý tài khoản người dùng}
@@ -1289,11 +1289,11 @@ Cuối cùng, toàn bộ thông tin chi tiết của phiên đo được trả v
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=8cm,height=7cm]{Images/sequence/record/chart.drawio.png}
-	\caption[Sơ đồ tuần tự chức năng xem đồ thị các tín hiệu phiên đo]{\bfseries \fontsize{12pt}{0pt}
-		\selectfont Sơ đồ tuần tự chức năng xem đồ thị các tín hiệu phiên đo}
+	\caption[Sơ đồ tuần tự chức năng hiển thị các tín hiệu của phiên đo dưới dạng đồ thị]{\bfseries \fontsize{12pt}{0pt}
+		\selectfont Sơ đồ tuần tự chức năng hiển thị các tín hiệu của phiên đo dưới dạng đồ thị}
 	\label{sequence_chart} %đặt tên cho ảnh
 \end{figure}
-Sau khi danh sách phiên đo được truy xuất và người dùng đã lựa chọn một phiên đo cụ thể, họ có thể gửi yêu cầu để xem đồ thị tín hiệu.
+Sau khi danh sách phiên đo được truy xuất và người dùng đã lựa chọn một phiên đo cụ thể, họ có thể gửi yêu cầu để hiển thị đồ thị tín hiệu.
 Hệ thống sẽ tiếp nhận yêu cầu, truy xuất dữ liệu các tín hiệu của phiên đo từ lớp Record, và trả về kết quả dưới dạng đồ thị trực quan, hỗ trợ người dùng theo dõi và phân tích một cách hiệu quả.
 
 \begin{figure}[H]
@@ -1502,7 +1502,7 @@ triển khai và kiểm tra tính đúng đắn của các tính năng, đảm b
 
 \subsection{Xử lý và phân tích dữ liệu}
 
-Trong phần này, chúng em sẽ xác định và mô tả chi tiết các thực thể cùng các thuộc tính trong hệ thống.
+Ở phần này, chúng em sẽ phân tích và trình bày chi tiết các thực thể cùng với những thuộc tính của chúng trong hệ thống.
 Quá trình này đóng vai trò quan trọng trong việc giúp chúng em hiểu rõ các thành phần cốt lõi, từ đó thiết kế và xây dựng cơ sở dữ liệu một cách tối ưu và hiệu quả.
 
 Trước tiên, chúng em sẽ tiến hành xác định các thực thể trong hệ thống và mô tả chi tiết các thuộc tính của chúng thông qua bảng biểu và sơ đồ liên kết.

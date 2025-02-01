@@ -6,7 +6,7 @@
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 3. THIẾT KẾ HỆ THỐNG}
 
-Ở chương này, chúng em mô tả quá trình thiết kế hệ thống từ tổng quan đến chi tiết, dựa trên phân tích ở Chương 2.
+Chương này sẽ tập trung mô tả quá trình thiết kế hệ thống, từ cấu trúc tổng thể đến các thành phần chi tiết, dựa trên những phân tích đã thực hiện trong Chương 2.
 Mở đầu là xây dựng sơ đồ kiến trúc hệ thống.
 Tiếp theo, chương tập trung vào thiết kế giao diện người dùng và các chức năng chính cho website cùng server.
 Nội dung chính được thể hiện qua hình ảnh và sơ đồ minh họa, không chỉ mô tả chi tiết luồng hoạt động mà còn làm rõ cách các thành phần trong hệ thống phối hợp, hỗ trợ lẫn nhau.
@@ -25,7 +25,7 @@ Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 
 \begin{adjustwidth}{1.5em}{}
 	\begin{itemize}
-		\item Device (Thiết bị): Gồm các thiết bị phần cứng đo điện tim, có khả năng kết nối với ứng dụng di động của bệnh nhân thông qua Bluetooth.
+		\item Device (Thiết bị): Gồm các thiết bị phần cứng đo các dữ liệu sức khỏe tim mạch, có khả năng kết nối với ứng dụng di động của bệnh nhân thông qua Bluetooth.
 		\item Application (Ứng dụng): Bao gồm ứng dụng di động và website, phục vụ nhu cầu sử dụng của bệnh nhân, bác sĩ và quản trị viên.
 		\item Server (Máy chủ): Chứa các dịch vụ (Services) xử lý yêu cầu từ ứng dụng và quản lý cơ sở dữ liệu.
 	\end{itemize}
@@ -57,7 +57,7 @@ hoàn thiện quá trình tương tác giữa người dùng và hệ thống.\b
 	\end{itemize}
 \end{adjustwidth}
 
-Dưới đây là mô tả chi tiết về các phần nhỏ hơn trong kiến trúc hệ thống, được xây dựng dựa trên các đối tượng chính đã phân tích.
+Phần dưới đây trình bày chi tiết về từng thành phần trong kiến trúc hệ thống, được hình thành dựa trên những nhóm người dùng đã được xác định trước đó.
 \newpage
 \subsection{Sơ đồ khối phần mềm}
 
@@ -1251,9 +1251,9 @@ Những sơ đồ tuần tự này giúp đảm bảo các API được thiết 
 Nhờ đó, hệ thống không chỉ hoạt động ổn định và hiệu quả mà còn đáp ứng linh hoạt các yêu cầu thực tiễn của người dùng,
 đồng thời tạo tiền đề vững chắc cho việc mở rộng và cải tiến trong tương lai.
 
-\subsection{Kết luận chương}
+\subsection{Kết luận}
 
-Chương 3 tập trung trình bày chi tiết quá trình thiết kế hệ thống, bao gồm kiến trúc tổng quan và từng thành phần cụ thể.
+Chương này tập trung mô tả chi tiết quá trình thiết kế hệ thống, từ kiến trúc tổng quan đến các thành phần cụ thể.
 Quá trình thiết kế hướng đến việc xây dựng một kiến trúc hoạt động hiệu quả, đảm bảo sự mượt mà trong vận hành,
 đồng thời ưu tiên các yếu tố như bảo mật, hiệu suất cao và khả năng mở rộng linh hoạt.
 \newpage
