@@ -18,7 +18,7 @@ Nội dung chính được thể hiện qua hình ảnh và sơ đồ minh họa
 	\caption[Tổng quan kiến trúc hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Tổng quan kiến trúc hệ thống}
 	\label{fmECG_architecture-System} %đặt tên cho ảnh
 \end{figure}
-Hệ thống bao gồm ba thành phần chính: Máy chủ (Server), Thiết bị (Device) và Ứng dụng (bao gồm web và app).
+Hệ thống bao gồm ba thành phần chính: Máy chủ (Server), Thiết bị (Device) và Ứng dụng (web và app).
 Mỗi thành phần đảm nhiệm một vai trò quan trọng, cùng phối hợp để đảm bảo hoạt động của toàn bộ hệ thống như được minh họa trong hình vẽ.
 
 Hình \ref{fmECG_architecture-System} thể hiện ba phần:
@@ -32,8 +32,8 @@ Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 \end{adjustwidth}
 
 Trong sơ đồ kiến trúc hệ thống, bệnh nhân sử dụng ứng dụng di động (Mobile App) để kết nối trực tiếp với thiết bị (Device).
-Ứng dụng di động thuộc Khối Ứng dụng (Application), chịu trách nhiệm giao tiếp với Khối Máy chủ (Server) thông qua các API và giao thức HTTP.
-Khi yêu cầu được nhận từ Application, Server sẽ thực hiện xử lý dữ liệu thông qua các dịch vụ (Services) được thiết kế riêng biệt.
+Ứng dụng di động thuộc khối Ứng dụng (Application), chịu trách nhiệm giao tiếp với khối Máy chủ (Server) thông qua các API và giao thức HTTP.
+Khi yêu cầu được nhận từ khối Ứng dụng, khối Máy chủ sẽ thực hiện xử lý dữ liệu thông qua các dịch vụ (Services) được thiết kế riêng biệt.
 Tùy theo loại yêu cầu, các dịch vụ này sẽ truy xuất hoặc cập nhật dữ liệu trong cơ sở dữ liệu, sau đó gửi kết quả phản hồi cho người dùng,
 hoàn thiện quá trình tương tác giữa người dùng và hệ thống.\begin{adjustwidth}{1.5em}{}
 	\begin{itemize}
@@ -86,7 +86,7 @@ Tương tự với bệnh nhân, sơ đồ hình \ref{fmECG_architecture-Doctor}
 
 Các Services chính, bao gồm User Service, Device Service, Record Service, Schedule Service, Diagnosis Service, Notification Service và Storage Service, đóng vai trò quan trọng trong việc hỗ trợ bác sĩ.
 Các nhiệm vụ được tập trung vào việc theo dõi và phân tích dữ liệu phiên đo từ bệnh nhân, quản lý lịch khám, chấp nhận hoặc từ chối yêu cầu đặt lịch, ghi nhận thông tin chẩn đoán, và trao đổi trực tiếp với bệnh nhân.
-Hơn nữa, hệ thống cung cấp khả năng tự động gửi thông báo về lịch khám và nhắc nhở các cuộc khám sắp tới, giúp bác sĩ quản lý thời gian và công việc hiệu quả hơn.
+Hơn nữa, hệ thống cung cấp khả năng tự động gửi thông báo về lịch khám và nhắc nhở các lịch khám sắp tới, giúp bác sĩ quản lý thời gian và công việc hiệu quả hơn.
 
 Cách tiếp cận này không chỉ hỗ trợ bác sĩ tổ chức công việc thuận lợi mà còn góp phần nâng cao hiệu quả điều trị cho bệnh nhân.
 
@@ -574,7 +574,7 @@ Hình \ref{devices-admin} là giao diện trang quản lý thiết bị.  Admin 
 	\label{device-info-admin}
 \end{figure}
 
-Hình \ref{device-info-admin} là giao diện cửa sổ trượt khi click vào 1 thiết bị bất kỳ nói trên. Nội dung chi tiết hơn về thông số thiết bị được hiển thị ở giao diện này. Admin có thể xem nhanh các số liệu cần thiết.
+Hình \ref{device-info-admin} là giao diện cửa sổ trượt khi click vào 1 thiết bị bất kỳ nói trên. Nội dung chi tiết hơn về thông số thiết bị được hiển thị ở giao diện này. Quản trị viên có thể xem nhanh các số liệu cần thiết.
 
 \begin{figure}[H]
 	\centering
@@ -592,7 +592,7 @@ Hình \ref{device-detail-admin} là giao diện trang sửa thông tin, thông s
 	\label{assign-admin}
 \end{figure}
 
-Hình \ref{assign-admin} là giao diện minh họa giao diện phân công, cho mượn thiết bị, hỗ trợ admin trong việc quản lý xem người dùng nào đang phụ trách thiết bị.
+Hình \ref{assign-admin} là giao diện minh họa giao diện phân công thiết bị, hỗ trợ quản trị viên trong việc quản lý người dùng nào đang phụ trách thiết bị.
 
 \begin{figure}[H]
 	\centering
@@ -601,7 +601,7 @@ Hình \ref{assign-admin} là giao diện minh họa giao diện phân công, cho
 	\label{records-admin}
 \end{figure}
 
-Hình \ref{records-admin} là giao diện quản lý dữ liệu các phiên đo tại các buổi khám. Liên kết tới dữ liệu được lưu tại đây, admin bác sĩ có thể sử dụng cho việc phân tích sau này.
+Hình \ref{records-admin} là giao diện quản lý dữ liệu phiên đo tại các buổi khám. Liên kết tới dữ liệu các phiên đo được lưu tại đây, quản trị viên và bác sĩ có thể sử dụng cho việc phân tích sau này.
 
 \begin{figure}[H]
 	\centering
@@ -610,7 +610,11 @@ Hình \ref{records-admin} là giao diện quản lý dữ liệu các phiên đo
 	\label{graph}
 \end{figure}
 
-Hình \ref{graph} là giao diện thể hiện đồ thị chỉ số tim mạch thu thập được tự các dữ liệu phiên đo. Trong đó ECG, PPG, và PCG là các thuật ngữ liên quan đến các phương pháp đo tín hiệu sinh lý của cơ thể, thường được sử dụng trong y học và khoa học để giám sát sức khỏe. ECG (Electrocardiogram) - Điện tâm đồ là đường màu xanh lá, mô tả tín hiệu đo hoạt động điện của tim theo thời gian. PPG (Photoplethysmography) - Quang phổ thể tích là đường màu xanh dương, mổ tả sự thay đổi thể tích máu trong mạch máu bằng cách sử dụng ánh sáng. Và PCG (Phonocardiography) - Âm thanh tim, đường màu đỏ, mổ tả tín hiệu ghi lại âm thanh được tạo ra bởi hoạt động của tim, thường gọi là âm thanh tim.
+Hình \ref{graph} là giao diện thể hiện đồ thị các tín hiệu tim mạch thu thập được từ dữ liệu phiên đo.
+Trong đó ECG, PPG, và PCG là các thuật ngữ liên quan đến các phương pháp đo tín hiệu sinh lý của cơ thể, thường được sử dụng trong y học và khoa học để giám sát sức khỏe.
+ECG (Electrocardiogram) - Điện tâm đồ là đường màu xanh lá, mô tả tín hiệu đo hoạt động điện của tim theo thời gian.
+PPG (Photoplethysmography) - Quang phổ thể tích là đường màu xanh dương, mổ tả sự thay đổi thể tích máu trong mạch máu bằng cách sử dụng ánh sáng.
+Và PCG (Phonocardiography) - Âm thanh tim, đường màu đỏ, mổ tả tín hiệu ghi lại âm thanh được tạo ra bởi hoạt động của tim, thường gọi là âm thanh tim.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=8cm]{Images/admin_ui/schedule.png}
@@ -618,7 +622,7 @@ Hình \ref{graph} là giao diện thể hiện đồ thị chỉ số tim mạch
 	\label{schedules-admin}
 \end{figure}
 
-Hình \ref{schedules-admin} là giao diện giúp admin có thể kiểm thử, thêm, sửa, xóa thông tin đặt lịch, từ đó có thể lấy dữ liệu để thống kê cho các mục đích sau này.
+Hình \ref{schedules-admin} là giao diện giúp quản trị viên có thể tra cứu thông tin đặt lịch, từ đó có thể lấy dữ liệu để thống kê cho các mục đích sau này.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm]{Images/admin_ui/schedule-info.png}
@@ -626,7 +630,7 @@ Hình \ref{schedules-admin} là giao diện giúp admin có thể kiểm thử, 
 	\label{schedule-info-admin}
 \end{figure}
 
-Hình \ref{schedule-info-admin} là giao diện trang thông tin đặt lịch, hỗ trợ người dùng có thể xem chi tiết tên bác sĩ, bệnh nhân, thời gian hẹn, giao diện này cũng sẽ dùng cho bệnh nhân và bác sĩ.
+Hình \ref{schedule-info-admin} là giao diện trang thông tin đặt lịch, hỗ trợ người dùng có thể xem chi tiết tên bác sĩ, bệnh nhân, thời gian khám. Giao diện này cũng sẽ dùng cho bệnh nhân và bác sĩ.
 
 \begin{figure}[H]
 	\centering
@@ -635,7 +639,7 @@ Hình \ref{schedule-info-admin} là giao diện trang thông tin đặt lịch, 
 	\label{diag-admin}
 \end{figure}
 
-Hình \ref{diag-admin} là giao diện chẩn đoán. Tại đây, admin có thể xem thông tin chi tiết của chẩn đoán.
+Hình \ref{diag-admin} minh họa giao diện chẩn đoán, nơi quản trị viên hoặc bệnh nhân có thể xem thông tin chi tiết về chẩn đoán, nhưng không có quyền thêm mới hay chỉnh sửa thông tin chẩn đoán.
 
 \begin{figure}[H]
 	\centering
@@ -644,7 +648,9 @@ Hình \ref{diag-admin} là giao diện chẩn đoán. Tại đây, admin có th�
 	\label{chat-admin}
 \end{figure}
 
-Hình \ref{chat-admin} là giao diện trang nhắn tin hỗ trợ admin có thể nhắn tin, tạo nhóm với người dùng khác để dễ dàng trong việc trao đổi, chia sẻ thông tin, hướng dẫn người dùng khác sử dụng hệ thống hoặc các chức vụ khác. 
+Hình \ref{chat-admin} minh họa giao diện trang nhắn tin, hỗ trợ quản trị viên nhắn tin và tạo nhóm với người dùng khác để thuận tiện trong việc trao đổi, chia sẻ thông tin và hướng dẫn sử dụng hệ thống.
+Ngoài ra, bác sĩ cũng có quyền tạo nhóm và nhắn tin với các bệnh nhân đã được chấp nhận lịch khám.
+Tuy nhiên, bệnh nhân chỉ có thể nhắn tin với quản trị viên và các bác sĩ đã chấp nhận lịch khám của mình, mà không có quyền tạo nhóm.
 
 \begin{figure}[H]
 	\centering
@@ -653,7 +659,7 @@ Hình \ref{chat-admin} là giao diện trang nhắn tin hỗ trợ admin có th�
 	\label{account-admin}
 \end{figure}
 
-Hình \ref{account-admin} là giao diện trang quản lý tài khoản, thông tin tài khoản, mật khẩu được lưu trữ tại đây, admin nói riêng hay người dùng nói chung có thể xem hoặc thay đổi thông tin về tài khoản của mình.
+Hình \ref{account-admin} là giao diện trang quản lý tài khoản, thông tin tài khoản. Quản trị viên nói riêng hay người dùng nói chung có thể xem hoặc thay đổi thông tin về tài khoản của mình.
 
 \subsubsection{Giao diện góc nhìn của bệnh nhân}
 \begin{figure}[H]
@@ -672,7 +678,8 @@ Hình \ref{doctor-info-patient} là giao diện trang thông tin bác sĩ giúp 
 	\label{schedule-with-doctor}
 \end{figure}
 
-Hình \ref{schedule-with-doctor} là giao diện phục vụ mục đích: bệnh nhân có thể chọn bác sĩ mà bệnh nhân muốn đặt lịch. Sau đó chọn ngày giờ phù hợp để đặt lịch hẹn. Từ đó có thể dễ dàng kiểm tra lịch hẹn của mình, lựa chọn lịch hẹn phù hợp.
+Hình \ref{schedule-with-doctor} minh họa giao diện cho phép bệnh nhân lựa chọn bác sĩ mong muốn và sau đó chọn ngày giờ phù hợp để đặt lịch khám.
+Từ đó, bệnh nhân có thể dễ dàng lựa chọn thời gian khám thuận tiện nhất theo bác sĩ tương ứng.
 
 \begin{figure}[H]
 	\centering
@@ -690,7 +697,8 @@ Hình \ref{schedule-with-time} cũng giống như chức năng trên, tuy nhiên
 	\label{noti-patient}
 \end{figure}
 
-Hình \ref{noti-patient} minh họa giao diện thông báo để bệnh nhân có thể xem thông báo từ bác sĩ, thông báo từ hệ thống để biết xem mình đã được chấp nhận lịch hẹn hay chưa. Giao diện này cũng sẽ giống đối với bác sĩ.
+Hình \ref{noti-patient} minh họa giao diện thông báo, nơi bệnh nhân có thể theo dõi lịch sử đặt lịch và các thông báo từ hệ thống để biết liệu lịch khám của mình đã được bác sĩ chấp nhận hay chưa.
+Giao diện này cũng được áp dụng tương tự đối với bác sĩ, giúp họ cập nhật trạng thái các lịch khám của mình.
 
 \subsubsection{Giao diện góc nhìn của bác sĩ}
 \begin{figure}[H]
@@ -700,7 +708,7 @@ Hình \ref{noti-patient} minh họa giao diện thông báo để bệnh nhân c
 	\label{home-doctor}
 \end{figure}
 
-Hình \ref{home-doctor} là giao diện trang chủ và thông báo của bác sĩ. Tại đây, bác sĩ có thể xem thông báo từ bệnh nhân, thông báo từ hệ thống để biết xem mình có lịch hẹn nào đang được yêu cầu không.
+Hình \ref{home-doctor} thể hiện giao diện trang chủ và thông báo của bác sĩ. Tại đây, bác sĩ có thể theo dõi các thông báo từ hệ thống để nắm bắt thông tin về ngày giờ của các lịch khám đã hoặc đang chờ phê duyệt.
 
 \begin{figure}[H]
 	\centering
@@ -709,16 +717,16 @@ Hình \ref{home-doctor} là giao diện trang chủ và thông báo của bác s
 	\label{patient-list}
 \end{figure}
 
-Hình \ref{patient-list} là giao diện trang danh sách bệnh nhân hỗ trợ bác sĩ có thể xem danh sách bệnh nhân của mình, thông tin chi tiết của bệnh nhân.
+Hình \ref{patient-list} là giao diện trang danh sách bệnh nhân, hỗ trợ bác sĩ có thể xem danh sách bệnh nhân của mình và thông tin chi tiết của từng bệnh nhân.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=8cm]{Images/doctor_ui/schedule.png}
-	\caption[Giao diện trang quản lý lịch hẹn của bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý lịch hẹn của bác sĩ}
+	\caption[Giao diện trang quản lý lịch khám của bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý lịch khám của bác sĩ}
 	\label{schdule-doctor}
 \end{figure}
 
-Hình \ref{schdule-doctor} là giao diện trang quản lý lịch hẹn của bác sĩ để bác sĩ có thể xem thông tin chi tiết của lịch hẹn. Kiểm tra xem lịch làm việc của mình ngày hôm nay.
+Hình \ref{schdule-doctor} minh họa giao diện trang quản lý lịch khám của bác sĩ, giúp bác sĩ xem chi tiết các lịch khám của mình trong ngày.
 
 \begin{figure}[H]
 	\centering
@@ -727,7 +735,7 @@ Hình \ref{schdule-doctor} là giao diện trang quản lý lịch hẹn của b
 	\label{diag}
 \end{figure}
 
-Hình \ref{diag} là giao diện chẩn đoán. Tại đây, bác sĩ có thể xem thông tin chi tiết của chẩn đoán, kết quả chẩn đoán của bệnh nhân sẽ được bác sĩ thêm tại đây.
+Hình \ref{diag} thể hiện giao diện chẩn đoán, nơi bác sĩ có thể xem chi tiết thông tin và thêm hoặc chỉnh sửa kết quả chẩn đoán của bệnh nhân.
 
 \begin{figure}[H]
 	\centering
@@ -741,29 +749,29 @@ Bên cạnh đó, bác sĩ cũng có thể chủ động đặt lịch tái khá
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=8cm]{Images/doctor_ui/schedule-detail.png}
-	\caption[Giao diện thông tin lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện thông tin lịch hẹn}
+	\caption[Giao diện thông tin lịch khám]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện thông tin lịch khám}
 	\label{schedule-detail-doctor}
 \end{figure}
 
-Hình \ref{schedule-detail-doctor} là giao diện thông tin chỉ tiết của lịch hẹn.
+Hình \ref{schedule-detail-doctor} là giao diện thông tin chỉ tiết của lịch khám.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm]{Images/doctor_ui/review.png}
-	\caption[Giao diện duyệt lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện duyệt lịch hẹn}
+	\caption[Giao diện duyệt lịch khám]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện duyệt lịch khám}
 	\label{review}
 \end{figure}
 
-Hình \ref{review} là giao diện duyệt lịch hẹn. Các bác sĩ có thể chấp nhận hoặc từ chối lịch hẹn của bệnh nhân, sau đó thông báo sẽ được gửi đến bệnh nhân để họ có thể sắp xếp công việc của mình phù hợp cho việc khám bệnh.
+Hình \ref{review} là giao diện duyệt lịch khám. Các bác sĩ có thể chấp nhận hoặc từ chối lịch khám của bệnh nhân, sau đó thông báo sẽ được gửi đến bệnh nhân để họ có thể sắp xếp công việc của mình cho phù hợp.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=8cm]{Images/doctor_ui/accepted.png}
-	\caption[Giao diện chấp nhận lịch hẹn]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện chấp nhận lịch hẹn}
+	\caption[Giao diện chấp nhận lịch khám]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện chấp nhận lịch khám}
 	\label{accepted}
 \end{figure}
 
-Hình \ref{accepted} là giao diện sau khi bác sĩ chấp nhận lịch hẹn của bệnh nhân. Một pop up tinh gọn sẽ hiện lên để thông báo việc xác nhận lịch hẹn đã thành công!
+Hình \ref{accepted} là giao diện sau khi bác sĩ chấp nhận lịch khám của bệnh nhân. Một pop up sẽ hiện lên để thông báo việc xác nhận lịch khám đã thành công.
 
 
 % =====================================================================
@@ -947,13 +955,6 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 	\label{sequence_diagram_login}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	% \includegraphics[width=13cm,height=10cm]{Images/sequence/user/logout.drawio.png}
-	\caption[Sơ đồ tuần tự API đăng xuất khỏi hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API đăng xuất khỏi hệ thống}
-	\label{sequence_diagram_logout}
-\end{figure}
-
 % % ------------------------User----------------------
 \paragraph{Các API phục vụ mục đích quản lý người dùng trong hệ thống}
 \mbox{}
@@ -1033,7 +1034,7 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=16cm]{Images/api_sequence/device/device-updateDevice.drawio.png}
-	\caption[Sơ đồ tuần tự API chỉnh sửa thông tin chi tiết cho thiết bị y tế cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cập nhật thông tin chi tiết cho thiết bị y tế cụ thể}
+	\caption[Sơ đồ tuần tự API chỉnh sửa thông tin chi tiết cho thiết bị y tế cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API chỉnh sửa thông tin chi tiết cho thiết bị y tế cụ thể}
 	\label{sequence_diagram_update_device}
 \end{figure}
 

@@ -1356,6 +1356,8 @@ Lớp Schedule sẽ lấy thông tin người dùng từ lớp User và kiểm t
 	\item Trường hợp số lịch đã tạo dưới 5: Hệ thống kiểm tra xem lịch mới có trùng với các lịch hiện tại không. Nếu không trùng, hệ thống xác nhận và tạo lịch mới, sau đó trả về kết quả thành công. Nếu trùng lịch, hệ thống sẽ trả về thông báo lỗi cho bệnh nhân.
 	\item Trường hợp số lịch đã tạo từ 5 trở lên: Hệ thống trả về thông báo lỗi, từ chối việc tạo thêm lịch.
 \end{itemize}
+Sau khi người dùng đặt lịch khám, nếu trong vòng 12 tiếng từ thời điểm đặt lịch mà bác sĩ chưa phê duyệt, hệ thống sẽ tự động hủy lịch khám và gửi thông báo tới các bên liên quan. Bên cạnh đó, hệ thống sẽ gửi thông báo nhắc nhở tự động trước mỗi lịch khám
+(trước 1 giờ với bệnh nhân và trước 15 phút với bác sĩ).
 
 \begin{figure}[H]
 	\centering
