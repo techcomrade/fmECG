@@ -4,7 +4,7 @@
 \setcounter{subsection}{0} %LƯU Ý MỖI LẦN THÊM CHƯƠNG MỚI CẦN THÊM CÂU NÀY ĐỂ RESET THỨ TỰ CỦA SUBSECTON VỀ 1
 \setcounter{table}{0} % LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
-\addcontentsline{toc}{section}{\numberline{}CHƯƠNG 4. TRIỂN KHAI VÀ KIỂM THỬ}
+\addcontentsline{toc}{section}{\numberline{}CHƯƠNG 4. Xây Dựng VÀ KIỂM THỬ}
 
 \subsection{Công nghệ sử dụng}
 \subsubsection{Thiết kế giao diện website}
@@ -120,43 +120,43 @@ Trong quá trình phát triển phần mềm hiện đại, API đóng vai trò 
 \end{figure}
 
 
-\paragraph{Docker}
-\mbox{}
+% \paragraph{Docker}
+% \mbox{}
 
-Trước Docker, việc triển khai ứng dụng thường gặp nhiều khó khăn do sự khác biệt về môi trường giữa các máy tính. Ví dụ: một ứng dụng chạy tốt trên máy tính của nhà phát triển có thể gặp lỗi khi triển khai lên máy chủ do thiếu thư viện, phiên bản phần mềm khác nhau, hoặc cấu hình không tương thích. Docker giải quyết vấn đề này bằng cách đóng gói tất cả các thành phần cần thiết cho ứng dụng vào một container, đảm bảo ứng dụng luôn chạy như nhau ở mọi nơi. Các từ khóa chính cầm quan tâm như: Image, container, DockerFile, Docker Compose, ... \cite{docker}
+% Trước Docker, việc triển khai ứng dụng thường gặp nhiều khó khăn do sự khác biệt về môi trường giữa các máy tính. Ví dụ: một ứng dụng chạy tốt trên máy tính của nhà phát triển có thể gặp lỗi khi triển khai lên máy chủ do thiếu thư viện, phiên bản phần mềm khác nhau, hoặc cấu hình không tương thích. Docker giải quyết vấn đề này bằng cách đóng gói tất cả các thành phần cần thiết cho ứng dụng vào một container, đảm bảo ứng dụng luôn chạy như nhau ở mọi nơi. Các từ khóa chính cầm quan tâm như: Image, container, DockerFile, Docker Compose, ... \cite{docker}
 
-Những lợi ích của Docker có thể kể đến như:
-\begin{itemize}
-	\item Tính nhất quán: đảm bảo ứng dụng chạy trên mọi môi trường
-	\item Tính di động: dễ dàng di chuyển ứng dụng giữa các máy tính, máy chủ, và đám mây.
-	\item Tiết kiệm tài nguyên: Container nhẹ hơn nhiều so với máy ảo (Virtual Machine) vì chúng chia sẻ kernel của hệ điều hành host.
-	\item Tăng tốc độ phát triển và triển khai: Docker giúp tự động hóa quá trình xây dựng, kiểm thử, và triển khai ứng dụng.
-	\item Dễ dàng quản lý phiên bản: Docker giúp quản lý các phiên bản khác nhau của ứng dụng một cách dễ dàng.
-	\item Cách ly ứng dụng: Container cung cấp môi trường cách ly, giúp ngăn chặn xung đột giữa các ứng dụng.
-\end{itemize}
+% Những lợi ích của Docker có thể kể đến như:
+% \begin{itemize}
+% 	\item Tính nhất quán: đảm bảo ứng dụng chạy trên mọi môi trường
+% 	\item Tính di động: dễ dàng di chuyển ứng dụng giữa các máy tính, máy chủ, và đám mây.
+% 	\item Tiết kiệm tài nguyên: Container nhẹ hơn nhiều so với máy ảo (Virtual Machine) vì chúng chia sẻ kernel của hệ điều hành host.
+% 	\item Tăng tốc độ phát triển và triển khai: Docker giúp tự động hóa quá trình xây dựng, kiểm thử, và triển khai ứng dụng.
+% 	\item Dễ dàng quản lý phiên bản: Docker giúp quản lý các phiên bản khác nhau của ứng dụng một cách dễ dàng.
+% 	\item Cách ly ứng dụng: Container cung cấp môi trường cách ly, giúp ngăn chặn xung đột giữa các ứng dụng.
+% \end{itemize}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=8cm,height=4cm]{Images/Technology/docker.jpg}
-	\caption[Logo của Docker]{\bfseries \fontsize{12pt}{0pt}
-		\selectfont Logo của Docker}
-	\label{docker} %đặt tên cho ảnh
-\end{figure}
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=8cm,height=4cm]{Images/Technology/docker.jpg}
+% 	\caption[Logo của Docker]{\bfseries \fontsize{12pt}{0pt}
+% 		\selectfont Logo của Docker}
+% 	\label{docker} %đặt tên cho ảnh
+% \end{figure}
 
 
-\subsection{Xây dựng và triển khai ứng dụng}
-Để giúp cho việc xây dung hệ thống thuận tiện hơn, sản phẩm của chúng em đã áp dụng quy trình CI/CD giúp cập nhật và triển khai một cách nhanh chóng, liên tục. Nhóm đã sử dụng VPS để triển khai server API và website, kết hợp với Docker để tự động hóa quá trình deploy ứng dụng. Về quản lý cơ sở dữ liệu, chúng em sử dụng MySQL Server và MongoDB Compass, đảm bảo hiệu suất và tính linh hoạt. Cuối cùng, toàn bộ mã nguồn dự án được quản lý trên GitHub, giúp theo dõi và kiểm soát phiên bản hiệu quả.
-\subsubsection{Quy trình CI/CD}
-CI/CD là một tập hợp các phương pháp và thực hành giúp tự động hóa quy trình phát triển, kiểm thử và triển khai phần mềm \cite{cicd}. CI (Continuous Integration - Tích hợp liên tục) tập trung vào việc thường xuyên tích hợp mã nguồn từ nhiều nhà phát triển vào một kho lưu trữ chung, sau đó tự động xây dựng và kiểm tra phần mềm. Việc này giúp phát hiện sớm các lỗi tích hợp và giảm thiểu xung đột giữa các thay đổi.
+\subsection{Xây dựng ứng dụng}
+ Về quản lý cơ sở dữ liệu, chúng em sử dụng MySQL Server và MongoDB Compass, đảm bảo hiệu suất và tính linh hoạt. Ngôn ngữ sử dụng TypeScript, hỗ trợ bởi framework và thư viện như ReactJS, NestJS. Công cụ kiểm thử API bao gồm Postman các trình duyệt như Cốc Cốc, Edge, Chrome. Bên cạnh đó toàn bộ mã nguồn dự án được quản lý trên GitHub, giúp theo dõi và kiểm soát phiên bản hiệu quả.
+% \subsubsection{Quy trình CI/CD}
+% CI/CD là một tập hợp các phương pháp và thực hành giúp tự động hóa quy trình phát triển, kiểm thử và triển khai phần mềm \cite{cicd}. CI (Continuous Integration - Tích hợp liên tục) tập trung vào việc thường xuyên tích hợp mã nguồn từ nhiều nhà phát triển vào một kho lưu trữ chung, sau đó tự động xây dựng và kiểm tra phần mềm. Việc này giúp phát hiện sớm các lỗi tích hợp và giảm thiểu xung đột giữa các thay đổi.
 
-CD (Continuous Delivery/Continuous Deployment - Chuyển giao/Triển khai liên tục) mở rộng CI bằng cách tự động hóa quá trình chuyển giao phần mềm đã được kiểm tra đến môi trường thử nghiệm hoặc sản xuất. Continuous Delivery cho phép triển khai thủ công sau khi kiểm tra, trong khi Continuous Deployment tự động triển khai lên môi trường sản xuất. CI/CD giúp tăng tốc độ phát hành phần mềm, cải thiện chất lượng và giảm thiểu rủi ro.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=15cm,height=8cm]{Images/Technology/cicd.png}
-	\caption[Quy trình CI/CD]{\bfseries \fontsize{12pt}{0pt}
-		\selectfont Quy trình CI/CD}
-	\label{cicd} %đặt tên cho ảnh
-\end{figure}
+% CD (Continuous Delivery/Continuous Deployment - Chuyển giao/Triển khai liên tục) mở rộng CI bằng cách tự động hóa quá trình chuyển giao phần mềm đã được kiểm tra đến môi trường thử nghiệm hoặc sản xuất. Continuous Delivery cho phép triển khai thủ công sau khi kiểm tra, trong khi Continuous Deployment tự động triển khai lên môi trường sản xuất. CI/CD giúp tăng tốc độ phát hành phần mềm, cải thiện chất lượng và giảm thiểu rủi ro.
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=15cm,height=8cm]{Images/Technology/cicd.png}
+% 	\caption[Quy trình CI/CD]{\bfseries \fontsize{12pt}{0pt}
+% 		\selectfont Quy trình CI/CD}
+% 	\label{cicd} %đặt tên cho ảnh
+% \end{figure}
 
 \subsubsection{Kiến trúc Microservices}
 Kiến trúc Microservices là một cách tiếp cận trong quy trình phát triển phần mềm, nơi một ứng dụng lớn được tách thành nhiều dịch vụ nhỏ hoạt động độc lập với nhau \cite{microservice}.
@@ -202,8 +202,6 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 \begin{enumerate}[a)]
 	\item URL: POST auth/register
-
-	      \break
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -304,8 +302,6 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 	\item URL: POST auth/login
-
-	      \cleardoublepage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -630,7 +626,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: GET users/{:id}
-
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -646,8 +642,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Người dùng tồn tại trong hệ thống và có id tương ứng
-		      & id người dùng
+		      & Người dùng tồn tại trong hệ thống và có ID tương ứng
+		      & ID người dùng
 
 		      &
 
@@ -666,8 +662,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Người dùng không tồn tại trong hệ thống với id tương ứng
-		      & id người dùng
+		      & Người dùng không tồn tại trong hệ thống với ID tương ứng
+		      & ID người dùng
 
 		      &
 
@@ -691,8 +687,6 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: GET users/data/patient-data
-
-	      \cleardoublepage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -700,7 +694,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bệnh nhân theo id của bác sĩ}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bệnh nhân theo ID của bác sĩ}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -710,7 +704,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-1
 		      & Admin, bác sĩ tương ứng với id
-		      & id của bác sĩ
+		      & ID của bác sĩ
 
 		      &
 
@@ -730,7 +724,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-2
 		      & Không phải admin, bác sĩ
-		      & id của bác sĩ
+		      & ID của bác sĩ
 		      &
 
 		      Status code: 403
@@ -784,7 +778,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bác sĩ theo id của bệnh nhân}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bác sĩ theo ID của bệnh nhân}
 		      \\
 		      \hline
 		      \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào
@@ -792,8 +786,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Admin, bác sĩ hoặc bệnh nhân có id tương ứng
-		      & id của bệnh nhân
+		      & Admin, bác sĩ hoặc bệnh nhân có ID tương ứng
+		      & ID của bệnh nhân
 
 		      &
 
@@ -813,7 +807,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-2
 		      & Bệnh nhân chưa có bác sĩ
-		      & id của bệnh nhân
+		      & ID của bệnh nhân
 
 		      &
 
@@ -836,7 +830,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-3
 		      & Không phải admin, bác sĩ hoặc bệnh nhân
-		      & id của bệnh nhân
+		      & ID của bệnh nhân
 		      &
 
 		      Status code: 403
@@ -898,7 +892,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Người dùng đã tồn tại trong hệ thống với id cho trước
+		      & Người dùng đã tồn tại trong hệ thống với ID cho trước
 		      & Dữ liệu cập nhật của người dùng
 		      &
 
@@ -917,7 +911,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Người dùng không tồn tại trong hệ thống với id cho trước
+		      & Người dùng không tồn tại trong hệ thống với ID cho trước
 		      &
 		      &
 
@@ -975,8 +969,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Người dùng đã tồn tại trong hệ thống với id cho trước
-		      & id của người dùng
+		      & Người dùng đã tồn tại trong hệ thống với ID cho trước
+		      & ID của người dùng
 
 		      &
 
@@ -995,8 +989,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Người dùng không tồn tại trong hệ thống với id cho trước
-		      & id của người dùng
+		      & Người dùng không tồn tại trong hệ thống với ID cho trước
+		      & ID của người dùng
 
 		      &
 
@@ -1016,8 +1010,6 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: GET statistic
-
-	      \cleardoublepage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2cm}
@@ -1084,7 +1076,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 \begin{enumerate}[a)]
 	\item URL: GET device
-
+		\clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -1141,9 +1133,6 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 	\item URL: GET device/{:id}
-
-	      \cleardoublepage
-
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -1160,8 +1149,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Thiết bị tồn tại với id cho trước
-		      & id thiết bị
+		      & Thiết bị tồn tại với ID cho trước
+		      & ID thiết bị
 		      &
 
 		      Status code: 200 OK
@@ -1178,8 +1167,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Thiết bị không tồn tại với id cho trước
-		      & id thiết bị
+		      & Thiết bị không tồn tại với ID cho trước
+		      & ID thiết bị
 		      &
 
 		      Status code: 404 Not Found
@@ -1200,7 +1189,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 	      % //TODO: new page
 	\item URL: POST device/add
-
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -1222,15 +1211,15 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      \{
 
-		      "user\_id": id bệnh nhân,
+		      "user\_id": ID bệnh nhân,
 
 		      "device\_name": Tên thiết bị,
 
 		      "infomation": Thông tin thiết bị,
 
-		      "device\_type\_id": id loại thiết bị,
+		      "device\_type\_id": ID loại thiết bị,
 
-		      "status\_id": id trạng thái thiết bị,
+		      "status\_id": ID trạng thái thiết bị,
 
 		      "start\_time": Giờ bắt đầu sử dụng
 
@@ -1255,20 +1244,20 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Người dùng không tồn tại với id đã cho
+		      & Người dùng không tồn tại với ID đã cho
 		      & Thông tin thiết bị
 
 		      \{
 
-		      "user\_id": id bệnh nhân,
+		      "user\_id": ID bệnh nhân,
 
 		      "device\_name": Tên thiết bị,
 
 		      "infomation": Thông tin thiết bị,
 
-		      "device\_type\_id": id loại thiết bị,
+		      "device\_type\_id": ID loại thiết bị,
 
-		      "status\_id": id trạng thái thiết bị,
+		      "status\_id": ID trạng thái thiết bị,
 
 		      "start\_time": Giờ bắt đầu sử dụng
 
@@ -1311,12 +1300,12 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Thiết bị tồn tại với id cho trước
+		      & Thiết bị tồn tại với ID cho trước
 		      & thông số kỹ thuật thiết bị
 
 		      \{
 
-		      "device\_id": id thiết bị,
+		      "device\_id": ID thiết bị,
 
 		      "detail\_name": Tên chi tiết,
 
@@ -1346,12 +1335,12 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Thiết bị không tồn tại với id cho trước
+		      & Thiết bị không tồn tại với ID cho trước
 		      & thông số kỹ thuật thiết bị
 
 		      \{
 
-		      "device\_id": id thiết bị,
+		      "device\_id": ID thiết bị,
 
 		      "detail\_name": Tên chi tiết,
 
@@ -1379,12 +1368,12 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-3
-		      & Người dùng không tồn tại với id tương ứng
+		      & Người dùng không tồn tại với ID tương ứng
 		      & thông số kỹ thuật thiết bị
 
 		      \{
 
-		      "device\_id": id thiết bị,
+		      "device\_id": ID thiết bị,
 
 		      "detail\_name": Tên chi tiết,
 
@@ -1431,8 +1420,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Thiết bị tồn tại với id cho trước
-		      & id thiết bị
+		      & Thiết bị tồn tại với ID cho trước
+		      & ID thiết bị
 
 		      &
 
@@ -1451,8 +1440,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Không tồn tại thiết bị với id cho trước
-		      & id thiết bị
+		      & Không tồn tại thiết bị với ID cho trước
+		      & ID thiết bị
 
 		      &
 
@@ -1490,20 +1479,20 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Thiết bị tồn tại với id cho trước
+		      & Thiết bị tồn tại với ID cho trước
 		      & Thông tin thiết bị
 
 		      \{
 
-		      "user\_id": id bệnh nhân,
+		      "user\_id": ID bệnh nhân,
 
 		      "device\_name": Tên thiết bị,
 
 		      "infomation": Thông tin thiết bị,
 
-		      "device\_type\_id": id loại thiết bị,
+		      "device\_type\_id": ID loại thiết bị,
 
-		      "status\_id": id trạng thái thiết bị,
+		      "status\_id": ID trạng thái thiết bị,
 
 		      "start\_time": Giờ bắt đầu sử dụng
 
@@ -1527,20 +1516,20 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Không tồn tại thiết bị với id cho trước
+		      & Không tồn tại thiết bị với ID cho trước
 		      & Thông tin thiết bị
 
 		      \{
 
-		      "user\_id": id bệnh nhân,
+		      "user\_id": ID bệnh nhân,
 
 		      "device\_name": Tên thiết bị,
 
 		      "infomation": Thông tin thiết bị,
 
-		      "device\_type\_id": id loại thiết bị,
+		      "device\_type\_id": ID loại thiết bị,
 
-		      "status\_id": id trạng thái thiết bị,
+		      "status\_id": ID trạng thái thiết bị,
 
 		      "start\_time": Giờ bắt đầu sử dụng
 
@@ -1564,20 +1553,20 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-3
-		      & Người dùng không tồn tại với id cho trước
+		      & Người dùng không tồn tại với ID cho trước
 		      & Thông tin thiết bị
 
 		      \{
 
-		      "user\_id": id bệnh nhân,
+		      "user\_id": ID bệnh nhân,
 
 		      "device\_name": Tên thiết bị,
 
 		      "infomation": Thông tin thiết bị,
 
-		      "device\_type\_id": id loại thiết bị,
+		      "device\_type\_id": ID loại thiết bị,
 
-		      "status\_id": id trạng thái thiết bị,
+		      "status\_id": ID trạng thái thiết bị,
 
 		      "start\_time": Giờ bắt đầu sử dụng
 
@@ -1625,7 +1614,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      \{
 
-		      "device\_id": id thiết bị,
+		      "device\_id": ID thiết bị,
 
 		      "detail\_name": Tên chi tiết,
 
@@ -1660,7 +1649,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      \{
 
-		      "device\_id": id thiết bị,
+		      "device\_id": ID thiết bị,
 
 		      "detail\_name": Tên chi tiết,
 
@@ -1707,7 +1696,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-1
 		      & Thông tin chi tiết mới phù hợp
-		      & id thông số kỹ thuật thiết bị
+		      & ID thông số kỹ thuật thiết bị
 		      &
 
 		      Status code: 200 OK
@@ -1738,7 +1727,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
-		      | >{\raggedright\arraybackslash}p{2.5cm}
+		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
@@ -1793,10 +1782,11 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: GET records/{:id}
+		\clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
-		      | >{\raggedright\arraybackslash}p{2.5cm}
+		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
@@ -1810,7 +1800,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-1
 		      & Là admin, bác sĩ của hệ thống, dữ liệu phiên đo tồn tại
-		      & id của dữ liệu phiên đo
+		      & ID của dữ liệu phiên đo
 
 		      &
 
@@ -1829,7 +1819,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-2
 		      & Không phải admin, bác sĩ
-		      & id của dữ liệu phiên đo
+		      & ID của dữ liệu phiên đo
 
 		      &
 
@@ -1848,7 +1838,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-3
 		      & Là admin, bác sĩ của hệ thống, dữ liệu phiên đo không tồn tại
-		      & id của dữ liệu phiên đo
+		      & ID của dữ liệu phiên đo
 
 		      &
 
@@ -1873,11 +1863,11 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
-		      | >{\raggedright\arraybackslash}p{2.5cm}
+		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy các dữ liệu phiên đo theo id của bác sĩ}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy các dữ liệu phiên đo theo ID của bác sĩ}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -1886,8 +1876,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Là admin hoặc bác sĩ có id cho trước
-		      & id bác sĩ
+		      & Là admin hoặc bác sĩ có ID cho trước
+		      & ID bác sĩ
 
 		      &
 
@@ -1896,8 +1886,9 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      Response message:
 
 		      \{
+			"status": "success"
 
-		      data: Danh sách các dữ liệu phiên đo của bác sĩ
+		      "data": Danh sách các dữ liệu phiên đo của bác sĩ
 
 		      \}
 		      & OK
@@ -1905,7 +1896,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-2
 		      & Không phải là admin hoặc bác sĩ tương ứng
-		      & id bác sĩ
+		      & ID bác sĩ
 
 		      &
 
@@ -1914,6 +1905,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      Response message:
 
 		      \{
+				"status": "error"
 
 		      "message": "Forbidden"
 
@@ -2045,6 +2037,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: PUT records
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2cm}
@@ -2131,6 +2124,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: DELETE records/{:record\_id}
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -2147,8 +2141,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Tồn tại dữ liệu phiên đo với id cho trước
-		      & id dữ liệu phiên đo
+		      & Tồn tại dữ liệu phiên đo với ID cho trước
+		      & ID dữ liệu phiên đo
 
 		      &
 
@@ -2166,8 +2160,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Không tồn tại dữ liệu phiên đo với id cho trước
-		      & id dữ liệu phiên đo
+		      & Không tồn tại dữ liệu phiên đo với ID cho trước
+		      & ID dữ liệu phiên đo
 
 		      &
 
@@ -2203,7 +2197,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy tất cả lịch hẹn của các bác sĩ - các bệnh nhân}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy tất cả lịch khám của các bác sĩ - các bệnh nhân}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2222,7 +2216,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      \{
 
-		      data: Danh sách tất cả lịch hẹn
+		      data: Danh sách tất cả lịch khám
 
 		      \}
 		      & OK
@@ -2249,6 +2243,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: GET schedules/doctor-id
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -2256,7 +2251,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách lịch hẹn theo id bác sĩ}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách lịch khám theo ID bác sĩ}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2266,7 +2261,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-1
 		      & Bác sĩ tồn tại trong hệ thống
-		      & id bác sĩ
+		      & ID bác sĩ
 		      &
 
 		      Status code: 200 OK
@@ -2275,7 +2270,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      \{
 
-		      data: Danh sách lịch hẹn của bác sĩ
+		      data: Danh sách lịch khám của bác sĩ
 
 		      \}
 
@@ -2285,7 +2280,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-2
 		      & Bác sĩ không tồn tại trong hệ thống
-		      & id bác sĩ
+		      & ID bác sĩ
 		      &
 
 		      Status code: 404 Not Found
@@ -2315,7 +2310,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách lịch hẹn theo id bệnh nhân}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách lịch khám theo ID bệnh nhân}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2325,7 +2320,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-1
 		      & Bệnh nhân tồn tại trong hệ thống
-		      & id bác sĩ
+		      & ID bác sĩ
 		      &
 
 		      Status code: 200 OK
@@ -2334,7 +2329,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      \{
 
-		      data: Danh sách lịch hẹn của bệnh nhân
+		      data: Danh sách lịch khám của bệnh nhân
 
 		      \}
 
@@ -2344,7 +2339,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-2
 		      & Bệnh nhân không tồn tại trong hệ thống
-		      & id bác sĩ
+		      & ID bác sĩ
 		      &
 
 		      Status code: 404 Not Found
@@ -2352,9 +2347,6 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      Response message:
 
 		      \{
-
-		      "status": "error",
-
 		      "message": "No user found, please try again."
 
 		      \}
@@ -2374,7 +2366,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tạo lịch hẹn bởi bác sĩ}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tạo lịch khám bởi bác sĩ}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2383,21 +2375,21 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Các trường thông tin lịch hẹn hợp lệ
-		      & Thông tin lịch hẹn
+		      & Các trường thông tin lịch khám hợp lệ
+		      & Thông tin lịch khám
 		      \{
 
-		      "doctor\_id": id bệnh nhân,
+		      "doctor\_id": ID bệnh nhân,
 
-		      "patient\_id": id bác sĩ,
+		      "patient\_id": ID bác sĩ,
 
 		      "schedule\_start\_time": Thời gian bắt đầu,
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
-		      "schedule\_result": Kết quả lịch hẹn
+		      "schedule\_result": Kết quả lịch khám
 
 		      \}
 		      &
@@ -2415,21 +2407,21 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      \\ \hline
 		      TC-2
-		      & Các trường thông tin lịch hẹn không hợp lệ
-		      & Thông tin lịch hẹn
+		      & Các trường thông tin lịch khám không hợp lệ
+		      & Thông tin lịch khám
 		      \{
 
-		      "doctor\_id": id bệnh nhân,
+		      "doctor\_id": ID bệnh nhân,
 
-		      "patient\_id": id bác sĩ,
+		      "patient\_id": ID bác sĩ,
 
 		      "schedule\_start\_time": Thời gian bắt đầu,
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
-		      "schedule\_result": Kết quả lịch hẹn
+		      "schedule\_result": Kết quả lịch khám
 
 		      \}
 		      &
@@ -2449,6 +2441,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: POST schedules/create-by-patient
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2cm}
@@ -2456,7 +2449,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tạo lịch hẹn bởi bệnh nhân}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tạo lịch khám bởi bệnh nhân}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2465,8 +2458,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Các trường thông tin lịch hẹn hợp lệ
-		      & Thông tin lịch hẹn
+		      & Các trường thông tin lịch khám hợp lệ
+		      & Thông tin lịch khám
 		      \{
 
 		      "doctor\_id": ID bệnh nhân,
@@ -2477,7 +2470,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
 		      \}
 		      &
@@ -2496,8 +2489,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Lịch hẹn đang chờ phê duyệt của bệnh nhân vượt quá 5
-		      & Thông tin lịch hẹn
+		      & lịch khám đang chờ phê duyệt của bệnh nhân vượt quá 5
+		      & Thông tin lịch khám
 		      \{
 
 		      "doctor\_id": ID bệnh nhân,
@@ -2508,7 +2501,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
 		      \}
 		      &
@@ -2527,8 +2520,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-3
-		      & Đặt lặp lịch hẹn (trùng thời gian và trùng bác sĩ)
-		      & Thông tin lịch hẹn
+		      & Đặt lặp lịch khám (trùng thời gian và trùng bác sĩ)
+		      & Thông tin lịch khám
 		      \{
 
 		      "doctor\_id": ID bệnh nhân,
@@ -2539,7 +2532,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
 		      \}
 		      &
@@ -2558,8 +2551,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-4
-		      & Cùng 1 thời điểm, đặt lịch hẹn với các bác sĩ khác nhau
-		      & Thông tin lịch hẹn
+		      & Đặt lặp lịch với lịch đã được chấp nhận
+		      & Thông tin lịch khám
 		      \{
 
 		      "doctor\_id": ID bệnh nhân,
@@ -2570,7 +2563,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
 		      \}
 		      &
@@ -2597,7 +2590,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bác sĩ có thể đặt lịch hẹn theo thời gian cụ thể}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bác sĩ có thể đặt lịch khám theo thời gian cụ thể}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2616,7 +2609,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      \{
 
-		      data: Danh sách các bác sĩ có thể đặt lịch hẹn
+		      data: Danh sách các bác sĩ có thể đặt lịch khám
 
 		      \}
 
@@ -2627,6 +2620,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: GET schedules/available-schedule/:id
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -2634,7 +2628,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách thời gian có thể đặt lịch hẹn của bác sĩ cụ thể}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách thời gian có thể đặt lịch khám của bác sĩ cụ thể}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2644,7 +2638,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-1
 		      & Bác sĩ tồn tại trong hệ thống
-		      & id của bác sĩ đã chọn
+		      & ID của bác sĩ đã chọn
 		      &
 
 		      Status code: 200 OK
@@ -2653,7 +2647,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      \{
 
-		      data: Danh sách các lịch hẹn có thể đặt với bác sĩ này
+		      data: Danh sách các lịch khám có thể đặt với bác sĩ này
 
 		      \}
 
@@ -2671,7 +2665,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API bác sĩ chấp nhận lịch hẹn từ bệnh nhân}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API bác sĩ chấp nhận lịch khám từ bệnh nhân}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2680,21 +2674,21 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Lịch hẹn của bệnh nhân đang ở trạng thái chờ phê duyệt
-		      & Thông tin lịch hẹn đang chờ phê duyệt
+		      & lịch khám của bệnh nhân đang ở trạng thái chờ phê duyệt
+		      & Thông tin lịch khám đang chờ phê duyệt
 		      \{
 
-		      "doctor\_id": id bệnh nhân,
+		      "doctor\_id": ID bệnh nhân,
 
-		      "patient\_id": id bác sĩ,
+		      "patient\_id": ID bác sĩ,
 
 		      "schedule\_start\_time": Thời gian bắt đầu,
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
-		      "schedule\_result": Kết quả lịch hẹn
+		      "schedule\_result": Kết quả lịch khám
 
 		      \}
 		      &
@@ -2716,6 +2710,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: DELETE schedules/reject-schedule/{:id}
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -2723,7 +2718,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API bác sĩ từ chối lịch hẹn từ bệnh nhân}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API bác sĩ từ chối lịch khám từ bệnh nhân}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2732,21 +2727,21 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Lịch hẹn của bệnh nhân đang ở trạng thái chờ phê duyệt
-		      & Thông tin lịch hẹn đang chờ phê duyệt
+		      & lịch khám của bệnh nhân đang ở trạng thái chờ phê duyệt
+		      & Thông tin lịch khám đang chờ phê duyệt
 		      \{
 
-		      "doctor\_id": id bệnh nhân,
+		      "doctor\_id": ID bệnh nhân,
 
-		      "patient\_id": id bác sĩ,
+		      "patient\_id": ID bác sĩ,
 
 		      "schedule\_start\_time": Thời gian bắt đầu,
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
-		      "schedule\_result": Kết quả lịch hẹn
+		      "schedule\_result": Kết quả lịch khám
 
 		      \}
 		      &
@@ -2789,11 +2784,11 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Lịch hẹn của bệnh nhân đã được chấp nhận
+		      & lịch khám của bệnh nhân đã được chấp nhận
 		      & Thông tin chẩn đoán của buổi khám
 		      \{
 
-		      "schedule\_id": ID lịch hẹn,
+		      "schedule\_id": ID lịch khám,
 
 		      "infomation": Thông tin chẩn đoán,
 
@@ -2815,11 +2810,11 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Lịch hẹn của bệnh nhân chưa được chấp nhận
+		      & lịch khám của bệnh nhân chưa được chấp nhận
 		      & Thông tin chẩn đoán của buổi khám
 		      \{
 
-		      "schedule\_id": ID lịch hẹn,
+		      "schedule\_id": ID lịch khám,
 
 		      "infomation": Thông tin chẩn đoán,
 
@@ -2850,7 +2845,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin chẩn đoán theo id lịch khám}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin chẩn đoán theo ID lịch khám}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2859,8 +2854,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Lịch hẹn của bệnh nhân đã được chấp nhận
-		      & id lịch hẹn
+		      & lịch khám của bệnh nhân đã được chấp nhận
+		      & ID lịch khám
 		      &
 
 		      Status code: 200 OK
@@ -2878,8 +2873,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Lịch hẹn của bệnh nhân chưa được chấp nhận
-		      & id lịch hẹn
+		      & lịch khám của bệnh nhân chưa được chấp nhận
+		      & ID lịch khám
 		      &
 
 		      Status code: 400 Bad Request
@@ -2899,6 +2894,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: POST diagnosis/update
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -2916,10 +2912,10 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-1
 		      & Thông tin cập nhật chẩn đoán hợp lệ
-		      & id chẩn đoán, thông tin chẩn đoán của buổi khám
+		      & ID chẩn đoán, thông tin chẩn đoán của buổi khám
 		      \{
 
-		      "schedule\_id": ID lịch hẹn,
+		      "schedule\_id": ID lịch khám,
 
 		      "infomation": Thông tin chẩn đoán,
 
@@ -2942,10 +2938,10 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-2
 		      & Thông tin cập nhật chẩn đoán không hợp lệ
-		      & id chẩn đoán, thông tin chẩn đoán của buổi khám
+		      & ID chẩn đoán, thông tin chẩn đoán của buổi khám
 		      \{
 
-		      "schedule\_id": ID lịch hẹn,
+		      "schedule\_id": ID lịch khám,
 
 		      "infomation": Thông tin chẩn đoán,
 
@@ -2980,7 +2976,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông báo theo id của người dùng}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông báo theo ID của người dùng}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2990,7 +2986,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-1
 		      & Là bệnh nhân
-		      & id người dùng tương ứng
+		      & ID người dùng tương ứng
 		      &
 
 		      Status code: 200 OK
@@ -3009,7 +3005,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-2
 		      & Là bác sĩ của hệ thống
-		      & id người dùng tương ứng
+		      & ID người dùng tương ứng
 		      &
 
 		      Status code: 400 Bad Request
@@ -3051,10 +3047,11 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      Status code: 200 OK
 
+			  Trường doctor\_id được gán giá trị là ID của người dùng hiện tại
+
 		      Response message:
 
 		      \{
-		      Trường doctor\_id được gán giá trị là id của người dùng hiện tại
 
 		      "message": "Notification added successfully",
 
@@ -3071,11 +3068,11 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      Status code: 200 OK
 
+			  Trường patient\_id được gán giá trị là ID của người dùng hiện tại
+
 		      Response message:
 
 		      \{
-
-		      Trường patient\_id được gán giá trị là id của người dùng hiện tại
 
 		      "message": "Notification added successfully",
 
@@ -3093,11 +3090,11 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      Status code: 200 OK
 
+			  Bỏ qua kiểm tra trùng lặp, tạo 2 thông báo và lưu.
+
 		      Response message:
 
 		      \{
-
-		      Bỏ qua kiểm tra trùng lặp, tạo 2 thông báo và lưu.
 
 		      "message": "Notification added successfully",
 
@@ -3127,7 +3124,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-1
 		      & Thông báo chưa được xem
-		      & id của thông báo
+		      & ID của thông báo
 		      &
 
 		      Status code: 200 OK
@@ -3146,7 +3143,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-2
 		      & Thông báo đã được xem
-		      & id của thông báo
+		      & ID của thông báo
 		      &
 
 		      Status code: 400 Bad Request
@@ -3166,6 +3163,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: DELETE notification/{:id}
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -3183,7 +3181,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-1
 		      & Thông báo tồn tại trong hệ thống
-		      & id của thông báo
+		      & ID của thông báo
 		      &
 
 		      Status code: 200 OK
@@ -3202,7 +3200,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-2
 		      & Thông báo không tồn tại trong hệ thống
-		      & id của thông báo
+		      & ID của thông báo
 		      &
 
 		      Status code: 400 Bad Request
@@ -3246,8 +3244,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      & Thông tin nhóm trò chuyện
 		      \{
 		      "title": Tên nhóm trò chuyện,
-		      "hostId: id của người tạo nhóm,
-		      "member": Danh sách id của các thành viên trong nhóm trò chuyện,
+		      "hostId: ID của người tạo nhóm,
+		      "member": Danh sách ID của các thành viên trong nhóm trò chuyện,
 		      "sendEvent": Sự kiện gửi của nhóm trò chuyện
 		      "receiveEvent": Sự kiện nhận của nhóm trò chuyện
 		      \}
@@ -3272,8 +3270,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      & Thông tin nhóm trò chuyện
 		      \{
 		      "title": Tên nhóm trò chuyện,
-		      "hostId: id của người tạo nhóm,
-		      "member": Danh sách id của các thành viên trong nhóm,
+		      "hostId: ID của người tạo nhóm,
+		      "member": Danh sách ID của các thành viên trong nhóm,
 		      "sendEvent": Sự kiện gửi của nhóm trò chuyện
 		      "receiveEvent": Sự kiện nhận của nhóm trò chuyện
 		      \}
@@ -3313,7 +3311,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-1
 		      & Người dùng của hệ thống
-		      & id người dùng tương ứng
+		      & ID người dùng tương ứng
 		      &
 
 		      Status code: 200 OK
@@ -3332,7 +3330,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC-2
 		      & Không phải người dùng hệ thống
-		      & id của người dùng
+		      & ID của người dùng
 		      &
 
 		      Status code: 401 Unauthorized
@@ -3352,6 +3350,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 
 	\item URL: GET chat/messages/:groupChatId
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -3359,7 +3358,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy tin nhắn theo id nhóm trò chuyện}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy tin nhắn theo ID nhóm trò chuyện}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -3369,7 +3368,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 		      TC
 		      & Người dùng của hệ thống
-		      & id nhóm trò chuyện của người dùng
+		      & ID nhóm trò chuyện của người dùng
 		      &
 
 		      Status code: 200 OK
@@ -3410,8 +3409,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      & Người dùng của hệ thống
 		      & Thông tin tin nhắn
 		      \{
-		      "senderId" : id người gửi,
-		      "groupChatId" : id nhóm trò chuyện,
+		      "senderId" : ID người gửi,
+		      "groupChatId" : ID nhóm trò chuyện,
 		      "message" : nội dung tin nhắn,
 		      "time": thời gian gửi
 		      \}
@@ -3433,6 +3432,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 \end{enumerate}
 
 \subsubsection{Kiểm thử ứng dụng web}
+\clearpage
 \begin{xltabular}{\textwidth}{
 	| >{\raggedright\arraybackslash}p{2cm}
 	| >{\raggedright\arraybackslash}X
@@ -3682,9 +3682,6 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	3. Tin nhắn được gửi thành công.
 
 	& OK
-
-
-	\\ \hline
 
 	\\ \hline
 	Kiểm tra chức năng tạo nhóm trò chuyện
