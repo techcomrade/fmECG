@@ -6,99 +6,81 @@
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 3. THIẾT KẾ HỆ THỐNG}
 
-Trong chương này, chúng em sẽ trình bày về thiết kế hệ thống từ tổng quan đến chi tiết dựa trên phân tích từ Chương 2.
-Đầu tiên là xây dựng sơ đồ kiến trúc hệ thống.
-Sau đó thiết kế giao diện, chức năng cho website và server.
-Nội dung chính của chương tập trung vào các hình ảnh và sơ đồ mô tả từng luồng hoạt động của hệ thống.
-\subsection{Sơ đồ kiến trúc tổng quan của hệ thống}
+Chương này sẽ tập trung mô tả quá trình thiết kế hệ thống, từ cấu trúc tổng thể đến các thành phần chi tiết, dựa trên những phân tích đã thực hiện trong Chương 2.
+Mở đầu là xây dựng sơ đồ kiến trúc hệ thống.
+Tiếp theo, chương tập trung vào thiết kế giao diện người dùng và các chức năng chính cho website cùng server.
+Nội dung chính được thể hiện qua hình ảnh và sơ đồ minh họa, không chỉ mô tả chi tiết luồng hoạt động mà còn làm rõ cách các thành phần trong hệ thống phối hợp, hỗ trợ lẫn nhau.
+\subsection{Sơ đồ tổng quan kiến trúc của hệ thống}
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=12cm,height=18cm]{Images/System/fmECG_architecture-System_Architecture.drawio.png}
-  \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
-  \label{fmECG_architecture-System} %đặt tên cho ảnh
+	\centering
+	\includegraphics[width=12cm,height=16cm]{Images/System/fmECG_architecture-System_Architecture.drawio.png}
+	\caption[Tổng quan kiến trúc hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Tổng quan kiến trúc hệ thống}
+	\label{fmECG_architecture-System} %đặt tên cho ảnh
 \end{figure}
-Hệ thống được chia làm ba phần chính bao gồm Device (Thiết bị), Server (Máy chủ) và Application (Ứng dụng bao gồm: web và app).
-Mỗi thành phần đóng vai trò quan trọng trong việc vận hành tổng thể hệ thống trong hình vẽ
+Hệ thống bao gồm ba thành phần chính: Máy chủ (Server), Thiết bị (Device) và Ứng dụng (Web và App).
+Mỗi thành phần đảm nhiệm một vai trò quan trọng, cùng phối hợp để đảm bảo hoạt động của toàn bộ hệ thống như được minh họa trong hình vẽ.
 
-Hình \ref{fmECG_architecture-System} thể hiện ba phần: 
+Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 
 \begin{adjustwidth}{1.5em}{}
-\begin{itemize}
-  \item Device (Thiết bị): Bao gồm thiết bị phần cứng đo điện tim, có thể kết nối với ứng dụng di động của bệnh nhân thông qua Bluetooth.
-  \item Application (Ứng dụng): Bao gồm ứng dụng di động và website cho bệnh nhân, bác sĩ, quản trị viên.
-  \item Server (Máy chủ): Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu.
-\end{itemize}
+	\begin{itemize}
+		\item Device (Thiết bị): Gồm các thiết bị phần cứng đo các dữ liệu sức khỏe tim mạch, có khả năng kết nối với ứng dụng di động của bệnh nhân thông qua Bluetooth.
+		\item Application (Ứng dụng): Bao gồm ứng dụng di động và website, phục vụ nhu cầu sử dụng của bệnh nhân, bác sĩ và quản trị viên.
+		\item Server (Máy chủ): Chứa các dịch vụ (Services) xử lý yêu cầu từ ứng dụng và quản lý cơ sở dữ liệu.
+	\end{itemize}
 \end{adjustwidth}
 
-Hệ thống được thiết kế với sự tương tác trực tiếp giữa bệnh nhân và thiết bị thông qua ứng dụng di động. 
-Ứng dụng đóng vai trò trung gian, giao tiếp với máy chủ bằng API và giao thức HTTP. 
-Máy chủ chịu trách nhiệm xử lý dữ liệu thông qua các dịch vụ chuyên biệt. 
-Mỗi dịch vụ được thiết kế để xử lý một loại yêu cầu cụ thể, bao gồm cả việc truy vấn và cập nhật cơ sở dữ liệu, 
-trước khi trả kết quả về cho người dùng.\begin{adjustwidth}{1.5em}{}
-\begin{itemize}
-  \item User service: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin cá nhân
-  \item Device service: Xử lý các tác vụ liên quan tới thiết bị như thêm, sửa, xoá thiết bị, cập nhật thông tin.
-  \item Storage service: Xử lý các tác vụ liên quan tới lưu trữ dữ liệu của hệ thống.
-  \item Record service: Xử lý các tác vụ liên quan tới bản ghi như thêm, sửa, xoá, xử lý dữ liệu file đo.
-  \item Message service: Xử lý các yêu cầu liên quan tới tin nhắn.
-  \item Authen service: Xử lý các tác vụ liên quan tới bảo mật như: mã hoá và cung cấp token, kiểm tra token, phân quyền truy cập api, mã hoá các dữ liệu nhạy cảm trước khi lưu trữ.
-  \item Statistic service: Xử lý các tác vụ liên quan tới thống kê như: thống kê người dùng, thiết bị, bản ghi.
-  \item Schedule service: Xử lý các tác vụ liên quan đến đặt lịch hẹn, phản hồi lịch.
-\end{itemize}
+Trong sơ đồ kiến trúc hệ thống, bệnh nhân sử dụng ứng dụng di động (Mobile App) để kết nối trực tiếp với thiết bị (Device).
+Ứng dụng di động thuộc Khối Ứng dụng (Application), chịu trách nhiệm giao tiếp với Khối Máy chủ (Server) thông qua các API và giao thức HTTP.
+Khi yêu cầu được nhận từ Application, Server sẽ thực hiện xử lý dữ liệu thông qua các dịch vụ (Services) được thiết kế riêng biệt.
+Tùy theo loại yêu cầu, các dịch vụ này sẽ truy xuất hoặc cập nhật dữ liệu trong cơ sở dữ liệu, sau đó gửi kết quả phản hồi cho người dùng,
+hoàn thiện quá trình tương tác giữa người dùng và hệ thống.\begin{adjustwidth}{1.5em}{}
+	\begin{itemize}
+		\item Authen Service: Đảm nhận các nhiệm vụ liên quan đến bảo mật hệ thống, bao gồm mã hóa dữ liệu nhạy cảm, tạo và xác minh token để đảm bảo tính an toàn khi truy cập,
+		      quản lý phân quyền người dùng đối với API,và thực hiện mã hóa thông tin trước khi lưu trữ nhằm ngăn chặn rò rỉ dữ liệu.
+		\item User Service: Xử lý toàn bộ các thao tác liên quan đến người dùng, như tạo tài khoản mới, xác minh thông tin đăng nhập, lấy thông tin cá nhân của người dùng,
+		      đồng thời hỗ trợ cập nhật và chỉnh sửa thông tin cá nhân khi cần thiết.
+		\item Device Service: Chịu trách nhiệm quản lý thiết bị, bao gồm các chức năng như thêm mới, chỉnh sửa thông tin, xóa thiết bị,
+		      và cập nhật tình trạng thiết bị hoặc thông số liên quan để đảm bảo thiết bị hoạt động đúng trong hệ thống.
+		\item Storage Service: Quản lý và vận hành hệ thống lưu trữ dữ liệu, bao gồm lưu trữ file, tài liệu, và các thông tin quan trọng của hệ thống.
+		      Đồng thời, đảm bảo tính nhất quán của dữ liệu thông qua cơ chế xử lý race condition, khóa truy cập và đồng bộ hóa dữ liệu trong các trường hợp truy cập đồng thời,
+		      cũng như tối ưu hóa hiệu suất lưu trữ và truy xuất dữ liệu.
+		\item Record Service: Xử lý các dữ liệu liên quan đến phiên đo, bao gồm thêm mới, cập nhật, xóa dữ liệu, và xử lý các file đo được từ thiết bị trước khi lưu trữ hoặc gửi đến người dùng.
+		\item Message Service: Quản lý toàn bộ các yêu cầu liên quan đến nhắn tin, bao gồm gửi, nhận, lưu trữ tin nhắn, hỗ trợ các nhóm trò chuyện giữa những người dùng trong hệ thống.
+		\item Schedule Service: Đảm nhiệm việc quản lý lịch khám, bao gồm đặt lịch và xử lý các phản hồi liên quan, nhằm đảm bảo quy trình đặt lịch diễn ra mượt mà giữa bệnh nhân, bác sĩ và hệ thống.
+		\item Diagnosis Service: Quản lý các tác vụ liên quan đến chẩn đoán, bao gồm thêm mới và chỉnh sửa thông tin chẩn đoán cho bệnh nhân, đảm bảo dữ liệu chính xác và hỗ trợ quá trình điều trị hiệu quả.
+		\item Notification Service: Đảm bảo quản lý hiệu quả các thông báo cho người dùng, từ việc gửi thông báo sự kiện, cảnh báo, đến nhắc nhở,
+		      giúp người dùng cập nhật kịp thời các thông tin quan trọng từ hệ thống.
+		\item Statistic Service: Chịu trách nhiệm tổng hợp số liệu thống kê trong hệ thống, bao gồm số lượng người dùng (bệnh nhân và bác sĩ),
+		      số thiết bị, và dữ liệu phiên đo theo từng tháng, nhằm cung cấp thông tin phục vụ quản lý hiệu quả.
+	\end{itemize}
 \end{adjustwidth}
 
 Sau đây là mô tả chi tiết về từng khối nhỏ hơn trong kiến trúc hệ thống, dựa trên các đối tượng đã được xác định trong hệ thống.
 \newpage
 \subsection{Sơ đồ khối phần mềm}
 
-\subsubsection{Ứng dụng di động dành cho bệnh nhân}
+\subsubsection{Application dành cho bệnh nhân}
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Patient-App.drawio.png}
-  \caption[Sơ đồ khối ứng dụng di động dành cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối ứng dụng di động dành cho bệnh nhân}
+  \caption[Sơ đồ khối application dành cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối ứng dụng di động dành cho bệnh nhân}
   \label{fmECG_architecture-Patient-App} %đặt tên cho ảnh
 \end{figure}
-% Lớp trên cùng trong sơ đồ hình \ref{fmECG_architecture-Patient} là lớp giao diện người dùng,
-% nơi người dùng trực tiếp tương tác với hệ thống, thực hiện các request thông qua API Adapter.
-
-% Sau đó các request được gửi đến lớp Application nơi chứa các Services để xử lý các request từ người dùng. 
-% Kết quả được trả về giao diện. Ở đây các services gồm có: 
-
-% \begin{adjustwidth}{1.5em}{}
-%   \begin{itemize}
-%     \item User service: Khối có nhiệm vụ xử lý thông tin cá nhân
-%     \item Device service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến mượn trả thiết bị.
-%     \item Schedule service: Khối có nhiệm vụ quản lý việc đặt lịch của bệnh nhân
-%     \item Record service: Khối có nhiệm vụ xử lý thông tin bản ghi
-%     \item Message service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ
-%     \item Storage service: Khối service đặc biệt có nhiệm vụ lưu thông tin vào bộ nhớ
-%   \end{itemize}
-% \end{adjustwidth}
 Tầng trên cùng trong sơ đồ hình \ref{fmECG_architecture-Patient-App} là User Interface (Giao diện người dùng), nơi bệnh nhân trực tiếp tương tác với hệ thống thông qua API Adapter để gửi yêu cầu và nhận phản hồi.
 Các yêu cầu này được xử lý bởi các Services chính, bao gồm User Service, Device Service, Record Service, Schedule Service, Diagnosis Service, Notification Service và Storage Service.
 
 Những Services này được thiết kế nhằm đáp ứng các nhu cầu của bệnh nhân, từ quản lý thông tin cá nhân, mượn và trả thiết bị, theo dõi lịch sử dữ liệu phiên đo, cho đến việc quản lý lịch khám,
 tra cứu thông tin chẩn đoán cho từng lịch khám. Ngoài ra, hệ thống còn đảm bảo việc gửi thông báo nhắc nhở kịp thời và hỗ trợ bệnh nhân trao đổi thông tin với bác sĩ một cách liền mạch và hiệu quả.
 
-\subsubsection{Ứng dụng di động dành cho bác sĩ}
+\subsubsection{Application dành cho bác sĩ}
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Doctors.drawio.png}
-  \caption[Sơ đồ khối Ứng dụng dành cho bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối ứng dụng di động dành cho bác sĩ}
+  \caption[Sơ đồ khối application dành cho bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối ứng dụng di động dành cho bác sĩ}
   \label{fmECG_architecture-Doctor} %đặt tên cho ảnh
 \end{figure}
-% \begin{adjustwidth}{1.5em}{}
-%   \begin{itemize}
-%     \item User service: Khối có nhiệm vụ xử lý thông tin cá nhân
-%     \item Device service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến mượn trả thiết bị.
-%     \item Schedule service: Khối có nhiệm vụ quản lý việc đặt lịch của bệnh nhân
-%     \item Record service: Khối có nhiệm vụ xử lý thông tin bản ghi
-%     \item Message service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ,
-%     trao đổi trong nhóm.
-%     \item Storage service: Khối service đặc biệt có nhiệm vụ lưu thông tin vào bộ nhớ
-%   \end{itemize}
-% \end{adjustwidth}
 Tương tự với bệnh nhân, sơ đồ hình \ref{fmECG_architecture-Doctor} được xây dựng để hỗ trợ bác sĩ thực hiện các nhiệm vụ chuyên môn thông qua giao diện người dùng và API Adapter, đảm bảo việc xử lý thông tin diễn ra nhanh chóng và hiệu quả.
 
 Các Services chính, bao gồm User Service, Device Service, Record Service, Schedule Service, Diagnosis Service, Notification Service và Storage Service, đóng vai trò quan trọng trong việc hỗ trợ bác sĩ.
@@ -490,7 +472,7 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/system/fmECG_database.png}
+	\includegraphics[width=15cm,height=15cm]{Images/system/ERD-db-Page-2.drawio.png}
 	\caption[Sơ đồ ERD]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ ERD}
 	\label{fmECG_architecture-Database}
 \end{figure}
@@ -974,12 +956,6 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 	\label{sequence_diagram_login}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	% \includegraphics[width=13cm,height=10cm]{Images/sequence/user/logout.drawio.png}
-	\caption[Sơ đồ tuần tự API đăng xuất khỏi hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API đăng xuất khỏi hệ thống}
-	\label{sequence_diagram_logout}
-\end{figure}
 
 % % ------------------------User----------------------
 \paragraph{Các API phục vụ mục đích quản lý người dùng trong hệ thống}
@@ -1001,7 +977,7 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=16cm]{Images/api_sequence/user/getUserById.drawio.png}
-	\caption[Sơ đồ tuần tự API tra cứu dữ liệu người dùng cụ thể dựa trên id tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu người dùng cụ thể dựa trên id tương ứng}
+	\caption[Sơ đồ tuần tự API tra cứu của thông tin người dùng cụ thể dựa trên id tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu thông tin của người dùng cụ thể dựa trên id tương ứng}
 	\label{sequence_diagram_get_user_by_id}
 \end{figure}
 
@@ -1022,7 +998,7 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=16cm]{Images/api_sequence/user/updateUserById.drawio.png}
-	\caption[Sơ đồ tuần tự API chỉnh sửa thông tin người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API chỉnh sửa thông tin người dùng}
+	\caption[Sơ đồ tuần tự API chỉnh sửa thông tin của người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API thay đổi thông tin của người dùng}
 	\label{sequence_diagram_update_user}
 \end{figure}
 
@@ -1060,7 +1036,7 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=16cm]{Images/api_sequence/device/device-updateDevice.drawio.png}
-	\caption[Sơ đồ tuần tự API cập nhật thông tin chi tiết cho thiết bị y tế cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cập nhật thông tin chi tiết cho thiết bị y tế cụ thể}
+	\caption[ Sơ đồ tuần tự API chỉnh sửa thông tin chi tiết cho thiết bị y tế cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont  Sơ đồ tuần tự API chỉnh sửa thông tin chi tiết cho thiết bị y tế cụ thể}
 	\label{sequence_diagram_update_device}
 \end{figure}
 
@@ -1277,8 +1253,9 @@ Phần này cung cấp các sơ đồ tuần tự minh họa chi tiết cách th
 Dựa trên bảng API đã thiết kế, các sơ đồ tuần tự sẽ mô phỏng luồng xử lý từ khi nhận yêu cầu đến khi trả về kết quả cho người dùng,
 cho thấy rõ sự tương tác giữa các thành phần và lớp chức năng trong hệ thống.
 
-\subsection{Kết luận chương}
+\subsection{Kết luận}
 
-Chương 3 trình bày chi tiết về quá trình thiết kế hệ thống, bao gồm kiến trúc tổng thể và các thành phần cụ thể.
-Thiết kế hệ thống tập trung vào việc xây dựng kiến trúc vận hành hiệu quả và mượt mà, chú trọng vào tính bảo mật, hiệu suất và khả năng mở rộng tối ưu.
+Chương này tập trung mô tả chi tiết quá trình thiết kế hệ thống, từ kiến trúc tổng quan đến các thành phần cụ thể.
+Quá trình thiết kế hướng đến việc xây dựng một kiến trúc hoạt động hiệu quả, đảm bảo sự mượt mà trong vận hành,
+đồng thời ưu tiên các yếu tố như bảo mật, hiệu suất cao và khả năng mở rộng linh hoạt.
 \newpage

@@ -25,7 +25,7 @@ Một số điểm nổi bật của Flutter trong việc thiết kế giao di�
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm,height=4cm]{Images/Technology/flutter_logo.png}
+	\includegraphics[height=3cm]{Images/Technology/flutter_logo.png}
 	\caption[Logo Flutter]{\bfseries \fontsize{12pt}{0pt}
 		\selectfont Logo Flutter}
 	\label{flutter_cover} %đặt tên cho ảnh
@@ -141,13 +141,13 @@ Những lợi ích của Docker có thể kể đến như:
 	\centering
 	\includegraphics[width=8cm,height=4cm]{Images/Technology/docker.jpg}
 	\caption[Logo Docker]{\bfseries \fontsize{12pt}{0pt}
-		\selectfont Logo Docker}
+		\selectfont Logo của Docker}
 	\label{docker} %đặt tên cho ảnh
 \end{figure}
 
 
-\subsection{Triển khai ứng dụng}
-Trong quá trình triển khai ứng dụng, chúng em áp dụng quy trình phát triển ứng dụng CI/CD để liên tục cập nhật và deploy. Để triển khai hệ thống theo đúng quy trình CI/CD thì chúng em đã sử dụng các dịch vụ, VPS server để triển khai server API và website, Docker để tự động deploy ứng dụng, MySQL Server và MongoDb Compass để quản lý cơ sở dữ liệu, Github để quản lý code của dự án.
+\subsection{Xây dựng và triển khai ứng dụng}
+Để giúp cho việc xây dung hệ thống thuận tiện hơn, sản phẩm của chúng em đã áp dụng quy trình CI/CD giúp cập nhật và triển khai một cách nhanh chóng, liên tục. Nhóm đã sử dụng VPS để triển khai server API và website, kết hợp với Docker để tự động hóa quá trình deploy ứng dụng. Về quản lý cơ sở dữ liệu, chúng em sử dụng MySQL Server và MongoDB Compass, đảm bảo hiệu suất và tính linh hoạt. Cuối cùng, toàn bộ mã nguồn dự án được quản lý trên GitHub, giúp theo dõi và kiểm soát phiên bản hiệu quả.
 
 \subsubsection{Quy trình CI/CD}
 CI/CD là một tập hợp các phương pháp và thực hành giúp tự động hóa quy trình phát triển, kiểm thử và triển khai phần mềm. CI (Continuous Integration - Tích hợp liên tục) tập trung vào việc thường xuyên tích hợp mã nguồn từ nhiều nhà phát triển vào một kho lưu trữ chung, sau đó tự động xây dựng và kiểm tra phần mềm. Việc này giúp phát hiện sớm các lỗi tích hợp và giảm thiểu xung đột giữa các thay đổi.
@@ -184,7 +184,7 @@ Một số lợi ích của microservice đã hỗ trợ chúng em:
 % \subsubsection{Triển khai Server và ứng dụng web trên máy chủ VPS}
 \subsection{Kiểm thử}
 
-\subsubsection{Kiểm thử hoạt động của các API}
+\subsubsection{Đánh giá và kiểm tra hoạt động các API}
 
 
 % Môi trường: 
@@ -195,7 +195,7 @@ Một số lợi ích của microservice đã hỗ trợ chúng em:
 % \end{itemize}
 % \end{adjustwidth}
 
-Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
+Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu API.
 
 \paragraph{API liên quan đến việc xác thực người dùng}
 \mbox{}
@@ -205,8 +205,6 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 \begin{enumerate}[a)]
 	\item URL: POST auth/register
-
-	      \break
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -307,8 +305,6 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 	\item URL: POST auth/login
-
-
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -633,7 +629,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: GET users/{:id}
-
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -649,8 +645,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Người dùng tồn tại trong hệ thống và có id tương ứng
-		      & id người dùng
+		      & Người dùng tồn tại trong hệ thống và có ID tương ứng
+		      & ID người dùng
 
 		      &
 
@@ -669,8 +665,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Người dùng không tồn tại trong hệ thống với id tương ứng
-		      & id người dùng
+		      & Người dùng không tồn tại trong hệ thống với ID tương ứng
+		      & ID người dùng
 
 		      &
 
@@ -694,7 +690,6 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: GET users/data/patient-data
-
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -702,7 +697,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bệnh nhân theo id của bác sĩ}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bệnh nhân theo ID của bác sĩ}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -712,7 +707,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Admin, bác sĩ tương ứng với id
-		      & id của bác sĩ
+		      & ID của bác sĩ
 
 		      &
 
@@ -732,7 +727,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Không phải admin, bác sĩ
-		      & id của bác sĩ
+		      & ID của bác sĩ
 		      &
 
 		      Status code: 403
@@ -786,7 +781,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bác sĩ theo id của bệnh nhân}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bác sĩ theo ID của bệnh nhân}
 		      \\
 		      \hline
 		      \bfseries Test case    &\bfseries Điều kiện   &\bfseries Đầu vào
@@ -794,8 +789,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Admin, bác sĩ hoặc bệnh nhân có id tương ứng
-		      & id của bệnh nhân
+		      & Admin, bác sĩ hoặc bệnh nhân có ID tương ứng
+		      & ID của bệnh nhân
 
 		      &
 
@@ -815,7 +810,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Bệnh nhân chưa có bác sĩ
-		      & id của bệnh nhân
+		      & ID của bệnh nhân
 
 		      &
 
@@ -838,7 +833,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-3
 		      & Không phải admin, bác sĩ hoặc bệnh nhân
-		      & id của bệnh nhân
+		      & ID của bệnh nhân
 		      &
 
 		      Status code: 403
@@ -900,7 +895,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Người dùng đã tồn tại trong hệ thống với id cho trước
+		      & Người dùng đã tồn tại trong hệ thống với ID cho trước
 		      & Dữ liệu cập nhật của người dùng
 		      &
 
@@ -919,7 +914,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Người dùng không tồn tại trong hệ thống với id cho trước
+		      & Người dùng không tồn tại trong hệ thống với ID cho trước
 		      &
 		      &
 
@@ -977,8 +972,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Người dùng đã tồn tại trong hệ thống với id cho trước
-		      & id của người dùng
+		      & Người dùng đã tồn tại trong hệ thống với ID cho trước
+		      & ID của người dùng
 
 		      &
 
@@ -997,8 +992,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Người dùng không tồn tại trong hệ thống với id cho trước
-		      & id của người dùng
+		      & Người dùng không tồn tại trong hệ thống với ID cho trước
+		      & ID của người dùng
 
 		      &
 
@@ -1018,7 +1013,6 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: GET statistic
-
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2cm}
@@ -1085,7 +1079,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 \begin{enumerate}[a)]
 	\item URL: GET device
-
+		\clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -1142,7 +1136,6 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 	\item URL: GET device/{:id}
-
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -1159,8 +1152,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Thiết bị tồn tại với id cho trước
-		      & id thiết bị
+		      & Thiết bị tồn tại với ID cho trước
+		      & ID thiết bị
 		      &
 
 		      Status code: 200 OK
@@ -1177,8 +1170,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Thiết bị không tồn tại với id cho trước
-		      & id thiết bị
+		      & Thiết bị không tồn tại với ID cho trước
+		      & ID thiết bị
 		      &
 
 		      Status code: 404 Not Found
@@ -1199,7 +1192,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 	      % //TODO: new page
 	\item URL: POST device/add
-
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -1221,15 +1214,15 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      \{
 
-		      "user\_id": id bệnh nhân,
+		      "user\_id": ID bệnh nhân,
 
 		      "device\_name": Tên thiết bị,
 
 		      "infomation": Thông tin thiết bị,
 
-		      "device\_type\_id": id loại thiết bị,
+		      "device\_type\_id": ID loại thiết bị,
 
-		      "status\_id": id trạng thái thiết bị,
+		      "status\_id": ID trạng thái thiết bị,
 
 		      "start\_time": Giờ bắt đầu sử dụng
 
@@ -1254,20 +1247,20 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Người dùng không tồn tại với id đã cho
+		      & Người dùng không tồn tại với ID đã cho
 		      & Thông tin thiết bị
 
 		      \{
 
-		      "user\_id": id bệnh nhân,
+		      "user\_id": ID bệnh nhân,
 
 		      "device\_name": Tên thiết bị,
 
 		      "infomation": Thông tin thiết bị,
 
-		      "device\_type\_id": id loại thiết bị,
+		      "device\_type\_id": ID loại thiết bị,
 
-		      "status\_id": id trạng thái thiết bị,
+		      "status\_id": ID trạng thái thiết bị,
 
 		      "start\_time": Giờ bắt đầu sử dụng
 
@@ -1310,12 +1303,12 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Thiết bị tồn tại với id cho trước
+		      & Thiết bị tồn tại với ID cho trước
 		      & thông số kỹ thuật thiết bị
 
 		      \{
 
-		      "device\_id": id thiết bị,
+		      "device\_id": ID thiết bị,
 
 		      "detail\_name": Tên chi tiết,
 
@@ -1345,12 +1338,12 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Thiết bị không tồn tại với id cho trước
+		      & Thiết bị không tồn tại với ID cho trước
 		      & thông số kỹ thuật thiết bị
 
 		      \{
 
-		      "device\_id": id thiết bị,
+		      "device\_id": ID thiết bị,
 
 		      "detail\_name": Tên chi tiết,
 
@@ -1378,12 +1371,12 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-3
-		      & Người dùng không tồn tại với id tương ứng
+		      & Người dùng không tồn tại với ID tương ứng
 		      & thông số kỹ thuật thiết bị
 
 		      \{
 
-		      "device\_id": id thiết bị,
+		      "device\_id": ID thiết bị,
 
 		      "detail\_name": Tên chi tiết,
 
@@ -1430,8 +1423,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Thiết bị tồn tại với id cho trước
-		      & id thiết bị
+		      & Thiết bị tồn tại với ID cho trước
+		      & ID thiết bị
 
 		      &
 
@@ -1450,8 +1443,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Không tồn tại thiết bị với id cho trước
-		      & id thiết bị
+		      & Không tồn tại thiết bị với ID cho trước
+		      & ID thiết bị
 
 		      &
 
@@ -1489,20 +1482,20 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Thiết bị tồn tại với id cho trước
+		      & Thiết bị tồn tại với ID cho trước
 		      & Thông tin thiết bị
 
 		      \{
 
-		      "user\_id": id bệnh nhân,
+		      "user\_id": ID bệnh nhân,
 
 		      "device\_name": Tên thiết bị,
 
 		      "infomation": Thông tin thiết bị,
 
-		      "device\_type\_id": id loại thiết bị,
+		      "device\_type\_id": ID loại thiết bị,
 
-		      "status\_id": id trạng thái thiết bị,
+		      "status\_id": ID trạng thái thiết bị,
 
 		      "start\_time": Giờ bắt đầu sử dụng
 
@@ -1526,20 +1519,20 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Không tồn tại thiết bị với id cho trước
+		      & Không tồn tại thiết bị với ID cho trước
 		      & Thông tin thiết bị
 
 		      \{
 
-		      "user\_id": id bệnh nhân,
+		      "user\_id": ID bệnh nhân,
 
 		      "device\_name": Tên thiết bị,
 
 		      "infomation": Thông tin thiết bị,
 
-		      "device\_type\_id": id loại thiết bị,
+		      "device\_type\_id": ID loại thiết bị,
 
-		      "status\_id": id trạng thái thiết bị,
+		      "status\_id": ID trạng thái thiết bị,
 
 		      "start\_time": Giờ bắt đầu sử dụng
 
@@ -1563,20 +1556,20 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-3
-		      & Người dùng không tồn tại với id cho trước
+		      & Người dùng không tồn tại với ID cho trước
 		      & Thông tin thiết bị
 
 		      \{
 
-		      "user\_id": id bệnh nhân,
+		      "user\_id": ID bệnh nhân,
 
 		      "device\_name": Tên thiết bị,
 
 		      "infomation": Thông tin thiết bị,
 
-		      "device\_type\_id": id loại thiết bị,
+		      "device\_type\_id": ID loại thiết bị,
 
-		      "status\_id": id trạng thái thiết bị,
+		      "status\_id": ID trạng thái thiết bị,
 
 		      "start\_time": Giờ bắt đầu sử dụng
 
@@ -1601,6 +1594,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 	      \end{xltabular}
 
+	      \cleardoublepage
 	\item URL: PUT device\_detail/
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
@@ -1623,7 +1617,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      \{
 
-		      "device\_id": id thiết bị,
+		      "device\_id": ID thiết bị,
 
 		      "detail\_name": Tên chi tiết,
 
@@ -1658,7 +1652,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      \{
 
-		      "device\_id": id thiết bị,
+		      "device\_id": ID thiết bị,
 
 		      "detail\_name": Tên chi tiết,
 
@@ -1686,6 +1680,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 	      \end{xltabular}
 
+	      \cleardoublepage
 	\item URL: DELETE device\_detail/{:detail\_id}
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
@@ -1704,7 +1699,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Thông tin chi tiết mới phù hợp
-		      & id thông số kỹ thuật thiết bị
+		      & ID thông số kỹ thuật thiết bị
 		      &
 
 		      Status code: 200 OK
@@ -1735,7 +1730,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
-		      | >{\raggedright\arraybackslash}p{2.5cm}
+		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
@@ -1790,10 +1785,11 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: GET records/{:id}
+		\clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
-		      | >{\raggedright\arraybackslash}p{2.5cm}
+		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
@@ -1807,7 +1803,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Là admin, bác sĩ của hệ thống, dữ liệu phiên đo tồn tại
-		      & id của dữ liệu phiên đo
+		      & ID của dữ liệu phiên đo
 
 		      &
 
@@ -1826,7 +1822,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Không phải admin, bác sĩ
-		      & id của dữ liệu phiên đo
+		      & ID của dữ liệu phiên đo
 
 		      &
 
@@ -1845,7 +1841,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-3
 		      & Là admin, bác sĩ của hệ thống, dữ liệu phiên đo không tồn tại
-		      & id của dữ liệu phiên đo
+		      & ID của dữ liệu phiên đo
 
 		      &
 
@@ -1870,11 +1866,11 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
-		      | >{\raggedright\arraybackslash}p{2.5cm}
+		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy các dữ liệu phiên đo theo id của bác sĩ}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy các dữ liệu phiên đo theo ID của bác sĩ}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -1883,8 +1879,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Là admin hoặc bác sĩ có id cho trước
-		      & id bác sĩ
+		      & Là admin hoặc bác sĩ có ID cho trước
+		      & ID bác sĩ
 
 		      &
 
@@ -1893,8 +1889,9 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      Response message:
 
 		      \{
+			"status": "success"
 
-		      data: Danh sách các dữ liệu phiên đo của bác sĩ
+		      "data": Danh sách các dữ liệu phiên đo của bác sĩ
 
 		      \}
 		      & OK
@@ -1902,7 +1899,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Không phải là admin hoặc bác sĩ tương ứng
-		      & id bác sĩ
+		      & ID bác sĩ
 
 		      &
 
@@ -1911,6 +1908,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      Response message:
 
 		      \{
+				"status": "error"
 
 		      "message": "Forbidden"
 
@@ -2042,6 +2040,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: PUT records
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2cm}
@@ -2128,6 +2127,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: DELETE records/{:record\_id}
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -2144,8 +2144,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Tồn tại dữ liệu phiên đo với id cho trước
-		      & id dữ liệu phiên đo
+		      & Tồn tại dữ liệu phiên đo với ID cho trước
+		      & ID dữ liệu phiên đo
 
 		      &
 
@@ -2163,8 +2163,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Không tồn tại dữ liệu phiên đo với id cho trước
-		      & id dữ liệu phiên đo
+		      & Không tồn tại dữ liệu phiên đo với ID cho trước
+		      & ID dữ liệu phiên đo
 
 		      &
 
@@ -2200,7 +2200,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy tất cả lịch hẹn của các bác sĩ - các bệnh nhân}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy tất cả lịch khám của các bác sĩ - các bệnh nhân}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2219,7 +2219,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      \{
 
-		      data: Danh sách tất cả lịch hẹn
+		      data: Danh sách tất cả lịch khám
 
 		      \}
 		      & OK
@@ -2246,6 +2246,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: GET schedules/doctor-id
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -2253,7 +2254,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách lịch hẹn theo id bác sĩ}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách lịch khám theo ID bác sĩ}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2263,7 +2264,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Bác sĩ tồn tại trong hệ thống
-		      & id bác sĩ
+		      & ID bác sĩ
 		      &
 
 		      Status code: 200 OK
@@ -2272,7 +2273,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      \{
 
-		      data: Danh sách lịch hẹn của bác sĩ
+		      data: Danh sách lịch khám của bác sĩ
 
 		      \}
 
@@ -2282,7 +2283,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Bác sĩ không tồn tại trong hệ thống
-		      & id bác sĩ
+		      & ID bác sĩ
 		      &
 
 		      Status code: 404 Not Found
@@ -2312,7 +2313,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách lịch hẹn theo id bệnh nhân}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách lịch khám theo ID bệnh nhân}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2322,7 +2323,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Bệnh nhân tồn tại trong hệ thống
-		      & id bác sĩ
+		      & ID bác sĩ
 		      &
 
 		      Status code: 200 OK
@@ -2331,7 +2332,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      \{
 
-		      data: Danh sách lịch hẹn của bệnh nhân
+		      data: Danh sách lịch khám của bệnh nhân
 
 		      \}
 
@@ -2341,7 +2342,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Bệnh nhân không tồn tại trong hệ thống
-		      & id bác sĩ
+		      & ID bác sĩ
 		      &
 
 		      Status code: 404 Not Found
@@ -2349,9 +2350,6 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      Response message:
 
 		      \{
-
-		      "status": "error",
-
 		      "message": "No user found, please try again."
 
 		      \}
@@ -2371,7 +2369,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tạo lịch hẹn bởi bác sĩ}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tạo lịch khám bởi bác sĩ}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2380,21 +2378,21 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Các trường thông tin lịch hẹn hợp lệ
-		      & Thông tin lịch hẹn
+		      & Các trường thông tin lịch khám hợp lệ
+		      & Thông tin lịch khám
 		      \{
 
-		      "doctor\_id": id bệnh nhân,
+		      "doctor\_id": ID bệnh nhân,
 
-		      "patient\_id": id bác sĩ,
+		      "patient\_id": ID bác sĩ,
 
 		      "schedule\_start\_time": Thời gian bắt đầu,
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
-		      "schedule\_result": Kết quả lịch hẹn
+		      "schedule\_result": Kết quả lịch khám
 
 		      \}
 		      &
@@ -2412,21 +2410,21 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      \\ \hline
 		      TC-2
-		      & Các trường thông tin lịch hẹn không hợp lệ
-		      & Thông tin lịch hẹn
+		      & Các trường thông tin lịch khám không hợp lệ
+		      & Thông tin lịch khám
 		      \{
 
-		      "doctor\_id": id bệnh nhân,
+		      "doctor\_id": ID bệnh nhân,
 
-		      "patient\_id": id bác sĩ,
+		      "patient\_id": ID bác sĩ,
 
 		      "schedule\_start\_time": Thời gian bắt đầu,
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
-		      "schedule\_result": Kết quả lịch hẹn
+		      "schedule\_result": Kết quả lịch khám
 
 		      \}
 		      &
@@ -2446,6 +2444,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: POST schedules/create-by-patient
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2cm}
@@ -2453,7 +2452,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tạo lịch hẹn bởi bệnh nhân}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API tạo lịch khám bởi bệnh nhân}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2462,8 +2461,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Các trường thông tin lịch hẹn hợp lệ
-		      & Thông tin lịch hẹn
+		      & Các trường thông tin lịch khám hợp lệ
+		      & Thông tin lịch khám
 		      \{
 
 		      "doctor\_id": ID bệnh nhân,
@@ -2474,7 +2473,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
 		      \}
 		      &
@@ -2493,8 +2492,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Lịch hẹn đang chờ phê duyệt của bệnh nhân vượt quá 5
-		      & Thông tin lịch hẹn
+		      & Lịch khám đang chờ phê duyệt của bệnh nhân vượt quá 5
+		      & Thông tin lịch khám
 		      \{
 
 		      "doctor\_id": ID bệnh nhân,
@@ -2505,7 +2504,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
 		      \}
 		      &
@@ -2524,8 +2523,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-3
-		      & Đặt lặp lịch hẹn (trùng thời gian và trùng bác sĩ)
-		      & Thông tin lịch hẹn
+		      & Đặt lịch trùng thời gian với lịch khám đang chờ phê duyệt
+		      & Thông tin lịch khám
 		      \{
 
 		      "doctor\_id": ID bệnh nhân,
@@ -2536,7 +2535,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
 		      \}
 		      &
@@ -2555,8 +2554,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-4
-		      & Cùng 1 thời điểm, đặt lịch hẹn với các bác sĩ khác nhau
-		      & Thông tin lịch hẹn
+		      & Đặt lịch trùng thời gian với lịch khám đã được chấp nhận
+		      & Thông tin lịch khám
 		      \{
 
 		      "doctor\_id": ID bệnh nhân,
@@ -2567,7 +2566,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
 		      \}
 		      &
@@ -2594,7 +2593,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bác sĩ có thể đặt lịch hẹn theo thời gian cụ thể}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách bác sĩ có thể đặt lịch khám theo thời gian cụ thể}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2613,7 +2612,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      \{
 
-		      data: Danh sách các bác sĩ có thể đặt lịch hẹn
+		      data: Danh sách các bác sĩ có thể đặt lịch khám
 
 		      \}
 
@@ -2624,6 +2623,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: GET schedules/available-schedule/:id
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -2631,7 +2631,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách thời gian có thể đặt lịch hẹn của bác sĩ cụ thể}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy danh sách thời gian có thể đặt lịch khám của bác sĩ cụ thể}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2641,7 +2641,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Bác sĩ tồn tại trong hệ thống
-		      & id của bác sĩ đã chọn
+		      & ID của bác sĩ đã chọn
 		      &
 
 		      Status code: 200 OK
@@ -2650,7 +2650,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      \{
 
-		      data: Danh sách các lịch hẹn có thể đặt với bác sĩ này
+		      data: Danh sách các lịch khám có thể đặt với bác sĩ này
 
 		      \}
 
@@ -2668,7 +2668,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API bác sĩ chấp nhận lịch hẹn từ bệnh nhân}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API bác sĩ chấp nhận lịch khám từ bệnh nhân}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2677,21 +2677,21 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Lịch hẹn của bệnh nhân đang ở trạng thái chờ phê duyệt
-		      & Thông tin lịch hẹn đang chờ phê duyệt
+		      & Lịch khám của bệnh nhân đang ở trạng thái chờ phê duyệt
+		      & Thông tin lịch khám đang chờ phê duyệt
 		      \{
 
-		      "doctor\_id": id bệnh nhân,
+		      "doctor\_id": ID bệnh nhân,
 
-		      "patient\_id": id bác sĩ,
+		      "patient\_id": ID bác sĩ,
 
 		      "schedule\_start\_time": Thời gian bắt đầu,
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
-		      "schedule\_result": Kết quả lịch hẹn
+		      "schedule\_result": Kết quả lịch khám
 
 		      \}
 		      &
@@ -2713,6 +2713,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: DELETE schedules/reject-schedule/{:id}
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -2720,7 +2721,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API bác sĩ từ chối lịch hẹn từ bệnh nhân}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API bác sĩ từ chối lịch khám từ bệnh nhân}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2729,21 +2730,21 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Lịch hẹn của bệnh nhân đang ở trạng thái chờ phê duyệt
-		      & Thông tin lịch hẹn đang chờ phê duyệt
+		      & Lịch khám của bệnh nhân đang ở trạng thái chờ phê duyệt
+		      & Thông tin lịch khám đang chờ phê duyệt
 		      \{
 
-		      "doctor\_id": id bệnh nhân,
+		      "doctor\_id": ID bệnh nhân,
 
-		      "patient\_id": id bác sĩ,
+		      "patient\_id": ID bác sĩ,
 
 		      "schedule\_start\_time": Thời gian bắt đầu,
 
 		      "schedule\_end\_time": Thời gian kết thúc,
 
-		      "status\_id": id trạng thái lịch hẹn
+		      "status\_id": ID trạng thái lịch khám
 
-		      "schedule\_result": Kết quả lịch hẹn
+		      "schedule\_result": Kết quả lịch khám
 
 		      \}
 		      &
@@ -2786,11 +2787,11 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Lịch hẹn của bệnh nhân đã được chấp nhận
-		      & Thông tin chẩn đoán của buổi khám
+		      & Ca khám đã có chẩn đoán từ bác sĩ
+		      & Thông tin chẩn đoán của ca khám
 		      \{
 
-		      "schedule\_id": ID lịch hẹn,
+		      "schedule\_id": ID lịch khám,
 
 		      "infomation": Thông tin chẩn đoán,
 
@@ -2812,11 +2813,11 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Lịch hẹn của bệnh nhân chưa được chấp nhận
+		      & Ca khám chưa có chẩn đoán từ bác sĩ
 		      & Thông tin chẩn đoán của buổi khám
 		      \{
 
-		      "schedule\_id": ID lịch hẹn,
+		      "schedule\_id": ID lịch khám,
 
 		      "infomation": Thông tin chẩn đoán,
 
@@ -2847,7 +2848,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin chẩn đoán theo id lịch khám}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông tin chẩn đoán theo ID lịch khám}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2856,8 +2857,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Lịch hẹn của bệnh nhân đã được chấp nhận
-		      & id lịch hẹn
+		      & Lịch khám của bệnh nhân đã được chấp nhận
+		      & ID lịch khám
 		      &
 
 		      Status code: 200 OK
@@ -2875,8 +2876,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Lịch hẹn của bệnh nhân chưa được chấp nhận
-		      & id lịch hẹn
+		      & Lịch khám của bệnh nhân chưa được chấp nhận
+		      & ID lịch khám
 		      &
 
 		      Status code: 400 Bad Request
@@ -2896,6 +2897,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: POST diagnosis/update
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -2913,10 +2915,10 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Thông tin cập nhật chẩn đoán hợp lệ
-		      & id chẩn đoán, thông tin chẩn đoán của buổi khám
+		      & ID chẩn đoán, thông tin chẩn đoán của buổi khám
 		      \{
 
-		      "schedule\_id": ID lịch hẹn,
+		      "schedule\_id": ID lịch khám,
 
 		      "infomation": Thông tin chẩn đoán,
 
@@ -2939,10 +2941,10 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Thông tin cập nhật chẩn đoán không hợp lệ
-		      & id chẩn đoán, thông tin chẩn đoán của buổi khám
+		      & ID chẩn đoán, thông tin chẩn đoán của buổi khám
 		      \{
 
-		      "schedule\_id": ID lịch hẹn,
+		      "schedule\_id": ID lịch khám,
 
 		      "infomation": Thông tin chẩn đoán,
 
@@ -2977,7 +2979,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông báo theo id của người dùng}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy thông báo theo ID của người dùng}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -2987,7 +2989,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Là bệnh nhân
-		      & id người dùng tương ứng
+		      & ID người dùng tương ứng
 		      &
 
 		      Status code: 200 OK
@@ -3006,10 +3008,10 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Là bác sĩ của hệ thống
-		      & id người dùng tương ứng
+		      & ID người dùng tương ứng
 		      &
 
-		      Status code: 400 Bad Request
+		      Status code: 200 OK
 
 		      Response message:
 
@@ -3042,8 +3044,21 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 		      TC-1
-		      & Là bác sĩ của hệ thống
-		      & Trạng thái của notification không phải là 1 hoặc 3
+		      & Là người dùng của hệ thống và lịch khám liên quan chưa được phê duyệt
+		      & Thông tin thông báo
+		      \{
+
+		      "doctor\_id": ID bác sĩ,
+
+			  "patient\_id": ID bệnh nhân,
+
+		      "schedule\_start\_time": Thời điểm bắt đầu lịch khám,
+
+			  "type": Loại thông báo,
+
+			  "status": Trạng thái thông báo
+
+		      \}
 		      &
 
 		      Status code: 200 OK
@@ -3051,7 +3066,6 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      Response message:
 
 		      \{
-		      Trường doctor\_id được gán giá trị là id của người dùng hiện tại
 
 		      "message": "Notification added successfully",
 
@@ -3062,30 +3076,23 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      \\ \hline
 
 		      TC-2
-		      & Là bệnh nhân của hệ thống
-		      & Trạng thái của notification không phải là 1 hoặc 3
-		      &
-
-		      Status code: 200 OK
-
-		      Response message:
-
+		      & Là người dùng của hệ thống và lịch khám đã được phê duyệt
+		      & Thông tin thông báo
 		      \{
 
-		      Trường patient\_id được gán giá trị là id của người dùng hiện tại
+		      "doctor\_id": ID bác sĩ,
 
-		      "message": "Notification added successfully",
+			  "patient\_id": ID bệnh nhân,
+
+		      "schedule\_start\_time": Thời điểm bắt đầu lịch khám,
+
+			  "type": Loại thông báo,
+
+			  "status": Trạng thái thông báo,
+
+			  "reject\_reason": Lý do từ chối lịch khám (nếu có)
 
 		      \}
-
-		      & OK
-
-		      \\ \hline
-
-
-		      TC-3
-		      & Là người dùng của hệ thống
-		      & Trạng thái của notification là 1 hoặc 3
 		      &
 
 		      Status code: 200 OK
@@ -3093,8 +3100,6 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      Response message:
 
 		      \{
-
-		      Bỏ qua kiểm tra trùng lặp, tạo 2 thông báo và lưu.
 
 		      "message": "Notification added successfully",
 
@@ -3124,7 +3129,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Thông báo chưa được xem
-		      & id của thông báo
+		      & ID của thông báo
 		      &
 
 		      Status code: 200 OK
@@ -3143,7 +3148,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Thông báo đã được xem
-		      & id của thông báo
+		      & ID của thông báo
 		      &
 
 		      Status code: 400 Bad Request
@@ -3163,6 +3168,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: DELETE notification/{:id}
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -3180,7 +3186,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Thông báo tồn tại trong hệ thống
-		      & id của thông báo
+		      & ID của thông báo
 		      &
 
 		      Status code: 200 OK
@@ -3199,7 +3205,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Thông báo không tồn tại trong hệ thống
-		      & id của thông báo
+		      & ID của thông báo
 		      &
 
 		      Status code: 400 Bad Request
@@ -3243,8 +3249,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      & Thông tin nhóm trò chuyện
 		      \{
 		      "title": Tên nhóm trò chuyện,
-		      "hostId: id của người tạo nhóm,
-		      "member": Danh sách id của các thành viên trong nhóm trò chuyện,
+		      "hostId: ID của người tạo nhóm,
+		      "member": Danh sách ID của các thành viên trong nhóm trò chuyện,
 		      "sendEvent": Sự kiện gửi của nhóm trò chuyện
 		      "receiveEvent": Sự kiện nhận của nhóm trò chuyện
 		      \}
@@ -3269,8 +3275,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      & Thông tin nhóm trò chuyện
 		      \{
 		      "title": Tên nhóm trò chuyện,
-		      "hostId: id của người tạo nhóm,
-		      "member": Danh sách id của các thành viên trong nhóm,
+		      "hostId: ID của người tạo nhóm,
+		      "member": Danh sách ID của các thành viên trong nhóm,
 		      "sendEvent": Sự kiện gửi của nhóm trò chuyện
 		      "receiveEvent": Sự kiện nhận của nhóm trò chuyện
 		      \}
@@ -3310,7 +3316,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-1
 		      & Người dùng của hệ thống
-		      & id người dùng tương ứng
+		      & ID người dùng tương ứng
 		      &
 
 		      Status code: 200 OK
@@ -3329,7 +3335,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC-2
 		      & Không phải người dùng hệ thống
-		      & id của người dùng
+		      & ID của người dùng
 		      &
 
 		      Status code: 401 Unauthorized
@@ -3349,6 +3355,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	      \end{xltabular}
 
 	\item URL: GET chat/messages/:groupChatId
+		  \clearpage
 	      \begin{xltabular}{\textwidth}{
 		      | >{\raggedright\arraybackslash}p{1cm}
 		      | >{\raggedright\arraybackslash}p{2.5cm}
@@ -3356,7 +3363,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      | >{\raggedright\arraybackslash}X
 		      | >{\raggedright\arraybackslash}p{1cm}|
 		      }
-		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy tin nhắn theo id nhóm trò chuyện}
+		      \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử API lấy tin nhắn theo ID nhóm trò chuyện}
 		      % \label{table_api_news}
 		      \\
 		      \hline
@@ -3366,7 +3373,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 		      TC
 		      & Người dùng của hệ thống
-		      & id nhóm trò chuyện của người dùng
+		      & ID nhóm trò chuyện của người dùng
 		      &
 
 		      Status code: 200 OK
@@ -3407,8 +3414,8 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 		      & Người dùng của hệ thống
 		      & Thông tin tin nhắn
 		      \{
-		      "senderId" : id người gửi,
-		      "groupChatId" : id nhóm trò chuyện,
+		      "senderId" : ID người gửi,
+		      "groupChatId" : ID nhóm trò chuyện,
 		      "message" : nội dung tin nhắn,
 		      "time": thời gian gửi
 		      \}
@@ -3430,13 +3437,14 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 \end{enumerate}
 
 \subsubsection{Kiểm thử ứng dụng web}
+\clearpage
 \begin{xltabular}{\textwidth}{
 	| >{\raggedright\arraybackslash}p{2cm}
 	| >{\raggedright\arraybackslash}X
 	| >{\raggedright\arraybackslash}X
 	| >{\raggedright\arraybackslash}p{1cm}|
 	}
-	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng của website quản trị}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng của website}
 	% \label{table_api_news}
 	\\
 	\hline
@@ -3445,7 +3453,7 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 	Kiểm tra chức năng đăng nhập
-	& 1. Truy cập giao diện đăng nhập tài khoản $\rightarrow$ Nhập thông tin đăng nhập chưa có trong hệ thống
+	& 1. Truy cập giao diện đăng nhập tài khoản $\rightarrow$ Nhập thông tin đăng nhập không hợp lệ
 	$\rightarrow$ Nhấn nút đăng nhập
 
 	% \\ &
@@ -3454,10 +3462,10 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	$\rightarrow$ Nhấn nút đăng nhập
 	&
 
-	1. Hiển thị thông báo sai email hoặc mật khẩu
+	1. Thông báo lỗi: Email đăng nhập hoặc mật khẩu truy cập không đúng
 
 
-	2. Đăng nhập thành công vào hệ thống
+	2. Thông báo đăng nhập thành công vào hệ thống
 	& OK
 
 	\\ \hline
@@ -3466,61 +3474,61 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	Kiểm tra chức năng đăng ký
 	&
 
-	1. Truy cập giao diện đăng ký tài khoản mới $\rightarrow$ Nhập thông tin đăng ký tài khoản đã tồn tại
-	$\rightarrow$ Nhấn đăng ký
+	1. Truy cập giao diện tạo tài khoản người dùng mới $\rightarrow$ Điền thông tin tương ứng với tài khoản đã tồn tại
+	$\rightarrow$ Nhấn đăng ký.
 
 	% \\ &
 
-	2. Truy cập giao diện đăng ký tài khoản mới $\rightarrow$ Nhập các thông tin tài khoản đăng ký hơp lệ
-	$\rightarrow$ Chọn nút đăng ký
+	2. Truy cập giao diện tạo tài khoản người dùng mới $\rightarrow$ Điền hợp lệ các thông tin tài khoản
+	$\rightarrow$ Nhấn đăng ký.
 
 	&
 
 
-	1. Hiển thị thông báo email đã tồn tại trong hệ thông
+	1. Hiển thị thông báo email đã tồn tại hoặc sai thông tin đăng ký.
 
-	2. Hiển thị thông báo tài khoản đã đăng ký thành công
+	2. Hiển thị thông báo tài khoản đã được tạo mới thành công.
 
 	& OK
 
 	\\ \hline
-	Kiểm tra chức năng quản lý người dùng
+	Kiểm tra chức năng quản lý người dùng hệ thống
 	&
 
-	1. Truy cập màn hình quản lý người dùng
+	1. Truy cập giao diện quản lý các người dùng hiện có.
 
-	2. Xem thông tin người dùng
+	2. Tra cứu thông tin chi tiết của người dùng cụ thể.
 
-	3. Sửa thông tin người dùng có sẵn  $\rightarrow$ Lưu thay đổi
+	3. Sửa thông tin chi tiết của một người dùng  $\rightarrow$ Lưu thay đổi.
 
-	4. Xóa một người dùng khỏi hệ thống
+	4. Xóa người dùng ra khỏi hệ thống.
 
 	&
 
-	1. Hiển thị danh sách người dùng
+	1. Hiển thị danh sách toàn bộ người dùng hiện có.
 
-	2. Hiển thị thông tin cụ thể của người dùng
+	2. Hiển thị thông tin chi tiết của người dùng đã chọn.
 
-	3. Cập nhật thông tin người dùng thành công
+	3. Chỉnh sửa dữ liệu của người dùng thành công.
 
-	4. Xóa tài khoản người dùng khỏi hệ thống thành công
+	4. Xóa người dùng ra khỏi hệ thống thành công.
 
 	& OK
 
 	\\ \hline
 
-	Kiểm tra chức năng xem thông tin bác sĩ
+	Kiểm tra chức năng xem thông tin các bác sĩ
 	&
 
-	1. Truy cập màn hình thông tin bác sĩ
+	1. Truy cập giao diện thông tin các bác sĩ.
 
-	2. Xem thông tin cụ thể của bác sĩ
+	2. Tra cứu thông tin chi tiết của bác sĩ cụ thể.
 
 	&
 
-	1. Hiển thị danh sách bác sĩ
+	1. Hiển thị danh sách các bác sĩ trong hệ thống.
 
-	2. Hiển thị thông tin cụ thể của bác sĩ
+	2. Hiển thị thông tin chi tiết của bác sĩ đã chọn.
 
 
 	& OK
@@ -3530,97 +3538,116 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 	Kiểm tra chức năng xem danh sách bệnh nhân
 	&
 
-	1. Truy cập màn hình quản lý bệnh nhân
+	1. Truy cập giao diện quản lý bệnh nhân.
 
-	2. Hiển thị thông tin cụ thể bệnh nhân
+	2. Tra cứu thông tin chi tiết của bệnh nhân cụ thể.
 
 	&
 
-	1. Hiển thị danh sách bệnh nhân
+	1. Hiển thị danh sách các bệnh nhân trong hệ thống.
 
-	2. Hiển thị thông tin cụ thể của bệnh nhân
+	2. Hiển thị thông tin chi tiết của bệnh nhân đã chọn.
 
 	& OK
 
 	\\ \hline
 
 
-	Kiểm tra chức năng quản lý thiết bị
+	Kiểm tra chức năng quản lý thiết bị y tế
 	&
 
-	1. Truy cập màn hình quản lý thiết bị
+	1. Truy cập giao diện quản lý thiết bị y tế.
 
-	2. Xem thông tin chi tiết thiết bị
+	2. Tra cứu thông tin chi tiết thiết bị y tế cụ thể.
 
-	3. Thêm thiết bị mới với thông tin hợp lệ $\rightarrow$ Lưu thông tin
+	3. Thêm thiết bị mới cùng các thông tin tương ứng $\rightarrow$ Lưu thông tin.
 
-	4. Sửa thông tin thiết bị có sẵn $\rightarrow$ Lưu thay đổi
+	4. Cập nhật thông tin cụ thể của thiết bị $\rightarrow$ Lưu thay đổi.
 
-	5. Xóa thiết bị (Đối với Admin hệ thống)
+	5. Xóa thiết bị (Đối với Quản trị viên hệ thống).
 
 	&
 
-	1. Hiển thị danh sách thiết bị
+	1. Hiển thị danh sách thiết bị y tế trong hệ thống.
 
-	2. Hiển thị thông tin chi tiết thiết bị
+	2. Hiển thị thông tin chi tiết thiết bị y tế đã chọn.
 
-	3. Thêm thiết bị thành công
+	3. Thêm thiết bị mới thành công.
 
-	4. Cập nhật thông tin thiết bị thành công
+	4. Cập nhật thông tin cụ thể của thiết bị thành công.
 
-	5. Xóa thiết bị khỏi hệ thống thành công
+	5. Thành công xóa thiết bị ra khỏi hệ thống.
 
 	& OK
 
 	\\ \hline
 
-	Kiểm tra chức năng quản lý đặt lịch hẹn bởi bệnh nhân
+	Kiểm tra chức năng quản lý lịch khám cá nhân
 	&
 
-	1. Vào màn hình đặt lịch hẹn
+	1. Truy cập giao diện quản lý lịch khám cá nhân.
 
-	2. Đặt lịch hẹn
+	2. Tra cứu thông tin chi tiết lịch khám cụ thể.
 
-	3. Chọn bác sĩ hoặc giờ khám
+	3. Đặt lịch khám theo yêu cầu (chọn bác sĩ trước hoặc thời gian rảnh của bản thân trước).
 
-	4. Lưu
-
+	4. Lưu.
 
 	&
 
-	1. Hiển thị giao diện lịch, bao gồm những ngày trống, những ngày có lịch hẹn
+	1. Hiển thị giao diện các lịch khám cá nhân, bao gồm những ngày trống và những ngày có lịch khám.
 
-	2. Hiển thị giao diện đật lịch
+	2. Hiển thị thông tin chi tiết lịch khám đã chọn.
 
-	3. Giờ khám hoặc bác sĩ phù hợp sẽ hiển thị
+	3. Hiển thị giao diện đặt lịch khám theo yêu cầu.
 
-	4. Lịch hẹn được lưu thành công
+	4. Lịch khám được đặt thành công, gửi thông báo đến cả bác sĩ và bệnh nhân.
 
 	& OK
 
 	\\ \hline
 
-	Kiểm tra chức năng quản lý đặt lịch tái khám bởi bác sĩ
+	Kiểm tra chức năng phê duyệt lịch khám của bác sĩ.
 	&
 
-	1. Chọn 1 lịch khám đã thành công
+	1. Vào giao diện quản lý lịch khám hoặc xem thông báo.
 
-	2. Chọn đặt lịch tái khám
+	2. Chọn lịch khám cần phê duyệt.
 
-	3. Chọn ngày giờ phù hợp
-
-	4. Lưu
-
+	3. Phê duyệt lịch khám.
 
 	&
 
-	1. Hiển thị giao diện thông tin chẩn đoán
+	1. Hiển thị giao diện các lịch khám, bao gồm những ngày trống và những ngày có lịch khám.
 
-	2. Giao diện được mở rộng để đặt lịch tái khám
+	2. Hiển thị thông tin chi tiết lịch khám đã chọn.
 
-	3. Thông tin lịch hẹn hiển thị trên màn hình
+	3. Lịch khám được chấp nhận hoặc từ chối kèm theo lý do (nếu có), gửi thông báo đến cả bác sĩ và bệnh nhân.
 
-	4. Lịch hẹn được lưu thành công
+	& OK
+
+	\\ \hline
+
+	Kiểm tra chức năng quản lý chẩn đoán và đặt lịch tái khám
+	&
+
+	1. Chọn 1 lịch khám đã hoặc đang diễn ra.
+
+	2. Chọn chỉnh sửa chẩn đoán.
+
+	3. Chọn lịch tái khám (nếu cần thiết).
+
+	4. Điền những thông tin cần thiết và ấn lưu.
+
+	&
+
+	1. Hiển thị giao diện thông tin chi tiết lịch khám đã chọn.
+
+	2. Hiển thị giao diện cho phép điền hoặc chỉnh sửa thông tin chẩn đoán (nếu đã có chẩn đoán).
+
+	3. Hiển thị thông tin các ca khám rảnh, cho phép bác sĩ chọn lịch phù hợp.
+
+	4. Thông tin chẩn đoán được lưu và lịch tái khám được tạo thành công (nếu có).
 
 	& OK
 
@@ -3628,62 +3655,55 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 	Kiểm tra chức năng quản lý thông tin cá nhân
 	&
-	1. Truy cập màn hình quản lý thông tin cá nhân
+	1. Truy cập giao diện quản lý thông tin cá nhân.
 
-	2. Sửa thông tin cá nhân có sẵn $\rightarrow$ Lưu thông tin
+	2. Sửa thông tin cá nhân có sẵn $\rightarrow$ Lưu thông tin.
 
 	&
 
-	1. Hiển thị thông tin tài khoản cá nhân
+	1. Hiển thị các thông tin cụ thể của người dùng.
 
-	2. Cập nhật thông tin cá nhân thành công
+	2. Cập nhật thông tin tài khoản thành công.
 
 
 	& OK
 
 
 	\\ \hline
-	Kiểm tra chức năng nhắn tin
+	Kiểm tra chức năng quản lý dịch vụ tin nhắn
 	&
-	1. Truy cập màn hình nhắn tin
+	1. Truy cập giao diện quản lý dịch vụ tin nhắn.
 
-	2. Chọn nhóm/ người dùng cần nhắn
+	2. Chọn người dùng hoặc nhóm muốn nhắn.
 
-	3. Nhắn tin
+	3. Tiến hành nhắn tin và ấn nút gửi.
 
 	&
 
-	1. Hiển thị danh sách các đoạn tin nhắn
+	1. Hiển thị danh sách những đoạn hội thoại.
 
-	2. Hiển thị tin nhắn lên màn hình
+	2. Hiển thị đầy đủ lịch sử trò chuyện của đoạn hội thoại được chọn.
 
-	3. Tin nhắn được gửi thành công
+	3. Tin nhắn được gửi thành công.
 
 	& OK
-
-
-	\\ \hline
 
 	\\ \hline
 	Kiểm tra chức năng tạo nhóm trò chuyện
 	&
-	1. Truy cập màn hình nhắn tin
+	1. Truy cập giao diện quản lý dịch vụ tin nhắn.
 
-	2. Chọn tạo nhóm trò chuyện
+	2. Chọn tạo nhóm trò chuyện.
 
-	3. Nhập các thông tin, chọn thành viên phù hợp
-
-	4. Lưu
+	3. Nhập các thông tin cần thiết và ấn lưu.
 
 	&
 
-	1. Hiển thị danh sách các đoạn tin nhắn, nút tạo nhóm
+	1. Hiển thị danh sách các đoạn hội thoại và nút tạo nhóm.
 
-	2. Hiển thị giao diện tạo nhóm trò chuyện
+	2. Hiển thị giao diện tạo nhóm trò chuyện.
 
-	3. Thông tin thành viên phù hợp hiển thị lên màn hình
-
-	4. nhóm trò chuyện được tạo thành công
+	3. Nhóm trò chuyện được tạo thành công.
 
 	& OK
 
@@ -3694,5 +3714,6 @@ Công cụ: Postman - Để xây dựng và thực hiện các yêu cầu API.
 
 
 \subsection{Kết luận chương}
-Chương 4 đã trình bày chi tiết về quá trình triển khai hệ thống và các nền tảng, công cụ được sử dụng trong hệ thống. Đồng thời, chương cũng trình bày về quá trình kiểm thử hệ thống, bao gồm kiểm thử API và kiểm thử ứng dụng web. Nhờ đó, hệ thống đã được kiểm thử kỹ lưỡng trước khi triển khai, giúp đảm bảo tính ổn định và chất lượng của hệ thống.
+Chương 4 cung cấp cái nhìn chi tiết về quá trình triển khai hệ thống, bao gồm các công nghệ và nền tảng được áp dụng. Ngoài ra, chương này cũng đề cập đến quá trình kiểm thử, bao gồm kiểm thử API và ứng dụng web,
+nhằm đánh giá hiệu suất và độ chính xác của hệ thống. Việc kiểm thử kỹ lưỡng trước khi đưa vào hoạt động giúp đảm bảo hệ thống vận hành ổn định và đáp ứng các yêu cầu chất lượng đặt ra.
 \newpage
