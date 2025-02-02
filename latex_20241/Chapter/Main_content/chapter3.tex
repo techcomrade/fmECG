@@ -32,7 +32,7 @@ Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 \end{adjustwidth}
 
 Trong sơ đồ kiến trúc hệ thống, bệnh nhân sử dụng ứng dụng di động (Mobile App) để kết nối trực tiếp với thiết bị (Device).
-Ứng dụng di động sẽ thuộc khối Ứng dụng (Application), nó chịu trách nhiệm việc giao tiếp với khối Máy chủ (hay Server) thông qua giao thức HTTP và các API.
+Ứng dụng di động sẽ thuộc khối Ứng dụng (Application). Nó chịu trách nhiệm cho việc giao tiếp với khối Máy chủ (hay Server) thông qua giao thức HTTP và các API.
 Khi yêu cầu được nhận từ khối Ứng dụng, khối Máy chủ sẽ thực hiện xử lý dữ liệu thông qua các dịch vụ (Services) được thiết kế riêng biệt.
 Tùy theo loại yêu cầu, các dịch vụ này sẽ truy xuất hoặc cập nhật dữ liệu trong cơ sở dữ liệu, sau đó gửi kết quả phản hồi cho người dùng,
 hoàn thiện quá trình tương tác giữa người dùng và hệ thống.\begin{adjustwidth}{1.5em}{}
@@ -97,8 +97,8 @@ Cách tiếp cận này không chỉ hỗ trợ bác sĩ tổ chức công việ
 	\caption[Sơ đồ khối Website dành cho quản trị viên]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối Website dành cho quản trị viên}
 	\label{fmECG_architecture-Admin} %đặt tên cho ảnh
 \end{figure}
-Về cơ bản, website dành cho admin được thiết kế với cấu trúc tương tự như website dành cho bác sĩ và bệnh nhân nhưng với quyền hạn mở rộng hơn.
-Admin có thể quản lý toàn bộ thông tin người dùng, dữ liệu phiên đo, theo dõi các thống kê tổng quan của hệ thống, kiểm soát thông tin và kết quả chẩn đoán từ các lịch khám,
+Về cơ bản, website dành cho quản trị viên được thiết kế với cấu trúc tương tự như website dành cho bác sĩ và bệnh nhân nhưng với quyền hạn mở rộng hơn.
+Quản trị viên có thể quản lý toàn bộ thông tin người dùng, dữ liệu phiên đo, theo dõi các thống kê tổng quan của hệ thống, kiểm soát thông tin và kết quả chẩn đoán từ các lịch khám,
 đồng thời điều hành việc mượn trả thiết bị một cách linh hoạt và hiệu quả.
 
 \subsection{Thiết kế cơ sở dữ liệu}
@@ -170,6 +170,8 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 	\end{tabularx}
 \end{table}
 
+\cleardoublepage
+
 \paragraph{Chuẩn hoá bảng Vai trò người dùng}
 \mbox{}
 \begin{table}[H]
@@ -228,6 +230,8 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 		\hline
 	\end{tabularx}
 \end{table}
+
+\cleardoublepage
 
 \paragraph{Chuẩn hoá bảng Loại thiết bị}
 \mbox{}
@@ -291,6 +295,8 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 	\end{tabularx}
 \end{table}
 
+\cleardoublepage
+
 \paragraph{Chuẩn hoá bảng Thông số kỹ thuật}
 \mbox{}
 \begin{table}[H]
@@ -350,6 +356,8 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 		\hline
 	\end{tabularx}
 \end{table}
+
+\cleardoublepage
 
 \paragraph{Chuẩn hoá bảng Kết quả lịch khám}
 \mbox{}
@@ -517,11 +525,11 @@ Sau khi thiết kế cơ sở dữ liệu của hệ thống, chúng em tiến �
 Hình \ref{about-us} minh họa giao diện trang giới thiệu về chúng tôi, nơi cung cấp thông tin về nhóm phát triển, bao gồm mục tiêu,
 định hướng hoạt động, thông tin liên hệ, và các công nghệ chủ chốt được sử dụng để tạo ra sản phẩm này.
 
-\subsubsection{Giao diện góc nhìn của admin}
+\subsubsection{Giao diện góc nhìn của quản trị viên}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=8cm]{Images/admin_ui/home.png}
-	\caption[Giao diện trang chủ admin]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang chủ admin}
+	\caption[Giao diện trang chủ quản trị viên]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang chủ quản trị viên}
 	\label{home-admin}
 \end{figure}
 
@@ -565,7 +573,7 @@ Hình \ref{user-detail-admin} minh họa giao diện cửa sổ pop up cho phép
 	\label{devices-admin}
 \end{figure}
 
-Hình \ref{devices-admin} là giao diện trang quản lý thiết bị.  Admin có thể thêm, sửa, xóa thông tin thiết bị, cũng như xem thông tin chi tiết của thiết bị khi click vào 1 thiết bị bất kỳ
+Hình \ref{devices-admin} là giao diện trang quản lý thiết bị. Quản trị viên có thể thêm, sửa, xóa thông tin thiết bị, cũng như xem thông tin chi tiết của thiết bị khi click vào 1 thiết bị bất kỳ.
 
 \begin{figure}[H]
 	\centering
@@ -613,12 +621,12 @@ Hình \ref{records-admin} là giao diện quản lý dữ liệu phiên đo tạ
 Hình \ref{graph} là giao diện thể hiện đồ thị các tín hiệu tim mạch thu thập được từ dữ liệu phiên đo.
 Trong đó ECG, PPG, và PCG là các thuật ngữ liên quan đến các phương pháp đo tín hiệu sinh lý của cơ thể, thường được sử dụng trong y học và khoa học để giám sát sức khỏe.
 ECG (Electrocardiogram) - Điện tâm đồ là đường màu xanh lá, mô tả tín hiệu đo hoạt động điện của tim theo thời gian.
-PPG (Photoplethysmography) - Quang phổ thể tích là đường màu xanh đỏ, mổ tả sự thay đổi thể tích máu trong mạch máu bằng cách sử dụng ánh sáng.
+PPG (Photoplethysmography) - Quang phổ thể tích là đường màu xanh đỏ, mô tả sự thay đổi thể tích máu trong mạch máu bằng cách sử dụng ánh sáng.
 Và PCG (Phonocardiography) - Âm thanh tim, đường màu xanh dương, mô tả tín hiệu ghi lại âm thanh được tạo ra bởi hoạt động của tim, thường gọi là âm thanh tim \cite{ecg_pcg_ppg}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=8cm]{Images/admin_ui/schedule.png}
-	\caption[Giao diện trang quản lý đặt lịch]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý đặt lịch (view admin)}
+	\caption[Giao diện trang quản lý đặt lịch]{\bfseries \fontsize{12pt}{0pt}\selectfont Giao diện trang quản lý đặt lịch (góc nhìn của quản trị viên)}
 	\label{schedules-admin}
 \end{figure}
 
@@ -1188,6 +1196,7 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \end{figure}
 
 % % ------------------------Noti----------------------
+\cleardoublepage
 \paragraph{Các API phục vụ mục đích liên quan đến thông báo}
 \mbox{}
 
@@ -1218,6 +1227,7 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 	\label{sequence_diagram_delete_notification}
 \end{figure}
 % % ------------------------Chat----------------------
+\cleardoublepage
 \paragraph{Các API phục vụ mục đích liên quan đến tin nhắn}
 \mbox{}
 \begin{figure}[H]
@@ -1230,7 +1240,7 @@ cho thấy rõ sự tương tác giữa các thành phần và lớp chức năn
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=16cm]{Images/api_sequence/chat/sendMessage.drawio.png}
-	\caption[Sơ đồ tuần tự API ch o phép người dùng gửi tin nhắn đến các đối tượng liên quan]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API ch o phép người dùng gửi tin nhắn đến các đối tượng liên quan}
+	\caption[Sơ đồ tuần tự API giúp người dùng gửi tin nhắn đến các đối tượng liên quan]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API giúp người dùng gửi tin nhắn đến các đối tượng liên quan}
 	\label{sequence_diagram_send_chat}
 \end{figure}
 

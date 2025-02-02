@@ -20,18 +20,43 @@
 
 \cleardoublepage
 
+\pagenumbering{roman} %đánh số thứ tự la mã
+\phantomsection\section*{DANH MỤC KÝ HIỆU VÀ CHỮ VIẾT TẮT}%dấu * để không đánh số
+\addcontentsline{toc}{section}{\numberline{}DANH MỤC KÝ HIỆU VÀ CHỮ VIẾT TẮT} % LƯU VÀO TRONG MỤC LỤC
+
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{0.85\textwidth}{
+		| >{\centering\arraybackslash}m{3cm}
+		| >{\centering\arraybackslash}X|
+		}
+		\hline
+		\bfseries Từ viết tắt & \bfseries Thay cho\hspace{1cm}               \\ \hline
+        IOT                   & Internet Of Things                           \\ \hline
+		CRC                   & Class - Responsibility - Collaboration       \\ \hline
+		API                   & Application Programming Interface            \\ \hline
+		UML                   & Unified Modeling Language                    \\ \hline
+		ERD                   & Entity-Relationship Diagram                  \\ \hline
+		3NF                   & Third Normal Form                            \\ \hline
+		ID                    & Identification                               \\ \hline
+		SQL                   & Structured Query Language                    \\ \hline
+		CI/CD                 & Continuous Integration/Continuous Deployment \\ \hline
+	\end{tabularx}
+\end{table}
+\cleardoublepage
+
 {
-\let\oldnumberline\numberline
-\renewcommand{\numberline}{\figurename~\oldnumberline}%
-\listoffigures
+	\let\oldnumberline\numberline
+	\renewcommand{\numberline}{\figurename~\oldnumberline}%
+	\listoffigures
 } %tạo danh mục hình vẽ tự động
 \phantomsection\addcontentsline{toc}{section}{\numberline{}DANH MỤC KÝ HÌNH VẼ}
 \cleardoublepage
 
 {
-\let\oldnumberline\numberline
-\renewcommand{\numberline}{\tablename~\oldnumberline}%
-\listoftables
+	\let\oldnumberline\numberline
+	\renewcommand{\numberline}{\tablename~\oldnumberline}%
+	\listoftables
 } %tạo danh mục hình vẽ tự động %tạo danh mục bảng biểu
 \phantomsection\addcontentsline{toc}{section}{\numberline{}DANH MỤC BẢNG BIỂU}
 \cleardoublepage
