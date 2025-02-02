@@ -32,7 +32,7 @@ Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 \end{adjustwidth}
 
 Trong sơ đồ kiến trúc hệ thống, bệnh nhân sử dụng ứng dụng di động (Mobile App) để kết nối trực tiếp với thiết bị (Device).
-Ứng dụng di động thuộc khối Ứng dụng (Application), chịu trách nhiệm giao tiếp với khối Máy chủ (Server) thông qua các API và giao thức HTTP.
+Ứng dụng di động sẽ thuộc khối Ứng dụng (Application), nó chịu trách nhiệm việc giao tiếp với khối Máy chủ (hay Server) thông qua giao thức HTTP và các API.
 Khi yêu cầu được nhận từ khối Ứng dụng, khối Máy chủ sẽ thực hiện xử lý dữ liệu thông qua các dịch vụ (Services) được thiết kế riêng biệt.
 Tùy theo loại yêu cầu, các dịch vụ này sẽ truy xuất hoặc cập nhật dữ liệu trong cơ sở dữ liệu, sau đó gửi kết quả phản hồi cho người dùng,
 hoàn thiện quá trình tương tác giữa người dùng và hệ thống.\begin{adjustwidth}{1.5em}{}
@@ -613,8 +613,8 @@ Hình \ref{records-admin} là giao diện quản lý dữ liệu phiên đo tạ
 Hình \ref{graph} là giao diện thể hiện đồ thị các tín hiệu tim mạch thu thập được từ dữ liệu phiên đo.
 Trong đó ECG, PPG, và PCG là các thuật ngữ liên quan đến các phương pháp đo tín hiệu sinh lý của cơ thể, thường được sử dụng trong y học và khoa học để giám sát sức khỏe.
 ECG (Electrocardiogram) - Điện tâm đồ là đường màu xanh lá, mô tả tín hiệu đo hoạt động điện của tim theo thời gian.
-PPG (Photoplethysmography) - Quang phổ thể tích là đường màu xanh dương, mổ tả sự thay đổi thể tích máu trong mạch máu bằng cách sử dụng ánh sáng.
-Và PCG (Phonocardiography) - Âm thanh tim, đường màu đỏ, mổ tả tín hiệu ghi lại âm thanh được tạo ra bởi hoạt động của tim, thường gọi là âm thanh tim.
+PPG (Photoplethysmography) - Quang phổ thể tích là đường màu xanh đỏ, mổ tả sự thay đổi thể tích máu trong mạch máu bằng cách sử dụng ánh sáng.
+Và PCG (Phonocardiography) - Âm thanh tim, đường màu xanh dương, mô tả tín hiệu ghi lại âm thanh được tạo ra bởi hoạt động của tim, thường gọi là âm thanh tim \cite{ecg_pcg_ppg}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=15cm,height=8cm]{Images/admin_ui/schedule.png}
