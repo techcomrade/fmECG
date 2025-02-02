@@ -2489,7 +2489,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & lịch khám đang chờ phê duyệt của bệnh nhân vượt quá 5
+		      & Lịch khám đang chờ phê duyệt của bệnh nhân vượt quá 5
 		      & Thông tin lịch khám
 		      \{
 
@@ -2520,7 +2520,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-3
-		      & Đặt lặp lịch khám (trùng thời gian và trùng bác sĩ)
+		      & Đặt lịch trùng thời gian với lịch khám đang chờ phê duyệt
 		      & Thông tin lịch khám
 		      \{
 
@@ -2551,7 +2551,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-4
-		      & Đặt lặp lịch với lịch đã được chấp nhận
+		      & Đặt lịch trùng thời gian với lịch khám đã được chấp nhận
 		      & Thông tin lịch khám
 		      \{
 
@@ -2674,7 +2674,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & lịch khám của bệnh nhân đang ở trạng thái chờ phê duyệt
+		      & Lịch khám của bệnh nhân đang ở trạng thái chờ phê duyệt
 		      & Thông tin lịch khám đang chờ phê duyệt
 		      \{
 
@@ -2727,7 +2727,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & lịch khám của bệnh nhân đang ở trạng thái chờ phê duyệt
+		      & Lịch khám của bệnh nhân đang ở trạng thái chờ phê duyệt
 		      & Thông tin lịch khám đang chờ phê duyệt
 		      \{
 
@@ -2784,8 +2784,8 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & lịch khám của bệnh nhân đã được chấp nhận
-		      & Thông tin chẩn đoán của buổi khám
+		      & Ca khám đã có chẩn đoán từ bác sĩ
+		      & Thông tin chẩn đoán của ca khám
 		      \{
 
 		      "schedule\_id": ID lịch khám,
@@ -2810,7 +2810,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & lịch khám của bệnh nhân chưa được chấp nhận
+		      & Ca khám chưa có chẩn đoán từ bác sĩ
 		      & Thông tin chẩn đoán của buổi khám
 		      \{
 
@@ -2854,7 +2854,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & lịch khám của bệnh nhân đã được chấp nhận
+		      & Lịch khám của bệnh nhân đã được chấp nhận
 		      & ID lịch khám
 		      &
 
@@ -2873,7 +2873,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & lịch khám của bệnh nhân chưa được chấp nhận
+		      & Lịch khám của bệnh nhân chưa được chấp nhận
 		      & ID lịch khám
 		      &
 
@@ -3008,7 +3008,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      & ID người dùng tương ứng
 		      &
 
-		      Status code: 400 Bad Request
+		      Status code: 200 OK
 
 		      Response message:
 
@@ -3041,13 +3041,24 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 
 
 		      TC-1
-		      & Là bác sĩ của hệ thống
-		      & Trạng thái của notification không phải là 1 hoặc 3
+		      & Là người dùng của hệ thống và lịch khám liên quan chưa được phê duyệt
+		      & Thông tin thông báo
+		      \{
+
+		      "doctor\_id": ID bác sĩ,
+
+			  "patient\_id": ID bệnh nhân,
+
+		      "schedule\_start\_time": Thời điểm bắt đầu lịch khám,
+
+			  "type": Loại thông báo,
+
+			  "status": Trạng thái thông báo
+
+		      \}
 		      &
 
 		      Status code: 200 OK
-
-			  Trường doctor\_id được gán giá trị là ID của người dùng hiện tại
 
 		      Response message:
 
@@ -3062,35 +3073,26 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 		      \\ \hline
 
 		      TC-2
-		      & Là bệnh nhân của hệ thống
-		      & Trạng thái của notification không phải là 1 hoặc 3
-		      &
-
-		      Status code: 200 OK
-
-			  Trường patient\_id được gán giá trị là ID của người dùng hiện tại
-
-		      Response message:
-
+		      & Là người dùng của hệ thống và lịch khám đã được phê duyệt
+		      & Thông tin thông báo
 		      \{
 
-		      "message": "Notification added successfully",
+		      "doctor\_id": ID bác sĩ,
+
+			  "patient\_id": ID bệnh nhân,
+
+		      "schedule\_start\_time": Thời điểm bắt đầu lịch khám,
+
+			  "type": Loại thông báo,
+
+			  "status": Trạng thái thông báo,
+
+			  "reject\_reason": Lý do từ chối lịch khám (nếu có)
 
 		      \}
-
-		      & OK
-
-		      \\ \hline
-
-
-		      TC-3
-		      & Là người dùng của hệ thống
-		      & Trạng thái của notification là 1 hoặc 3
 		      &
 
 		      Status code: 200 OK
-
-			  Bỏ qua kiểm tra trùng lặp, tạo 2 thông báo và lưu.
 
 		      Response message:
 
