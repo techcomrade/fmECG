@@ -6,99 +6,81 @@
 \setcounter{figure}{0} %% LƯU Ý SAU MỖI LẦN GỌI BẢNG HAY HÌNH ẢNH PHẢI THÊM CÂU NÀY ĐỂ RESET THỨ TỰ
 \addcontentsline{toc}{section}{\numberline{}CHƯƠNG 3. THIẾT KẾ HỆ THỐNG}
 
-Trong chương này, chúng em sẽ trình bày về thiết kế hệ thống từ tổng quan đến chi tiết dựa trên phân tích từ Chương 2.
-Đầu tiên là xây dựng sơ đồ kiến trúc hệ thống.
-Sau đó thiết kế giao diện, chức năng cho website và server.
-Nội dung chính của chương tập trung vào các hình ảnh và sơ đồ mô tả từng luồng hoạt động của hệ thống.
-\subsection{Sơ đồ kiến trúc tổng quan của hệ thống}
+Chương này sẽ tập trung mô tả quá trình thiết kế hệ thống, từ cấu trúc tổng thể đến các thành phần chi tiết, dựa trên những phân tích đã thực hiện trong Chương 2.
+Mở đầu là xây dựng sơ đồ kiến trúc hệ thống.
+Tiếp theo, chương tập trung vào thiết kế giao diện người dùng và các chức năng chính cho app cùng server.
+Nội dung chính được thể hiện qua hình ảnh và sơ đồ minh họa, không chỉ mô tả chi tiết luồng hoạt động mà còn làm rõ cách các thành phần trong hệ thống phối hợp, hỗ trợ lẫn nhau.
+\subsection{Sơ đồ tổng quan kiến trúc của hệ thống}
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=12cm,height=18cm]{Images/System/fmECG_architecture-System_Architecture.drawio.png}
-  \caption[Kiến trúc tổng quan hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Kiến trúc tổng quan hệ thống}
-  \label{fmECG_architecture-System} %đặt tên cho ảnh
+	\centering
+	\includegraphics[width=12cm,height=16cm]{Images/System/fmECG_architecture-System_Architecture.drawio.png}
+	\caption[Tổng quan kiến trúc hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Tổng quan kiến trúc hệ thống}
+	\label{fmECG_architecture-System} %đặt tên cho ảnh
 \end{figure}
-Hệ thống được chia làm ba phần chính bao gồm Device (Thiết bị), Server (Máy chủ) và Application (Ứng dụng bao gồm: web và app).
-Mỗi thành phần đóng vai trò quan trọng trong việc vận hành tổng thể hệ thống trong hình vẽ
+Hệ thống bao gồm ba thành phần chính: Máy chủ (Server), Thiết bị (Device) và Ứng dụng (Web và App).
+Mỗi thành phần đảm nhiệm một vai trò quan trọng, cùng phối hợp để đảm bảo hoạt động của toàn bộ hệ thống như được minh họa trong hình vẽ.
 
-Hình \ref{fmECG_architecture-System} thể hiện ba phần: 
+Hình \ref{fmECG_architecture-System} thể hiện ba phần:
 
 \begin{adjustwidth}{1.5em}{}
-\begin{itemize}
-  \item Device (Thiết bị): Bao gồm thiết bị phần cứng đo điện tim, có thể kết nối với ứng dụng di động của bệnh nhân thông qua Bluetooth.
-  \item Application (Ứng dụng): Bao gồm ứng dụng di động và website cho bệnh nhân, bác sĩ, quản trị viên.
-  \item Server (Máy chủ): Bao gồm các Services để xử lý các yêu cầu gửi từ Application, cơ sở dữ liệu.
-\end{itemize}
+	\begin{itemize}
+		\item Device (Thiết bị): Gồm các thiết bị phần cứng đo các dữ liệu sức khỏe tim mạch, có khả năng kết nối với ứng dụng di động của bệnh nhân thông qua Bluetooth.
+		\item Application (Ứng dụng): Bao gồm ứng dụng di động và website, phục vụ nhu cầu sử dụng của bệnh nhân, bác sĩ và quản trị viên.
+		\item Server (Máy chủ): Chứa các dịch vụ (Services) xử lý yêu cầu từ ứng dụng và quản lý cơ sở dữ liệu.
+	\end{itemize}
 \end{adjustwidth}
 
-Hệ thống được thiết kế với sự tương tác trực tiếp giữa bệnh nhân và thiết bị thông qua ứng dụng di động. 
-Ứng dụng đóng vai trò trung gian, giao tiếp với máy chủ bằng API và giao thức HTTP. 
-Máy chủ chịu trách nhiệm xử lý dữ liệu thông qua các dịch vụ chuyên biệt. 
-Mỗi dịch vụ được thiết kế để xử lý một loại yêu cầu cụ thể, bao gồm cả việc truy vấn và cập nhật cơ sở dữ liệu, 
-trước khi trả kết quả về cho người dùng.\begin{adjustwidth}{1.5em}{}
-\begin{itemize}
-  \item User service: Xử lý các yêu cầu liên quan đến người dùng như đăng ký, đăng nhập, lấy thông tin cá nhân
-  \item Device service: Xử lý các tác vụ liên quan tới thiết bị như thêm, sửa, xoá thiết bị, cập nhật thông tin.
-  \item Storage service: Xử lý các tác vụ liên quan tới lưu trữ dữ liệu của hệ thống.
-  \item Record service: Xử lý các tác vụ liên quan tới bản ghi như thêm, sửa, xoá, xử lý dữ liệu file đo.
-  \item Message service: Xử lý các yêu cầu liên quan tới tin nhắn.
-  \item Authen service: Xử lý các tác vụ liên quan tới bảo mật như: mã hoá và cung cấp token, kiểm tra token, phân quyền truy cập api, mã hoá các dữ liệu nhạy cảm trước khi lưu trữ.
-  \item Statistic service: Xử lý các tác vụ liên quan tới thống kê như: thống kê người dùng, thiết bị, bản ghi.
-  \item Schedule service: Xử lý các tác vụ liên quan đến đặt lịch hẹn, phản hồi lịch.
-\end{itemize}
+Trong sơ đồ kiến trúc hệ thống, bệnh nhân sử dụng ứng dụng di động (Mobile App) để kết nối trực tiếp với thiết bị (Device).
+Ứng dụng di động thuộc Khối Ứng dụng (Application), chịu trách nhiệm giao tiếp với Khối Máy chủ (Server) thông qua các API và giao thức HTTP.
+Khi yêu cầu được nhận từ Application, Server sẽ thực hiện xử lý dữ liệu thông qua các dịch vụ (Services) được thiết kế riêng biệt.
+Tùy theo loại yêu cầu, các dịch vụ này sẽ truy xuất hoặc cập nhật dữ liệu trong cơ sở dữ liệu, sau đó gửi kết quả phản hồi cho người dùng,
+hoàn thiện quá trình tương tác giữa người dùng và hệ thống.\begin{adjustwidth}{1.5em}{}
+	\begin{itemize}
+		\item Authen Service: Đảm nhận các nhiệm vụ liên quan đến bảo mật hệ thống, bao gồm mã hóa dữ liệu nhạy cảm, tạo và xác minh token để đảm bảo tính an toàn khi truy cập,
+		      quản lý phân quyền người dùng đối với API,và thực hiện mã hóa thông tin trước khi lưu trữ nhằm ngăn chặn rò rỉ dữ liệu.
+		\item User Service: Xử lý toàn bộ các thao tác liên quan đến người dùng, như tạo tài khoản mới, xác minh thông tin đăng nhập, lấy thông tin cá nhân của người dùng,
+		      đồng thời hỗ trợ cập nhật và chỉnh sửa thông tin cá nhân khi cần thiết.
+		\item Device Service: Chịu trách nhiệm quản lý thiết bị, bao gồm các chức năng như thêm mới, chỉnh sửa thông tin, xóa thiết bị,
+		      và cập nhật tình trạng thiết bị hoặc thông số liên quan để đảm bảo thiết bị hoạt động đúng trong hệ thống.
+		\item Storage Service: Quản lý và vận hành hệ thống lưu trữ dữ liệu, bao gồm lưu trữ file, tài liệu, và các thông tin quan trọng của hệ thống.
+		      Đồng thời, đảm bảo tính nhất quán của dữ liệu thông qua cơ chế xử lý race condition, khóa truy cập và đồng bộ hóa dữ liệu trong các trường hợp truy cập đồng thời,
+		      cũng như tối ưu hóa hiệu suất lưu trữ và truy xuất dữ liệu.
+		\item Record Service: Xử lý các dữ liệu liên quan đến phiên đo, bao gồm thêm mới, cập nhật, xóa dữ liệu, và xử lý các file đo được từ thiết bị trước khi lưu trữ hoặc gửi đến người dùng.
+		\item Message Service: Quản lý toàn bộ các yêu cầu liên quan đến nhắn tin, bao gồm gửi, nhận, lưu trữ tin nhắn, hỗ trợ các nhóm trò chuyện giữa những người dùng trong hệ thống.
+		\item Schedule Service: Đảm nhiệm việc quản lý lịch khám, bao gồm đặt lịch và xử lý các phản hồi liên quan, nhằm đảm bảo quy trình đặt lịch diễn ra mượt mà giữa bệnh nhân, bác sĩ và hệ thống.
+		\item Diagnosis Service: Quản lý các tác vụ liên quan đến chẩn đoán, bao gồm thêm mới và chỉnh sửa thông tin chẩn đoán cho bệnh nhân, đảm bảo dữ liệu chính xác và hỗ trợ quá trình điều trị hiệu quả.
+		\item Notification Service: Đảm bảo quản lý hiệu quả các thông báo cho người dùng, từ việc gửi thông báo sự kiện, cảnh báo, đến nhắc nhở,
+		      giúp người dùng cập nhật kịp thời các thông tin quan trọng từ hệ thống.
+		\item Statistic Service: Chịu trách nhiệm tổng hợp số liệu thống kê trong hệ thống, bao gồm số lượng người dùng (bệnh nhân và bác sĩ),
+		      số thiết bị, và dữ liệu phiên đo theo từng tháng, nhằm cung cấp thông tin phục vụ quản lý hiệu quả.
+	\end{itemize}
 \end{adjustwidth}
 
 Sau đây là mô tả chi tiết về từng khối nhỏ hơn trong kiến trúc hệ thống, dựa trên các đối tượng đã được xác định trong hệ thống.
 \newpage
 \subsection{Sơ đồ khối phần mềm}
 
-\subsubsection{Ứng dụng di động dành cho bệnh nhân}
+\subsubsection{Application dành cho bệnh nhân}
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Patient-App.drawio.png}
-  \caption[Sơ đồ khối ứng dụng di động dành cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối ứng dụng di động dành cho bệnh nhân}
+  \caption[Sơ đồ khối application dành cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối ứng dụng di động dành cho bệnh nhân}
   \label{fmECG_architecture-Patient-App} %đặt tên cho ảnh
 \end{figure}
-% Lớp trên cùng trong sơ đồ hình \ref{fmECG_architecture-Patient} là lớp giao diện người dùng,
-% nơi người dùng trực tiếp tương tác với hệ thống, thực hiện các request thông qua API Adapter.
-
-% Sau đó các request được gửi đến lớp Application nơi chứa các Services để xử lý các request từ người dùng. 
-% Kết quả được trả về giao diện. Ở đây các services gồm có: 
-
-% \begin{adjustwidth}{1.5em}{}
-%   \begin{itemize}
-%     \item User service: Khối có nhiệm vụ xử lý thông tin cá nhân
-%     \item Device service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến mượn trả thiết bị.
-%     \item Schedule service: Khối có nhiệm vụ quản lý việc đặt lịch của bệnh nhân
-%     \item Record service: Khối có nhiệm vụ xử lý thông tin bản ghi
-%     \item Message service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ
-%     \item Storage service: Khối service đặc biệt có nhiệm vụ lưu thông tin vào bộ nhớ
-%   \end{itemize}
-% \end{adjustwidth}
 Tầng trên cùng trong sơ đồ hình \ref{fmECG_architecture-Patient-App} là User Interface (Giao diện người dùng), nơi bệnh nhân trực tiếp tương tác với hệ thống thông qua API Adapter để gửi yêu cầu và nhận phản hồi.
 Các yêu cầu này được xử lý bởi các Services chính, bao gồm User Service, Device Service, Record Service, Schedule Service, Diagnosis Service, Notification Service và Storage Service.
 
 Những Services này được thiết kế nhằm đáp ứng các nhu cầu của bệnh nhân, từ quản lý thông tin cá nhân, mượn và trả thiết bị, theo dõi lịch sử dữ liệu phiên đo, cho đến việc quản lý lịch khám,
 tra cứu thông tin chẩn đoán cho từng lịch khám. Ngoài ra, hệ thống còn đảm bảo việc gửi thông báo nhắc nhở kịp thời và hỗ trợ bệnh nhân trao đổi thông tin với bác sĩ một cách liền mạch và hiệu quả.
 
-\subsubsection{Ứng dụng di động dành cho bác sĩ}
+\subsubsection{Application dành cho bác sĩ}
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm,height=14cm]{Images/System/fmECG_architecture-Doctors.drawio.png}
-  \caption[Sơ đồ khối Ứng dụng dành cho bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối ứng dụng di động dành cho bác sĩ}
+  \caption[Sơ đồ khối application dành cho bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối ứng dụng di động dành cho bác sĩ}
   \label{fmECG_architecture-Doctor} %đặt tên cho ảnh
 \end{figure}
-% \begin{adjustwidth}{1.5em}{}
-%   \begin{itemize}
-%     \item User service: Khối có nhiệm vụ xử lý thông tin cá nhân
-%     \item Device service: Khối có nhiệm vụ xử lý các vấn đề liên quan đến mượn trả thiết bị.
-%     \item Schedule service: Khối có nhiệm vụ quản lý việc đặt lịch của bệnh nhân
-%     \item Record service: Khối có nhiệm vụ xử lý thông tin bản ghi
-%     \item Message service: Khối có nhiệm vụ quản lý việc chat, trao đổi thông tin với bác sĩ,
-%     trao đổi trong nhóm.
-%     \item Storage service: Khối service đặc biệt có nhiệm vụ lưu thông tin vào bộ nhớ
-%   \end{itemize}
-% \end{adjustwidth}
 Tương tự với bệnh nhân, sơ đồ hình \ref{fmECG_architecture-Doctor} được xây dựng để hỗ trợ bác sĩ thực hiện các nhiệm vụ chuyên môn thông qua giao diện người dùng và API Adapter, đảm bảo việc xử lý thông tin diễn ra nhanh chóng và hiệu quả.
 
 Các Services chính, bao gồm User Service, Device Service, Record Service, Schedule Service, Diagnosis Service, Notification Service và Storage Service, đóng vai trò quan trọng trong việc hỗ trợ bác sĩ.
@@ -114,7 +96,7 @@ Cách tiếp cận này không chỉ hỗ trợ bác sĩ tổ chức công việ
   \caption[Sơ đồ khối Website dành cho quản trị viên]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ khối Website dành cho quản trị viên}
   \label{fmECG_architecture-Admin} %đặt tên cho ảnh
 \end{figure}
-Về cơ bản, website dành cho admin có cấu trúc tương tự như website dành cho bác sĩ và bệnh nhân.
+Về cơ bản, website dành cho admin có cấu trúc tương tự như website hay là app dành cho bác sĩ và bệnh nhân.
 Admin sẽ có quyền quản lý toàn bộ thông tin người dùng, thiết bị, bản ghi.
 
 \subsection{Thiết kế cơ sở dữ liệu}
@@ -490,7 +472,7 @@ Các bảng đã được thiết kế theo nguyên tắc chuẩn hoá 3NF, vì 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm,height=15cm]{Images/system/fmECG_database.png}
+	\includegraphics[width=15cm,height=15cm]{Images/system/ERD-db-Page-2.drawio.png}
 	\caption[Sơ đồ ERD]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ ERD}
 	\label{fmECG_architecture-Database}
 \end{figure}
@@ -796,266 +778,484 @@ Về giao diện phần Hội thoại và Thông tin cá nhân sẽ được thi
 \end{figure}
 	\subsection{Thiết kế các chức năng}
 
-\subsubsection{Thiết kế các API cần thiết}
+	\subsubsection{Thiết kế các API cần thiết}
 
 
-\begin{enumerate}[a)]
-  \item API xác minh tài khoản
-
-  \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{4.6cm}
-    | >{\centering\arraybackslash}m{2.8cm}
-    | >{\raggedright\arraybackslash}X |
-    }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API xác minh tài khoản}
-    \label{table_api_auth}
-    \\
-    \hline
-    \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-    api/ecg/auth/create-account   &   POST  & Tạo mới tài khoản người dùng \\ \hline
-    api/ecg/auth/login   &    POST    & Đăng nhập vào hệ thống \\ \hline
-    api/ecg/auth/logout   &    POST    & Đăng xuất khỏi hệ thống \\ \hline
-  \end{xltabular}
-
-  \item API quản lý người dùng trong hệ thống
-  \begin{xltabular}{\textwidth}{
-    | >{\raggedright\arraybackslash}m{4.6cm}
-    | >{\centering\arraybackslash}m{2.8cm}
-    | >{\raggedright\arraybackslash}X |
-    }
-    \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý người dùng trong hệ thống}
-    \label{table_api_user}
-    \\
-    \hline
-    \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-    api/ecg/users   &   GET  &  Tra cứu danh sách tất cả người dùng trong hệ thống\\  \hline
-	api/ecg/users/doctors   &   GET  &  Tra cứu danh sách toàn bộ bác sĩ trong hệ thống \\  \hline
-	api/ecg/users/:id   &   GET  &  Tra cứu dữ liệu người dùng cụ thể dựa trên id tương ứng \\  \hline
-	api/ecg/users/data/patient-data   &   GET  &  Tra cứu danh sách các bệnh nhân đang được theo dõi của bác sĩ cụ thể \\  \hline
-	api/ecg/users/   &   PUT  &  Chỉnh sửa thông tin người dùng \\  \hline
-	api/ecg/users/:userId  &   DELETE  &  Xóa người dùng cụ thể dựa trên id tương ứng \\  \hline
-  \end{xltabular}
-
-\item API quản lý thiết bị y tế
-\begin{xltabular}{\textwidth}{
-  | >{\raggedright\arraybackslash}m{4.8cm}
-  | >{\centering\arraybackslash}m{2.8cm}
-  | >{\raggedright\arraybackslash}X |
-  }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý thiết bị y tế}
-  \label{table_api_device}
-  \\
-  \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-  api/ecg/device   &   GET  & Tra cứu danh sách toàn bộ thiết bị y tế trong hệ thống\\ \hline
-  api/ecg/devide/:id   &    GET    & Tra cứu thông tin chi tiết của một thiết bị y tế dựa trên id tương ứng \\ \hline
-  api/ecg/device/add &   POST     & Thêm mới thiết bị y tế \\ \hline
-  api/ecg/device-detail &   POST     & Thêm thông số kỹ thuật cho một thiết bị y tế \\ \hline
-  api/ecg/device/:deviceId  &     PUT   & Cập nhật thông tin chi tiết cho thiết bị y tế cụ thể \\ \hline
-  api/ecg/device/:deviceId  &     DELETE   & Xóa thiết bị y tế dựa trên id tương ứng \\ \hline
-  api/ecg/device-detail  &     PUT   & Cập nhật thông số kỹ thuật cho thiết bị y tế \\ \hline
-  api/ecg/device-detail/: detailId  &     PUT   & Xoá thông số kỹ thuật của thiết bị y tế \\ \hline
-\end{xltabular}
-
-\item API quản lý dữ liệu phiên đo
-\begin{xltabular}{\textwidth}{
-  | >{\raggedright\arraybackslash}p{5cm}
-  | >{\centering\arraybackslash}m{2.8cm}
-  | >{\raggedright\arraybackslash}X |
-  }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý dữ liệu phiên đo}
-  \label{table_api_record}
-  \\
-  \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả \\ \hline
-   api/ecg/records   &   GET  & Tra cứu dữ liệu tất cả các phiên đo \\ \hline
-   api/ecg/records/:id   &    GET    & Tra cứu dữ liệu phiên đo cụ thể dựa theo id tương ứng \\ \hline
-   api/ecg/records/data/ doctorId &   GET     & Tra cứu dữ liệu tất cả các phiên đo của bệnh nhân mà bác sĩ phụ trách \\ \hline
-   api/ecg/records/   &    POST    & Tạo dữ liệu phiên đo mới \\ \hline
-   api/ecg/records/   &    PUT    & Cập nhật dữ liệu phiên đo \\ \hline
-   api/ecg/records/:recordId  &    DELETE    & Xóa dữ liệu phiên đo dựa theo id tương ứng \\ \hline
-  \end{xltabular}
-
-
-\item API quản lý dịch vụ lịch khám
-\begin{xltabular}{\textwidth}{
-  | >{\raggedright\arraybackslash}m{4.5cm}
-  | >{\centering\arraybackslash}m{2.8cm}
-  | >{\raggedright\arraybackslash}X |
-  }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý dịch vụ lịch khám}
-  \label{table_api_schedule}
-  \\
-  \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-  api/ecg/schedules   &   GET  & Tra cứu danh sách tất cả lịch khám trong hệ thống \\ \hline
-  api/ecg/schedules/ doctorId  &    GET    & Tra cứu danh sách lịch khám của bác sĩ cụ thể \\ \hline
-  api/ecg/schedules/ patientId  &    GET    & Tra cứu danh sách lịch khám của bệnh nhân cụ thể \\ \hline
-  api/ecg/schedules/create-by-doctor  &    POST    & Cho phép bác sĩ đặt lịch tái khám cho bệnh nhân \\ \hline
-  api/ecg/schedules/create-by-patient  &    POST    & Cho phép bệnh nhân đặt lịch khám với bác sĩ \\ \hline
-  api/ecg/schedules/time/ available-doctor/: schedule-time  &    GET    & Tra cứu danh sách các bác sĩ khả dụng theo thời gian đã chọn \\ \hline
-  api/ecg/schedules/ available-schedule/:id  &    GET    & Tra cứu các khung giờ trống có thể đặt lịch với bác sĩ cụ thể. \\ \hline
-  api/ecg/schedules/accept-schedule  &    PUT    & Chấp nhận lịch khám cụ thể \\ \hline
-  api/ecg/schedules/reject-schedule/:id  &    DELETE    & Từ chối lịch khám cụ thể \\ \hline
-  \end{xltabular}
-
-\item API liên quan đến chẩn đoán cho bệnh nhân
-\begin{xltabular}{\textwidth}{
-  | >{\raggedright\arraybackslash}m{4.5cm}
-  | >{\centering\arraybackslash}m{2.8cm}
-  | >{\raggedright\arraybackslash}X |
-  }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến chẩn đoán cho bệnh nhân}
-  \label{table_api_diagnosis}
-  \\
-  \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-  api/ecg/diagnosis   &   POST  & Tạo chẩn đoán mới cho bệnh nhân \\ \hline
-  api/ecg/diagnosis/ schedule/:scheduleId   &   POST  & Tra cứu thông tin chẩn đoán dựa trên id lịch khám tương ứng\\ \hline
-  api/ecg/diagnosis/update   &   POST  & Cập nhật thông tin chẩn đoán \\ \hline
-  \end{xltabular}
-
-
-\item API liên quan đến thông báo về lịch khám
-\begin{xltabular}{\textwidth}{
-  | >{\raggedright\arraybackslash}m{4.5cm}
-  | >{\centering\arraybackslash}m{2.8cm}
-  | >{\raggedright\arraybackslash}X |
-  }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến thông báo về lịch khám}
-  \label{table_api_notification}
-  \\
-  \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-  api/ecg/notification/get   &   GET  & Tra cứu tất cả các thông báo của người dùng cụ thể  \\ \hline
-  api/ecg/notification   &   POST  & Tạo thông báo mới liên quan đến lịch khám \\ \hline
-  api/ecg/notification/ update-seen   &   POST  & Cập nhật trạng thái thông báo đã được xem\\ \hline
-  api/ecg/notification/:id   &   DELETE  & Xóa thông báo dựa trên id tương ứng\\ \hline
-  \end{xltabular}
-
-\item API liên quan đến tin nhắn
-\begin{xltabular}{\textwidth}{
-  | >{\raggedright\arraybackslash}m{4.5cm}
-  | >{\centering\arraybackslash}m{2.8cm}
-  | >{\raggedright\arraybackslash}X |
-  }
-  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin nhắn}
-  \label{table_api_chat}
-  \\
-  \hline
-  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
-  api/ecg/groupChat   &   POST  & Tạo nhóm trò chuyện mới  \\ \hline
-  api/ecg/groupChat   &   GET  & Tra cứu danh sách các nhóm trò chuyện của người dùng  \\ \hline
-  api/ecg/chat/messages/: groupChatId   &   GET  & Tra cứu lịch sử trò chuyện của các đoạn hội thoại đã thực hiện \\ \hline
-  api/ecg/chat/send   &   POST  & Cho phép người dùng gửi tin nhắn đến các đối tượng liên quan \\ \hline
-  \end{xltabular}
-\end{enumerate}
-
-
-\subsubsection{Sơ đồ tuần tự API}
+	\begin{enumerate}[a)]
+		\item API xác minh tài khoản
+	
+		\begin{xltabular}{\textwidth}{
+		  | >{\raggedright\arraybackslash}m{4.6cm}
+		  | >{\centering\arraybackslash}m{2.8cm}
+		  | >{\raggedright\arraybackslash}X |
+		  }
+		  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API xác minh tài khoản}
+		  \label{table_api_auth}
+		  \\
+		  \hline
+		  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+		  api/ecg/auth/create-account   &   POST  & Tạo mới tài khoản người dùng \\ \hline
+		  api/ecg/auth/login   &    POST    & Đăng nhập vào hệ thống \\ \hline
+		  api/ecg/auth/logout   &    POST    & Đăng xuất khỏi hệ thống \\ \hline
+		\end{xltabular}
+	  
+		\item API quản lý người dùng trong hệ thống
+		\begin{xltabular}{\textwidth}{
+		  | >{\raggedright\arraybackslash}m{4.6cm}
+		  | >{\centering\arraybackslash}m{2.8cm}
+		  | >{\raggedright\arraybackslash}X |
+		  }
+		  \caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý người dùng trong hệ thống}
+		  \label{table_api_user}
+		  \\
+		  \hline
+		  \bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+		  api/ecg/users   &   GET  &  Tra cứu danh sách tất cả người dùng trong hệ thống\\  \hline
+		  api/ecg/users/doctors   &   GET  &  Tra cứu danh sách toàn bộ bác sĩ trong hệ thống \\  \hline
+		  api/ecg/users/:id   &   GET  &  Tra cứu dữ liệu người dùng cụ thể dựa trên id tương ứng \\  \hline
+		  api/ecg/users/data/patient-data   &   GET  &  Tra cứu danh sách các bệnh nhân đang được theo dõi của bác sĩ cụ thể \\  \hline
+		  api/ecg/users/data/doctor-id   &   GET  &  Tra cứu thông tin của bác sĩ phụ trách bệnh nhân \\  \hline
+		  api/ecg/users/   &   PUT  &  Chỉnh sửa thông tin người dùng \\  \hline
+		  api/ecg/users/:userId  &   DELETE  &  Xóa người dùng cụ thể dựa trên id tương ứng \\  \hline
+		\end{xltabular}
+	  
+	  \item API quản lý thiết bị y tế
+	  \begin{xltabular}{\textwidth}{
+		| >{\raggedright\arraybackslash}m{4.8cm}
+		| >{\centering\arraybackslash}m{2.8cm}
+		| >{\raggedright\arraybackslash}X |
+		}
+		\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý thiết bị y tế}
+		\label{table_api_device}
+		\\
+		\hline
+		\bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+		api/ecg/device   &   GET  & Tra cứu danh sách toàn bộ thiết bị y tế trong hệ thống\\ \hline
+		api/ecg/devide/:id   &    GET    & Tra cứu thông tin chi tiết của một thiết bị y tế dựa trên id tương ứng \\ \hline
+		api/ecg/device/add &   POST     & Thêm mới thiết bị y tế \\ \hline
+		api/ecg/device/update  &     PUT   & Cập nhật thông tin chi tiết cho thiết bị y tế cụ thể \\ \hline
+		api/ecg/device/:deviceId  &     DELETE   & Xóa thiết bị y tế dựa trên id tương ứng \\ \hline
+	  \end{xltabular}
+	  
+	  \item API quản lý dữ liệu phiên đo
+	  \begin{xltabular}{\textwidth}{
+		| >{\raggedright\arraybackslash}p{5cm}
+		| >{\centering\arraybackslash}m{2.8cm}
+		| >{\raggedright\arraybackslash}X |
+		}
+		\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý dữ liệu phiên đo}
+		\label{table_api_record}
+		\\
+		\hline
+		\bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả \\ \hline
+		 api/ecg/records   &   GET  & Tra cứu danh sách các dữ liệu phiên đo \\ \hline
+		 api/ecg/records/:id   &    GET    & Tra cứu dữ liệu phiên đo cụ thể dựa theo id tương ứng \\ \hline
+		 api/ecg/records/data/ doctor &   GET     & Tra cứu danh sách các dữ liệu phiên đo của bệnh nhân mà bác sĩ phụ trách \\ \hline
+		 api/ecg/records/data/ patient &   GET     & Tra cứu danh sách dữ liệu các phiên đo cá nhân \\ \hline
+		 api/ecg/records/   &    POST    & Tạo dữ liệu phiên đo mới \\ \hline
+		 api/ecg/records/   &    PUT    & Cập nhật dữ liệu phiên đo \\ \hline
+		 api/ecg/records/:recordId  &    DELETE    & Xóa dữ liệu phiên đo dựa theo id tương ứng \\ \hline
+		\end{xltabular}
+	  
+	  
+	  \item API quản lý dịch vụ lịch khám
+	  \begin{xltabular}{\textwidth}{
+		| >{\raggedright\arraybackslash}m{4.5cm}
+		| >{\centering\arraybackslash}m{2.8cm}
+		| >{\raggedright\arraybackslash}X |
+		}
+		\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API quản lý dịch vụ lịch khám}
+		\label{table_api_schedule}
+		\\
+		\hline
+		\bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+		api/ecg/schedules   &   GET  & Tra cứu danh sách tất cả lịch khám trong hệ thống \\ \hline
+		api/ecg/schedules/ doctor-id  &    GET    & Tra cứu danh sách lịch khám của bác sĩ cụ thể \\ \hline
+		api/ecg/schedules/ patient-id  &    GET    & Tra cứu danh sách lịch khám của bệnh nhân cụ thể \\ \hline
+		api/ecg/schedules/create-by-doctor  &    POST    & Cho phép bác sĩ đặt lịch tái khám cho bệnh nhân \\ \hline
+		api/ecg/schedules/create-by-patient  &    POST    & Cho phép bệnh nhân đặt lịch khám với bác sĩ \\ \hline
+		api/ecg/schedules/time/ available-doctor/: schedule-time  &    GET    & Tra cứu danh sách các bác sĩ khả dụng theo thời gian đã chọn \\ \hline
+		api/ecg/schedules/ available-schedule/:id  &    GET    & Tra cứu các khung giờ trống có thể đặt lịch với bác sĩ cụ thể. \\ \hline
+		api/ecg/schedules/accept-schedule  &    PUT    & Chấp nhận lịch khám cụ thể \\ \hline
+		api/ecg/schedules/reject-schedule/:id  &    DELETE    & Từ chối lịch khám cụ thể \\ \hline
+		\end{xltabular}
+	  
+	  \item API liên quan đến chẩn đoán cho bệnh nhân
+	  \begin{xltabular}{\textwidth}{
+		| >{\raggedright\arraybackslash}m{4.5cm}
+		| >{\centering\arraybackslash}m{2.8cm}
+		| >{\raggedright\arraybackslash}X |
+		}
+		\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến chẩn đoán cho bệnh nhân}
+		\label{table_api_diagnosis}
+		\\
+		\hline
+		\bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+		api/ecg/diagnosis   &   POST  & Tạo chẩn đoán mới cho bệnh nhân \\ \hline
+		api/ecg/diagnosis/ schedule/:scheduleId   &   POST  & Tra cứu thông tin chẩn đoán dựa trên id lịch khám tương ứng\\ \hline
+		api/ecg/diagnosis/update   &   POST  & Cập nhật thông tin chẩn đoán \\ \hline
+		\end{xltabular}
+	  
+	  
+	  \item API liên quan đến thông báo về lịch khám
+	  \begin{xltabular}{\textwidth}{
+		| >{\raggedright\arraybackslash}m{4.5cm}
+		| >{\centering\arraybackslash}m{2.8cm}
+		| >{\raggedright\arraybackslash}X |
+		}
+		\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến thông báo về lịch khám}
+		\label{table_api_notification}
+		\\
+		\hline
+		\bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+		api/ecg/notification/get   &   GET  & Tra cứu tất cả các thông báo của người dùng cụ thể  \\ \hline
+		api/ecg/notification   &   POST  & Tạo thông báo mới liên quan đến lịch khám \\ \hline
+		api/ecg/notification/ update-seen   &   POST  & Cập nhật trạng thái thông báo đã được xem\\ \hline
+		api/ecg/notification/:id   &   DELETE  & Xóa thông báo dựa trên id tương ứng\\ \hline
+		\end{xltabular}
+	  
+	  \item API liên quan đến tin nhắn
+	  \begin{xltabular}{\textwidth}{
+		| >{\raggedright\arraybackslash}m{4.5cm}
+		| >{\centering\arraybackslash}m{2.8cm}
+		| >{\raggedright\arraybackslash}X |
+		}
+		\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng API liên quan đến tin nhắn}
+		\label{table_api_chat}
+		\\
+		\hline
+		\bfseries Đường dẫn    &\bfseries Phương thức    &\bfseries Mô tả\\ \hline
+		api/ecg/groupChat   &   POST  & Tạo nhóm trò chuyện mới  \\ \hline
+		api/ecg/groupChat   &   GET  & Tra cứu danh sách các nhóm trò chuyện của người dùng  \\ \hline
+		api/ecg/chat/messages/: groupChatId   &   GET  & Tra cứu lịch sử trò chuyện của các đoạn hội thoại đã thực hiện \\ \hline
+		api/ecg/chat/send   &   POST  & Cho phép người dùng gửi tin nhắn đến các đối tượng liên quan \\ \hline
+		\end{xltabular}
+	\end{enumerate}
+	
+	
+	\subsubsection{Sơ đồ tuần tự API}
 Phần này cung cấp các sơ đồ tuần tự minh họa chi tiết cách thức hoạt động của các API trong hệ thống.
 Dựa trên bảng API đã thiết kế, các sơ đồ tuần tự sẽ mô phỏng luồng xử lý từ khi nhận yêu cầu đến khi trả về kết quả cho người dùng,
 cho thấy rõ sự tương tác giữa các thành phần và lớp chức năng trong hệ thống.
 % ------------------------Auth----------------------
 
 \paragraph{Các API phục vụ mục đích xác minh tài khoản}
+\mbox{}
+
 \begin{figure}[H]
 	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\includegraphics[width=16cm]{Images/api_sequence/authen/authentication-register.drawio.png}
 	\caption[Sơ đồ tuần tự API tạo mới tài khoản người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tạo mới tài khoản người dùng}
 	\label{sequence_diagram_create_account}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\includegraphics[width=16cm]{Images/api_sequence/authen/authentication-login.drawio.png}
 	\caption[Sơ đồ tuần tự API đăng nhập vào hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API đăng nhập vào hệ thống}
 	\label{sequence_diagram_login}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
-	\caption[Sơ đồ tuần tự API đăng xuất khỏi hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API đăng xuất khỏi hệ thống}
-	\label{sequence_diagram_logout}
-\end{figure}
 
-% ------------------------User----------------------
+% % ------------------------User----------------------
 \paragraph{Các API phục vụ mục đích quản lý người dùng trong hệ thống}
+\mbox{}
 \begin{figure}[H]
 	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\includegraphics[width=16cm]{Images/api_sequence/user/getAllUsers.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu danh sách tất cả người dùng trong hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách tất cả người dùng trong hệ thống}
 	\label{sequence_diagram_get_all_users}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\includegraphics[width=16cm]{Images/api_sequence/user/getAllDoctors.drawio.png}
 	\caption[Sơ đồ tuần tự API tra cứu danh sách toàn bộ bác sĩ trong hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách toàn bộ bác sĩ trong hệ thống}
 	\label{sequence_diagram_get_all_doctors}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
-	\caption[Sơ đồ tuần tự API tra cứu dữ liệu người dùng cụ thể dựa trên id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu người dùng cụ thể dựa trên id}
+	\includegraphics[width=16cm]{Images/api_sequence/user/getUserById.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu của thông tin người dùng cụ thể dựa trên id tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu thông tin của người dùng cụ thể dựa trên id tương ứng}
 	\label{sequence_diagram_get_user_by_id}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
-	\caption[Sơ đồ tuần tự API tra cứu danh sách bệnh nhân đang được theo dõi]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách bệnh nhân đang được theo dõi}
+	\includegraphics[width=16cm]{Images/api_sequence/user/getPatientByDoctorId.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách bệnh nhân đang được theo dõi của bác sĩ cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách bệnh nhân đang được theo dõi của bác sĩ cụ thể}
 	\label{sequence_diagram_get_patient_data}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
-	\caption[Sơ đồ tuần tự API chỉnh sửa thông tin người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API chỉnh sửa thông tin người dùng}
+	\includegraphics[width=16cm]{Images/api_sequence/user/getDoctorByPatientId.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu thông tin của bác sĩ phụ trách bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu thông tin của bác sĩ phụ trách bệnh nhân}
+	\label{sequence_diagram_get_doctor_data}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/user/updateUserById.drawio.png}
+	\caption[Sơ đồ tuần tự API chỉnh sửa thông tin của người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API thay đổi thông tin của người dùng}
 	\label{sequence_diagram_update_user}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
-	\caption[Sơ đồ tuần tự API xóa người dùng cụ thể dựa trên id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa người dùng cụ thể dựa trên id}
+	\includegraphics[width=16cm]{Images/api_sequence/user/deleteUserById.drawio.png}
+	\caption[Sơ đồ tuần tự API xóa người dùng cụ thể dựa trên id tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa người dùng cụ thể dựa trên id tương ứng}
 	\label{sequence_diagram_delete_user}
 \end{figure}
 
-% ------------------------Device----------------------
+% % ------------------------Device----------------------
 \paragraph{Các API phục vụ mục đích quản lý thiết bị y tế}
+\mbox{}
 \begin{figure}[H]
 	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
-	\caption[Sơ đồ tuần tự API tra cứu danh sách toàn bộ thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách toàn bộ thiết bị y tế}
+	\includegraphics[width=16cm]{Images/api_sequence/device/device-GetAllDevice.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách toàn bộ thiết bị y tế trong hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách toàn bộ thiết bị y tế trong hệ thống}
 	\label{sequence_diagram_get_all_devices}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
-	\caption[Sơ đồ tuần tự API tra cứu thông tin chi tiết thiết bị y tế dựa trên id]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu thông tin chi tiết thiết bị y tế dựa trên id}
-	\label{sequence_diagram_get_device_by_id}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
+	\includegraphics[width=16cm]{Images/api_sequence/device/device-Add.drawio.png}
 	\caption[Sơ đồ tuần tự API thêm mới thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API thêm mới thiết bị y tế}
 	\label{sequence_diagram_add_device}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	% \includegraphics[width=15cm,height=15cm]{Images/sequence_api/}
-	\caption[Sơ đồ tuần tự API thêm thông số kỹ thuật cho nột thiết bị y tế]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API thêm thông số kỹ thuật cho một thiết bị y tế}
+	\includegraphics[width=16cm]{Images/api_sequence/device/device-GetDeviceById.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu thông tin chi tiết một thiết bị y tế dựa trên id tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu thông tin chi tiết một thiết bị y tế dựa trên id tương ứng}
 	\label{sequence_diagram_add_device}
 \end{figure}
 
-\subsection{Kết luận chương}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/device/device-updateDevice.drawio.png}
+	\caption[ Sơ đồ tuần tự API chỉnh sửa thông tin chi tiết cho thiết bị y tế cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont  Sơ đồ tuần tự API chỉnh sửa thông tin chi tiết cho thiết bị y tế cụ thể}
+	\label{sequence_diagram_update_device}
+\end{figure}
 
-Chương 3 trình bày chi tiết về quá trình thiết kế hệ thống, bao gồm kiến trúc tổng thể và các thành phần cụ thể.
-Thiết kế hệ thống tập trung vào việc xây dựng kiến trúc vận hành hiệu quả và mượt mà, chú trọng vào tính bảo mật, hiệu suất và khả năng mở rộng tối ưu.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/device/device-Add.drawio.png}
+	\caption[Sơ đồ tuần tự API xóa thiết bị y tế dựa trên id tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa thiết bị y tế dựa trên id tương ứng}
+	\label{sequence_diagram_get_device_by_id}
+\end{figure}
+% % ------------------------Record----------------------
+\paragraph{Các API phục vụ mục đích liên quan đến dữ liệu phiên đo}
+\mbox{}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/record/getAllRecord.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách các dữ liệu phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách các dữ liệu phiên đo}
+	\label{sequence_diagram_get_all_records}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/record/getRecordById.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu dữ liệu phiên đo cụ thể theo id tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu dữ liệu phiên đo cụ thể theo id tương ứng}
+	\label{sequence_diagram_get_record_by_id}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/record/getRecordByDoctorId.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách các dữ liệu phiên đo của bệnh nhân mà bác sĩ phụ trách]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách các dữ liệu phiên đo của bệnh nhân mà bác sĩ phụ trách}
+	\label{sequence_diagram_get_record_by_doctor_id}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/record/getRecordByPatientId.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách dữ liệu các phiên đo cá nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách dữ liệu các phiên đo cá nhân}
+	\label{sequence_diagram_get_record_by_patient_id}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/record/createRecord.drawio.png}
+	\caption[Sơ đồ tuần tự API tạo dữ liệu phiên đo mới]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tạo dữ liệu phiên đo mới}
+	\label{sequence_diagram_create_record}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/record/updateRecordById.drawio.png}
+	\caption[Sơ đồ tuần tự API cập nhật dữ liệu phiên đo]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cập nhật dữ liệu phiên đo}
+	\label{sequence_diagram_update_record}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/record/deleteRecordByID.drawio.png}
+	\caption[Sơ đồ tuần tự API xóa dữ liệu phiên đo theo id tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa dữ liệu phiên đo theo id tương ứng}
+	\label{sequence_diagram_delete_record}
+\end{figure}
+
+% % ------------------------Schedule----------------------
+\paragraph{Các API phục vụ mục đích quản lý dịch vụ lịch khám}
+\mbox{}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/schedule/getAllSchedules.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách tất cả lịch khám trong hệ thống]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách tất cả lịch khám trong hệ thống}
+	\label{sequence_diagram_get_schedule}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/schedule/getScheduleByDoctorId.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách lịch khám của bác sĩ cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách lịch khám của bác sĩ cụ thể}
+	\label{sequence_diagram_get_schedule_by_doctor}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/schedule/getScheduleByPatientId.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu danh sách lịch khám của bệnh nhân cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu danh sách lịch khám của bệnh nhân cụ thể}
+	\label{sequence_diagram_get_schedule_by_patient}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/schedule/createScheduleByDoctor.drawio.png}
+	\caption[Sơ đồ tuần tự API cho phép bác sĩ đặt lịch tái khám cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cho phép bác sĩ đặt lịch tái khám cho bệnh nhân}
+	\label{sequence_diagram_create_schedule_by_doctor}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/schedule/createScheduleByPatient.drawio.png}
+	\caption[Sơ đồ tuần tự API cho phép bệnh nhân đặt lịch khám với bác sĩ]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cho phép bệnh nhân đặt lịch khám với bác sĩ}
+	\label{sequence_diagram_create_schedule_by_patient}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/schedule/getAvailableScheduleByDoctorId.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu các khung giờ trống có thể đặt lịch với bác sĩ cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu các khung giờ trống có thể đặt lịch với bác sĩ cụ thể}
+	\label{sequence_diagram_get_available_by_doctor}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/schedule/getAvailableDoctorByScheduleTime.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu các bác sĩ khả dụng theo thời gian đã chọn]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu các bác sĩ khả dụng theo thời gian đã chọn}
+	\label{sequence_diagram_get_available_with_time}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/schedule/acceptSchedule.drawio.png}
+	\caption[Sơ đồ tuần tự API chấp nhận lịch khám cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API chấp nhận lịch khám cụ thể}
+	\label{sequence_diagram_accept_schedule}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/schedule/deleteScheduleById.drawio.png}
+	\caption[Sơ đồ tuần tự API từ chối lịch khám cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API bác sĩ từ chối lịch khám cụ thể}
+	\label{sequence_diagram_reject_schedule}
+\end{figure}
+
+% % ------------------------Diag----------------------
+\paragraph{Các API phục vụ mục đích liên quan đến chẩn đoán}
+\mbox{}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/diag/getByScheduleId.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu thông tin chẩn đoán dựa trên id lịch khám tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu thông tin chẩn đoán dựa trên id lịch khám tương ứng}
+	\label{sequence_diagram_get_diagnosis_by_schedule}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/diag/create.drawio.png}
+	\caption[Sơ đồ tuần tự API tạo chẩn đoán mới cho bệnh nhân]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tạo chẩn đoán mới cho bệnh nhân}
+	\label{sequence_diagram_create_diagnosis}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/diag/update.drawio.png}
+	\caption[Sơ đồ tuần tự API cập nhật thông tin chẩn đoán]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cập nhật thông tin chẩn đoán}
+	\label{sequence_diagram_update_diagnosis}
+\end{figure}
+
+% % ------------------------Noti----------------------
+\paragraph{Các API phục vụ mục đích liên quan đến thông báo}
+\mbox{}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/noti/getNotificationByUserId.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu tất cả thông báo của người dùng cụ thể]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu tất cả thông báo của người dùng cụ thể}
+	\label{sequence_diagram_get_notification_by_user}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/noti/createNotification.drawio.png}
+	\caption[Sơ đồ tuần tự API tạo thông báo mới liên quan đến lịch khám]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tạo thông báo mới liên quan đến lịch khám}
+	\label{sequence_diagram_create_notification}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/noti/updateSeenStatus.drawio.png}
+	\caption[Sơ đồ tuần tự API cập nhật trạng thái thông báo đã được xem]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API cập nhật trạng thái thông báo đã được xem}
+	\label{sequence_diagram_update_seen}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/noti/deleteNotification.drawio.png}
+	\caption[Sơ đồ tuần tự API xóa thông báo dựa trên id tương ứng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API xóa thông báo dựa trên id tương ứng}
+	\label{sequence_diagram_delete_notification}
+\end{figure}
+% % ------------------------Chat----------------------
+\paragraph{Các API phục vụ mục đích liên quan đến tin nhắn}
+\mbox{}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/chat/loadMessages.drawio.png}
+	\caption[Sơ đồ tuần tự API tra cứu lịch sử trò chuyện của các đoạn hội thoại đã thực hiện]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tra cứu lịch sử trò chuyện của các đoạn hội thoại đã thực hiện}
+	\label{sequence_diagram_load_chat}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/chat/sendMessage.drawio.png}
+	\caption[Sơ đồ tuần tự API ch o phép người dùng gửi tin nhắn đến các đối tượng liên quan]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API ch o phép người dùng gửi tin nhắn đến các đối tượng liên quan}
+	\label{sequence_diagram_send_chat}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/chat/createGroupChat.drawio.png}
+	\caption[Sơ đồ tuần tự API tạo nhóm trò chuyện mới]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API tạo nhóm trò chuyện mới}
+	\label{sequence_diagram_create_group_chat}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{Images/api_sequence/chat/getGroupChat.drawio.png}
+	\caption[Sơ đồ tuần tự API lấy danh sách nhóm trò chuyện của người dùng]{\bfseries \fontsize{12pt}{0pt}\selectfont Sơ đồ tuần tự API lấy danh sách nhóm trò chuyện của người dùng}
+	\label{sequence_diagram_get_group_chat}
+\end{figure}
+Phần này cung cấp các sơ đồ tuần tự minh họa chi tiết cách thức hoạt động của các API trong hệ thống.
+Dựa trên bảng API đã thiết kế, các sơ đồ tuần tự sẽ mô phỏng luồng xử lý từ khi nhận yêu cầu đến khi trả về kết quả cho người dùng,
+cho thấy rõ sự tương tác giữa các thành phần và lớp chức năng trong hệ thống.
+
+\subsection{Kết luận}
+
+Chương này tập trung mô tả chi tiết quá trình thiết kế hệ thống, từ kiến trúc tổng quan đến các thành phần cụ thể.
+Quá trình thiết kế hướng đến việc xây dựng một kiến trúc hoạt động hiệu quả, đảm bảo sự mượt mà trong vận hành,
+đồng thời ưu tiên các yếu tố như bảo mật, hiệu suất cao và khả năng mở rộng linh hoạt.
 \newpage
