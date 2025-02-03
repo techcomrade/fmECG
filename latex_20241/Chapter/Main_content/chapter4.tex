@@ -49,14 +49,14 @@ TypeScript mang lại nhiều lợi ích cho việc phát triển server của c
 \begin{itemize}
 	\item Kiểu tĩnh giúp phát hiện lỗi ngay trong quá trình viết code, giúp tiết kiệm thời gian kiểm thử và sửa lỗi.
 	\item Code dễ đọc và dễ bảo trì hơn với kiểu dữ liệu rõ ràng, giúp tăng hiệu suất và chất lượng code.
-	\item Các công cụ và thư viện hỗ trợ mạnh mẽ từ TypeScript, giúp phát triển ứng dụng nhanh chóng và hiệu quả.
+	\item Công cụ và thư viện hỗ trợ mạnh mẽ như NestJS \cite{nestjs}, giúp phát triển ứng dụng nhanh chóng và hiệu quả.
 	\item Hỗ trợ OOP giúp chúng em xây dựng ứng dụng theo mô hình hướng đối tượng, dễ dàng mở rộng và bảo trì.
 \end{itemize}
 
 \paragraph{NodeJS}
 \mbox{}
 
-NodeJS (hay Node.js) là một môi trường chạy (runtime environment) cho JavaScript, cho phép bạn thực thi mã JavaScript bên ngoài trình duyệt web. Điều này giúp chúng em có thể sử dụng JavaScript để viết các ứng dụng phía máy chủ (back-end), các công cụ dòng lệnh, và nhiều thứ khác, thay vì chỉ giới hạn trong việc viết mã chạy trên trình duyệt (front-end).
+NodeJS (hay Node.js) là một môi trường chạy (runtime environment) cho JavaScript \cite{nodejs}, cho phép bạn thực thi mã JavaScript bên ngoài trình duyệt web. Điều này giúp chúng em có thể sử dụng JavaScript để viết các ứng dụng phía máy chủ (back-end), các công cụ dòng lệnh, và nhiều thứ khác, thay vì chỉ giới hạn trong việc viết mã chạy trên trình duyệt (front-end).
 
 \begin{figure}[H]
 	\centering
@@ -77,9 +77,9 @@ Một số đặc điểm chính của NodeJS:
 \paragraph{MySQL}
 \mbox{}
 
-MySQL là một hệ quản trị cơ sở dữ liệu quan hệ (RDBMS) mã nguồn mở phổ biến, được phát triển và duy trì bởi Oracle Corporation. Nó sử dụng Ngôn ngữ truy vấn cấu trúc (SQL) để quản lý và thao tác dữ liệu. MySQL lưu trữ dữ liệu trong các bảng, được tổ chức thành các cơ sở dữ liệu. Các bảng có thể liên kết với nhau thông qua các khóa, tạo thành mối quan hệ giữa các dữ liệu.
+MySQL là một hệ quản trị cơ sở dữ liệu quan hệ (RDBMS) với mã nguồn mở phổ biến \cite{mysql}, được phát triển và duy trì bởi Oracle Corporation. Nó sử dụng Ngôn ngữ truy vấn cấu trúc (SQL) để quản lý và thao tác dữ liệu. MySQL lưu trữ dữ liệu trong các bảng, được tổ chức thành các cơ sở dữ liệu. Các bảng có thể liên kết với nhau thông qua các khóa, tạo thành mối quan hệ giữa các dữ liệu.
 
-MySQL nổi tiếng với tốc độ, độ tin cậy và tính dễ sử dụng. Nó được sử dụng rộng rãi trong các ứng dụng web, ứng dụng doanh nghiệp và các hệ thống nhúng. MySQL hỗ trợ nhiều hệ điều hành, bao gồm Windows, Linux, macOS và Unix. Nó cũng tương thích với nhiều ngôn ngữ lập trình, như PHP, Java, Python và C++.
+MySQL nổi tiếng với tốc độ, độ tin cậy và tính dễ sử dụng. Nó được sử dụng rộng rãi trong các ứng dụng web, ứng dụng doanh nghiệp và các hệ thống nhúng. MySQL tương thích với nhiều hệ điều hành và nhiều ngôn ngữ lập trình, như PHP, Java, Python và C++.
 
 MySQL là một phần mềm mã nguồn mở, cho phép người dùng sử dụng, phân phối và sửa đổi mã nguồn một cách tự do theo các điều khoản của Giấy phép Công cộng GNU. Điều này đã góp phần vào sự phổ biến và phát triển của MySQL trong cộng đồng các nhà phát triển. Nó cung cấp nhiều tính năng mạnh mẽ, bao gồm bảo mật dữ liệu, sao lưu và phục hồi, và khả năng mở rộng.
 
@@ -96,7 +96,7 @@ MySQL là một phần mềm mã nguồn mở, cho phép người dùng sử d�
 
 MongoDB là một hệ quản trị cơ sở dữ liệu NoSQL mã nguồn mở, được thiết kế để xử lý dữ liệu lớn, dữ liệu phi cấu trúc và bán cấu trúc một cách hiệu quả. Thay vì sử dụng các bảng và hàng như trong cơ sở dữ liệu quan hệ (SQL), MongoDB sử dụng các tài liệu (documents) theo định dạng JSON (JavaScript Object Notation) để lưu trữ dữ liệu. Điều này mang lại sự linh hoạt cao trong việc xử lý các loại dữ liệu khác nhau. MongoDB được phát triển và duy trì bởi MongoDB Inc.
 
-Đặc điểm nổi bật của MongoDB là khả năng mở rộng linh hoạt theo chiều ngang (horizontal scaling) thông qua sharding, cho phép phân tán dữ liệu trên nhiều máy chủ, giúp xử lý lượng dữ liệu lớn và tăng hiệu suất. MongoDB thường được sử dụng trong các ứng dụng web hiện đại, ứng dụng di động, phân tích dữ liệu lớn và các ứng dụng yêu cầu tốc độ và khả năng mở rộng cao.
+Đặc điểm nổi bật của MongoDB là khả năng mở rộng linh hoạt theo chiều ngang (horizontal scaling) thông qua sharding, cho phép phân tán dữ liệu trên nhiều máy chủ, giúp xử lý lượng dữ liệu lớn và tăng hiệu suất. MongoDB thường được sử dụng trong các ứng dụng web hiện đại, ứng dụng di động, phân tích dữ liệu lớn và các ứng dụng yêu cầu tốc độ và khả năng mở rộng cao \cite{mongodb}.
 
 \begin{figure}[H]
 	\centering
@@ -109,7 +109,7 @@ MongoDB là một hệ quản trị cơ sở dữ liệu NoSQL mã nguồn mở,
 \paragraph{Postman}
 \mbox{}
 
-Postman là một nền tảng mạnh mẽ giúp đơn giản hóa quá trình phát triển và kiểm thử API. Thay vì phải viết code phức tạp để tương tác với API, Postman cung cấp một giao diện trực quan, cho phép người dùng dễ dàng gửi các yêu cầu HTTP (GET, POST, PUT, DELETE,...) với đầy đủ các tùy chỉnh về headers, body, parameters. Không chỉ dừng lại ở việc gửi yêu cầu, Postman còn hỗ trợ tổ chức API thành các bộ sưu tập (Collections), tự động hóa kiểm thử bằng JavaScript, giả lập server (Mock Server) và theo dõi hiệu suất API. Với những tính năng này, Postman trở thành một "trợ thủ đắc lực" cho cả lập trình viên và kiểm thử viên.
+Postman là một nền tảng mạnh mẽ giúp đơn giản hóa quá trình phát triển và kiểm thử API. Thay vì phải viết code phức tạp để tương tác với API, Postman cung cấp một giao diện trực quan, cho phép người dùng dễ dàng gửi các yêu cầu HTTP (GET, POST, PUT, DELETE,...) với đầy đủ các tùy chỉnh về headers, body, parameters. Không chỉ dừng lại ở việc gửi yêu cầu, Postman còn hỗ trợ tổ chức API thành các bộ sưu tập (Collections), tự động hóa kiểm thử bằng JavaScript, giả lập server (Mock Server) và theo dõi hiệu suất API. Với những tính năng này, Postman trở thành một "trợ thủ đắc lực" cho cả lập trình viên và kiểm thử viên \cite{postman}.
 
 Trong quá trình phát triển phần mềm hiện đại, API đóng vai trò trung tâm trong việc kết nối các ứng dụng. Việc kiểm thử API một cách hiệu quả là vô cùng quan trọng để đảm bảo chất lượng và tính ổn định của hệ thống. Postman ra đời để giải quyết bài toán này. Nó giúp người dùng dễ dàng tạo và kiểm thử các API, tiết kiệm thời gian và công sức so với việc viết code thủ công. Khả năng tự động hóa kiểm thử của Postman giúp phát hiện sớm các lỗi tiềm ẩn, trong khi tính năng mock server cho phép tiếp tục phát triển ngay cả khi API chưa hoàn thiện.
 
@@ -122,48 +122,47 @@ Trong quá trình phát triển phần mềm hiện đại, API đóng vai trò 
 \end{figure}
 
 
-\paragraph{Docker}
-\mbox{}
+% \paragraph{Docker}
+% \mbox{}
 
-Trước Docker, việc triển khai ứng dụng thường gặp nhiều khó khăn do sự khác biệt về môi trường giữa các máy tính. Ví dụ: một ứng dụng chạy tốt trên máy tính của nhà phát triển có thể gặp lỗi khi triển khai lên máy chủ do thiếu thư viện, phiên bản phần mềm khác nhau, hoặc cấu hình không tương thích. Docker giải quyết vấn đề này bằng cách đóng gói tất cả các thành phần cần thiết cho ứng dụng vào một container, đảm bảo ứng dụng luôn chạy như nhau ở mọi nơi. Các từ khóa chính cầm quan tâm như: Image, container, DockerFile, Docker Compose, ...
+% Trước Docker, việc triển khai ứng dụng thường gặp nhiều khó khăn do sự khác biệt về môi trường giữa các máy tính. Ví dụ: một ứng dụng chạy tốt trên máy tính của nhà phát triển có thể gặp lỗi khi triển khai lên máy chủ do thiếu thư viện, phiên bản phần mềm khác nhau, hoặc cấu hình không tương thích. Docker giải quyết vấn đề này bằng cách đóng gói tất cả các thành phần cần thiết cho ứng dụng vào một container, đảm bảo ứng dụng luôn chạy như nhau ở mọi nơi. Các từ khóa chính cầm quan tâm như: Image, container, DockerFile, Docker Compose, ... \cite{docker}
 
-Những lợi ích của Docker có thể kể đến như:
-\begin{itemize}
-	\item Tính nhất quán: đảm bảo ứng dụng chạy trên mọi môi trường
-	\item Tính di động: dễ dàng di chuyển ứng dụng giữa các máy tính, máy chủ, và đám mây.
-	\item Tiết kiệm tài nguyên: Container nhẹ hơn nhiều so với máy ảo (Virtual Machine) vì chúng chia sẻ kernel của hệ điều hành host.
-	\item Tăng tốc độ phát triển và triển khai: Docker giúp tự động hóa quá trình xây dựng, kiểm thử, và triển khai ứng dụng.
-	\item Dễ dàng quản lý phiên bản: Docker giúp quản lý các phiên bản khác nhau của ứng dụng một cách dễ dàng.
-	\item Cách ly ứng dụng: Container cung cấp môi trường cách ly, giúp ngăn chặn xung đột giữa các ứng dụng.
-\end{itemize}
+% Những lợi ích của Docker có thể kể đến như:
+% \begin{itemize}
+% 	\item Tính nhất quán: đảm bảo ứng dụng chạy trên mọi môi trường
+% 	\item Tính di động: dễ dàng di chuyển ứng dụng giữa các máy tính, máy chủ, và đám mây.
+% 	\item Tiết kiệm tài nguyên: Container nhẹ hơn nhiều so với máy ảo (Virtual Machine) vì chúng chia sẻ kernel của hệ điều hành host.
+% 	\item Tăng tốc độ phát triển và triển khai: Docker giúp tự động hóa quá trình xây dựng, kiểm thử, và triển khai ứng dụng.
+% 	\item Dễ dàng quản lý phiên bản: Docker giúp quản lý các phiên bản khác nhau của ứng dụng một cách dễ dàng.
+% 	\item Cách ly ứng dụng: Container cung cấp môi trường cách ly, giúp ngăn chặn xung đột giữa các ứng dụng.
+% \end{itemize}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=8cm,height=4cm]{Images/Technology/docker.jpg}
-	\caption[Logo Docker]{\bfseries \fontsize{12pt}{0pt}
-		\selectfont Logo của Docker}
-	\label{docker} %đặt tên cho ảnh
-\end{figure}
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=8cm,height=4cm]{Images/Technology/docker.jpg}
+% 	\caption[Logo của Docker]{\bfseries \fontsize{12pt}{0pt}
+% 		\selectfont Logo của Docker}
+% 	\label{docker} %đặt tên cho ảnh
+% \end{figure}
 
 
-\subsection{Xây dựng và triển khai ứng dụng}
-Để giúp cho việc xây dung hệ thống thuận tiện hơn, sản phẩm của chúng em đã áp dụng quy trình CI/CD giúp cập nhật và triển khai một cách nhanh chóng, liên tục. Nhóm đã sử dụng VPS để triển khai server API và website, kết hợp với Docker để tự động hóa quá trình deploy ứng dụng. Về quản lý cơ sở dữ liệu, chúng em sử dụng MySQL Server và MongoDB Compass, đảm bảo hiệu suất và tính linh hoạt. Cuối cùng, toàn bộ mã nguồn dự án được quản lý trên GitHub, giúp theo dõi và kiểm soát phiên bản hiệu quả.
+\subsection{Xây dựng ứng dụng}
+ Về quản lý cơ sở dữ liệu, chúng em sử dụng MySQL Server và MongoDB Compass, đảm bảo hiệu suất và tính linh hoạt. Ngôn ngữ sử dụng TypeScript, hỗ trợ bởi framework và thư viện như ReactJS, NestJS. Công cụ kiểm thử API bao gồm Postman các trình duyệt như Cốc Cốc, Edge, Chrome. Bên cạnh đó toàn bộ mã nguồn dự án được quản lý trên GitHub, giúp theo dõi và kiểm soát phiên bản hiệu quả.
+% \subsubsection{Quy trình CI/CD}
+% CI/CD là một tập hợp các phương pháp và thực hành giúp tự động hóa quy trình phát triển, kiểm thử và triển khai phần mềm \cite{cicd}. CI (Continuous Integration - Tích hợp liên tục) tập trung vào việc thường xuyên tích hợp mã nguồn từ nhiều nhà phát triển vào một kho lưu trữ chung, sau đó tự động xây dựng và kiểm tra phần mềm. Việc này giúp phát hiện sớm các lỗi tích hợp và giảm thiểu xung đột giữa các thay đổi.
 
-\subsubsection{Quy trình CI/CD}
-CI/CD là một tập hợp các phương pháp và thực hành giúp tự động hóa quy trình phát triển, kiểm thử và triển khai phần mềm. CI (Continuous Integration - Tích hợp liên tục) tập trung vào việc thường xuyên tích hợp mã nguồn từ nhiều nhà phát triển vào một kho lưu trữ chung, sau đó tự động xây dựng và kiểm tra phần mềm. Việc này giúp phát hiện sớm các lỗi tích hợp và giảm thiểu xung đột giữa các thay đổi.
-
-CD (Continuous Delivery/Continuous Deployment - Chuyển giao/Triển khai liên tục) mở rộng CI bằng cách tự động hóa quá trình chuyển giao phần mềm đã được kiểm tra đến môi trường thử nghiệm hoặc sản xuất. Continuous Delivery cho phép triển khai thủ công sau khi kiểm tra, trong khi Continuous Deployment tự động triển khai lên môi trường sản xuất. CI/CD giúp tăng tốc độ phát hành phần mềm, cải thiện chất lượng và giảm thiểu rủi ro.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=15cm,height=8cm]{Images/Technology/cicd.png}
-	\caption[Quy trình CI/CD]{\bfseries \fontsize{12pt}{0pt}
-		\selectfont Quy trình CI/CD}
-	\label{cicd} %đặt tên cho ảnh
-\end{figure}
+% CD (Continuous Delivery/Continuous Deployment - Chuyển giao/Triển khai liên tục) mở rộng CI bằng cách tự động hóa quá trình chuyển giao phần mềm đã được kiểm tra đến môi trường thử nghiệm hoặc sản xuất. Continuous Delivery cho phép triển khai thủ công sau khi kiểm tra, trong khi Continuous Deployment tự động triển khai lên môi trường sản xuất. CI/CD giúp tăng tốc độ phát hành phần mềm, cải thiện chất lượng và giảm thiểu rủi ro.
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=15cm,height=8cm]{Images/Technology/cicd.png}
+% 	\caption[Quy trình CI/CD]{\bfseries \fontsize{12pt}{0pt}
+% 		\selectfont Quy trình CI/CD}
+% 	\label{cicd} %đặt tên cho ảnh
+% \end{figure}
 
 \subsubsection{Kiến trúc Microservices}
-Kiến trúc Microservices là một phương pháp phát triển phần mềm trong đó một
-ứng dụng lớn được chia thành nhiều dịch vụ nhỏ độc lập với nhau.  Mỗi dịch vụ thực hiện một chức năng cụ thể và có thể được phát triển, triển khai, mở rộng và bảo trì một cách độc lập với các microservice khác. Chúng thường giao tiếp với nhau thông qua mạng, sử dụng các giao thức như HTTP/REST hoặc message queues.
+Kiến trúc Microservices là một cách tiếp cận trong quy trình phát triển phần mềm, nơi một ứng dụng lớn được tách thành nhiều dịch vụ nhỏ hoạt động độc lập với nhau \cite{microservice}.
+Mỗi dịch vụ thực hiện một chức năng cụ thể và có thể được phát triển, triển khai, mở rộng và bảo trì một cách độc lập với các microservice khác. Chúng thường giao tiếp với nhau thông qua mạng, sử dụng các giao thức như HTTP/REST hoặc message queues.
 
 \begin{figure}[H]
 	\centering
@@ -180,7 +179,6 @@ Một số lợi ích của microservice đã hỗ trợ chúng em:
 	\item Khả năng mở rộng: Có thể mở rộng từng microservice một cách độc lập dựa trên nhu cầu, giúp tối ưu hóa việc sử dụng tài nguyên.
 	\item Khả năng chịu lỗi: Nếu một microservice gặp sự cố, các microservice khác vẫn có thể hoạt động bình thường, giúp tăng tính ổn định của hệ thống.
 \end{itemize}
-
 % \subsubsection{Triển khai Server và ứng dụng web trên máy chủ VPS}
 \subsection{Kiểm thử}
 
@@ -3436,7 +3434,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	      \end{xltabular}
 \end{enumerate}
 
-\subsubsection{Kiểm thử ứng dụng web}
+\subsubsection{Kiểm thử ứng dụng app}
 \clearpage
 \begin{xltabular}{\textwidth}{
 	| >{\raggedright\arraybackslash}p{2cm}
@@ -3444,7 +3442,7 @@ Công cụ: Postman - Dùng để thiết lập và kiểm thử các yêu cầu
 	| >{\raggedright\arraybackslash}X
 	| >{\raggedright\arraybackslash}p{1cm}|
 	}
-	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng của website}
+	\caption{\bfseries \fontsize{12pt}{0pt}\selectfont Bảng kiểm thử chức năng của app}
 	% \label{table_api_news}
 	\\
 	\hline
