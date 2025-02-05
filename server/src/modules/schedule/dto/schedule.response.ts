@@ -28,4 +28,7 @@ export class ScheduleResponse {
 
   @Expose()
   createdAt: Date;
+
+  @Expose()
+  updatedAt: Date;
 }

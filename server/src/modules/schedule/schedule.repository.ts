@@ -48,6 +48,24 @@ export class ScheduleRepository {
     });
   }
 
+  async getPendingResultSchedule(): Promise<ScheduleResponse[]> {
+    return await this.scheduleModel.findAll({
+      where: {
+        schedule_result: 0,
+      },
+      lock: true,
+    });
+  }
+
+  async getWarningResultSchedule(): Promise<ScheduleResponse[]> {
+    return await this.scheduleModel.findAll({
+      where: {
+        schedule_result: 5,
+      },
+      lock: true,
+    });
+  }
+
   async getAcceptedSchedule(): Promise<ScheduleResponse[]> {
     return await this.scheduleModel.findAll({
       where: {
@@ -64,7 +82,7 @@ export class ScheduleRepository {
       lock: true,
     });
   }
-  
+
   async getScheduleById(id: string): Promise<ScheduleResponse> {
     return await this.scheduleModel.findOne({
       where: {

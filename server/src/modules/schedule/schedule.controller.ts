@@ -22,6 +22,7 @@ import { UserService } from "../user/user.service";
 import { UserResponse } from "../user/dto/user.response";
 import { UserGuardModel } from "../authentication/dto/user.guard.model";
 import { AcceptScheduleRequest } from "./dto/acceptSchedule.request";
+import { UpdateResultRequest } from "./dto/updateResult.request";
 
 @Controller("schedules")
 export class ScheduleController {
@@ -339,6 +340,28 @@ export class ScheduleController {
       throw new InternalServerErrorException(
         "Error when get available doctor by schedule time"
       );
+    }
+  }
+
+  @Put("update-result")
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+    description: "Successful",
+  })
+  async updateScheduleResult(
+    @Body() schedule: UpdateResultRequest,
+    @Res() res: Response
+  ) {
+    console.log("[P]:::Update schedule result by id", schedule.schedule_id);
+    try {
+      await this.scheduleService.updateScheduleResult(schedule.schedule_id, schedule.result);
+      return res.json({
+        message: "Schedule updated successfully",
+      });
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException("Error when update schedule");
     }
   }
 }

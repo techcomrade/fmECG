@@ -25,6 +25,9 @@ export class ScheduleService {
   ) {
     this.autoCancelPendingSchedule();
     this.autoSendScheduleReminder();
+    this.autoCheckScheduleResult();
+    this.autoWarnScheduleResult();
+    this.autoCancelWarningSchedule();
   }
 
   async getAllSchedules(): Promise<ScheduleResponse[]> {
@@ -277,6 +280,88 @@ export class ScheduleService {
           `Running auto send schedule reminder at ${new Date().toLocaleTimeString()}, ${new Date().toLocaleDateString()}`
         );
         await this.sendScheduleReminder();
+      },
+      start: true,
+    });
+  }
+
+  async checkScheduleResult() {
+    const currentTime = Math.floor(new Date().getTime() / 1000);
+    const acceptedSchedules =
+      await this.scheduleRepository.getAcceptedSchedule();
+    for (const schedule of acceptedSchedules) {
+      if (
+        Number(schedule.schedule_end_time) === currentTime &&
+        schedule.schedule_result === 4
+      ) {
+        await this.updateScheduleResult(schedule.id, 0);
+      }
+      if (Number(schedule.schedule_start_time) === currentTime) {
+        await this.updateScheduleResult(schedule.id, 4);
+      }
+    }
+  }
+
+  private async autoCheckScheduleResult() {
+    const job = CronJob.from({
+      cronTime: "0,30 8-21 * * *",
+      onTick: async () => {
+        console.log(
+          `Running auto check schedule result at ${new Date().toLocaleTimeString()}, ${new Date().toLocaleDateString()}`
+        );
+        await this.checkScheduleResult();
+      },
+      start: true,
+    });
+  }
+
+  async warnScheduleResult() {
+    let schedules = await this.scheduleRepository.getPendingResultSchedule();
+    for (const schedule of schedules) {
+      await this.updateScheduleResult(schedule.id, 5);
+      const consultation =
+        await this.consultationScheduleService.getConsultationScheduleByScheduleId(
+          schedule.id
+        );
+      await this.notificationService.add({
+        doctor_id: consultation.doctor_id,
+        patient_id: schedule.patient_id,
+        schedule_start_time: schedule.schedule_start_time,
+        is_seen: false,
+        type: 1,
+        status: 6,
+      } as NotificationRequest);
+    }
+  }
+
+  private async autoWarnScheduleResult() {
+    const job = CronJob.from({
+      cronTime: "00 10 * * *",
+      onTick: async () => {
+        console.log(
+          `Running auto warn schedule result at ${new Date().toLocaleTimeString()}, ${new Date().toLocaleDateString()}`
+        );
+        await this.warnScheduleResult();
+      },
+      start: true,
+    });
+  }
+
+  async cancelWarningSchedule() {
+    let schedules = await this.scheduleRepository.getWarningResultSchedule();
+    for (const schedule of schedules) {
+      await this.updateScheduleResult(schedule.id, 3);
+    }
+  }
+
+  private async autoCancelWarningSchedule() {
+    const job = CronJob.from({
+      cronTime: "30 9 * * *",
+      onTick: async () => {
+        console.log(
+          `Running auto cancel warning schedule at ${new Date().toLocaleTimeString()}, ${new Date().toLocaleDateString()}`
+        );
+        await this.cancelWarningSchedule();
       },
       start: true,
     });
