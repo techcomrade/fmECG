@@ -6,6 +6,7 @@ import {
   ScheduleRequest,
   ScheduleResponse,
   Service,
+  UpdateResultRequest,
   UserResponse,
 } from "../../api";
 
@@ -18,6 +19,7 @@ interface IScheduleState {
   loadCreateScheduleByPatientStatus: ApiLoadingStatus;
   loadGetAvailableScheduleByDoctorId: ApiLoadingStatus;
   loadGetAvailableDoctorByScheduleTime: ApiLoadingStatus;
+  loadUpdateScheduleResultStatus: ApiLoadingStatus;
   loadAcceptScheduleStatus: ApiLoadingStatus;
   loadRejectScheduleStatus: ApiLoadingStatus;
   errorMessage: string | undefined;
@@ -33,6 +35,7 @@ const initialState: IScheduleState = {
   loadCreateScheduleByPatientStatus: ApiLoadingStatus.None,
   loadGetAvailableScheduleByDoctorId: ApiLoadingStatus.None,
   loadGetAvailableDoctorByScheduleTime: ApiLoadingStatus.None,
+  loadUpdateScheduleResultStatus: ApiLoadingStatus.None,
   loadAcceptScheduleStatus: ApiLoadingStatus.None,
   loadRejectScheduleStatus: ApiLoadingStatus.None,
   errorMessage: undefined,
@@ -89,6 +92,13 @@ export const getAvailableDoctorByScheduleTime = createAsyncThunkWrap(
   }
 );
 
+export const updateScheduleResult = createAsyncThunkWrap(
+  "/schedules/update-result",
+  async (schedule: UpdateResultRequest) => {
+    return await Service.scheduleService.updateScheduleResult(schedule);
+  }
+);
+
 export const acceptSchedule = createAsyncThunkWrap(
   "/schedules/accept",
   async (schedule: AcceptScheduleRequest) => {
@@ -122,13 +132,19 @@ export const scheduleSlice = createSlice({
     resetLoadGetAvailableDoctorByScheduleTime: (state) => {
       state.loadGetAvailableDoctorByScheduleTime = ApiLoadingStatus.None;
     },
+    resetLoadUpdateScheduleResultStatus: (state) => {
+      state.loadUpdateScheduleResultStatus = ApiLoadingStatus.None;
+    },
     resetLoadAcceptScheduleStatus: (state) => {
       state.loadAcceptScheduleStatus = ApiLoadingStatus.None;
     },
     resetLoadRejectScheduleStatus: (state) => {
       state.loadAcceptScheduleStatus = ApiLoadingStatus.None;
     },
-    setClickedNotificationDate: (state, action: PayloadAction<object | null>) => {
+    setClickedNotificationDate: (
+      state,
+      action: PayloadAction<object | null>
+    ) => {
       state.clickedNotificationDate = action.payload;
     },
   },
@@ -215,6 +231,16 @@ export const scheduleSlice = createSlice({
         state.errorMessage = (<any>action.payload)?.message;
         state.loadGetAvailableDoctorByScheduleTime = ApiLoadingStatus.Failed;
       })
+      .addCase(updateScheduleResult.pending, (state, action) => {
+        state.loadUpdateScheduleResultStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(updateScheduleResult.fulfilled, (state, action) => {
+        state.loadUpdateScheduleResultStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(updateScheduleResult.rejected, (state, action) => {
+        state.errorMessage = (<any>action.payload)?.message;
+        state.loadUpdateScheduleResultStatus = ApiLoadingStatus.Failed;
+      })
       .addCase(acceptSchedule.pending, (state, action) => {
         state.loadAcceptScheduleStatus = ApiLoadingStatus.Loading;
       })
@@ -240,6 +266,7 @@ export const scheduleSlice = createSlice({
 
 export const {
   resetLoadDataStatus,
+  resetLoadUpdateScheduleResultStatus,
   resetLoadAcceptScheduleStatus,
   resetLoadRejectScheduleStatus,
   resetLoadCreateScheduleByDoctorStatus,

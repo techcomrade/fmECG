@@ -130,7 +130,9 @@ export const Notification: React.FC = () => {
         return `Bệnh nhân ${item.patient_name} đã đặt lịch khám vào ${time} ngày ${date}, vui lòng xác nhận`;
       if (item.status === 3)
         return `Bạn đã từ chối lịch khám vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
-      return `Bạn đã tạo lịch khám vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name}`;
+      if (item.status === 4)
+        return `Bạn đã tạo lịch khám vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name}`;
+      return `Lịch khám vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name} chưa có kết quả, vui lòng xác nhận`;
     }
   };
 

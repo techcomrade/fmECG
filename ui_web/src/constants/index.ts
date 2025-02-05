@@ -215,12 +215,18 @@ export const convertScheduleStatusToString = (status: number) => {
 
 export const convertScheduleResultToString = (result: number) => {
   switch (result) {
+    case 0:
+      return "Đang chờ duyệt";
     case 1:
       return "Thành công";
     case 2:
-      return "Chưa bắt đầu";
+      return "Chưa diễn ra";
     case 3:
       return "Thất bại";
+    case 4:
+      return "Đang diễn ra";
+    case 5:
+      return "Đang chờ duyệt (cảnh báo)";
     default:
       return "Không xác định";
   }
