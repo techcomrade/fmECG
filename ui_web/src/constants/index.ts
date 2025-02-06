@@ -163,6 +163,17 @@ export const deviceStatus = [
   },
 ];
 
+export const deviceAvailableStatus = [
+  {
+    value: 2,
+    label: "Đang trống",
+  },
+  {
+    value: 3,
+    label: "Đang bảo trì",
+  },
+];
+
 export const convertDeviceStatusToString = (deviceStatus: number) => {
   switch (deviceStatus) {
     case 1:

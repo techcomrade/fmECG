@@ -3,20 +3,19 @@ import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { DrawerSide } from "../../components/Drawer/Drawer";
 import {
   getDeviceById,
-  resetLoadAddDetailDataStatus,
-  resetLoadDeleteDetailDataStatus,
-  resetLoadGetDeviceByIdStatus,
 } from "../../redux/reducer/deviceSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { DesktopOutlined } from "@ant-design/icons";
 import { Avatar, Divider, Table } from "antd";
 import { useTranslation } from "react-i18next";
-import { convertTimeToDate } from "../../utils/dateUtils";
+import { convertTimeToDateTime } from "../../utils/dateUtils";
 import {
   convertDeviceTypeToString,
   convertDeviceStatusToString,
+  userRole,
 } from "../../constants";
 import { showNotiError } from "../../components/notification";
+import { Context } from "../../utils/context";
 
 const DeviceDetailComponent = (props: any, ref: any) => {
   const dispatch = useAppDispatch();
@@ -37,24 +36,6 @@ const DeviceDetailComponent = (props: any, ref: any) => {
   }));
 
   React.useEffect(() => {
-    dispatch(getDeviceById(idSelect));
-  }, [dataState.loadUpdateDataStatus]);
-
-  React.useEffect(() => {
-    if (dataState.loadAddDetailDataStatus === ApiLoadingStatus.Success) {
-      dispatch(resetLoadAddDetailDataStatus());
-      dispatch(getDeviceById(idSelect));
-    }
-  }, [dataState.loadAddDetailDataStatus]);
-
-  React.useEffect(() => {
-    if (dataState.loadDeleteDetailDataStatus === ApiLoadingStatus.Success) {
-      dispatch(resetLoadDeleteDetailDataStatus());
-      dispatch(getDeviceById(idSelect));
-    }
-  }, [dataState.loadDeleteDetailDataStatus]);
-
-  React.useEffect(() => {
     if (dataState.loadGetDeviceByIdStatus === ApiLoadingStatus.Success) {
       const rawData = {
         ...dataState.deviceData,
@@ -62,8 +43,8 @@ const DeviceDetailComponent = (props: any, ref: any) => {
           dataState.deviceData.device_type_id
         ),
         status_id: convertDeviceStatusToString(dataState.deviceData.status_id),
-        start_time: convertTimeToDate(dataState.deviceData.start_time),
-        end_time: convertTimeToDate(dataState.deviceData.end_time),
+        start_time: convertTimeToDateTime(dataState.deviceData.start_time),
+        end_time: convertTimeToDateTime(dataState.deviceData.end_time),
       };
       setData(rawData);
     }
@@ -76,17 +57,12 @@ const DeviceDetailComponent = (props: any, ref: any) => {
   }, [dataState.loadGetDeviceByIdStatus]);
 
   const labelsInfo = {
+    username: Context.role === userRole.admin ?  "Người phụ trách" : "",
     device_name: "Tên thiết bị",
     device_type_id: "Loại thiết bị",
     status_id: "Trạng thái",
-    start_time:
-      data.status_id === convertDeviceStatusToString(1)
-        ? "Thời gian bắt đầu mượn"
-        : "",
-    end_time:
-      data.status_id === convertDeviceStatusToString(1)
-        ? "Hạn trả thiết bị"
-        : "",
+    start_time: "Thời gian bắt đầu mượn",
+    end_time: "Hạn trả thiết bị",
     frequency: "Tần số",
     connection: "Phương thức kết nối",
     storage: "Phương thức lưu trữ dữ liệu",

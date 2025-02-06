@@ -4,7 +4,6 @@ import DataTable from "../../components/Table/dataTable";
 import { ModalControlData } from "../../components/Modal/ModalControlData";
 import { DeviceDetail } from "./device.details";
 import {
-  getAllDevices,
   updateDeviceById,
   deleteDeviceById,
   resetLoadAddDataStatus,
@@ -15,8 +14,9 @@ import {
   addDeviceDetail,
   updateDeviceDetailById,
   getDeviceByUserId,
+  getUnassignedDevices,
 } from "../../redux/reducer/deviceSlice";
-import { getAllUsers } from "../../redux/reducer/userSlice";
+import { getAllExceptAdmin } from "../../redux/reducer/userSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { convertTimeToDate, checkDateTypeKey } from "../../utils/dateUtils";
 import {
@@ -29,9 +29,8 @@ import {
   deviceType,
   convertDeviceTypeToString,
   convertStringToDeviceType,
-  deviceStatus,
+  deviceAvailableStatus,
   convertDeviceStatusToString,
-  convertStringToDeviceStatus,
   userRole,
   convertRoleToString,
 } from "../../constants";
@@ -60,7 +59,6 @@ export const Device: React.FC = () => {
   const [dataTable, setDataTable] = React.useState<any[]>([]);
   const [userDropDown, setUserDropDown] = React.useState<any[]>([]);
   const [selectedData, setSelectedData] = React.useState<any[]>([]);
-  const [hidden, setHidden] = React.useState<boolean>(false);
   const drawerRef = React.useRef<DeviceDetailType>(null);
   const modalAddRef = React.useRef<AddEditDeviceType>(null);
   const modalAssignRef = React.useRef<AssignDeviceType>(null);
@@ -103,32 +101,19 @@ export const Device: React.FC = () => {
     },
     {
       title: "Người phụ trách",
-      dataIndex: "username",
-      key: "username",
-      type: "select",
-      isEdit: false,
-      hidden: hidden,
-      searchable: true,
-    },
-    {
-      title: "Người phụ trách",
       dataIndex: "user_id",
       key: "user_id",
       type: "select",
       isEdit: false,
       hidden: true,
-      dataSelect: userDropDown.map((user) => ({
-        value: user.id,
-        label: user.username,
-      })),
     },
     {
       title: "Trạng thái",
       dataIndex: "status_id",
       key: "status_id",
       type: "select",
-      isEdit: false,
-      dataSelect: deviceStatus,
+      isEdit: true,
+      dataSelect: deviceAvailableStatus,
       render: (status_id: any) => {
         let color =
           status_id == 1 ? "geekblue" : status_id == 2 ? "green" : "volcano";
@@ -197,7 +182,7 @@ export const Device: React.FC = () => {
     if (type === "edit-form") {
       deviceData = {
         ...data,
-        status_id: convertStringToDeviceStatus(data.status_id),
+        status_id: data.status_id,
         device_type_id: convertStringToDeviceType(data.device_type_id),
       };
       Object.keys(data).forEach((key) => {
@@ -263,19 +248,8 @@ export const Device: React.FC = () => {
   };
 
   React.useEffect(() => {
-    if (Context.role === userRole.admin) {
-      dispatch(getAllDevices());
-      dispatch(getAllUsers());
-      setHidden(false);
-    }
-    if (Context.role === userRole.doctor) {
-      dispatch(getDeviceByUserId());
-      setHidden(true);
-    }
-    if (Context.role === userRole.patient) {
-      dispatch(getDeviceByUserId());
-      setHidden(true);
-    }
+    dispatch(getUnassignedDevices());
+    dispatch(getAllExceptAdmin());
   }, []);
 
   React.useEffect(() => {
@@ -283,6 +257,7 @@ export const Device: React.FC = () => {
       const rawData = dataState.data.map((device) =>
         handleData(device, "render")
       );
+      console.log(rawData);
       setDataTable(rawData);
     }
     if (
@@ -309,7 +284,7 @@ export const Device: React.FC = () => {
     if (dataState.loadAddDataStatus === ApiLoadingStatus.Success) {
       showNotiSuccess("Bạn đã thêm thiết bị thành công");
       dispatch(resetLoadAddDataStatus());
-      dispatch(getAllDevices());
+      dispatch(getUnassignedDevices());
     }
     if (
       dataState.loadAddDataStatus === ApiLoadingStatus.Failed &&
@@ -323,7 +298,7 @@ export const Device: React.FC = () => {
     if (dataState.loadUpdateDataStatus === ApiLoadingStatus.Success) {
       showNotiSuccess("Bạn đã sửa thiết bị thành công");
       dispatch(resetLoadUpdateDataStatus());
-      dispatch(getAllDevices());
+      dispatch(getUnassignedDevices());
     }
     if (
       dataState.loadUpdateDataStatus === ApiLoadingStatus.Failed &&
@@ -337,7 +312,7 @@ export const Device: React.FC = () => {
     if (dataState.loadDeleteDataStatus === ApiLoadingStatus.Success) {
       showNotiSuccess("Bạn đã xóa thiết bị thành công");
       dispatch(resetLoadDeleteDataStatus());
-      dispatch(getAllDevices());
+      dispatch(getUnassignedDevices());
     }
     if (
       dataState.loadDeleteDataStatus === ApiLoadingStatus.Failed &&
@@ -348,12 +323,17 @@ export const Device: React.FC = () => {
   }, [dataState.loadDeleteDataStatus]);
 
   const handleSubmitAddFunction = (data: any) => {
+    data.start_time = null;
+    data.end_time = null;
+    data.status_id = 2;
+
     const result = {
       ...data,
       frequency: data.frequency["list"],
       connection: data.connection["list"],
       storage: data.storage["list"],
     };
+
     return dispatch(addDevice(result));
   };
 
@@ -364,8 +344,12 @@ export const Device: React.FC = () => {
   };
 
   const handleSubmitEditDevice = (data: any) => {
+    data.start_time = null;
+    data.end_time = null;
+    data.status_id ||= 2;
     const { ...payload } = data;
     const deviceData = findElementById(dataTable, selectedData[0]);
+
     handleDetailChanges(
       deviceData.frequency,
       payload.frequency["list"],
@@ -386,19 +370,6 @@ export const Device: React.FC = () => {
     );
 
     dispatch(updateDeviceById(payload));
-  };
-
-  const handleAssignFunction = () => {
-    const deviceData = findElementById(dataTable, selectedData[0]);
-    const dataEdit = handleData(deviceData, "edit-form");
-    modalAssignRef.current?.open(dataEdit);
-  };
-
-  const handleSubmitAssignDevice = (data: any) => {
-    console.log(data);
-    dispatch(
-      updateDeviceById(data)
-    );
   };
 
   const handleDeleteFunction = (id: string) => {
@@ -440,13 +411,36 @@ export const Device: React.FC = () => {
     },
   };
 
+  React.useEffect(() => {
+    if (userState.loadDataStatus === ApiLoadingStatus.Success) {
+      setUserDropDown(userState.data);
+    }
+    if (
+      userState.loadDataStatus === ApiLoadingStatus.Failed &&
+      userState.errorMessage
+    ) {
+      showNotiError(userState.errorMessage);
+    }
+  }, [userState.loadDataStatus]);
+
+  const handleAssignFunction = () => {
+    const deviceData = findElementById(dataTable, selectedData[0]);
+    const dataEdit = handleData(deviceData, "edit-form");
+    modalAssignRef.current?.open(dataEdit);
+  };
+
+  const handleSubmitAssignDevice = (data: any) => {
+    console.log(data);
+    dispatch(updateDeviceById(data));
+  };
+
   return (
     <>
       <DataTable
         role={Context.role === userRole.admin ? userRole.admin : undefined}
         addButton={Context.role === userRole.admin}
         editButton={Context.role === userRole.admin}
-        assignButton={Context.role === userRole.admin}
+        assignButton
         deleteButton={Context.role === userRole.admin}
         column={columns}
         name="Thông tin thiết bị"
@@ -457,7 +451,7 @@ export const Device: React.FC = () => {
           modalAddRef.current?.open(initData, columns, "vertical")
         }
         editFunction={handleEditFunction}
-        assginFunction={handleAssignFunction}
+        assignFunction={handleAssignFunction}
         deleteFunction={handleDeleteFunction}
         handleOpenDrawer={(id) => drawerRef.current?.open(id)}
       />

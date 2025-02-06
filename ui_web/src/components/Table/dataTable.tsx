@@ -9,6 +9,7 @@ import {
   TagOutlined,
   LineChartOutlined,
   ReloadOutlined,
+  ClearOutlined,
 } from "@ant-design/icons";
 import "./dataTable.scss";
 import { ExclamationCircleFilled } from "@ant-design/icons";
@@ -21,6 +22,7 @@ const { confirm } = Modal;
 
 interface Props {
   role?: string;
+  maintained?: boolean;
   data: any[];
   name: string;
   loading: boolean;
@@ -29,7 +31,9 @@ interface Props {
   addFunction?: () => void;
   addDeviceButton?: boolean;
   assignButton?: boolean;
-  assginFunction?: (id: any) => void;
+  assignFunction?: (id: any) => void;
+  unassignButton?: boolean;
+  unassignFunction?: (id: any) => void;
   editButton: boolean;
   editFunction?: (id: any) => void;
   deleteButton: boolean;
@@ -48,7 +52,8 @@ const DataTable = (props: Props) => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const [tableData, setTableData] = useState<any[]>([]);
   const [editButton, setEditButtton] = useState<boolean>(false);
-  const [assginButton, setAssignButton] = useState<boolean>(false);
+  const [assignButton, setAssignButton] = useState<boolean>(false);
+  const [unassignButton, setUnassignButton] = useState<boolean>(false);
   const [deleteButton, setDeleteButton] = useState<boolean>(false);
   const [chartButton, setChartButton] = useState<boolean>(false);
   const [selectedState, setSelectedRowKeys] = useState<any[]>([]);
@@ -69,6 +74,7 @@ const DataTable = (props: Props) => {
       setSelectedRowKeys(selectedRowKeys);
       if (props.editButton) setEditButtton(selectedRowKeys.length === 1);
       if (props.assignButton) setAssignButton(selectedRowKeys.length === 1);
+      if (props.unassignButton) setUnassignButton(selectedRowKeys.length === 1);
       if (props.deleteButton) setDeleteButton(selectedRowKeys.length === 1);
       if (props.chartButton) setChartButton(selectedRowKeys.length === 1);
       props.updateSelectedData?.(selectedRowKeys);
@@ -183,6 +189,8 @@ const DataTable = (props: Props) => {
     ...(col.searchable ? getColumnSearchProps(col.dataIndex) : {}),
   }));
 
+  const selectedItem = tableData.find((item) => item.id === selectedState[0]);
+
   return (
     <>
       <h2>{props.name}</h2>
@@ -223,10 +231,19 @@ const DataTable = (props: Props) => {
         {props.assignButton && (
           <Button
             icon={<TagOutlined />}
-            disabled={!assginButton}
-            onClick={() => props.assginFunction?.(selectedState[0])}
+            disabled={!assignButton || selectedItem?.status_id === 3}
+            onClick={() => props.assignFunction?.(selectedState[0])}
           >
             Phân công thiết bị
+          </Button>
+        )}
+        {props.unassignButton && (
+          <Button
+            icon={<ClearOutlined />}
+            disabled={!unassignButton}
+            onClick={() => props.unassignFunction?.(selectedState[0])}
+          >
+            Hủy phân công thiết bị
           </Button>
         )}
         {props.deleteButton && (

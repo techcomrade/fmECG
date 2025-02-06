@@ -38,6 +38,10 @@ export const getAllDoctors = createAsyncThunkWrap("users/doctors", async () => {
   return await Service.userService.getAllDoctors();
 });
 
+export const getAllExceptAdmin = createAsyncThunkWrap("users/except-admin", async () => {
+  return await Service.userService.getAllExceptAdmin();
+});
+
 export const getUserById = createAsyncThunkWrap(
   "/users/id",
   async (id: string) => {
@@ -99,6 +103,18 @@ export const userSlice = createSlice({
         state.loadDataStatus = ApiLoadingStatus.Success;
       })
       .addCase(getAllUsers.rejected, (state, action) => {
+        state.data = [];
+        state.errorMessage = (<any>action.payload)?.message;
+        state.loadDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getAllExceptAdmin.pending, (state, action) => {
+        state.loadDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getAllExceptAdmin.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getAllExceptAdmin.rejected, (state, action) => {
         state.data = [];
         state.errorMessage = (<any>action.payload)?.message;
         state.loadDataStatus = ApiLoadingStatus.Failed;
