@@ -4,6 +4,7 @@ import { DeviceRepository } from "./device.repository";
 import { Injectable } from "@nestjs/common";
 import { DeviceRequest } from "./dto/device.request";
 import { DeviceResponse } from "./dto/device.response";
+import { UnassignDeviceRequest } from "./dto/unassignDevice.request";
 const { v4: uuidv4 } = require("uuid");
 
 @Injectable()
@@ -17,6 +18,64 @@ export class DeviceService {
   async getAllData(): Promise<DeviceResponse[]> {
     let result = [];
     let devices = await this.deviceRepository.getAllData();
+    for (const device of devices) {
+      let user = await this.userService.getUserById(device.user_id);
+      let frequency =
+        await this.deviceDetailService.getDetailByDeviceIdAndFreqType(
+          device.id
+        );
+      let storage =
+        await this.deviceDetailService.getDetailByDeviceIdAndStorageType(
+          device.id
+        );
+      let connection =
+        await this.deviceDetailService.getDetailByDeviceIdAndConnectionType(
+          device.id
+        );
+      const deviceWithDoctorName = {
+        ...(<any>device).dataValues,
+        username: user.username,
+        frequency: frequency,
+        connection: connection,
+        storage: storage,
+      };
+      result.push(deviceWithDoctorName);
+    }
+    return result;
+  }
+
+  async getUnassignedDevices(): Promise<DeviceResponse[]> {
+    let result = [];
+    let devices = await this.deviceRepository.getUnassignedDevices();
+    for (const device of devices) {
+      let user = await this.userService.getUserById(device.user_id);
+      let frequency =
+        await this.deviceDetailService.getDetailByDeviceIdAndFreqType(
+          device.id
+        );
+      let storage =
+        await this.deviceDetailService.getDetailByDeviceIdAndStorageType(
+          device.id
+        );
+      let connection =
+        await this.deviceDetailService.getDetailByDeviceIdAndConnectionType(
+          device.id
+        );
+      const deviceWithDoctorName = {
+        ...(<any>device).dataValues,
+        username: user.username,
+        frequency: frequency,
+        connection: connection,
+        storage: storage,
+      };
+      result.push(deviceWithDoctorName);
+    }
+    return result;
+  }
+
+  async getAssignedDevices(): Promise<DeviceResponse[]> {
+    let result = [];
+    let devices = await this.deviceRepository.getAssignedDevices();
     for (const device of devices) {
       let user = await this.userService.getUserById(device.user_id);
       let frequency =
@@ -67,6 +126,10 @@ export class DeviceService {
     return await this.deviceRepository.updateById(device, id);
   }
 
+  async unassignDevice(device: UnassignDeviceRequest, id: string) {
+    return await this.deviceRepository.unassignDevice(device, id);
+  }
+
   async getById(id: string): Promise<DeviceResponse> {
     let device = await this.deviceRepository.getById(id);
     let user = await this.userService.getUserById(device.user_id);
@@ -93,6 +156,14 @@ export class DeviceService {
     return await this.deviceRepository.getByUserId(user_id);
   }
 
+  // async getByUserId(user_id: string): Promise<DeviceResponse[]> {
+  //   let devices = await this.deviceRepository.getByUserId(user_id);
+  //   const user = await this.userService.getUserById(user_id);
+  //   for (const device of devices) {
+  //     device.username = user.username;
+  //   }
+  //   return devices;
+  // }
   async getByDeviceTypeId(device_type_id: string): Promise<DeviceResponse> {
     return await this.deviceRepository.getByDeviceType(device_type_id);
   }
