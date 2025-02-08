@@ -79,7 +79,7 @@ export class ScheduleService {
     const availableSchedule = [];
     const localTime = new Date(new Date().getTime() + 7 * 60 * 60 * 1000);
 
-    for (let i = 2; i <= 15; i++) {
+    for (let i = 1; i <= 15; i++) {
       const date = new Date(localTime);
       date.setDate(localTime.getDate() + i);
       date.setUTCHours(0, 0, 0, 0);
@@ -99,7 +99,7 @@ export class ScheduleService {
         });
       });
       const dayOfWeek = date.getDay();
-      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+      if (dayOfWeek) {
         availableSchedule.push({
           date: formattedDate,
           hours: filterHours,

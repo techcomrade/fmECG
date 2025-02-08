@@ -61,14 +61,6 @@ export const Schedule: React.FC = () => {
       type: "date",
       isEdit: true,
     },
-    {
-      title: "Loại lịch tái khám",
-      dataIndex: "schedule_type_id",
-      key: "schedule_type_id",
-      type: "select",
-      dataSelect: scheduleType,
-      isEdit: true,
-    },
   ];
 
   React.useEffect(() => {
@@ -140,9 +132,6 @@ export const Schedule: React.FC = () => {
             time: Number(dayjs(schedule.schedule_start_time).format("HHmm")),
             doctor: schedule.doctor_name,
             patient: schedule.patient_name,
-            schedule_type: convertScheduleTypeToString(
-              schedule.schedule_type_id
-            ),
             status: convertScheduleStatusToString(schedule.status_id),
             result: schedule.schedule_result,
             doctor_id: schedule.doctor_id,
