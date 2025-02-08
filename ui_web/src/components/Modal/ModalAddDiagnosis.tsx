@@ -7,7 +7,6 @@ import {
   TimePicker,
   Row,
   Col,
-  Select,
   Button,
 } from "antd";
 import dayjs, { Dayjs } from "dayjs";
@@ -132,7 +131,7 @@ const ModalComponent = (props: any, ref: any) => {
         ? diagnosisState.diagnosis.information
         : "",
     });
-  }, [diagnosisState.loadGetDiagnosisByScheduleIdStatus]);
+  }, [diagnosisState]);
 
   React.useEffect(() => {
     if (
@@ -151,14 +150,6 @@ const ModalComponent = (props: any, ref: any) => {
       dispatch(resetLoadGetAvailableScheduleByDoctorId());
     }
   }, [scheduleState.loadGetAvailableScheduleByDoctorId]);
-
-  const mapOptions: any = (options: any[]) =>
-    options
-      ? options.map((option) => ({
-          value: option.value,
-          label: option.label,
-        }))
-      : [];
 
   return (
     <>
@@ -228,30 +219,6 @@ const ModalComponent = (props: any, ref: any) => {
                       name={item.dataIndex}
                       placeholder="Thông tin chẩn đoán"
                     />
-                  </Form.Item>
-                );
-              }
-              if (item.type === "select" && isShow) {
-                return (
-                  <Form.Item
-                    label={item.title}
-                    name={item.dataIndex}
-                    key={item.dataIndex}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Vui lòng chọn loại lịch tái khám",
-                      },
-                    ]}
-                    style={{ marginBottom: "25px" }}
-                  >
-                    <Select
-                      options={mapOptions(item.dataSelect || [])}
-                      allowClear
-                      value={data[item.dataIndex]}
-                      placeholder="Loại lịch tái khám"
-                      onChange={() => setIsShow(true)}
-                    ></Select>
                   </Form.Item>
                 );
               }
