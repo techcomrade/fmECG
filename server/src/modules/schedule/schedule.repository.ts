@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/sequelize";
 import { ScheduleModel } from "../../entities/schedule.model";
 import { ScheduleResponse } from "./dto/schedule.response";
 import { ScheduleRequest } from "./dto/schedule.request";
+import { Op } from "sequelize";
 
 @Injectable()
 export class ScheduleRepository {
@@ -38,6 +39,18 @@ export class ScheduleRepository {
   }
 
   async checkExistingSchedule(
+    schedule: ScheduleRequest
+  ): Promise<ScheduleResponse> {
+    return await this.scheduleModel.findOne({
+      where: {
+        patient_id: schedule.patient_id,
+        schedule_start_time: schedule.schedule_start_time,
+        status_id: { [Op.in]: [1, 2] },
+      },
+    });
+  }
+
+  async checkScheduleByPatientIdAndTime(
     schedule: ScheduleRequest
   ): Promise<ScheduleResponse> {
     return await this.scheduleModel.findOne({
@@ -95,6 +108,7 @@ export class ScheduleRepository {
     return await this.scheduleModel.findAll({
       where: {
         schedule_start_time: startTime,
+        status_id: { [Op.in]: [1, 2] },
       },
     });
   }
@@ -103,6 +117,19 @@ export class ScheduleRepository {
     return await this.scheduleModel.update(
       {
         status_id: 1,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+  }
+
+  async rejectSchedule(id: string) {
+    return await this.scheduleModel.update(
+      {
+        status_id: 3,
       },
       {
         where: {
@@ -158,6 +185,7 @@ export class ScheduleRepository {
     return await this.scheduleModel.findAll({
       where: {
         patient_id: patient_id,
+        status_id: { [Op.in]: [1, 2] },
       },
     });
   }

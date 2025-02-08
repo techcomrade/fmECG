@@ -172,6 +172,28 @@ export class ScheduleController {
     }
   }
 
+  @Put("reject-schedule")
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+    description: "Successful",
+  })
+  async rejectSchedule(
+    @Body() schedule: AcceptScheduleRequest,
+    @Res() res: Response
+  ) {
+    console.log("[P]:::Reject schedule by id", schedule.schedule_id);
+    try {
+      await this.scheduleService.rejectSchedule(schedule.schedule_id);
+      return res.json({
+        message: "Schedule rejected successfully",
+      });
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException("Error when reject schedule");
+    }
+  }
+
   @Put("")
   @ApiResponse({
     status: 200,
@@ -202,21 +224,21 @@ export class ScheduleController {
     }
   }
 
-  @Delete("reject-schedule/:id")
+  @Delete("delete-schedule/:id")
   @ApiResponse({
     status: 200,
     type: Boolean,
     description: "Successful",
   })
   async deleteScheduleById(@Res() res: Response, @Param("id") id: string) {
-    console.log("[P]:::Reject schedule:", id);
+    console.log("[P]:::Delete schedule:", id);
     try {
       await this.scheduleService.deleteScheduleById(id);
       return res.json({
-        message: "Schedule has been rejected successfully",
+        message: "Schedule has been deleted successfully",
       });
     } catch (error) {
-      throw new InternalServerErrorException("Error when reject schedule");
+      throw new InternalServerErrorException("Error when delete schedule");
     }
   }
 

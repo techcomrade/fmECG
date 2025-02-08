@@ -59,6 +59,12 @@ export class ScheduleService {
     return await this.scheduleRepository.checkExistingSchedule(schedule);
   }
 
+  async checkScheduleByPatientIdAndTime(
+    schedule: ScheduleRequest
+  ): Promise<ScheduleResponse> {
+    return await this.scheduleRepository.checkScheduleByPatientIdAndTime(schedule);
+  }
+
   async createSchedule(schedule: ScheduleRequest, doctor_id: string) {
     schedule.id = uuidv4();
     return await this.transactionService.transaction(async (t: any) => {
@@ -121,6 +127,10 @@ export class ScheduleService {
     return await this.scheduleRepository.acceptSchedule(schedule_id);
   }
 
+  async rejectSchedule(schedule_id: string) {
+    return await this.scheduleRepository.rejectSchedule(schedule_id);
+  }
+
   async updateSchedule(schedule: ScheduleRequest, id: string) {
     return await this.scheduleRepository.updateScheduleById(schedule, id);
   }
@@ -179,12 +189,14 @@ export class ScheduleService {
       const schedule = await this.scheduleRepository.getScheduleById(
         item.schedule_id
       );
-      const patient = await this.userService.getUserById(schedule.patient_id);
-      scheduleList.push({
-        ...(<any>schedule).dataValues,
-        patient_name: patient.username,
-        doctor_name: doctor?.username,
-      });
+      if (schedule.status_id !== 3) {
+        const patient = await this.userService.getUserById(schedule.patient_id);
+        scheduleList.push({
+          ...(<any>schedule).dataValues,
+          patient_name: patient.username,
+          doctor_name: doctor?.username,
+        });
+      }
     }
     return scheduleList;
   }
@@ -203,6 +215,7 @@ export class ScheduleService {
       const id = item.schedule_id;
       const schedule = await this.getScheduleById(id);
       if (
+        schedule.status_id !== 3 &&
         schedule.schedule_start_time >= startTime &&
         schedule.schedule_start_time < startTime + TWO_WEEKS_IN_SECONDS
       )

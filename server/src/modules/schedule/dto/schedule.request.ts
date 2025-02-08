@@ -39,7 +39,7 @@ export class ScheduleRequest {
   })
   @IsNotEmpty()
   @IsNumber()
-  schedule_end_time: bigint;
+  schedule_end_time?: bigint;
 
   @ApiProperty({
     description: "Status ID of the schedule",
