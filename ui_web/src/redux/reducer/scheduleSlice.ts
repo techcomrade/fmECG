@@ -108,8 +108,8 @@ export const acceptSchedule = createAsyncThunkWrap(
 
 export const rejectSchedule = createAsyncThunkWrap(
   "/schedules/reject",
-  async (schedule_id: string) => {
-    return await Service.scheduleService.deleteScheduleById(schedule_id);
+  async (schedule: AcceptScheduleRequest) => {
+    return await Service.scheduleService.rejectSchedule(schedule);
   }
 );
 

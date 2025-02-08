@@ -20,7 +20,6 @@ import { checkDateTypeKey } from "../../utils/dateUtils";
 import { ScheduleModal } from "../../components/Modal/ScheduleModal";
 import {
   convertScheduleStatusToString,
-  convertScheduleTypeToString,
   scheduleType,
   userRole,
 } from "../../constants";
@@ -140,9 +139,6 @@ export const Schedule: React.FC = () => {
             time: Number(dayjs(schedule.schedule_start_time).format("HHmm")),
             doctor: schedule.doctor_name,
             patient: schedule.patient_name,
-            schedule_type: convertScheduleTypeToString(
-              schedule.schedule_type_id
-            ),
             status: convertScheduleStatusToString(schedule.status_id),
             result: schedule.schedule_result,
             doctor_id: schedule.doctor_id,

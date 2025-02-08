@@ -211,7 +211,11 @@ const ScheduleModalComponent = (props: any) => {
           if (!reason.trim()) {
             return alert("Vui lòng nhập lý do trước khi gửi!");
           }
-          dispatch(rejectSchedule(data.schedule_id));
+          dispatch(
+            rejectSchedule({
+              schedule_id: data.schedule_id,
+            } as AcceptScheduleRequest)
+          );
           dispatch(
             createNotification({
               patient_id: data.patient_id,

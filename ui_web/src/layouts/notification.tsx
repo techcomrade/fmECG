@@ -9,6 +9,8 @@ import {
   Button,
   Modal,
   Form,
+  Row,
+  Col,
 } from "antd";
 import { BellFilled, CloseOutlined } from "@ant-design/icons";
 import "./notification.scss";
@@ -183,6 +185,13 @@ export const Notification: React.FC = () => {
                 position: "relative",
               }}
               onClick={() => {
+                if (!item.is_seen) {
+                  dispatch(
+                    updateSeenStatus({
+                      id: item.id,
+                    } as UpdateSeenStatusRequest)
+                  );
+                }
                 if (item.status === 3 && Context.role === userRole.patient) {
                   setShowReason(true);
                   console.log(item);
@@ -199,13 +208,6 @@ export const Notification: React.FC = () => {
                   }
                   if (Context.role === userRole.patient) {
                     dispatch(getScheduleByPatientId());
-                  }
-                  if (!item.is_seen) {
-                    dispatch(
-                      updateSeenStatus({
-                        id: item.id,
-                      } as UpdateSeenStatusRequest)
-                    );
                   }
                   const selectedDate = dayjs.unix(item.schedule_start_time);
                   navigate("/schedule");
@@ -275,28 +277,44 @@ export const Notification: React.FC = () => {
         footer={null}
         onCancel={() => setShowReason(false)}
       >
-        <Form form={form} labelCol={{ span: 11 }} wrapperCol={{ span: 12 }}>
-          <Form.Item
-            label="Bác sĩ:"
-            style={{ marginBottom: "0px", marginTop: "12px" }}
-          >
-            <div>{data.doctor_name}</div>
-          </Form.Item>
-          <Form.Item label="Ngày khám:" style={{ marginBottom: "0px" }}>
-            <div>
+        <div className="event-details">
+          <Row key="doctor" className="event-row" style={{ marginTop: "20px" }}>
+            <Col span={9} className="event-label">
+              Bác sĩ:
+            </Col>
+            <Col span={15} className="event-value">
+              {data.doctor_name}
+            </Col>
+          </Row>
+
+          <Row key="start_time" className="event-row">
+            <Col span={9} className="event-label">
+              Ngày khám:
+            </Col>
+            <Col span={15} className="event-value">
               {convertTimeToDateTime(data.schedule_start_time).split(" ")[1]}
-            </div>
-          </Form.Item>
-          <Form.Item label="Ca khám:" style={{ marginBottom: "0px" }}>
-            <div>
+            </Col>
+          </Row>
+
+          <Row key="session" className="event-row">
+            <Col span={9} className="event-label">
+              Ca khám:
+            </Col>
+            <Col span={15} className="event-value">
               Từ {convertTimeToDateTime(data.schedule_start_time).split(" ")[0]}{" "}
               đến {convertTimeToDateTime(data.schedule_end_time).split(" ")[0]}
-            </div>
-          </Form.Item>
-          <Form.Item label="Lí do từ chối:" style={{ marginBottom: "0px" }}>
-            <div>{data.reject_reason}</div>
-          </Form.Item>
-        </Form>
+            </Col>
+          </Row>
+
+          <Row key="reason" className="event-row">
+            <Col span={9} className="event-label">
+              Lí do từ chối:
+            </Col>
+            <Col span={15} className="event-value">
+              {data.reject_reason}
+            </Col>
+          </Row>
+        </div>
       </Modal>
       <Dropdown
         open={isOpen}
@@ -321,6 +339,12 @@ export const Notification: React.FC = () => {
             onClick={() => {
               setIsOpen(true);
               dispatch(getNotificationByUserId());
+              if (Context.role === userRole.doctor) {
+                dispatch(getScheduleByDoctorId());
+              }
+              if (Context.role === userRole.patient) {
+                dispatch(getScheduleByPatientId());
+              }
             }}
           />
         </Badge>
