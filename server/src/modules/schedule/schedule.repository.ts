@@ -158,7 +158,6 @@ export class ScheduleRepository {
     return await this.scheduleModel.findAll({
       where: {
         patient_id: patient_id,
-        status_id: 1,
       },
     });
   }

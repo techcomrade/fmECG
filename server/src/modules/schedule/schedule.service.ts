@@ -213,7 +213,7 @@ export class ScheduleService {
 
   async cancelPendingSchedule() {
     const pendingSchedules = await this.scheduleRepository.getPendingSchedule();
-    const ALLOW_TIME = 12 * 60 * 60 * 1000;
+    const ALLOW_TIME = 24 * 60 * 60 * 1000;
     const currentTime = new Date().getTime();
     for (const schedule of pendingSchedules) {
       const consultation =
