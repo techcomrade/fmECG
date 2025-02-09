@@ -19,6 +19,22 @@ export class UserRequest {
   account_id: string;
 
   @ApiProperty({
+    description: 'email',
+    example: 'dnthang300@gmail.com',
+  })
+  @IsNotEmpty()
+  @IsUUID()
+  email: string;
+
+  @ApiProperty({
+    description: 'password',
+    example: '123456a@',
+  })
+  @IsNotEmpty()
+  @IsUUID()
+  password: string;
+
+  @ApiProperty({
     description: 'Username for the user',
     example: 'john_doe',
   })
@@ -36,7 +52,7 @@ export class UserRequest {
 
   @ApiProperty({
     description: 'Birth date of the user in ISO format',
-    example: '1990-01-01T00:00:00',
+    example: '123123123123',
   })
   @IsOptional()
   @IsDateString()

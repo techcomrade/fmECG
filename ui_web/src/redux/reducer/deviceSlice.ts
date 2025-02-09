@@ -131,7 +131,7 @@ export const deviceSlice = createSlice({
       })
       .addCase(getAllDevices.rejected, (state, action) => {
         state.deviceData = {} as DeviceResponse;
-        state.errorMessage = (<any>action.payload)?.message;
+        // state.errorMessage = (<any>action.payload)?.message;
         state.loadDataStatus = ApiLoadingStatus.Failed;
       })
       .addCase(getDeviceByDoctorId.pending, (state, action) => {
@@ -143,7 +143,7 @@ export const deviceSlice = createSlice({
       })
       .addCase(getDeviceByDoctorId.rejected, (state, action) => {
         state.deviceData = {} as DeviceResponse;
-        state.errorMessage = (<any>action.payload)?.message;
+        // state.errorMessage = (<any>action.payload)?.message;
         state.loadDataStatus = ApiLoadingStatus.Failed;
       })
       .addCase(getDeviceById.pending, (state, action) => {

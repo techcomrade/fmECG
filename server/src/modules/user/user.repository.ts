@@ -8,7 +8,7 @@ import { UserResponse } from "./dto/user.response";
 export class UserRepository {
   constructor(
     @InjectModel(UserModel)
-    private userModel: typeof UserModel,
+    private userModel: typeof UserModel
   ) {}
 
   async getAllUsers(): Promise<UserResponse[]> {
@@ -20,10 +20,10 @@ export class UserRepository {
       where: { role_id: 2 },
     });
   }
-  async getUserByEmail(email:string): Promise<UserResponse> {
+  async getUserByEmail(email: string): Promise<UserResponse> {
     return await this.userModel.findOne({
-      where: {email: email}
-    })
+      where: { email: email },
+    });
   }
   async countUsersPerMonth(): Promise<any> {
     const [doctors] = await this.userModel.sequelize.query(
@@ -40,6 +40,8 @@ export class UserRepository {
 
   async add(user: UserRequest) {
     return await this.userModel.create({
+      email: user.email,
+      password: user.password,
       account_id: user.account_id,
       username: user.username,
       gender: user.gender,

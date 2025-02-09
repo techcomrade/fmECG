@@ -64,6 +64,7 @@ export class ScheduleController {
     const patientId = (
       await this.userService.getUserByAccountId(req.user.accountId)
     ).id;
+    
     console.log("[P]:::Get schedule by patient id", patientId);
     let checkExistPatient = await this.userService.getUserById(patientId);
     if (checkExistPatient == null) {
@@ -270,7 +271,7 @@ export class ScheduleController {
     console.log("[P]:::Create schedule by patient:", schedule);
     try {
       const { doctor_id } = schedule;
-      schedule.status_id = 2;
+      schedule.status_id = 1;
       const patient = await this.userService.getUserByAccountId(
         req.user.accountId
       );

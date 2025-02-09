@@ -169,7 +169,6 @@ export const scheduleSlice = createSlice({
         state.loadCreateScheduleByDoctorStatus = ApiLoadingStatus.Loading;
       })
       .addCase(createScheduleByDoctor.fulfilled, (state, action) => {
-        console.log(action);
         state.loadCreateScheduleByDoctorStatus = ApiLoadingStatus.Success;
       })
       .addCase(createScheduleByDoctor.rejected, (state, action) => {
@@ -207,7 +206,7 @@ export const scheduleSlice = createSlice({
       })
       .addCase(getAvailableDoctorByScheduleTime.rejected, (state, action) => {
         state.doctorState = [];
-        state.errorMessage = (<any>action.payload)?.message;
+        // state.errorMessage = (<any>action.payload)?.message;
         state.loadGetAvailableDoctorByScheduleTime = ApiLoadingStatus.Failed;
       })
       .addCase(acceptSchedule.pending, (state, action) => {
