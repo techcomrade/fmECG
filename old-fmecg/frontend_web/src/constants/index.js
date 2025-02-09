@@ -144,11 +144,11 @@ export const colorChart = [
 export const convertDeviceTypeToString = (status) => {
   switch (status) {
     case 1:
-      return "Đo điện tim";
+      return "Thiết bị hỗ trợ";
     case 2:
-      return "Đo chỉ số tim mạch";
+      return "Thiết bị xét nghiệm";
     case 3:
-      return "Đo âm thanh";
+      return "Thiết bị hỗ trợ điều trị";
     default:
       return "Không xác định";
   }

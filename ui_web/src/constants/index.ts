@@ -110,26 +110,26 @@ export const convertStringToUserStatus = (status: string) => {
 export const deviceType = [
   {
     value: 1,
-    label: "Đo điện tim",
+    label: "Thiết bị chuẩn đoán",
   },
   {
     value: 2,
-    label: "Đo chỉ số tim mạch",
+    label: "Thiết bị xét nghiệm",
   },
   {
     value: 3,
-    label: "Đo âm thanh",
+    label: "Thiết bị hỗ trợ điều trị",
   },
 ];
 
 export const convertDeviceTypeToString = (deviceType: number) => {
   switch (deviceType) {
     case 1:
-      return "Đo điện tim";
+      return "Thiết bị chuẩn đoán";
     case 2:
-      return "Đo chỉ số tim mạch";
+      return "Thiết bị xét nghiệm";
     case 3:
-      return "Đo âm thanh";
+      return "Thiết bị hỗ trợ điều trị";
     default:
       return "Không xác định";
   }
@@ -137,11 +137,11 @@ export const convertDeviceTypeToString = (deviceType: number) => {
 
 export const convertStringToDeviceType = (deviceType: string) => {
   switch (deviceType) {
-    case "Đo điện tim":
+    case "Thiết bị chuẩn đoán":
       return 1;
-    case "Đo chỉ số tim mạch":
+    case "Thiết bị xét nghiệm":
       return 2;
-    case "Đo âm thanh":
+    case "Thiết bị hỗ trợ điều trị":
       return 3;
     default:
       return 4;

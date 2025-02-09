@@ -66,7 +66,7 @@ export class UserControllerClient {
      * @return Successful
      */
     createUser(body: UserRequest): Promise<boolean> {
-        let url_ = this.baseUrl + "/users";
+        let url_ = this.baseUrl + "/users/create";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);

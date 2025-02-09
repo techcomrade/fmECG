@@ -79,15 +79,15 @@ export const Device: React.FC = () => {
       dataSelect: deviceType,
       filters: [
         {
-          text: "Đo điện tim",
+          text: "Thiết bị chuẩn đoán",
           value: 1,
         },
         {
-          text: "Đo chỉ số tim mạch",
+          text: "Thiết bị xét nghiệm",
           value: 2,
         },
         {
-          text: "Đo âm thanh",
+          text: "Thiết bị hỗ trợ điều trị",
           value: 3,
         },
       ],
