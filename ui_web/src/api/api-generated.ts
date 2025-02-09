@@ -2573,6 +2573,53 @@ export class GroupChatControllerClient {
         }
         return Promise.resolve<void>(null as any);
     }
+
+    /**
+     * @return Successful
+     */
+    getMemberByGroupChatId(id: string): Promise<GroupMemberResponse[]> {
+        let url_ = this.baseUrl + "/groupChat/member/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetMemberByGroupChatId(_response);
+        });
+    }
+
+    protected processGetMemberByGroupChatId(response: Response): Promise<GroupMemberResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GroupMemberResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<GroupMemberResponse[]>(null as any);
+    }
 }
 
 export class UserResponse implements IUserResponse {
@@ -3868,6 +3915,50 @@ export class GroupChatRequest implements IGroupChatRequest {
 }
 
 export interface IGroupChatRequest {
+
+    [key: string]: any;
+}
+
+export class GroupMemberResponse implements IGroupMemberResponse {
+
+    [key: string]: any;
+
+    constructor(data?: IGroupMemberResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+        }
+    }
+
+    static fromJS(data: any): GroupMemberResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new GroupMemberResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        return data;
+    }
+}
+
+export interface IGroupMemberResponse {
 
     [key: string]: any;
 }
