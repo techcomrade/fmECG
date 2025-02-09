@@ -308,52 +308,45 @@ export const User: React.FC = () => {
         return dispatch(updateUserById(payload));
     };
 
-    const handleDeleteFunction = (id: string) => {
-        dispatch(deleteUserById(id));
-    };
-    const initData: any = {
-        username: "",
-        gender: "",
-        birth: "",
-        phone_number: "",
-        role_id: "",
-        status_id: "",
-    };
-    return (
-        <>
-            <DataTable
-                role={Context.role === userRole.admin ? userRole.admin : undefined}
-                addButton={Context.role === userRole.admin}
-                editButton={Context.role === userRole.admin}
-                deleteButton={Context.role === userRole.admin}
-                column={columns}
-                name={
-                    Context.role === userRole.patient
-                        ? "Thông tin bác sĩ"
-                        : Context.role === userRole.admin
-                            ? "Thông tin người dùng"
-                            : "Thông tin bệnh nhân"
-                }
-                data={dataTable}
-                loading={dataState.loadDataStatus === ApiLoadingStatus.Loading}
-                updateSelectedData={setSelectedData}
-                addFunction={handleAddFunction}
-                editFunction={handleEditFunction}
-                deleteFunction={handleDeleteFunction}
-                handleOpenDrawer={(id) => drawerRef.current?.open(id)}
-            />
-            <ModalControlData
-                ref={modalAddRef}
-                title="Thêm thông tin người dùng"
-                submitFunction={(data: any) => handleSubmitAddUser(data)}
-                initialValues={initData}
-            />
-            <ModalControlData
-                ref={modalUpdateRef}
-                title="Thông tin người dùng"
-                submitFunction={(data: any) => handleSubmitEditUser(data)}
-            />
-            <UserDetail ref={drawerRef} />
-        </>
-    );
+  const handleDeleteFunction = (id: string) => {
+    dispatch(deleteUserById(id));
+  };
+  const initData: any = {
+    username: "",
+    gender: "",
+    birth: "",
+    phone_number: "",
+    role_id: "",
+    status_id: "",
+};
+  return (
+    <>
+      <DataTable
+        role={Context.role === userRole.admin ? userRole.admin : undefined}
+        addButton={Context.role === userRole.admin}
+        editButton={Context.role === userRole.admin}
+        deleteButton={Context.role === userRole.admin}
+        column={columns}
+        name={
+          Context.role === userRole.patient
+            ? "Thông tin bác sĩ"
+            : Context.role === userRole.admin
+            ? "Thông tin người dùng"
+            : "Thông tin bệnh nhân"
+        }
+        data={dataTable}
+        loading={dataState.loadDataStatus === ApiLoadingStatus.Loading}
+        updateSelectedData={setSelectedData}
+        editFunction={handleEditFunction}
+        deleteFunction={handleDeleteFunction}
+        handleOpenDrawer={(id) => drawerRef.current?.open(id)}
+      />
+      <ModalControlData
+        ref={modalUpdateRef}
+        title="Thông tin người dùng"
+        submitFunction={(data: any) => handleSubmitEditUser(data)}
+      />
+      <UserDetail ref={drawerRef} />
+    </>
+  );
 };
