@@ -202,7 +202,7 @@ export class UserController {
       throw new BadRequestException("Failed to login");
     }
   }
-  @Post("/create")
+  @Post("/register")
   @ApiResponse({
     status: 201,
     type: Boolean,

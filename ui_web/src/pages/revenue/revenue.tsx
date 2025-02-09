@@ -60,20 +60,13 @@ export const Revenue: React.FC = () => {
         },
         {
             title: "ID lịch khám",
-            dataIndex: "scheduleId",
+            dataIndex: "schedule_id",
             key: "scheduleId",
             type: "text",
             isEdit: false,
             searchable: true,
         },
-        {
-            title: "Loại lịch khám",
-            dataIndex: "scheduleType",
-            key: "scheduleType",
-            type: "text",
-            isEdit: false,
-            searchable: true,
-        },
+
         {
             title: "ID bệnh nhân",
             dataIndex: "patientId",
@@ -187,6 +180,7 @@ export const Revenue: React.FC = () => {
             const rawData = dataState.data.map((device) =>
                 handleData(device, "render")
             );
+            console.log(rawData);
             setDataTable(rawData);
         }
         if (
