@@ -31,7 +31,12 @@ export class ScheduleRepository {
       }
     );
   }
-
+  async countSchedulesPerMonth() {
+    const [result, metadata] = await this.scheduleModel.sequelize.query(
+      "SELECT EXTRACT(MONTH FROM FROM_UNIXTIME(start_time)) AS month, COUNT(*) AS schedule_count FROM schedules GROUP BY month ORDER BY month"
+    );
+    return result;
+  }
   async countExistingSchedule(schedule: ScheduleRequest): Promise<Number> {
     return await this.scheduleModel.count({
       where: { patient_id: schedule.patient_id, status_id: 2 },

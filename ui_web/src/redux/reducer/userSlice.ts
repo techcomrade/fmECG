@@ -14,6 +14,7 @@ interface IUserState {
   loadGetUserByIdStatus: ApiLoadingStatus;
   loadUpdateDataStatus: ApiLoadingStatus;
   loadDeleteDataStatus: ApiLoadingStatus;
+    loadAddDataStatus: ApiLoadingStatus; // Added loading status for add
   errorMessage: string | undefined;
 }
 
@@ -27,6 +28,7 @@ const initialState: IUserState = {
   loadGetUserByIdStatus: ApiLoadingStatus.None,
   loadUpdateDataStatus: ApiLoadingStatus.None,
   loadDeleteDataStatus: ApiLoadingStatus.None,
+    loadAddDataStatus: ApiLoadingStatus.None, // Initialized loading status for add
   errorMessage: undefined,
 };
 
@@ -58,7 +60,13 @@ export const getDoctorByPatientId = createAsyncThunkWrap(
     return await Service.userService.getDoctorByPatientId();
   }
 );
-
+// Add a new async thunk for adding a user
+export const addUser = createAsyncThunkWrap(
+  "/users/add",
+  async (user: UserRequest) => {
+    return await Service.userService.createUser(user);
+  }
+);
 export const updateUserById = createAsyncThunkWrap(
   "/users/update",
   async (user: UserRequest) => {
@@ -87,6 +95,9 @@ export const userSlice = createSlice({
     },
     resetLoadDeleteDataStatus: (state) => {
       state.loadDeleteDataStatus = ApiLoadingStatus.None;
+    },
+       resetLoadAddDataStatus: (state) => { // Reset action for add loading status
+      state.loadAddDataStatus = ApiLoadingStatus.None;
     },
   },
   extraReducers: (builder) => {
@@ -151,6 +162,16 @@ export const userSlice = createSlice({
         state.errorMessage = (<any>action.payload)?.message;
         state.loadGetUserByIdStatus = ApiLoadingStatus.Failed;
       })
+          .addCase(addUser.pending, (state) => { // Handle pending state for add
+        state.loadAddDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(addUser.fulfilled, (state) => { // Handle successful add
+        state.loadAddDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(addUser.rejected, (state, action) => { // Handle failed add
+          state.errorMessage = (<any>action.payload)?.message;
+        state.loadAddDataStatus = ApiLoadingStatus.Failed;
+      })
       .addCase(updateUserById.pending, (state, action) => {
         state.loadUpdateDataStatus = ApiLoadingStatus.Loading;
       })
@@ -179,5 +200,6 @@ export const {
   resetLoadGetUserByIdStatus,
   resetLoadUpdateDataStatus,
   resetLoadDeleteDataStatus,
+    resetLoadAddDataStatus, // Export the reset action for add
 } = userSlice.actions;
 export default userSlice.reducer;

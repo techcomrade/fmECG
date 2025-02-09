@@ -97,7 +97,7 @@ export default function DeviceInformation() {
           </Row>
           <Row>
             <Col span={10}>
-              <Form.Item label="Số bản ghi">
+              <Form.Item label="Số lịch khám">
                 <Input value={accountData.email} name="email" disabled/>
               </Form.Item>
             </Col>

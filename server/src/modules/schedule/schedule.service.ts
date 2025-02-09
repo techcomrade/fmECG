@@ -120,6 +120,9 @@ export class ScheduleService {
       t
     );
   }
+  async countSchedulesPerMonth(): Promise<any> {
+    return await this.scheduleRepository.countSchedulesPerMonth();
+  }
 
   async deleteScheduleById(id: string) {
     return await this.transactionService.transaction(async (t: any) => {

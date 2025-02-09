@@ -223,7 +223,7 @@ export const Home: React.FC = () => {
       }
       setRecordArray([
         {
-          name: "Số bản ghi",
+          name: "Số lịch khám",
           data: recordsResult,
           offsetY: 0,
         },
@@ -324,7 +324,7 @@ export const Home: React.FC = () => {
           bnb: getPersent("devices")?.startsWith("-") ? "redtext" : "bnb2",
         },
         {
-          today: "Số bản ghi",
+          today: "Số lịch khám",
           title: Array.isArray(statistic.record_array)
             ? dataThisMonth(statistic.record_array, "record_count")
             : 0,
