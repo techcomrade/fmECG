@@ -14,9 +14,9 @@ export class UserRequest {
     description: 'Account ID associated with the user',
     example: 'f4289c39-ff2e-43b0-8f78-4dcc98128a16',
   })
-  @IsNotEmpty()
+  // @IsNotEmpty()
   @IsUUID()
-  account_id: string;
+  account_id?: string;
 
   @ApiProperty({
     description: 'email',

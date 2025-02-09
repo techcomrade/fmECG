@@ -38,6 +38,7 @@ export class UserService {
   }
 
   async add(user: UserRequest) {
+    user.account_id = uuidv4();
     return await this.userRepository.add(user);
   }
 
