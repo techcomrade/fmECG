@@ -35,10 +35,17 @@ const ModalAssign = (props: any, ref: any) => {
 
   React.useImperativeHandle(ref, () => ({
     open: (data: any) => {
+      console.log(data);
       setIsOpen(true);
       dispatch(getUserById(data.user_id));
       setData(data);
-      form.setFieldsValue(data);
+      const now = dayjs();
+      form.setFieldsValue({
+        ...data,
+        user_id: null,
+        start_time: now,
+        end_time: now.add(1, "day"),
+      });
     },
   }));
 
@@ -86,7 +93,7 @@ const ModalAssign = (props: any, ref: any) => {
         >
           <Select
             options={props.userOptions || []}
-            placeholder="Select a user"
+            placeholder="Vui lòng chọn người dùng"
             onChange={(value) => {
               const selectedUser = props.userOptions.find(
                 (user: any) => user.value === value
@@ -95,76 +102,75 @@ const ModalAssign = (props: any, ref: any) => {
             }}
           />
         </Form.Item>
-        {user.role_id !== 1 && (
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                label="Thời gian bắt đầu"
-                name="start_time"
-                rules={[{ required: true }]}
-                style={{ marginBottom: "8px" }}
-              >
-                <DatePicker
-                  showTime
-                  format="DD/MM/YYYY HH:mm"
-                  placeholder="Thời gian bắt đầu"
-                  disabledDate={(currentDate) => {
-                    return currentDate && currentDate.isBefore(dayjs(), "day");
-                  }}
-                  disabledTime={() => {
-                    return {
-                      disabledHours: () => {
-                        let array = [];
-                        for (let i = 0; i < 9; i++) array.push(i);
-                        for (let i = 21; i < 24; i++) array.push(i);
-                        return array;
-                      },
-                    };
-                  }}
-                  onChange={(value) => {
-                    const endTime = form.getFieldValue("end_time");
-                    if (!endTime || dayjs(value).isAfter(dayjs(endTime))) {
-                      form.setFieldsValue({ end_time: value });
-                    }
-                  }}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                label="Thời gian kết thúc"
-                name="end_time"
-                rules={[{ required: true }]}
-                style={{ marginBottom: "8px" }}
-              >
-                <DatePicker
-                  showTime
-                  format="DD/MM/YYYY HH:mm"
-                  placeholder="Thời gian kết thúc"
-                  disabledDate={(currentDate) => {
-                    const startTime = form.getFieldValue("start_time");
-                    return (
-                      currentDate &&
-                      (currentDate.isBefore(dayjs(), "day") ||
-                        (startTime &&
-                          currentDate.isBefore(dayjs(startTime), "day")))
-                    );
-                  }}
-                  disabledTime={() => {
-                    return {
-                      disabledHours: () => {
-                        let array = [];
-                        for (let i = 0; i < 9; i++) array.push(i);
-                        for (let i = 21; i < 24; i++) array.push(i);
-                        return array;
-                      },
-                    };
-                  }}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-        )}
+
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              label="Thời gian bắt đầu"
+              name="start_time"
+              rules={[{ required: true }]}
+              style={{ marginBottom: "8px" }}
+            >
+              <DatePicker
+                showTime
+                format="DD/MM/YYYY HH:mm"
+                placeholder="Thời gian bắt đầu"
+                disabledDate={(currentDate) => {
+                  return currentDate && currentDate.isBefore(dayjs(), "day");
+                }}
+                disabledTime={() => {
+                  return {
+                    disabledHours: () => {
+                      let array = [];
+                      for (let i = 0; i < 9; i++) array.push(i);
+                      for (let i = 21; i < 24; i++) array.push(i);
+                      return array;
+                    },
+                  };
+                }}
+                onChange={(value) => {
+                  const endTime = form.getFieldValue("end_time");
+                  if (!endTime || dayjs(value).isAfter(dayjs(endTime))) {
+                    form.setFieldsValue({ end_time: value });
+                  }
+                }}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label="Thời gian kết thúc"
+              name="end_time"
+              rules={[{ required: true }]}
+              style={{ marginBottom: "8px" }}
+            >
+              <DatePicker
+                showTime
+                format="DD/MM/YYYY HH:mm"
+                placeholder="Thời gian kết thúc"
+                disabledDate={(currentDate) => {
+                  const startTime = form.getFieldValue("start_time");
+                  return (
+                    currentDate &&
+                    (currentDate.isBefore(dayjs(), "day") ||
+                      (startTime &&
+                        currentDate.isBefore(dayjs(startTime), "day")))
+                  );
+                }}
+                disabledTime={() => {
+                  return {
+                    disabledHours: () => {
+                      let array = [];
+                      for (let i = 0; i < 9; i++) array.push(i);
+                      for (let i = 21; i < 24; i++) array.push(i);
+                      return array;
+                    },
+                  };
+                }}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     </Modal>
   );

@@ -3,7 +3,8 @@ import { InjectModel } from "@nestjs/sequelize";
 import { DeviceModel } from "../../entities/device.model";
 import { DeviceRequest } from "./dto/device.request";
 import { DeviceResponse } from "./dto/device.response";
-const sequelize = require("../../config/sequelize");
+import { Op } from "sequelize";
+import { UnassignDeviceRequest } from "./dto/unassignDevice.request";
 
 @Injectable()
 export class DeviceRepository {
@@ -27,6 +28,22 @@ export class DeviceRepository {
 
   async getAllData(): Promise<DeviceResponse[]> {
     return await this.deviceModel.findAll();
+  }
+
+  async getUnassignedDevices(): Promise<DeviceResponse[]> {
+    return await this.deviceModel.findAll({
+      where: {
+        status_id: { [Op.in]: [2, 3] },
+      },
+    });
+  }
+
+  async getAssignedDevices(): Promise<DeviceResponse[]> {
+    return await this.deviceModel.findAll({
+      where: {
+        status_id: 1,
+      },
+    });
   }
 
   async getById(id: string): Promise<DeviceResponse> {
@@ -68,6 +85,18 @@ export class DeviceRepository {
         where: {
           id: id,
         },
+      }
+    );
+  }
+
+  async unassignDevice(device: UnassignDeviceRequest, id: string) {
+    return await this.deviceModel.update(
+      {
+        user_id: device.user_id,
+        status_id: 2,
+      },
+      {
+        where: { id: id },
       }
     );
   }

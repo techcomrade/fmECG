@@ -188,7 +188,7 @@ export const Record: React.FC = () => {
   return (
     <>
       <DataTable
-        role={Context.role === userRole.doctor ? userRole.doctor : undefined}
+        role={Context.role}
         editButton={Context.role === userRole.doctor}
         deleteButton={Context.role === userRole.doctor}
         chartButton

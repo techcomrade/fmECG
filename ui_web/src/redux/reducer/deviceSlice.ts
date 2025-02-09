@@ -3,6 +3,7 @@ import {
   DeviceDetailRequest,
   DeviceRequest,
   DeviceResponse,
+  UnassignDeviceRequest,
 } from "../../api/api-generated";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { createAsyncThunkWrap } from "../handler";
@@ -16,6 +17,7 @@ interface IDeviceState {
   loadAddDataStatus: ApiLoadingStatus;
   loadAddDetailDataStatus: ApiLoadingStatus;
   loadUpdateDataStatus: ApiLoadingStatus;
+  loadUnassignDeviceStatus: ApiLoadingStatus;
   loadDeleteDataStatus: ApiLoadingStatus;
   loadDeleteDetailDataStatus: ApiLoadingStatus;
   errorMessage: string | undefined;
@@ -29,6 +31,7 @@ const initialState: IDeviceState = {
   loadAddDataStatus: ApiLoadingStatus.None,
   loadAddDetailDataStatus: ApiLoadingStatus.None,
   loadUpdateDataStatus: ApiLoadingStatus.None,
+  loadUnassignDeviceStatus: ApiLoadingStatus.None,
   loadDeleteDataStatus: ApiLoadingStatus.None,
   loadDeleteDetailDataStatus: ApiLoadingStatus.None,
   errorMessage: undefined,
@@ -37,6 +40,20 @@ const initialState: IDeviceState = {
 export const getAllDevices = createAsyncThunkWrap("/devices", async () => {
   return await Service.deviceService.getAllData();
 });
+
+export const getUnassignedDevices = createAsyncThunkWrap(
+  "/devices/unassigned",
+  async () => {
+    return await Service.deviceService.getUnassignedDevices();
+  }
+);
+
+export const getAssignedDevices = createAsyncThunkWrap(
+  "/devices/assigned",
+  async () => {
+    return await Service.deviceService.getAssignedDevices();
+  }
+);
 
 export const getDeviceById = createAsyncThunkWrap(
   "/devices/id",
@@ -80,6 +97,13 @@ export const updateDeviceDetailById = createAsyncThunkWrap(
   }
 );
 
+export const unassignDevice = createAsyncThunkWrap(
+  "/devices/unassign",
+  async (device: UnassignDeviceRequest) => {
+    return await Service.deviceService.unassignDevice(device)
+  }
+)
+
 export const deleteDeviceById = createAsyncThunkWrap(
   "/devices/delete",
   async (id: string) => {
@@ -113,6 +137,9 @@ export const deviceSlice = createSlice({
     resetLoadUpdateDataStatus: (state) => {
       state.loadUpdateDataStatus = ApiLoadingStatus.None;
     },
+    resetLoadUnassignDeviceStatus: (state) => {
+      state.loadUnassignDeviceStatus = ApiLoadingStatus.None;
+    },
     resetLoadDeleteDataStatus: (state) => {
       state.loadDeleteDataStatus = ApiLoadingStatus.None;
     },
@@ -130,7 +157,31 @@ export const deviceSlice = createSlice({
         state.loadDataStatus = ApiLoadingStatus.Success;
       })
       .addCase(getAllDevices.rejected, (state, action) => {
-        state.deviceData = {} as DeviceResponse;
+        state.data = [];
+        state.errorMessage = (<any>action.payload)?.message;
+        state.loadDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getAssignedDevices.pending, (state, action) => {
+        state.loadDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getAssignedDevices.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getAssignedDevices.rejected, (state, action) => {
+        state.data = [];
+        state.errorMessage = (<any>action.payload)?.message;
+        state.loadDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getUnassignedDevices.pending, (state, action) => {
+        state.loadDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getUnassignedDevices.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getUnassignedDevices.rejected, (state, action) => {
+        state.data = [];
         state.errorMessage = (<any>action.payload)?.message;
         state.loadDataStatus = ApiLoadingStatus.Failed;
       })
@@ -187,6 +238,16 @@ export const deviceSlice = createSlice({
         state.errorMessage = (<any>action.payload).message;
         state.loadUpdateDataStatus = ApiLoadingStatus.Failed;
       })
+      .addCase(unassignDevice.pending, (state, action) => {
+        state.loadUnassignDeviceStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(unassignDevice.fulfilled, (state, action) => {
+        state.loadUnassignDeviceStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(unassignDevice.rejected, (state, action) => {
+        state.errorMessage = (<any>action.payload).message;
+        state.loadUnassignDeviceStatus = ApiLoadingStatus.Failed;
+      })
       .addCase(deleteDeviceById.pending, (state, action) => {
         state.loadDeleteDataStatus = ApiLoadingStatus.Loading;
       })
@@ -216,6 +277,7 @@ export const {
   resetLoadAddDetailDataStatus,
   resetLoadGetDeviceByIdStatus,
   resetLoadUpdateDataStatus,
+  resetLoadUnassignDeviceStatus,
   resetLoadDeleteDataStatus,
   resetLoadDeleteDetailDataStatus,
 } = deviceSlice.actions;

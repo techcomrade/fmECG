@@ -26,14 +26,6 @@ module.exports = {
         type: Sequelize.BIGINT,
         allowNull: false,
       },
-      schedule_type_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "schedule_type",
-          key: "id",
-        },
-      },
       status_id: {
         type: Sequelize.INTEGER,
         allowNull: false,

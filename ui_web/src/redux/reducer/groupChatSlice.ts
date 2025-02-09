@@ -2,23 +2,26 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { createAsyncThunkWrap } from "../handler";
 import {
-  MessageSchema,
-  MessageRequest,
   Service,
   GroupChatRequest,
   GroupChatSchema,
+  GroupMemberResponse,
 } from "../../api";
 
 interface IGroupChatState {
   data: GroupChatSchema[];
+  member: GroupMemberResponse[];
   loadCreateGroupChat: ApiLoadingStatus;
   loadGetGroupChat: ApiLoadingStatus;
+  loadGetMemberByGroupChatId: ApiLoadingStatus;
 }
 
 const initialState: IGroupChatState = {
   data: [],
+  member: [],
   loadCreateGroupChat: ApiLoadingStatus.None,
   loadGetGroupChat: ApiLoadingStatus.None,
+  loadGetMemberByGroupChatId: ApiLoadingStatus.None,
 };
 
 export const createGroupChat = createAsyncThunkWrap(
@@ -35,6 +38,13 @@ export const getGroupChat = createAsyncThunkWrap(
   }
 );
 
+export const getMemberByGroupChatId = createAsyncThunkWrap(
+  "/groupChat/member/group-id",
+  async (id: string) => {
+    return await Service.groupChatService.getMemberByGroupChatId(id);
+  }
+);
+
 export const groupChatSlice = createSlice({
   name: "groupChat",
   initialState,
@@ -42,8 +52,11 @@ export const groupChatSlice = createSlice({
     resetLoadCreateGroupChat: (state) => {
       state.loadCreateGroupChat = ApiLoadingStatus.None;
     },
-    resetGetCreateGroupChat: (state) => {
+    resetLoadGetGroupChat: (state) => {
       state.loadGetGroupChat = ApiLoadingStatus.None;
+    },
+    resetGetMemberByGroupChatId: (state) => {
+      state.loadGetMemberByGroupChatId = ApiLoadingStatus.None;
     },
   },
   extraReducers: (builder) => {
@@ -66,11 +79,22 @@ export const groupChatSlice = createSlice({
       })
       .addCase(getGroupChat.rejected, (state, action) => {
         state.loadGetGroupChat = ApiLoadingStatus.Failed;
+      })
+      .addCase(getMemberByGroupChatId.pending, (state) => {
+        state.loadGetMemberByGroupChatId = ApiLoadingStatus.Loading;
+      })
+      .addCase(getMemberByGroupChatId.fulfilled, (state, action) => {
+        state.member = action.payload;
+        state.loadGetMemberByGroupChatId = ApiLoadingStatus.Success;
+      })
+      .addCase(getMemberByGroupChatId.rejected, (state, action) => {
+        state.member = [];
+        state.loadGetMemberByGroupChatId = ApiLoadingStatus.Failed;
       });
   },
 });
 
-export const { resetLoadCreateGroupChat, resetGetCreateGroupChat } =
+export const { resetLoadCreateGroupChat, resetLoadGetGroupChat } =
   groupChatSlice.actions;
 
 export default groupChatSlice.reducer;

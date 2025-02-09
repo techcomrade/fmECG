@@ -10,9 +10,11 @@ import {
   LineChartOutlined,
   ScheduleOutlined,
   UserOutlined,
-  WechatWorkOutlined
+  WechatWorkOutlined,
+  TagOutlined
 } from "@ant-design/icons";
 import { userRole } from "../constants";
+import { AssignedDevice } from "../pages/assignedDevice";
 
 export interface IRouteItem {
   key: string;
@@ -43,6 +45,13 @@ export const adminRouterMappingGroup: { [key: string]: IRouteItem } = {
     label: "Thông tin thiết bị",
     component: Device,
     icon: DesktopOutlined,
+  },
+  AssignedDevice: {
+    key: "/assigned-device",
+    url: "/assigned-device",
+    label: "Phân công thiết bị",
+    component: AssignedDevice,
+    icon: TagOutlined,
   },
   Record: {
     key: "/record",
@@ -75,12 +84,12 @@ export const doctorRouterMappingGroup: { [key: string]: IRouteItem } = {
     component: User,
     icon: TeamOutlined,
   },
-  Device: {
-    key: "/device",
-    url: "/device",
-    label: "Thông tin thiết bị",
-    component: Device,
-    icon: DesktopOutlined,
+  AssignedDevice: {
+    key: "/assigned-device",
+    url: "/assigned-device",
+    label: "Phân công thiết bị",
+    component: AssignedDevice,
+    icon: TagOutlined,
   },
   Record: {
     key: "/record",
@@ -113,12 +122,12 @@ export const patientRouterMappingGroup: { [key: string]: IRouteItem } = {
     component: User,
     icon: UserOutlined,
   },
-  Device: {
-    key: "/device",
-    url: "/device",
-    label: "Thông tin thiết bị",
-    component: Device,
-    icon: DesktopOutlined,
+  AssignedDevice: {
+    key: "/assigned-device",
+    url: "/assigned-device",
+    label: "Phân công thiết bị",
+    component: AssignedDevice,
+    icon: TagOutlined,
   },
   RecordInformation: {
     key: "/record",

@@ -235,6 +235,50 @@ export class UserControllerClient {
     /**
      * @return Successful
      */
+    getAllExceptAdmin(): Promise<UserResponse[]> {
+        let url_ = this.baseUrl + "/users/except-admin";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetAllExceptAdmin(_response);
+        });
+    }
+
+    protected processGetAllExceptAdmin(response: Response): Promise<UserResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UserResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<UserResponse[]>(null as any);
+    }
+
+    /**
+     * @return Successful
+     */
     getUserById(id: string): Promise<UserResponse> {
         let url_ = this.baseUrl + "/users/{id}";
         if (id === undefined || id === null)
@@ -679,8 +723,50 @@ export class ScheduleControllerClient {
     /**
      * @return Successful
      */
+    rejectSchedule(body: AcceptScheduleRequest): Promise<boolean> {
+        let url_ = this.baseUrl + "/schedules/reject-schedule";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processRejectSchedule(_response);
+        });
+    }
+
+    protected processRejectSchedule(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
+    }
+
+    /**
+     * @return Successful
+     */
     deleteScheduleById(id: string): Promise<boolean> {
-        let url_ = this.baseUrl + "/schedules/reject-schedule/{id}";
+        let url_ = this.baseUrl + "/schedules/delete-schedule/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -851,6 +937,48 @@ export class ScheduleControllerClient {
             });
         }
         return Promise.resolve<UserResponse[]>(null as any);
+    }
+
+    /**
+     * @return Successful
+     */
+    updateScheduleResult(body: UpdateResultRequest): Promise<boolean> {
+        let url_ = this.baseUrl + "/schedules/update-result";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUpdateScheduleResult(_response);
+        });
+    }
+
+    protected processUpdateScheduleResult(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
     }
 }
 
@@ -1243,6 +1371,136 @@ export class DeviceControllerClient {
     }
 
     protected processGetAllData(response: Response): Promise<DeviceResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(DeviceResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<DeviceResponse[]>(null as any);
+    }
+
+    /**
+     * @return successful
+     */
+    unassignDevice(body: UnassignDeviceRequest): Promise<boolean> {
+        let url_ = this.baseUrl + "/device/unassign";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUnassignDevice(_response);
+        });
+    }
+
+    protected processUnassignDevice(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(null as any);
+    }
+
+    /**
+     * @return successful
+     */
+    getUnassignedDevices(): Promise<DeviceResponse[]> {
+        let url_ = this.baseUrl + "/device/unassigned";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetUnassignedDevices(_response);
+        });
+    }
+
+    protected processGetUnassignedDevices(response: Response): Promise<DeviceResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(DeviceResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<DeviceResponse[]>(null as any);
+    }
+
+    /**
+     * @return successful
+     */
+    getAssignedDevices(): Promise<DeviceResponse[]> {
+        let url_ = this.baseUrl + "/device/assigned";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetAssignedDevices(_response);
+        });
+    }
+
+    protected processGetAssignedDevices(response: Response): Promise<DeviceResponse[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -2315,6 +2573,53 @@ export class GroupChatControllerClient {
         }
         return Promise.resolve<void>(null as any);
     }
+
+    /**
+     * @return Successful
+     */
+    getMemberByGroupChatId(id: string): Promise<GroupMemberResponse[]> {
+        let url_ = this.baseUrl + "/groupChat/member/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetMemberByGroupChatId(_response);
+        });
+    }
+
+    protected processGetMemberByGroupChatId(response: Response): Promise<GroupMemberResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GroupMemberResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<GroupMemberResponse[]>(null as any);
+    }
 }
 
 export class UserResponse implements IUserResponse {
@@ -2520,8 +2825,6 @@ export class ScheduleRequest implements IScheduleRequest {
     schedule_start_time!: number;
     /** End time of the schedule (in Unix timestamp format) */
     schedule_end_time!: number;
-    /** Type ID of the schedule */
-    schedule_type_id!: number;
     /** Status ID of the schedule */
     status_id!: number;
     /** Result of the schedule (1: success, 2: upcoming, 3: failed) */
@@ -2549,7 +2852,6 @@ export class ScheduleRequest implements IScheduleRequest {
             this.patient_id = _data["patient_id"];
             this.schedule_start_time = _data["schedule_start_time"];
             this.schedule_end_time = _data["schedule_end_time"];
-            this.schedule_type_id = _data["schedule_type_id"];
             this.status_id = _data["status_id"];
             this.schedule_result = _data["schedule_result"];
         }
@@ -2573,7 +2875,6 @@ export class ScheduleRequest implements IScheduleRequest {
         data["patient_id"] = this.patient_id;
         data["schedule_start_time"] = this.schedule_start_time;
         data["schedule_end_time"] = this.schedule_end_time;
-        data["schedule_type_id"] = this.schedule_type_id;
         data["status_id"] = this.status_id;
         data["schedule_result"] = this.schedule_result;
         return data;
@@ -2591,8 +2892,6 @@ export interface IScheduleRequest {
     schedule_start_time: number;
     /** End time of the schedule (in Unix timestamp format) */
     schedule_end_time: number;
-    /** Type ID of the schedule */
-    schedule_type_id: number;
     /** Status ID of the schedule */
     status_id: number;
     /** Result of the schedule (1: success, 2: upcoming, 3: failed) */
@@ -2647,6 +2946,62 @@ export class AcceptScheduleRequest implements IAcceptScheduleRequest {
 export interface IAcceptScheduleRequest {
     /** Unique identifier for the schedule */
     schedule_id: string;
+
+    [key: string]: any;
+}
+
+export class UpdateResultRequest implements IUpdateResultRequest {
+    /** Unique identifier for the schedule */
+    schedule_id!: string;
+    /** Result of the schedule */
+    result!: number;
+
+    [key: string]: any;
+
+    constructor(data?: IUpdateResultRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.schedule_id = _data["schedule_id"];
+            this.result = _data["result"];
+        }
+    }
+
+    static fromJS(data: any): UpdateResultRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateResultRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["schedule_id"] = this.schedule_id;
+        data["result"] = this.result;
+        return data;
+    }
+}
+
+export interface IUpdateResultRequest {
+    /** Unique identifier for the schedule */
+    schedule_id: string;
+    /** Result of the schedule */
+    result: number;
 
     [key: string]: any;
 }
@@ -2812,7 +3167,7 @@ export class NotificationRequest implements INotificationRequest {
     schedule_start_time!: number;
     /** Check if the notification was seen before (true: seen, false: not seen) */
     is_seen!: boolean;
-    /** Status of the notification (0: reminder, 1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule, 5: cancel automatically) */
+    /** Status of the notification (0: reminder, 1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule, 5: cancel automatically, 6: pending schedule result) */
     status!: number;
     /** Reason why the doctor rejected patient's schedule */
     reject_reason!: string;
@@ -2883,7 +3238,7 @@ export interface INotificationRequest {
     schedule_start_time: number;
     /** Check if the notification was seen before (true: seen, false: not seen) */
     is_seen: boolean;
-    /** Status of the notification (0: reminder, 1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule, 5: cancel automatically) */
+    /** Status of the notification (0: reminder, 1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule, 5: cancel automatically, 6: pending schedule result) */
     status: number;
     /** Reason why the doctor rejected patient's schedule */
     reject_reason: string;
@@ -2983,6 +3338,50 @@ export class DeviceResponse implements IDeviceResponse {
 }
 
 export interface IDeviceResponse {
+
+    [key: string]: any;
+}
+
+export class UnassignDeviceRequest implements IUnassignDeviceRequest {
+
+    [key: string]: any;
+
+    constructor(data?: IUnassignDeviceRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+        }
+    }
+
+    static fromJS(data: any): UnassignDeviceRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new UnassignDeviceRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        return data;
+    }
+}
+
+export interface IUnassignDeviceRequest {
 
     [key: string]: any;
 }
@@ -3516,6 +3915,50 @@ export class GroupChatRequest implements IGroupChatRequest {
 }
 
 export interface IGroupChatRequest {
+
+    [key: string]: any;
+}
+
+export class GroupMemberResponse implements IGroupMemberResponse {
+
+    [key: string]: any;
+
+    constructor(data?: IGroupMemberResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+        }
+    }
+
+    static fromJS(data: any): GroupMemberResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new GroupMemberResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        return data;
+    }
+}
+
+export interface IGroupMemberResponse {
 
     [key: string]: any;
 }

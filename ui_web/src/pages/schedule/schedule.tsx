@@ -20,7 +20,6 @@ import { checkDateTypeKey } from "../../utils/dateUtils";
 import { ScheduleModal } from "../../components/Modal/ScheduleModal";
 import {
   convertScheduleStatusToString,
-  convertScheduleTypeToString,
   scheduleType,
   userRole,
 } from "../../constants";
@@ -95,7 +94,7 @@ export const Schedule: React.FC = () => {
       setData([]);
       showNotiError(dataState.errorMessage);
     }
-  }, [dataState.loadDataStatus]);
+  }, [dataState]);
 
   React.useEffect(() => {
     if (dataState.clickedNotificationDate) {
@@ -140,9 +139,6 @@ export const Schedule: React.FC = () => {
             time: Number(dayjs(schedule.schedule_start_time).format("HHmm")),
             doctor: schedule.doctor_name,
             patient: schedule.patient_name,
-            schedule_type: convertScheduleTypeToString(
-              schedule.schedule_type_id
-            ),
             status: convertScheduleStatusToString(schedule.status_id),
             result: schedule.schedule_result,
             doctor_id: schedule.doctor_id,
@@ -169,22 +165,66 @@ export const Schedule: React.FC = () => {
       evening: 0,
     };
 
+    let checkWarningSchedule: Array<boolean> = [false, false, false];
     listData.forEach((item) => {
       const time = item.time;
       if (time < 1200) {
         count.morning++;
+        if (item.result === 5) checkWarningSchedule[0] = true;
       } else if (time >= 1200 && time < 1900) {
         count.afternoon++;
+        if (item.result === 5) checkWarningSchedule[1] = true;
       } else {
         count.evening++;
+        if (item.result === 5) checkWarningSchedule[3] = true;
       }
     });
 
     return (
       <ul className="events">
-        <Badge color={"orange"} text={`Số ca sáng: ${count.morning}`} />
-        <Badge color={"green"} text={`Số ca chiều: ${count.afternoon}`} />
-        <Badge color={"purple"} text={`Số ca tối: ${count.evening}`} />
+        <Badge
+          color={"orange"}
+          text={
+            <span
+              style={
+                checkWarningSchedule[0]
+                  ? { color: "#E6B800", fontWeight: "bold" }
+                  : {}
+              }
+            >
+              Số ca sáng: {count.morning} {checkWarningSchedule[0] ? "!!!" : ""}
+            </span>
+          }
+        />
+        <Badge
+          color={"green"}
+          text={
+            <span
+              style={
+                checkWarningSchedule[1]
+                  ? { color: "#E6B800", fontWeight: "bold" }
+                  : {}
+              }
+            >
+              Số ca chiều: {count.afternoon}{" "}
+              {checkWarningSchedule[1] ? "!!!" : ""}
+            </span>
+          }
+        />
+        <Badge
+          color={"purple"}
+          text={
+            <span
+              style={
+                checkWarningSchedule[2]
+                  ? { color: "#E6B800", fontWeight: "bold" }
+                  : {}
+              }
+            >
+              Số ca tối: {count.evening} {checkWarningSchedule[3] ? "!!!" : ""}
+            </span>
+          }
+        />
       </ul>
     );
   };
@@ -214,7 +254,7 @@ export const Schedule: React.FC = () => {
     if (
       dataState.loadCreateScheduleByDoctorStatus === ApiLoadingStatus.Success
     ) {
-      showNotiSuccess("Bạn đã tạo lịch hẹn thành công");
+      showNotiSuccess("Bạn đã tạo lịch khám thành công");
       dispatch(resetLoadCreateScheduleByDoctorStatus());
       dispatch(getScheduleByDoctorId());
     }
@@ -231,7 +271,7 @@ export const Schedule: React.FC = () => {
     if (
       dataState.loadCreateScheduleByPatientStatus === ApiLoadingStatus.Success
     ) {
-      showNotiSuccess("Bạn đã đặt lịch hẹn thành công");
+      showNotiSuccess("Bạn đã đặt lịch khám thành công");
       dispatch(resetLoadCreateScheduleByPatientStatus());
       dispatch(getScheduleByPatientId());
     }
@@ -267,7 +307,7 @@ export const Schedule: React.FC = () => {
       <ConfigProvider locale={viVN}>
         <Calendar cellRender={cellRender} onSelect={onDateSelect} />
         <ScheduleModal
-          title={`Lịch hẹn ngày ${selectedDate?.format("DD-MM-YYYY")}`}
+          title={`Lịch khám ngày ${selectedDate?.format("DD-MM-YYYY")}`}
           isOpen={isOpen}
           selectedDate={selectedDate}
           data={data}

@@ -9,6 +9,8 @@ import {
   Button,
   Modal,
   Form,
+  Row,
+  Col,
 } from "antd";
 import { BellFilled, CloseOutlined } from "@ant-design/icons";
 import "./notification.scss";
@@ -111,26 +113,28 @@ export const Notification: React.FC = () => {
     const [time, date] = dateObj.split(" ");
     if (Context.role === userRole.patient) {
       if (item.status === 0)
-        return `Còn 1 tiếng nữa là đến lịch hẹn với bác sĩ ${item.doctor_name} vào ${time} ngày ${date} của bạn`;
+        return `Còn 1 tiếng nữa là đến lịch khám với bác sĩ ${item.doctor_name} vào ${time} ngày ${date} của bạn`;
       if (item.status === 1)
-        return `Bác sĩ ${item.doctor_name} đã chấp nhận lịch hẹn vào ${time} ngày ${date} của bạn`;
+        return `Bác sĩ ${item.doctor_name} đã chấp nhận lịch khám vào ${time} ngày ${date} của bạn`;
       if (item.status === 2)
-        return `Bạn đã thành công đặt lịch hẹn với bác sĩ ${item.doctor_name} vào ${time} ngày ${date}, vui lòng đợi bác sĩ xác nhận`;
+        return `Bạn đã thành công đặt lịch khám với bác sĩ ${item.doctor_name} vào ${time} ngày ${date}, vui lòng đợi bác sĩ xác nhận`;
       if (item.status === 3)
-        return `Bác sĩ ${item.doctor_name} đã từ chối lịch hẹn vào ${time} ngày ${date} của bạn, nhấn để xem thông tin chi tiết`;
+        return `Bác sĩ ${item.doctor_name} đã từ chối lịch khám vào ${time} ngày ${date} của bạn, nhấn để xem thông tin chi tiết`;
       if (item.status === 4)
-        return `Bác sĩ ${item.doctor_name} đã tạo lịch hẹn vào ${time} ngày ${date} cho bạn`;
-      return `Lịch hẹn vào ${time} ngày ${date} của bạn đã bị hủy tự động do chưa được bác sĩ xác nhận`;
+        return `Bác sĩ ${item.doctor_name} đã tạo lịch khám vào ${time} ngày ${date} cho bạn`;
+      return `Lịch khám vào ${time} ngày ${date} của bạn đã bị hủy tự động do chưa được bác sĩ xác nhận`;
     } else if (Context.role === userRole.doctor) {
       if (item.status === 0)
-        return `Còn 15 phút nữa là đến lịch hẹn vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
+        return `Còn 15 phút nữa là đến lịch khám vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
       if (item.status === 1)
-        return `Bạn đã chấp nhận lịch hẹn vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
+        return `Bạn đã chấp nhận lịch khám vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
       if (item.status === 2)
-        return `Bệnh nhân ${item.patient_name} đã đặt lịch hẹn vào ${time} ngày ${date}, vui lòng xác nhận`;
+        return `Bệnh nhân ${item.patient_name} đã đặt lịch khám vào ${time} ngày ${date}, vui lòng xác nhận`;
       if (item.status === 3)
-        return `Bạn đã từ chối lịch hẹn vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
-      return `Bạn đã tạo lịch hẹn vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name}`;
+        return `Bạn đã từ chối lịch khám vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
+      if (item.status === 4)
+        return `Bạn đã tạo lịch khám vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name}`;
+      return `Lịch khám vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name} chưa có kết quả, vui lòng xác nhận`;
     }
   };
 
@@ -144,7 +148,7 @@ export const Notification: React.FC = () => {
             fontSize: "16px",
           }}
         >
-          Thông báo lịch hẹn
+          Thông báo lịch khám
         </div>
       }
       style={{
@@ -181,6 +185,13 @@ export const Notification: React.FC = () => {
                 position: "relative",
               }}
               onClick={() => {
+                if (!item.is_seen) {
+                  dispatch(
+                    updateSeenStatus({
+                      id: item.id,
+                    } as UpdateSeenStatusRequest)
+                  );
+                }
                 if (item.status === 3 && Context.role === userRole.patient) {
                   setShowReason(true);
                   console.log(item);
@@ -197,13 +208,6 @@ export const Notification: React.FC = () => {
                   }
                   if (Context.role === userRole.patient) {
                     dispatch(getScheduleByPatientId());
-                  }
-                  if (!item.is_seen) {
-                    dispatch(
-                      updateSeenStatus({
-                        id: item.id,
-                      } as UpdateSeenStatusRequest)
-                    );
                   }
                   const selectedDate = dayjs.unix(item.schedule_start_time);
                   navigate("/schedule");
@@ -273,28 +277,44 @@ export const Notification: React.FC = () => {
         footer={null}
         onCancel={() => setShowReason(false)}
       >
-        <Form form={form} labelCol={{ span: 11 }} wrapperCol={{ span: 12 }}>
-          <Form.Item
-            label="Bác sĩ:"
-            style={{ marginBottom: "0px", marginTop: "12px" }}
-          >
-            <div>{data.doctor_name}</div>
-          </Form.Item>
-          <Form.Item label="Ngày hẹn:" style={{ marginBottom: "0px" }}>
-            <div>
+        <div className="event-details">
+          <Row key="doctor" className="event-row" style={{ marginTop: "20px" }}>
+            <Col span={9} className="event-label">
+              Bác sĩ:
+            </Col>
+            <Col span={15} className="event-value">
+              {data.doctor_name}
+            </Col>
+          </Row>
+
+          <Row key="start_time" className="event-row">
+            <Col span={9} className="event-label">
+              Ngày khám:
+            </Col>
+            <Col span={15} className="event-value">
               {convertTimeToDateTime(data.schedule_start_time).split(" ")[1]}
-            </div>
-          </Form.Item>
-          <Form.Item label="Ca hẹn:" style={{ marginBottom: "0px" }}>
-            <div>
+            </Col>
+          </Row>
+
+          <Row key="session" className="event-row">
+            <Col span={9} className="event-label">
+              Ca khám:
+            </Col>
+            <Col span={15} className="event-value">
               Từ {convertTimeToDateTime(data.schedule_start_time).split(" ")[0]}{" "}
               đến {convertTimeToDateTime(data.schedule_end_time).split(" ")[0]}
-            </div>
-          </Form.Item>
-          <Form.Item label="Lí do từ chối:" style={{ marginBottom: "0px" }}>
-            <div>{data.reject_reason}</div>
-          </Form.Item>
-        </Form>
+            </Col>
+          </Row>
+
+          <Row key="reason" className="event-row">
+            <Col span={9} className="event-label">
+              Lí do từ chối:
+            </Col>
+            <Col span={15} className="event-value">
+              {data.reject_reason}
+            </Col>
+          </Row>
+        </div>
       </Modal>
       <Dropdown
         open={isOpen}
@@ -319,6 +339,12 @@ export const Notification: React.FC = () => {
             onClick={() => {
               setIsOpen(true);
               dispatch(getNotificationByUserId());
+              if (Context.role === userRole.doctor) {
+                dispatch(getScheduleByDoctorId());
+              }
+              if (Context.role === userRole.patient) {
+                dispatch(getScheduleByPatientId());
+              }
             }}
           />
         </Badge>

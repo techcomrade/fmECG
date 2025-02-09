@@ -63,7 +63,7 @@ const ModalComponent = (props: any, ref: any) => {
       }}
       className={props.className}
     >
-      <Form form={form} labelCol={{ span: 10 }} wrapperCol={{ span: 12 }}>
+      <Form form={form} labelCol={{ span: 12 }} wrapperCol={{ span: 14 }}>
         {(Context.role === userRole.doctor ||
           Context.role === userRole.admin) && (
           <Form.Item
@@ -79,7 +79,7 @@ const ModalComponent = (props: any, ref: any) => {
             <div>{data.doctor}</div>
           </Form.Item>
         )}
-        <Form.Item label="Thời gian hẹn" style={{ marginBottom: "4px" }}>
+        <Form.Item label="Thời gian khám" style={{ marginBottom: "4px" }}>
           <div>
             Từ {data.start_time} đến {data.end_time}
           </div>
