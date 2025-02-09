@@ -271,7 +271,7 @@ export class ScheduleController {
     console.log("[P]:::Create schedule by patient:", schedule);
     try {
       const { doctor_id } = schedule;
-      schedule.status_id = 1;
+      schedule.status_id = 2;
       const patient = await this.userService.getUserByAccountId(
         req.user.accountId
       );

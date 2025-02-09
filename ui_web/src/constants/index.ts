@@ -208,6 +208,8 @@ export const convertScheduleStatusToString = (status: number) => {
       return "Chưa được chấp nhận";
     case 3:
       return "Không được chấp nhận";
+    case 4:
+      return "Đã được khám bệnh";
     default:
       return "Không xác định";
   }

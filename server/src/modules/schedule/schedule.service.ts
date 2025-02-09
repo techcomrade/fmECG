@@ -1,5 +1,3 @@
-const { v4: uuidv4 } = require("uuid");
-
 import { Injectable, forwardRef, Inject } from "@nestjs/common";
 import { ScheduleRepository } from "./schedule.repository";
 import { ScheduleResponse } from "./dto/schedule.response";
@@ -8,6 +6,9 @@ import { ConsultationScheduleService } from "../consultation_schedule/consultati
 import { UserService } from "../user/user.service";
 import { ConsultationScheduleRequest } from "../consultation_schedule/dto/consultation_schedule.request";
 import { TransactionService } from "../transaction/transaction.service";
+import { RevenueService } from "../revenue/revenue.service";
+import { RevenueRequest } from "../revenue/dto/revenue.request";
+const { v4: uuidv4 } = require("uuid");
 
 @Injectable()
 export class ScheduleService {
@@ -16,7 +17,8 @@ export class ScheduleService {
     @Inject(forwardRef(() => UserService))
     private userService: UserService,
     private consultationScheduleService: ConsultationScheduleService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private revenueService: RevenueService
   ) {}
 
   async getAllSchedules(): Promise<ScheduleResponse[]> {
@@ -106,7 +108,25 @@ export class ScheduleService {
   }
 
   async acceptSchedule(schedule_id: string) {
-    return await this.scheduleRepository.acceptSchedule(schedule_id);
+    const schedule = await this.scheduleRepository.getScheduleById(schedule_id);
+    if (schedule.status_id == 1) {
+      const revenueData: RevenueRequest = new RevenueRequest();
+      revenueData.id = uuidv4();
+
+      const consultation = await this.consultationScheduleService.getConsultationScheduleByScheduleId(
+        schedule.id
+      );
+      revenueData.doctor_id = consultation.doctor_id;
+      revenueData.patient_id = schedule.patient_id;
+      revenueData.schedule_id = schedule_id;
+      revenueData.serviceType = 1;
+      revenueData.fee = 200000;
+      revenueData.schedule_type = schedule.schedule_type_id;
+      await this.revenueService.createRevenue(revenueData);
+      return await this.scheduleRepository.scheduleDone(schedule_id);
+    } else {
+      return await this.scheduleRepository.acceptSchedule(schedule_id);
+    }
   }
 
   async updateSchedule(schedule: ScheduleRequest, id: string) {

@@ -77,7 +77,19 @@ export class ScheduleRepository {
       }
     );
   }
-
+  async scheduleDone(id:string){
+    return await this.scheduleModel.update(
+      {
+        //status_id = 4 thì bản ghi này đã đc khám xong 
+        status_id: 4,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+  }
   async updateScheduleById(schedule: ScheduleRequest, id: string) {
     return await this.scheduleModel.update(
       {
@@ -125,7 +137,7 @@ export class ScheduleRepository {
     return await this.scheduleModel.findAll({
       where: {
         patient_id: patient_id,
-        status_id: 1,
+        // status_id: 2,
       },
     });
   }
