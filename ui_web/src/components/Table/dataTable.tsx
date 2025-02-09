@@ -6,6 +6,10 @@ import {
   EditOutlined,
   DeleteOutlined,
   MobileOutlined,
+  TagOutlined,
+  LineChartOutlined,
+  ReloadOutlined,
+  ClearOutlined,
 } from "@ant-design/icons";
 import "./dataTable.scss";
 import { ExclamationCircleFilled } from "@ant-design/icons";
@@ -18,6 +22,7 @@ const { confirm } = Modal;
 
 interface Props {
   role?: string;
+  maintained?: boolean;
   data: any[];
   name: string;
   loading: boolean;
@@ -25,12 +30,16 @@ interface Props {
   addButton?: boolean;
   addFunction?: () => void;
   addDeviceButton?: boolean;
+  assignButton?: boolean;
+  assignFunction?: (id: any) => void;
+  unassignButton?: boolean;
+  unassignFunction?: (id: any) => void;
   editButton: boolean;
   editFunction?: (id: any) => void;
   deleteButton: boolean;
   deleteFunction?: (id: any) => void;
   chartButton?: boolean;
-  openChart?: () => void;
+  openChartFunction?: (id: any) => void;
   customButton?: React.ReactNode;
   customData?: React.ReactNode;
   hasCheckBox?: "checkbox" | "radio";
@@ -43,9 +52,12 @@ const DataTable = (props: Props) => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const [tableData, setTableData] = useState<any[]>([]);
   const [editButton, setEditButtton] = useState<boolean>(false);
+  const [assignButton, setAssignButton] = useState<boolean>(false);
+  const [unassignButton, setUnassignButton] = useState<boolean>(false);
   const [deleteButton, setDeleteButton] = useState<boolean>(false);
   const [chartButton, setChartButton] = useState<boolean>(false);
   const [selectedState, setSelectedRowKeys] = useState<any[]>([]);
+  const [tableKey, setTableKey] = useState(0);
   const searchInput = useRef<any>(null);
   const navigate = useNavigate();
 
@@ -56,17 +68,19 @@ const DataTable = (props: Props) => {
     }
   }, [props.data]);
 
-    const rowSelection = {
-      selectedRowKeys: selectedState,
-      onChange: (selectedRowKeys: any[]) => {
-        setSelectedRowKeys(selectedRowKeys);
-        if (props.editButton) setEditButtton(selectedRowKeys.length === 1);
-        if (props.deleteButton) setDeleteButton(selectedRowKeys.length === 1);
-        if (props.chartButton) setChartButton(selectedRowKeys.length === 1);
-        props.updateSelectedData?.(selectedRowKeys);
-      },
-    };
-  
+  const rowSelection = {
+    selectedRowKeys: selectedState,
+    onChange: (selectedRowKeys: any[]) => {
+      setSelectedRowKeys(selectedRowKeys);
+      if (props.editButton) setEditButtton(selectedRowKeys.length === 1);
+      if (props.assignButton) setAssignButton(selectedRowKeys.length === 1);
+      if (props.unassignButton) setUnassignButton(selectedRowKeys.length === 1);
+      if (props.deleteButton) setDeleteButton(selectedRowKeys.length === 1);
+      if (props.chartButton) setChartButton(selectedRowKeys.length === 1);
+      props.updateSelectedData?.(selectedRowKeys);
+    },
+  };
+
   const handleSearch = (
     selectedKeys: string[],
     confirm: () => void,
@@ -79,6 +93,11 @@ const DataTable = (props: Props) => {
 
   const handleReset = (clearFilters: () => void) => {
     clearFilters();
+    setSearchText("");
+  };
+
+  const resetFilters = () => {
+    setTableKey((tableKey) => tableKey + 1);
     setSearchText("");
   };
 
@@ -170,6 +189,8 @@ const DataTable = (props: Props) => {
     ...(col.searchable ? getColumnSearchProps(col.dataIndex) : {}),
   }));
 
+  const selectedItem = tableData.find((item) => item.id === selectedState[0]);
+
   return (
     <>
       <h2>{props.name}</h2>
@@ -187,6 +208,16 @@ const DataTable = (props: Props) => {
         ) : (
           ""
         )}
+        {props.chartButton && (
+          <Button
+            icon={<LineChartOutlined />}
+            disabled={!chartButton}
+            className="chart-btn"
+            onClick={() => props.openChartFunction?.(selectedState[0])}
+          >
+            Xem đồ thị
+          </Button>
+        )}
         {props.editButton && (
           <Button
             icon={<EditOutlined />}
@@ -195,6 +226,24 @@ const DataTable = (props: Props) => {
             onClick={() => props.editFunction?.(selectedState[0])}
           >
             Sửa
+          </Button>
+        )}
+        {props.assignButton && (
+          <Button
+            icon={<TagOutlined />}
+            disabled={!assignButton || selectedItem?.status_id === 3}
+            onClick={() => props.assignFunction?.(selectedState[0])}
+          >
+            Phân công thiết bị
+          </Button>
+        )}
+        {props.unassignButton && (
+          <Button
+            icon={<ClearOutlined />}
+            disabled={!unassignButton}
+            onClick={() => props.unassignFunction?.(selectedState[0])}
+          >
+            Hủy phân công thiết bị
           </Button>
         )}
         {props.deleteButton && (
@@ -207,8 +256,12 @@ const DataTable = (props: Props) => {
             Xóa
           </Button>
         )}
+        <Button icon={<ReloadOutlined />} onClick={() => resetFilters()}>
+          Xóa bộ lọc và tìm kiếm
+        </Button>
       </div>
       <Table
+        key={tableKey}
         rowSelection={
           props.role
             ? {

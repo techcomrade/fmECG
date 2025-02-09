@@ -85,10 +85,10 @@ export const HeaderBar = () => {
         <Col span={24} md={12} className="header-breadcrumb">
           <Breadcrumb>
             <Breadcrumb.Item>
-              <NavLink to="/">{t("page.breadcrumb.pages")}</NavLink>
+              <NavLink to="/">Pages</NavLink>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              {t(getLabelByKey(pathname) ?? "page.side-bar.home")}
+              {getLabelByKey(pathname) ?? "Trang chủ"}
             </Breadcrumb.Item>
           </Breadcrumb>
           <div className="ant-page-header-heading">

@@ -5,6 +5,7 @@ import {
   getDeviceById,
   resetLoadAddDetailDataStatus,
   resetLoadDeleteDetailDataStatus,
+  resetLoadGetDeviceByIdStatus,
 } from "../../redux/reducer/deviceSlice";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { DesktopOutlined } from "@ant-design/icons";
@@ -36,6 +37,10 @@ const DeviceDetailComponent = (props: any, ref: any) => {
   }));
 
   React.useEffect(() => {
+    dispatch(getDeviceById(idSelect));
+  }, [dataState.loadUpdateDataStatus]);
+
+  React.useEffect(() => {
     if (dataState.loadAddDetailDataStatus === ApiLoadingStatus.Success) {
       dispatch(resetLoadAddDetailDataStatus());
       dispatch(getDeviceById(idSelect));
@@ -57,7 +62,8 @@ const DeviceDetailComponent = (props: any, ref: any) => {
           dataState.deviceData.device_type_id
         ),
         status_id: convertDeviceStatusToString(dataState.deviceData.status_id),
-        start_date: convertTimeToDate(dataState.deviceData.start_date),
+        start_time: convertTimeToDate(dataState.deviceData.start_time),
+        end_time: convertTimeToDate(dataState.deviceData.end_time),
       };
       setData(rawData);
     }
@@ -70,11 +76,17 @@ const DeviceDetailComponent = (props: any, ref: any) => {
   }, [dataState.loadGetDeviceByIdStatus]);
 
   const labelsInfo = {
-    doctor_name: "Bác sĩ phụ trách",
     device_name: "Tên thiết bị",
     device_type_id: "Loại thiết bị",
     status_id: "Trạng thái",
-    start_date: "Ngày bắt đầu sử dụng",
+    start_time:
+      data.status_id === convertDeviceStatusToString(1)
+        ? "Thời gian bắt đầu mượn"
+        : "",
+    end_time:
+      data.status_id === convertDeviceStatusToString(1)
+        ? "Hạn trả thiết bị"
+        : "",
     frequency: "Tần số",
     connection: "Phương thức kết nối",
     storage: "Phương thức lưu trữ dữ liệu",

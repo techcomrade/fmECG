@@ -151,11 +151,22 @@ export const convertStringToDeviceType = (deviceType: string) => {
 export const deviceStatus = [
   {
     value: 1,
-    label: "Đang trống",
+    label: "Đang được mượn",
   },
   {
     value: 2,
-    label: "Đang hoạt động",
+    label: "Đang trống",
+  },
+  {
+    value: 3,
+    label: "Đang bảo trì",
+  },
+];
+
+export const deviceAvailableStatus = [
+  {
+    value: 2,
+    label: "Đang trống",
   },
   {
     value: 3,
@@ -166,9 +177,9 @@ export const deviceStatus = [
 export const convertDeviceStatusToString = (deviceStatus: number) => {
   switch (deviceStatus) {
     case 1:
-      return "Đang trống";
+      return "Đang được mượn";
     case 2:
-      return "Đang hoạt động";
+      return "Đang trống";
     case 3:
       return "Đang bảo trì";
     default:
@@ -189,17 +200,6 @@ export const convertStringToDeviceStatus = (deviceStatus: string) => {
   }
 };
 
-export const convertScheduleTypeToString = (type: number) => {
-  switch (type) {
-    case 1:
-      return "Khám bệnh";
-    case 2:
-      return "Tư vấn thiết bị";
-    default:
-      return "Không xác định";
-  }
-};
-
 export const convertScheduleStatusToString = (status: number) => {
   switch (status) {
     case 1:
@@ -215,12 +215,18 @@ export const convertScheduleStatusToString = (status: number) => {
 
 export const convertScheduleResultToString = (result: number) => {
   switch (result) {
+    case 0:
+      return "Đang chờ duyệt";
     case 1:
       return "Thành công";
     case 2:
-      return "Chưa bắt đầu";
+      return "Chưa diễn ra";
     case 3:
       return "Thất bại";
+    case 4:
+      return "Đang diễn ra";
+    case 5:
+      return "Đang chờ duyệt (cảnh báo)";
     default:
       return "Không xác định";
   }

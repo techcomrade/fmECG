@@ -127,27 +127,10 @@ const ModalComponent = (props: any, ref: any) => {
         wrapperCol={{ span: 14 }}
       >
         <Form.Item
-          label="Loại lịch khám"
-          name="schedule_type_id"
-          key="schedule_type_id"
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn loại lịch khám",
-            },
-          ]}
-          style={{ marginTop: "20px" }}
-        >
-          <Select
-            options={scheduleType}
-            value={data["schedule_type_id"]}
-            placeholder="Loại lịch khám"
-          />
-        </Form.Item>
-        <Form.Item
           label="Chọn lịch khám"
           name="schedule_start_time"
           key="schedule_start_time"
+          style={{ marginTop: "20px"}}
         >
           <Row gutter={10}>
             <Col span={12}>

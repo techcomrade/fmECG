@@ -34,3 +34,27 @@ div[style*="overflow-y: auto"]::-webkit-scrollbar-thumb {
 div[style*="overflow-y: auto"]::-webkit-scrollbar-thumb:hover {
   background: #8c8c8c;
 }
+
+.event-details {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin-left: 80px;
+  font-size: 15px;
+}
+
+.event-row {
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.event-label {
+  font-weight: 600;
+  color: #555555;
+}
+
+.event-value {
+  font-weight: 400;
+  color: #333333;
+}

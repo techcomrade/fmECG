@@ -22,17 +22,11 @@ import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import { UserResponse } from "./dto/user.response";
 import { plainToInstance } from "class-transformer";
 import { UserGuardModel } from "../authentication/dto/user.guard.model";
-import { Roles } from "../authentication/decorators/role.decorator";
-import { AuthorizationGuard } from "../authentication/authorization.guard";
-import { Role } from "../authentication/dto/role.enum";
 
 @Controller("users")
-@ApiBearerAuth("access-token") // Reference the name from addBearerAuth()
-@UseGuards(AuthenticationGuard)
-@UseGuards(AuthorizationGuard)
 export class UserController {
   constructor(private userService: UserService) {}
-  // @Roles(Role.Admin)
+
   @Get("")
   @ApiResponse({
     status: 200,
@@ -77,6 +71,27 @@ export class UserController {
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException("Error when get all doctors");
+    }
+  }
+
+  @Get("/except-admin")
+  @ApiResponse({
+    status: 200,
+    type: [UserResponse],
+    description: "Successful",
+  })
+  async getAllExceptAdmin(@Res() res: Response) {
+    console.log(`[P]:::Get all except admin`);
+    try {
+      let users = await this.userService.getAllExceptAdmin();
+      if (!users.length) {
+        throw new NotFoundException("No user found, please try again");
+      }
+      let result = plainToInstance(UserResponse, users);
+      return res.json(result);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException("Error when get all except admin");
     }
   }
 

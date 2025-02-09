@@ -21,6 +21,7 @@ import { plainToInstance } from "class-transformer";
 import { DeviceRequest } from "./dto/device.request";
 import { UserGuardModel } from "../authentication/dto/user.guard.model";
 import { UserService } from "../user/user.service";
+import { UnassignDeviceRequest } from "./dto/unassignDevice.request";
 
 @Controller("device")
 export class DeviceController {
@@ -38,6 +39,63 @@ export class DeviceController {
   async getAllData(@Res() res: Response) {
     console.log(`[P]:::Get all devices data`);
     let devices = await this.deviceService.getAllData();
+    if (!devices.length) {
+      throw new NotFoundException("No device found, please try again");
+    }
+    let result = plainToInstance(DeviceResponse, devices);
+    return res.json(result);
+  }
+
+  @Put("unassign")
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+    description: "successful",
+  })
+  async unassignDevice(
+    @Req() req: Request & { user?: UserGuardModel },
+    @Res() res: Response,
+    @Body() device: UnassignDeviceRequest
+  ) {
+    const user = await this.userService.getUserByAccountId(req.user.accountId);
+    device.user_id = user.id;
+    console.log(`[P]:::Unassigned device: `, device.id);
+    try {
+      await this.deviceService.unassignDevice(device, device.id);
+      return res.json({
+        message: "Device updated successfully",
+      });
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException("Error when update device");
+    }
+  }
+
+  @Get("unassigned")
+  @ApiResponse({
+    status: 200,
+    type: [DeviceResponse],
+    description: "successful",
+  })
+  async getUnassignedDevices(@Res() res: Response) {
+    console.log(`[P]:::Get unassigned devices data`);
+    let devices = await this.deviceService.getUnassignedDevices();
+    if (!devices.length) {
+      throw new NotFoundException("No device found, please try again");
+    }
+    let result = plainToInstance(DeviceResponse, devices);
+    return res.json(result);
+  }
+
+  @Get("assigned")
+  @ApiResponse({
+    status: 200,
+    type: [DeviceResponse],
+    description: "successful",
+  })
+  async getAssignedDevices(@Res() res: Response) {
+    console.log(`[P]:::Get all devices data`);
+    let devices = await this.deviceService.getAssignedDevices();
     if (!devices.length) {
       throw new NotFoundException("No device found, please try again");
     }
@@ -80,21 +138,21 @@ export class DeviceController {
     return res.status(HttpStatus.OK).json(result);
   }
 
-  @Get("data/doctor_id")
+  @Get("data/user")
   @ApiResponse({
     status: 200,
     type: [DeviceResponse],
     description: "successful",
   })
-  async getDeviceByDoctorId(
+  async getDeviceByUserId(
     @Req() req: Request & { user?: UserGuardModel },
-    @Res() res: Response,
+    @Res() res: Response
   ) {
-    const doctorId = (
+    const userId = (
       await this.userService.getUserByAccountId(req.user.accountId)
     ).id;
-    console.log("[P]::: Get device by doctor id");
-    let devices = await this.deviceService.getByDoctorId(doctorId);
+    console.log("[P]::: Get device by user id");
+    let devices = await this.deviceService.getByUserId(userId);
     if (!devices.length) {
       throw new NotFoundException("No devices found, please try again");
     }
@@ -129,9 +187,17 @@ export class DeviceController {
     type: Boolean,
     description: "successful",
   })
-  async add(@Body() device: DeviceRequest, @Res() res: Response) {
+  async add(
+    @Req() req: Request & { user?: UserGuardModel },
+    @Body() device: DeviceRequest,
+    @Res() res: Response
+  ) {
     console.log(`[P]:::Add device data`, device);
     try {
+      const user = await this.userService.getUserByAccountId(
+        req.user.accountId
+      );
+      device.user_id = user.id;
       await this.deviceService.add(device);
       return res.json({
         message: "Device created successfully",

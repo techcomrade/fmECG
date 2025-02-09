@@ -21,9 +21,6 @@ export class ScheduleResponse {
   schedule_end_time: bigint;
 
   @Expose()
-  schedule_type_id: number;
-
-  @Expose()
   status_id: number;
 
   @Expose()
@@ -31,4 +28,7 @@ export class ScheduleResponse {
 
   @Expose()
   createdAt: Date;
+
+  @Expose()
+  updatedAt: Date;
 }

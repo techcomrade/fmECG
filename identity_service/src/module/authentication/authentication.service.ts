@@ -71,7 +71,7 @@ export class AuthenticationService {
   public async login(loginRequest: LoginRequest): Promise<TokensResponseModel> {
     const user = await this.accountRepository.getByEmail(loginRequest.email);
     if (!user) {
-      throw new NotFoundException('email not founded');
+      throw new NotFoundException('email not found');
     }
     const blackAccount =
       await this.blacklistService.checkBlacklistAccountByAccountId(user.id);

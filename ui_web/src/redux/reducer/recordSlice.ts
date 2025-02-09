@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RecordRequest, RecordResponse } from "../../api/api-generated";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import { createAsyncThunkWrap } from "../handler";
@@ -7,6 +7,7 @@ import { Service } from "../../api";
 interface IRecordState {
   data: RecordResponse[];
   recordData: RecordResponse;
+  samples: number;
   loadDataStatus: ApiLoadingStatus;
   loadGetRecordByIdStatus: ApiLoadingStatus;
   loadUpdateDataStatus: ApiLoadingStatus;
@@ -17,6 +18,7 @@ interface IRecordState {
 const initialState: IRecordState = {
   data: [],
   recordData: {} as RecordResponse,
+  samples: 100,
   loadDataStatus: ApiLoadingStatus.None,
   loadGetRecordByIdStatus: ApiLoadingStatus.None,
   loadUpdateDataStatus: ApiLoadingStatus.None,
@@ -79,6 +81,9 @@ export const recordSlice = createSlice({
     resetLoadDeleteDataStatus: (state) => {
       state.loadDeleteDataStatus = ApiLoadingStatus.None;
     },
+    setSamples: (state, action: PayloadAction<number>) => {
+      state.samples = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -158,5 +163,6 @@ export const {
   resetLoadGetRecordByIdStatus,
   resetLoadUpdateDataStatus,
   resetLoadDeleteDataStatus,
+  setSamples,
 } = recordSlice.actions;
 export default recordSlice.reducer;

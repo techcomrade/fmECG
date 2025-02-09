@@ -139,7 +139,7 @@ app.use((err: any, req: any, res: any, next: any) => {
     next();
   }
 });
-app.listen(config.APP_PORT, config.APP_HOST, () => {
+app.listen(config.APP_PORT, () => {
   console.log(
     `Server is running at http://${config.APP_HOST}:${config.APP_PORT}`
   );

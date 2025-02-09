@@ -7,7 +7,6 @@ import {
   TimePicker,
   Row,
   Col,
-  Select,
   Button,
 } from "antd";
 import dayjs, { Dayjs } from "dayjs";
@@ -61,7 +60,7 @@ const ModalComponent = (props: any, ref: any) => {
     return dataSubmit;
   };
 
-  const handleSubmit = async (values: any) => {
+  const handleAdd = async (values: any) => {
     const payload = {
       ...handleData(values),
       doctor_id: data.doctor_id,
@@ -132,7 +131,7 @@ const ModalComponent = (props: any, ref: any) => {
         ? diagnosisState.diagnosis.information
         : "",
     });
-  }, [diagnosisState.loadGetDiagnosisByScheduleIdStatus]);
+  }, [diagnosisState]);
 
   React.useEffect(() => {
     if (
@@ -151,14 +150,6 @@ const ModalComponent = (props: any, ref: any) => {
       dispatch(resetLoadGetAvailableScheduleByDoctorId());
     }
   }, [scheduleState.loadGetAvailableScheduleByDoctorId]);
-
-  const mapOptions: any = (options: any[]) =>
-    options
-      ? options.map((option) => ({
-          value: option.value,
-          label: option.label,
-        }))
-      : [];
 
   return (
     <>
@@ -196,7 +187,7 @@ const ModalComponent = (props: any, ref: any) => {
         >
           <Form
             form={form}
-            onFinish={handleSubmit}
+            onFinish={handleAdd}
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 12 }}
             disabled={!isEnableAdd}
@@ -228,30 +219,6 @@ const ModalComponent = (props: any, ref: any) => {
                       name={item.dataIndex}
                       placeholder="Thông tin chẩn đoán"
                     />
-                  </Form.Item>
-                );
-              }
-              if (item.type === "select" && isShow) {
-                return (
-                  <Form.Item
-                    label={item.title}
-                    name={item.dataIndex}
-                    key={item.dataIndex}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Vui lòng chọn loại lịch tái khám",
-                      },
-                    ]}
-                    style={{ marginBottom: "25px" }}
-                  >
-                    <Select
-                      options={mapOptions(item.dataSelect || [])}
-                      allowClear
-                      value={data[item.dataIndex]}
-                      placeholder="Loại lịch tái khám"
-                      onChange={() => setIsShow(true)}
-                    ></Select>
                   </Form.Item>
                 );
               }

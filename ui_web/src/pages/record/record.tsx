@@ -20,6 +20,7 @@ import { Context } from "../../utils/context";
 import { userRole } from "../../constants";
 import { showNotiError, showNotiSuccess } from "../../components/notification";
 import { handleRecordName } from "../../utils/recordUtils";
+import { ModalChart } from "../../components/Modal/ModalChart";
 
 type RecordDetailType = {
   open: (id: string) => void;
@@ -29,6 +30,10 @@ type EditRecordType = {
   open: (data: any[], columns: any[], layout: any) => void;
 };
 
+type ChartType = {
+  open: (id: string) => void;
+};
+
 export const Record: React.FC = () => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.record);
@@ -36,7 +41,7 @@ export const Record: React.FC = () => {
   const [selectedData, setSelectedData] = React.useState<any[]>([]);
   const drawerRef = React.useRef<RecordDetailType>(null);
   const modalUpdateRef = React.useRef<EditRecordType>(null);
-
+  const modalChartRef = React.useRef<ChartType>(null);
   const columns = [
     {
       title: "Tên bản ghi",
@@ -56,29 +61,12 @@ export const Record: React.FC = () => {
       searchable: true,
     },
     {
-      title: "Tên bác sĩ",
-      dataIndex: "doctor",
-      key: "doctor",
-      type: "text",
-      isEdit: false,
-      hidden: Context.role === userRole.doctor,
-      searchable: true,
-    },
-    {
       title: "Tên thiết bị",
       dataIndex: "device_name",
       key: "device_name",
       type: "text",
       isEdit: false,
       searchable: true,
-    },
-    {
-      title: "ID lịch khám",
-      dataIndex: "schedule_id",
-      key: "schedule_id",
-      type: "select",
-      isEdit: false,
-      hidden: true,
     },
     {
       title: "Thời gian bắt đầu phiên đo",
@@ -111,7 +99,6 @@ export const Record: React.FC = () => {
     }
 
     if (type === "render") {
-      console.log(data);
       recordData = {
         ...data,
         data_rec_url: handleRecordName(data.data_rec_url, data.device_id),
@@ -138,7 +125,6 @@ export const Record: React.FC = () => {
     }
   }, []);
 
-  // Get data
   React.useEffect(() => {
     if (dataState.loadDataStatus === ApiLoadingStatus.Success) {
       const rawData = dataState.data.map((device) =>
@@ -202,9 +188,10 @@ export const Record: React.FC = () => {
   return (
     <>
       <DataTable
-        role={Context.role === userRole.doctor ? userRole.doctor : undefined}
+        role={Context.role}
         editButton={Context.role === userRole.doctor}
         deleteButton={Context.role === userRole.doctor}
+        chartButton
         column={columns}
         name="Thông tin bản ghi"
         data={dataTable}
@@ -212,7 +199,12 @@ export const Record: React.FC = () => {
         updateSelectedData={setSelectedData}
         editFunction={handleEditFunction}
         deleteFunction={handleDeleteFunction}
+        openChartFunction={(id) => modalChartRef.current?.open(id)}
         handleOpenDrawer={(id) => drawerRef.current?.open(id)}
+      />
+      <ModalChart
+        ref={modalChartRef}
+        title="Đồ thị dữ liệu bản ghi"
       />
       <ModalControlData
         ref={modalUpdateRef}
