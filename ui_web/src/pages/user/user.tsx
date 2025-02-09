@@ -277,7 +277,7 @@ export const User: React.FC = () => {
     <>
       <DataTable
         role={Context.role === userRole.admin ? userRole.admin : undefined}
-        addButton={Context.role === userRole.admin}
+        // addButton={Context.role === userRole.admin}
         editButton={Context.role === userRole.admin}
         deleteButton={Context.role === userRole.admin}
         column={columns}
