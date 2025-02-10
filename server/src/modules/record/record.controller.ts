@@ -28,7 +28,8 @@ import {
 import { UserGuardModel } from "../authentication/dto/user.guard.model";
 import { UserService } from "../user/user.service";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { ppid } from "process";
+import * as fs from "fs";
+import * as path from "path";
 
 @Controller("records")
 export class RecordController {
@@ -234,6 +235,43 @@ export class RecordController {
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException("Error when delete record");
+    }
+  }
+
+  @Get("download/:id")
+  @ApiResponse({
+    status: 200,
+    type: Boolean,
+    description: "Successful",
+  })
+  async downloadRecord(@Res() res: Response, @Param("id") id: string) {
+    console.log(`[P]:::Download record csv by id`, id);
+    let checkExistRecord = await this.recordService.getRecordById(id);
+    if (checkExistRecord == null) {
+      throw new NotFoundException(
+        "No record found to delete, please try again"
+      );
+    }
+    try {
+      const record = await this.recordService.getRecordById(id);
+      let filePath = record.data_rec_url;
+      filePath = filePath.replace(/\\/g, "/");
+      filePath = path.join(__dirname, "../../../..", filePath);
+      if (!fs.existsSync(filePath)) {
+        throw new NotFoundException("File not found on the server");
+      }
+
+      const fileName = path.basename(filePath);
+
+      return res.download(filePath, fileName, (err) => {
+        if (err) {
+          console.error("Error downloading file:", err);
+          throw new NotFoundException("Error downloading the file");
+        }
+      });
+    } catch (e) {
+      console.log(e);
+      throw new InternalServerErrorException("Error when download file");
     }
   }
 }
