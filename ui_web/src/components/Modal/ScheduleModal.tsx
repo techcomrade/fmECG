@@ -143,7 +143,7 @@ const ScheduleModalComponent = (props: any) => {
 
   React.useEffect(() => {
     if (scheduleState.loadRejectScheduleStatus === ApiLoadingStatus.Success) {
-      showNotiSuccess("Bạn đã hủy lịch khám thành công");
+      showNotiSuccess("Bạn đã từ chối lịch khám thành công");
       dispatch(resetLoadRejectScheduleStatus());
       dispatch(getScheduleByDoctorId());
     }
@@ -225,24 +225,30 @@ const ScheduleModalComponent = (props: any) => {
         width={"420px"}
         title="Lí do từ chối lịch"
         open={isOpen}
-        onOk={() => {
-          if (!reason.trim()) {
-            return alert("Vui lòng nhập lý do trước khi gửi!");
+        onOk={async () => {
+          try {
+            if (!reason.trim()) {
+              return alert("Vui lòng nhập lý do trước khi gửi!");
+            }
+            await dispatch(
+              rejectSchedule({
+                schedule_id: data.schedule_id,
+              } as AcceptScheduleRequest)
+            ).unwrap();
+            await dispatch(
+              createNotification({
+                patient_id: data.patient_id,
+                schedule_start_time: data.schedule_start_time,
+                status: 3,
+                reject_reason: reason,
+              } as NotificationRequest)
+            ).unwrap();
+            setIsOpen(false);
+          } catch (error) {
+            console.error("Lỗi xảy ra:", error);
+            showNotiError(error as string);
+            setIsOpen(false);
           }
-          dispatch(
-            rejectSchedule({
-              schedule_id: data.schedule_id,
-            } as AcceptScheduleRequest)
-          );
-          dispatch(
-            createNotification({
-              patient_id: data.patient_id,
-              schedule_start_time: data.schedule_start_time,
-              status: 3,
-              reject_reason: reason,
-            } as NotificationRequest)
-          );
-          setIsOpen(false);
         }}
         okText="Lưu"
         onCancel={() => setIsOpen(false)}
@@ -416,33 +422,28 @@ const ScheduleModalComponent = (props: any) => {
                                     <Button
                                       key="accept"
                                       type="primary"
-                                      onClick={() => {
-                                        dispatch(
-                                          acceptSchedule({
-                                            schedule_id: item.schedule_id,
-                                          } as AcceptScheduleRequest)
-                                        )
-                                          .then(() => {
-                                            dispatch(
-                                              createNotification({
-                                                patient_id: item.patient_id,
-                                                schedule_start_time:
-                                                  item.schedule_start_time,
-                                                status: 1,
-                                              } as NotificationRequest)
-                                            );
-                                          })
-                                          .then(() => {
-                                            Modal.destroyAll();
-                                          })
-                                          .catch((error) => {
-                                            console.error("Lỗi xảy ra:", error);
-                                            Modal.error({
-                                              title: "Lỗi",
-                                              content:
-                                                "Không thể hoàn tất thao tác, vui lòng thử lại!",
-                                            });
-                                          });
+                                      onClick={async () => {
+                                        try {
+                                          await dispatch(
+                                            acceptSchedule({
+                                              schedule_id: item.schedule_id,
+                                            } as AcceptScheduleRequest)
+                                          ).unwrap();
+
+                                          await dispatch(
+                                            createNotification({
+                                              patient_id: item.patient_id,
+                                              schedule_start_time:
+                                                item.schedule_start_time,
+                                              status: 1,
+                                            } as NotificationRequest)
+                                          ).unwrap();
+
+                                          Modal.destroyAll();
+                                        } catch (error) {
+                                          console.error("Lỗi xảy ra:", error);
+                                          Modal.destroyAll();
+                                        }
                                       }}
                                     >
                                       Có
