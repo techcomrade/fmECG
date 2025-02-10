@@ -54,7 +54,6 @@ export const Notification: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [showReason, setShowReason] = useState<boolean>(false);
   const [data, setData] = React.useState<any>({});
-  const [form] = Form.useForm();
 
   useEffect(() => {
     dispatch(getNotificationByUserId());
@@ -69,11 +68,7 @@ export const Notification: React.FC = () => {
       );
       dispatch(resetLoadGetNotificationByUserId());
     }
-    if (
-      dataState.loadGetNotificationByUserId === ApiLoadingStatus.Failed &&
-      dataState.errorMessage
-    ) {
-      showNotiError(dataState.errorMessage);
+    if (dataState.loadGetNotificationByUserId === ApiLoadingStatus.Failed) {
       dispatch(resetLoadGetNotificationByUserId());
     }
   }, [dataState.loadGetNotificationByUserId]);
@@ -271,7 +266,7 @@ export const Notification: React.FC = () => {
   return (
     <>
       <Modal
-        width={"400px"}
+        width={"450px"}
         title="Thông tin chi tiết"
         open={showReason}
         footer={null}

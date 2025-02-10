@@ -92,7 +92,6 @@ export const Schedule: React.FC = () => {
       dataState.errorMessage
     ) {
       setData([]);
-      showNotiError(dataState.errorMessage);
     }
   }, [dataState]);
 

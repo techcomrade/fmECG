@@ -258,12 +258,6 @@ export const AssignedDevice: React.FC = () => {
       );
       setDataTable(rawData);
     }
-    if (
-      dataState.loadDataStatus === ApiLoadingStatus.Failed &&
-      dataState.errorMessage
-    ) {
-      showNotiError(dataState.errorMessage);
-    }
   }, [dataState.loadDataStatus]);
 
   const handleUnassignDevice = () => {
@@ -294,7 +288,7 @@ export const AssignedDevice: React.FC = () => {
         role={Context.role === userRole.admin ? userRole.admin : undefined}
         addButton={false}
         editButton={false}
-        unassignButton
+        unassignButton={Context.role === userRole.admin}
         deleteButton={false}
         column={columns}
         name="Thông tin thiết bị"

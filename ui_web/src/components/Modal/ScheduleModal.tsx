@@ -4,6 +4,7 @@ import "./schedule.scss";
 import {
   CarryOutOutlined,
   CheckOutlined,
+  CloseOutlined,
   EditOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
@@ -17,9 +18,11 @@ import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import {
   acceptSchedule,
   createScheduleByDoctor,
+  deleteSchedule,
   getScheduleByDoctorId,
   rejectSchedule,
   resetLoadAcceptScheduleStatus,
+  resetLoadDeleteScheduleStatus,
   resetLoadRejectScheduleStatus,
   resetLoadUpdateScheduleResultStatus,
   updateScheduleResult,
@@ -189,6 +192,21 @@ const ScheduleModalComponent = (props: any) => {
   }, [diagnosisState.loadUpdateDiagnosisByScheduleIdStatus]);
 
   React.useEffect(() => {
+    if (scheduleState.loadDeleteScheduleStatus === ApiLoadingStatus.Success) {
+      showNotiSuccess("Bạn đã hủy lịch khám thành công");
+      dispatch(resetLoadDeleteScheduleStatus());
+      dispatch(getScheduleByDoctorId());
+    }
+    if (
+      scheduleState.loadDeleteScheduleStatus === ApiLoadingStatus.Failed &&
+      scheduleState.errorMessage
+    ) {
+      dispatch(resetLoadDeleteScheduleStatus());
+      showNotiError(scheduleState.errorMessage);
+    }
+  }, [scheduleState.loadDeleteScheduleStatus]);
+
+  React.useEffect(() => {
     if (notificationState.loadCreateNotification === ApiLoadingStatus.Success) {
       dispatch(resetLoadCreateNotification());
     }
@@ -254,6 +272,40 @@ const ScheduleModalComponent = (props: any) => {
                 key={index}
                 className="card-filter"
                 actions={[
+                  ...(item.result === 2 &&
+                  item.status !== convertScheduleStatusToString(2) &&
+                  Context.role === userRole.doctor
+                    ? [
+                        <Tooltip title="Hủy lịch khám" key="delete">
+                          <CloseOutlined
+                            onClick={() => {
+                              Modal.confirm({
+                                title: "Hủy lịch khám",
+                                content:
+                                  "Bạn có muốn xác nhận hủy lịch khám này không?",
+                                footer: (_, { CancelBtn }) => (
+                                  <>
+                                    <CancelBtn />
+                                    <Button
+                                      key="accept"
+                                      type="primary"
+                                      onClick={() => {
+                                        dispatch(
+                                          deleteSchedule(item.schedule_id)
+                                        );
+                                        Modal.destroyAll();
+                                      }}
+                                    >
+                                      Có
+                                    </Button>
+                                  </>
+                                ),
+                              });
+                            }}
+                          />
+                        </Tooltip>,
+                      ]
+                    : []),
                   ...(item.result !== 3 && item.result !== 4
                     ? [
                         <Tooltip title="Xem chẩn đoán">
@@ -369,16 +421,28 @@ const ScheduleModalComponent = (props: any) => {
                                           acceptSchedule({
                                             schedule_id: item.schedule_id,
                                           } as AcceptScheduleRequest)
-                                        );
-                                        dispatch(
-                                          createNotification({
-                                            patient_id: item.patient_id,
-                                            schedule_start_time:
-                                              item.schedule_start_time,
-                                            status: 1,
-                                          } as NotificationRequest)
-                                        );
-                                        Modal.destroyAll();
+                                        )
+                                          .then(() => {
+                                            dispatch(
+                                              createNotification({
+                                                patient_id: item.patient_id,
+                                                schedule_start_time:
+                                                  item.schedule_start_time,
+                                                status: 1,
+                                              } as NotificationRequest)
+                                            );
+                                          })
+                                          .then(() => {
+                                            Modal.destroyAll();
+                                          })
+                                          .catch((error) => {
+                                            console.error("Lỗi xảy ra:", error);
+                                            Modal.error({
+                                              title: "Lỗi",
+                                              content:
+                                                "Không thể hoàn tất thao tác, vui lòng thử lại!",
+                                            });
+                                          });
                                       }}
                                     >
                                       Có
