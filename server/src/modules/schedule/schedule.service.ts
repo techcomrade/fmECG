@@ -1,6 +1,11 @@
 const { v4: uuidv4 } = require("uuid");
 
-import { Injectable, forwardRef, Inject } from "@nestjs/common";
+import {
+  Injectable,
+  forwardRef,
+  Inject,
+  InternalServerErrorException,
+} from "@nestjs/common";
 import { ScheduleRepository } from "./schedule.repository";
 import { ScheduleResponse } from "./dto/schedule.response";
 import { ScheduleRequest } from "./dto/schedule.request";
@@ -139,35 +144,53 @@ export class ScheduleService {
           schedule_start_time: schedule.schedule_start_time,
         } as ScheduleRequest
       );
-    for (const item of duplicateSchedules) {
-      const duplicateSchedule = (<any>item).dataValues;
-      console.log(duplicateSchedule);
-      console.log("abc", duplicateSchedule.consultation_schedules?.[0]?.doctor_id)
-      await Promise.all([
-        this.rejectSchedule(duplicateSchedule.id),
-        this.notificationService.add({
-          doctor_id: duplicateSchedule.consultation_schedules?.[0]?.doctor_id,
-          patient_id: duplicateSchedule.patient_id,
-          schedule_start_time: duplicateSchedule.schedule_start_time,
-          is_seen: false,
-          type: 0,
-          status: 3,
-          reject_reason: "Bác sĩ đã chấp nhận lịch khám khác vào thời gian này",
-        } as NotificationRequest),
-        this.notificationService.add({
-          doctor_id: duplicateSchedule.consultation_schedules?.[0]?.doctor_id,
-          patient_id: duplicateSchedule.patient_id,
-          schedule_start_time: duplicateSchedule.schedule_start_time,
-          is_seen: false,
-          type: 1,
-          status: 3,
-        } as NotificationRequest),
-      ]);
+    if (duplicateSchedules) {
+      for (const item of duplicateSchedules) {
+        const duplicateSchedule = (<any>item).dataValues;
+        console.log("Duplicate schedule: ", duplicateSchedule);
+        try {
+          if (duplicateSchedule.status_id === 1) {
+            throw new InternalServerErrorException(
+              "Bạn đã có lịch khám vào thời điểm này, không thể chấp nhận lịch khám hiện tại"
+            );
+          } else {
+            await Promise.all([
+              this.rejectSchedule(duplicateSchedule.id),
+              this.notificationService.add({
+                doctor_id:
+                  duplicateSchedule.consultation_schedules?.[0]?.doctor_id,
+                patient_id: duplicateSchedule.patient_id,
+                schedule_start_time: duplicateSchedule.schedule_start_time,
+                is_seen: false,
+                type: 0,
+                status: 3,
+                reject_reason:
+                  "Bác sĩ đã chấp nhận lịch khám khác vào thời điểm này",
+              } as NotificationRequest),
+              this.notificationService.add({
+                doctor_id:
+                  duplicateSchedule.consultation_schedules?.[0]?.doctor_id,
+                patient_id: duplicateSchedule.patient_id,
+                schedule_start_time: duplicateSchedule.schedule_start_time,
+                is_seen: false,
+                type: 1,
+                status: 3,
+              } as NotificationRequest),
+            ]);
+            return await this.scheduleRepository.acceptSchedule(schedule_id);
+          }
+        } catch (error) {
+          throw new InternalServerErrorException(
+            "Bạn đã có lịch khám vào thời điểm này, không thể chấp nhận lịch khám hiện tại"
+          );
+        }
+      }
     }
     return await this.scheduleRepository.acceptSchedule(schedule_id);
   }
 
   async rejectSchedule(schedule_id: string) {
+    await this.scheduleRepository.getScheduleById(schedule_id);
     return await this.scheduleRepository.rejectSchedule(schedule_id);
   }
 

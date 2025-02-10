@@ -168,7 +168,7 @@ export class ScheduleController {
       });
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException("Error when accept schedule");
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -377,7 +377,10 @@ export class ScheduleController {
   ) {
     console.log("[P]:::Update schedule result by id", schedule.schedule_id);
     try {
-      await this.scheduleService.updateScheduleResult(schedule.schedule_id, schedule.result);
+      await this.scheduleService.updateScheduleResult(
+        schedule.schedule_id,
+        schedule.result
+      );
       return res.json({
         message: "Schedule updated successfully",
       });

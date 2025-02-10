@@ -71,6 +71,7 @@ export class ScheduleRepository {
     return await this.scheduleModel.findAll({
       where: {
         schedule_start_time: schedule_start_time,
+        status_id: { [Op.in]: [1, 2] },
         id: { [Op.ne]: exclude_schedule_id },
       },
       include: [
@@ -80,7 +81,7 @@ export class ScheduleRepository {
           attributes: ["id", "doctor_id"],
         },
       ],
-      attributes: ["id", "patient_id", "schedule_start_time"],
+      attributes: ["id", "patient_id", "schedule_start_time", "status_id"],
     });
   }
 
@@ -107,6 +108,7 @@ export class ScheduleRepository {
       where: {
         status_id: 1,
       },
+      lock: true,
     });
   }
 
@@ -124,6 +126,7 @@ export class ScheduleRepository {
       where: {
         id: id,
       },
+      lock: true,
     });
   }
 
