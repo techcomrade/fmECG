@@ -4,12 +4,15 @@ import { ScheduleModel } from "../../entities/schedule.model";
 import { ScheduleResponse } from "./dto/schedule.response";
 import { ScheduleRequest } from "./dto/schedule.request";
 import { Op } from "sequelize";
+import { ConsultationScheduleModel } from "../../entities/consultation_schedule.model";
 
 @Injectable()
 export class ScheduleRepository {
   constructor(
     @InjectModel(ScheduleModel)
-    private scheduleModel: typeof ScheduleModel
+    private scheduleModel: typeof ScheduleModel,
+    @InjectModel(ConsultationScheduleModel)
+    private consultationModel: typeof ConsultationScheduleModel
   ) {}
 
   async getAllSchedules(): Promise<ScheduleResponse[]> {
@@ -58,6 +61,26 @@ export class ScheduleRepository {
         patient_id: schedule.patient_id,
         schedule_start_time: schedule.schedule_start_time,
       },
+    });
+  }
+
+  async checkScheduleByDoctorIdAndTime(
+    exclude_schedule_id: any,
+    { doctor_id, schedule_start_time }: ScheduleRequest
+  ): Promise<ScheduleResponse[]> {
+    return await this.scheduleModel.findAll({
+      where: {
+        schedule_start_time: schedule_start_time,
+        id: { [Op.ne]: exclude_schedule_id },
+      },
+      include: [
+        {
+          model: this.consultationModel,
+          where: { doctor_id: doctor_id },
+          attributes: ["id", "doctor_id"],
+        },
+      ],
+      attributes: ["id", "patient_id", "schedule_start_time"],
     });
   }
 

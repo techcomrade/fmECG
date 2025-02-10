@@ -62,7 +62,9 @@ export class ScheduleService {
   async checkScheduleByPatientIdAndTime(
     schedule: ScheduleRequest
   ): Promise<ScheduleResponse> {
-    return await this.scheduleRepository.checkScheduleByPatientIdAndTime(schedule);
+    return await this.scheduleRepository.checkScheduleByPatientIdAndTime(
+      schedule
+    );
   }
 
   async createSchedule(schedule: ScheduleRequest, doctor_id: string) {
@@ -124,6 +126,44 @@ export class ScheduleService {
   }
 
   async acceptSchedule(schedule_id: string) {
+    const schedule = await this.scheduleRepository.getScheduleById(schedule_id);
+    const consultation =
+      await this.consultationScheduleService.getConsultationScheduleByScheduleId(
+        schedule_id
+      );
+    const duplicateSchedules =
+      await this.scheduleRepository.checkScheduleByDoctorIdAndTime(
+        schedule_id,
+        {
+          doctor_id: consultation.doctor_id,
+          schedule_start_time: schedule.schedule_start_time,
+        } as ScheduleRequest
+      );
+    for (const item of duplicateSchedules) {
+      const duplicateSchedule = (<any>item).dataValues;
+      console.log(duplicateSchedule);
+      console.log("abc", duplicateSchedule.consultation_schedules?.[0]?.doctor_id)
+      await Promise.all([
+        this.rejectSchedule(duplicateSchedule.id),
+        this.notificationService.add({
+          doctor_id: duplicateSchedule.consultation_schedules?.[0]?.doctor_id,
+          patient_id: duplicateSchedule.patient_id,
+          schedule_start_time: duplicateSchedule.schedule_start_time,
+          is_seen: false,
+          type: 0,
+          status: 3,
+          reject_reason: "Bác sĩ đã chấp nhận lịch khám khác vào thời gian này",
+        } as NotificationRequest),
+        this.notificationService.add({
+          doctor_id: duplicateSchedule.consultation_schedules?.[0]?.doctor_id,
+          patient_id: duplicateSchedule.patient_id,
+          schedule_start_time: duplicateSchedule.schedule_start_time,
+          is_seen: false,
+          type: 1,
+          status: 3,
+        } as NotificationRequest),
+      ]);
+    }
     return await this.scheduleRepository.acceptSchedule(schedule_id);
   }
 
