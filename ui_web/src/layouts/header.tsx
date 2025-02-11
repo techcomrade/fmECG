@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { Row, Col, Breadcrumb, Dropdown, Avatar, Input } from "antd";
+import { Row, Col, Breadcrumb, Dropdown, Avatar } from "antd";
 import "./header.scss";
 import { NavLink } from "react-router-dom";
 import {
@@ -14,18 +14,9 @@ import { Notification } from "./notification";
 import avatar from "../assets/avatar.svg";
 import { getRoutesByRole, IRouteItem } from "./routes.type";
 import { Context } from "../utils/context";
-import { GetProps } from "react-redux";
-type SearchProps = GetProps<typeof Input.Search>;
 
 export const HeaderBar = () => {
-  const { Search } = Input;
   const { pathname } = useLocation();
-
-  const { t, i18n } = useTranslation();
-
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-  };
 
   const logOut = () => {
     console.log("he");
@@ -76,9 +67,6 @@ export const HeaderBar = () => {
     return entry.label;
   }
 
-  const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
-    console.log(info?.source, value);
-
   return (
     <div className="header-container">
       <Row gutter={[24, 0]}>
@@ -123,14 +111,6 @@ export const HeaderBar = () => {
             <NavLink to="/chat">
               <MessageFilled style={{ color: "#3399FC" }} />
             </NavLink>
-          </div>
-
-          <div style={{ flex: 1, marginRight: "24px" }}>
-            <Search
-              placeholder="Search something here..."
-              onSearch={onSearch}
-              style={{ width: 450 }}
-            />
           </div>
         </Col>
       </Row>

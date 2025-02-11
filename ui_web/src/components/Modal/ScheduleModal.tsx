@@ -3,8 +3,8 @@ import { Modal, Card, Tooltip, Button, Row, Col, Input } from "antd";
 import "./schedule.scss";
 import {
   CarryOutOutlined,
-  CheckOutlined,
   CloseOutlined,
+  DeleteOutlined,
   EditOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
@@ -66,8 +66,11 @@ const ScheduleModalComponent = (props: any) => {
   );
   const [statusIcon, setStatusIcon] = React.useState<any>(null);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isCancel, setIsCancel] = React.useState<boolean>(false);
   const [data, setData] = React.useState<any>({});
+  const [cancelData, setCancelData] = React.useState<any>({});
   const [reason, setReason] = React.useState<string>("");
+  const [cancelReason, setCancelReason] = React.useState<string>("");
   const modalAddDiagnosisRef = React.useRef<AddDiagnosis>(null);
   const modalShowRef = React.useRef<ShowDiagnosis>(null);
 
@@ -260,6 +263,45 @@ const ScheduleModalComponent = (props: any) => {
           onChange={(e) => setReason(e.target.value)}
         ></Input>
       </Modal>
+
+      <Modal
+        width={"420px"}
+        title="Lí do hủy lịch"
+        open={isCancel}
+        onOk={async () => {
+          try {
+            if (!cancelReason.trim()) {
+              return alert("Vui lòng nhập lý do trước khi gửi!");
+            }
+            await dispatch(
+              deleteSchedule(cancelData.schedule_id)
+            ).unwrap();
+            await dispatch(
+              createNotification({
+                patient_id: cancelData.patient_id,
+                schedule_start_time: cancelData.schedule_start_time,
+                status: 3,
+                reject_reason: cancelReason,
+              } as NotificationRequest)
+            ).unwrap();
+            setIsCancel(false);
+          } catch (error) {
+            console.error("Lỗi xảy ra:", error);
+            showNotiError(error as string);
+            setIsCancel(false);
+          }
+        }}
+        okText="Lưu"
+        onCancel={() => setIsCancel(false)}
+      >
+        <Input
+          placeholder="Nhập lí do bạn muốn hủy lịch"
+          style={{ marginTop: "10px" }}
+          value={cancelReason}
+          onChange={(e) => setCancelReason(e.target.value)}
+        ></Input>
+      </Modal>
+
       <Modal
         title={props.title}
         open={props.isOpen}
@@ -283,7 +325,7 @@ const ScheduleModalComponent = (props: any) => {
                   Context.role === userRole.doctor
                     ? [
                         <Tooltip title="Hủy lịch khám" key="delete">
-                          <CloseOutlined
+                          <DeleteOutlined
                             onClick={() => {
                               Modal.confirm({
                                 title: "Hủy lịch khám",
@@ -296,9 +338,13 @@ const ScheduleModalComponent = (props: any) => {
                                       key="accept"
                                       type="primary"
                                       onClick={() => {
-                                        dispatch(
-                                          deleteSchedule(item.schedule_id)
-                                        );
+                                        setIsCancel(true);
+                                        setCancelData({
+                                          schedule_id: item.schedule_id,
+                                          patient_id: item.patient_id,
+                                          schedule_start_time:
+                                            item.schedule_start_time,
+                                        });
                                         Modal.destroyAll();
                                       }}
                                     >
@@ -357,21 +403,22 @@ const ScheduleModalComponent = (props: any) => {
                   (item.result === 0 || item.result === 5)
                     ? [
                         <Tooltip
-                          title="Duyệt kết quả lịch khám"
+                          title="Hủy kết quả lịch khám"
                           key="edit-result"
                         >
-                          <CheckOutlined
+                          <CloseOutlined
                             onClick={() => {
                               Modal.confirm({
-                                title: "Duyệt kết quả lịch khám",
+                                title: "Hủy kết quả lịch khám",
                                 content:
-                                  "Bạn có muốn xác nhận rằng lịch khám này không diễn ra không?",
+                                  "Bạn có muốn xác nhận rằng lịch khám này KHÔNG diễn ra không?",
                                 footer: (_, { CancelBtn }) => (
                                   <>
                                     <CancelBtn />
                                     <Button
                                       key="accept"
                                       type="primary"
+                                      style={{ backgroundColor: "#E53935" }}
                                       onClick={() => {
                                         dispatch(
                                           updateScheduleResult({
@@ -466,14 +513,14 @@ const ScheduleModalComponent = (props: any) => {
                           <Col
                             span={12}
                             className="event-label"
-                            style={value === 5 ? { color: "#E6B800" } : {}}
+                            style={value === 5 ? { color: "#E53935" } : {}}
                           >
                             {value !== 2 ? "🎯 Kết quả lịch khám:" : ""}
                           </Col>
                           <Col
                             span={12}
                             className="event-value"
-                            style={value === 5 ? { color: "#E6B800" } : {}}
+                            style={value === 5 ? { color: "#E53935" } : {}}
                           >
                             {value !== 2
                               ? convertScheduleResultToString(value)

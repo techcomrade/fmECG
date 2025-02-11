@@ -114,7 +114,7 @@ export const Notification: React.FC = () => {
       if (item.status === 2)
         return `Bạn đã thành công đặt lịch khám với bác sĩ ${item.doctor_name} vào ${time} ngày ${date}, vui lòng đợi bác sĩ xác nhận`;
       if (item.status === 3)
-        return `Bác sĩ ${item.doctor_name} đã từ chối lịch khám vào ${time} ngày ${date} của bạn, nhấn để xem thông tin chi tiết`;
+        return `Bác sĩ ${item.doctor_name} đã hủy lịch khám vào ${time} ngày ${date} của bạn, nhấn để xem thông tin chi tiết`;
       if (item.status === 4)
         return `Bác sĩ ${item.doctor_name} đã tạo lịch khám vào ${time} ngày ${date} cho bạn`;
       return `Lịch khám vào ${time} ngày ${date} của bạn đã bị hủy tự động do chưa được bác sĩ xác nhận`;
@@ -126,7 +126,7 @@ export const Notification: React.FC = () => {
       if (item.status === 2)
         return `Bệnh nhân ${item.patient_name} đã đặt lịch khám vào ${time} ngày ${date}, vui lòng xác nhận`;
       if (item.status === 3)
-        return `Bạn đã từ chối lịch khám vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
+        return `Bạn đã hủy lịch khám vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
       if (item.status === 4)
         return `Bạn đã tạo lịch khám vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name}`;
       return `Lịch khám vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name} chưa có kết quả, vui lòng xác nhận`;
@@ -197,6 +197,19 @@ export const Notification: React.FC = () => {
                     reject_reason: item.reject_reason,
                   });
                   setIsOpen(false);
+                  return;
+                }
+                if (item.status === 3 && Context.role === userRole.doctor) {
+                  setShowReason(true);
+                  console.log(item);
+                  setData({
+                    patient_name: item.patient_name,
+                    schedule_start_time: item.schedule_start_time,
+                    schedule_end_time: item.schedule_start_time + 1800,
+                    reject_reason: item.reject_reason,
+                  });
+                  setIsOpen(false);
+                  return;
                 } else {
                   if (Context.role === userRole.doctor) {
                     dispatch(getScheduleByDoctorId());
@@ -275,10 +288,12 @@ export const Notification: React.FC = () => {
         <div className="event-details">
           <Row key="doctor" className="event-row" style={{ marginTop: "20px" }}>
             <Col span={9} className="event-label">
-              Bác sĩ:
+              {Context.role === userRole.patient ? "Bác sĩ:" : "Bệnh nhân:"}
             </Col>
             <Col span={15} className="event-value">
-              {data.doctor_name}
+              {Context.role === userRole.patient
+                ? data.doctor_name
+                : data.patient_name}
             </Col>
           </Row>
 
