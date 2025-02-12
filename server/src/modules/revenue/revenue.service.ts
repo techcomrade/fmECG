@@ -63,12 +63,13 @@ export class RevenueService {
     return revenueArrays.reduce((sum,i)=> sum + parseFloat(i.fee.toString()), 0);
   }
   async getStaticByMonthDate(month: number, year: number): Promise<number> {
-    const revenueArrays = await this.revenueRepository.getRevenueByMonth(month, year);
+    const revenueArrays = await this.revenueRepository.getRevenueByMonth(year, month);
+   
     return revenueArrays.reduce((sum, i) => sum + parseFloat(i.fee.toString()), 0);
 }
 
 async getStaticByDayDate(day: number, month: number, year: number): Promise<number> {
-  const revenueArrays = await this.revenueRepository.getRevenueByDay(day, month, year);
+  const revenueArrays = await this.revenueRepository.getRevenueByDay(year, month, day);
   return revenueArrays.reduce((sum, i) => sum + parseFloat(i.fee.toString()), 0);
 }
 }

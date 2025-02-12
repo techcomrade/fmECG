@@ -69,7 +69,7 @@ export const Revenue: React.FC = () => {
 
         {
             title: "ID bệnh nhân",
-            dataIndex: "patientId",
+            dataIndex: "patient_id",
             key: "patientId",
             type: "text",
             isEdit: false,
@@ -77,7 +77,7 @@ export const Revenue: React.FC = () => {
         },
         {
             title: "ID bác sĩ",
-            dataIndex: "doctorId",
+            dataIndex: "doctor_id",
             key: "doctorId",
             type: "text",
             isEdit: false,
