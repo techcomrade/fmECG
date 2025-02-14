@@ -60,14 +60,6 @@ export const Schedule: React.FC = () => {
       type: "date",
       isEdit: true,
     },
-    {
-      title: "Loại lịch tái khám",
-      dataIndex: "schedule_type_id",
-      key: "schedule_type_id",
-      type: "select",
-      dataSelect: scheduleType,
-      isEdit: true,
-    },
   ];
 
   React.useEffect(() => {
