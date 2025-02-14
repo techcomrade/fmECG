@@ -112,7 +112,7 @@ export class NotificationController {
         type: notification.type === 0 ? 1 : 0,
       };
 
-      if (![1, 3, 7].includes(notification.status)) {
+      if (![1, 2, 3, 7].includes(notification.status)) {
         const checkSchedule =
           await this.scheduleService.checkScheduleByPatientIdAndTime({
             patient_id: notification.patient_id,

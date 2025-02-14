@@ -9,7 +9,7 @@ import { Op } from "sequelize";
 export class UserRepository {
   constructor(
     @InjectModel(UserModel)
-    private userModel: typeof UserModel,
+    private userModel: typeof UserModel
   ) {}
 
   async getAllUsers(): Promise<UserResponse[]> {
@@ -19,6 +19,12 @@ export class UserRepository {
   async getAllDoctors(): Promise<UserResponse[]> {
     return await this.userModel.findAll({
       where: { role_id: 2 },
+    });
+  }
+
+  async getAllAdmin(): Promise<UserResponse[]> {
+    return await this.userModel.findAll({
+      where: { role_id: 1 },
     });
   }
 

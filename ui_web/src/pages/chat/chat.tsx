@@ -16,6 +16,8 @@ import {
 } from "../../api";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import {
+  getAdminAndPatientByDoctorId,
+  getAllExceptSelf,
   getAllUsers,
   getDoctorByPatientId,
   getPatientByDoctorId,
@@ -79,8 +81,9 @@ export const ChatMes: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    if (Context.role === userRole.admin) dispatch(getAllUsers());
-    if (Context.role === userRole.doctor) dispatch(getPatientByDoctorId());
+    if (Context.role === userRole.admin) dispatch(getAllExceptSelf());
+    if (Context.role === userRole.doctor)
+      dispatch(getAdminAndPatientByDoctorId());
     if (Context.role === userRole.patient) dispatch(getDoctorByPatientId());
   }, []);
 
