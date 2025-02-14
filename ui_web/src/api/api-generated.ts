@@ -279,6 +279,50 @@ export class UserControllerClient {
     /**
      * @return Successful
      */
+    getAllExceptSelf(): Promise<UserResponse[]> {
+        let url_ = this.baseUrl + "/users/except-self";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetAllExceptSelf(_response);
+        });
+    }
+
+    protected processGetAllExceptSelf(response: Response): Promise<UserResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UserResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<UserResponse[]>(null as any);
+    }
+
+    /**
+     * @return Successful
+     */
     getUserById(id: string): Promise<UserResponse> {
         let url_ = this.baseUrl + "/users/{id}";
         if (id === undefined || id === null)
@@ -336,6 +380,50 @@ export class UserControllerClient {
     }
 
     protected processGetPatientByDoctorId(response: Response): Promise<UserResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UserResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<UserResponse[]>(null as any);
+    }
+
+    /**
+     * @return Successful
+     */
+    getAdminAndPatientByDoctorId(): Promise<UserResponse[]> {
+        let url_ = this.baseUrl + "/users/data/admin-patient-data";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetAdminAndPatientByDoctorId(_response);
+        });
+    }
+
+    protected processGetAdminAndPatientByDoctorId(response: Response): Promise<UserResponse[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -3167,7 +3255,7 @@ export class NotificationRequest implements INotificationRequest {
     schedule_start_time!: number;
     /** Check if the notification was seen before (true: seen, false: not seen) */
     is_seen!: boolean;
-    /** Status of the notification (0: reminder, 1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule, 5: cancel automatically, 6: pending schedule result) */
+    /** Status of the notification (0: reminder, 1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule, 5: cancel automatically, 6: pending schedule result, 7: cancel schedule result) */
     status!: number;
     /** Reason why the doctor rejected patient's schedule */
     reject_reason!: string;
@@ -3238,7 +3326,7 @@ export interface INotificationRequest {
     schedule_start_time: number;
     /** Check if the notification was seen before (true: seen, false: not seen) */
     is_seen: boolean;
-    /** Status of the notification (0: reminder, 1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule, 5: cancel automatically, 6: pending schedule result) */
+    /** Status of the notification (0: reminder, 1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule, 5: cancel automatically, 6: pending schedule result, 7: cancel schedule result) */
     status: number;
     /** Reason why the doctor rejected patient's schedule */
     reject_reason: string;
