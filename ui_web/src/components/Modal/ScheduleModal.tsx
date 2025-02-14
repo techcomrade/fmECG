@@ -381,6 +381,7 @@ const ScheduleModalComponent = (props: any) => {
                                     <Button
                                       key="accept"
                                       type="primary"
+                                      style={{ backgroundColor: "#E53935" }}
                                       onClick={() => {
                                         setIsCancel(true);
                                         setCancelData({
@@ -402,7 +403,7 @@ const ScheduleModalComponent = (props: any) => {
                         </Tooltip>,
                       ]
                     : []),
-                  ...(item.result !== 3 && item.result !== 4
+                  ...(item.result !== 3 && item.result !== 4 && item.status !== convertScheduleStatusToString(2)
                     ? [
                         <Tooltip title="Xem chẩn đoán">
                           <EyeOutlined
