@@ -22,6 +22,7 @@ interface IScheduleState {
   loadUpdateScheduleResultStatus: ApiLoadingStatus;
   loadAcceptScheduleStatus: ApiLoadingStatus;
   loadRejectScheduleStatus: ApiLoadingStatus;
+  loadDeleteScheduleStatus: ApiLoadingStatus;
   errorMessage: string | undefined;
   clickedNotificationDate: object | null;
 }
@@ -38,6 +39,7 @@ const initialState: IScheduleState = {
   loadUpdateScheduleResultStatus: ApiLoadingStatus.None,
   loadAcceptScheduleStatus: ApiLoadingStatus.None,
   loadRejectScheduleStatus: ApiLoadingStatus.None,
+  loadDeleteScheduleStatus: ApiLoadingStatus.None,
   errorMessage: undefined,
   clickedNotificationDate: null,
 };
@@ -106,10 +108,17 @@ export const acceptSchedule = createAsyncThunkWrap(
   }
 );
 
+export const deleteSchedule = createAsyncThunkWrap(
+  "/schedules/delete",
+  async (id: string) => {
+    return await Service.scheduleService.deleteScheduleById(id);
+  }
+);
+
 export const rejectSchedule = createAsyncThunkWrap(
   "/schedules/reject",
-  async (schedule_id: string) => {
-    return await Service.scheduleService.deleteScheduleById(schedule_id);
+  async (schedule: AcceptScheduleRequest) => {
+    return await Service.scheduleService.rejectSchedule(schedule);
   }
 );
 
@@ -140,6 +149,9 @@ export const scheduleSlice = createSlice({
     },
     resetLoadRejectScheduleStatus: (state) => {
       state.loadAcceptScheduleStatus = ApiLoadingStatus.None;
+    },
+    resetLoadDeleteScheduleStatus: (state) => {
+      state.loadDeleteScheduleStatus = ApiLoadingStatus.None;
     },
     setClickedNotificationDate: (
       state,
@@ -260,6 +272,16 @@ export const scheduleSlice = createSlice({
       .addCase(rejectSchedule.rejected, (state, action) => {
         state.errorMessage = (<any>action.payload)?.message;
         state.loadRejectScheduleStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(deleteSchedule.pending, (state, action) => {
+        state.loadDeleteScheduleStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(deleteSchedule.fulfilled, (state, action) => {
+        state.loadDeleteScheduleStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(deleteSchedule.rejected, (state, action) => {
+        state.errorMessage = (<any>action.payload)?.message;
+        state.loadDeleteScheduleStatus = ApiLoadingStatus.Failed;
       });
   },
 });
@@ -269,6 +291,7 @@ export const {
   resetLoadUpdateScheduleResultStatus,
   resetLoadAcceptScheduleStatus,
   resetLoadRejectScheduleStatus,
+  resetLoadDeleteScheduleStatus,
   resetLoadCreateScheduleByDoctorStatus,
   resetLoadCreateScheduleByPatientStatus,
   resetLoadGetAvailableScheduleByDoctorId,

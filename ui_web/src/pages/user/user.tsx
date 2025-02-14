@@ -229,12 +229,6 @@ export const User: React.FC = () => {
       const data = rawData.map((element) => handleData(element, "render"));
       setDataTable(data);
     }
-    if (
-      dataState.loadDoctorDataStatus === ApiLoadingStatus.Failed &&
-      dataState.errorMessage
-    ) {
-      showNotiError(dataState.errorMessage);
-    }
   }, [dataState.loadDoctorDataStatus]);
 
   React.useEffect(() => {

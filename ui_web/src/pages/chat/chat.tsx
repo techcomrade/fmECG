@@ -12,6 +12,7 @@ import {
   MessageRequest,
   UserResponse,
   GroupChatSchema,
+  GroupMemberResponse,
 } from "../../api";
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import {
@@ -20,12 +21,23 @@ import {
   getPatientByDoctorId,
   getUserById,
 } from "../../redux/reducer/userSlice";
-import { Button, Col, Form, Input, Modal, Row, Select } from "antd";
+import {
+  Avatar,
+  Button,
+  Col,
+  Form,
+  Input,
+  List,
+  Modal,
+  Row,
+  Select,
+} from "antd";
 import dayjs from "dayjs";
 import io from "socket.io-client";
 import {
   createGroupChat,
   getGroupChat,
+  getMemberByGroupChatId,
   resetLoadCreateGroupChat,
 } from "../../redux/reducer/groupChatSlice";
 import groupChatImg from "../../assets/groupChat.svg";
@@ -34,6 +46,7 @@ import { Context } from "../../utils/context";
 import { convertRoleToString, userRole } from "../../constants";
 import avatar from "../../assets/avatar.svg";
 import groupAvatar from "../../assets/groupAvatar.svg";
+import { showNotiError, showNotiSuccess } from "../../components/notification";
 const socket = io("http://localhost:3000");
 
 export const ChatMes: React.FC = () => {
@@ -55,9 +68,11 @@ export const ChatMes: React.FC = () => {
   const [role, setRole] = useState<number>(0);
   const [showTimestamp, setShowTimestamp] = useState<number | null>(null);
   const [showUser, setShowUser] = useState<string>("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [groupTitle, setGroupTitle] = useState("");
   const [personalName, setPersonalName] = useState("");
+  const [isShowMember, setIsShowMember] = useState<boolean>(false);
+  const [member, setMember] = useState<GroupMemberResponse[]>([]);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [form] = Form.useForm();
 
@@ -193,7 +208,6 @@ export const ChatMes: React.FC = () => {
   };
 
   const handleCreateGroup = (values: any) => {
-    console.log(values);
     const payload = {
       title: values.title,
       hostId: accountData.id,
@@ -206,14 +220,25 @@ export const ChatMes: React.FC = () => {
   };
 
   useEffect(() => {
-    if (groupState.loadCreateGroupChat == ApiLoadingStatus.Success) {
-      window.alert("Bạn đã tạo nhóm thành công!");
+    if (groupState.loadCreateGroupChat === ApiLoadingStatus.Success) {
+      showNotiSuccess("Bạn đã tạo nhóm thành công!");
       setIsModalOpen(false);
       form.resetFields();
       dispatch(getGroupChat(accountData.id));
       dispatch(resetLoadCreateGroupChat());
     }
+    if (groupState.loadCreateGroupChat === ApiLoadingStatus.Failed) {
+      showNotiError("Tạo nhóm thất bại, vui lòng thử lại!");
+      form.resetFields();
+      dispatch(resetLoadCreateGroupChat());
+    }
   }, [groupState.loadCreateGroupChat]);
+
+  useEffect(() => {
+    if (groupState.loadGetMemberByGroupChatId === ApiLoadingStatus.Success) {
+      setMember(groupState.member);
+    }
+  }, [groupState, selectedGroup]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value.toLowerCase());
@@ -315,7 +340,19 @@ export const ChatMes: React.FC = () => {
         ) : (
           <>
             <div className="chat-header">
-              <h3>
+              <h3
+                onClick={() => {
+                  if (
+                    !selectedGroup.includes(accountData.id) &&
+                    !selectedRoomId.includes(accountData.id)
+                  ) {
+                    setIsShowMember(true);
+                    console.log(selectedGroup);
+                    dispatch(getMemberByGroupChatId(selectedGroup));
+                  }
+                }}
+                style={{ cursor: "pointer" }}
+              >
                 {selectedGroup.includes(accountData.id) ||
                 selectedRoomId.includes(accountData.id)
                   ? `Tin nhắn với ${convertRoleToString(
@@ -457,6 +494,53 @@ export const ChatMes: React.FC = () => {
             />
           </Form.Item>
         </Form>
+      </Modal>
+
+      <Modal
+        width={350}
+        title={
+          <h3 style={{ fontWeight: "bold", textAlign: "center" }}>
+            Danh sách thành viên nhóm
+          </h3>
+        }
+        open={isShowMember}
+        footer={null}
+        onCancel={() => setIsShowMember(false)}
+      >
+        <List
+          dataSource={member}
+          size="small"
+          renderItem={(item) => (
+            <List.Item
+              style={{
+                paddingLeft: "60px",
+                transition: "0.3s",
+                borderRadius: "8px",
+              }}
+            >
+              <List.Item.Meta
+                avatar={
+                  <img
+                    src={avatar}
+                    alt="avatar"
+                    style={{
+                      width: "26px",
+                      height: "26px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      backgroundColor: "#1890ff",
+                    }}
+                  />
+                }
+                title={
+                  <span style={{ fontSize: "15px", fontWeight: "500" }}>
+                    {item.username}
+                  </span>
+                }
+              />
+            </List.Item>
+          )}
+        />
       </Modal>
     </div>
   );

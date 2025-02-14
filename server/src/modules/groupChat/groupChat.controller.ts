@@ -14,6 +14,7 @@ import { ApiResponse } from "@nestjs/swagger";
 import { groupChatRequest } from "./dto/groupChat.request";
 import { GroupChatService } from "./groupChat.service";
 import { UserGuardModel } from "../authentication/dto/user.guard.model";
+import { GroupMemberResponse } from "../user/dto/groupMember.response";
 
 @Controller("groupChat")
 export class GroupChatController {
@@ -34,7 +35,7 @@ export class GroupChatController {
   ) {
     let sender = await this.userService.getUserByAccountId(req.user.accountId);
     console.log("Get group chat by user id:", sender.id);
-    return this.groupChatService.getGroupChatByUserId(sender.id);
+    return await this.groupChatService.getGroupChatByUserId(sender.id);
   }
 
   @Post("")
@@ -47,6 +48,24 @@ export class GroupChatController {
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException("Error when creating group");
+    }
+  }
+
+  @ApiResponse({
+    status: 200,
+    type: [GroupMemberResponse],
+    description: "Successful",
+  })
+  @Get("member/:id")
+  async getMemberByGroupChatId(
+    @Param("id") id: string, 
+  ) {
+    console.log("Get all member by group chat id:", id);
+    try {
+      return await this.groupChatService.getMemberByGroupChatId(id);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException("Error when get all member by group chat id");
     }
   }
 }

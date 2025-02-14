@@ -7,7 +7,6 @@ import {
   TimePicker,
   Row,
   Col,
-  Select,
   Button,
 } from "antd";
 import dayjs, { Dayjs } from "dayjs";
@@ -22,6 +21,8 @@ import {
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import {
   getAvailableScheduleByDoctorId,
+  getScheduleByDoctorId,
+  getScheduleByPatientId,
   resetLoadGetAvailableScheduleByDoctorId,
 } from "../../redux/reducer/scheduleSlice";
 import {
@@ -30,6 +31,8 @@ import {
   getBusyHours,
 } from "../../utils/dateUtils";
 import { showNotiError } from "../notification";
+import { Context } from "../../utils/context";
+import { userRole } from "../../constants";
 
 const ModalComponent = (props: any, ref: any) => {
   const [form] = Form.useForm();
@@ -77,6 +80,8 @@ const ModalComponent = (props: any, ref: any) => {
       setIsOpen(false);
       setIsShow(false);
       form.resetFields();
+      if (Context.role === userRole.doctor) dispatch(getScheduleByDoctorId());
+      if (Context.role === userRole.patient) dispatch(getScheduleByPatientId());
       dispatch(getDiagnosisByScheduleId(data.schedule_id));
       dispatch(getAvailableScheduleByDoctorId(data.doctor_id));
     }
@@ -110,7 +115,7 @@ const ModalComponent = (props: any, ref: any) => {
 
   React.useEffect(() => {
     if (data.schedule_id) dispatch(getDiagnosisByScheduleId(data.schedule_id));
-  }, [data.schedule_id]);
+  }, [data.schedule_id, form]);
 
   React.useEffect(() => {
     if (
@@ -119,6 +124,9 @@ const ModalComponent = (props: any, ref: any) => {
     ) {
       dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis(diagnosisState.diagnosis);
+      form.setFieldsValue({
+        information: diagnosisState.diagnosis.information,
+      });
     }
     if (
       diagnosisState.loadGetDiagnosisByScheduleIdStatus ===
@@ -126,13 +134,12 @@ const ModalComponent = (props: any, ref: any) => {
     ) {
       dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis({} as DiagnosisResponse);
+      form.setFieldsValue({
+        information: "",
+      });
     }
-    form.setFieldsValue({
-      information: diagnosisState.diagnosis
-        ? diagnosisState.diagnosis.information
-        : "",
-    });
-  }, [diagnosisState.loadGetDiagnosisByScheduleIdStatus]);
+    
+  }, [diagnosisState]);
 
   React.useEffect(() => {
     if (
@@ -151,14 +158,6 @@ const ModalComponent = (props: any, ref: any) => {
       dispatch(resetLoadGetAvailableScheduleByDoctorId());
     }
   }, [scheduleState.loadGetAvailableScheduleByDoctorId]);
-
-  const mapOptions: any = (options: any[]) =>
-    options
-      ? options.map((option) => ({
-          value: option.value,
-          label: option.label,
-        }))
-      : [];
 
   return (
     <>
@@ -228,30 +227,6 @@ const ModalComponent = (props: any, ref: any) => {
                       name={item.dataIndex}
                       placeholder="Thông tin chẩn đoán"
                     />
-                  </Form.Item>
-                );
-              }
-              if (item.type === "select" && isShow) {
-                return (
-                  <Form.Item
-                    label={item.title}
-                    name={item.dataIndex}
-                    key={item.dataIndex}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Vui lòng chọn loại lịch tái khám",
-                      },
-                    ]}
-                    style={{ marginBottom: "25px" }}
-                  >
-                    <Select
-                      options={mapOptions(item.dataSelect || [])}
-                      allowClear
-                      value={data[item.dataIndex]}
-                      placeholder="Loại lịch tái khám"
-                      onChange={() => setIsShow(true)}
-                    ></Select>
                   </Form.Item>
                 );
               }

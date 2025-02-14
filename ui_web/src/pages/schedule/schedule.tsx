@@ -20,7 +20,6 @@ import { checkDateTypeKey } from "../../utils/dateUtils";
 import { ScheduleModal } from "../../components/Modal/ScheduleModal";
 import {
   convertScheduleStatusToString,
-  convertScheduleTypeToString,
   scheduleType,
   userRole,
 } from "../../constants";
@@ -85,7 +84,6 @@ export const Schedule: React.FC = () => {
       dataState.errorMessage
     ) {
       setData([]);
-      showNotiError(dataState.errorMessage);
     }
   }, [dataState]);
 
@@ -169,7 +167,7 @@ export const Schedule: React.FC = () => {
         if (item.result === 5) checkWarningSchedule[1] = true;
       } else {
         count.evening++;
-        if (item.result === 5) checkWarningSchedule[3] = true;
+        if (item.result === 5) checkWarningSchedule[2] = true;
       }
     });
 
@@ -181,7 +179,7 @@ export const Schedule: React.FC = () => {
             <span
               style={
                 checkWarningSchedule[0]
-                  ? { color: "#E6B800", fontWeight: "bold" }
+                  ? { color: "#E53935", fontWeight: "bold" }
                   : {}
               }
             >
@@ -195,7 +193,7 @@ export const Schedule: React.FC = () => {
             <span
               style={
                 checkWarningSchedule[1]
-                  ? { color: "#E6B800", fontWeight: "bold" }
+                  ? { color: "#E53935", fontWeight: "bold" }
                   : {}
               }
             >
@@ -210,11 +208,11 @@ export const Schedule: React.FC = () => {
             <span
               style={
                 checkWarningSchedule[2]
-                  ? { color: "#E6B800", fontWeight: "bold" }
+                  ? { color: "#E53935", fontWeight: "bold" }
                   : {}
               }
             >
-              Số ca tối: {count.evening} {checkWarningSchedule[3] ? "!!!" : ""}
+              Số ca tối: {count.evening} {checkWarningSchedule[2] ? "!!!" : ""}
             </span>
           }
         />

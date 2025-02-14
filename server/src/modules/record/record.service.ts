@@ -15,7 +15,7 @@ export class RecordService {
     private deviceService: DeviceService,
     private userService: UserService,
     private recordRepository: RecordRepository,
-    private scheduleService: ScheduleService,
+    private scheduleService: ScheduleService
   ) {}
 
   private async saveFile(
@@ -100,17 +100,30 @@ export class RecordService {
 
   async getRecordByDoctorId(doctor_id: string): Promise<RecordResponse[]> {
     let result = [];
-    const schedules = await this.scheduleService.getScheduleByDoctorId(doctor_id);
+    const schedules = await this.scheduleService.getScheduleByDoctorId(
+      doctor_id
+    );
     for (const schedule of schedules) {
-      const records = await this.recordRepository.getRecordByPatientId(schedule.patient_id);
+      const records = await this.recordRepository.getRecordByPatientId(
+        schedule.patient_id
+      );
       for (const record of records) {
-        let device = await this.deviceService.getById(record.device_id);
-        let patient = await this.userService.getUserById(record.patient_id);
-        result.push({
-          ...(<any>record).dataValues,
-          patient: patient.username,
-          device_name: device.device_name,
-        });
+        let checkDuplicate = false;
+        for (const item of result) {
+          if (record.id === item.id) {
+            checkDuplicate = true;
+            break;
+          }
+        }
+        if (!checkDuplicate) {
+          let device = await this.deviceService.getById(record.device_id);
+          let patient = await this.userService.getUserById(record.patient_id);
+          result.push({
+            ...(<any>record).dataValues,
+            patient: patient.username,
+            device_name: device.device_name,
+          });
+        }
       }
     }
     return result;

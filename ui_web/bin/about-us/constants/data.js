@@ -1,9 +1,9 @@
 const ECG = {
     name: 'ECG',
-    subtitle: 'Hệ thống quản lý dữ liệu điện tim, hỗ trợ theo dõi sức khỏe và tạo cầu nối tương tác hiệu quả giữa bệnh nhân và bác sĩ.',
-    subtitle2: 'Dự án quản lý dữ liệu điện tim',
+    subtitle: 'Hệ thống quản lý dữ liệu tim mạch, hỗ trợ theo dõi sức khỏe và tạo cầu nối tương tác hiệu quả giữa bệnh nhân và bác sĩ.',
+    subtitle2: 'Dự án quản lý dữ liệu tim mạch',
     welcome: {
-        description: 'Dự án ECG nhằm phát triển một hệ thống thông minh giúp thu thập, xử lý và quản lý dữ liệu điện tim từ bệnh nhân. Hệ thống này hỗ trợ người dùng theo dõi sức khỏe hàng ngày, đồng thời cung cấp cho bác sĩ và phòng khám công cụ hữu ích trong việc quản lý và chẩn đoán. Dữ liệu từ bệnh nhân sẽ được lưu trữ an toàn, bảo mật, đảm bảo tính liên tục và khả năng truy cập cho các chuyên gia y tế khi cần thiết. Ngoài ra, hệ thống còn có sự tương tác giữa bệnh nhân và bác sĩ thông qua các tính năng lập lịch khám trực tuyến và nhắn tin trực tiếp, giúp trao đổi thông tin y tế nhanh chóng, quản lý thời gian hiệu quả, và hỗ trợ điều trị từ xa.',
+        description: 'Dự án ECG nhằm phát triển một hệ thống thông minh giúp thu thập, xử lý và quản lý dữ liệu tim mạch từ bệnh nhân. Hệ thống này hỗ trợ người dùng theo dõi sức khỏe hàng ngày, đồng thời cung cấp cho bác sĩ và phòng khám công cụ hữu ích trong việc quản lý và chẩn đoán. Dữ liệu từ bệnh nhân sẽ được lưu trữ an toàn, bảo mật, đảm bảo tính liên tục và khả năng truy cập cho các chuyên gia y tế khi cần thiết. Ngoài ra, hệ thống còn có sự tương tác giữa bệnh nhân và bác sĩ thông qua các tính năng lập lịch khám trực tuyến và nhắn tin trực tiếp, giúp trao đổi thông tin y tế nhanh chóng, quản lý thời gian hiệu quả, và hỗ trợ điều trị từ xa.',
         list: [
             'Giao diện bắt mắt, dễ sử dụng',
             'Hiển thị dữ liệu trực quan',
@@ -14,8 +14,8 @@ const ECG = {
     services: [
         {
             iconClass: 'flaticon-electrocardiogram',
-            name: 'Thu thập và xử lý dữ liệu điện tim',
-            description: 'Dữ liệu được thu thập từ các thiết bị điện tim đeo tay hoặc đặt gần bệnh nhân và truyền qua Bluetooth về ứng dụng di động, giúp đảm bảo tính chính xác và liên tục.'
+            name: 'Thu thập và xử lý dữ liệu tim mạch',
+            description: 'Dữ liệu được thu thập từ các thiết bị đo đeo tay hoặc đặt gần bệnh nhân và truyền qua Bluetooth về ứng dụng di động, giúp đảm bảo tính chính xác và liên tục.'
         },
         {
             iconClass: 'flaticon-emergency-call',
@@ -32,11 +32,11 @@ const ECG = {
         steps: [
             {
                 name: 'Thiết bị',
-                description: 'Bệnh nhân đeo thiết bị điện tim có khả năng thu thập dữ liệu sinh học.'
+                description: 'Bệnh nhân đeo thiết bị đo có khả năng thu thập dữ liệu sinh học.'
             },
             {
                 name: 'App di động',
-                description: 'Thiết bị điện tim kết nối với ứng dụng qua Bluetooth, dữ liệu được gửi từ thiết bị tới app.'
+                description: 'Thiết bị đo kết nối với ứng dụng qua Bluetooth, dữ liệu được gửi từ thiết bị tới app.'
             },
             {
                 name: 'Server',
@@ -44,7 +44,7 @@ const ECG = {
             },
             {
                 name: 'Thiết bị',
-                description: 'Bác sĩ hoặc bệnh viện có thể truy cập dữ liệu từ máy chủ thông qua ứng dụng web, với giao diện trực quan hiển thị thông tin dưới dạng bảng biểu và đồ thị.'
+                description: 'Bác sĩ hoặc phòng khám có thể truy cập dữ liệu từ máy chủ thông qua ứng dụng web, với giao diện trực quan hiển thị thông tin dưới dạng bảng biểu và đồ thị.'
             },
         ],
         img: 'img/about/1.png'
@@ -53,10 +53,10 @@ const ECG = {
         {
             name: 'Ứng dụng di động',
             list: [
-                'Nhận dữ liệu từ thiết bị điện tim qua kết nối Bluetooth.',
-                'Hiển thị dữ liệu điện tim cho người dùng trên giao diện trực quan.',
+                'Nhận dữ liệu từ thiết bị đo qua kết nối Bluetooth.',
+                'Hiển thị dữ liệu tim mạch cho người dùng trên giao diện trực quan.',
                 'Đồng bộ dữ liệu với máy chủ để lưu trữ và phân tích lâu dài.',
-                'Cảnh báo và nhắc nhở người dùng trong các trường hợp kết quả điện tim không ổn định.',
+                'Cảnh báo và nhắc nhở người dùng trong các trường hợp kết quả tim mạch không ổn định.',
                 'Cung cấp giao diện lập lịch hẹn với bác sĩ và tương tác trực tiếp qua nhắn tin.',
             ]
         },
@@ -64,7 +64,7 @@ const ECG = {
             name: 'Ứng dụng web',
             list: [
                 'Dành cho bác sĩ, bệnh viện và bệnh nhân để theo dõi tình trạng sức khỏe.',
-                'Hiển thị dữ liệu điện tim dưới dạng bảng biểu, đồ thị, cung cấp các công cụ phân tích chi tiết.',
+                'Hiển thị dữ liệu tim mạch dưới dạng bảng biểu, đồ thị, cung cấp các công cụ phân tích chi tiết.',
                 'Quản lý hồ sơ bệnh nhân, bác sĩ và quyền truy cập dữ liệu.',
                 'Chức năng báo cáo và xuất dữ liệu cho các nghiên cứu lâm sàng hoặc y tế.',
                 'Cung cấp giao diện lập lịch hẹn với bác sĩ và tương tác trực tiếp qua nhắn tin.',
@@ -98,7 +98,7 @@ const ECG = {
             },
             {
                 name: 'Cơ sở dữ liệu',
-                description: 'Sử dụng các hệ quản trị cơ sở dữ liệu như MongoDB hoặc MySQL để lưu trữ hồ sơ bệnh nhân và dữ liệu điện tim.',
+                description: 'Sử dụng các hệ quản trị cơ sở dữ liệu như MongoDB hoặc MySQL để lưu trữ hồ sơ bệnh nhân và dữ liệu tim mạch.',
                 iconImg: [
                     'img/fmECG/mongodb.png',
                     'img/fmECG/mysql.png'

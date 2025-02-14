@@ -43,7 +43,7 @@ export class NotificationRequest {
 
   @ApiProperty({
     description:
-      "Status of the notification (0: reminder, 1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule, 5: cancel automatically, 6: pending schedule result)",
+      "Status of the notification (0: reminder, 1: accepted, 2: pending, 3: rejected, 4: successful follow-up schedule, 5: cancel automatically, 6: pending schedule result, 7: cancel schedule result)",
     example: 0,
   })
   @IsNotEmpty()

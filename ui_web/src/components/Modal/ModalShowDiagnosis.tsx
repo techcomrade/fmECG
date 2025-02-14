@@ -63,7 +63,7 @@ const ModalComponent = (props: any, ref: any) => {
       }}
       className={props.className}
     >
-      <Form form={form} labelCol={{ span: 10 }} wrapperCol={{ span: 12 }}>
+      <Form form={form} labelCol={{ span: 12 }} wrapperCol={{ span: 14 }}>
         {(Context.role === userRole.doctor ||
           Context.role === userRole.admin) && (
           <Form.Item

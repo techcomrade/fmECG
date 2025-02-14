@@ -1,6 +1,11 @@
 const { v4: uuidv4 } = require("uuid");
 
-import { Injectable, forwardRef, Inject } from "@nestjs/common";
+import {
+  Injectable,
+  forwardRef,
+  Inject,
+  InternalServerErrorException,
+} from "@nestjs/common";
 import { ScheduleRepository } from "./schedule.repository";
 import { ScheduleResponse } from "./dto/schedule.response";
 import { ScheduleRequest } from "./dto/schedule.request";
@@ -57,6 +62,14 @@ export class ScheduleService {
     schedule: ScheduleRequest
   ): Promise<ScheduleResponse> {
     return await this.scheduleRepository.checkExistingSchedule(schedule);
+  }
+
+  async checkScheduleByPatientIdAndTime(
+    schedule: ScheduleRequest
+  ): Promise<ScheduleResponse> {
+    return await this.scheduleRepository.checkScheduleByPatientIdAndTime(
+      schedule
+    );
   }
 
   async createSchedule(schedule: ScheduleRequest, doctor_id: string) {
@@ -118,7 +131,67 @@ export class ScheduleService {
   }
 
   async acceptSchedule(schedule_id: string) {
+    const schedule = await this.scheduleRepository.getScheduleById(schedule_id);
+    const consultation =
+      await this.consultationScheduleService.getConsultationScheduleByScheduleId(
+        schedule_id
+      );
+    const duplicateSchedules =
+      await this.scheduleRepository.checkScheduleByDoctorIdAndTime(
+        schedule_id,
+        {
+          doctor_id: consultation.doctor_id,
+          schedule_start_time: schedule.schedule_start_time,
+        } as ScheduleRequest
+      );
+    if (duplicateSchedules) {
+      for (const item of duplicateSchedules) {
+        const duplicateSchedule = (<any>item).dataValues;
+        console.log("Duplicate schedule: ", duplicateSchedule);
+        try {
+          if (duplicateSchedule.status_id === 1) {
+            throw new InternalServerErrorException(
+              "Bạn đã có lịch khám vào thời điểm này, không thể chấp nhận lịch khám hiện tại"
+            );
+          } else {
+            await Promise.all([
+              this.rejectSchedule(duplicateSchedule.id),
+              this.notificationService.add({
+                doctor_id:
+                  duplicateSchedule.consultation_schedules?.[0]?.doctor_id,
+                patient_id: duplicateSchedule.patient_id,
+                schedule_start_time: duplicateSchedule.schedule_start_time,
+                is_seen: false,
+                type: 0,
+                status: 3,
+                reject_reason:
+                  "Bác sĩ đã chấp nhận lịch khám khác vào thời điểm này",
+              } as NotificationRequest),
+              this.notificationService.add({
+                doctor_id:
+                  duplicateSchedule.consultation_schedules?.[0]?.doctor_id,
+                patient_id: duplicateSchedule.patient_id,
+                schedule_start_time: duplicateSchedule.schedule_start_time,
+                is_seen: false,
+                type: 1,
+                status: 3,
+              } as NotificationRequest),
+            ]);
+            return await this.scheduleRepository.acceptSchedule(schedule_id);
+          }
+        } catch (error) {
+          throw new InternalServerErrorException(
+            "Bạn đã có lịch khám vào thời điểm này, không thể chấp nhận lịch khám hiện tại"
+          );
+        }
+      }
+    }
     return await this.scheduleRepository.acceptSchedule(schedule_id);
+  }
+
+  async rejectSchedule(schedule_id: string) {
+    await this.scheduleRepository.getScheduleById(schedule_id);
+    return await this.scheduleRepository.rejectSchedule(schedule_id);
   }
 
   async updateSchedule(schedule: ScheduleRequest, id: string) {
@@ -179,12 +252,14 @@ export class ScheduleService {
       const schedule = await this.scheduleRepository.getScheduleById(
         item.schedule_id
       );
-      const patient = await this.userService.getUserById(schedule.patient_id);
-      scheduleList.push({
-        ...(<any>schedule).dataValues,
-        patient_name: patient.username,
-        doctor_name: doctor?.username,
-      });
+      if (schedule.status_id !== 3) {
+        const patient = await this.userService.getUserById(schedule.patient_id);
+        scheduleList.push({
+          ...(<any>schedule).dataValues,
+          patient_name: patient.username,
+          doctor_name: doctor?.username,
+        });
+      }
     }
     return scheduleList;
   }
@@ -203,6 +278,7 @@ export class ScheduleService {
       const id = item.schedule_id;
       const schedule = await this.getScheduleById(id);
       if (
+        schedule.status_id !== 3 &&
         schedule.schedule_start_time >= startTime &&
         schedule.schedule_start_time < startTime + TWO_WEEKS_IN_SECONDS
       )
@@ -213,7 +289,7 @@ export class ScheduleService {
 
   async cancelPendingSchedule() {
     const pendingSchedules = await this.scheduleRepository.getPendingSchedule();
-    const ALLOW_TIME = 12 * 60 * 60 * 1000;
+    const ALLOW_TIME = 24 * 60 * 60 * 1000;
     const currentTime = new Date().getTime();
     for (const schedule of pendingSchedules) {
       const consultation =

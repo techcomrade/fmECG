@@ -3,23 +3,42 @@ import { InjectModel } from "@nestjs/mongoose";
 import { GroupChatSchema } from "./schema/groupChat.schema";
 import { Model } from "mongoose";
 import { groupChatRequest } from "./dto/groupChat.request";
+import { UserService } from "../user/user.service";
+import { GroupMemberResponse } from "../user/dto/groupMember.response";
 
 @Injectable()
 export class GroupChatService {
   constructor(
     @InjectModel(GroupChatSchema.name)
-    private groupChatModel: Model<GroupChatSchema>
+    private groupChatModel: Model<GroupChatSchema>,
+    private userService: UserService
   ) {}
 
-  async getGroupChatByUserId(
-    user_id: string,
-  ): Promise<GroupChatSchema[]> {
-    return await this.groupChatModel.find({
-      $or: [
-        { hostId: user_id }, 
-        { member: user_id }  
-      ]
-    }).exec();
+  async getGroupChatByUserId(user_id: string): Promise<GroupChatSchema[]> {
+    return await this.groupChatModel
+      .find({
+        $or: [{ hostId: user_id }, { member: user_id }],
+      })
+      .exec();
+  }
+
+  async getMemberByGroupChatId(id: string): Promise<GroupMemberResponse[]> {
+    const groupChat = await this.groupChatModel.findOne({ _id: id }).exec();
+    if (!groupChat) {
+      throw new Error("Group chat not found");
+    }
+
+    let memberResult: GroupMemberResponse[] = [];
+    for (const member of groupChat.member) {
+      const user = await this.userService.getUserById(member);
+      memberResult.push({
+        id: user.id,
+        username: user.username,
+        role_id: user.role_id,
+      });
+    }
+
+    return memberResult;
   }
 
   async saveGroupChat(
@@ -28,7 +47,7 @@ export class GroupChatService {
     const groupChat = new this.groupChatModel(groupChatRequest);
     groupChat.sendEvent = `sendMessageTo${groupChat.id}`;
     groupChat.receiveEvent = `receiveMessageFrom${groupChat.id}`;
-    console.log(groupChat)
+    console.log(groupChat);
     return await groupChat.save();
   }
 

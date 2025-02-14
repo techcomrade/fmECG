@@ -156,14 +156,6 @@ export class DeviceService {
     return await this.deviceRepository.getByUserId(user_id);
   }
 
-  // async getByUserId(user_id: string): Promise<DeviceResponse[]> {
-  //   let devices = await this.deviceRepository.getByUserId(user_id);
-  //   const user = await this.userService.getUserById(user_id);
-  //   for (const device of devices) {
-  //     device.username = user.username;
-  //   }
-  //   return devices;
-  // }
   async getByDeviceTypeId(device_type_id: string): Promise<DeviceResponse> {
     return await this.deviceRepository.getByDeviceType(device_type_id);
   }
