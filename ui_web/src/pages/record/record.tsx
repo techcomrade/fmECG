@@ -132,12 +132,6 @@ export const Record: React.FC = () => {
       );
       setDataTable(rawData);
     }
-    if (
-      dataState.loadDataStatus === ApiLoadingStatus.Failed &&
-      dataState.errorMessage
-    ) {
-      showNotiError(dataState.errorMessage);
-    }
   }, [dataState.loadDataStatus]);
 
   React.useEffect(() => {

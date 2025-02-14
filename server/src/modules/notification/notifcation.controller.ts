@@ -112,7 +112,7 @@ export class NotificationController {
         type: notification.type === 0 ? 1 : 0,
       };
 
-      if (![1, 3].includes(notification.status)) {
+      if (![1, 2, 3, 7].includes(notification.status)) {
         const checkSchedule =
           await this.scheduleService.checkScheduleByPatientIdAndTime({
             patient_id: notification.patient_id,
@@ -122,7 +122,7 @@ export class NotificationController {
           await this.notificationService.checkExistingNotification(
             notification
           );
-        if (!checkExistingNotification || checkSchedule.status_id === 3) {
+        if (!checkExistingNotification || checkSchedule?.status_id === 3) {
           console.log("[P]:::Create notification data", notification);
           await Promise.all([
             this.notificationService.add(selfNotification),

@@ -154,9 +154,7 @@ const ModalComponent = (props: any, ref: any) => {
                     return (
                       current &&
                       (current.isBefore(afterTomorrow.startOf("day")) ||
-                        current.isAfter(twoWeeksFromTomorrow) ||
-                        current.day() === 0 ||
-                        current.day() === 6)
+                        current.isAfter(twoWeeksFromTomorrow))
                     );
                   }}
                   onChange={handleDateChange}

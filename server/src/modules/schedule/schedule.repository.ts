@@ -4,12 +4,15 @@ import { ScheduleModel } from "../../entities/schedule.model";
 import { ScheduleResponse } from "./dto/schedule.response";
 import { ScheduleRequest } from "./dto/schedule.request";
 import { Op } from "sequelize";
+import { ConsultationScheduleModel } from "../../entities/consultation_schedule.model";
 
 @Injectable()
 export class ScheduleRepository {
   constructor(
     @InjectModel(ScheduleModel)
-    private scheduleModel: typeof ScheduleModel
+    private scheduleModel: typeof ScheduleModel,
+    @InjectModel(ConsultationScheduleModel)
+    private consultationModel: typeof ConsultationScheduleModel
   ) {}
 
   async getAllSchedules(): Promise<ScheduleResponse[]> {
@@ -61,6 +64,27 @@ export class ScheduleRepository {
     });
   }
 
+  async checkScheduleByDoctorIdAndTime(
+    exclude_schedule_id: any,
+    { doctor_id, schedule_start_time }: ScheduleRequest
+  ): Promise<ScheduleResponse[]> {
+    return await this.scheduleModel.findAll({
+      where: {
+        schedule_start_time: schedule_start_time,
+        status_id: { [Op.in]: [1, 2] },
+        id: { [Op.ne]: exclude_schedule_id },
+      },
+      include: [
+        {
+          model: this.consultationModel,
+          where: { doctor_id: doctor_id },
+          attributes: ["id", "doctor_id"],
+        },
+      ],
+      attributes: ["id", "patient_id", "schedule_start_time", "status_id"],
+    });
+  }
+
   async getPendingResultSchedule(): Promise<ScheduleResponse[]> {
     return await this.scheduleModel.findAll({
       where: {
@@ -84,6 +108,7 @@ export class ScheduleRepository {
       where: {
         status_id: 1,
       },
+      lock: true,
     });
   }
 
@@ -101,6 +126,7 @@ export class ScheduleRepository {
       where: {
         id: id,
       },
+      lock: true,
     });
   }
 

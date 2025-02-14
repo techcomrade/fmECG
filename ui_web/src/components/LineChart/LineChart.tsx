@@ -110,6 +110,7 @@ const LineChart: React.FC<LineChartProps> = ({ rawData }) => {
             position: "left",
             stack: "demo",
             stackWeight: 1,
+            fixedrange: true,
           };
         }
       });
@@ -161,7 +162,7 @@ const LineChart: React.FC<LineChartProps> = ({ rawData }) => {
       x: {
         title: {
           display: true,
-          text: "Thời gian",
+          text: "Số mẫu",
         },
         max: recordState.samples,
       },

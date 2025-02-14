@@ -92,7 +92,6 @@ export const Schedule: React.FC = () => {
       dataState.errorMessage
     ) {
       setData([]);
-      showNotiError(dataState.errorMessage);
     }
   }, [dataState]);
 
@@ -176,7 +175,7 @@ export const Schedule: React.FC = () => {
         if (item.result === 5) checkWarningSchedule[1] = true;
       } else {
         count.evening++;
-        if (item.result === 5) checkWarningSchedule[3] = true;
+        if (item.result === 5) checkWarningSchedule[2] = true;
       }
     });
 
@@ -188,7 +187,7 @@ export const Schedule: React.FC = () => {
             <span
               style={
                 checkWarningSchedule[0]
-                  ? { color: "#E6B800", fontWeight: "bold" }
+                  ? { color: "#E53935", fontWeight: "bold" }
                   : {}
               }
             >
@@ -202,7 +201,7 @@ export const Schedule: React.FC = () => {
             <span
               style={
                 checkWarningSchedule[1]
-                  ? { color: "#E6B800", fontWeight: "bold" }
+                  ? { color: "#E53935", fontWeight: "bold" }
                   : {}
               }
             >
@@ -217,11 +216,11 @@ export const Schedule: React.FC = () => {
             <span
               style={
                 checkWarningSchedule[2]
-                  ? { color: "#E6B800", fontWeight: "bold" }
+                  ? { color: "#E53935", fontWeight: "bold" }
                   : {}
               }
             >
-              Số ca tối: {count.evening} {checkWarningSchedule[3] ? "!!!" : ""}
+              Số ca tối: {count.evening} {checkWarningSchedule[2] ? "!!!" : ""}
             </span>
           }
         />
@@ -238,6 +237,8 @@ export const Schedule: React.FC = () => {
     if (selectInfo.source === "date") {
       setSelectedDate(value);
       setIsOpen(true);
+      if (Context.role === userRole.doctor) dispatch(getScheduleByDoctorId());
+      if (Context.role === userRole.patient) dispatch(getScheduleByPatientId());
     }
   };
 
@@ -246,6 +247,7 @@ export const Schedule: React.FC = () => {
     dispatch(
       createNotification({
         ...data,
+        status: 2,
       } as NotificationRequest)
     );
   };

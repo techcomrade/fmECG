@@ -226,7 +226,7 @@ export const convertScheduleResultToString = (result: number) => {
     case 4:
       return "Đang diễn ra";
     case 5:
-      return "Đang chờ duyệt (cảnh báo)";
+      return "Đang chờ duyệt ";
     default:
       return "Không xác định";
   }

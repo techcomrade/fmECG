@@ -38,9 +38,26 @@ export const getAllDoctors = createAsyncThunkWrap("users/doctors", async () => {
   return await Service.userService.getAllDoctors();
 });
 
-export const getAllExceptAdmin = createAsyncThunkWrap("users/except-admin", async () => {
-  return await Service.userService.getAllExceptAdmin();
-});
+export const getAllExceptAdmin = createAsyncThunkWrap(
+  "users/except-admin",
+  async () => {
+    return await Service.userService.getAllExceptAdmin();
+  }
+);
+
+export const getAllExceptSelf = createAsyncThunkWrap(
+  "users/except-self",
+  async () => {
+    return await Service.userService.getAllExceptSelf();
+  }
+);
+
+export const getAdminAndPatientByDoctorId = createAsyncThunkWrap(
+  "users/admin-patient-data",
+  async () => {
+    return await Service.userService.getAdminAndPatientByDoctorId();
+  }
+);
 
 export const getUserById = createAsyncThunkWrap(
   "/users/id",
@@ -119,6 +136,18 @@ export const userSlice = createSlice({
         state.errorMessage = (<any>action.payload)?.message;
         state.loadDataStatus = ApiLoadingStatus.Failed;
       })
+      .addCase(getAllExceptSelf.pending, (state, action) => {
+        state.loadDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getAllExceptSelf.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getAllExceptSelf.rejected, (state, action) => {
+        state.data = [];
+        state.errorMessage = (<any>action.payload)?.message;
+        state.loadDataStatus = ApiLoadingStatus.Failed;
+      })
       .addCase(getAllDoctors.pending, (state, action) => {
         state.loadDoctorDataStatus = ApiLoadingStatus.Loading;
       })
@@ -130,6 +159,18 @@ export const userSlice = createSlice({
         state.doctorData = [];
         state.errorMessage = (<any>action.payload)?.message;
         state.loadDoctorDataStatus = ApiLoadingStatus.Failed;
+      })
+      .addCase(getAdminAndPatientByDoctorId.pending, (state, action) => {
+        state.loadDataStatus = ApiLoadingStatus.Loading;
+      })
+      .addCase(getAdminAndPatientByDoctorId.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loadDataStatus = ApiLoadingStatus.Success;
+      })
+      .addCase(getAdminAndPatientByDoctorId.rejected, (state, action) => {
+        state.data = [];
+        state.errorMessage = (<any>action.payload)?.message;
+        state.loadDataStatus = ApiLoadingStatus.Failed;
       })
       .addCase(getPatientByDoctorId.pending, (state, action) => {
         state.loadDataStatus = ApiLoadingStatus.Loading;
