@@ -95,6 +95,32 @@ export class UserController {
     }
   }
 
+  @Get("/except-self")
+  @ApiResponse({
+    status: 200,
+    type: [UserResponse],
+    description: "Successful",
+  })
+  async getAllExceptSelf(
+    @Req() req: Request & { user?: UserGuardModel },
+    @Res() res: Response
+  ) {
+    console.log(`[P]:::Get all except self`);
+    try {
+      let self = await this.userService.getUserByAccountId(req.user.accountId);
+      let users = await this.userService.getAllUsers();
+      if (!users.length) {
+        throw new NotFoundException("No user found, please try again");
+      }
+      users = users.filter((user) => user.id !== self.id);
+      let result = plainToInstance(UserResponse, users);
+      return res.json(result);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException("Error when get all except self");
+    }
+  }
+
   @Get(":id")
   @ApiResponse({
     status: 200,
@@ -146,7 +172,39 @@ export class UserController {
         throw new NotFoundException("No user found, please try again");
       }
       let result = plainToInstance(UserResponse, user);
-      console.log(result)
+      console.log(result);
+      return res.json(result);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException(
+        "Error when get user by doctor id"
+      );
+    }
+  }
+
+  @Get("data/admin-patient-data")
+  @ApiResponse({
+    status: 200,
+    type: [UserResponse],
+    description: "Successful",
+  })
+  async getAdminAndPatientByDoctorId(
+    @Req() req: Request & { user?: UserGuardModel },
+    @Res() res: Response
+  ) {
+    const doctorId = (
+      await this.userService.getUserByAccountId(req.user.accountId)
+    ).id;
+    console.log(`[P]:::Get all users by doctor id: `, doctorId);
+    try {
+      let user = await this.userService.getPatientByDoctorId(doctorId);
+      if (!user) {
+        throw new NotFoundException("No user found, please try again");
+      }
+      let admins = await this.userService.getAllAdmin();
+      const adminData = admins.map((admin) => (<any>admin).dataValues);
+      const mergedList = [...adminData, ...user];
+      let result = plainToInstance(UserResponse, mergedList);
       return res.json(result);
     } catch (error) {
       console.log(error);
@@ -175,7 +233,10 @@ export class UserController {
       if (!user) {
         throw new NotFoundException("No user found, please try again");
       }
-      let result = plainToInstance(UserResponse, user);
+      let admins = await this.userService.getAllAdmin();
+      const adminData = admins.map((admin) => (<any>admin).dataValues);
+      const mergedList = [...adminData, ...user];
+      let result = plainToInstance(UserResponse, mergedList);
       return res.json(result);
     } catch (error) {
       console.log(error);

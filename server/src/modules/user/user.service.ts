@@ -24,6 +24,10 @@ export class UserService {
     return await this.userRepository.getAllDoctors();
   }
 
+  async getAllAdmin(): Promise<UserResponse[]> {
+    return await this.userRepository.getAllAdmin();
+  }
+
   async getAllExceptAdmin(): Promise<UserResponse[]> {
     return await this.userRepository.getAllExceptAdmin();
   }
