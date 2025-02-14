@@ -103,7 +103,7 @@ export const convertStringToUserStatus = (status: string) => {
     case "Đã nghỉ":
       return 2;
     default:
-      return 3;
+      return "Chọn trạng thái";
   }
 };
 
@@ -144,7 +144,7 @@ export const convertStringToDeviceType = (deviceType: string) => {
     case "Thiết bị hỗ trợ điều trị":
       return 3;
     default:
-      return 4;
+      return "Chọn trạng thái";
   }
 };
 
@@ -192,9 +192,9 @@ export const convertStringToDeviceStatus = (deviceStatus: string) => {
 export const convertScheduleTypeToString = (type: number) => {
   switch (type) {
     case 1:
-      return "Khám bệnh";
+      return "Khám định kì";
     case 2:
-      return "Tư vấn thiết bị";
+      return "Khám tổng quát";
     default:
       return "Không xác định";
   }
@@ -231,10 +231,10 @@ export const convertScheduleResultToString = (result: number) => {
 export const scheduleType = [
   {
     value: 1,
-    label: "Khám bệnh",
+    label: "Khám định kì",
   },
   {
     value: 2,
-    label: "Tư vấn thiết bị",
+    label: "Khám tổng quát",
   },
 ];

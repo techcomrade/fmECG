@@ -149,11 +149,11 @@ const ScheduleModalComponent = (props: any) => {
                   : []),
                 ...(Context.role === userRole.doctor && (item.type === 2 || item.type === 1)
                   ? [
-                      <Tooltip title={item.type === 2 ? "Phê duyệt lịch khám" : "Đã khám xong"} key="accept">
+                      <Tooltip title={item.type === 2 ? "CHấp nhận hoàn thành lịch khám" : "Đã khám xong"} key="accept">
                         <CarryOutOutlined
                           onClick={() => {
                             Modal.confirm({
-                              title: "Phê duyệt",
+                              title: "Chấp nhận",
                               content:
                                 "Bạn có muốn chấp nhận không?",
                               footer: (_, { CancelBtn }) => (

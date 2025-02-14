@@ -75,9 +75,9 @@ const DeviceDetailComponent = (props: any, ref: any) => {
     device_type_id: "Loại thiết bị",
     status_id: "Trạng thái",
     start_date: "Ngày bắt đầu sử dụng",
-    frequency: "Tần số",
-    connection: "Phương thức kết nối",
-    storage: "Phương thức lưu trữ dữ liệu",
+    // frequency: "Tần số",
+    // connection: "Phương thức kết nối",
+    // storage: "Phương thức lưu trữ dữ liệu",
   };
 
   const customData = (
@@ -97,11 +97,11 @@ const DeviceDetailComponent = (props: any, ref: any) => {
       dataIndex: "detail_name",
       key: "detail_name",
     },
-    {
-      title: "Tần số lấy mẫu (Hz)",
-      dataIndex: "value",
-      key: "value",
-    },
+    // {
+    //   title: "Tần số lấy mẫu (Hz)",
+    //   dataIndex: "value",
+    //   key: "value",
+    // },
     {
       title: "Thông tin chi tiết",
       dataIndex: "information",
