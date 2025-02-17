@@ -111,13 +111,10 @@ export class ScheduleService {
           return hourStart === BigInt(scheduleStartTimeBigInt);
         });
       });
-      const dayOfWeek = date.getDay();
-      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-        availableSchedule.push({
-          date: formattedDate,
-          hours: filterHours,
-        });
-      }
+      availableSchedule.push({
+        date: formattedDate,
+        hours: filterHours,
+      });
     }
     return availableSchedule;
   }

@@ -237,6 +237,8 @@ export const Schedule: React.FC = () => {
     if (selectInfo.source === "date") {
       setSelectedDate(value);
       setIsOpen(true);
+      if (Context.role === userRole.doctor) dispatch(getScheduleByDoctorId());
+      if (Context.role === userRole.patient) dispatch(getScheduleByPatientId());
     }
   };
 
@@ -245,6 +247,7 @@ export const Schedule: React.FC = () => {
     dispatch(
       createNotification({
         ...data,
+        status: 2,
       } as NotificationRequest)
     );
   };
