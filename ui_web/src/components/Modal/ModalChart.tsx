@@ -16,9 +16,9 @@ interface ChartData {
 }
 
 interface RawData {
-  PPG: ChartData;
-  PCG: ChartData;
-  ECG: ChartData;
+  "PPG (a.u)": ChartData;
+  "PCG (mV)": ChartData;
+  "ECG (mV)": ChartData;
   frequency: number;
 }
 
@@ -43,30 +43,29 @@ const ModalChartComponent = (props: any, ref: any) => {
       const time = i / frequency;
       const phase = time % 1;
 
-      // **Dạng sóng ECG cơ bản**
       const ecgValue =
         phase >= 0.16 && phase < 0.18
-          ? -0.15 * Math.exp(-Math.pow((phase - 0.17) / 0.004, 2)) // 🔽 Q ~ -0.15 mV
+          ? -0.25 * Math.exp(-Math.pow((phase - 0.17) / 0.004, 2)) // Q ~ -0.25 mV
           : phase >= 0.18 && phase < 0.22
-          ? 1.0 * Math.exp(-Math.pow((phase - 0.2) / 0.008, 2)) // 🔽 R ~ 1.0 mV
+          ? 1.8 * Math.exp(-Math.pow((phase - 0.2) / 0.008, 2)) // R ~ 1.8 mV
           : phase >= 0.22 && phase < 0.24
-          ? -0.3 * Math.exp(-Math.pow((phase - 0.23) / 0.006, 2)) // 🔽 S ~ -0.3 mV
+          ? -0.8 * Math.exp(-Math.pow((phase - 0.23) / 0.006, 2)) // S ~ -0.8 mV
           : phase >= 0.3 && phase < 0.4
-          ? 0.25 * Math.exp(-Math.pow((phase - 0.35) / 0.04, 2)) // 🔽 T ~ 0.25 mV
+          ? 0.4 * Math.exp(-Math.pow((phase - 0.35) / 0.04, 2)) // T ~ 0.4 mV
           : phase >= 0.08 && phase < 0.12
-          ? 0.15 * Math.exp(-Math.pow((phase - 0.1) / 0.015, 2)) // 🔽 P ~ 0.15 mV
+          ? 0.2 * Math.exp(-Math.pow((phase - 0.1) / 0.015, 2)) // P ~ 0.2 mV
           : phase >= 0.42 && phase < 0.46
-          ? 0.1 * Math.exp(-Math.pow((phase - 0.44) / 0.008, 2)) // 🔽 U ~ 0.1 mV (tuỳ trường hợp)
+          ? 0.1 * Math.exp(-Math.pow((phase - 0.44) / 0.008, 2)) // U ~ 0.1 mV
           : 0;
 
-      // **Tăng nhiễu Gaussian (~±0.02 mV) để tín hiệu tự nhiên hơn**
+      // **Nhiễu Gaussian (~±0.02 mV)**
       const noise = (Math.random() - 0.5) * 0.04;
 
-      // **Thêm nhiễu cao tần để mô phỏng rung động nhỏ**
+      // **Nhiễu cao tần (~±0.02 mV)**
       const highFreqNoise =
         0.02 * Math.sin(50 * Math.PI * time) * (Math.random() - 0.5);
 
-      // **Tổng hợp tín hiệu ECG với nhiễu**
+      // **Tổng hợp tín hiệu ECG**
       const ecgWithNoise = ecgValue + noise + highFreqNoise;
 
       return { value: parseFloat(ecgWithNoise.toFixed(3)), warning: 0 };
@@ -74,44 +73,56 @@ const ModalChartComponent = (props: any, ref: any) => {
   };
 
   const generatePPGData = () => {
-    const frequency = 50; // Tần số lấy mẫu (Hz)
-    const duration = 20;
+    const frequency = 100; // Tần số lấy mẫu (Hz)
+    const duration = 10; // Thời gian đo (giây)
     const samples = duration * frequency;
-    const cycle = 1.0; // Chu kỳ ~1s (~60 BPM)
+    const cycle = 1.0; // Chu kỳ 1 giây (~60 BPM)
 
-    return Array.from({ length: samples }, (_, i) => {
+    let ppgData = [];
+
+    for (let i = 0; i < samples; i++) {
       const time = (i / frequency) % cycle; // Thời gian trong chu kỳ
 
-      // **Sóng sin cơ bản với pha lệch**
+      // **Dạng sóng PPG với biên độ hợp lý**
       const baseWave =
-        40 * Math.sin(2 * Math.PI * time + Math.sin(4 * Math.PI * time));
+        30 * Math.sin(2 * Math.PI * time + Math.sin(4 * Math.PI * time));
 
-      // **Biến dạng lệch để làm tín hiệu không đối xứng**
+      // **Hiệu ứng biến dạng**
       const distortion =
-        20 * Math.sin(3 * Math.PI * time) * Math.exp(-3 * time);
+        15 * Math.sin(3 * Math.PI * time) * Math.exp(-3 * time);
 
-      const noise = (Math.random() - 0.5) * 8;
-
-      // **Thêm nhiễu cao tần để tạo rung động nhỏ**
+      // **Thêm nhiễu để mô phỏng tín hiệu thực tế**
+      const noise = (Math.random() - 0.5) * 5;
       const highFreqNoise =
-        4 * Math.sin(50 * Math.PI * time) * (Math.random() - 0.5);
+        3 * Math.sin(50 * Math.PI * time) * (Math.random() - 0.5);
 
       // **Tổng hợp tín hiệu**
-      const ppgValue = baseWave + distortion + noise + highFreqNoise - 40; // Dịch xuống để có đáy -80
+      let ppgValue = baseWave + distortion + noise + highFreqNoise;
 
-      return { value: parseFloat(ppgValue.toFixed(3)), warning: 0 };
-    });
+      // **Dịch lên giá trị dương và chuẩn hóa về a.u**
+      ppgValue = ppgValue - Math.min(ppgValue, -30) + 40; // Offset để đảm bảo luôn dương
+
+      // **Giảm số lượng mẫu trong vùng trũng**
+      if (ppgValue > 45 || i % 5 === 0) {
+        ppgData.push({ value: parseFloat(ppgValue.toFixed(3)), warning: 0 });
+      }
+    }
+
+    return ppgData;
   };
 
   const generatePCGData = (): DataPoint[] => {
-    const frequency = 150; // Tần số mẫu
+    const frequency = 150; // Tần số mẫu (Hz)
     const samples = recordState.samples;
+
+    // Hệ số điều chỉnh biên độ để phản ánh đơn vị Volt
+    const amplitudeScale = 20; // 20mV là mức phổ biến
 
     return Array.from({ length: samples }, (_, i) => {
       const time = i / frequency;
       const phase = time % 1;
 
-      // Mô phỏng tiếng tim S1
+      // Mô phỏng tiếng tim S1 (First Heart Sound)
       const s1_wave =
         phase >= 0 && phase < 0.05
           ? 0.7 * Math.exp(-Math.pow((phase - 0.025) / 0.012, 2)) +
@@ -129,7 +140,7 @@ const ModalChartComponent = (props: any, ref: any) => {
             Math.exp(-Math.pow((phase - 0.25) / 0.05, 2)) // Dao động tần số cao, lan rộng
           : 0;
 
-      // Mô phỏng tiếng tim S2
+      // Mô phỏng tiếng tim S2 (Second Heart Sound)
       const s2_wave =
         phase >= 0.5 && phase < 0.55
           ? 0.5 * Math.exp(-Math.pow((phase - 0.525) / 0.012, 2)) +
@@ -141,10 +152,13 @@ const ModalChartComponent = (props: any, ref: any) => {
 
       // Nhiễu nền tự nhiên hơn
       const noise =
-        (Math.random() - 0.5) * 0.05 + 0.05 * Math.sin(10 * Math.PI * time);
+        (Math.random() - 0.5) * 0.02 + 0.02 * Math.sin(10 * Math.PI * time);
+
+      // Tính giá trị cuối cùng & nhân với hệ số biên độ (V)
+      const valueInV = (s1_wave + murmur + s2_wave + noise) * amplitudeScale;
 
       return {
-        value: parseFloat((s1_wave + murmur + s2_wave + noise).toFixed(3)),
+        value: parseFloat(valueInV.toFixed(3)),
         warning: 0,
       };
     });
@@ -152,9 +166,9 @@ const ModalChartComponent = (props: any, ref: any) => {
 
   const generateData = (): RawData => {
     return {
-      PPG: { data: generatePPGData() },
-      PCG: { data: generatePCGData() },
-      ECG: { data: generateECGData() },
+      "PPG (a.u)": { data: generatePPGData() },
+      "PCG (mV)": { data: generatePCGData() },
+      "ECG (mV)": { data: generateECGData() },
       frequency: 250,
     };
   };

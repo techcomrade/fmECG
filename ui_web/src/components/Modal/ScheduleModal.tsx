@@ -43,6 +43,7 @@ import { ModalAddDiagnosis } from "./ModalAddDiagnosis";
 import { ModalShowDiagnosis } from "./ModalShowDiagnosis";
 import {
   createDiagnosis,
+  getDiagnosisByScheduleId,
   resetLoadCreateDiagnosisStatus,
   resetLoadUpdateDiagnosisByScheduleIdStatus,
   updateDiagnosisByScheduleId,
@@ -67,10 +68,14 @@ const ScheduleModalComponent = (props: any) => {
   const [statusIcon, setStatusIcon] = React.useState<any>(null);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [isCancel, setIsCancel] = React.useState<boolean>(false);
+  const [isCancelResult, setIsCancelResult] = React.useState<boolean>(false);
   const [data, setData] = React.useState<any>({});
   const [cancelData, setCancelData] = React.useState<any>({});
+  const [cancelResultData, setCancelResultData] = React.useState<any>({});
   const [reason, setReason] = React.useState<string>("");
   const [cancelReason, setCancelReason] = React.useState<string>("");
+  const [cancelResultReason, setCancelResultReason] =
+    React.useState<string>("");
   const modalAddDiagnosisRef = React.useRef<AddDiagnosis>(null);
   const modalShowRef = React.useRef<ShowDiagnosis>(null);
 
@@ -273,9 +278,7 @@ const ScheduleModalComponent = (props: any) => {
             if (!cancelReason.trim()) {
               return alert("Vui lòng nhập lý do trước khi gửi!");
             }
-            await dispatch(
-              deleteSchedule(cancelData.schedule_id)
-            ).unwrap();
+            await dispatch(deleteSchedule(cancelData.schedule_id)).unwrap();
             await dispatch(
               createNotification({
                 patient_id: cancelData.patient_id,
@@ -299,6 +302,47 @@ const ScheduleModalComponent = (props: any) => {
           style={{ marginTop: "10px" }}
           value={cancelReason}
           onChange={(e) => setCancelReason(e.target.value)}
+        ></Input>
+      </Modal>
+
+      <Modal
+        width={"420px"}
+        title="Lí do hủy kết quả lịch"
+        open={isCancelResult}
+        onOk={async () => {
+          try {
+            if (!cancelResultReason.trim()) {
+              return alert("Vui lòng nhập lý do trước khi gửi!");
+            }
+            await dispatch(
+              updateScheduleResult({
+                schedule_id: cancelResultData.schedule_id,
+                result: 3,
+              } as UpdateResultRequest)
+            );
+            await dispatch(
+              createNotification({
+                patient_id: cancelResultData.patient_id,
+                schedule_start_time: cancelResultData.schedule_start_time,
+                status: 7,
+                reject_reason: cancelResultReason,
+              } as NotificationRequest)
+            ).unwrap();
+            setIsCancelResult(false);
+          } catch (error) {
+            console.error("Lỗi xảy ra:", error);
+            showNotiError(error as string);
+            setIsCancelResult(false);
+          }
+        }}
+        okText="Lưu"
+        onCancel={() => setIsCancelResult(false)}
+      >
+        <Input
+          placeholder="Nhập lí do bạn muốn hủy lịch"
+          style={{ marginTop: "10px" }}
+          value={cancelResultReason}
+          onChange={(e) => setCancelResultReason(e.target.value)}
         ></Input>
       </Modal>
 
@@ -382,7 +426,10 @@ const ScheduleModalComponent = (props: any) => {
                     ? [
                         <Tooltip title="Cập nhật chẩn đoán" key="edit">
                           <EditOutlined
-                            onClick={() =>
+                            onClick={() => {
+                              dispatch(
+                                getDiagnosisByScheduleId(item.schedule_id)
+                              );
                               modalAddDiagnosisRef.current?.open(
                                 {
                                   selected_date: props.selectedDate,
@@ -393,8 +440,8 @@ const ScheduleModalComponent = (props: any) => {
                                   end_time: item.end_time,
                                 } as any,
                                 props.columns
-                              )
-                            }
+                              );
+                            }}
                           />
                         </Tooltip>,
                       ]
@@ -420,12 +467,13 @@ const ScheduleModalComponent = (props: any) => {
                                       type="primary"
                                       style={{ backgroundColor: "#E53935" }}
                                       onClick={() => {
-                                        dispatch(
-                                          updateScheduleResult({
-                                            schedule_id: item.schedule_id,
-                                            result: 3,
-                                          } as UpdateResultRequest)
-                                        );
+                                        setIsCancelResult(true);
+                                        setCancelResultData({
+                                          schedule_id: item.schedule_id,
+                                          patient_id: item.patient_id,
+                                          schedule_start_time:
+                                            item.schedule_start_time,
+                                        });
                                         Modal.destroyAll();
                                       }}
                                     >

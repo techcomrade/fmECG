@@ -21,6 +21,8 @@ import {
 import { ApiLoadingStatus } from "../../utils/loadingStatus";
 import {
   getAvailableScheduleByDoctorId,
+  getScheduleByDoctorId,
+  getScheduleByPatientId,
   resetLoadGetAvailableScheduleByDoctorId,
 } from "../../redux/reducer/scheduleSlice";
 import {
@@ -29,6 +31,8 @@ import {
   getBusyHours,
 } from "../../utils/dateUtils";
 import { showNotiError } from "../notification";
+import { Context } from "../../utils/context";
+import { userRole } from "../../constants";
 
 const ModalComponent = (props: any, ref: any) => {
   const [form] = Form.useForm();
@@ -76,6 +80,8 @@ const ModalComponent = (props: any, ref: any) => {
       setIsOpen(false);
       setIsShow(false);
       form.resetFields();
+      if (Context.role === userRole.doctor) dispatch(getScheduleByDoctorId());
+      if (Context.role === userRole.patient) dispatch(getScheduleByPatientId());
       dispatch(getDiagnosisByScheduleId(data.schedule_id));
       dispatch(getAvailableScheduleByDoctorId(data.doctor_id));
     }
@@ -109,7 +115,7 @@ const ModalComponent = (props: any, ref: any) => {
 
   React.useEffect(() => {
     if (data.schedule_id) dispatch(getDiagnosisByScheduleId(data.schedule_id));
-  }, [data.schedule_id]);
+  }, [data.schedule_id, form]);
 
   React.useEffect(() => {
     if (
@@ -118,6 +124,9 @@ const ModalComponent = (props: any, ref: any) => {
     ) {
       dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis(diagnosisState.diagnosis);
+      form.setFieldsValue({
+        information: diagnosisState.diagnosis.information,
+      });
     }
     if (
       diagnosisState.loadGetDiagnosisByScheduleIdStatus ===
@@ -125,12 +134,11 @@ const ModalComponent = (props: any, ref: any) => {
     ) {
       dispatch(resetLoadGetDiagnosisByScheduleIdStatus());
       setDiagnosis({} as DiagnosisResponse);
+      form.setFieldsValue({
+        information: "",
+      });
     }
-    form.setFieldsValue({
-      information: diagnosisState.diagnosis
-        ? diagnosisState.diagnosis.information
-        : "",
-    });
+    
   }, [diagnosisState]);
 
   React.useEffect(() => {

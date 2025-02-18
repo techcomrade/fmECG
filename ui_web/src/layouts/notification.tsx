@@ -117,6 +117,8 @@ export const Notification: React.FC = () => {
         return `Bác sĩ ${item.doctor_name} đã hủy lịch khám vào ${time} ngày ${date} của bạn, nhấn để xem thông tin chi tiết`;
       if (item.status === 4)
         return `Bác sĩ ${item.doctor_name} đã tạo lịch khám vào ${time} ngày ${date} cho bạn`;
+      if (item.status === 7)
+        return `Bác sĩ ${item.doctor_name} đã hủy kết quả lịch khám vào ${time} ngày ${date} của bạn, nhấn để xem thông tin chi tiết`;
       return `Lịch khám vào ${time} ngày ${date} của bạn đã bị hủy tự động do chưa được bác sĩ xác nhận`;
     } else if (Context.role === userRole.doctor) {
       if (item.status === 0)
@@ -129,6 +131,8 @@ export const Notification: React.FC = () => {
         return `Bạn đã hủy lịch khám vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}`;
       if (item.status === 4)
         return `Bạn đã tạo lịch khám vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name}`;
+      if (item.status === 7)
+        return `Bạn đã hủy kểt quả lịch khám vào ${time} ngày ${date} của bệnh nhân ${item.patient_name}, nhấn để xem thông tin chi tiết`;
       return `Lịch khám vào ${time} ngày ${date} cho bệnh nhân ${item.patient_name} chưa có kết quả, vui lòng xác nhận`;
     }
   };
@@ -187,7 +191,10 @@ export const Notification: React.FC = () => {
                     } as UpdateSeenStatusRequest)
                   );
                 }
-                if (item.status === 3 && Context.role === userRole.patient) {
+                if (
+                  (item.status === 3 || item.status === 7) &&
+                  Context.role === userRole.patient
+                ) {
                   setShowReason(true);
                   console.log(item);
                   setData({
@@ -199,7 +206,10 @@ export const Notification: React.FC = () => {
                   setIsOpen(false);
                   return;
                 }
-                if (item.status === 3 && Context.role === userRole.doctor) {
+                if (
+                  (item.status === 3 || item.status === 7) &&
+                  Context.role === userRole.doctor
+                ) {
                   setShowReason(true);
                   console.log(item);
                   setData({
@@ -318,7 +328,7 @@ export const Notification: React.FC = () => {
 
           <Row key="reason" className="event-row">
             <Col span={9} className="event-label">
-              Lí do từ chối:
+              Lí do hủy:
             </Col>
             <Col span={15} className="event-value">
               {data.reject_reason}
